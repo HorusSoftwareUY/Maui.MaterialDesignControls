@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             BackgroundColor="White"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <material:MaterialLabel
+                Type="DisplayLarge"
+                Text="Display Large" />
+
+            <material:MaterialLabel
+                Type="DisplayMedium"
+                Text="Display Medium" />
+
+            <material:MaterialLabel
+                Type="DisplaySmall"
+                Text="Display Small" />
+
+            <material:MaterialButton 
+                ButtonType="Elevated"
+                Text="Save file" />
+
+            <material:MaterialButton 
+                ButtonType="Filled"
+                Text="Download file" />
+
+            <material:MaterialButton 
+                ButtonType="Tonal"
+                Text="Open tutorial" />
+
+            <material:MaterialButton 
+                ButtonType="Outlined"
+                Text="Cancel action" />
+
+            <material:MaterialButton 
+                ButtonType="Text"
+                Text="Delete item" />
+
+            <Button
+                x:Name="CounterBtn"
+                Text="Click me"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

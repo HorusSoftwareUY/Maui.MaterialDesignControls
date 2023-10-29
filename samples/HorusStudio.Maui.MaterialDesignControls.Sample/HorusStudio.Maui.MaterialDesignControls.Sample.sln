@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HorusStudio.Maui.MaterialDesignControls.Sample", "HorusStudio.Maui.MaterialDesignControls.Sample.csproj", "{A048B013-1A15-45A0-8175-62703F0D7B74}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HorusStudio.Maui.MaterialDesignControls", "..\..\src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj", "{DE16B804-FCC3-4132-8E64-56E61CE5FF99}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A048B013-1A15-45A0-8175-62703F0D7B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A048B013-1A15-45A0-8175-62703F0D7B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A048B013-1A15-45A0-8175-62703F0D7B74}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A048B013-1A15-45A0-8175-62703F0D7B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A048B013-1A15-45A0-8175-62703F0D7B74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A048B013-1A15-45A0-8175-62703F0D7B74}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DE16B804-FCC3-4132-8E64-56E61CE5FF99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE16B804-FCC3-4132-8E64-56E61CE5FF99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE16B804-FCC3-4132-8E64-56E61CE5FF99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE16B804-FCC3-4132-8E64-56E61CE5FF99}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B7F5BFB-428C-41C7-B31D-E25B061F03E3}
+	EndGlobalSection
+EndGlobal
