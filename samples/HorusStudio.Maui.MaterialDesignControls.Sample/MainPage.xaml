@@ -3,54 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
              BackgroundColor="White"
-             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.MainPage">
-
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.MainPage"
+             Title="HorusStudio.Maui.MaterialDesignControls"
+             NavigationPage.HasNavigationBar="False">
     <ScrollView>
         <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+            Spacing="16"
+            Padding="16">
 
             <material:MaterialLabel
-                Type="DisplayLarge"
-                Text="Display Large" />
+                Type="BodyMedium"
+                Text="MaterialLabel" />
 
-            <material:MaterialLabel
-                Type="DisplayMedium"
-                Text="Display Medium" />
-
-            <material:MaterialLabel
-                Type="DisplaySmall"
-                Text="Display Small" />
-
-            <material:MaterialButton 
-                ButtonType="Elevated"
-                Text="Save file" />
+            <material:MaterialDivider />
 
             <material:MaterialButton 
                 ButtonType="Filled"
-                Text="Download file" />
+                Text="MaterialButton"
+                Command="{Binding MaterialButtonCommand}"
+                IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
 
-            <material:MaterialButton 
-                ButtonType="Tonal"
-                Text="Open tutorial" />
+            <material:MaterialDivider />
 
-            <material:MaterialButton 
-                ButtonType="Outlined"
-                Text="Cancel action" />
+            <StackLayout
+                Spacing="8">
+                <material:MaterialLabel
+                    Type="BodySmall"
+                    Text="MaterialProgressIndicator" />
+                <material:MaterialProgressIndicator
+                    Type="Linear" />
+            </StackLayout>
 
-            <material:MaterialButton 
-                ButtonType="Text"
-                Text="Delete item" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+            <material:MaterialDivider />
 
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
