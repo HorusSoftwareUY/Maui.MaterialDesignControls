@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using HorusStudio.Maui.MaterialDesignControls.Implementations;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -9,7 +10,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         Elevated, Filled, Tonal, Outlined, Text
     }
 
-    public class MaterialButton : Grid, ITouchAndPressEffectConsumer
+    public class MaterialButton : Grid, ITouchAndPressBehaviorConsumer
     {
         #region Attributes and Properties
 
@@ -362,7 +363,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 Orientation = StackOrientation.Horizontal,
                 Spacing = Spacing,
-                HorizontalOptions = ContentIsExpanded ? LayoutOptions.FillAndExpand : LayoutOptions.Center,
+                HorizontalOptions = ContentIsExpanded ? LayoutOptions.FillAndExpand : LayoutOptions.Center
             };
             _frameLayout.Content = _stcLayout;
 
@@ -405,7 +406,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             };
             this.Add(_cntActivityIndicator, 0, 0);
 
-            Effects.Add(new TouchAndPressEffect());
+            Behaviors.Add(new TouchAndPressBehavior(_frameLayout));
 
             SetButtonType();
         }
@@ -612,6 +613,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 Clicked.Invoke(this, null);
         }
 
-        #endregion Methods
+#endregion Methods
     }
 }

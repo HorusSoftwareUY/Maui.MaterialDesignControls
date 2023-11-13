@@ -20,4 +20,16 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Platforms\iOS\GestureRecognizers\" />
+	  <None Remove="Platforms\Android\Behaviors\" />
+	  <None Remove="Platforms\iOS\Behaviors\" />
+	  <None Remove="Behaviors\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Platforms\iOS\GestureRecognizers\" />
+	  <Folder Include="Platforms\Android\Behaviors\" />
+	  <Folder Include="Platforms\iOS\Behaviors\" />
+	  <Folder Include="Behaviors\" />
+	</ItemGroup>
 </Project>

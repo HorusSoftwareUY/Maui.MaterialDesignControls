@@ -92,7 +92,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     if (Type == MaterialProgressIndicatorType.Circular && _customActivityIndicator != null)
                         _customActivityIndicator.Color = IndicatorColor;
                     else if (Type == MaterialProgressIndicatorType.Linear && _progressBar != null)
-                        _progressBar.BackgroundColor = IndicatorColor;
+                        _progressBar.Color = IndicatorColor;
                     break;
                 case nameof(IsVisible):
                     base.OnPropertyChanged(propertyName);
@@ -135,7 +135,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     WidthRequest = -1;
                     _progressBar = new BoxView()
                     {
-                        BackgroundColor = IndicatorColor,
+                        Color = IndicatorColor,
                         IsEnabled = this.IsEnabled,
                         Margin = new Thickness(0),
                     };
