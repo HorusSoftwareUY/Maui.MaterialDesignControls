@@ -1,9 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
+using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample
 {
     public static class MauiProgram
     {
+        private const string FontRegular = "FontRegular";
+        private const string FontMedium = "FontMedium";
+
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -11,8 +16,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Roboto-Regular.ttf", FontRegular);
+                    fonts.AddFont("Roboto-Medium.ttf", FontMedium);
                 });
 
             MaterialDesignControlsBuilder.Configure(builder);
@@ -21,7 +26,59 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             builder.Logging.AddDebug();
 #endif
 
+            builder.Services
+                .ConfigureMaterial()
+                .AutoConfigureViewModelsAndPages();
+
             return builder.Build();
+        }
+
+        static IServiceCollection ConfigureMaterial(this IServiceCollection services)
+        {
+            MaterialFontFamily.Medium = FontMedium;
+            MaterialFontFamily.Regular = FontRegular;
+            MaterialFontFamily.Default = MaterialFontFamily.Regular;
+
+            return services;
+        }
+
+        static IServiceCollection AutoConfigureViewModelsAndPages(this IServiceCollection services)
+        {
+            var vmTypes = GetViewModelsToRegister();
+            foreach (var vm in vmTypes)
+            {
+                services.AddSingleton(vm);
+            }
+
+            var pageTypes = GetPagesToRegister(vmTypes);
+            foreach (var page in pageTypes)
+            {
+                services.AddSingleton(page);
+            }
+
+            return services;
+        }
+
+        public static IEnumerable<Type> GetViewModelsToRegister()
+        {
+            // Get ViewModel types that satisfy MyViewModel:BaseViewModel
+            var currentNs = typeof(MauiProgram).Namespace;
+            var types = typeof(MauiProgram).Assembly.GetTypes();
+            var viewModels = types.Where(t => t.Namespace == $"{currentNs}.ViewModels" && t.BaseType == typeof(BaseViewModel));
+
+            return viewModels;
+        }
+
+        public static IEnumerable<Type> GetPagesToRegister(IEnumerable<Type> viewModelTypes)
+        {
+            // Get ContentPage types that satisfy MyPage:BaseContentPage<MyPage>
+            var currentNs = typeof(MauiProgram).Namespace;
+            var types = typeof(MauiProgram).Assembly.GetTypes();
+            var pages = types.Where(t => t.Namespace == $"{currentNs}.Pages" &&
+                t.BaseType.Name.StartsWith(typeof(BaseContentPage<>).Name) &&
+                viewModelTypes.Any(vm => t.BaseType.FullName.Contains(vm.FullName)));
+
+            return pages;
         }
     }
 }

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.MainPage"
+             x:TypeArguments="vm:MainViewModel"
+             x:DataType="vm:MainViewModel"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="48,*">
+        <Grid Grid.Row="0" ColumnDefinitions="24,*,24,*,24" Padding="16,0">
+            <ImageButton Grid.Column="0" Source="menu.png" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding ToggleMenuCommand}" />
+            <Image Grid.Column="2" Source="logo.png" HeightRequest="24" WidthRequest="24" Aspect="Center" />
+            <ImageButton Grid.Column="4" Source="info.png" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding AboutUsCommand}" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Spacing="16"
+                Padding="16,96">
+
+                <Label FontSize="Title" Text="Welcome to Material Design Controls for .NET MAUI" HorizontalTextAlignment="Center" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
+    
+</local:BaseContentPage>

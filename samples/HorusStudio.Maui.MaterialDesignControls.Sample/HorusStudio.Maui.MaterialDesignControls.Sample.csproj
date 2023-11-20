@@ -12,10 +12,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>HorusStudio.Maui.MaterialDesignControls.Sample</ApplicationTitle>
+		<ApplicationTitle>Material Design Controls</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.horusstudio.maui.materialdesigncontrols.sample</ApplicationId>
+		<ApplicationId>com.horusstudio.maui.materialdesigncontrols.sample</ApplicationId>
 		<ApplicationIdGuid>24a1a7f0-9c21-4710-9d6d-f863bd1bdb97</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -33,18 +33,18 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#F7F2FA" BaseSize="82,82" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-
-		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
@@ -58,12 +58,5 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="ViewModels\" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="ViewModels\" />
 	</ItemGroup>
 </Project>

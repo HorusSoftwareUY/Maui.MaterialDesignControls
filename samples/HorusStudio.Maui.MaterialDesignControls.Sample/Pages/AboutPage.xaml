@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.AboutPage"
+             x:TypeArguments="vm:AboutViewModel"
+             x:DataType="vm:AboutViewModel">
+    <ContentPage.Resources>
+
+        <Style x:Key="Logo" TargetType="Image">
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="WidthRequest" Value="40" />
+            <Setter Property="Aspect" Value="AspectFit" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+        </Style>
+
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource MainLayout}" Spacing="20">
+            <Frame Style="{StaticResource SurfaceContainerLow}">
+                <VerticalStackLayout>
+                    <Image Style="{StaticResource Logo}" Source="horus_logo.png" />
+                    <material:MaterialLabel Type="TitleLarge" Text="Powered by Horus Studio" />
+                    <material:MaterialLabel Type="BodyMedium" Text="We are a mobile studio development studio that provides world-class design and development solutions." />
+
+                    <material:MaterialButton Text="Contact us" HorizontalOptions="End" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource SurfaceContainerLow}">
+                <VerticalStackLayout>
+                    <Image Style="{StaticResource Logo}" Source="logo.png" />
+                    <material:MaterialLabel Type="TitleLarge" Text="Based on Material Design" />
+                    <material:MaterialLabel Type="BodyMedium" Text="Material 3 is the latest version of Google’s open-source design system. Design and build beautiful, usable products with Material 3." />
+
+                    <material:MaterialButton ButtonType="Tonal" Text="See more" HorizontalOptions="End" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource SurfaceContainerLow}">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout Spacing="12">
+                        <Image Style="{StaticResource Logo}" Source="maui.png" />
+                        <Image Style="{StaticResource Logo}" Source="xamarin.png" WidthRequest="46" />
+                    </HorizontalStackLayout>
+                    
+                    <material:MaterialLabel Type="TitleLarge" Text="Supported platforms" />
+                    <material:MaterialLabel Type="BodyMedium" Text="Material 3 is the latest version of Google’s open-source design system. Design and build beautiful, usable products with Material 3." />
+
+                    <material:MaterialButton ButtonType="Tonal" Text="GitHub" HorizontalOptions="End" />
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</local:BaseContentPage>

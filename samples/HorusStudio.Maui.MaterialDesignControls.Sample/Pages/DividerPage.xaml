@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.DividerPage"
+             x:TypeArguments="vm:DividerViewModel"
+             x:DataType="vm:DividerViewModel">
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource MainLayout}">
+            <material:MaterialLabel Text="{Binding Subtitle}" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full width dividers" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="0,32">
+                <material:MaterialDivider />
+            </Frame>
+            <material:MaterialLabel Text="Full width dividers to indicate separation of content." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Inset dividers" />
+            <Frame Style="{StaticResource SurfaceContainer}">
+                <material:MaterialDivider />
+            </Frame>
+            <material:MaterialLabel Text="Inset dividers separate related content, such as emails in a list. They should be used with anchoring elements such as icons or avatars, and align with the leading edge of the screen." />
+        </VerticalStackLayout>
+    </ScrollView>
+</local:BaseContentPage>

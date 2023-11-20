@@ -1,14 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    <ShellContent Title="" ContentTemplate="{DataTemplate local:MainPage}" />        
 </Shell>
