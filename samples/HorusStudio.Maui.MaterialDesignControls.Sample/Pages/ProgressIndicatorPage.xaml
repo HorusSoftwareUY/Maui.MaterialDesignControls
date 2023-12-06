@@ -13,13 +13,17 @@
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Linear" />
             <Frame Style="{StaticResource SurfaceContainer}">
-                <material:MaterialProgressIndicator Type="Linear" VerticalOptions="Center" IsVisible="{Binding IsVisible}" />
+                <Grid>
+                    <material:MaterialProgressIndicator Type="Linear" VerticalOptions="Center" IsVisible="{Binding IsVisible}" />
+                </Grid>
             </Frame>
             <material:MaterialLabel Text="Linear progress indicators are composed of track and indicator." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Circular" />
             <Frame Style="{StaticResource SurfaceContainer}">
-                <material:MaterialProgressIndicator Type="Circular" VerticalOptions="Center" IsVisible="{Binding IsVisible}" />
+                <Grid>
+                    <material:MaterialProgressIndicator Type="Circular" VerticalOptions="Center" IsVisible="{Binding IsVisible}" />
+                </Grid>
             </Frame>
             <material:MaterialLabel Text="Circular progress indicators are composed of an invisible track and an indicator." />
 
