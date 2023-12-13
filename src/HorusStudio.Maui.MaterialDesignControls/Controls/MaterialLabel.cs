@@ -62,7 +62,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         public static new readonly BindableProperty TextColorProperty =
-            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialLabel), defaultValue: MaterialColor.Text);
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialLabel), defaultValue: MaterialLightTheme.Text);
 
         public new Color TextColor
         {

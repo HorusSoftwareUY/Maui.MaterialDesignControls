@@ -1,13 +1,17 @@
 ﻿using System;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
-	public partial class ButtonViewModel : BaseViewModel
-	{
+    public partial class ButtonViewModel : BaseViewModel
+    {
         #region Attributes & Properties
 
         public override string Title => "Buttons";
+
+        [ObservableProperty]
+        private bool _buttonEnabled = true;
 
         #endregion
 
@@ -19,8 +23,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async Task MaterialButton()
         {
-            await Task.Delay(2000);
-            await DisplayAlert($"Material Design Controls > {Title}", $"MaterialButton command executed!", "Ok");
+            IsBusy = true;
+            await Task.Delay(3000);
+            //await DisplayAlert($"{Title}", $"MaterialButton command executed!", "Ok");
+            IsBusy = false;
         }
     }
 }

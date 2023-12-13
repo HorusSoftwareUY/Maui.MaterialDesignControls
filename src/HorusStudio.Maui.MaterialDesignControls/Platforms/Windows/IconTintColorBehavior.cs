@@ -12,7 +12,7 @@ using static Android.Widget.TimePicker;
 using WButton = Microsoft.UI.Xaml.Controls.Button;
 using WImage = Microsoft.UI.Xaml.Controls.Image;
 
-namespace HorusStudio.Maui.MaterialDesignControls.Sample.Behaviors;
+namespace HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
 public partial class IconTintColorBehavior
 {

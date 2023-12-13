@@ -8,6 +8,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         public BaseContentPage(TBaseViewModel viewModel)
         {
             BindingContext = viewModel;
+            viewModel.DisplayAlert = DisplayAlert;
             SetBinding(TitleProperty, new Binding(nameof(BaseViewModel.Title)));
         }
 
