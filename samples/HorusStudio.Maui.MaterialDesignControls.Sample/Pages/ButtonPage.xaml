@@ -16,6 +16,10 @@
             <Setter Property="ColumnSpacing" Value="16" />
         </Style>
 
+        <Style TargetType="material:MaterialButton">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+
         <Style x:Key="MyStyle" TargetType="material:MaterialButton"> 
             <Setter Property="VisualStateManager.VisualStateGroups"> 
                 <VisualStateGroupList> 
@@ -37,7 +41,7 @@
                             <VisualState.Setters>
                                 <Setter Property="BackgroundColor" Value="Green" />
                                 <Setter Property="TextColor" Value="White" />
-                                <Setter Property="IconTintColor" Value="White" />
+                                <Setter Property="IconTintColor" Value="Coral" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -52,13 +56,15 @@
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
             <material:MaterialButton
-                Style="{StaticResource MyStyle}"
+                    Style="{StaticResource MyStyle}"
                     Grid.Row="0"
                     Grid.Column="0"
                     Type="Elevated"
                     Text="Enabled"
                     IsEnabled="{Binding ButtonEnabled}"
                     ImageSource="info.png" />
+
+            <Switch IsToggled="{Binding ButtonEnabled}" />
 
             <material:MaterialButton
                     Grid.Row="0"
@@ -75,8 +81,6 @@
                     Text="Enabled"
                     IsEnabled="{Binding ButtonEnabled}"
                     ImageSource="info.png" />
-
-            <Switch IsToggled="{Binding ButtonEnabled}" />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Elevated" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">

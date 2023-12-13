@@ -187,7 +187,6 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     {
         if (bindable is MaterialButton self)
         {
-            Debug.WriteLine($"BACKGROUND CHANGED {((Brush)o)?.ToString() ?? "NULL"} -> {((Brush)n)?.ToString() ?? "NULL"}");
             self.SetBackground(self.Type);
         }
     });
@@ -199,7 +198,6 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     {
         if (bindable is MaterialButton self)
         {
-            Debug.WriteLine($"BACKGROUND COLOR CHANGED {((Color)o)?.ToArgbHex() ?? "NULL"} -> {((Color)n)?.ToArgbHex() ?? "NULL"}");
             self.SetBackgroundColor(self.Type);
         }
     });
@@ -211,7 +209,6 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     {
         if (bindable is MaterialButton self)
         {
-            Debug.WriteLine($"BORDER WIDTH CHANGED {(double)o} -> {(double)n}");
             self.SetBorderWidth(self.Type);
         }
     });
@@ -223,7 +220,6 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     {
         if (bindable is MaterialButton self)
         {
-            Debug.WriteLine($"BORDER COLOR CHANGED {((Color)o)?.ToArgbHex() ?? "NULL"} -> {((Color)n)?.ToArgbHex() ?? "NULL"}");
             self.SetBorderColor(self.Type);
         }
     });
@@ -255,7 +251,6 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     {
         if (bindable is MaterialButton self)
         {
-            Debug.WriteLine($"PADDING: ({self.Padding.Left}, {self.Padding.Top}, {self.Padding.Right}, {self.Padding.Bottom})");
             self.UpdatePadding();
         }
     });
@@ -321,6 +316,17 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
                 self._internalActivityIndicator = newValue as View ?? self._activityIndicator;
                 self._mainLayout.Add(self._internalActivityIndicator);
             }
+        }
+    });
+
+    /// <summary>
+    /// The backing store for the <see cref="Shadow" /> bindable property.
+    /// </summary>
+    public static new readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialButton), defaultValue: DefaultShadow, propertyChanged: (bindable, o, n) =>
+    {
+        if (bindable is MaterialButton self)
+        {
+            self.SetShadow(self.Type);
         }
     });
 
@@ -627,6 +633,15 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     {
         get => (View)GetValue(CustomBusyIndicatorProperty);
         set => SetValue(CustomBusyIndicatorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the shadow effect cast by the element. This is a bindable property.
+    /// </summary>
+    public new Shadow Shadow
+    {
+        get { return (Shadow)GetValue(ShadowProperty); }
+        set { SetValue(ShadowProperty, value); }
     }
 
     #endregion Properties
@@ -1084,7 +1099,7 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     //protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     //{
     //    base.OnPropertyChanged(propertyName);
-    //    Debug.WriteLine($"PROPERTYCHANGED.{propertyName}");//: {BackgroundColor?.ToArgbHex(true) ?? "NULL"}, {TextColor?.ToArgbHex(true) ?? "NULL"}, {TintColor?.ToArgbHex(true) ?? "NULL"}, {BorderColor?.ToArgbHex(true) ?? "NULL"}");
+    //    Debug.WriteLine($"PROPERTYCHANGED.{propertyName}");
     //}
 
     #region ITouchAndPressBehaviorConsumer
