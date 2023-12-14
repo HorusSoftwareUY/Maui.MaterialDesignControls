@@ -14,10 +14,10 @@ public enum MaterialButtonType
 /// </summary>
 public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
 {
-    // TODO: Change ActivityIndicator for MaterialProgressIndicator
     // TODO: [iOS] IconTintColor doesn't react to VisualStateManager changes
     // TODO: Shadow doesn't react to VisualStateManager changes
     // TODO: ContentLayout is buggy
+    // TODO: [iOS] BusyIndicatorSize doesn't work (maybe it's MaterialProgressBar issue)
 
     #region Attributes
 
@@ -800,7 +800,7 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
 
     private Grid _mainLayout;
     private Button _button;
-    private ActivityIndicator _activityIndicator;
+    private MaterialProgressIndicator _activityIndicator;
     private View _internalActivityIndicator;
 
     #endregion Layout
@@ -858,10 +858,9 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
         _button.Behaviors.Add(iconTintColor);
 
         _activityIndicator = new();
-        _activityIndicator.SetBinding(ActivityIndicator.ColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
-        _activityIndicator.SetBinding(ActivityIndicator.HeightRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
-        _activityIndicator.SetBinding(ActivityIndicator.WidthRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
-        _activityIndicator.IsRunning = true;
+        _activityIndicator.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
+        _activityIndicator.SetBinding(MaterialProgressIndicator.HeightRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
+        _activityIndicator.SetBinding(MaterialProgressIndicator.WidthRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
 
         _internalActivityIndicator = CustomBusyIndicator ?? _activityIndicator;
         _internalActivityIndicator.IsVisible = !_button.IsVisible;
