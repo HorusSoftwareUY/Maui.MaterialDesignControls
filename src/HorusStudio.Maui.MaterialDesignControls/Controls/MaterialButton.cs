@@ -1,8 +1,5 @@
-﻿using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
-using Microsoft.Maui.Graphics.Text;
 using static Microsoft.Maui.Controls.Button;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -763,16 +760,14 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
 
     protected virtual void InternalFocusHandler(object sender, FocusEventArgs e)
     {
-        //if (e.IsFocused)
-        //{
-        //    Debug.WriteLine("[Button.FOCUSED]");
-        //    VisualStateManager.GoToState(this, ButtonCommonStates.Focused);
-        //}
-        //else
-        //{
-        //    Debug.WriteLine("[Button.UNFOCUSED]");
-        //    VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
-        //}
+        if (e.IsFocused)
+        {
+            VisualStateManager.GoToState(this, ButtonCommonStates.Focused);
+        }
+        else
+        {
+            VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
+        }
     }
 
     protected virtual void InternalPressedHandler(object sender, EventArgs e)
@@ -797,7 +792,7 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
 
     private Grid _mainLayout;
     private Button _button;
-    private MaterialProgressIndicator _activityIndicator;
+    private ActivityIndicator _activityIndicator;
     private View _internalActivityIndicator;
 
     #endregion Layout
@@ -858,6 +853,7 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
         _activityIndicator.SetBinding(ActivityIndicator.ColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
         _activityIndicator.SetBinding(ActivityIndicator.HeightRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
         _activityIndicator.SetBinding(ActivityIndicator.WidthRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
+        _activityIndicator.IsRunning = true;
 
         _internalActivityIndicator = CustomBusyIndicator ?? _activityIndicator;
         _internalActivityIndicator.IsVisible = !_button.IsVisible;
@@ -1089,18 +1085,6 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
             return;
         }
     }
-
-    //protected override void ChangeVisualState()
-    //{
-    //    base.ChangeVisualState();
-    //    Debug.WriteLine($"CHANGEVISUALSTATE");
-    //}
-
-    //protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    //{
-    //    base.OnPropertyChanged(propertyName);
-    //    Debug.WriteLine($"PROPERTYCHANGED.{propertyName}");
-    //}
 
     #region ITouchAndPressBehaviorConsumer
 

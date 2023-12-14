@@ -20,15 +20,17 @@
             <Setter Property="Margin" Value="2" />
         </Style>
 
-        <Style x:Key="MyStyle" TargetType="material:MaterialButton"> 
+        <Style x:Key="VisualStateManagerStyle" TargetType="material:MaterialButton"> 
             <Setter Property="VisualStateManager.VisualStateGroups"> 
                 <VisualStateGroupList> 
                     <VisualStateGroup x:Name="CommonStates"> 
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="LightYellow" />
                                 <Setter Property="TextColor" Value="Black" />
-                                <Setter Property="IconTintColor" Value="Yellow" />
-                            </VisualState.Setters>
+                                <Setter Property="IconTintColor" Value="DarkGoldenrod" />
+                                <Setter Property="BorderColor" Value="DarkGoldenrod" />
+                            </VisualState.Setters>  
                         </VisualState>
                         <VisualState x:Name="Disabled">
                             <VisualState.Setters>
@@ -55,33 +57,6 @@
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <material:MaterialButton
-                    Style="{StaticResource MyStyle}"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Type="Elevated"
-                    Text="Enabled"
-                    IsEnabled="{Binding ButtonEnabled}"
-                    ImageSource="info.png" />
-
-            <Switch IsToggled="{Binding ButtonEnabled}" />
-
-            <material:MaterialButton
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Type="Elevated"
-                    Text="Enabled"
-                    IsEnabled="{Binding ButtonEnabled}"
-                    ImageSource="plus.png" />
-
-            <material:MaterialButton
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Type="Elevated"
-                    Text="Enabled"
-                    IsEnabled="{Binding ButtonEnabled}"
-                    ImageSource="info.png" />
-
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Elevated" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <Grid Style="{StaticResource ButtonsContainer}">
@@ -89,17 +64,19 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Type="Elevated"
-                        Text="Enabled" />
+                        Text="Enabled"
+                        Command="{Binding MaterialButton1Command}"
+                        IsBusy="{Binding MaterialButton1Command.IsRunning}" />
 
                     <material:MaterialButton
                         Grid.Row="1"
                         Grid.Column="0"
                         Type="Elevated"
                         Text="Enabled"
-                        ImageSource="info.png"
+                        ImageSource="plus.png"
                         Animation="Scale"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
+                        Command="{Binding MaterialButton2Command}"
+                        IsBusy="{Binding MaterialButton2Command.IsRunning}" />
 
                     <material:MaterialButton
                         Grid.Row="0"
@@ -113,7 +90,7 @@
                         Grid.Column="1"
                         Type="Elevated"
                         Text="Disabled"
-                        ImageSource="info.png"
+                        ImageSource="plus.png"
                         IsEnabled="False" />
                 </Grid>
             </Frame>
@@ -126,14 +103,18 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Type="Filled"
-                        Text="Enabled" />
+                        Text="Enabled"
+                        Command="{Binding MaterialButton3Command}"
+                        IsBusy="{Binding MaterialButton3Command.IsRunning}" />
 
                     <material:MaterialButton
                         Grid.Row="1"
                         Grid.Column="0"
                         Type="Filled"
                         Text="Enabled"
-                        ImageSource="plus.png" />
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton4Command}"
+                        IsBusy="{Binding MaterialButton4Command.IsRunning}" />
 
                     <material:MaterialButton
                         Grid.Row="0"
@@ -160,14 +141,18 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Type="Tonal"
-                        Text="Enabled" />
+                        Text="Enabled"
+                        Command="{Binding MaterialButton5Command}"
+                        IsBusy="{Binding MaterialButton5Command.IsRunning}" />
 
                     <material:MaterialButton
                         Grid.Row="1"
                         Grid.Column="0"
                         Type="Tonal"
                         Text="Enabled"
-                        ImageSource="plus.png" />
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton6Command}"
+                        IsBusy="{Binding MaterialButton6Command.IsRunning}" />
 
                     <material:MaterialButton
                         Grid.Row="0"
@@ -194,14 +179,18 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Type="Outlined"
-                        Text="Enabled" />
+                        Text="Enabled"
+                        Command="{Binding MaterialButton7Command}"
+                        IsBusy="{Binding MaterialButton7Command.IsRunning}" />
 
                     <material:MaterialButton
                         Grid.Row="1"
                         Grid.Column="0"
                         Type="Outlined"
                         Text="Enabled"
-                        ImageSource="plus.png" />
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton8Command}"
+                        IsBusy="{Binding MaterialButton8Command.IsRunning}" />
 
                     <material:MaterialButton
                         Grid.Row="0"
@@ -228,14 +217,18 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Type="Text"
-                        Text="Enabled" />
+                        Text="Enabled"
+                        Command="{Binding MaterialButton9Command}"
+                        IsBusy="{Binding MaterialButton9Command.IsRunning}" />
 
                     <material:MaterialButton
                         Grid.Row="1"
                         Grid.Column="0"
                         Type="Text"
                         Text="Enabled"
-                        ImageSource="plus.png" />
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton10Command}"
+                        IsBusy="{Binding MaterialButton10Command.IsRunning}" />
 
                     <material:MaterialButton
                         Grid.Row="0"
@@ -261,30 +254,51 @@
                     <material:MaterialButton
                         Grid.Row="0"
                         Grid.Column="0"
+                        BackgroundColor="LightSkyBlue"
+                        BorderColor="DarkBlue"
+                        BorderWidth="2"
+                        TextColor="DarkSlateGray"
                         Type="Custom"
-                        Text="Enabled" />
-
-                    <material:MaterialButton
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Type="Custom"
-                        Text="Enabled"
-                        ImageSource="plus.png" />
+                        Text="Custom"
+                        IsEnabled="{Binding ButtonEnabled}"
+                        Command="{Binding MaterialButton11Command}"
+                        IsBusy="{Binding MaterialButton11Command.IsRunning}"
+                        BusyIndicatorColor="DarkCyan"
+                        BusyIndicatorSize="44">
+                        <material:MaterialButton.Shadow>
+                            <Shadow Brush="Cyan" 
+                                Offset="4,4"
+                                Radius="6"
+                                Opacity="0.4" />
+                        </material:MaterialButton.Shadow>
+                    </material:MaterialButton>
 
                     <material:MaterialButton
                         Grid.Row="0"
                         Grid.Column="1"
+                        Style="{StaticResource VisualStateManagerStyle}"
                         Type="Custom"
-                        Text="Disabled"
-                        IsEnabled="False" />
+                        Text="Visual state"
+                        ImageSource="plus.png"
+                        IsEnabled="{Binding ButtonEnabled}"
+                        Command="{Binding MaterialButton12Command}"
+                        IsBusy="{Binding MaterialButton12Command.IsRunning}"
+                        BusyIndicatorColor="DarkGoldenrod"
+                        BusyIndicatorSize="44" />
 
-                    <material:MaterialButton
+                    <material:MaterialLabel
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="Is enabled"
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        VerticalTextAlignment="Center" />
+
+                    <Switch
                         Grid.Row="1"
                         Grid.Column="1"
-                        Type="Custom"
-                        Text="Disabled"
-                        ImageSource="plus.png"
-                        IsEnabled="False" />
+                        HorizontalOptions="Start"
+                        IsToggled="{Binding ButtonEnabled}" />
                 </Grid>
             </Frame>
             <material:MaterialLabel Text="Use custom buttons if you need to combine properties from different button types." />
