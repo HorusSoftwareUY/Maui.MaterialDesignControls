@@ -9,8 +9,16 @@ public enum MaterialButtonType
     Elevated, Filled, Tonal, Outlined, Text, Custom
 }
 
+/// <summary>
+/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines.
+/// </summary>
 public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
 {
+    // TODO: Change ActivityIndicator for MaterialProgressIndicator
+    // TODO: [iOS] IconTintColor doesn't react to VisualStateManager changes
+    // TODO: Shadow doesn't react to VisualStateManager changes
+    // TODO: ContentLayout is buggy
+
     #region Attributes
 
     private readonly static MaterialButtonType DefaultButtonType = MaterialButtonType.Filled;
