@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:behaviors="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Behaviors;assembly=HorusStudio.Maui.MaterialDesignControls"
+                       xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+                       xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+                       xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+                       x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.IconButtonPage"
+                       x:TypeArguments="vm:IconButtonViewModel"
+                       x:DataType="vm:IconButtonViewModel">
+
+    <ContentPage.Resources>
+        <Style x:Key="ButtonsContainer" TargetType="Grid">
+            <Setter Property="RowDefinitions" Value="Auto" />
+            <Setter Property="ColumnDefinitions" Value="*,*" />
+            <Setter Property="RowSpacing" Value="16" />
+            <Setter Property="ColumnSpacing" Value="16" />
+        </Style>
+
+        <Style TargetType="material:MaterialIconButton">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+
+        <Style x:Key="VisualStateManagerStyle" TargetType="material:MaterialIconButton"> 
+            <Setter Property="VisualStateManager.VisualStateGroups"> 
+                <VisualStateGroupList> 
+                    <VisualStateGroup x:Name="CommonStates"> 
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="LightYellow" />
+                                <Setter Property="IconTintColor" Value="DarkGoldenrod" />
+                                <Setter Property="BorderColor" Value="DarkGoldenrod" />
+                            </VisualState.Setters>  
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Orange" />
+                                <Setter Property="IconTintColor" Value="DarkCyan" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Green" />
+                                <Setter Property="IconTintColor" Value="Coral" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource MainLayout}">
+            <material:MaterialLabel Text="{Binding Subtitle}" />
+
+            <!--<HorizontalStackLayout HorizontalOptions="Center" Spacing="16">
+                <Border HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="LightBlue" Stroke="Red" StrokeThickness="2" HeightRequest="40" WidthRequest="40">
+                    <Border.Behaviors>
+                        <behaviors:TouchAndPressBehavior />
+                    </Border.Behaviors>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="0"/>
+                    </Border.StrokeShape>
+                    <Image Source="plus.png" HeightRequest="24" WidthRequest="24" Aspect="AspectFit" BackgroundColor="Blue">
+                        <Image.Behaviors>
+                            <behaviors:IconTintColorBehavior TintColor="White" />
+                        </Image.Behaviors>
+                    </Image>
+                    <Border.Shadow>
+                        <Shadow Brush="Gray" 
+                                    Offset="4,4"
+                                    Radius="6"
+                                    Opacity="0.4" />
+
+                    </Border.Shadow>
+                </Border>
+
+                <Border HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="LightBlue" Stroke="Red" StrokeThickness="2" Padding="8" HeightRequest="60" WidthRequest="60">
+                    <Border.Behaviors>
+                        <behaviors:TouchAndPressBehavior />
+                    </Border.Behaviors>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="0"/>
+                    </Border.StrokeShape>
+                    <Image Source="plus.png" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" BackgroundColor="Blue">
+                        <Image.Behaviors>
+                            <behaviors:IconTintColorBehavior TintColor="White" />
+                        </Image.Behaviors>
+                    </Image>
+                    <Border.Shadow>
+                        <Shadow Brush="Gray" 
+                                    Offset="4,4"
+                                    Radius="6"
+                                    Opacity="0.4" />
+
+                    </Border.Shadow>
+                </Border>
+            </HorizontalStackLayout>-->
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <material:MaterialIconButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Type="Filled"
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton4Command}"
+                        IsBusy="{Binding MaterialButton4Command.IsRunning}" />
+
+                    <material:MaterialIconButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Type="Filled"
+                        ImageSource="plus.png"
+                        IsEnabled="False" />
+                </Grid>
+            </Frame>
+            <material:MaterialLabel Text="Filled icon buttons have higher visual impact and are best for high emphasis actions." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled tonal" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <material:MaterialIconButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Type="Tonal"
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton6Command}"
+                        IsBusy="{Binding MaterialButton6Command.IsRunning}" />
+
+                    <material:MaterialIconButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Type="Tonal"
+                        ImageSource="plus.png"
+                        IsEnabled="False" />
+                </Grid>
+            </Frame>
+            <material:MaterialLabel Text="Filled tonal icon buttons are a middle ground between filled and outlined icon buttons. They’re useful in contexts where the button requires slightly more emphasis than an outline would give, such as a secondary action paired with a high emphasis action." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <material:MaterialIconButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Type="Outlined"
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton8Command}"
+                        IsBusy="{Binding MaterialButton8Command.IsRunning}" />
+
+                    <material:MaterialIconButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Type="Outlined"
+                        ImageSource="plus.png"
+                        IsEnabled="False" />
+                </Grid>
+            </Frame>
+            <material:MaterialLabel Text="Outlined icon buttons are medium-emphasis buttons. They’re useful when an icon button needs more emphasis than a standard icon button but less than a filled or filled tonal icon button. " />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Standard" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <material:MaterialIconButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Type="Standard"
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton10Command}"
+                        IsBusy="{Binding MaterialButton10Command.IsRunning}" />
+
+                    <material:MaterialIconButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Type="Standard"
+                        ImageSource="plus.png"
+                        IsEnabled="False" />
+                </Grid>
+            </Frame>
+            <material:MaterialLabel Text="Use standard icon buttons for the lowest priority actions." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}" RowDefinitions="Auto,Auto">
+                    <material:MaterialIconButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        BackgroundColor="LightSkyBlue"
+                        BorderColor="DarkBlue"
+                        BorderWidth="2"
+                        Type="Custom"
+                        IsEnabled="{Binding IsEnabled}"
+                        Command="{Binding MaterialButton11Command}"
+                        IsBusy="{Binding MaterialButton11Command.IsRunning}"
+                        ImageSource="plus.png"
+                        IconTintColor="White"
+                        BusyIndicatorColor="DarkCyan"
+                        BusyIndicatorSize="44"
+                        HeightRequest="60"
+                        WidthRequest="60"
+                        CornerRadius="30">
+                        <material:MaterialIconButton.Shadow>
+                            <Shadow Brush="Cyan" 
+                                Offset="4,4"
+                                Radius="6"
+                                Opacity="0.4" />
+                        </material:MaterialIconButton.Shadow>
+                    </material:MaterialIconButton>
+
+                    <material:MaterialIconButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Style="{StaticResource VisualStateManagerStyle}"
+                        Type="Custom"
+                        ImageSource="plus.png"
+                        IsEnabled="{Binding IsEnabled}"
+                        Command="{Binding MaterialButton12Command}"
+                        IsBusy="{Binding MaterialButton12Command.IsRunning}"
+                        BusyIndicatorColor="DarkGoldenrod"
+                        BusyIndicatorSize="44" />
+
+                    <material:MaterialLabel
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="IsEnabled"
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        VerticalTextAlignment="Center" />
+
+                    <Switch
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalOptions="Start"
+                        IsToggled="{Binding IsEnabled}" />
+                </Grid>
+            </Frame>
+            <material:MaterialLabel Text="Use custom icon buttons if you need to combine properties from different types." />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</local:BaseContentPage>
