@@ -10,7 +10,7 @@ public enum MaterialButtonType
 }
 
 /// <summary>
-/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines.
+/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/buttons/overview">.
 /// </summary>
 public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
 {
@@ -1102,14 +1102,19 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
 
     public void ExecuteAction()
     {
-        if (IsEnabled && Command != null && Command.CanExecute(CommandParameter))
+        if (!IsEnabled) return;
+
+        if (Command != null && Command.CanExecute(CommandParameter))
             Command.Execute(CommandParameter);
 
-        if (IsEnabled && _clicked != null)
-            _clicked.Invoke(this, null);
-
-        if (IsEnabled && _released != null)
+        if (_released != null)
+        {
             _released.Invoke(this, null);
+        }
+        else
+        {
+            _clicked?.Invoke(this, null);
+        }
     }
 
     #endregion ITouchAndPressBehaviorConsumer

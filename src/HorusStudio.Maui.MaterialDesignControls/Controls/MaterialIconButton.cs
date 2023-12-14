@@ -10,16 +10,15 @@ public enum MaterialIconButtonType
 }
 
 /// <summary>
-/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines.
+/// An icon button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/icon-buttons/overview">.
 /// </summary>
 public class MaterialIconButton : ContentView, ITouchAndPressBehaviorConsumer
 {
-    // TODO: [iOS] IconTintColor doesn't react to VisualStateManager changes
     // TODO: Shadow doesn't react to VisualStateManager changes
 
     #region Attributes
 
-    private readonly static MaterialIconButtonType DefaultButtonType = MaterialIconButtonType.Filled;
+    private readonly static MaterialIconButtonType DefaultButtonType = MaterialIconButtonType.Standard;
     private readonly static Color DefaultTintColor = default;
     private readonly static Brush DefaultBackground = ContentView.BackgroundProperty.DefaultValue as Brush;
     private readonly static Color DefaultBackgroundColor = Colors.Transparent;
@@ -551,17 +550,16 @@ public class MaterialIconButton : ContentView, ITouchAndPressBehaviorConsumer
     protected virtual void InternalPressedHandler(object sender, EventArgs e)
     {
         VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
-        //ConsumeEvent(EventType.Pressing);
     }
 
     protected virtual void InternalReleasedHandler(object sender, EventArgs e)
     {
         VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
-        //ConsumeEvent(EventType.Released);
     }
 
     protected virtual void InternalClickedHandler(object sender, EventArgs e)
     {
+        VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
     }
 
     #endregion Events
@@ -623,7 +621,7 @@ public class MaterialIconButton : ContentView, ITouchAndPressBehaviorConsumer
         _border.SetBinding(Border.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
         _border.SetBinding(Border.WidthRequestProperty, new Binding(nameof(WidthRequest), source: this));
         _border.SetBinding(Border.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
-        _border.Behaviors.Add(new TouchAndPressBehavior());
+        Behaviors.Add(new TouchAndPressBehavior());
 
         _clicked += InternalClickedHandler;
         _pressed += InternalPressedHandler;
@@ -809,20 +807,45 @@ public class MaterialIconButton : ContentView, ITouchAndPressBehaviorConsumer
 
     public void ConsumeEvent(EventType gestureType)
     {
-        System.Diagnostics.Debug.WriteLine($"ConsumeEvent: {gestureType}");
         TouchAndPressAnimation.Animate(this, gestureType);
+        if (!IsEnabled) return;
+
+        switch (gestureType)
+        {
+            case EventType.Pressing:
+                _pressed?.Invoke(this, null);
+                break;
+            case EventType.Released:
+                if (_released != null)
+                {
+                    _released.Invoke(this, null);
+                }
+                else
+                {
+                    _clicked?.Invoke(this, null);
+                }
+                break;
+            default:
+                VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
+                break;
+        }
     }
 
     public void ExecuteAction()
     {
-        if (IsEnabled && Command != null && Command.CanExecute(CommandParameter))
+        if (!IsEnabled) return;
+
+        if (Command != null && Command.CanExecute(CommandParameter))
             Command.Execute(CommandParameter);
-
-        if (IsEnabled && _clicked != null)
-            _clicked.Invoke(this, null);
-
-        if (IsEnabled && _released != null)
+       
+        if (_released != null)
+        {
             _released.Invoke(this, null);
+        }
+        else
+        {
+            _clicked?.Invoke(this, null);
+        }
     }
 
     #endregion ITouchAndPressBehaviorConsumer

@@ -54,50 +54,6 @@
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
-
-            <!--<HorizontalStackLayout HorizontalOptions="Center" Spacing="16">
-                <Border HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="LightBlue" Stroke="Red" StrokeThickness="2" HeightRequest="40" WidthRequest="40">
-                    <Border.Behaviors>
-                        <behaviors:TouchAndPressBehavior />
-                    </Border.Behaviors>
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="0"/>
-                    </Border.StrokeShape>
-                    <Image Source="plus.png" HeightRequest="24" WidthRequest="24" Aspect="AspectFit" BackgroundColor="Blue">
-                        <Image.Behaviors>
-                            <behaviors:IconTintColorBehavior TintColor="White" />
-                        </Image.Behaviors>
-                    </Image>
-                    <Border.Shadow>
-                        <Shadow Brush="Gray" 
-                                    Offset="4,4"
-                                    Radius="6"
-                                    Opacity="0.4" />
-
-                    </Border.Shadow>
-                </Border>
-
-                <Border HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="LightBlue" Stroke="Red" StrokeThickness="2" Padding="8" HeightRequest="60" WidthRequest="60">
-                    <Border.Behaviors>
-                        <behaviors:TouchAndPressBehavior />
-                    </Border.Behaviors>
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="0"/>
-                    </Border.StrokeShape>
-                    <Image Source="plus.png" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" BackgroundColor="Blue">
-                        <Image.Behaviors>
-                            <behaviors:IconTintColorBehavior TintColor="White" />
-                        </Image.Behaviors>
-                    </Image>
-                    <Border.Shadow>
-                        <Shadow Brush="Gray" 
-                                    Offset="4,4"
-                                    Radius="6"
-                                    Opacity="0.4" />
-
-                    </Border.Shadow>
-                </Border>
-            </HorizontalStackLayout>-->
             
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
@@ -106,7 +62,7 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Type="Filled"
-                        ImageSource="plus.png"
+                        ImageSource="settings.png"
                         Command="{Binding MaterialButton4Command}"
                         IsBusy="{Binding MaterialButton4Command.IsRunning}" />
 
@@ -114,7 +70,7 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         Type="Filled"
-                        ImageSource="plus.png"
+                        ImageSource="settings.png"
                         IsEnabled="False" />
                 </Grid>
             </Frame>
@@ -127,7 +83,7 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Type="Tonal"
-                        ImageSource="plus.png"
+                        ImageSource="settings.png"
                         Command="{Binding MaterialButton6Command}"
                         IsBusy="{Binding MaterialButton6Command.IsRunning}" />
 
@@ -135,7 +91,7 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         Type="Tonal"
-                        ImageSource="plus.png"
+                        ImageSource="settings.png"
                         IsEnabled="False" />
                 </Grid>
             </Frame>
@@ -148,7 +104,7 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Type="Outlined"
-                        ImageSource="plus.png"
+                        ImageSource="settings.png"
                         Command="{Binding MaterialButton8Command}"
                         IsBusy="{Binding MaterialButton8Command.IsRunning}" />
 
@@ -156,7 +112,7 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         Type="Outlined"
-                        ImageSource="plus.png"
+                        ImageSource="settings.png"
                         IsEnabled="False" />
                 </Grid>
             </Frame>
@@ -169,7 +125,7 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Type="Standard"
-                        ImageSource="plus.png"
+                        ImageSource="settings.png"
                         Command="{Binding MaterialButton10Command}"
                         IsBusy="{Binding MaterialButton10Command.IsRunning}" />
 
@@ -177,7 +133,7 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         Type="Standard"
-                        ImageSource="plus.png"
+                        ImageSource="settings.png"
                         IsEnabled="False" />
                 </Grid>
             </Frame>
@@ -191,20 +147,21 @@
                         Grid.Column="0"
                         BackgroundColor="LightSkyBlue"
                         BorderColor="DarkBlue"
-                        BorderWidth="2"
+                        BorderWidth="3"
                         Type="Custom"
                         IsEnabled="{Binding IsEnabled}"
                         Command="{Binding MaterialButton11Command}"
                         IsBusy="{Binding MaterialButton11Command.IsRunning}"
-                        ImageSource="plus.png"
-                        IconTintColor="White"
+                        ImageSource="settings.png"
+                        IconTintColor="SlateBlue"
                         BusyIndicatorColor="DarkCyan"
                         BusyIndicatorSize="44"
                         HeightRequest="60"
                         WidthRequest="60"
-                        CornerRadius="30">
+                        CornerRadius="30"
+                        Animation="Scale">
                         <material:MaterialIconButton.Shadow>
-                            <Shadow Brush="Cyan" 
+                            <Shadow Brush="Black" 
                                 Offset="4,4"
                                 Radius="6"
                                 Opacity="0.4" />
@@ -216,7 +173,7 @@
                         Grid.Column="1"
                         Style="{StaticResource VisualStateManagerStyle}"
                         Type="Custom"
-                        ImageSource="plus.png"
+                        ImageSource="settings.png"
                         IsEnabled="{Binding IsEnabled}"
                         Command="{Binding MaterialButton12Command}"
                         IsBusy="{Binding MaterialButton12Command.IsRunning}"

@@ -14,14 +14,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
         {
             base.OnAttachedTo(bindable, platformView);
 
-            if (_buttonFrame != null)
+            _view = platformView as Android.Views.View;
+            if (_view != null && bindable is ITouchAndPressBehaviorConsumer touchAndPressBehaviorConsumer)
             {
-                _view = _buttonFrame.Handler.PlatformView as Android.Views.View;
-                if (_view != null && bindable is ITouchAndPressBehaviorConsumer touchAndPressBehaviorConsumer)
-                {
-                    _view.Touch += OnViewOnTouch;
-                    _touchAndPressBehaviorConsumer = touchAndPressBehaviorConsumer;
-                }
+                _view.Touch += OnViewOnTouch;
+                _touchAndPressBehaviorConsumer = touchAndPressBehaviorConsumer;
             }
         }
 
