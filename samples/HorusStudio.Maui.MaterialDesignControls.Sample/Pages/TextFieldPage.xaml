@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:implementations="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Implementations;assembly=HorusStudio.Maui.MaterialDesignControls"
+                       xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+                       xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+                       xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+                       x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TextFieldPage"
+                       x:TypeArguments="vm:TextFieldViewModel"
+                       x:DataType="vm:TextFieldViewModel">
+
+    <ContentPage.Resources>
+        <Style x:Key="ButtonsContainer" TargetType="Grid">
+            <Setter Property="RowDefinitions" Value="Auto,Auto" />
+            <Setter Property="ColumnDefinitions" Value="*,*" />
+            <Setter Property="RowSpacing" Value="16" />
+            <Setter Property="ColumnSpacing" Value="16" />
+        </Style>
+
+        <Style TargetType="material:MaterialIconButton">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+
+        <Style x:Key="VisualStateManagerStyle" TargetType="material:MaterialIconButton"> 
+            <Setter Property="VisualStateManager.VisualStateGroups"> 
+                <VisualStateGroupList> 
+                    <VisualStateGroup x:Name="CommonStates"> 
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="LightYellow" />
+                                <Setter Property="IconTintColor" Value="DarkGoldenrod" />
+                                <Setter Property="BorderColor" Value="DarkGoldenrod" />
+                            </VisualState.Setters>  
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Orange" />
+                                <Setter Property="IconTintColor" Value="DarkCyan" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Green" />
+                                <Setter Property="IconTintColor" Value="Coral" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Placeholder" TargetType="Label">
+            <Setter Property="FontFamily" Value="{x:Static material:MaterialFontFamily.Default}" />
+            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.OnSurfaceVariant}" />
+            <Setter Property="FontSize" Value="{x:Static material:MaterialFontSize.BodyLarge}" />
+        </Style>
+
+        <Style x:Key="SupportingText" TargetType="Label" BaseResourceKey="Placeholder">
+            <Setter Property="FontSize" Value="{x:Static material:MaterialFontSize.BodySmall}" />
+        </Style>
+
+        <Style x:Key="PopulatedLabel" TargetType="Label" BaseResourceKey="SupportingText">
+            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.Primary}" />
+        </Style>
+
+        <Style TargetType="implementations:BorderlessEntry">
+            <Setter Property="FontFamily" Value="{x:Static material:MaterialFontFamily.Default}" />
+            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.OnSurface}" />
+            <Setter Property="FontSize" Value="{x:Static material:MaterialFontSize.BodyLarge}" />
+            <Setter Property="PlaceholderColor" Value="{x:Static material:MaterialLightTheme.OnSurfaceVariant}" />
+        </Style>
+
+        <Color x:Key="FilledBackgroundColor">#1A333333</Color>
+        <CornerRadius x:Key="FilledCornerRadius">4,4,0,0</CornerRadius>
+        <Color x:Key="OutlinedBorderColor">DarkGray</Color>
+        <x:Double x:Key="OutlinedBorderWidth">1</x:Double>
+        <CornerRadius x:Key="OutlinedCornerRadius">4</CornerRadius>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource MainLayout}">
+            <material:MaterialLabel Text="{Binding Subtitle}" />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled text field" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                    
+                    <Border
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HeightRequest="48"
+                        BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerHighest}"
+                        StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="{StaticResource FilledCornerRadius}" />
+                        </Border.StrokeShape>
+
+                        <Grid>
+                            <StackLayout Orientation="Horizontal" Margin="0,8" Spacing="0" HeightRequest="32">
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="12,0,0,0" IsVisible="false" />
+
+                                <StackLayout Spacing="0" HorizontalOptions="FillAndExpand" Margin="16,0">
+                                    <Label Style="{StaticResource PopulatedLabel}" Text="Label text" IsVisible="false" />
+                                    <implementations:BorderlessEntry
+                                        VerticalTextAlignment="Center"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="CenterAndExpand"
+                                        Placeholder="Label text"
+                                        Text="" />
+                                </StackLayout>
+
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="0,0,12,0" IsVisible="false" />
+                            </StackLayout>
+                            
+                            <BoxView HeightRequest="1" Color="{x:Static material:MaterialLightTheme.OnSurfaceVariant}" VerticalOptions="EndAndExpand" />
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HeightRequest="48"
+                        BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerHighest}"
+                        StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="{StaticResource FilledCornerRadius}" />
+                        </Border.StrokeShape>
+
+                        <Grid>
+                            <StackLayout Orientation="Horizontal" Margin="0,8" Spacing="0" HeightRequest="32">
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="12,0,0,0" IsVisible="false" />
+
+                                <StackLayout Spacing="0" HorizontalOptions="FillAndExpand" Margin="16,0">
+                                    <Label Style="{StaticResource PopulatedLabel}" Text="Label text" IsVisible="true" />
+                                    <implementations:BorderlessEntry
+                                        VerticalTextAlignment="Center"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="CenterAndExpand"
+                                        Placeholder="Label text"
+                                        Text="Input text" />
+                                </StackLayout>
+
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="0,0,12,0" IsVisible="false" />
+                            </StackLayout>
+                            
+                            <BoxView HeightRequest="2" Color="{x:Static material:MaterialLightTheme.Primary}" VerticalOptions="EndAndExpand" />
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HeightRequest="48"
+                        BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerHighest}"
+                        StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="{StaticResource FilledCornerRadius}" />
+                        </Border.StrokeShape>
+
+                        <Grid>
+                            <StackLayout Orientation="Horizontal" Margin="0,8" Spacing="0" HeightRequest="32">
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="12,0,0,0" IsVisible="true" />
+
+                                <StackLayout Spacing="0" HorizontalOptions="FillAndExpand" Margin="16,0">
+                                    <Label Style="{StaticResource PopulatedLabel}" Text="Label text" IsVisible="false" />
+                                    <implementations:BorderlessEntry
+                                        VerticalTextAlignment="Center"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="CenterAndExpand"
+                                        Placeholder="Label text"
+                                        Text="" />
+                                </StackLayout>
+
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="0,0,12,0" IsVisible="false" />
+                            </StackLayout>
+                            
+                            <BoxView HeightRequest="1" Color="{x:Static material:MaterialLightTheme.OnSurfaceVariant}" VerticalOptions="EndAndExpand" />
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HeightRequest="48"
+                        BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerHighest}"
+                        StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="{StaticResource FilledCornerRadius}" />
+                        </Border.StrokeShape>
+
+                        <Grid>
+                            <StackLayout Orientation="Horizontal" Margin="0,8" Spacing="0" HeightRequest="32">
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="12,0,0,0" IsVisible="true" />
+
+                                <StackLayout Spacing="0" HorizontalOptions="FillAndExpand" Margin="16,0">
+                                    <Label Style="{StaticResource PopulatedLabel}" Text="Label text" IsVisible="true" />
+                                    <implementations:BorderlessEntry
+                                        VerticalTextAlignment="Center"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="CenterAndExpand"
+                                        Placeholder="Label text"
+                                        Text="Input text" />
+                                </StackLayout>
+
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="0,0,12,0" IsVisible="false" />
+                            </StackLayout>
+                            
+                            <BoxView HeightRequest="2" Color="{x:Static material:MaterialLightTheme.Primary}" VerticalOptions="EndAndExpand" />
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HeightRequest="48"
+                        BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerHighest}"
+                        StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="{StaticResource FilledCornerRadius}" />
+                        </Border.StrokeShape>
+
+                        <Grid>
+                            <StackLayout Orientation="Horizontal" Margin="0,8" Spacing="0" HeightRequest="32">
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="12,0,0,0" IsVisible="false" />
+
+                                <StackLayout Spacing="0" HorizontalOptions="FillAndExpand" Margin="16,0">
+                                    <Label Style="{StaticResource PopulatedLabel}" Text="Label text" IsVisible="false" />
+                                    <implementations:BorderlessEntry
+                                        VerticalTextAlignment="Center"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="CenterAndExpand"
+                                        Placeholder="Label text"
+                                        Text="" />
+                                </StackLayout>
+
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="0,0,12,0" IsVisible="true" />
+                            </StackLayout>
+                            
+                            <BoxView HeightRequest="1" Color="{x:Static material:MaterialLightTheme.OnSurfaceVariant}" VerticalOptions="EndAndExpand" />
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HeightRequest="48"
+                        BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerHighest}"
+                        StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="{StaticResource FilledCornerRadius}" />
+                        </Border.StrokeShape>
+
+                        <Grid>
+                            <StackLayout Orientation="Horizontal" Margin="0,8" Spacing="0" HeightRequest="32">
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="12,0,0,0" IsVisible="false" />
+
+                                <StackLayout Spacing="0" HorizontalOptions="FillAndExpand" Margin="16,0">
+                                    <Label Style="{StaticResource PopulatedLabel}" Text="Label text" IsVisible="true" />
+                                    <implementations:BorderlessEntry
+                                        VerticalTextAlignment="Center"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="CenterAndExpand"
+                                        Placeholder="Label text"
+                                        Text="Input text" />
+                                </StackLayout>
+
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="0,0,12,0" IsVisible="true" />
+                            </StackLayout>
+                            
+                            <BoxView HeightRequest="2" Color="{x:Static material:MaterialLightTheme.Primary}" VerticalOptions="EndAndExpand" />
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HeightRequest="48"
+                        BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerHighest}"
+                        StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="{StaticResource FilledCornerRadius}" />
+                        </Border.StrokeShape>
+
+                        <Grid>
+                            <StackLayout Orientation="Horizontal" Margin="0,8" Spacing="0" HeightRequest="32">
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="12,0,0,0" IsVisible="true" />
+
+                                <StackLayout Spacing="0" HorizontalOptions="FillAndExpand" Margin="16,0">
+                                    <Label Style="{StaticResource PopulatedLabel}" Text="Label text" IsVisible="false" />
+                                    <implementations:BorderlessEntry
+                                        VerticalTextAlignment="Center"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="CenterAndExpand"
+                                        Placeholder="Label text"
+                                        Text="" />
+                                </StackLayout>
+
+                                <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="0,0,12,0" IsVisible="true" />
+                            </StackLayout>
+                            
+                            <BoxView HeightRequest="1" Color="{x:Static material:MaterialLightTheme.OnSurfaceVariant}" VerticalOptions="EndAndExpand" />
+                        </Grid>
+                    </Border>
+
+                    <VerticalStackLayout
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Spacing="0">
+
+                        <Border
+                            HeightRequest="48"
+                            BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerHighest}"
+                            StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="{StaticResource FilledCornerRadius}" />
+                            </Border.StrokeShape>
+
+                            <Grid>
+                                <StackLayout Orientation="Horizontal" Margin="0,8" Spacing="0" HeightRequest="32">
+                                    <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="12,0,0,0" IsVisible="true" />
+
+                                    <Grid Margin="16,0" RowDefinitions="12,24" RowSpacing="0" HorizontalOptions="FillAndExpand" BackgroundColor="Yellow">
+                                        <Label Grid.Row="0" Style="{StaticResource PopulatedLabel}" Text="Label text" IsVisible="false" />
+                                        <implementations:BorderlessEntry
+                                            Grid.Row="1"
+                                            VerticalTextAlignment="Center"
+                                            HorizontalOptions="FillAndExpand"
+                                            VerticalOptions="CenterAndExpand"
+                                            Placeholder="Label text"
+                                            Text="Input text"
+                                            IsVisible="false" />
+                                        <Label Grid.Row="0" Grid.RowSpan="2" Style="{StaticResource Placeholder}" Text="Label text" BackgroundColor="Cyan" VerticalOptions="Center" VerticalTextAlignment="Center" IsVisible="true" />
+                                    </Grid>
+
+                                    <material:MaterialIconButton ImageSource="plus.png" HeightRequest="24" WidthRequest="24" Padding="0" Margin="0,0,12,0" IsVisible="true" />
+                                </StackLayout>
+                            
+                                <BoxView HeightRequest="2" Color="{x:Static material:MaterialLightTheme.Primary}" VerticalOptions="EndAndExpand" />
+                            </Grid>
+                        </Border>
+
+                        <Label Style="{StaticResource SupportingText}" Text="Supporting text" Margin="16,4" IsVisible="true" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Frame>
+            <material:MaterialLabel Text="Use a text field when someone needs to enter text into a UI, such as filling in contact or payment information." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined text field" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <Entry
+                        Grid.Row="0"
+                        Grid.Column="0" />
+
+                    <Entry
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        IsEnabled="False" />
+
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        BackgroundColor="{StaticResource FilledBackgroundColor}"
+                        Stroke="{StaticResource OutlinedBorderColor}"
+                        StrokeThickness="{StaticResource OutlinedBorderWidth}"
+                        Padding="{OnPlatform Android='10,0', iOS='10', MacCatalyst='10'}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="{StaticResource OutlinedCornerRadius}" />
+                        </Border.StrokeShape>
+
+                        <implementations:BorderlessEntry
+                            BackgroundColor="Red" />
+
+                    </Border>
+
+                    <implementations:BorderlessEntry
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        IsEnabled="false"
+                        BackgroundColor="Yellow"/>
+                </Grid>
+            </Frame>
+            <material:MaterialLabel Text="Outlined text fields have less visual emphasis than filled text fields. When they appear in places like forms (where many text fields are placed together) their reduced emphasis helps simplify the layout." />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</local:BaseContentPage>

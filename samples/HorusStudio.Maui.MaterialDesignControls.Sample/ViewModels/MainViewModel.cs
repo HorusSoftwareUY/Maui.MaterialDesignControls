@@ -24,6 +24,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new MenuItemViewModel { Title = "Labels", ViewModel = typeof(LabelViewModel) },
                 new MenuItemViewModel { Title = "Progress indicators", ViewModel = typeof(ProgressIndicatorViewModel) },
                 new MenuItemViewModel { Title = "Icon buttons", ViewModel = typeof(IconButtonViewModel) },
+                new MenuItemViewModel { Title = "Text fields", ViewModel = typeof(TextFieldViewModel) },
             };
         }
 

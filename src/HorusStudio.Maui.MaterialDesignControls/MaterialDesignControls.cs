@@ -1,10 +1,23 @@
-﻿namespace HorusStudio.Maui.MaterialDesignControls
+﻿using HorusStudio.Maui.MaterialDesignControls.Implementations;
+
+namespace HorusStudio.Maui.MaterialDesignControls
 {
     public static class MaterialDesignControls
     {
         private const string CommonStatesGroupName = "CommonStates";
 
         public static void Init(Application application)
+        {
+            RegisterDefaultStyles(application);
+            RegisterHandlers();
+        }
+
+        private static void RegisterHandlers()
+        {
+            BorderlessEntry.RegisterHandler();
+        }
+
+        private static void RegisterDefaultStyles(Application application)
         {
             // Button
             application.Resources.Add(ButtonStyle());
