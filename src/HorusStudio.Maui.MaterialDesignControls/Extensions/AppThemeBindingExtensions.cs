@@ -2,7 +2,7 @@
 
 namespace Microsoft.Maui.Controls.Xaml;
 
-public static class AppThemeBindingExtensions
+internal static class AppThemeBindingExtensions
 {
     public static object GetValueForCurrentTheme(this AppThemeBindingExtension instance)
     {

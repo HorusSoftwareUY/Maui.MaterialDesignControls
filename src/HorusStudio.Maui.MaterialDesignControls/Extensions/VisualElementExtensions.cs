@@ -1,14 +1,17 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace Microsoft.Maui.Controls
 {
-	public static class VisualElementExtensions
+    internal static class VisualElementExtensions
 	{
-		public static void PrintVisualStates(this VisualElement visualElement)
+		public static void PrintVisualStates(this VisualElement visualElement, [CallerFilePath] string callerFilePath = null, [CallerMemberName] string callerName = null)
 		{
-            Debug.WriteLine("-------------------   VisualStates   --------------------");
-            Debug.WriteLine(string.Empty);
+            var builder = new StringBuilder();
+            builder.AppendLine();
+            builder.AppendLine("-------------------   VisualStates   --------------------");
+            builder.AppendLine();
             if (visualElement.HasVisualStateGroups())
             {
                 var visualStateGroups = VisualStateManager.GetVisualStateGroups(visualElement);
@@ -16,20 +19,22 @@ namespace Microsoft.Maui.Controls
                 {
                     foreach (var group in visualStateGroups)
                     {
-                        Debug.WriteLine($"{visualElement.GetType()} -> Group: {group.Name}, TargetType: {group.TargetType ?? visualElement.GetType()}, CurrentState: {group.CurrentState?.Name}");
+                        builder.AppendLine($"{visualElement.GetType()} -> Group: {group.Name}, TargetType: {group.TargetType ?? visualElement.GetType()}, CurrentState: {group.CurrentState?.Name}");
                         foreach (var state in group.States)
                         {
-                            Debug.WriteLine($"      [{state.Name}, {string.Join(", ", state.Setters.Select(s => $"({s.Property.PropertyName}, {s.TargetName}, {s.Value})"))}]");
+                            builder.AppendLine($"      [{state.Name}, {string.Join(", ", state.Setters.Select(s => $"({s.Property.PropertyName}, {s.TargetName}, {s.Value})"))}]");
                         }
                     }
                 }
             }
             else
             {
-                Debug.WriteLine($"{visualElement.GetType()} -> Undefined");
+                builder.AppendLine($"{visualElement.GetType()} -> Undefined");
             }
-            Debug.WriteLine(string.Empty);
-            Debug.WriteLine("---------------------------------------------------------");
+            builder.AppendLine();
+            builder.AppendLine("---------------------------------------------------------");
+
+            Logger.Debug(builder.ToString(), callerFilePath, callerName);
         }
 	}
 }
