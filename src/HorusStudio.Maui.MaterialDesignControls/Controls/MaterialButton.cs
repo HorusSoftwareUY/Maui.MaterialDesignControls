@@ -18,6 +18,7 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     // TODO: Shadow doesn't react to VisualStateManager changes
     // TODO: ContentLayout is buggy
     // TODO: [iOS] BusyIndicatorSize doesn't work (maybe it's MaterialProgressBar issue)
+    // TODO: Add default Material behavior for pressed state on default styles (v2)
 
     #region Attributes
 
@@ -1075,13 +1076,11 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
                 if (ContentLayout.Position == ButtonContentLayout.ImagePosition.Left)
                 {
                     _button.Padding = DefaultLeftIconPadding;
-                    return;
                 }
                 else if (ContentLayout.Position == ButtonContentLayout.ImagePosition.Right
                     && (Padding == DefaultPadding || Padding == DefaultLeftIconPadding))
                 {
                     _button.Padding = DefaultRightIconPadding;
-                    return;
                 }
             }
         }
@@ -1089,7 +1088,6 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
         {
             // Set by user
             _button.Padding = Padding;
-            return;
         }
     }
 
@@ -1113,6 +1111,69 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     }
 
     #endregion ITouchAndPressBehaviorConsumer
+
+    #region Styles
+
+    internal static IEnumerable<Style> GetStyles()
+    {
+        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
+
+        var disabledState = new VisualState { Name = ButtonCommonStates.Disabled };
+        disabledState.Setters.Add(
+            MaterialButton.BackgroundColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.12f));
+
+        disabledState.Setters.Add(
+            MaterialButton.TextColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.38f));
+
+        disabledState.Setters.Add(
+            MaterialButton.IconTintColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.38f));
+
+        disabledState.Setters.Add(MaterialButton.ShadowProperty, null);
+
+        disabledState.Setters.Add(
+            MaterialButton.BorderColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.12f));
+
+        var pressedState = new VisualState { Name = ButtonCommonStates.Pressed };
+
+        commonStatesGroup.States.Add(new VisualState { Name = ButtonCommonStates.Normal });
+        commonStatesGroup.States.Add(disabledState);
+        commonStatesGroup.States.Add(pressedState);
+
+        var style = new Style(typeof(MaterialButton));
+        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
+
+        return new List<Style> { style };
+    }
+
+    #endregion Styles
 }
 
 public class ButtonCommonStates : VisualStateManager.CommonStates
