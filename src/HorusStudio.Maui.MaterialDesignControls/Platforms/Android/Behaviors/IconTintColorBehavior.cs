@@ -59,27 +59,6 @@ public partial class IconTintColorBehavior
             image.SetColorFilter(new PorterDuffColorFilter(color.ToPlatform(), PorterDuff.Mode.SrcIn ?? throw new InvalidOperationException("PorterDuff.Mode.SrcIn should not be null at runtime.")));
         }
 
-        // Original method from CommunityToolkit
-        //static void SetButtonTintColor(AButton button, Color? color)
-        //{
-        //    var drawables = button.GetCompoundDrawables().Where(d => d is not null);
-
-        //    if (color is null)
-        //    {
-        //        foreach (var img in drawables)
-        //        {
-        //            img.ClearColorFilter();
-        //        }
-        //        color = Colors.Transparent;
-        //    }
-
-        //    foreach (var img in drawables)
-        //    {
-        //        img.SetTint(color.ToPlatform());
-        //    }
-        //}
-
-        // Method modified by Pablo
         static void SetButtonTintColor(AButton button, Color? color)
         {
             if (button is MauiMaterialButton nativeButton)

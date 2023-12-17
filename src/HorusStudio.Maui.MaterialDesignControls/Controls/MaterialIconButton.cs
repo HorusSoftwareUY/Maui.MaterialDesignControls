@@ -849,4 +849,57 @@ public class MaterialIconButton : ContentView, ITouchAndPressBehaviorConsumer
     }
 
     #endregion ITouchAndPressBehaviorConsumer
+
+    #region Styles
+
+    internal static IEnumerable<Style> GetStyles()
+    {
+        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
+
+        var disabledState = new VisualState { Name = ButtonCommonStates.Disabled };
+        disabledState.Setters.Add(
+            MaterialIconButton.BackgroundColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.12f));
+
+        disabledState.Setters.Add(
+            MaterialIconButton.IconTintColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.38f));
+
+        disabledState.Setters.Add(MaterialIconButton.ShadowProperty, null);
+
+        disabledState.Setters.Add(
+            MaterialIconButton.BorderColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.12f));
+
+        var pressedState = new VisualState { Name = ButtonCommonStates.Pressed };
+
+        commonStatesGroup.States.Add(new VisualState { Name = ButtonCommonStates.Normal });
+        commonStatesGroup.States.Add(disabledState);
+        commonStatesGroup.States.Add(pressedState);
+
+        var style = new Style(typeof(MaterialIconButton));
+        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
+
+        return new List<Style> { style };
+    }
+
+    #endregion Styles
 }
