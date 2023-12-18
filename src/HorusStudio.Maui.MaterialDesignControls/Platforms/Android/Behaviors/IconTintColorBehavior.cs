@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Android.Content.Res;
 using Android.Graphics;
 using Android.Widget;
 using Microsoft.Maui.Platform;
@@ -7,7 +8,7 @@ using AView = Android.Views.View;
 using Color = Microsoft.Maui.Graphics.Color;
 using ImageButton = Microsoft.Maui.Controls.ImageButton;
 
-namespace HorusStudio.Maui.MaterialDesignControls.Sample.Behaviors;
+namespace HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
 public partial class IconTintColorBehavior
 {
@@ -60,21 +61,34 @@ public partial class IconTintColorBehavior
 
         static void SetButtonTintColor(AButton button, Color? color)
         {
-            var drawables = button.GetCompoundDrawables().Where(d => d is not null);
-
-            if (color is null)
+            if (button is MauiMaterialButton nativeButton)
             {
-                foreach (var img in drawables)
+                if (color is null)
                 {
-                    img.ClearColorFilter();
+                    nativeButton?.Icon?.ClearColorFilter();
                 }
-                color = Colors.Transparent;
+                else
+                {
+                    nativeButton.IconTint = ColorStateList.ValueOf(color.ToPlatform());
+                    nativeButton.IconTintMode = PorterDuff.Mode.SrcIn;
+                }
+                return;
             }
 
+            var drawables = button.GetCompoundDrawables().Where(d => d is not null);
             foreach (var img in drawables)
             {
-                img.SetTint(color.ToPlatform());
+                if (color is null)
+                {
+                    img?.ClearColorFilter();
+                }
+                else
+                {
+                    img?.SetTint(color.ToPlatform());
+                }
             }
+
+            color ??= Colors.Transparent;
         }
     }
 

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HorusStudio.Maui.MaterialDesignControls.Sample.Behaviors;
+namespace HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
 /// <summary>
 /// A behavior that allows you to tint an icon with a specified <see cref="Color"/>.

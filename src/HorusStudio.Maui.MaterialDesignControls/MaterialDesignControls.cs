@@ -1,0 +1,22 @@
+﻿
+namespace HorusStudio.Maui.MaterialDesignControls
+{
+    public static class MaterialDesignControls
+    {
+        public static void Init(Application application)
+        {
+            // Button
+            application.Resources.AddStyles(MaterialButton.GetStyles());
+        }
+
+        private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
+        {
+            if (styles == null) return;
+
+            foreach(var style in styles)
+            {
+                resources.Add(style);
+            }
+        } 
+    }
+}

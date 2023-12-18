@@ -25,7 +25,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Properties
 
         public static new readonly BindableProperty BackgroundColorProperty =
-            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialDivider), defaultValue: MaterialColor.OutlineVariant);
+            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialDivider), defaultValue: MaterialLightTheme.OutlineVariant);
 
         public new Color BackgroundColor
         {
@@ -34,7 +34,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         public static new readonly BindableProperty ColorProperty =
-            BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValue: MaterialColor.OutlineVariant);
+            BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValue: MaterialLightTheme.OutlineVariant);
 
         public new Color Color
         {

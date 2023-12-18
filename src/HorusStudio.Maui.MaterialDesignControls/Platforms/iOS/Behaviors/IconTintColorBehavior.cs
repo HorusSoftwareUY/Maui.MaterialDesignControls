@@ -2,7 +2,7 @@
 using Microsoft.Maui.Platform;
 using UIKit;
 
-namespace HorusStudio.Maui.MaterialDesignControls.Sample.Behaviors;
+namespace HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
 public partial class IconTintColorBehavior
 {
@@ -103,7 +103,6 @@ public partial class IconTintColorBehavior
         button.TintColor = platformColor;
         button.ImageView.TintColor = platformColor;
         button.SetImage(templatedImage, UIControlState.Normal);
-
     }
 
     static void SetUIImageViewTintColor(UIImageView imageView, View element, Color color)
