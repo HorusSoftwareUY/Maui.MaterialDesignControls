@@ -29,7 +29,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             
             if (_view != null)
             {
-                var touchReleaseEffect = (MaterialDesignControls.TouchReleaseEffect)Element.Effects.FirstOrDefault(x => x is MaterialDesignControls.TouchReleaseEffect);
+                var touchReleaseEffect = (HorusStudio.Maui.MaterialDesignControls.TouchReleaseEffect)Element.Effects.FirstOrDefault(x => x is HorusStudio.Maui.MaterialDesignControls.TouchReleaseEffect);
                 if (touchReleaseEffect != null && touchReleaseEffect.OnRelease != null)
                 {
                     _onRelease = touchReleaseEffect.OnRelease;

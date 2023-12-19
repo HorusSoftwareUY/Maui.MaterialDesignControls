@@ -2,7 +2,7 @@
 using Microsoft.Maui.Platform;
 using UIKit;
 
-namespace HorusStudio.Maui.MaterialDesignControls.Sample.Behaviors;
+namespace HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
 public partial class IconTintColorBehavior
 {

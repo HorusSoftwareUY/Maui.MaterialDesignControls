@@ -36,7 +36,7 @@
                     <material:MaterialLabel Type="TitleLarge" Text="Based on Material Design" />
                     <material:MaterialLabel Type="BodyMedium" Text="Material 3 is the latest version of Google’s open-source design system. Design and build beautiful, usable products with Material 3." />
 
-                    <material:MaterialButton ButtonType="Tonal" Text="See more" HorizontalOptions="End" />
+                    <material:MaterialButton Type="Tonal" Text="See more" HorizontalOptions="End" />
                 </VerticalStackLayout>
             </Frame>
 
@@ -50,7 +50,7 @@
                     <material:MaterialLabel Type="TitleLarge" Text="Supported platforms" />
                     <material:MaterialLabel Type="BodyMedium" Text="Material 3 is the latest version of Google’s open-source design system. Design and build beautiful, usable products with Material 3." />
 
-                    <material:MaterialButton ButtonType="Tonal" Text="GitHub" HorizontalOptions="End" />
+                    <material:MaterialButton Type="Tonal" Text="GitHub" HorizontalOptions="End" />
                 </VerticalStackLayout>
             </Frame>
         </VerticalStackLayout>

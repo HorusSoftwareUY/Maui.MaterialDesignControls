@@ -6,6 +6,7 @@
         {
             InitializeComponent();
 
+            MaterialDesignControls.Init(this);
             MainPage = new AppShell();
         }
     }

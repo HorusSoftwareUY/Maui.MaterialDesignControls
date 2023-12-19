@@ -43,7 +43,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         public static readonly BindableProperty IndicatorColorProperty =
-            BindableProperty.Create(nameof(IndicatorColor), typeof(Color), typeof(MaterialProgressIndicator), defaultValue: MaterialColor.Primary);
+            BindableProperty.Create(nameof(IndicatorColor), typeof(Color), typeof(MaterialProgressIndicator), defaultValue: MaterialLightTheme.Primary);
 
         public Color IndicatorColor
         {
@@ -52,7 +52,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         public static readonly BindableProperty TrackColorProperty =
-            BindableProperty.Create(nameof(TrackColor), typeof(Color), typeof(MaterialProgressIndicator), defaultValue: MaterialColor.SurfaceContainerHighest);
+            BindableProperty.Create(nameof(TrackColor), typeof(Color), typeof(MaterialProgressIndicator), defaultValue: MaterialLightTheme.SurfaceContainerHighest);
 
         public Color TrackColor
         {

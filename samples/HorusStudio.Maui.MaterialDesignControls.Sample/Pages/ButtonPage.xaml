@@ -1,120 +1,308 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:behaviors="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Behaviors"
-             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-             xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
-             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
-             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.ButtonPage"
-             x:TypeArguments="vm:ButtonViewModel"
-             x:DataType="vm:ButtonViewModel">
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+                       xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+                       xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+                       x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.ButtonPage"
+                       x:TypeArguments="vm:ButtonViewModel"
+                       x:DataType="vm:ButtonViewModel">
+
+    <ContentPage.Resources>
+        <Style x:Key="ButtonsContainer" TargetType="Grid">
+            <Setter Property="RowDefinitions" Value="Auto,Auto" />
+            <Setter Property="ColumnDefinitions" Value="*,*" />
+            <Setter Property="RowSpacing" Value="16" />
+            <Setter Property="ColumnSpacing" Value="16" />
+        </Style>
+
+        <Style TargetType="material:MaterialButton">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+
+        <Style x:Key="VisualStateManagerStyle" TargetType="material:MaterialButton"> 
+            <Setter Property="VisualStateManager.VisualStateGroups"> 
+                <VisualStateGroupList> 
+                    <VisualStateGroup x:Name="CommonStates"> 
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="LightYellow" />
+                                <Setter Property="TextColor" Value="Black" />
+                                <Setter Property="IconTintColor" Value="DarkGoldenrod" />
+                                <Setter Property="BorderColor" Value="DarkGoldenrod" />
+                            </VisualState.Setters>  
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Orange" />
+                                <Setter Property="TextColor" Value="DarkRed" />
+                                <Setter Property="IconTintColor" Value="DarkCyan" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Green" />
+                                <Setter Property="TextColor" Value="White" />
+                                <Setter Property="IconTintColor" Value="Coral" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+    </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Elevated buttons" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <HorizontalStackLayout HorizontalOptions="Center">
-                    <material:MaterialButton 
-                        ButtonType="Elevated"
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Elevated" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Type="Elevated"
                         Text="Enabled"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
+                        Command="{Binding MaterialButton1Command}"
+                        IsBusy="{Binding MaterialButton1Command.IsRunning}" />
 
-                    <material:MaterialButton 
-                        ButtonType="Elevated"
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Type="Elevated"
                         Text="Enabled"
-                        LeadingIcon="plus.png"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
-                </HorizontalStackLayout>
+                        ImageSource="plus.png"
+                        Animation="Scale"
+                        Command="{Binding MaterialButton2Command}"
+                        IsBusy="{Binding MaterialButton2Command.IsRunning}" />
+
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Type="Elevated"
+                        Text="Disabled"
+                        IsEnabled="False" />
+
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Type="Elevated"
+                        Text="Disabled"
+                        ImageSource="plus.png"
+                        IsEnabled="False" />
+                </Grid>
             </Frame>
             <material:MaterialLabel Text="Elevated buttons provide separation from a patterned background." />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled buttons" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <HorizontalStackLayout HorizontalOptions="Center">
-                    <material:MaterialButton 
-                        ButtonType="Filled"
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Type="Filled"
                         Text="Enabled"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
+                        Command="{Binding MaterialButton3Command}"
+                        IsBusy="{Binding MaterialButton3Command.IsRunning}" />
 
-                    <material:MaterialButton 
-                        ButtonType="Filled"
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Type="Filled"
                         Text="Enabled"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}">
-                        <material:MaterialButton.CustomLeadingIcon>
-                            <Image Source="plus.png">
-                                <Image.Behaviors>
-                                    <behaviors:IconTintColorBehavior TintColor="White" />
-                                </Image.Behaviors>
-                            </Image>
-                        </material:MaterialButton.CustomLeadingIcon>
-                    </material:MaterialButton>
-                </HorizontalStackLayout>
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton4Command}"
+                        IsBusy="{Binding MaterialButton4Command.IsRunning}" />
+
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Type="Filled"
+                        Text="Disabled"
+                        IsEnabled="False" />
+
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Type="Filled"
+                        Text="Disabled"
+                        ImageSource="plus.png"
+                        IsEnabled="False" />
+                </Grid>
             </Frame>
             <material:MaterialLabel Text="Filled buttons have high visual impact when used for important actions." />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Tonal buttons" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <HorizontalStackLayout HorizontalOptions="Center">
-                    <material:MaterialButton 
-                        ButtonType="Tonal"
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled tonal" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Type="Tonal"
                         Text="Enabled"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
+                        Command="{Binding MaterialButton5Command}"
+                        IsBusy="{Binding MaterialButton5Command.IsRunning}" />
 
-                    <material:MaterialButton 
-                        ButtonType="Tonal"
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Type="Tonal"
                         Text="Enabled"
-                        LeadingIcon="plus.png"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
-                </HorizontalStackLayout>
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton6Command}"
+                        IsBusy="{Binding MaterialButton6Command.IsRunning}" />
+
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Type="Tonal"
+                        Text="Disabled"
+                        IsEnabled="False" />
+
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Type="Tonal"
+                        Text="Disabled"
+                        ImageSource="plus.png"
+                        IsEnabled="False" />
+                </Grid>
             </Frame>
             <material:MaterialLabel Text="Filled tonal buttons have less emphasis than other filled buttons." />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined buttons" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <HorizontalStackLayout HorizontalOptions="Center">
-                    <material:MaterialButton 
-                        ButtonType="Outlined"
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Type="Outlined"
                         Text="Enabled"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
+                        Command="{Binding MaterialButton7Command}"
+                        IsBusy="{Binding MaterialButton7Command.IsRunning}" />
 
-                    <material:MaterialButton 
-                        ButtonType="Outlined"
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Type="Outlined"
                         Text="Enabled"
-                        LeadingIcon="plus.png"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
-                </HorizontalStackLayout>
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton8Command}"
+                        IsBusy="{Binding MaterialButton8Command.IsRunning}" />
+
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Type="Outlined"
+                        Text="Disabled"
+                        IsEnabled="False" />
+
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Type="Outlined"
+                        Text="Disabled"
+                        ImageSource="plus.png"
+                        IsEnabled="False" />
+                </Grid>
             </Frame>
             <material:MaterialLabel Text="Outline buttons contain less important supporting actions." />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Text buttons" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <HorizontalStackLayout HorizontalOptions="Center">
-                    <material:MaterialButton 
-                        ButtonType="Text"
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Text" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Type="Text"
                         Text="Enabled"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
+                        Command="{Binding MaterialButton9Command}"
+                        IsBusy="{Binding MaterialButton9Command.IsRunning}" />
 
-                    <material:MaterialButton 
-                        ButtonType="Text"
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Type="Text"
                         Text="Enabled"
-                        LeadingIcon="plus.png"
-                        Command="{Binding MaterialButtonCommand}"
-                        IsBusy="{Binding MaterialButtonCommand.IsRunning}" />
-                </HorizontalStackLayout>
+                        ImageSource="plus.png"
+                        Command="{Binding MaterialButton10Command}"
+                        IsBusy="{Binding MaterialButton10Command.IsRunning}" />
+
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Type="Text"
+                        Text="Disabled"
+                        IsEnabled="False" />
+
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Type="Text"
+                        Text="Disabled"
+                        ImageSource="plus.png"
+                        IsEnabled="False" />
+                </Grid>
             </Frame>
             <material:MaterialLabel Text="Use text buttons for the lowest priority actions." />
-            
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource ButtonsContainer}">
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        BackgroundColor="LightSkyBlue"
+                        BorderColor="DarkBlue"
+                        BorderWidth="2"
+                        TextColor="DarkSlateGray"
+                        Type="Custom"
+                        Text="Custom"
+                        IsEnabled="{Binding ButtonEnabled}"
+                        Command="{Binding MaterialButton11Command}"
+                        IsBusy="{Binding MaterialButton11Command.IsRunning}"
+                        BusyIndicatorColor="DarkCyan"
+                        BusyIndicatorSize="44">
+                        <material:MaterialButton.Shadow>
+                            <Shadow Brush="Cyan" 
+                                Offset="4,4"
+                                Radius="6"
+                                Opacity="0.4" />
+                        </material:MaterialButton.Shadow>
+                    </material:MaterialButton>
+
+                    <material:MaterialButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Style="{StaticResource VisualStateManagerStyle}"
+                        Type="Custom"
+                        Text="Visual state"
+                        ImageSource="plus.png"
+                        IsEnabled="{Binding ButtonEnabled}"
+                        Command="{Binding MaterialButton12Command}"
+                        IsBusy="{Binding MaterialButton12Command.IsRunning}"
+                        BusyIndicatorColor="DarkGoldenrod"
+                        BusyIndicatorSize="44" />
+
+                    <material:MaterialLabel
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="Is enabled"
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        VerticalTextAlignment="Center" />
+
+                    <Switch
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalOptions="Start"
+                        IsToggled="{Binding ButtonEnabled}" />
+                </Grid>
+            </Frame>
+            <material:MaterialLabel Text="Use custom buttons if you need to combine properties from different button types." />
+
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>
