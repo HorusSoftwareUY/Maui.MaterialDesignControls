@@ -29,6 +29,10 @@
 	  <None Remove="Platforms\iOS\Behaviors\" />
 	  <None Remove="Behaviors\" />
 	  <None Remove="Extensions\" />
+	  <None Remove="Platforms\Tizen\" />
+	  <None Remove="Platforms\MacCatalyst\Behaviors\" />
+	  <None Remove="Platforms\Windows\Behaviors\" />
+	  <None Remove="Platforms\MacCatalyst\GestureRecognizers\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Platforms\iOS\GestureRecognizers\" />
@@ -36,5 +40,9 @@
 	  <Folder Include="Platforms\iOS\Behaviors\" />
 	  <Folder Include="Behaviors\" />
 	  <Folder Include="Extensions\" />
+	  <Folder Include="Platforms\Tizen\" />
+	  <Folder Include="Platforms\MacCatalyst\Behaviors\" />
+	  <Folder Include="Platforms\Windows\Behaviors\" />
+	  <Folder Include="Platforms\MacCatalyst\GestureRecognizers\" />
 	</ItemGroup>
 </Project>

@@ -206,7 +206,7 @@ public class MaterialIconButton : ContentView, ITouchAndPressBehaviorConsumer
         if (bindable is MaterialIconButton self)
         {
             self._border.IsVisible = !(bool)newValue;
-            self._internalActivityIndicator.IsVisible = !self._border.IsVisible;
+            self._activityIndicatorContainer.IsVisible = !self._border.IsVisible;
         }
     });
 
@@ -227,13 +227,16 @@ public class MaterialIconButton : ContentView, ITouchAndPressBehaviorConsumer
     {
         if (bindable is MaterialIconButton self)
         {
-            if (self._mainLayout.Children.Count > 1)
+            if (self._activityIndicatorContainer.Children.Count > 0)
             {
-                self._mainLayout.Children.RemoveAt(1);
-
-                self._internalActivityIndicator = newValue as View ?? self._activityIndicator;
-                self._mainLayout.Add(self._internalActivityIndicator);
+                self._activityIndicatorContainer.Children.Clear();
             }
+
+            self._internalActivityIndicator = newValue as View ?? self._activityIndicator;
+            self._internalActivityIndicator.HorizontalOptions = LayoutOptions.Center;
+            self._internalActivityIndicator.VerticalOptions = LayoutOptions.Center;
+
+            self._activityIndicatorContainer.Add(self._internalActivityIndicator);
         }
     });
 
@@ -571,6 +574,7 @@ public class MaterialIconButton : ContentView, ITouchAndPressBehaviorConsumer
     private Image _image;
     private MaterialProgressIndicator _activityIndicator;
     private View _internalActivityIndicator;
+    private Grid _activityIndicatorContainer;
 
     #endregion Layout
 
@@ -634,13 +638,22 @@ public class MaterialIconButton : ContentView, ITouchAndPressBehaviorConsumer
         _activityIndicator.SetBinding(MaterialProgressIndicator.WidthRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
 
         _internalActivityIndicator = CustomBusyIndicator ?? _activityIndicator;
-        _internalActivityIndicator.IsVisible = !_image.IsVisible;
+        _internalActivityIndicator.HorizontalOptions = LayoutOptions.Center;
+        _internalActivityIndicator.VerticalOptions = LayoutOptions.Center;
+
+        _activityIndicatorContainer = new Grid { _internalActivityIndicator };
+        _activityIndicatorContainer.IsVisible = !_image.IsVisible;
+
+        // Main Layout
+        var rowDefinition = new RowDefinition();
+        rowDefinition.SetBinding(RowDefinition.HeightProperty, new Binding(nameof(HeightRequest), source: this));
 
         _mainLayout = new()
         {
             _border,
-            _internalActivityIndicator
+            _activityIndicatorContainer
         };
+        _mainLayout.AddRowDefinition(rowDefinition);
 
         Content = _mainLayout;
     }
