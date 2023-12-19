@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Converters"
+             xmlns:implementations="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Implementations"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.MaterialInputBase"
+             ControlTemplate="{StaticResource FilledControlTemplate}">
+
+    <ContentView.Resources>
+        <x:Double x:Key="DefaultHeight">48</x:Double>
+        <Thickness x:Key="DefaultHorizontalPadding">16,0</Thickness>
+        <Thickness x:Key="DefaultVerticalPadding">0,8</Thickness>
+        <Thickness x:Key="DefaultLeftPaddingWithIcon">12,0,0,0</Thickness>
+        <Thickness x:Key="DefaultRightPaddingWithIcon">0,0,12,0</Thickness>
+        <x:Double x:Key="DefaultIconSize">24</x:Double>
+        <Thickness x:Key="DefaultSupportingTextMargin">16,4</Thickness>
+
+        <converters:IsNotNullConverter x:Key="IsNotNull" />
+
+        <Style x:Key="MainContent" TargetType="StackLayout">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Spacing" Value="0" />
+            <Setter Property="Margin" Value="{StaticResource DefaultVerticalPadding}" />
+        </Style>
+
+        <Style x:Key="FieldContainer" TargetType="Grid">
+            <Setter Property="Margin" Value="{StaticResource DefaultHorizontalPadding}" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="RowSpacing" Value="0" />
+        </Style>
+
+        <Style x:Key="Placeholder" TargetType="Label">
+            <Setter Property="FontFamily" Value="{x:Static material:MaterialFontFamily.Default}" />
+            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.OnSurfaceVariant}" />
+            <Setter Property="FontSize" Value="{x:Static material:MaterialFontSize.BodyLarge}" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Style.Triggers>
+                <DataTrigger Binding="{TemplateBinding IsFocused}" Value="true" TargetType="Label">
+                    <Setter Property="IsVisible" Value="false" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SupportingText" TargetType="Label" BaseResourceKey="Placeholder">
+            <Setter Property="FontSize" Value="{x:Static material:MaterialFontSize.BodySmall}" />
+            <Setter Property="Margin" Value="{StaticResource DefaultSupportingTextMargin}" />
+        </Style>
+
+        <Style x:Key="FilledLabel" TargetType="Label" BaseResourceKey="SupportingText">
+            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.Primary}" />
+            <Setter Property="Margin" Value="{OnPlatform Android='0,-3,0,0', Default='0,-1,0,0'}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{TemplateBinding IsFocused}" Value="false" TargetType="Label">
+                    <Setter Property="IsVisible" Value="false" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="OutlinedLabel" TargetType="Label" BaseResourceKey="FilledLabel">
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="VerticalOptions" Value="Start" />
+            <Setter Property="Margin" Value="12,-10,0,0" />
+            <Setter Property="Padding" Value="4" />
+        </Style>
+
+        <Style x:Key="LeadingIcon" TargetType="material:MaterialIconButton">
+            <Setter Property="HeightRequest" Value="{StaticResource DefaultIconSize}" />
+            <Setter Property="WidthRequest" Value="{StaticResource DefaultIconSize}" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="{StaticResource DefaultLeftPaddingWithIcon}" />
+        </Style>
+
+        <Style x:Key="TrailingIcon" TargetType="material:MaterialIconButton" BaseResourceKey="LeadingIcon">
+            <Setter Property="Margin" Value="{StaticResource DefaultRightPaddingWithIcon}" />
+        </Style>
+
+        <Style x:Key="FilledEntry" TargetType="implementations:BorderlessEntry">
+            <Setter Property="FontFamily" Value="{x:Static material:MaterialFontFamily.Default}" />
+            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.OnSurface}" />
+            <Setter Property="FontSize" Value="{x:Static material:MaterialFontSize.BodyLarge}" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="EndAndExpand" />
+            <Setter Property="Margin" Value="{OnPlatform Android='0,0,0,-12', Default='0,0,0,-1'}" />
+        </Style>
+
+        <Style x:Key="OutlinedEntry" TargetType="implementations:BorderlessEntry" BaseResourceKey="FilledEntry">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Margin" Value="{OnPlatform Android='0,-7.5', Default='0'}" />
+        </Style>
+
+        <ControlTemplate x:Key="FilledControlTemplate">
+            <VerticalStackLayout Spacing="0">
+                <Border
+                    HeightRequest="{StaticResource DefaultHeight}"
+                    BackgroundColor="{TemplateBinding BackgroundColor}"
+                    StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="{TemplateBinding CornerRadius}" />
+                    </Border.StrokeShape>
+
+                    <Grid>
+                        <StackLayout Style="{StaticResource MainContent}">
+                            <material:MaterialIconButton Style="{StaticResource LeadingIcon}" ImageSource="{TemplateBinding LeadingIconSource}" IsVisible="{TemplateBinding LeadingIconSource, Converter={StaticResource IsNotNull}}" />
+
+                            <Grid Style="{StaticResource FieldContainer}">
+                                <Label Style="{StaticResource FilledLabel}" Text="{TemplateBinding Label}" />
+                                <ContentPresenter />
+                                <!--<implementations:BorderlessEntry Style="{StaticResource FilledEntry}" Text="{TemplateBinding Text, Mode=TwoWay}" />-->
+                                <Label Style="{StaticResource Placeholder}" Text="{TemplateBinding Placeholder}" />
+                            </Grid>
+
+                            <material:MaterialIconButton Style="{StaticResource TrailingIcon}" ImageSource="{TemplateBinding TrailingIconSource}" IsVisible="{TemplateBinding TrailingIconSource, Converter={StaticResource IsNotNull}}" />
+                        </StackLayout>
+                            
+                        <BoxView HeightRequest="{TemplateBinding BorderWidth}" Color="{TemplateBinding BorderColor}" VerticalOptions="EndAndExpand" />
+                    </Grid>
+                </Border>
+
+                <Label Style="{StaticResource SupportingText}" Text="{TemplateBinding SupportingText}" />
+            </VerticalStackLayout>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="OutlinedControlTemplate">
+            <VerticalStackLayout Spacing="0">
+                <Grid>
+                    <Border
+                        HeightRequest="{StaticResource DefaultHeight}"
+                        Stroke="{TemplateBinding BorderColor}"
+                        BackgroundColor="{TemplateBinding BackgroundColor}"
+                        StrokeThickness="{TemplateBinding BorderWidth}"
+                        x:Name="TextFieldBorder">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="{TemplateBinding CornerRadius}" />
+                        </Border.StrokeShape>
+
+                        <StackLayout Style="{StaticResource MainContent}">
+                            <material:MaterialIconButton Style="{StaticResource LeadingIcon}" ImageSource="{TemplateBinding LeadingIconSource}" IsVisible="{TemplateBinding LeadingIconSource, Converter={StaticResource IsNotNull}}" />
+
+                            <Grid Style="{StaticResource FieldContainer}">
+                                <!--<ContentPresenter />-->
+                                <implementations:BorderlessEntry Style="{StaticResource OutlinedEntry}" Text="{TemplateBinding Text, Mode=TwoWay}" />
+                                <Label Style="{StaticResource Placeholder}" Text="{TemplateBinding Placeholder}" />
+                            </Grid>
+
+                            <material:MaterialIconButton Style="{StaticResource TrailingIcon}" ImageSource="{TemplateBinding TrailingIconSource}" IsVisible="{TemplateBinding TrailingIconSource, Converter={StaticResource IsNotNull}}" />
+                        </StackLayout>
+                    </Border>
+                    <Label Style="{StaticResource OutlinedLabel}" Text="{TemplateBinding Label}" BackgroundColor="{Binding Source={x:Reference TextFieldBorder}, Path=BackgroundColor}" />
+                </Grid>
+
+                <Label Style="{StaticResource SupportingText}" Text="{TemplateBinding SupportingText}" />
+            </VerticalStackLayout>
+        </ControlTemplate>
+
+        <!--<ControlTemplate x:Key="OutlinedControlTemplate">
+            <VerticalStackLayout Spacing="0">
+                <Grid>
+                    <Border
+                        HeightRequest="{StaticResource DefaultHeight}"
+                        Stroke="{x:Static material:MaterialLightTheme.OnSurfaceVariant}"
+                        BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                        StrokeThickness="1"
+                        x:Name="TextFieldBorder2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="4" />
+                        </Border.StrokeShape>
+
+                        <StackLayout Style="{StaticResource MainContent}" BackgroundColor="Cyan">
+                            <material:MaterialIconButton Style="{StaticResource LeadingIcon}" ImageSource="{TemplateBinding LeadingIconSource}" IsVisible="true" />
+
+                            <Grid Style="{StaticResource FieldContainer}" BackgroundColor="Yellow">
+                                <implementations:BorderlessEntry Style="{StaticResource OutlinedEntry}" Text="{TemplateBinding Text, Mode=TwoWay}" BackgroundColor="Red" />
+                                <Label Style="{StaticResource Placeholder}" Text="{TemplateBinding Placeholder}" BackgroundColor="LightGreen" />
+                            </Grid>
+
+                            <material:MaterialIconButton Style="{StaticResource TrailingIcon}" ImageSource="{TemplateBinding TrailingIconSource}" IsVisible="true" />
+                        </StackLayout>
+                    </Border>
+                    <Label Style="{StaticResource OutlinedLabel}" Text="{TemplateBinding Label}" BackgroundColor="{Binding Source={x:Reference TextFieldBorder2}, Path=BackgroundColor}" />
+                </Grid>
+
+                <Label Style="{StaticResource SupportingText}" Text="{TemplateBinding SupportingText}" />
+            </VerticalStackLayout>
+        </ControlTemplate>-->
+
+    </ContentView.Resources>
+
+</ContentView>
+

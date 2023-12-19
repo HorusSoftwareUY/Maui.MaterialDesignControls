@@ -29,6 +29,7 @@
 	  <None Remove="Platforms\iOS\Behaviors\" />
 	  <None Remove="Behaviors\" />
 	  <None Remove="Extensions\" />
+	  <None Remove="Converters\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Platforms\iOS\GestureRecognizers\" />
@@ -36,5 +37,6 @@
 	  <Folder Include="Platforms\iOS\Behaviors\" />
 	  <Folder Include="Behaviors\" />
 	  <Folder Include="Extensions\" />
+	  <Folder Include="Converters\" />
 	</ItemGroup>
 </Project>
