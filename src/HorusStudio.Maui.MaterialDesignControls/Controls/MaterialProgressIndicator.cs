@@ -17,14 +17,22 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static MaterialProgressIndicatorType DefaultProgressIndicatorType = MaterialProgressIndicatorType.Circular;
         private readonly static Color DefaultIndicatorColor = MaterialLightTheme.Primary;
         private readonly static Color DefaultTrackColor = MaterialLightTheme.SurfaceContainerHighest;
+        private readonly static double DefaultHeightRequest = -1;
+        private readonly static double DefaultWidthRequest = -1;
+
+        private readonly Dictionary<MaterialProgressIndicatorType, double> _controlDefaultWidths = new()
+        {
+            { MaterialProgressIndicatorType.Circular, 48 },
+            { MaterialProgressIndicatorType.Linear, -1 }
+        };
+
+        private readonly Dictionary<MaterialProgressIndicatorType, double> _controlDefaultHeights = new()
+        {
+            { MaterialProgressIndicatorType.Circular, 48 },
+            { MaterialProgressIndicatorType.Linear, 4 }
+        };
 
         private const string LinearAnimationName = "LinearAnimation";
-
-        private const string CircularAnimationName = "CircularAnimation";
-
-        private const int CircleAnimationMinimumProgress = 12;
-
-        private const int CircleAnimationMaximumProgress = 96;
 
         private bool _rendered = false;
 
@@ -81,6 +89,30 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }
         });
 
+        /// <summary>
+        /// The backing store for the <see cref="HeightRequest" /> bindable property.
+        /// </summary>
+        public static new readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultHeightRequest, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialProgressIndicator self
+                && n is double newHeight && (o == null || (o is double oldHeight && !oldHeight.Equals(newHeight))))
+            {
+                self.SetHeightRequest(self.Type);
+            }
+        });
+
+        /// <summary>
+        /// The backing store for the <see cref="WidthRequest" /> bindable property.
+        /// </summary>
+        public static new readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultWidthRequest, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialProgressIndicator self
+                && n is double newWidth && (o == null || (o is double oldWidth && !oldWidth.Equals(newWidth))))
+            {
+                self.SetWidthRequest(self.Type);
+            }
+        });
+
         #endregion Bindable properties
 
         #region Properties
@@ -125,12 +157,29 @@ namespace HorusStudio.Maui.MaterialDesignControls
             set => SetValue(IsVisibleProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets height of the progress indicator. This is a bindable property.
+        /// </summary>
+        public new double HeightRequest
+        {
+            get => (double)GetValue(HeightRequestProperty);
+            set => SetValue(HeightRequestProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets width of the progress indicator. This is a bindable property.
+        /// </summary>
+        public new double WidthRequest
+        {
+            get => (double)GetValue(WidthRequestProperty);
+            set => SetValue(WidthRequestProperty, value);
+        }
+
         #endregion Properties
 
         #region Layout
 
         private BoxView _progressBar;
-        private ActivityIndicator _activityIndicator;
         private CustomActivityIndicator _customActivityIndicator;
 
         #endregion Layout
@@ -166,7 +215,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     if (Type == MaterialProgressIndicatorType.Circular
                         && _customActivityIndicator != null)
                     {
-                        this.AbortAnimation(CircularAnimationName + Id);
+                        _customActivityIndicator.IsRunning = false;
                     }
                     else if (Type == MaterialProgressIndicatorType.Linear)
                     {
@@ -181,60 +230,38 @@ namespace HorusStudio.Maui.MaterialDesignControls
             switch (type)
             {
                 case MaterialProgressIndicatorType.Linear:
-                    HeightRequest = 4;
-                    WidthRequest = -1;
-                    _progressBar = new BoxView()
+                    _progressBar = new BoxView
                     {
                         Color = IndicatorColor,
                         IsEnabled = this.IsEnabled,
                         Margin = new Thickness(0),
                     };
-                    this.Content = _progressBar;
-                    this.BackgroundColor = TrackColor;
+                    Content = _progressBar;
+                    BackgroundColor = TrackColor;
                     StartLinearAnimation();
                     break;
                 case MaterialProgressIndicatorType.Circular:
-                    HeightRequest = 48;
-                    WidthRequest = 48;
-                    this.BackgroundColor = Colors.Transparent;
-
-                    if (DeviceInfo.Platform == DevicePlatform.Android)
+                    BackgroundColor = Colors.Transparent;
+                    _customActivityIndicator = new CustomActivityIndicator
                     {
-                        _activityIndicator = new ActivityIndicator()
-                        {
-                            Color = IndicatorColor,
-                            IsRunning = true
-                        };
-                        this.Content = _activityIndicator;
-                    }
-                    else
-                    {
-                        _customActivityIndicator = new CustomActivityIndicator()
-                        {
-                            IndicatorColor = IndicatorColor,
-                            TrackColor = Colors.Transparent,
-                            Size = 48,
-                            Thickness = 4
-                        };
-                        this.Content = _customActivityIndicator;
-                        StartCustomCircleAnimation();
-                    }
+                        IndicatorColor = IndicatorColor,
+                        TrackColor = Colors.Transparent,
+                        Thickness = 4
+                    };
+                    Content = _customActivityIndicator;
+                    _customActivityIndicator.IsRunning = true;
                     break;
             }
+
+            SetWidthRequest(type);
+            SetHeightRequest(type);
         }
 
         private void SetIndicatorColor(MaterialProgressIndicatorType type)
         {
-            if (type == MaterialProgressIndicatorType.Circular)
+            if (type == MaterialProgressIndicatorType.Circular && _customActivityIndicator != null)
             {
-                if (_activityIndicator != null)
-                {
-                    _activityIndicator.Color = IndicatorColor;
-                }
-                else if (_customActivityIndicator != null)
-                {
-                    _customActivityIndicator.IndicatorColor = IndicatorColor;
-                }
+                _customActivityIndicator.IndicatorColor = IndicatorColor;
             }
             else if (type == MaterialProgressIndicatorType.Linear && _progressBar != null)
             {
@@ -246,7 +273,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             if (type == MaterialProgressIndicatorType.Linear)
             {
-                this.BackgroundColor = TrackColor;
+                BackgroundColor = TrackColor;
             }
         }
 
@@ -254,26 +281,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             base.IsVisible = IsVisible;
 
-            if (type == MaterialProgressIndicatorType.Circular)
+            if (type == MaterialProgressIndicatorType.Circular
+                && _customActivityIndicator != null)
             {
-                if (_activityIndicator != null)
-                {
-                    _activityIndicator.IsRunning = IsVisible;
-                }
-                else if (_customActivityIndicator != null)
-                {
-                    // Handle circular animation
-                    if (IsVisible)
-                    {
-                        StartCustomCircleAnimation();
-                    }
-                    else
-                    {
-                        this.AbortAnimation(CircularAnimationName + Id);
-                    }
-                }
+                _customActivityIndicator.IsRunning = IsVisible;
             }
-            else
+            else if (type == MaterialProgressIndicatorType.Linear)
             {
                 // Handle linear animation
                 if (IsVisible)
@@ -284,6 +297,34 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 {
                     this.AbortAnimation(LinearAnimationName + Id);
                 }
+            }
+        }
+
+        private void SetHeightRequest(MaterialProgressIndicatorType type)
+        {
+            var height = this.HeightRequest != DefaultHeightRequest ?
+                    this.HeightRequest :
+                    _controlDefaultHeights[type];
+
+            base.HeightRequest = height;
+
+            if (type == MaterialProgressIndicatorType.Circular)
+            {
+                _customActivityIndicator.Size = (int)height;
+            }
+        }
+
+        private void SetWidthRequest(MaterialProgressIndicatorType type)
+        {
+            var width = this.WidthRequest != DefaultWidthRequest ?
+                    this.WidthRequest :
+                    _controlDefaultWidths[type];
+
+            base.WidthRequest = width;
+
+            if (type == MaterialProgressIndicatorType.Circular)
+            {
+                _customActivityIndicator.Size = (int)width;
             }
         }
 
@@ -306,56 +347,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }, 0, 1, Easing.CubicOut));
             mainAnimation.Commit(this, LinearAnimationName + Id, 16, 1500, Easing.Linear, (v, c) => ++index,
             () => Type == MaterialProgressIndicatorType.Linear && IsVisible);
-        }
-
-        private void StartCustomCircleAnimation()
-        {
-            _customActivityIndicator.Progress = CircleAnimationMinimumProgress;
-            CustomCircleAnimationA();
-        }
-
-        private void CustomCircleAnimationA()
-        {
-            var mainAnimation = new Animation();
-            mainAnimation.Add(0, 1, new Animation(v =>
-            {
-                _customActivityIndicator.Rotation = v;
-            }, 0, 360, Easing.SinIn));
-            mainAnimation.Add(0, 1, new Animation(v =>
-            {
-                _customActivityIndicator.Progress = (int)v;
-            }, CircleAnimationMinimumProgress, CircleAnimationMaximumProgress, Easing.SinIn));
-            mainAnimation.Commit(this, CircularAnimationName + Id, 16, 1000, Easing.Linear,
-            (v, c) =>
-            {
-                if (Type == MaterialProgressIndicatorType.Circular && IsVisible)
-                {
-                    CustomCircleAnimationB();
-                }
-            },
-            () => false);
-        }
-
-        private void CustomCircleAnimationB()
-        {
-            var mainAnimation = new Animation();
-            mainAnimation.Add(0, 1, new Animation(v =>
-            {
-                _customActivityIndicator.Rotation = v;
-            }, 0, 360, Easing.SinOut));
-            mainAnimation.Add(0, 1, new Animation(v =>
-            {
-                _customActivityIndicator.Progress = (int)v;
-            }, CircleAnimationMaximumProgress, CircleAnimationMinimumProgress, Easing.SinOut));
-            mainAnimation.Commit(this, CircularAnimationName + Id, 16, 1000, Easing.Linear,
-            (v, c) =>
-            {
-                if (Type == MaterialProgressIndicatorType.Circular && IsVisible)
-                {
-                    CustomCircleAnimationA();
-                }
-            },
-            () => false);
         }
 
         #endregion Methods
