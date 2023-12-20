@@ -10,7 +10,7 @@ public enum MaterialButtonType
 }
 
 /// <summary>
-/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines.
+/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/buttons/overview">.
 /// </summary>
 public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
 {
@@ -294,7 +294,7 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
         if (bindable is MaterialButton self)
         {
             self._button.IsVisible = !(bool)newValue;
-            self._internalActivityIndicator.IsVisible = !self._button.IsVisible;
+            self._activityIndicatorContainer.IsVisible = !self._button.IsVisible;
         }
     });
 
@@ -315,13 +315,16 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     {
         if (bindable is MaterialButton self)
         {
-            if (self._mainLayout.Children.Count > 1)
+            if (self._activityIndicatorContainer.Children.Count > 0)
             {
-                self._mainLayout.Children.RemoveAt(1);
-
-                self._internalActivityIndicator = newValue as View ?? self._activityIndicator;
-                self._mainLayout.Add(self._internalActivityIndicator);
+                self._activityIndicatorContainer.Children.Clear();
             }
+
+            self._internalActivityIndicator = newValue as View ?? self._activityIndicator;
+            self._internalActivityIndicator.HorizontalOptions = LayoutOptions.Center;
+            self._internalActivityIndicator.VerticalOptions = LayoutOptions.Center;
+
+            self._activityIndicatorContainer.Add(self._internalActivityIndicator);
         }
     });
 
@@ -803,6 +806,7 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     private Button _button;
     private MaterialProgressIndicator _activityIndicator;
     private View _internalActivityIndicator;
+    private Grid _activityIndicatorContainer;
 
     #endregion Layout
 
@@ -821,6 +825,7 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
         HorizontalOptions = LayoutOptions.Center;
         VerticalOptions = LayoutOptions.Center;
 
+        // Button
         _button = new()
         {
             Background = Background,
@@ -858,19 +863,29 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
         iconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(TintColor), source: this));
         _button.Behaviors.Add(iconTintColor);
 
+        // Busy indicator
         _activityIndicator = new();
         _activityIndicator.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.HeightRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.WidthRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
 
         _internalActivityIndicator = CustomBusyIndicator ?? _activityIndicator;
-        _internalActivityIndicator.IsVisible = !_button.IsVisible;
+        _internalActivityIndicator.HorizontalOptions = LayoutOptions.Center;
+        _internalActivityIndicator.VerticalOptions = LayoutOptions.Center;
+
+        _activityIndicatorContainer = new Grid { _internalActivityIndicator };
+        _activityIndicatorContainer.IsVisible = !_button.IsVisible;
+
+        // Main Layout
+        var rowDefinition = new RowDefinition();
+        rowDefinition.SetBinding(RowDefinition.HeightProperty, new Binding(nameof(HeightRequest), source: this));
 
         _mainLayout = new()
         {
             _button,
-            _internalActivityIndicator
+            _activityIndicatorContainer
         };
+        _mainLayout.AddRowDefinition(rowDefinition);
 
         Content = _mainLayout;
     }
@@ -1100,14 +1115,19 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
 
     public void ExecuteAction()
     {
-        if (IsEnabled && Command != null && Command.CanExecute(CommandParameter))
+        if (!IsEnabled) return;
+
+        if (Command != null && Command.CanExecute(CommandParameter))
             Command.Execute(CommandParameter);
 
-        if (IsEnabled && _clicked != null)
-            _clicked.Invoke(this, null);
-
-        if (IsEnabled && _released != null)
+        if (_released != null)
+        {
             _released.Invoke(this, null);
+        }
+        else
+        {
+            _clicked?.Invoke(this, null);
+        }
     }
 
     #endregion ITouchAndPressBehaviorConsumer
