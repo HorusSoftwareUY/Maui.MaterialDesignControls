@@ -1,5 +1,4 @@
-﻿
-namespace HorusStudio.Maui.MaterialDesignControls
+﻿namespace HorusStudio.Maui.MaterialDesignControls
 {
     public static class MaterialDesignControls
     {
@@ -7,16 +6,18 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             // Button
             application.Resources.AddStyles(MaterialButton.GetStyles());
+            // Icon Button
+            application.Resources.AddStyles(MaterialIconButton.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
         {
             if (styles == null) return;
 
-            foreach(var style in styles)
+            foreach (var style in styles)
             {
                 resources.Add(style);
             }
-        } 
+        }
     }
 }

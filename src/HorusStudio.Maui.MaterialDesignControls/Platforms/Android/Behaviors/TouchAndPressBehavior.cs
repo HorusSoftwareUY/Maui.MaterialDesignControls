@@ -4,27 +4,30 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
 {
 	public partial class TouchAndPressBehavior : PlatformBehavior<Microsoft.Maui.Controls.View>
 	{
+        #region Attributes
+
         private Android.Views.View _view;
         private ITouchAndPressBehaviorConsumer _touchAndPressBehaviorConsumer;
         private float? _firstX;
         private float? _firstY;
         private bool _ignored;
 
+        #endregion Attributes
+
+        /// <inheritdoc/>
         protected override void OnAttachedTo(Microsoft.Maui.Controls.View bindable, Android.Views.View platformView)
         {
             base.OnAttachedTo(bindable, platformView);
 
-            if (_buttonFrame != null)
+            _view = platformView as Android.Views.View;
+            if (_view != null && bindable is ITouchAndPressBehaviorConsumer touchAndPressBehaviorConsumer)
             {
-                _view = _buttonFrame.Handler.PlatformView as Android.Views.View;
-                if (_view != null && bindable is ITouchAndPressBehaviorConsumer touchAndPressBehaviorConsumer)
-                {
-                    _view.Touch += OnViewOnTouch;
-                    _touchAndPressBehaviorConsumer = touchAndPressBehaviorConsumer;
-                }
+                _view.Touch += OnViewOnTouch;
+                _touchAndPressBehaviorConsumer = touchAndPressBehaviorConsumer;
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnDetachedFrom(Microsoft.Maui.Controls.View bindable, Android.Views.View platformView)
         {
             base.OnDetachedFrom(bindable, platformView);
