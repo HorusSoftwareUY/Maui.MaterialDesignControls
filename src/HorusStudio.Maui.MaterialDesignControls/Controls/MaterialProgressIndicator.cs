@@ -15,10 +15,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Attributes and Properties
 
         private readonly static MaterialProgressIndicatorType DefaultProgressIndicatorType = MaterialProgressIndicatorType.Circular;
-        private readonly static Color DefaultIndicatorColor = MaterialLightTheme.Primary;
-        private readonly static Color DefaultTrackColor = MaterialLightTheme.SurfaceContainerHighest;
+        private readonly static Color DefaultIndicatorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+        private readonly static Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
         private readonly static double DefaultHeightRequest = -1;
         private readonly static double DefaultWidthRequest = -1;
+        private readonly static int CircularThickness = 4;
 
         private readonly Dictionary<MaterialProgressIndicatorType, double> _controlDefaultWidths = new()
         {
@@ -246,7 +247,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     {
                         IndicatorColor = IndicatorColor,
                         TrackColor = Colors.Transparent,
-                        Thickness = 4
+                        Thickness = CircularThickness
                     };
                     Content = _customActivityIndicator;
                     _customActivityIndicator.IsRunning = true;

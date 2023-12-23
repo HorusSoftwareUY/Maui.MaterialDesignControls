@@ -17,7 +17,6 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     // TODO: [iOS] IconTintColor doesn't react to VisualStateManager changes
     // TODO: Shadow doesn't react to VisualStateManager changes
     // TODO: ContentLayout is buggy
-    // TODO: [iOS] BusyIndicatorSize doesn't work (maybe it's MaterialProgressBar issue)
     // TODO: Add default Material behavior for pressed state on default styles (v2)
 
     #region Attributes
