@@ -155,7 +155,7 @@
                         ImageSource="settings.png"
                         IconTintColor="SlateBlue"
                         BusyIndicatorColor="DarkCyan"
-                        BusyIndicatorSize="44"
+                        BusyIndicatorSize="22"
                         HeightRequest="60"
                         WidthRequest="60"
                         CornerRadius="30"

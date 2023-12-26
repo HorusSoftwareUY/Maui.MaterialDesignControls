@@ -266,7 +266,7 @@
                         Command="{Binding MaterialButton11Command}"
                         IsBusy="{Binding MaterialButton11Command.IsRunning}"
                         BusyIndicatorColor="DarkCyan"
-                        BusyIndicatorSize="44">
+                        BusyIndicatorSize="22">
                         <material:MaterialButton.Shadow>
                             <Shadow Brush="Cyan" 
                                 Offset="4,4"
