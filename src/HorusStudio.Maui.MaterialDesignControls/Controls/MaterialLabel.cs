@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace HorusStudio.Maui.MaterialDesignControls
+﻿namespace HorusStudio.Maui.MaterialDesignControls
 {
     public enum LabelTypes
     {
@@ -21,49 +19,103 @@ namespace HorusStudio.Maui.MaterialDesignControls
         BodySmall
     }
 
+    /// <summary>
+    /// A label <see cref="View" /> that helps make writing legible and beautiful, and follows Material Design Guidelines <see href="https://m3.material.io/styles/typography/overview">.
+    /// </summary>
     public class MaterialLabel : Label
     {
+        #region Attributes
+
+        private readonly static LabelTypes DefaultType = LabelTypes.BodyMedium;
+        private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
+        private readonly static string DefaultFontFamilyRegular = MaterialFontFamily.Regular;
+        private readonly static string DefaultFontFamilyMedium = MaterialFontFamily.Medium;
+        private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+
+        #endregion Attributes
+
+        #region Bindable Properties
+
+        /// <summary>
+        /// The backing store for the <see cref="Type" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(LabelTypes), typeof(MaterialLabel), defaultValue: DefaultType, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is MaterialLabel self)
+            {
+                if (Enum.IsDefined(typeof(LabelTypes), oldValue) &&
+                    Enum.IsDefined(typeof(LabelTypes), newValue) &&
+                    (LabelTypes)oldValue != (LabelTypes)newValue)
+                {
+                    self.TypeChanged((LabelTypes)newValue);
+                }
+            }
+        });
+
+        /// <summary>
+        /// The backing store for the <see cref="FontFamily" /> bindable property.
+        /// </summary>
+        public static new readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily);
+
+        /// <summary>
+        /// The backing store for the <see cref="FontFamilyRegular" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty FontFamilyRegularProperty = BindableProperty.Create(nameof(FontFamilyRegular), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamilyRegular);
+
+        /// <summary>
+        /// The backing store for the <see cref="FontFamilyMedium" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty FontFamilyMediumProperty = BindableProperty.Create(nameof(FontFamilyMedium), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamilyMedium);
+
+        /// <summary>
+        /// The backing store for the <see cref="TextColor" /> bindable property.
+        /// </summary>
+        public static new readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialLabel), defaultValue: DefaultTextColor);
+
+        #endregion Bindable Properties
+
         #region Properties
 
-        public static readonly BindableProperty TypeProperty =
-            BindableProperty.Create(nameof(Type), typeof(LabelTypes), typeof(MaterialLabel), defaultValue: LabelTypes.BodyMedium, propertyChanged: OnTypeChanged);
-
+        /// <summary>
+        /// Gets or sets the label type according to <see cref="LabelTypes"/> enum.
+        /// The default value is <see cref="LabelTypes.BodyMedium"/>. This is a bindable property.
+        /// </summary>
         public LabelTypes Type
         {
             get { return (LabelTypes)GetValue(TypeProperty); }
             set { SetValue(TypeProperty, value); }
         }
 
-        public static new readonly BindableProperty FontFamilyProperty =
-            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: MaterialFontFamily.Default);
-
+        /// <summary>
+        /// Gets or sets the font family for the label. This is a bindable property.
+        /// </summary>
         public new string FontFamily
         {
             get { return (string)GetValue(FontFamilyProperty); }
             set { SetValue(FontFamilyProperty, value); }
         }
 
-        public static readonly BindableProperty FontFamilyRegularProperty =
-            BindableProperty.Create(nameof(FontFamilyRegular), typeof(string), typeof(MaterialLabel), defaultValue: MaterialFontFamily.Regular);
-
+        /// <summary>
+        /// Gets or sets the regular font family for the label. This is a bindable property.
+        /// </summary>
         public string FontFamilyRegular
         {
             get { return (string)GetValue(FontFamilyRegularProperty); }
             set { SetValue(FontFamilyRegularProperty, value); }
         }
 
-        public static readonly BindableProperty FontFamilyMediumProperty =
-            BindableProperty.Create(nameof(FontFamilyMedium), typeof(string), typeof(MaterialLabel), defaultValue: MaterialFontFamily.Medium);
-
+        /// <summary>
+        /// Gets or sets the medium font family for the label. This is a bindable property.
+        /// </summary>
         public string FontFamilyMedium
         {
             get { return (string)GetValue(FontFamilyMediumProperty); }
             set { SetValue(FontFamilyMediumProperty, value); }
         }
 
-        public static new readonly BindableProperty TextColorProperty =
-            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialLabel), defaultValue: MaterialLightTheme.Text);
-
+        /// <summary>
+        /// Gets or sets the <see cref="Color" /> for the text of the label. This is a bindable property.
+        /// </summary>
         public new Color TextColor
         {
             get { return (Color)GetValue(TextColorProperty); }
@@ -76,24 +128,26 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         public MaterialLabel()
         {
-            base.FontFamily = this.FontFamily;
             base.TextColor = this.TextColor;
-            base.FontSize = MaterialFontSize.BodyMedium;
+
+            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamilyRegular), source: this));
+            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamilyMedium), source: this));
+            SetBinding(Label.TextColorProperty, new Binding(nameof(TextColor), source: this));
+
+            if (Type == DefaultType)
+            {
+                TypeChanged(Type);
+            }
         }
 
         #endregion Constructors
 
         #region Methods
 
-        private static void OnTypeChanged(BindableObject bindable, object oldValue, object newValue)
+        private void TypeChanged(LabelTypes type)
         {
-            var control = (MaterialLabel)bindable;
-            control.ApplyTypeProperty((LabelTypes)newValue);
-        }
-
-        private void ApplyTypeProperty(LabelTypes labelType)
-        {
-            switch (labelType)
+            switch (type)
             {
                 case LabelTypes.DisplayLarge:
                     base.FontFamily = this.FontFamily;
@@ -171,26 +225,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     base.FontSize = MaterialFontSize.BodySmall;
                     break;
             }
-        }
-
-        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            switch (propertyName)
-            {
-                case nameof(FontFamily):
-                    base.FontFamily = this.FontFamily;
-                    break;
-                case nameof(FontFamilyRegular):
-                    base.FontFamily = this.FontFamilyRegular;
-                    break;
-                case nameof(FontFamilyMedium):
-                    base.FontFamily = this.FontFamilyMedium;
-                    break;
-                case nameof(TextColor):
-                    base.TextColor = this.TextColor;
-                    break;
-            }
-            base.OnPropertyChanged(propertyName);
         }
 
         #endregion Methods
