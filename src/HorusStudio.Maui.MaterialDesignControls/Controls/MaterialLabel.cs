@@ -2,21 +2,125 @@
 {
     public enum LabelTypes
     {
+        /// <summary>
+        /// The default value is:
+        /// Regular font family
+        /// 57 font size (80 on tablet)
+        /// -0.25 font tracking
+        /// </summary>
         DisplayLarge,
+
+        /// <summary>
+        /// The default value is:
+        /// Regular font family
+        /// 45 font size (62 on tablet)
+        /// 0 font tracking
+        /// </summary>
         DisplayMedium,
+
+        /// <summary>
+        /// The default value is:
+        /// Regular font family
+        /// 36 font size (50 on tablet)
+        /// 0 font tracking
+        /// </summary>
         DisplaySmall,
+
+        /// <summary>
+        /// The default value is:
+        /// Regular font family
+        /// 32 font size (44 on tablet)
+        /// 0 font tracking
+        /// </summary>
         HeadlineLarge,
+
+        /// <summary>
+        /// The default value is:
+        /// Regular font family
+        /// 28 font size (38 on tablet)
+        /// 0 font tracking
+        /// </summary>
         HeadlineMedium,
+
+        /// <summary>
+        /// The default value is:
+        /// Regular font family
+        /// 24 font size (32 on tablet)
+        /// 0 font tracking
+        /// </summary>
         HeadlineSmall,
+
+        /// <summary>
+        /// The default value is:
+        /// Regular font family
+        /// 22 font size (26 on tablet)
+        /// 0 font tracking
+        /// </summary>
         TitleLarge,
+
+        /// <summary>
+        /// The default value is:
+        /// Medium font family
+        /// 16 font size (19 on tablet)
+        /// 0.15 font tracking
+        /// </summary>
         TitleMedium,
+
+        /// <summary>
+        /// The default value is:
+        /// Medium font family
+        /// 14 font size (17 on tablet)
+        /// 0.1 font tracking
+        /// </summary>
         TitleSmall,
-        LabelLarge,
-        LabelMedium,
-        LabelSmall,
+
+        /// <summary>
+        /// The default value is:
+        /// Regular font family
+        /// 16 font size (19 on tablet)
+        /// 0.5 font tracking
+        /// </summary>
         BodyLarge,
+
+        /// <summary>
+        /// The default value is:
+        /// Regular font family
+        /// 14 font size (17 on tablet)
+        /// 0.4 font tracking
+        /// </summary>
         BodyMedium,
-        BodySmall
+
+        /// <summary>
+        /// The default value is:
+        /// Regular font family
+        /// 12 font size (15 on tablet)
+        /// 0.25 font tracking
+        /// </summary>
+        BodySmall,
+
+        /// <summary>
+        /// The default value is:
+        /// Medium font family
+        /// 14 font size (17 on tablet)
+        /// 0.1 font tracking
+        /// </summary>
+        LabelLarge,
+
+        /// <summary>
+        /// The default value is:
+        /// Medium font family
+        /// 12 font size (15 on tablet)
+        /// 0.5 font tracking
+        /// </summary>
+        LabelMedium,
+
+        /// <summary>
+        /// The default value is:
+        /// Medium font family
+        /// 11 font size (14 on tablet)
+        /// 0.5 font tracking
+        /// </summary>
+        LabelSmall
     }
 
     /// <summary>
@@ -78,6 +182,7 @@
 
         /// <summary>
         /// Gets or sets the label type according to <see cref="LabelTypes"/> enum.
+        /// This property handle internally the FontFamily, CharacterSpacing and FontSize properties.
         /// The default value is <see cref="LabelTypes.BodyMedium"/>. This is a bindable property.
         /// </summary>
         public LabelTypes Type
@@ -150,79 +255,79 @@
             switch (type)
             {
                 case LabelTypes.DisplayLarge:
-                    base.FontFamily = this.FontFamily;
-                    base.CharacterSpacing = -0.25;
+                    base.FontFamily = this.FontFamilyRegular;
+                    base.CharacterSpacing = MaterialFontTracking.DisplayLarge;
                     base.FontSize = MaterialFontSize.DisplayLarge;
                     break;
                 case LabelTypes.DisplayMedium:
-                    base.FontFamily = this.FontFamily;
-                    base.CharacterSpacing = 0;
+                    base.FontFamily = this.FontFamilyRegular;
+                    base.CharacterSpacing = MaterialFontTracking.DisplayMedium;
                     base.FontSize = MaterialFontSize.DisplayMedium;
                     break;
                 case LabelTypes.DisplaySmall:
-                    base.FontFamily = this.FontFamily;
-                    base.CharacterSpacing = 0;
+                    base.FontFamily = this.FontFamilyRegular;
+                    base.CharacterSpacing = MaterialFontTracking.DisplaySmall;
                     base.FontSize = MaterialFontSize.DisplaySmall;
                     break;
                 case LabelTypes.HeadlineLarge:
-                    base.FontFamily = this.FontFamily;
-                    base.CharacterSpacing = 0;
+                    base.FontFamily = this.FontFamilyRegular;
+                    base.CharacterSpacing = MaterialFontTracking.HeadlineLarge;
                     base.FontSize = MaterialFontSize.HeadlineLarge;
                     break;
                 case LabelTypes.HeadlineMedium:
-                    base.FontFamily = this.FontFamily;
-                    base.CharacterSpacing = 0;
+                    base.FontFamily = this.FontFamilyRegular;
+                    base.CharacterSpacing = MaterialFontTracking.HeadlineMedium;
                     base.FontSize = MaterialFontSize.HeadlineMedium;
                     break;
                 case LabelTypes.HeadlineSmall:
-                    base.FontFamily = this.FontFamily;
-                    base.CharacterSpacing = 0;
+                    base.FontFamily = this.FontFamilyRegular;
+                    base.CharacterSpacing = MaterialFontTracking.HeadlineSmall;
                     base.FontSize = MaterialFontSize.HeadlineSmall;
                     break;
                 case LabelTypes.TitleLarge:
                     base.FontFamily = this.FontFamilyRegular;
-                    base.CharacterSpacing = 0;
+                    base.CharacterSpacing = MaterialFontTracking.TitleLarge;
                     base.FontSize = MaterialFontSize.TitleLarge;
                     break;
                 case LabelTypes.TitleMedium:
                     base.FontFamily = this.FontFamilyMedium;
-                    base.CharacterSpacing = 0.15;
+                    base.CharacterSpacing = MaterialFontTracking.TitleMedium;
                     base.FontSize = MaterialFontSize.TitleMedium;
                     break;
                 case LabelTypes.TitleSmall:
                     base.FontFamily = this.FontFamilyMedium;
-                    base.CharacterSpacing = 0.1;
+                    base.CharacterSpacing = MaterialFontTracking.TitleSmall;
                     base.FontSize = MaterialFontSize.TitleSmall;
+                    break;
+                case LabelTypes.BodyLarge:
+                    base.FontFamily = this.FontFamilyRegular;
+                    base.CharacterSpacing = MaterialFontTracking.BodyLarge;
+                    base.FontSize = MaterialFontSize.BodyLarge;
+                    break;
+                case LabelTypes.BodyMedium:
+                    base.FontFamily = this.FontFamilyRegular;
+                    base.CharacterSpacing = MaterialFontTracking.BodyMedium;
+                    base.FontSize = MaterialFontSize.BodyMedium;
+                    break;
+                case LabelTypes.BodySmall:
+                    base.FontFamily = this.FontFamilyRegular;
+                    base.CharacterSpacing = MaterialFontTracking.BodySmall;
+                    base.FontSize = MaterialFontSize.BodySmall;
                     break;
                 case LabelTypes.LabelLarge:
                     base.FontFamily = this.FontFamilyMedium;
-                    base.CharacterSpacing = 0.1;
+                    base.CharacterSpacing = MaterialFontTracking.LabelLarge;
                     base.FontSize = MaterialFontSize.LabelLarge;
                     break;
                 case LabelTypes.LabelMedium:
                     base.FontFamily = this.FontFamilyMedium;
-                    base.CharacterSpacing = 0.5;
+                    base.CharacterSpacing = MaterialFontTracking.LabelMedium;
                     base.FontSize = MaterialFontSize.LabelMedium;
                     break;
                 case LabelTypes.LabelSmall:
                     base.FontFamily = this.FontFamilyMedium;
-                    base.CharacterSpacing = 0.5;
+                    base.CharacterSpacing = MaterialFontTracking.LabelSmall;
                     base.FontSize = MaterialFontSize.LabelSmall;
-                    break;
-                case LabelTypes.BodyLarge:
-                    base.FontFamily = this.FontFamily;
-                    base.CharacterSpacing = 0.5;
-                    base.FontSize = MaterialFontSize.BodyLarge;
-                    break;
-                case LabelTypes.BodyMedium:
-                    base.FontFamily = this.FontFamily;
-                    base.CharacterSpacing = 0.25;
-                    base.FontSize = MaterialFontSize.BodyMedium;
-                    break;
-                case LabelTypes.BodySmall:
-                    base.FontFamily = this.FontFamily;
-                    base.CharacterSpacing = 0.4;
-                    base.FontSize = MaterialFontSize.BodySmall;
                     break;
             }
         }
