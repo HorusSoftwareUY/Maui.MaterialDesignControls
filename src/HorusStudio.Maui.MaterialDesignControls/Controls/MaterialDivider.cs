@@ -1,5 +1,8 @@
 ﻿namespace HorusStudio.Maui.MaterialDesignControls
 {
+    /// <summary>
+    /// A divider <see cref="View" /> that group content in lists or other containers and follows Material Design Guidelines <see href="https://m3.material.io/components/divider/overview">.
+    /// </summary>
     public class MaterialDivider : BoxView
     {
         #region Attributes
