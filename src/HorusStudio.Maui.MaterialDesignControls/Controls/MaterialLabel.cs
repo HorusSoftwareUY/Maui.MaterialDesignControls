@@ -2,124 +2,20 @@
 {
     public enum LabelTypes
     {
-        /// <summary>
-        /// The default value is:
-        /// Regular font family
-        /// 57 font size (80 on tablet)
-        /// -0.25 font tracking
-        /// </summary>
         DisplayLarge,
-
-        /// <summary>
-        /// The default value is:
-        /// Regular font family
-        /// 45 font size (62 on tablet)
-        /// 0 font tracking
-        /// </summary>
         DisplayMedium,
-
-        /// <summary>
-        /// The default value is:
-        /// Regular font family
-        /// 36 font size (50 on tablet)
-        /// 0 font tracking
-        /// </summary>
         DisplaySmall,
-
-        /// <summary>
-        /// The default value is:
-        /// Regular font family
-        /// 32 font size (44 on tablet)
-        /// 0 font tracking
-        /// </summary>
         HeadlineLarge,
-
-        /// <summary>
-        /// The default value is:
-        /// Regular font family
-        /// 28 font size (38 on tablet)
-        /// 0 font tracking
-        /// </summary>
         HeadlineMedium,
-
-        /// <summary>
-        /// The default value is:
-        /// Regular font family
-        /// 24 font size (32 on tablet)
-        /// 0 font tracking
-        /// </summary>
         HeadlineSmall,
-
-        /// <summary>
-        /// The default value is:
-        /// Regular font family
-        /// 22 font size (26 on tablet)
-        /// 0 font tracking
-        /// </summary>
         TitleLarge,
-
-        /// <summary>
-        /// The default value is:
-        /// Medium font family
-        /// 16 font size (19 on tablet)
-        /// 0.15 font tracking
-        /// </summary>
         TitleMedium,
-
-        /// <summary>
-        /// The default value is:
-        /// Medium font family
-        /// 14 font size (17 on tablet)
-        /// 0.1 font tracking
-        /// </summary>
         TitleSmall,
-
-        /// <summary>
-        /// The default value is:
-        /// Regular font family
-        /// 16 font size (19 on tablet)
-        /// 0.5 font tracking
-        /// </summary>
         BodyLarge,
-
-        /// <summary>
-        /// The default value is:
-        /// Regular font family
-        /// 14 font size (17 on tablet)
-        /// 0.4 font tracking
-        /// </summary>
         BodyMedium,
-
-        /// <summary>
-        /// The default value is:
-        /// Regular font family
-        /// 12 font size (15 on tablet)
-        /// 0.25 font tracking
-        /// </summary>
         BodySmall,
-
-        /// <summary>
-        /// The default value is:
-        /// Medium font family
-        /// 14 font size (17 on tablet)
-        /// 0.1 font tracking
-        /// </summary>
         LabelLarge,
-
-        /// <summary>
-        /// The default value is:
-        /// Medium font family
-        /// 12 font size (15 on tablet)
-        /// 0.5 font tracking
-        /// </summary>
         LabelMedium,
-
-        /// <summary>
-        /// The default value is:
-        /// Medium font family
-        /// 11 font size (14 on tablet)
-        /// 0.5 font tracking
-        /// </summary>
         LabelSmall
     }
 
