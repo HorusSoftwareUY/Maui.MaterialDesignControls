@@ -836,8 +836,6 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
             Shadow = Shadow
         };
 
-        _button.SetBinding(Button.CommandProperty, new Binding(nameof(Command), source: this));
-        _button.SetBinding(Button.CommandParameterProperty, new Binding(nameof(CommandParameter), source: this));
         _button.SetBinding(Button.ContentLayoutProperty, new Binding(nameof(ContentLayout), source: this));
         _button.SetBinding(Button.TextProperty, new Binding(nameof(Text), source: this));
         _button.SetBinding(Button.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
