@@ -20,16 +20,16 @@
 
         public static double TitleSmall { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 17 : 14;
 
-        public static double LabelLarge { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 17 : 14;
-
-        public static double LabelMedium { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 15 : 12;
-
-        public static double LabelSmall { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 14 : 11;
-
         public static double BodyLarge { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 19 : 16;
 
         public static double BodyMedium { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 17 : 14;
 
         public static double BodySmall { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 15 : 12;
+
+        public static double LabelLarge { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 17 : 14;
+
+        public static double LabelMedium { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 15 : 12;
+
+        public static double LabelSmall { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 14 : 11;
     }
 }
