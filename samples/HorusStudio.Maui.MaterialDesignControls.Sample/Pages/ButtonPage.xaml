@@ -260,15 +260,17 @@
                         TextColor="DarkSlateGray"
                         Type="Custom"
                         Text="Custom"
+                        HeightRequest="60"
+                        CornerRadius="30"
                         IsEnabled="{Binding ButtonEnabled}"
                         Command="{Binding MaterialButton11Command}"
                         IsBusy="{Binding MaterialButton11Command.IsRunning}"
                         BusyIndicatorColor="DarkCyan"
-                        BusyIndicatorSize="44">
+                        BusyIndicatorSize="22">
                         <material:MaterialButton.Shadow>
                             <Shadow Brush="Cyan" 
                                 Offset="4,4"
-                                Radius="6"
+                                Radius="8"
                                 Opacity="0.4" />
                         </material:MaterialButton.Shadow>
                     </material:MaterialButton>

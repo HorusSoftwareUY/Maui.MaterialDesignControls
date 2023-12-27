@@ -16,8 +16,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
 public partial class IconTintColorBehavior
 {
+    #region Attributes
+
     SpriteVisual? currentSpriteVisual;
     CompositionColorBrush? currentColorBrush;
+
+    #endregion Attributes
 
     /// <inheritdoc/>
     protected override void OnAttachedTo(View bindable, FrameworkElement platformView)

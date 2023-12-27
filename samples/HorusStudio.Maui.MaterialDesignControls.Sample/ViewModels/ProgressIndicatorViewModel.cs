@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
@@ -7,6 +8,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => "Progress Indicators";
+
+        [ObservableProperty]
+        bool _isVisible = true;
 
         #endregion
 
