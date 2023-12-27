@@ -1,82 +1,66 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace HorusStudio.Maui.MaterialDesignControls
+﻿namespace HorusStudio.Maui.MaterialDesignControls
 {
+    /// <summary>
+    /// A divider <see cref="View" /> that group content in lists or other containers and follows Material Design Guidelines <see href="https://m3.material.io/components/divider/overview">.
+    /// </summary>
     public class MaterialDivider : BoxView
     {
-        private bool _initialized = false;
+        #region Attributes
 
-        #region Constructor
+        private readonly static Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
+        private readonly static double DefaultHeightRequest = 1.0;
 
-        public MaterialDivider()
-        {
-            if (!_initialized)
-            {
-                _initialized = true;
-                Initialize();
-            }
+        #endregion Attributes
 
-            // TODO: Test if we have to set the elevation to the MaterialDivider to avoid the shadow on Android
-            //Xamarin.Forms.PlatformConfiguration.AndroidSpecific.VisualElement.SetElevation(this, 0);
-        }
+        #region Bindable Properties
 
-        #endregion Constructor
+        /// <summary>
+        /// The backing store for the <see cref="Color" /> bindable property.
+        /// </summary>
+        public static new readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValue: DefaultColor);
+
+        /// <summary>
+        /// The backing store for the <see cref="HeightRequest" /> bindable property.
+        /// </summary>
+        public static new readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialDivider), defaultValue: DefaultHeightRequest);
+
+        #endregion Bindable Properties
 
         #region Properties
 
-        public static new readonly BindableProperty BackgroundColorProperty =
-            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialDivider), defaultValue: MaterialLightTheme.OutlineVariant);
-
-        public new Color BackgroundColor
-        {
-            get { return (Color)GetValue(BackgroundColorProperty); }
-            set { SetValue(BackgroundColorProperty, value); }
-        }
-
-        public static new readonly BindableProperty ColorProperty =
-            BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValue: MaterialLightTheme.OutlineVariant);
-
+        /// <summary>
+        /// Gets or sets the <see cref="Color" /> of the divider. This is a bindable property.
+        /// </summary>
         public new Color Color
         {
             get { return (Color)GetValue(ColorProperty); }
             set { SetValue(ColorProperty, value); }
         }
 
-        public static new readonly BindableProperty HeightRequestProperty =
-            BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialDivider), defaultValue: 1.0);
-
+        /// <summary>
+        /// Gets or sets the desired height override of this element.
+        /// The default value is 1.
+        /// This is a bindable property.
+        /// </summary>
         public new double HeightRequest
         {
             get { return (double)GetValue(HeightRequestProperty); }
             set { SetValue(HeightRequestProperty, value); }
         }
-        #endregion  Properties
 
-        #region Methods
+        #endregion Properties
 
-        private void Initialize()
+        #region Constructor
+
+        public MaterialDivider()
         {
-            base.BackgroundColor = this.BackgroundColor;
             base.Color = this.Color;
             base.HeightRequest = this.HeightRequest;
+
+            SetBinding(BoxView.ColorProperty, new Binding(nameof(Color), source: this));
+            SetBinding(BoxView.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
         }
 
-        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            switch (propertyName)
-            {
-                case nameof(this.BackgroundColor):
-                    base.BackgroundColor = this.BackgroundColor;
-                    break;
-                case nameof(this.Color):
-                    base.Color = this.Color;
-                    break;
-                case nameof(this.HeightRequest):
-                    base.HeightRequest = this.HeightRequest;
-                    break;
-            }
-        }
-
-        #endregion  Methods
+        #endregion Constructor
     }
 }
