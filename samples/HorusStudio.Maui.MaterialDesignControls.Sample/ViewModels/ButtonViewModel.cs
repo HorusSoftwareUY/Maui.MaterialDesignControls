@@ -21,33 +21,34 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async Task MaterialButton1()
+        private async Task MaterialButton1(string message)
         {
-            await Task.Delay(3000);
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            await DisplayAlert(Title, message ?? "Clicked!", "OK");
         }
 
         [ICommand]
-        private Task MaterialButton2() => MaterialButton1();
+        private Task MaterialButton2(string message) => MaterialButton1(message);
         [ICommand]
-        private Task MaterialButton3() => MaterialButton1();
+        private Task MaterialButton3(string message) => MaterialButton1(message);
         [ICommand]
-        private Task MaterialButton4() => MaterialButton1();
+        private Task MaterialButton4(string message) => MaterialButton1(message);
         [ICommand]
-        private Task MaterialButton5() => MaterialButton1();
+        private Task MaterialButton5(string message) => MaterialButton1(message);
         [ICommand]
-        private Task MaterialButton6() => MaterialButton1();
+        private Task MaterialButton6(string message) => MaterialButton1(message);
         [ICommand]
-        private Task MaterialButton7() => MaterialButton1();
+        private Task MaterialButton7(string message) => MaterialButton1(message);
         [ICommand]
-        private Task MaterialButton8() => MaterialButton1();
+        private Task MaterialButton8(string message) => MaterialButton1(message);
         [ICommand]
-        private Task MaterialButton9() => MaterialButton1();
+        private Task MaterialButton9(string message) => MaterialButton1(message);
         [ICommand]
-        private Task MaterialButton10() => MaterialButton1();
+        private Task MaterialButton10(string message) => MaterialButton1(message);
         [ICommand]
-        private Task MaterialButton11() => MaterialButton1();
+        private Task MaterialButton11(string message) => MaterialButton1(message);
         [ICommand]
-        private Task MaterialButton12() => MaterialButton1();
+        private Task MaterialButton12(string message) => MaterialButton1(message);
     }
 }
 

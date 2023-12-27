@@ -21,33 +21,22 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async Task MaterialButton1()
+        private async Task MaterialIconButton1(string message)
         {
-            await Task.Delay(3000);
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            await DisplayAlert(Title, message ?? "Clicked!", "OK");
         }
 
         [ICommand]
-        private Task MaterialButton2() => MaterialButton1();
+        private Task MaterialIconButton2(string message) => MaterialIconButton1(message);
         [ICommand]
-        private Task MaterialButton3() => MaterialButton1();
+        private Task MaterialIconButton3(string message) => MaterialIconButton1(message);
         [ICommand]
-        private Task MaterialButton4() => MaterialButton1();
+        private Task MaterialIconButton4(string message) => MaterialIconButton1(message);
         [ICommand]
-        private Task MaterialButton5() => MaterialButton1();
+        private Task MaterialIconButton5(string message) => MaterialIconButton1(message);
         [ICommand]
-        private Task MaterialButton6() => MaterialButton1();
-        [ICommand]
-        private Task MaterialButton7() => MaterialButton1();
-        [ICommand]
-        private Task MaterialButton8() => MaterialButton1();
-        [ICommand]
-        private Task MaterialButton9() => MaterialButton1();
-        [ICommand]
-        private Task MaterialButton10() => MaterialButton1();
-        [ICommand]
-        private Task MaterialButton11() => MaterialButton1();
-        [ICommand]
-        private Task MaterialButton12() => MaterialButton1();
+        private Task MaterialIconButton6(string message) => MaterialIconButton1(message);
     }
 }
 

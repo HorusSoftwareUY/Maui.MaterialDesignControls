@@ -66,6 +66,7 @@
                         Type="Elevated"
                         Text="Enabled"
                         Command="{Binding MaterialButton1Command}"
+                        CommandParameter="Elevated button clicked!"
                         IsBusy="{Binding MaterialButton1Command.IsRunning}" />
 
                     <material:MaterialButton
@@ -76,6 +77,7 @@
                         ImageSource="plus.png"
                         Animation="Scale"
                         Command="{Binding MaterialButton2Command}"
+                        CommandParameter="Elevated button with icon clicked!"
                         IsBusy="{Binding MaterialButton2Command.IsRunning}" />
 
                     <material:MaterialButton
@@ -105,6 +107,7 @@
                         Type="Filled"
                         Text="Enabled"
                         Command="{Binding MaterialButton3Command}"
+                        CommandParameter="Filled button clicked!"
                         IsBusy="{Binding MaterialButton3Command.IsRunning}" />
 
                     <material:MaterialButton
@@ -114,6 +117,7 @@
                         Text="Enabled"
                         ImageSource="plus.png"
                         Command="{Binding MaterialButton4Command}"
+                        CommandParameter="Filled button with icon clicked!"
                         IsBusy="{Binding MaterialButton4Command.IsRunning}" />
 
                     <material:MaterialButton
@@ -143,6 +147,7 @@
                         Type="Tonal"
                         Text="Enabled"
                         Command="{Binding MaterialButton5Command}"
+                        CommandParameter="Filled tonal button clicked!"
                         IsBusy="{Binding MaterialButton5Command.IsRunning}" />
 
                     <material:MaterialButton
@@ -152,6 +157,7 @@
                         Text="Enabled"
                         ImageSource="plus.png"
                         Command="{Binding MaterialButton6Command}"
+                        CommandParameter="Filled tonal button with icon clicked!"
                         IsBusy="{Binding MaterialButton6Command.IsRunning}" />
 
                     <material:MaterialButton
@@ -181,6 +187,7 @@
                         Type="Outlined"
                         Text="Enabled"
                         Command="{Binding MaterialButton7Command}"
+                        CommandParameter="Outlined button clicked!"
                         IsBusy="{Binding MaterialButton7Command.IsRunning}" />
 
                     <material:MaterialButton
@@ -190,6 +197,7 @@
                         Text="Enabled"
                         ImageSource="plus.png"
                         Command="{Binding MaterialButton8Command}"
+                        CommandParameter="Outlined button with icon clicked!"
                         IsBusy="{Binding MaterialButton8Command.IsRunning}" />
 
                     <material:MaterialButton
@@ -219,6 +227,7 @@
                         Type="Text"
                         Text="Enabled"
                         Command="{Binding MaterialButton9Command}"
+                        CommandParameter="Text button clicked!"
                         IsBusy="{Binding MaterialButton9Command.IsRunning}" />
 
                     <material:MaterialButton
@@ -228,6 +237,7 @@
                         Text="Enabled"
                         ImageSource="plus.png"
                         Command="{Binding MaterialButton10Command}"
+                        CommandParameter="Text button with icon clicked!"
                         IsBusy="{Binding MaterialButton10Command.IsRunning}" />
 
                     <material:MaterialButton
@@ -264,6 +274,7 @@
                         CornerRadius="30"
                         IsEnabled="{Binding ButtonEnabled}"
                         Command="{Binding MaterialButton11Command}"
+                        CommandParameter="Custom button clicked!"
                         IsBusy="{Binding MaterialButton11Command.IsRunning}"
                         BusyIndicatorColor="DarkCyan"
                         BusyIndicatorSize="22">
@@ -284,6 +295,7 @@
                         ImageSource="plus.png"
                         IsEnabled="{Binding ButtonEnabled}"
                         Command="{Binding MaterialButton12Command}"
+                        CommandParameter="Custom button with icon clicked!"
                         IsBusy="{Binding MaterialButton12Command.IsRunning}"
                         BusyIndicatorColor="DarkGoldenrod"
                         BusyIndicatorSize="44" />

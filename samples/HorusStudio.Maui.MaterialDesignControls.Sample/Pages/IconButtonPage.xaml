@@ -63,8 +63,9 @@
                         Grid.Column="0"
                         Type="Filled"
                         ImageSource="settings.png"
-                        Command="{Binding MaterialButton4Command}"
-                        IsBusy="{Binding MaterialButton4Command.IsRunning}" />
+                        Command="{Binding MaterialIconButton1Command}"
+                        CommandParameter="Filled icon button clicked!"
+                        IsBusy="{Binding MaterialIconButton1Command.IsRunning}" />
 
                     <material:MaterialIconButton
                         Grid.Row="0"
@@ -84,8 +85,9 @@
                         Grid.Column="0"
                         Type="Tonal"
                         ImageSource="settings.png"
-                        Command="{Binding MaterialButton6Command}"
-                        IsBusy="{Binding MaterialButton6Command.IsRunning}" />
+                        Command="{Binding MaterialIconButton2Command}"
+                        CommandParameter="Filled tonal icon button clicked!"
+                        IsBusy="{Binding MaterialIconButton2Command.IsRunning}" />
 
                     <material:MaterialIconButton
                         Grid.Row="0"
@@ -105,8 +107,9 @@
                         Grid.Column="0"
                         Type="Outlined"
                         ImageSource="settings.png"
-                        Command="{Binding MaterialButton8Command}"
-                        IsBusy="{Binding MaterialButton8Command.IsRunning}" />
+                        Command="{Binding MaterialIconButton3Command}"
+                        CommandParameter="Outlined icon button clicked!"
+                        IsBusy="{Binding MaterialIconButton3Command.IsRunning}" />
 
                     <material:MaterialIconButton
                         Grid.Row="0"
@@ -126,8 +129,9 @@
                         Grid.Column="0"
                         Type="Standard"
                         ImageSource="settings.png"
-                        Command="{Binding MaterialButton10Command}"
-                        IsBusy="{Binding MaterialButton10Command.IsRunning}" />
+                        Command="{Binding MaterialIconButton4Command}"
+                        CommandParameter="Standard icon button clicked!"
+                        IsBusy="{Binding MaterialIconButton4Command.IsRunning}" />
 
                     <material:MaterialIconButton
                         Grid.Row="0"
@@ -150,8 +154,9 @@
                         BorderWidth="3"
                         Type="Custom"
                         IsEnabled="{Binding IsEnabled}"
-                        Command="{Binding MaterialButton11Command}"
-                        IsBusy="{Binding MaterialButton11Command.IsRunning}"
+                        Command="{Binding MaterialIconButton5Command}"
+                        CommandParameter="Custom icon button clicked!"
+                        IsBusy="{Binding MaterialIconButton5Command.IsRunning}"
                         ImageSource="settings.png"
                         IconTintColor="SlateBlue"
                         BusyIndicatorColor="DarkCyan"
@@ -175,8 +180,9 @@
                         Type="Custom"
                         ImageSource="settings.png"
                         IsEnabled="{Binding IsEnabled}"
-                        Command="{Binding MaterialButton12Command}"
-                        IsBusy="{Binding MaterialButton12Command.IsRunning}"
+                        Command="{Binding MaterialIconButton6Command}"
+                        CommandParameter="Custom icon button clicked!"
+                        IsBusy="{Binding MaterialIconButton6Command.IsRunning}"
                         BusyIndicatorColor="DarkGoldenrod"
                         BusyIndicatorSize="44" />
 
