@@ -96,6 +96,22 @@
                 </VerticalStackLayout>
             </Frame>
 
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Appearance" />
+            <Frame Style="{StaticResource SurfaceContainer}">
+                <VerticalStackLayout>
+                    <material:MaterialLabel 
+                        Type="{Binding LabelType}"
+                        TextColor="{Binding TextColor}"
+                        Text="Sample text" />
+                </VerticalStackLayout>
+            </Frame>
+            <Button
+                Text="Change appearance"
+                Command="{Binding ChangeAppearanceCommand}" />
+            <!--<material:MaterialButton
+                Text="Change appearance"
+                Command="{Binding ChangeAppearanceCommand}" />-->
+
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>
