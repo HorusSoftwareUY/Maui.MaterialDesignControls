@@ -30,12 +30,9 @@
                     HeightRequest="{Binding DividerHeight}"
                     Color="{Binding DividerColor}" />
             </Frame>
-            <Button
+            <material:MaterialButton
                 Text="Change appearance"
                 Command="{Binding ChangeAppearanceCommand}" />
-            <!--<material:MaterialButton
-                Text="Change appearance"
-                Command="{Binding ChangeAppearanceCommand}" />-->
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>

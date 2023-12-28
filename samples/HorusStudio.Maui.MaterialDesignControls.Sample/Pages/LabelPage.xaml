@@ -105,12 +105,9 @@
                         Text="Sample text" />
                 </VerticalStackLayout>
             </Frame>
-            <Button
+            <material:MaterialButton
                 Text="Change appearance"
                 Command="{Binding ChangeAppearanceCommand}" />
-            <!--<material:MaterialButton
-                Text="Change appearance"
-                Command="{Binding ChangeAppearanceCommand}" />-->
 
         </VerticalStackLayout>
     </ScrollView>
