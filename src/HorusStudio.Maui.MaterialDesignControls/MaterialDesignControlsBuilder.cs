@@ -2,7 +2,7 @@
 {
     public static class MaterialDesignControlsBuilder
     {
-        public static void Configure(MauiAppBuilder builder)
+        public static MauiAppBuilder ConfigureMaterialDesignControls(this MauiAppBuilder builder)
         {
             builder.ConfigureEffects(effects =>
             {
@@ -10,6 +10,8 @@
                 effects.Add<TouchReleaseEffect, TouchReleasePlatformEffect>();
 #endif
             });
+
+            return builder;
         }
     }
 }

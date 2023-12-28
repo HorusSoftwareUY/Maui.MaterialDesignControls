@@ -13,6 +13,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private bool _buttonEnabled = true;
 
+        [ObservableProperty]
+        private TextDecorations _decorations = TextDecorations.None;
+
         #endregion
 
         public ButtonViewModel()
@@ -45,8 +48,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private Task MaterialButton9(string message) => MaterialButton1(message);
         [ICommand]
         private Task MaterialButton10(string message) => MaterialButton1(message);
+
         [ICommand]
-        private Task MaterialButton11(string message) => MaterialButton1(message);
+        private void MaterialButton11(string message)
+        {
+            Decorations = (TextDecorations)(((int)Decorations + 1) % 3);
+        }
+
         [ICommand]
         private Task MaterialButton12(string message) => MaterialButton1(message);
     }

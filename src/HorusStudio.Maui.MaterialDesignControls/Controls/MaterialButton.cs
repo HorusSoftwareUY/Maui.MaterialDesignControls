@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Implementations;
 using static Microsoft.Maui.Controls.Button;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -338,6 +339,11 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
         }
     });
 
+    /// <summary>
+    /// The backing store for the <see cref="TextDecorations" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty TextDecorationsProperty = BindableProperty.Create(nameof(TextDecorations), typeof(TextDecorations), typeof(MaterialButton), defaultValue: TextDecorations.None);
+
     #endregion Bindable Properties
 
     #region Properties
@@ -645,11 +651,22 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
 
     /// <summary>
     /// Gets or sets the shadow effect cast by the element. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
     public new Shadow Shadow
     {
-        get { return (Shadow)GetValue(ShadowProperty); }
-        set { SetValue(ShadowProperty, value); }
+        get => (Shadow)GetValue(ShadowProperty);
+        set => SetValue(ShadowProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets <see cref="TextDecorations" /> for the text of the button.
+    /// This is a bindable property.
+    /// </summary>
+    public TextDecorations TextDecorations
+    {
+        get => (TextDecorations)GetValue(TextDecorationsProperty);
+        set => SetValue(TextDecorationsProperty, value);
     }
 
     #endregion Properties
@@ -802,7 +819,7 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
     #region Layout
 
     private Grid _mainLayout;
-    private Button _button;
+    private CustomButton _button;
     private MaterialProgressIndicator _activityIndicator;
     private View _internalActivityIndicator;
     private Grid _activityIndicatorContainer;
@@ -849,6 +866,7 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
         _button.SetBinding(Button.LineBreakModeProperty, new Binding(nameof(LineBreakMode), source: this));
         _button.SetBinding(Button.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
         _button.SetBinding(Button.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        _button.SetBinding(CustomButton.TextDecorationsProperty, new Binding(nameof(TextDecorations), source: this));
 
         _button.Clicked += InternalClickedHandler;
         _button.Pressed += InternalPressedHandler;
@@ -1115,15 +1133,16 @@ public class MaterialButton : ContentView, ITouchAndPressBehaviorConsumer
         if (!IsEnabled) return;
 
         if (Command != null && Command.CanExecute(CommandParameter))
+        {
             Command.Execute(CommandParameter);
-
-        if (_released != null)
+        }
+        else if (_released != null)
         {
             _released.Invoke(this, null);
         }
-        else
+        else if(_clicked != null)
         {
-            _clicked?.Invoke(this, null);
+            _clicked.Invoke(this, null);
         }
     }
 
