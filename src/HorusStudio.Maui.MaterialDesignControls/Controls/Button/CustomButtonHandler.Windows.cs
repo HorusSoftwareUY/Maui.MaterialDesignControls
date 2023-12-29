@@ -1,6 +1,6 @@
 ﻿using Microsoft.Maui.Handlers;
 
-namespace HorusStudio.Maui.MaterialDesignControls.Handlers;
+namespace HorusStudio.Maui.MaterialDesignControls;
 
 partial class CustomButtonHandler
 {
