@@ -35,8 +35,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private const string LinearAnimationName = "LinearAnimation";
 
-        private bool _rendered = false;
-
         #endregion Attributes and Properties
 
         #region Bindable properties
@@ -203,25 +201,19 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (propertyName == "Renderer")
+            if (propertyName == nameof(Window)
+                && Window == null)
             {
-                if (!_rendered)
+                // Window property is setted on null when the view is dissapearing
+                // So we abort the linear or circular animation here
+                if (Type == MaterialProgressIndicatorType.Circular
+                    && _customActivityIndicator != null)
                 {
-                    _rendered = true;
+                    _customActivityIndicator.IsRunning = false;
                 }
-                else
+                else if (Type == MaterialProgressIndicatorType.Linear)
                 {
-                    // This property is setted on the view appearing and in the view dissapearing
-                    // So we abort the linear or circular animation here
-                    if (Type == MaterialProgressIndicatorType.Circular
-                        && _customActivityIndicator != null)
-                    {
-                        _customActivityIndicator.IsRunning = false;
-                    }
-                    else if (Type == MaterialProgressIndicatorType.Linear)
-                    {
-                        this.AbortAnimation(LinearAnimationName + Id);
-                    }
+                    this.AbortAnimation(LinearAnimationName + Id);
                 }
             }
         }
