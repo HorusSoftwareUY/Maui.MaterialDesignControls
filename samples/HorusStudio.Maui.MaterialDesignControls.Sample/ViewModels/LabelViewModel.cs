@@ -23,7 +23,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async Task ChangeAppearance()
+        private void ChangeAppearance()
         {
             TextColor = LabelType == LabelTypes.HeadlineSmall ? Colors.DarkRed : Colors.DarkGreen;
             LabelType = LabelType == LabelTypes.HeadlineSmall ? LabelTypes.LabelMedium : LabelTypes.HeadlineSmall;

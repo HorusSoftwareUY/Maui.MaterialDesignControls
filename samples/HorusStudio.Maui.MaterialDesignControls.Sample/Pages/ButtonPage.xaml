@@ -275,9 +275,9 @@
                         IsEnabled="{Binding ButtonEnabled}"
                         Command="{Binding MaterialButton11Command}"
                         CommandParameter="Custom button clicked!"
-                        IsBusy="{Binding MaterialButton11Command.IsRunning}"
                         BusyIndicatorColor="DarkCyan"
-                        BusyIndicatorSize="22">
+                        BusyIndicatorSize="22"
+                        TextDecorations="{Binding Decorations}">
                         <material:MaterialButton.Shadow>
                             <Shadow Brush="Cyan" 
                                 Offset="4,4"

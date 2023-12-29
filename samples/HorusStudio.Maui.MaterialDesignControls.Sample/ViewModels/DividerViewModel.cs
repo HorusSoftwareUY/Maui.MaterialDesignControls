@@ -23,7 +23,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async Task ChangeAppearance()
+        private void ChangeAppearance()
         {
             DividerColor = DividerHeight == 3 ? Colors.DarkBlue : Colors.Green;
             DividerHeight = DividerHeight == 3 ? 6 : 3;
