@@ -2,8 +2,8 @@
 {
     public interface ICustomAnimation
     {
-        Task SetAnimation(View view);
+        Task SetAnimationAsync(View view);
 
-        Task RestoreAnimation(View view);
+        Task RestoreAnimationAsync(View view);
     }
 }

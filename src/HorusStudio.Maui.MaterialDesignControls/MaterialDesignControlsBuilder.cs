@@ -4,11 +4,9 @@
     {
         public static MauiAppBuilder ConfigureMaterialDesignControls(this MauiAppBuilder builder)
         {
-            builder.ConfigureEffects(effects =>
+            builder.ConfigureMauiHandlers(handlers =>
             {
-#if ANDROID
-                effects.Add<TouchReleaseEffect, TouchReleasePlatformEffect>();
-#endif
+                handlers.AddHandler(typeof(CustomButton), typeof(Handlers.CustomButtonHandler));
             });
 
             return builder;

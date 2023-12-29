@@ -4,13 +4,7 @@ public static class MaterialDesignControls
 {
     public static void Init(Application application)
     {
-        RegisterHandlers();
         RegisterDefaultStyles(application);
-    }
-
-    private static void RegisterHandlers()
-    {
-        Implementations.CustomButton.RegisterHandler();
     }
 
     private static void RegisterDefaultStyles(Application application)

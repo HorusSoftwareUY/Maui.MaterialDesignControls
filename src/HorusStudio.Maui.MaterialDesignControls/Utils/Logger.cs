@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Utils
 {
-	internal static class Logger
+	static class Logger
 	{
 		private const string Tag = "HorusStudio.Maui.MaterialDesignControls";
 

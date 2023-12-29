@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0;net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
@@ -14,35 +14,29 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>-->
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
-	<ItemGroup>
-	  <None Remove="Platforms\iOS\GestureRecognizers\" />
-	  <None Remove="Platforms\Android\Behaviors\" />
-	  <None Remove="Platforms\iOS\Behaviors\" />
-	  <None Remove="Behaviors\" />
-	  <None Remove="Extensions\" />
-	  <None Remove="Platforms\Tizen\" />
-	  <None Remove="Platforms\MacCatalyst\Behaviors\" />
-	  <None Remove="Platforms\Windows\Behaviors\" />
-	  <None Remove="Platforms\MacCatalyst\GestureRecognizers\" />
+	
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-android')) != true">
+	  <Compile Remove="**\*.Android.cs" />
+	  <None Include="**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Platforms\iOS\GestureRecognizers\" />
-	  <Folder Include="Platforms\Android\Behaviors\" />
-	  <Folder Include="Platforms\iOS\Behaviors\" />
-	  <Folder Include="Behaviors\" />
-	  <Folder Include="Extensions\" />
-	  <Folder Include="Platforms\Tizen\" />
-	  <Folder Include="Platforms\MacCatalyst\Behaviors\" />
-	  <Folder Include="Platforms\Windows\Behaviors\" />
-	  <Folder Include="Platforms\MacCatalyst\GestureRecognizers\" />
+
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-ios')) != true AND $(TargetFramework.StartsWith('net7.0-maccatalyst')) != true">
+	  <Compile Remove="**\*.MaciOS.cs" />
+	  <None Include="**\*.MaciOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-windows')) != true ">
+	  <Compile Remove="**\*.Windows.cs" />
+	  <None Include="**\*.Windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
 </Project>
