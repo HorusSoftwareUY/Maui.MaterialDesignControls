@@ -615,6 +615,7 @@ public class MaterialIconButton : ContentView, ITouchable
 
         // Busy indicator
         _activityIndicator = new();
+        _activityIndicator.SetBinding(MaterialProgressIndicator.IsVisibleProperty, new Binding(nameof(IsBusy), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.HeightRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.WidthRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
