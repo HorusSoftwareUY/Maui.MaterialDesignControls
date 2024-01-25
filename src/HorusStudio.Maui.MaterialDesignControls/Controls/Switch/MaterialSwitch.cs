@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Maui.Graphics;
 using static Microsoft.Maui.Controls.VisualStateManager;
 
@@ -41,7 +42,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly double _trackWidth = 52;
 
         private readonly double _thumbSelectedSize = 24;
-        private readonly double _thumbUnselectedWithoutIconSize = 16;
+        private readonly double _thumbUnselectedWithoutIconScale = 0.7;
 
         private bool _reduceThumbSize => UnselectedIcon == null;
 
@@ -96,12 +97,26 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="SelectedIcon"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty SelectedIconProperty = BindableProperty.Create(nameof(SelectedIcon), typeof(ImageSource), typeof(MaterialSwitch), defaultValue: null);
+        public static readonly BindableProperty SelectedIconProperty = BindableProperty.Create(nameof(SelectedIcon), typeof(ImageSource), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialSwitch self)
+            {
+                self.SetIconSource();
+                self.SetThumbSize();
+            }
+        });
 
         /// <summary>
         /// The backing store for the <see cref="UnselectedIcon"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty UnselectedIconProperty = BindableProperty.Create(nameof(UnselectedIcon), typeof(ImageSource), typeof(MaterialSwitch), defaultValue: null);
+        public static readonly BindableProperty UnselectedIconProperty = BindableProperty.Create(nameof(UnselectedIcon), typeof(ImageSource), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialSwitch self)
+            {
+                self.SetIconSource();
+                self.SetThumbSize();
+            }
+        });
 
         /// <summary>
         /// The backing store for the <see cref="Text"/> bindable property.
@@ -336,13 +351,26 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             if (!IsToggled)
             {
-                GoToOffState();
+                GoToOffState(animate: false);
             }
         }
 
         #endregion Constructors
 
         #region Methods
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+
+            // Window property is setted with a value when the view is appearing
+            // So we force the visual state setting to apply the initial state styles here
+            if (propertyName == nameof(Window)
+                && Window != null)
+            {
+                SetVisualState();
+            }
+        }
 
         private void CreateLayout()
         {
@@ -524,17 +552,17 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             if (isToggled && !_isOnToggledState)
             {
-                GoToOnState();
+                GoToOnState(animate: Window != null);
             }
             else if (!isToggled && _isOnToggledState)
             {
-                GoToOffState();
+                GoToOffState(animate: Window != null);
             }
         }
 
-        private void GoToOffState()
+        private void GoToOffState(bool animate)
         {
-            if (Math.Abs(_thumb.TranslationX + _xReference) > 0.0)
+            if (animate && Math.Abs(_thumb.TranslationX + _xReference) > 0.0)
             {
                 this.AbortAnimation(SwitchAnimationName);
 
@@ -551,7 +579,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
                 if (_reduceThumbSize)
                 {
-                    animation.Add(0, 1, new Animation(v => _thumb.Scale = v, 1, 0.7));
+                    animation.Add(0, 1, new Animation(v => _thumb.Scale = v, 1, _thumbUnselectedWithoutIconScale));
                 }
 
                 animation.Commit(this, SwitchAnimationName, 16, _toggleAnimationDuration, null, (_, __) =>
@@ -564,26 +592,20 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }
             else
             {
+                _thumb.TranslationX = -_xReference;
                 this.AbortAnimation(SwitchAnimationName);
                 _isOnToggledState = false;
                 IsToggled = false;
                 SetVisualState();
             }
 
-            if (_reduceThumbSize)
-            {
-                _icon.IsVisible = false;
-            }
-            else
-            {
-                _thumb.Scale = 1;
-                SetUnselectedIconSource();
-            }
+            SetIconSource();
+            SetThumbSize();
         }
 
-        private void GoToOnState()
+        private void GoToOnState(bool animate)
         {
-            if (Math.Abs(_thumb.TranslationX - _xReference) > 0.0)
+            if (animate && Math.Abs(_thumb.TranslationX - _xReference) > 0.0)
             {
                 this.AbortAnimation(SwitchAnimationName);
 
@@ -601,7 +623,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
                 if (_reduceThumbSize)
                 {
-                    animation.Add(0, 1, new Animation(v => _thumb.Scale = v, 0.7, 1));
+                    animation.Add(0, 1, new Animation(v => _thumb.Scale = v, _thumbUnselectedWithoutIconScale, 1));
                 }
 
                 animation.Commit(this, SwitchAnimationName, 16, _toggleAnimationDuration, null, (_, __) =>
@@ -614,15 +636,15 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }
             else
             {
+                _thumb.TranslationX = _xReference;
                 this.AbortAnimation(SwitchAnimationName);
                 _isOnToggledState = true;
                 IsToggled = true;
                 SetVisualState();
             }
 
-            _icon.IsVisible = true;
-            _thumb.Scale = 1;
-            SetSelectedIconSource();
+            SetIconSource();
+            SetThumbSize();
         }
 
         private Animation GetChangeTrackColorAnimation(bool animationToOnSate)
@@ -657,16 +679,30 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }
         }
 
-        private void SetUnselectedIconSource()
+        private void SetIconSource()
         {
-            _icon.Source = UnselectedIcon;
-            _icon.IsVisible = !_reduceThumbSize && !IsToggled;
+            if (IsToggled)
+            {
+                _icon.Source = SelectedIcon;
+                _icon.IsVisible = SelectedIcon != null;
+            }
+            else
+            {
+                _icon.Source = UnselectedIcon;
+                _icon.IsVisible = !_reduceThumbSize;
+            }
         }
 
-        private void SetSelectedIconSource()
+        private void SetThumbSize()
         {
-            _icon.Source = SelectedIcon;
-            _icon.IsVisible = IsToggled;
+            if (!IsToggled && _reduceThumbSize)
+            {
+                _thumb.Scale = _thumbUnselectedWithoutIconScale;
+            }
+            else
+            {
+                _thumb.Scale = 1;
+            }
         }
 
         private void SetVisualState()

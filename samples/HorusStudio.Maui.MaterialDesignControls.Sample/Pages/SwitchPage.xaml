@@ -51,12 +51,6 @@
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <!--<material:MaterialSwitch
-                IsEnabled="True"
-                IsToggled="False"
-                Text="Option B"
-                Style="{StaticResource VisualStateManagerStyle}" />-->
-
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Switch's states" />
             <Frame Style="{StaticResource SurfaceContainer}">
                 <VerticalStackLayout>
