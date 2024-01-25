@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
+using static Microsoft.Maui.Controls.VisualStateManager;
 
 namespace Microsoft.Maui.Controls
 {
@@ -36,5 +37,34 @@ namespace Microsoft.Maui.Controls
 
             Logger.Debug(builder.ToString(), callerFilePath, callerName);
         }
-	}
+
+        public static object GetVisualStatePropertyValue(this VisualElement visualElement, string visualStateGroupName, string visualStateName, string propertyName)
+        {
+            var visualStateGroups = VisualStateManager.GetVisualStateGroups(visualElement);
+            if (visualStateGroups != null)
+            {
+                var commonStates = visualStateGroups.Where(x => x.Name == visualStateGroupName);
+                if (commonStates != null)
+                {
+                    foreach (var commonState in commonStates)
+                    {
+                        var onVisualStates = commonState.States.Where(x => x.Name == visualStateName);
+                        if (onVisualStates != null)
+                        {
+                            foreach (var onVisualState in onVisualStates)
+                            {
+                                var onTrackColorSetter = onVisualState.Setters.FirstOrDefault(x => x.Property.PropertyName == propertyName);
+                                if (onTrackColorSetter != null)
+                                {
+                                    return onTrackColorSetter.Value;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+    }
 }

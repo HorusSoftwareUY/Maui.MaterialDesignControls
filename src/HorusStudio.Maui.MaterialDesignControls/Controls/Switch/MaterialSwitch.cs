@@ -1,4 +1,6 @@
 ﻿using System.Windows.Input;
+using Maui.Graphics;
+using static Microsoft.Maui.Controls.VisualStateManager;
 
 namespace HorusStudio.Maui.MaterialDesignControls
 {
@@ -34,7 +36,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static double DefaultSpacing = 10.0;
         
         private bool _isOnToggledState;
-        private double _xRef;
+        private double _xReference;
 
         private readonly uint _toggleAnimationDuration = 150;
 
@@ -355,8 +357,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         public event EventHandler<ToggledEventArgs> Toggled;
 
-        private event EventHandler<SwitchPanUpdatedEventArgs> SwitchPanUpdate;
-
         #endregion Events
 
         #region Layout
@@ -377,10 +377,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         public MaterialSwitch()
 		{
             CreateLayout();
-            //if (TextSide == DefaultTextSide)
-            //{
-            //    UpdateLayoutAfterTextSideChanged(TextSide);
-            //}
 
             if (!IsToggled)
             {
@@ -473,7 +469,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 if (IsEnabled)
                 {
-                    SendSwitchPanUpdatedEventArgs(PanStatusEnum.Started);
                     IsToggled = !IsToggled;
                     Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
                     ToggledCommand?.Execute(IsToggled);
@@ -510,23 +505,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             mainContainer.Children.Add(_container);
             mainContainer.Children.Add(_lblSupportingText);
 
-            SwitchPanUpdate += (sender, e) =>
-            {
-                //var t = e.Percentage * 0.01;
-
-                //// Color background with Animation
-                //var backgroundFromColor = IsToggled ? (IsEnabled ? BackgroundOnSelectedColor : DisabledBackgroundOnSelectedColor) : (IsEnabled ? BackgroundOnUnselectedColor : DisabledBackgroundOnUnselectedColor);
-                //var backgroundToColor = IsToggled ? (IsEnabled ? BackgroundOnUnselectedColor : DisabledBackgroundOnUnselectedColor) : (IsEnabled ? BackgroundOnSelectedColor : DisabledBackgroundOnSelectedColor);
-                //TrackColor = backgroundFromColor.AnimateTo(backgroundToColor, t);
-
-                //// Color border with Animation
-                //var borderFromColor = IsToggled ? (IsEnabled ? BorderOnSelectedColor : DisabledBorderOnSelectedColor) : (IsEnabled ? BorderOnUnselectedColor : DisabledBorderOnUnselectedColor);
-                //var borderToColor = IsToggled ? (IsEnabled ? BorderOnUnselectedColor : DisabledBorderOnUnselectedColor) : (IsEnabled ? BorderOnSelectedColor : DisabledBorderOnSelectedColor);
-                //BorderColor = borderFromColor.AnimateTo(borderToColor, t);
-            };
-
-            _xRef = ((_track.WidthRequest - _thumb.WidthRequest) / 2) - 5;
-            _thumb.TranslationX = !_isOnToggledState ? -_xRef : _xRef;
+            _xReference = ((_track.WidthRequest - _thumb.WidthRequest) / 2) - 5;
+            _thumb.TranslationX = !_isOnToggledState ? -_xReference : _xReference;
 
             Content = mainContainer;
         }
@@ -582,15 +562,20 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void GoToOffState()
         {
-            if (Math.Abs(_thumb.TranslationX + _xRef) > 0.0)
+            if (Math.Abs(_thumb.TranslationX + _xReference) > 0.0)
             {
                 this.AbortAnimation(SwitchAnimationName);
 
                 var animation = new Animation
                 {
-                    {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, -_xRef)},
-                    {0, 1, new Animation(_ => SendSwitchPanUpdatedEventArgs(PanStatusEnum.Running))}
+                    {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, -_xReference)}
                 };
+
+                var changeTrackColorAnimation = GetChangeTrackColorAnimation(false);
+                if (changeTrackColorAnimation != null)
+                {
+                    animation.Add(0, 1, changeTrackColorAnimation);
+                }
 
                 if (_reduceThumbSize)
                 {
@@ -603,7 +588,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     _isOnToggledState = false;
                     IsToggled = false;
                     SetVisualState();
-                    SendSwitchPanUpdatedEventArgs(PanStatusEnum.Completed);
                 });
             }
             else
@@ -612,7 +596,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 _isOnToggledState = false;
                 IsToggled = false;
                 SetVisualState();
-                SendSwitchPanUpdatedEventArgs(PanStatusEnum.Completed);
             }
 
             if (_reduceThumbSize)
@@ -628,16 +611,21 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void GoToOnState()
         {
-            if (Math.Abs(_thumb.TranslationX - _xRef) > 0.0)
+            if (Math.Abs(_thumb.TranslationX - _xReference) > 0.0)
             {
                 this.AbortAnimation(SwitchAnimationName);
 
                 IsToggled = true;
                 var animation = new Animation
                 {
-                    {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, _xRef)},
-                    {0, 1, new Animation(_ => SendSwitchPanUpdatedEventArgs(PanStatusEnum.Running))}
+                    {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, _xReference)}
                 };
+
+                var changeTrackColorAnimation = GetChangeTrackColorAnimation(true);
+                if (changeTrackColorAnimation != null)
+                {
+                    animation.Add(0, 1, changeTrackColorAnimation);
+                }
 
                 if (_reduceThumbSize)
                 {
@@ -650,7 +638,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     _isOnToggledState = true;
                     IsToggled = true;
                     SetVisualState();
-                    SendSwitchPanUpdatedEventArgs(PanStatusEnum.Completed);
                 });
             }
             else
@@ -659,12 +646,43 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 _isOnToggledState = true;
                 IsToggled = true;
                 SetVisualState();
-                SendSwitchPanUpdatedEventArgs(PanStatusEnum.Completed);
             }
 
             _icon.IsVisible = true;
             _thumb.Scale = 1;
             SetSelectedIconSource();
+        }
+
+        private Animation GetChangeTrackColorAnimation(bool animationToOnSate)
+        {
+            string fromState;
+            string toState;
+
+            if (animationToOnSate)
+            {
+                fromState = IsEnabled ? SwitchCommonStates.Off : SwitchCommonStates.OffDisabled;
+                toState = IsEnabled ? SwitchCommonStates.On : SwitchCommonStates.OnDisabled;
+            }
+            else
+            {
+                fromState = IsEnabled ? SwitchCommonStates.On : SwitchCommonStates.OnDisabled;
+                toState = IsEnabled ? SwitchCommonStates.Off : SwitchCommonStates.OffDisabled;
+            }
+
+            var trackColorFromValue = this.GetVisualStatePropertyValue(nameof(CommonStates), fromState, TrackColorProperty.PropertyName);
+            var trackColorToValue = this.GetVisualStatePropertyValue(nameof(CommonStates), toState, TrackColorProperty.PropertyName);
+
+            if (trackColorFromValue is Color trackColorFrom && trackColorToValue is Color trackColorTo)
+            {
+                return new Animation(v =>
+                {
+                    TrackColor = trackColorFrom.AnimateTo(trackColorTo, v);
+                }, 0, 1);
+            }
+            else
+            {
+                return null;
+            }    
         }
 
         private void SetUnselectedIconSource()
@@ -703,23 +721,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     VisualStateManager.GoToState(this, SwitchCommonStates.OffDisabled);
                 }
             }
-        }
-
-        private void SendSwitchPanUpdatedEventArgs(PanStatusEnum status)
-        {
-            var eventArgs = new SwitchPanUpdatedEventArgs
-            {
-                XRef = _xRef,
-                IsToggled = IsToggled,
-                TranslateX = _thumb.TranslationX,
-                Status = status,
-                Percentage = IsToggled
-                    ? Math.Abs(_thumb.TranslationX - _xRef) / (2 * _xRef) * 100
-                    : Math.Abs(_thumb.TranslationX + _xRef) / (2 * _xRef) * 100
-            };
-
-            if (!double.IsNaN(eventArgs.Percentage))
-                SwitchPanUpdate?.Invoke(this, eventArgs);
         }
 
         #endregion Methods
