@@ -18,7 +18,6 @@
                                 <Setter Property="TrackColor" Value="#ffe6e6" />
                                 <Setter Property="BorderColor" Value="#800000" />
                                 <Setter Property="ThumbColor" Value="#800000" />
-                                <Setter Property="TextColor" Value="#ff9999" />
                             </VisualState.Setters>  
                         </VisualState>
                         <VisualState x:Name="On">
@@ -26,7 +25,6 @@
                                 <Setter Property="TrackColor" Value="#800000" />
                                 <Setter Property="BorderColor" Value="#800000" />
                                 <Setter Property="ThumbColor" Value="#ff9999" />
-                                <Setter Property="TextColor" Value="#800000" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="OffDisabled">
@@ -34,7 +32,6 @@
                                 <Setter Property="TrackColor" Value="#f2f2f2" />
                                 <Setter Property="BorderColor" Value="#bfbfbf" />
                                 <Setter Property="ThumbColor" Value="#bfbfbf" />
-                                <Setter Property="TextColor" Value="#bfbfbf" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="OnDisabled">
@@ -42,7 +39,6 @@
                                 <Setter Property="TrackColor" Value="#404040" />
                                 <Setter Property="BorderColor" Value="#404040" />
                                 <Setter Property="ThumbColor" Value="#f2f2f2" />
-                                <Setter Property="TextColor" Value="#404040" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -67,7 +63,8 @@
                     <material:MaterialSwitch
                         IsEnabled="True"
                         IsToggled="True"
-                        Text="Option A" />
+                        Text="Option A"
+                        SupportingText="This is a supporting text" />
                     <material:MaterialSwitch
                         IsEnabled="True"
                         IsToggled="False"
@@ -82,7 +79,7 @@
                         Text="Option D" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="Switchs provide 4 default states (VisualState): On, Off, OnDisabled and OffDisabled." />
+            <material:MaterialLabel Text="Switches provide 4 default states (VisualState): On, Off, OnDisabled and OffDisabled." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Text on the right side" />
             <Frame Style="{StaticResource SurfaceContainer}">
@@ -91,6 +88,7 @@
                         IsEnabled="True"
                         IsToggled="True"
                         Text="Option A"
+                        SupportingText="This is a supporting text"
                         TextSide="Right" />
                     <material:MaterialSwitch
                         IsEnabled="True"
@@ -110,6 +108,25 @@
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="With the TextSide property you can tell whether you want the text on the left or right." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Bindings" />
+            <Frame Style="{StaticResource SurfaceContainer}">
+                <VerticalStackLayout>
+                    <material:MaterialSwitch
+                        Text="Option A"
+                        IsToggled="{Binding IsToggled}"
+                        IsEnabled="{Binding IsEnabled}" />
+                    <material:MaterialSwitch
+                        Text="Is toggled"
+                        TextSide="Right"
+                        IsToggled="{Binding IsToggled}" />
+                    <material:MaterialSwitch
+                        Text="Is enabled"
+                        TextSide="Right"
+                        IsToggled="{Binding IsEnabled}" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="Switches provide state control by binding the IsToggled and IsEnabled properties." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Icons" />
             <Frame Style="{StaticResource SurfaceContainer}">
@@ -152,7 +169,7 @@
                         Style="{StaticResource VisualStateManagerStyle}" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="VisualStateManager allows you to configure TrackColor, BorderColor, ThumbColor and TextColor." />
+            <material:MaterialLabel Text="VisualStateManager allows you to configure TrackColor, BorderColor and ThumbColor." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API sample" />
             <Frame Style="{StaticResource SurfaceContainer}">
@@ -181,24 +198,13 @@
                         FontSize="10"
                         FontFamily="FontRegular"
                         TextSide="Right"
-                        Spacing="40" />
+                        Spacing="40"
+                        SupportingText="This is a supporting text"
+                        TextSpacing="12"
+                        SupportingTextColor="DarkRed" />
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="Example with the rest of the properties offered by the switch control." />
-
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Animate on error sample" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialSwitch
-                        Text="Accept the terms and conditions"
-                        IsToggled="{Binding TermsAndConditionsAccepted}"
-                        AnimateError="True"
-                        SupportingText="{Binding ErrorText}"/>
-                    <material:MaterialButton
-                        Text="Submit"
-                        Command="{Binding SubmitCommand}" />
-                </VerticalStackLayout>
-            </Frame>
 
         </VerticalStackLayout>
     </ScrollView>

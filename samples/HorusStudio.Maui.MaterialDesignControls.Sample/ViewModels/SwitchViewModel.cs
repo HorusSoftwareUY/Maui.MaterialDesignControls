@@ -10,29 +10,16 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public override string Title => "Switchs";
 
         [ObservableProperty]
-        private string _errorText;
+        private bool _isEnabled = true;
 
         [ObservableProperty]
-        private bool _termsAndConditionsAccepted = false;
+        private bool _isToggled = true;
 
         #endregion
 
         public SwitchViewModel()
         {
             Subtitle = "Switches toggle the selection of an item on or off.";
-        }
-
-        [ICommand]
-        private async Task Submit()
-        {
-            if (TermsAndConditionsAccepted)
-            {
-                ErrorText = string.Empty;
-            }
-            else
-            {
-                ErrorText = "You must accept the terms and conditions";
-            }
         }
 
         [ICommand]

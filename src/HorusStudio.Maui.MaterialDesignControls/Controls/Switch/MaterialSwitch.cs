@@ -20,21 +20,18 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static bool DefaultIsEnabled = true;
         private readonly static Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
         private readonly static Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
-        private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+        private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
         private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
         private readonly static double DefaultBorderWidth = 2;
         private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
         private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
         private readonly static SwitchTextSide DefaultTextSide = SwitchTextSide.Left;
-        private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
+        private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
         private readonly static double DefaultSupportingSize = MaterialFontSize.BodySmall;
         private readonly static string DefaultSupportingFontFamily = MaterialFontFamily.Default;
-        private readonly static Thickness DefaultSupportingMargin = new Thickness(14, 2, 14, 0);
-        private readonly static bool DefaultAnimateError = MaterialAnimation.AnimateOnError;
-        private readonly static LayoutOptions DefaultSwitchHorizontalOptions = LayoutOptions.End;
-        private readonly static LayoutOptions DefaultTextHorizontalOptions = LayoutOptions.FillAndExpand;
-        private readonly static double DefaultSpacing = 10.0;
-        
+        private readonly static double DefaultSpacing = 16.0;
+        private readonly static double DefaultTextSpacing = 4.0;
+
         private bool _isOnToggledState;
         private double _xReference;
 
@@ -109,7 +106,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="Text"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialSwitch), defaultValue: string.Empty);
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialSwitch), defaultValue: null);
 
         /// <summary>
         /// The backing store for the <see cref="TextColor"/> bindable property.
@@ -138,11 +135,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="TextHorizontalOptions"/> bindable property.
-        /// </summary>
-        public static readonly BindableProperty TextHorizontalOptionsProperty = BindableProperty.Create(nameof(TextHorizontalOptions), typeof(LayoutOptions), typeof(MaterialSwitch), defaultValue: DefaultTextHorizontalOptions);
-
-        /// <summary>
         /// The backing store for the <see cref="SupportingText"/> bindable property.
         /// </summary>
         public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, o, n) =>
@@ -151,16 +143,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 self.SetSupportingText();
             }
-        }, validateValue: (bindable, v) =>
-        {
-            if (bindable is MaterialSwitch self)
-            {
-                // Used to animate the error when the assistive text doesn't change
-                if (self.AnimateError && !string.IsNullOrEmpty(self.SupportingText) && self.SupportingText == (string)v)
-                    _ = ShakeAnimation.AnimateAsync(self);
-            }
-
-            return true;
         });
 
         /// <summary>
@@ -179,24 +161,14 @@ namespace HorusStudio.Maui.MaterialDesignControls
         public static readonly BindableProperty SupportingFontFamilyProperty = BindableProperty.Create(nameof(SupportingFontFamily), typeof(string), typeof(MaterialSwitch), defaultValue: DefaultSupportingFontFamily);
 
         /// <summary>
-        /// The backing store for the <see cref="SupportingMargin"/> bindable property.
-        /// </summary>
-        public static readonly BindableProperty SupportingMarginProperty = BindableProperty.Create(nameof(SupportingMargin), typeof(Thickness), typeof(MaterialSwitch), defaultValue: DefaultSupportingMargin);
-
-        /// <summary>
-        /// The backing store for the <see cref="AnimateError"/> bindable property.
-        /// </summary>
-        public static readonly BindableProperty AnimateErrorProperty = BindableProperty.Create(nameof(AnimateError), typeof(bool), typeof(MaterialSwitch), defaultValue: DefaultAnimateError);
-
-        /// <summary>
-        /// The backing store for the <see cref="SwitchHorizontalOptions"/> bindable property.
-        /// </summary>
-        public static readonly BindableProperty SwitchHorizontalOptionsProperty = BindableProperty.Create(nameof(SwitchHorizontalOptions), typeof(LayoutOptions), typeof(MaterialSwitch), defaultValue: DefaultSwitchHorizontalOptions);
-
-        /// <summary>
         /// The backing store for the <see cref="Spacing"/> bindable property.
         /// </summary>
         public static readonly BindableProperty SpacingProperty = BindableProperty.Create(nameof(Spacing), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultSpacing);
+
+        /// <summary>
+        /// The backing store for the <see cref="TextSpacing"/> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TextSpacingProperty = BindableProperty.Create(nameof(TextSpacing), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultTextSpacing);
 
         /// <summary>
         /// The backing store for the <see cref="IsEnabled"/> bindable property.
@@ -291,12 +263,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             set { SetValue(TextSideProperty, value); }
         }
 
-        public LayoutOptions TextHorizontalOptions
-        {
-            get { return (LayoutOptions)GetValue(TextHorizontalOptionsProperty); }
-            set { SetValue(TextHorizontalOptionsProperty, value); }
-        }
-
         public string SupportingText
         {
             get { return (string)GetValue(SupportingTextProperty); }
@@ -321,28 +287,16 @@ namespace HorusStudio.Maui.MaterialDesignControls
             set { SetValue(SupportingFontFamilyProperty, value); }
         }
 
-        public Thickness SupportingMargin
-        {
-            get { return (Thickness)GetValue(SupportingMarginProperty); }
-            set { SetValue(SupportingMarginProperty, value); }
-        }
-
-        public bool AnimateError
-        {
-            get { return (bool)GetValue(AnimateErrorProperty); }
-            set { SetValue(AnimateErrorProperty, value); }
-        }
-
-        public LayoutOptions SwitchHorizontalOptions
-        {
-            get { return (LayoutOptions)GetValue(SwitchHorizontalOptionsProperty); }
-            set { SetValue(SwitchHorizontalOptionsProperty, value); }
-        }
-
         public double Spacing
         {
             get { return (double)GetValue(SpacingProperty); }
             set { SetValue(SpacingProperty, value); }
+        }
+
+        public double TextSpacing
+        {
+            get { return (double)GetValue(TextSpacingProperty); }
+            set { SetValue(TextSpacingProperty, value); }
         }
 
         public new bool IsEnabled
@@ -361,21 +315,23 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Layout
 
-        private StackLayout _container;
-        private MaterialLabel _label;
+        private Grid _mainContainer;
+        private ColumnDefinition _leftColumnMainContainer;
+        private ColumnDefinition _rightColumnMainContainer;
+        private MaterialLabel _textLabel;
         private Grid _switch;
         private Frame _track;
         private Frame _trackInner;
         private Frame _thumb;
         private Image _icon;
-        private MaterialLabel _lblSupportingText;
+        private MaterialLabel _supportingTextLabel;
 
         #endregion Layout
 
         #region Constructors
 
         public MaterialSwitch()
-		{
+        {
             CreateLayout();
 
             if (!IsToggled)
@@ -390,23 +346,25 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void CreateLayout()
         {
-            var mainContainer = new StackLayout()
+            _mainContainer = new Grid
             {
-                Spacing = 0,
-                Margin = 0,
-                Padding = 0
+                RowSpacing = 0
             };
+            _mainContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+            _mainContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
 
-            _container = new StackLayout()
+            _leftColumnMainContainer = new ColumnDefinition(GridLength.Star);
+            _rightColumnMainContainer = new ColumnDefinition(_trackWidth);
+            _mainContainer.ColumnDefinitions.Add(_leftColumnMainContainer);
+            _mainContainer.ColumnDefinitions.Add(_rightColumnMainContainer);
+
+            _mainContainer.SetBinding(Grid.ColumnSpacingProperty, new Binding(nameof(Spacing), source: this));
+            _mainContainer.SetBinding(Grid.RowSpacingProperty, new Binding(nameof(TextSpacing), source: this));
+
+            _switch = new Grid
             {
-                Orientation = StackOrientation.Horizontal
+                VerticalOptions = LayoutOptions.Center
             };
-
-            _container.SetBinding(StackLayout.SpacingProperty, new Binding(nameof(Spacing), source: this));
-
-            _switch = new Grid();
-
-            _switch.SetBinding(Grid.HorizontalOptionsProperty, new Binding(nameof(SwitchHorizontalOptions), source: this));
 
             _trackInner = new Frame
             {
@@ -479,62 +437,76 @@ namespace HorusStudio.Maui.MaterialDesignControls
             contentViewGesture.GestureRecognizers.Add(tapGestureRecognizer);
             _switch.Children.Add(contentViewGesture);
 
-            _label = new MaterialLabel
+            _textLabel = new MaterialLabel
             {
-                VerticalTextAlignment = TextAlignment.Center
+                VerticalTextAlignment = TextAlignment.Center,
+                LineBreakMode = LineBreakMode.TailTruncation
             };
-            _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Text), source: this));
-            _label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
-            _label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-            _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-            _label.SetBinding(MaterialLabel.HorizontalOptionsProperty, new Binding(nameof(TextHorizontalOptions), source: this));
+            _textLabel.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Text), source: this));
+            _textLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
+            _textLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+            _textLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
 
-            UpdateLayoutAfterTextSideChanged(TextSide);
-
-            _lblSupportingText = new MaterialLabel()
+            _supportingTextLabel = new MaterialLabel()
             {
                 IsVisible = false,
-                LineBreakMode = LineBreakMode.NoWrap,
-                HorizontalTextAlignment = TextAlignment.Start
+                VerticalTextAlignment = TextAlignment.Center,
+                LineBreakMode = LineBreakMode.TailTruncation
             };
-            _lblSupportingText.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SupportingTextColor), source: this));
-            _lblSupportingText.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(SupportingFontFamily), source: this));
-            _lblSupportingText.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingSize), source: this));
-            _lblSupportingText.SetBinding(MaterialLabel.MarginProperty, new Binding(nameof(SupportingMargin), source: this));
+            _supportingTextLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SupportingTextColor), source: this));
+            _supportingTextLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(SupportingFontFamily), source: this));
+            _supportingTextLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingSize), source: this));
 
-            mainContainer.Children.Add(_container);
-            mainContainer.Children.Add(_lblSupportingText);
+            _mainContainer.Children.Add(_switch);
+            _mainContainer.Children.Add(_textLabel);
+            _mainContainer.Children.Add(_supportingTextLabel);
+
+            UpdateLayoutAfterTextSideChanged(TextSide);
 
             _xReference = ((_track.WidthRequest - _thumb.WidthRequest) / 2) - 5;
             _thumb.TranslationX = !_isOnToggledState ? -_xReference : _xReference;
 
-            Content = mainContainer;
+            Content = _mainContainer;
         }
 
         private void UpdateLayoutAfterTextSideChanged(SwitchTextSide textSide)
         {
-            if (_container != null)
+            if (textSide == SwitchTextSide.Left)
             {
-                _container.Children.Clear();
-                if (textSide == SwitchTextSide.Left)
-                {
-                    _container.Children.Add(_label);
-                    _container.Children.Add(_switch);
-                }
-                else
-                {
-                    _container.Children.Add(_switch);
-                    _container.Children.Add(_label);
-                }
+                _leftColumnMainContainer.Width = GridLength.Star;
+                _rightColumnMainContainer.Width = _trackWidth;
+
+                Grid.SetRow(_textLabel, 0);
+                Grid.SetColumn(_textLabel, 0);
+
+                Grid.SetRow(_supportingTextLabel, 1);
+                Grid.SetColumn(_supportingTextLabel, 0);
+
+                Grid.SetRow(_switch, 0);
+                Grid.SetColumn(_switch, 1);
+                Grid.SetRowSpan(_switch, 2);
+            }
+            else
+            {
+                _leftColumnMainContainer.Width = _trackWidth;
+                _rightColumnMainContainer.Width = GridLength.Star;
+
+                Grid.SetRow(_textLabel, 0);
+                Grid.SetColumn(_textLabel, 1);
+
+                Grid.SetRow(_supportingTextLabel, 1);
+                Grid.SetColumn(_supportingTextLabel, 1);
+
+                Grid.SetRow(_switch, 0);
+                Grid.SetColumn(_switch, 0);
+                Grid.SetRowSpan(_switch, 2);
             }
         }
 
         private void SetSupportingText()
         {
-            _lblSupportingText.Text = SupportingText;
-            _lblSupportingText.IsVisible = !string.IsNullOrEmpty(SupportingText);
-            if (AnimateError && !string.IsNullOrEmpty(SupportingText))
-                _ = ShakeAnimation.AnimateAsync(this);
+            _supportingTextLabel.Text = SupportingText;
+            _supportingTextLabel.IsVisible = !string.IsNullOrEmpty(SupportingText);
         }
 
         private void SetBorderWidth()
@@ -682,7 +654,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             else
             {
                 return null;
-            }    
+            }
         }
 
         private void SetUnselectedIconSource()
@@ -756,14 +728,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     Dark = MaterialDarkTheme.Outline
                 }
                 .GetValueForCurrentTheme<Color>());
-            offState.Setters.Add(
-                MaterialSwitch.TextColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.Text,
-                    Dark = MaterialDarkTheme.Text
-                }
-                .GetValueForCurrentTheme<Color>());
 
             var onState = new VisualState { Name = SwitchCommonStates.On };
             onState.Setters.Add(
@@ -788,14 +752,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 {
                     Light = MaterialLightTheme.OnPrimary,
                     Dark = MaterialDarkTheme.OnPrimary
-                }
-                .GetValueForCurrentTheme<Color>());
-            onState.Setters.Add(
-                MaterialSwitch.TextColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.Text,
-                    Dark = MaterialDarkTheme.Text
                 }
                 .GetValueForCurrentTheme<Color>());
 
@@ -828,17 +784,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.38f));
 
-            // TODO: IT SHOULD BE THE SAME DISABLE COLOR OF THE BASE INPUT LABEL COLOR
-            offDisabledState.Setters.Add(
-                MaterialSwitch.TextColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(1f));
-
             var onDisabledState = new VisualState { Name = SwitchCommonStates.OnDisabled };
             onDisabledState.Setters.Add(
                 MaterialSwitch.TrackColorProperty,
@@ -867,17 +812,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 }
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.38f));
-
-            // TODO: IT SHOULD BE THE SAME DISABLE COLOR OF THE BASE INPUT LABEL COLOR
-            onDisabledState.Setters.Add(
-                MaterialSwitch.TextColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(1f));
 
             commonStatesGroup.States.Add(new VisualState { Name = SwitchCommonStates.Normal });
             commonStatesGroup.States.Add(offState);
