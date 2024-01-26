@@ -1,7 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Maui.Graphics;
-using static Microsoft.Maui.Controls.VisualStateManager;
 
 namespace HorusStudio.Maui.MaterialDesignControls
 {
@@ -15,6 +13,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// </summary>
     public class MaterialSwitch : ContentView
     {
+        // TODO: Track color animation is commented on because it produces an issue on track color when you change the IsEnabled and IsToggled values
+        // TODO: Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them
+
         #region Attributes
 
         private readonly static bool DefaultIsToggled = false;
@@ -649,34 +650,36 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private Animation GetChangeTrackColorAnimation(bool animationToOnSate)
         {
-            string fromState;
-            string toState;
+            //string fromState;
+            //string toState;
 
-            if (animationToOnSate)
-            {
-                fromState = IsEnabled ? SwitchCommonStates.Off : SwitchCommonStates.OffDisabled;
-                toState = IsEnabled ? SwitchCommonStates.On : SwitchCommonStates.OnDisabled;
-            }
-            else
-            {
-                fromState = IsEnabled ? SwitchCommonStates.On : SwitchCommonStates.OnDisabled;
-                toState = IsEnabled ? SwitchCommonStates.Off : SwitchCommonStates.OffDisabled;
-            }
+            //if (animationToOnSate)
+            //{
+            //    fromState = IsEnabled ? SwitchCommonStates.Off : SwitchCommonStates.OffDisabled;
+            //    toState = IsEnabled ? SwitchCommonStates.On : SwitchCommonStates.OnDisabled;
+            //}
+            //else
+            //{
+            //    fromState = IsEnabled ? SwitchCommonStates.On : SwitchCommonStates.OnDisabled;
+            //    toState = IsEnabled ? SwitchCommonStates.Off : SwitchCommonStates.OffDisabled;
+            //}
 
-            var trackColorFromValue = this.GetVisualStatePropertyValue(nameof(CommonStates), fromState, TrackColorProperty.PropertyName);
-            var trackColorToValue = this.GetVisualStatePropertyValue(nameof(CommonStates), toState, TrackColorProperty.PropertyName);
+            //var trackColorFromValue = this.GetVisualStatePropertyValue(nameof(CommonStates), fromState, TrackColorProperty.PropertyName);
+            //var trackColorToValue = this.GetVisualStatePropertyValue(nameof(CommonStates), toState, TrackColorProperty.PropertyName);
 
-            if (trackColorFromValue is Color trackColorFrom && trackColorToValue is Color trackColorTo)
-            {
-                return new Animation(v =>
-                {
-                    TrackColor = trackColorFrom.AnimateTo(trackColorTo, v);
-                }, 0, 1);
-            }
-            else
-            {
-                return null;
-            }
+            //if (trackColorFromValue is Color trackColorFrom && trackColorToValue is Color trackColorTo)
+            //{
+            //    return new Animation(v =>
+            //    {
+            //        TrackColor = trackColorFrom.AnimateTo(trackColorTo, v);
+            //    }, 0, 0.1);
+            //}
+            //else
+            //{
+            //    return null;
+            //}
+
+            return null;
         }
 
         private void SetIconSource()
@@ -791,6 +794,35 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 }
                 .GetValueForCurrentTheme<Color>());
 
+            //var offDisabledState = new VisualState { Name = SwitchCommonStates.OffDisabled };
+            //offDisabledState.Setters.Add(
+            //    MaterialSwitch.TrackColorProperty,
+            //    new AppThemeBindingExtension
+            //    {
+            //        Light = MaterialLightTheme.SurfaceContainerHighest,
+            //        Dark = MaterialDarkTheme.SurfaceContainerHighest
+            //    }
+            //    .GetValueForCurrentTheme<Color>()
+            //    .WithAlpha(0.12f));
+            //offDisabledState.Setters.Add(
+            //    MaterialSwitch.BorderColorProperty,
+            //    new AppThemeBindingExtension
+            //    {
+            //        Light = MaterialLightTheme.OnSurface,
+            //        Dark = MaterialDarkTheme.OnSurface
+            //    }
+            //    .GetValueForCurrentTheme<Color>()
+            //    .WithAlpha(0.38f));
+            //offDisabledState.Setters.Add(
+            //    MaterialSwitch.ThumbColorProperty,
+            //    new AppThemeBindingExtension
+            //    {
+            //        Light = MaterialLightTheme.OnSurface,
+            //        Dark = MaterialDarkTheme.OnSurface
+            //    }
+            //    .GetValueForCurrentTheme<Color>()
+            //    .WithAlpha(0.38f));
+
             var offDisabledState = new VisualState { Name = SwitchCommonStates.OffDisabled };
             offDisabledState.Setters.Add(
                 MaterialSwitch.TrackColorProperty,
@@ -800,13 +832,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     Dark = MaterialDarkTheme.SurfaceContainerHighest
                 }
                 .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.12f));
+                .WithAlpha(1f));
             offDisabledState.Setters.Add(
                 MaterialSwitch.BorderColorProperty,
                 new AppThemeBindingExtension
                 {
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
+                    Light = MaterialLightTheme.Outline,
+                    Dark = MaterialDarkTheme.Outline
                 }
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.38f));
@@ -814,40 +846,69 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 MaterialSwitch.ThumbColorProperty,
                 new AppThemeBindingExtension
                 {
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
+                    Light = MaterialLightTheme.Outline,
+                    Dark = MaterialDarkTheme.Outline
                 }
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.38f));
+
+            //var onDisabledState = new VisualState { Name = SwitchCommonStates.OnDisabled };
+            //onDisabledState.Setters.Add(
+            //    MaterialSwitch.TrackColorProperty,
+            //    new AppThemeBindingExtension
+            //    {
+            //        Light = MaterialLightTheme.OnSurface,
+            //        Dark = MaterialDarkTheme.OnSurface
+            //    }
+            //    .GetValueForCurrentTheme<Color>()
+            //    .WithAlpha(0.12f));
+            //onDisabledState.Setters.Add(
+            //    MaterialSwitch.BorderColorProperty,
+            //    new AppThemeBindingExtension
+            //    {
+            //        Light = MaterialLightTheme.OnSurface,
+            //        Dark = MaterialDarkTheme.OnSurface
+            //    }
+            //    .GetValueForCurrentTheme<Color>()
+            //    .WithAlpha(0.12f));
+            //onDisabledState.Setters.Add(
+            //    MaterialSwitch.ThumbColorProperty,
+            //    new AppThemeBindingExtension
+            //    {
+            //        Light = MaterialLightTheme.Surface,
+            //        Dark = MaterialDarkTheme.Surface
+            //    }
+            //    .GetValueForCurrentTheme<Color>()
+            //    .WithAlpha(0.38f));
 
             var onDisabledState = new VisualState { Name = SwitchCommonStates.OnDisabled };
             onDisabledState.Setters.Add(
                 MaterialSwitch.TrackColorProperty,
                 new AppThemeBindingExtension
                 {
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
+                    Light = MaterialLightTheme.Outline,
+                    Dark = MaterialDarkTheme.Outline
                 }
                 .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.12f));
+                .WithAlpha(0.38f));
             onDisabledState.Setters.Add(
                 MaterialSwitch.BorderColorProperty,
                 new AppThemeBindingExtension
                 {
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
+                    Light = MaterialLightTheme.Outline,
+                    Dark = MaterialDarkTheme.Outline
                 }
                 .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.12f));
+                .WithAlpha(0.38f));
             onDisabledState.Setters.Add(
                 MaterialSwitch.ThumbColorProperty,
                 new AppThemeBindingExtension
                 {
-                    Light = MaterialLightTheme.Surface,
-                    Dark = MaterialDarkTheme.Surface
+                    Light = MaterialLightTheme.SurfaceContainerHighest,
+                    Dark = MaterialDarkTheme.SurfaceContainerHighest
                 }
                 .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.38f));
+                .WithAlpha(1f));
 
             commonStatesGroup.States.Add(new VisualState { Name = SwitchCommonStates.Normal });
             commonStatesGroup.States.Add(offState);
