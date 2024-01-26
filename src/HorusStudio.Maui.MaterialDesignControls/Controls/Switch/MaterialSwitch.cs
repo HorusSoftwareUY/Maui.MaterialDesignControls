@@ -15,6 +15,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     {
         // TODO: Track color animation is commented on because it produces an issue on track color when you change the IsEnabled and IsToggled values
         // TODO: Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them
+        // TODO: FontAttributes and SupportingFontAttributes don't work
 
         #region Attributes
 
@@ -25,12 +26,14 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
         private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
         private readonly static double DefaultBorderWidth = 2;
-        private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
         private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
+        private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
+        private readonly static FontAttributes DefaultFontAttributes = FontAttributes.None;
         private readonly static SwitchTextSide DefaultTextSide = SwitchTextSide.Left;
         private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
         private readonly static double DefaultSupportingSize = MaterialFontSize.BodySmall;
         private readonly static string DefaultSupportingFontFamily = MaterialFontFamily.Default;
+        private readonly static FontAttributes DefaultSupportingFontAttributes = FontAttributes.None;
         private readonly static double DefaultSpacing = 16.0;
         private readonly static double DefaultTextSpacing = 4.0;
 
@@ -140,6 +143,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSwitch), defaultValue: DefaultFontFamily);
 
         /// <summary>
+        /// The backing store for the <see cref="FontAttributes" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialSwitch), defaultValue: DefaultFontAttributes);
+
+        /// <summary>
         /// The backing store for the <see cref="TextSide"/> bindable property.
         /// </summary>
         public static readonly BindableProperty TextSideProperty = BindableProperty.Create(nameof(TextSide), typeof(SwitchTextSide), typeof(MaterialSwitch), defaultValue: DefaultTextSide, propertyChanged: (bindable, o, n) =>
@@ -177,6 +185,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         public static readonly BindableProperty SupportingFontFamilyProperty = BindableProperty.Create(nameof(SupportingFontFamily), typeof(string), typeof(MaterialSwitch), defaultValue: DefaultSupportingFontFamily);
 
         /// <summary>
+        /// The backing store for the <see cref="SupportingFontAttributes" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty SupportingFontAttributesProperty = BindableProperty.Create(nameof(SupportingFontAttributes), typeof(FontAttributes), typeof(MaterialSwitch), defaultValue: DefaultSupportingFontAttributes);
+
+        /// <summary>
         /// The backing store for the <see cref="Spacing"/> bindable property.
         /// </summary>
         public static readonly BindableProperty SpacingProperty = BindableProperty.Create(nameof(Spacing), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultSpacing);
@@ -201,120 +214,214 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets a color that describes the track color of the switch. This is a bindable property.
+        /// </summary>
         public Color TrackColor
         {
             get => (Color)GetValue(TrackColorProperty);
             set => SetValue(TrackColorProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets a color that describes the border stroke color of the switch. This is a bindable property.
+        /// </summary>
+        /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0.</remarks>
         public Color BorderColor
         {
             get => (Color)GetValue(BorderColorProperty);
             set => SetValue(BorderColorProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets the width of the border. This is a bindable property.
+        /// </summary>
+        /// <remarks>Set this value to a non-zero value in order to have a visible border.</remarks>
         public double BorderWidth
         {
             get => (double)GetValue(BorderWidthProperty);
             set => SetValue(BorderWidthProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets if switch is on 'On' state or on 'Off'.
+        /// The default value is <see langword="false"/>.
+        /// This is a bindable property.
+        /// </summary>
         public bool IsToggled
         {
             get => (bool)GetValue(IsToggledProperty);
             set => SetValue(IsToggledProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets the command to invoke when the switch's IsToggled property changes. This is a bindable property.
+        /// </summary>
+        /// <remarks>This property is used to associate a command with an instance of a switch. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.</remarks>
         public ICommand ToggledCommand
         {
             get => (ICommand)GetValue(ToggledCommandProperty);
             set => SetValue(ToggledCommandProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets a color that describes the thumb color of the switch. This is a bindable property.
+        /// </summary>
         public Color ThumbColor
         {
             get => (Color)GetValue(ThumbColorProperty);
             set => SetValue(ThumbColorProperty, value);
         }
 
+        /// <summary>
+        /// Allows you to display a image on the switch's thumb when it is on the ON state. This is a bindable property.
+        /// </summary>
         public ImageSource SelectedIcon
         {
             get { return (ImageSource)GetValue(SelectedIconProperty); }
             set { SetValue(SelectedIconProperty, value); }
         }
 
+        /// <summary>
+        /// Allows you to display a image on the switch's thumb when it is on the OFF state. This is a bindable property.
+        /// </summary>
         public ImageSource UnselectedIcon
         {
             get { return (ImageSource)GetValue(UnselectedIconProperty); }
             set { SetValue(UnselectedIconProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the text displayed next to the switch.
+        /// The default value is <see langword="null"/>. This is a bindable property.
+        /// </summary>
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="Color" /> for the text of the switch. This is a bindable property.
+        /// </summary>
         public Color TextColor
         {
             get { return (Color)GetValue(TextColorProperty); }
             set { SetValue(TextColorProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the size of the font for the text of this switch. This is a bindable property.
+        /// </summary>
+        [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double FontSize
         {
             get { return (double)GetValue(FontSizeProperty); }
             set { SetValue(FontSizeProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the font family for the text of this switch. This is a bindable property.
+        /// </summary>
         public string FontFamily
         {
             get { return (string)GetValue(FontFamilyProperty); }
             set { SetValue(FontFamilyProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets a value that indicates whether the font for the text of this switch is bold, italic, or neither.
+        /// This is a bindable property.
+        /// </summary>
+        public FontAttributes FontAttributes
+        {
+            get => (FontAttributes)GetValue(FontAttributesProperty);
+            set => SetValue(FontAttributesProperty, value);
+        }
+
+        /// <summary>
+        /// Determines if the Text and SupportingText are displayed to the right or left of the switch.
+        /// The default value is Left. This is a bindable property.
+        /// </summary>
         public SwitchTextSide TextSide
         {
             get { return (SwitchTextSide)GetValue(TextSideProperty); }
             set { SetValue(TextSideProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the supporting text displayed next to the switch and under the Text.
+        /// The default value is <see langword="null"/>. This is a bindable property.
+        /// </summary>
         public string SupportingText
         {
             get { return (string)GetValue(SupportingTextProperty); }
             set { SetValue(SupportingTextProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="Color" /> for the supporting text of the switch. This is a bindable property.
+        /// </summary>
         public Color SupportingTextColor
         {
             get { return (Color)GetValue(SupportingTextColorProperty); }
             set { SetValue(SupportingTextColorProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the size of the font for the supporting text of this switch. This is a bindable property.
+        /// </summary>
+        [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double SupportingSize
         {
             get { return (double)GetValue(SupportingSizeProperty); }
             set { SetValue(SupportingSizeProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the font family for the supporting text of this switch. This is a bindable property.
+        /// </summary>
         public string SupportingFontFamily
         {
             get { return (string)GetValue(SupportingFontFamilyProperty); }
             set { SetValue(SupportingFontFamilyProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets a value that indicates whether the font for the supporting text of this switch is bold, italic, or neither.
+        /// This is a bindable property.
+        /// </summary>
+        public FontAttributes SupportingFontAttributes
+        {
+            get => (FontAttributes)GetValue(SupportingFontAttributesProperty);
+            set => SetValue(SupportingFontAttributesProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the spacing between the switch and the texts (Text and SupportingText).
+        /// This is a bindable property.
+        /// </summary>
         public double Spacing
         {
             get { return (double)GetValue(SpacingProperty); }
             set { SetValue(SpacingProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the spacing between the Text and SupportingText.
+        /// This is a bindable property.
+        /// </summary>
         public double TextSpacing
         {
             get { return (double)GetValue(TextSpacingProperty); }
             set { SetValue(TextSpacingProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets if switch is on 'OnDisabled' state or 'OffDisabled'.
+        /// The default value is <see langword="true"/>.
+        /// This is a bindable property.
+        /// </summary>
         public new bool IsEnabled
         {
             get { return (bool)GetValue(IsEnabledProperty); }
@@ -475,6 +582,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _textLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
             _textLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
             _textLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+            _textLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
 
             _supportingTextLabel = new MaterialLabel()
             {
@@ -485,6 +593,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _supportingTextLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SupportingTextColor), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(SupportingFontFamily), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingSize), source: this));
+            _supportingTextLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(SupportingFontAttributes), source: this));
 
             _mainContainer.Children.Add(_switch);
             _mainContainer.Children.Add(_textLabel);
