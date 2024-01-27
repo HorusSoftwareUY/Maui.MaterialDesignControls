@@ -1,5 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -578,40 +580,36 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
 
-            // On surface antes
-            // filled = surface variant
-
-
             var disabledState = new VisualState { Name = ButtonCommonStates.Disabled };
-            //disabledState.Setters.Add(
-            //    MaterialCard.BackgroundColorProperty,
-            //    new AppThemeBindingExtension
-            //    {
-            //        Light = MaterialLightTheme.Surface,
-            //        Dark = MaterialDarkTheme.Surface
-            //    }
-            //    .GetValueForCurrentTheme<Color>()
-            //    .WithAlpha(0.38f));
+            disabledState.Setters.Add(
+                MaterialCard.BackgroundColorProperty,
+                new AppThemeBindingExtension
+                {
+                    Light = MaterialLightTheme.Surface,
+                    Dark = MaterialDarkTheme.Surface
+                }
+                .GetValueForCurrentTheme<Color>()
+                .WithAlpha(0.38f));
 
-            //disabledState.Setters.Add(MaterialCard.ShadowProperty, null);
+            disabledState.Setters.Add(MaterialCard.ShadowProperty, null);
 
-            //disabledState.Setters.Add(
-            //    MaterialCard.BorderColorProperty,
-            //    new AppThemeBindingExtension
-            //    {
-            //        Light = MaterialLightTheme.Surface,
-            //        Dark = MaterialDarkTheme.Surface
-            //    }
-            //    .GetValueForCurrentTheme<Color>()
-            //    .WithAlpha(0.38f));
+            disabledState.Setters.Add(
+                MaterialCard.BorderColorProperty,
+                new AppThemeBindingExtension
+                {
+                    Light = MaterialLightTheme.Surface,
+                    Dark = MaterialDarkTheme.Surface
+                }
+                .GetValueForCurrentTheme<Color>()
+                .WithAlpha(0.38f));
 
-            disabledState.Setters.Add(MaterialCard.OpacityProperty, 0.38f);
+            //disabledState.Setters.Add(MaterialCard.OpacityProperty, 0.38f);
 
             var pressedState = new VisualState { Name = ButtonCommonStates.Pressed };
-            pressedState.Setters.Add(MaterialCard.OpacityProperty, 1f);
+            //pressedState.Setters.Add(MaterialCard.OpacityProperty, 1f);
 
             var normalState = new VisualState { Name = ButtonCommonStates.Normal };
-            normalState.Setters.Add(MaterialCard.OpacityProperty, 1f);
+            //normalState.Setters.Add(MaterialCard.OpacityProperty, 1f);
 
             commonStatesGroup.States.Add(normalState);
             commonStatesGroup.States.Add(disabledState);
