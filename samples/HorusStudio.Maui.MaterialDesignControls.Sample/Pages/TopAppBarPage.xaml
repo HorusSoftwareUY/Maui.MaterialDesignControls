@@ -6,60 +6,162 @@
                        xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
                        x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TopAppBarPage"
                        x:TypeArguments="vm:TopAppBarViewModel"
-                       x:DataType="vm:TopAppBarViewModel">
+                       x:DataType="vm:TopAppBarViewModel"
+                       NavigationPage.HasNavigationBar="False">
+    <Grid
+        RowDefinitions="Auto,*">
+        <material:MaterialTopAppBar
+            Headline="{Binding Title}"
+            Description="{Binding Subtitle}"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIcon="ic_back_b.png"
+            ScrollViewName="scrollView" />
 
-    <ContentPage.Resources>
-        <!--<Style x:Key="VisualStateManagerStyle" TargetType="material:MaterialButton"> 
-            <Setter Property="VisualStateManager.VisualStateGroups"> 
-                <VisualStateGroupList> 
-                    <VisualStateGroup x:Name="CommonStates"> 
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="LightYellow" />
-                                <Setter Property="TextColor" Value="Black" />
-                                <Setter Property="IconTintColor" Value="DarkGoldenrod" />
-                                <Setter Property="BorderColor" Value="DarkGoldenrod" />
-                            </VisualState.Setters>  
-                        </VisualState>
-                        <VisualState x:Name="Disabled">
-                            <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="Orange" />
-                                <Setter Property="TextColor" Value="DarkRed" />
-                                <Setter Property="IconTintColor" Value="DarkCyan" />
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="Green" />
-                                <Setter Property="TextColor" Value="White" />
-                                <Setter Property="IconTintColor" Value="Coral" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>-->
-    </ContentPage.Resources>
+        <ScrollView
+            x:Name="scrollView"
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout
+                Style="{StaticResource MainLayout}"
+                Spacing="24">
 
-    <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
-            <material:MaterialLabel Text="{Binding Subtitle}" />
+                <material:MaterialLabel
+                    Text="The MaterialTopAppBar above uses the ScrollViewName to bind the control to a ScrollView and run an animation when scrolling down."/>
 
-            <!--<material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Elevated" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <Grid Style="{StaticResource ButtonsContainer}">
-                    <material:MaterialButton
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Type="Elevated"
-                        Text="Enabled"
-                        Command="{Binding MaterialButton1Command}"
-                        CommandParameter="Elevated button clicked!"
-                        IsBusy="{Binding MaterialButton1Command.IsRunning}" />
-                </Grid>
-            </Frame>
-            <material:MaterialLabel Text="Elevated buttons provide separation from a patterned background." />-->
+                <material:MaterialDivider />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="CenterAligned type"
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    TrailingIconCommand="{Binding TrailingIconTapCommand}"
+                    TrailingIconIsBusy="{Binding TrailingIconTapCommand.IsRunning}"
+                    TrailingIcon="info.png"
+                    Type="CenterAligned" />
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Small type"
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    TrailingIconCommand="{Binding TrailingIconTapCommand}"
+                    TrailingIconIsBusy="{Binding TrailingIconTapCommand.IsRunning}"
+                    TrailingIcon="info.png"
+                    Type="Small" />
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Medium type"
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    TrailingIconCommand="{Binding TrailingIconTapCommand}"
+                    TrailingIconIsBusy="{Binding TrailingIconTapCommand.IsRunning}"
+                    TrailingIcon="info.png"
+                    Type="Medium" />
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Large type"
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    TrailingIconCommand="{Binding TrailingIconTapCommand}"
+                    TrailingIconIsBusy="{Binding TrailingIconTapCommand.IsRunning}"
+                    TrailingIcon="info.png"
+                    Type="Large" />
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="CenterAligned type"
+                    Description="Sample with a description text."
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    TrailingIconCommand="{Binding TrailingIconTapCommand}"
+                    TrailingIconIsBusy="{Binding TrailingIconTapCommand.IsRunning}"
+                    TrailingIcon="info.png"
+                    Type="CenterAligned" />
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Small type"
+                    Description="Sample with a description text."
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    TrailingIconCommand="{Binding TrailingIconTapCommand}"
+                    TrailingIconIsBusy="{Binding TrailingIconTapCommand.IsRunning}"
+                    TrailingIcon="info.png"
+                    Type="Small" />
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Medium type"
+                    Description="Sample with a description text."
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    TrailingIconCommand="{Binding TrailingIconTapCommand}"
+                    TrailingIconIsBusy="{Binding TrailingIconTapCommand.IsRunning}"
+                    TrailingIcon="info.png"
+                    Type="Medium" />
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Large type"
+                    Description="Sample with a description text."
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    TrailingIconCommand="{Binding TrailingIconTapCommand}"
+                    TrailingIconIsBusy="{Binding TrailingIconTapCommand.IsRunning}"
+                    TrailingIcon="info.png"
+                    Type="Large" />
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="LightCyan"
+                    HeadlineColor="DarkCyan"
+                    HeadlineFontSize="45"
+                    HeadlineFontFamily="FontMedium"
+                    HeadlineFontAttributes="Italic"
+                    DescriptionColor="DarkCyan"
+                    DescriptionFontSize="23"
+                    DescriptionFontFamily="FontMedium"
+                    DescriptionFontAttributes="Italic"
+                    Headline="Full API"
+                    Description="Example with all the properties provided by the top app bar."
+                    BusyIndicatorColor="DarkCyan"
+                    TrailingIconCommand="{Binding TrailingIconTapCommand}"
+                    TrailingIcon="info.png"
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIcon="ic_back_b.png"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    TrailingIconIsBusy="{Binding TrailingIconTapCommand.IsRunning}"
+                    DescriptionMarginAdjustment="25,10,0,0"
+                    HeadlineMarginAdjustment="38,0,0,0"
+                    Type="Small" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </local:BaseContentPage>

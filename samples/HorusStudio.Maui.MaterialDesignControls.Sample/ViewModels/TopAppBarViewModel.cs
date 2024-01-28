@@ -3,14 +3,14 @@ using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
-	public class TopAppBarViewModel : BaseViewModel
+	public partial class TopAppBarViewModel : BaseViewModel
     {
         #region Attributes & Properties
 
         public override string Title => "Top app bars";
 
-        //[ObservableProperty]
-        //private bool _buttonEnabled = true;
+        [ObservableProperty]
+        private bool _iconButtonsEnabled = true;
 
         #endregion
 
@@ -20,10 +20,17 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async Task Tap()
+        private async Task LeadingIconTap()
         {
             await Task.Delay(TimeSpan.FromSeconds(2));
-            await DisplayAlert(Title, "Clicked!", "OK");
+            await DisplayAlert(Title, "Leading icon clicked!", "OK");
+        }
+
+        [ICommand]
+        private async Task TrailingIconTap()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            await DisplayAlert(Title, "Trailing icon clicked!", "OK");
         }
     }
 }
