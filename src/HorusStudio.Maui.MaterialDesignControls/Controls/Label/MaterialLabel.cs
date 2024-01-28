@@ -55,7 +55,13 @@
         /// <summary>
         /// The backing store for the <see cref="FontFamily" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily);
+        public static new readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialLabel self)
+            {
+                self.SetFontFamily();
+            }
+        });
 
         /// <summary>
         /// The backing store for the <see cref="FontFamilyRegular" /> bindable property.
@@ -130,10 +136,8 @@
         public MaterialLabel()
         {
             base.TextColor = this.TextColor;
+            base.FontFamily = this.FontFamily;
 
-            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamilyRegular), source: this));
-            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamilyMedium), source: this));
             SetBinding(Label.TextColorProperty, new Binding(nameof(TextColor), source: this));
 
             if (Type == DefaultType)
@@ -145,6 +149,11 @@
         #endregion Constructors
 
         #region Methods
+
+        private void SetFontFamily()
+        {
+            base.FontFamily = this.FontFamily;
+        }
 
         private void TypeChanged(LabelTypes type)
         {
