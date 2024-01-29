@@ -157,8 +157,8 @@
                     LeadingIcon="ic_back_b.png"
                     LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
                     TrailingIconIsBusy="{Binding TrailingIconTapCommand.IsRunning}"
-                    DescriptionMarginAdjustment="25,10,0,0"
-                    HeadlineMarginAdjustment="38,0,0,0"
+                    DescriptionMarginAdjustment="0,20,0,0"
+                    HeadlineMarginAdjustment="0,10,0,0"
                     Type="Small" />
 
             </VerticalStackLayout>

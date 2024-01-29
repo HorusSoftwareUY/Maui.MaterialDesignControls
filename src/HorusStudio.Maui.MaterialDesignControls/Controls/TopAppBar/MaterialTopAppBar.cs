@@ -25,6 +25,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static double DefaultDescriptionFontSize = MaterialFontSize.TitleMedium;
         private readonly static string DefaultDescriptionFontFamily = MaterialFontFamily.Default;
         private readonly static FontAttributes DefaultDescriptionFontAttributes = FontAttributes.None;
+        private readonly static Thickness DefaultDescriptionMarginAdjustment = new Thickness(_descriptionLateralMargin, 0, _descriptionLateralMargin, 0);
         private readonly static double DefaultIconSize = 48.0;
         private readonly static AnimationTypes DefaultIconButtonAnimationType = MaterialAnimation.Type;
 #nullable enable
@@ -34,7 +35,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static double DefaultBusyIndicatorSize = 24.0;
         private readonly static int DefaultScrollViewAnimationLength = 250;
 
-        private double _descriptionLateralMargin = 10;
+        private const double _descriptionLateralMargin = 10;
 
         private const int SmallRowHeight = 48;
         private const int MediumRowHeight = 106;
@@ -130,7 +131,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="DescriptionMarginAdjustment" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty DescriptionMarginAdjustmentProperty = BindableProperty.Create(nameof(DescriptionMarginAdjustment), typeof(Thickness), typeof(MaterialTopAppBar), default(Thickness), BindingMode.OneTime);
+        public static readonly BindableProperty DescriptionMarginAdjustmentProperty = BindableProperty.Create(nameof(DescriptionMarginAdjustment), typeof(Thickness), typeof(MaterialTopAppBar), defaultValue: DefaultDescriptionMarginAdjustment, BindingMode.OneTime);
 
         /// <summary>
         /// The backing store for the <see cref="LeadingIcon" /> bindable property.
@@ -309,6 +310,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// Allows you to adjust the margins of the headline text. This is a bindable property.
         /// </summary>
+        /// <remarks>This property does not take into account the Left and Right of the set <see cref="Thickness" />, it only applies the Top and Bottom values.</remarks>
         public Thickness HeadlineMarginAdjustment
         {
             get => (Thickness)GetValue(HeadlineMarginAdjustmentProperty);
@@ -366,6 +368,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// Allows you to adjust the margins of the description text. This is a bindable property.
         /// </summary>
+        /// <remarks>This property does not take into account the Left and Right of the set <see cref="Thickness" />, it only applies the Top and Bottom values.</remarks>
         public Thickness DescriptionMarginAdjustment
         {
             get => (Thickness)GetValue(DescriptionMarginAdjustmentProperty);
