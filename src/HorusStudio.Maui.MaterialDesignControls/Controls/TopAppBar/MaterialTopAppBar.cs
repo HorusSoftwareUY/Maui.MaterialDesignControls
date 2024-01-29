@@ -812,30 +812,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     int maxLabelLateralMargin = Type == MaterialTopAppBarType.Large ? LargeLabelLateralMargin : MediumLabelLateralMargin;
                     int minLabelLateralMargin = SmallLabelLateralMargin;
 
-                    //if (DeviceInfo.Platform == DevicePlatform.Android)
-                    //{
-                    //    scrollView.Effects.Add(new TouchReleaseEffect(() =>
-                    //    {
-                    //        ScrollAnimation(scrollView.ScrollY, maxHeight, minHeight, maxFontSize, minFontSize, maxLabelLateralMargin, minLabelLateralMargin);
-
-                    //        Task.Run(async () =>
-                    //        {
-                    //            await Task.Delay(500);
-                    //            if (_isCollapsed && scrollView.ScrollY <= 0)
-                    //            {
-                    //                ExpandTopAppBar(maxHeight, minHeight, maxFontSize, minFontSize, maxLabelLateralMargin, minLabelLateralMargin);
-                    //            }
-                    //        });
-                    //    }));
-                    //}
-                    //else
-                    //{
-                    //    scrollView.Scrolled += (s, e) =>
-                    //    {
-                    //        ScrollAnimation(e.ScrollY, maxHeight, minHeight, maxFontSize, minFontSize, maxLabelLateralMargin, minLabelLateralMargin);
-                    //    };
-                    //}
-
                     scrollView.Scrolled += (s, e) =>
                     {
                         ScrollAnimation(e.ScrollY, maxHeight, minHeight, maxFontSize, minFontSize, maxLabelLateralMargin, minLabelLateralMargin);

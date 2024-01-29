@@ -7,7 +7,7 @@
                        x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TopAppBarPage"
                        x:TypeArguments="vm:TopAppBarViewModel"
                        x:DataType="vm:TopAppBarViewModel"
-                       NavigationPage.HasNavigationBar="False">
+                       Shell.NavBarIsVisible="False">
     <Grid
         RowDefinitions="Auto,*">
         <material:MaterialTopAppBar
@@ -15,7 +15,8 @@
             Description="{Binding Subtitle}"
             LeadingIconCommand="{Binding GoBackCommand}"
             LeadingIcon="ic_back_b.png"
-            ScrollViewName="scrollView" />
+            ScrollViewName="scrollView"
+            Type="Large" />
 
         <ScrollView
             x:Name="scrollView"
