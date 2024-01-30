@@ -19,6 +19,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         string _subtitle;
 
+        [ObservableProperty]
+        private bool _isEnabled = true;
+
+        [ObservableProperty]
+        bool _isVisible = true;
+
         #endregion Attributes & Properties
 
         public delegate Task DisplayAlertType(string title, string message, string cancel);
