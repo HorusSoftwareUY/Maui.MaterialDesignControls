@@ -39,4 +39,10 @@
 	  <Compile Remove="**\*.Windows.cs" />
 	  <None Include="**\*.Windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Controls\TopAppBar\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Controls\TopAppBar\" />
+	</ItemGroup>
 </Project>

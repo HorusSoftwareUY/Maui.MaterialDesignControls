@@ -15,6 +15,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private Color _textColor = Colors.DarkGreen;
 
+        [ObservableProperty]
+        private string _fontFamily = "FontRegular";
+
         #endregion
 
         public LabelViewModel()
@@ -27,6 +30,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             TextColor = LabelType == LabelTypes.HeadlineSmall ? Colors.DarkRed : Colors.DarkGreen;
             LabelType = LabelType == LabelTypes.HeadlineSmall ? LabelTypes.LabelMedium : LabelTypes.HeadlineSmall;
+            FontFamily = LabelType == LabelTypes.HeadlineSmall ? "FontBold" : "FontRegular";
         }
     }
 }
