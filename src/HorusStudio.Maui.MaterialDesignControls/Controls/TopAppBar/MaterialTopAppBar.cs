@@ -1,6 +1,11 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
+using Microsoft.Maui.Controls;
 
 namespace HorusStudio.Maui.MaterialDesignControls
 {
@@ -46,6 +51,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const int LargeLabelLateralMargin = 10;
 
         private bool _isCollapsed = false;
+
+        private IList _trailingIcons;
 
         #endregion Attributes
 
@@ -145,22 +152,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="TrailingIcon" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty TrailingIconProperty = BindableProperty.Create(nameof(TrailingIcon), typeof(ImageSource), typeof(MaterialTopAppBar), defaultValue: null, propertyChanged: (bindable, o, n) =>
-        {
-            if (bindable is MaterialTopAppBar self)
-            {
-                self.SetTrailingIcon();
-            }
-        });
-
-        /// <summary>
-        /// The backing store for the <see cref="IconSize" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(double), typeof(MaterialTopAppBar), defaultValue: DefaultIconSize);
-
-        /// <summary>
         /// The backing store for the <see cref="LeadingIconCommand" /> bindable property.
         /// </summary>
         public static readonly BindableProperty LeadingIconCommandProperty = BindableProperty.Create(nameof(LeadingIconCommand), typeof(ICommand), typeof(MaterialTopAppBar), null, BindingMode.OneTime, propertyChanged: (bindable, o, n) =>
@@ -172,15 +163,31 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="TrailingIconCommand" /> bindable property.
+        /// The backing store for the <see cref="LeadingIconIsBusy" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty TrailingIconCommandProperty = BindableProperty.Create(nameof(TrailingIconCommand), typeof(ICommand), typeof(MaterialTopAppBar), null, BindingMode.OneTime, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty LeadingIconIsBusyProperty = BindableProperty.Create(nameof(LeadingIconIsBusy), typeof(bool), typeof(MaterialTopAppBar), defaultValue: false, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialTopAppBar self)
             {
-                self.SetTrailingIconCommand();
+                self.SetLeadingIconIsBusy();
             }
         });
+
+        /// <summary>
+        /// The backing store for the <see cref="TrailingIcons" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TrailingIconsProperty = BindableProperty.Create(nameof(TrailingIcons), typeof(IList), typeof(MaterialTopAppBar), defaultValue: null, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialTopAppBar self)
+            {
+                self.SetTrailingIcons();
+            }
+        });
+
+        /// <summary>
+        /// The backing store for the <see cref="IconSize" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(double), typeof(MaterialTopAppBar), defaultValue: DefaultIconSize);
 
         /// <summary>
         /// The backing store for the <see cref="IconButtonAnimation" /> bindable property.
@@ -196,28 +203,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// The backing store for the <see cref="IconButtonCustomAnimation" /> bindable property.
         /// </summary>
         public static readonly BindableProperty IconButtonCustomAnimationProperty = BindableProperty.Create(nameof(IconButtonCustomAnimation), typeof(ICustomAnimation), typeof(MaterialTopAppBar), defaultValue: null);
-
-        /// <summary>
-        /// The backing store for the <see cref="TrailingIconIsBusy" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty TrailingIconIsBusyProperty = BindableProperty.Create(nameof(TrailingIconIsBusy), typeof(bool), typeof(MaterialTopAppBar), defaultValue: false, propertyChanged: (bindable, o, n) =>
-        {
-            if (bindable is MaterialTopAppBar self)
-            {
-                self.SetTrailingIconIsBusy();
-            }
-        });
-
-        /// <summary>
-        /// The backing store for the <see cref="LeadingIconIsBusy" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty LeadingIconIsBusyProperty = BindableProperty.Create(nameof(LeadingIconIsBusy), typeof(bool), typeof(MaterialTopAppBar), defaultValue: false, propertyChanged: (bindable, o, n) =>
-        {
-            if (bindable is MaterialTopAppBar self)
-            {
-                self.SetLeadingIconIsBusy();
-            }
-        });
 
         /// <summary>
         /// The backing store for the <see cref="BusyIndicatorColor" /> bindable property.
@@ -384,31 +369,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             set { SetValue(LeadingIconProperty, value); }
         }
 
-        private bool LeadingIconIsVisible
-            => LeadingIcon != null;
-
-        /// <summary>
-        /// Allows you to display an icon button on the right side of the top app bar. This is a bindable property.
-        /// </summary>
-        public ImageSource TrailingIcon
-        {
-            get { return (ImageSource)GetValue(TrailingIconProperty); }
-            set { SetValue(TrailingIconProperty, value); }
-        }
-
-        private bool TrailingIconIsVisible
-            => TrailingIcon != null;
-
-        /// <summary>
-        /// Gets or sets the size of the <see cref="MaterialTopAppBar.LeadingIcon"/> and <see cref="MaterialTopAppBar.TrailingIcon"/> of this top app bar.
-        /// This is a bindable property.
-        /// </summary>
-        public double IconSize
-        {
-            get { return (double)GetValue(IconSizeProperty); }
-            set { SetValue(IconSizeProperty, value); }
-        }
-
         /// <summary>
         /// Gets or sets the command to invoke when the leading icon button is clicked. This is a bindable property.
         /// </summary>
@@ -420,13 +380,36 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the command to invoke when the trailing icon button is clicked. This is a bindable property.
+        /// Gets or sets if the leading icon button is on busy state (executing Command).
+        /// The default value is <see langword="false"/>.
+        /// This is a bindable property.
         /// </summary>
-        /// <remarks>This property is used to associate a command with an instance of a top app bar. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.</remarks>
-        public ICommand TrailingIconCommand
+        public bool LeadingIconIsBusy
         {
-            get => (ICommand)GetValue(TrailingIconCommandProperty);
-            set => SetValue(TrailingIconCommandProperty, value);
+            get { return (bool)GetValue(LeadingIconIsBusyProperty); }
+            set { SetValue(LeadingIconIsBusyProperty, value); }
+        }
+
+        private IList<TrailingIcon> trailingIcons;
+
+        /// <summary>
+        /// Allows you to display a list of icon buttons on the right side of the top app bar. This is a bindable property.
+        /// </summary>
+        /// <remarks>This property supports a maximum of 3 icon buttons.</remarks>
+        public IList TrailingIcons
+        {
+            get { return (IList)GetValue(TrailingIconsProperty); }
+            set { SetValue(TrailingIconsProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the size of the <see cref="MaterialTopAppBar.LeadingIcon"/> and <see cref="MaterialTopAppBar.TrailingIcon"/> of this top app bar.
+        /// This is a bindable property.
+        /// </summary>
+        public double IconSize
+        {
+            get { return (double)GetValue(IconSizeProperty); }
+            set { SetValue(IconSizeProperty, value); }
         }
 
         /// <summary>
@@ -461,28 +444,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             get { return (ICustomAnimation)GetValue(IconButtonCustomAnimationProperty); }
             set { SetValue(IconButtonCustomAnimationProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets if the trailing icon button is on busy state (executing Command).
-        /// The default value is <see langword="false"/>.
-        /// This is a bindable property.
-        /// </summary>
-        public bool TrailingIconIsBusy
-        {
-            get { return (bool)GetValue(TrailingIconIsBusyProperty); }
-            set { SetValue(TrailingIconIsBusyProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets if the leading icon button is on busy state (executing Command).
-        /// The default value is <see langword="false"/>.
-        /// This is a bindable property.
-        /// </summary>
-        public bool LeadingIconIsBusy
-        {
-            get { return (bool)GetValue(LeadingIconIsBusyProperty); }
-            set { SetValue(LeadingIconIsBusyProperty, value); }
         }
 
         /// <summary>
@@ -526,10 +487,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #endregion Properties
 
-        #region Events
-
-        #endregion Events
-
         #region Layout
 
         private MaterialLabel _headlineLabel;
@@ -538,11 +495,15 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private MaterialIconButton _leadingIconButton;
 
-        private MaterialIconButton _trailingIconButton;
+        private MaterialProgressIndicator _leadingActivityIndicator;
 
-        private MaterialProgressIndicator _activityIndicatorTrailing;
+        private List<MaterialIconButton> _trailingIconButtons;
 
-        private MaterialProgressIndicator _activityIndicatorLeading;
+        private List<MaterialProgressIndicator> _trailingActivityIndicators;
+
+        private ColumnDefinition _secondTrailingColumnDefinition;
+
+        private ColumnDefinition _thirdTrailingColumnDefinition;
 
         #endregion Layout
 
@@ -559,6 +520,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void CreateLayout()
         {
+            TrailingIcons = new List<TrailingIcon>();
+
             VerticalOptions = LayoutOptions.Start;
             Padding = new Thickness(4, 8);
             RowSpacing = 0;
@@ -575,7 +538,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 HorizontalTextAlignment = TextAlignment.Center,
                 VerticalTextAlignment = TextAlignment.Center,
-                HeightRequest = SmallRowHeight
+                HeightRequest = SmallRowHeight,
+                LineBreakMode = LineBreakMode.TailTruncation
             };
             _headlineLabel.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Headline), source: this));
             _headlineLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(HeadlineColor), source: this));
@@ -589,13 +553,15 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _descriptionLabel = new MaterialLabel
             {
                 HorizontalTextAlignment = TextAlignment.Center,
-                VerticalTextAlignment = TextAlignment.Center
+                VerticalTextAlignment = TextAlignment.Center,
+                LineBreakMode = LineBreakMode.WordWrap
             };
             _descriptionLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(DescriptionColor), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(DescriptionFontSize), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(DescriptionFontFamily), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(DescriptionFontAttributes), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.MarginProperty, new Binding(nameof(DescriptionMarginAdjustment), source: this));
+            Grid.SetColumnSpan(_descriptionLabel, 3);
 
             _leadingIconButton = new MaterialIconButton
             {
@@ -612,7 +578,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             var busyIndicatorMargin = GetBusyIndicatorMargin();
 
-            _activityIndicatorLeading = new MaterialProgressIndicator
+            _leadingActivityIndicator = new MaterialProgressIndicator
             {
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
@@ -621,33 +587,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 Margin = busyIndicatorMargin,
                 IsVisible = false
             };
-            _activityIndicatorLeading.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
-            this.Add(_activityIndicatorLeading, 0, 0);
-
-            _trailingIconButton = new MaterialIconButton
-            {
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center,
-                IsVisible = false
-            };
-            _trailingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
-            _trailingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
-            _trailingIconButton.SetBinding(MaterialIconButton.AnimationProperty, new Binding(nameof(IconButtonAnimation), source: this));
-            _trailingIconButton.SetBinding(MaterialIconButton.AnimationParameterProperty, new Binding(nameof(IconButtonAnimationParameter), source: this));
-            _trailingIconButton.SetBinding(MaterialIconButton.CustomAnimationProperty, new Binding(nameof(IconButtonCustomAnimation), source: this));
-            this.Add(_trailingIconButton, 2, 0);
-
-            _activityIndicatorTrailing = new MaterialProgressIndicator
-            {
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
-                WidthRequest = BusyIndicatorSize,
-                HeightRequest = BusyIndicatorSize,
-                Margin = busyIndicatorMargin,
-                IsVisible = false
-            };
-            _activityIndicatorTrailing.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
-            this.Add(_activityIndicatorTrailing, 2, 0);
+            _leadingActivityIndicator.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
+            this.Add(_leadingActivityIndicator, 0, 0);
 
             UpdateLayoutAfterTypeChanged(Type);
         }
@@ -658,9 +599,24 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 case MaterialTopAppBarType.Small:
                     _leadingIconButton.VerticalOptions = LayoutOptions.Center;
-                    _activityIndicatorLeading.VerticalOptions = LayoutOptions.Center;
-                    _trailingIconButton.VerticalOptions = LayoutOptions.Center;
-                    _activityIndicatorTrailing.VerticalOptions = LayoutOptions.Center;
+                    _leadingActivityIndicator.VerticalOptions = LayoutOptions.Center;
+
+                    if (_trailingIconButtons != null)
+                    {
+                        foreach (var trailingIconButton in _trailingIconButtons)
+                        {
+                            trailingIconButton.VerticalOptions = LayoutOptions.Center;
+                        }
+                    }
+
+                    if (_trailingActivityIndicators != null)
+                    {
+                        foreach (var trailingActivityIndicator in _trailingActivityIndicators)
+                        {
+                            trailingActivityIndicator.VerticalOptions = LayoutOptions.Center;
+                        }
+                    }
+
                     _headlineLabel.HorizontalTextAlignment = TextAlignment.Start;
                     _headlineLabel.Margin = new Thickness(SmallLabelLateralMargin, HeadlineMarginAdjustment.Top, SmallLabelLateralMargin, HeadlineMarginAdjustment.Bottom);
                     _descriptionLabel.HorizontalTextAlignment = TextAlignment.Start;
@@ -668,9 +624,24 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     break;
                 case MaterialTopAppBarType.Medium:
                     _leadingIconButton.VerticalOptions = LayoutOptions.Start;
-                    _activityIndicatorLeading.VerticalOptions = LayoutOptions.Start;
-                    _trailingIconButton.VerticalOptions = LayoutOptions.Start;
-                    _activityIndicatorTrailing.VerticalOptions = LayoutOptions.Start;
+                    _leadingActivityIndicator.VerticalOptions = LayoutOptions.Start;
+
+                    if (_trailingIconButtons != null)
+                    {
+                        foreach (var trailingIconButton in _trailingIconButtons)
+                        {
+                            trailingIconButton.VerticalOptions = LayoutOptions.Start;
+                        }
+                    }
+
+                    if (_trailingActivityIndicators != null)
+                    {
+                        foreach (var trailingActivityIndicator in _trailingActivityIndicators)
+                        {
+                            trailingActivityIndicator.VerticalOptions = LayoutOptions.Start;
+                        }
+                    }
+
                     _headlineLabel.HorizontalTextAlignment = TextAlignment.Start;
                     _headlineLabel.VerticalOptions = LayoutOptions.End;
                     _headlineLabel.Margin = new Thickness(MediumLabelLateralMargin, HeadlineMarginAdjustment.Top, MediumLabelLateralMargin, HeadlineMarginAdjustment.Bottom);
@@ -681,9 +652,24 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     break;
                 case MaterialTopAppBarType.Large:
                     _leadingIconButton.VerticalOptions = LayoutOptions.Start;
-                    _activityIndicatorLeading.VerticalOptions = LayoutOptions.Start;
-                    _trailingIconButton.VerticalOptions = LayoutOptions.Start;
-                    _activityIndicatorTrailing.VerticalOptions = LayoutOptions.Start;
+                    _leadingActivityIndicator.VerticalOptions = LayoutOptions.Start;
+
+                    if (_trailingIconButtons != null)
+                    {
+                        foreach (var trailingIconButton in _trailingIconButtons)
+                        {
+                            trailingIconButton.VerticalOptions = LayoutOptions.Start;
+                        }
+                    }
+
+                    if (_trailingActivityIndicators != null)
+                    {
+                        foreach (var trailingActivityIndicator in _trailingActivityIndicators)
+                        {
+                            trailingActivityIndicator.VerticalOptions = LayoutOptions.Start;
+                        }
+                    }
+
                     _headlineLabel.HorizontalTextAlignment = TextAlignment.Start;
                     _headlineLabel.VerticalOptions = LayoutOptions.End;
                     _headlineLabel.Margin = new Thickness(LargeLabelLateralMargin, HeadlineMarginAdjustment.Top, LargeLabelLateralMargin, HeadlineMarginAdjustment.Bottom);
@@ -700,7 +686,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             if (!string.IsNullOrEmpty(Description))
             {
                 this.Add(_descriptionLabel, 0, 1);
-                Grid.SetColumnSpan(_descriptionLabel, 3);
             }
             else
             {
@@ -713,13 +698,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private void SetLeadingIconCommand()
         {
             _leadingIconButton.Command = LeadingIconCommand;
-            _leadingIconButton.IsVisible = LeadingIconIsVisible;
-        }
-
-        private void SetTrailingIconCommand()
-        {
-            _trailingIconButton.Command = TrailingIconCommand;
-            _trailingIconButton.IsVisible = TrailingIconIsVisible;
+            _leadingIconButton.IsVisible = LeadingIcon != null;
         }
 
         private void SetLeadingIcon()
@@ -728,49 +707,36 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _leadingIconButton.IsVisible = LeadingIcon != null;
         }
 
-        private void SetTrailingIcon()
-        {
-            _trailingIconButton.ImageSource = TrailingIcon;
-            _trailingIconButton.IsVisible = TrailingIcon != null;
-        }
-
         private void SetLeadingIconIsBusy()
         {
             if (LeadingIconIsBusy)
             {
-                _activityIndicatorLeading.IsVisible = true;
+                _leadingActivityIndicator.IsVisible = true;
                 _leadingIconButton.IsVisible = false;
             }
             else
             {
-                _activityIndicatorLeading.IsVisible = false;
+                _leadingActivityIndicator.IsVisible = false;
                 _leadingIconButton.IsVisible = true;
-            }
-        }
-
-        private void SetTrailingIconIsBusy()
-        {
-            if (TrailingIconIsBusy)
-            {
-                _activityIndicatorTrailing.IsVisible = true;
-                _trailingIconButton.IsVisible = false;
-            }
-            else
-            {
-                _activityIndicatorTrailing.IsVisible = false;
-                _trailingIconButton.IsVisible = true;
             }
         }
 
         private void SetBusyIndicatorSize()
         {
             var busyIndicatorMargin = GetBusyIndicatorMargin();
-            _activityIndicatorLeading.Margin = busyIndicatorMargin;
-            _activityIndicatorLeading.WidthRequest = BusyIndicatorSize;
-            _activityIndicatorLeading.HeightRequest = BusyIndicatorSize;
-            _activityIndicatorTrailing.Margin = busyIndicatorMargin;
-            _activityIndicatorTrailing.WidthRequest = BusyIndicatorSize;
-            _activityIndicatorTrailing.HeightRequest = BusyIndicatorSize;
+            _leadingActivityIndicator.Margin = busyIndicatorMargin;
+            _leadingActivityIndicator.WidthRequest = BusyIndicatorSize;
+            _leadingActivityIndicator.HeightRequest = BusyIndicatorSize;
+
+            if (_trailingActivityIndicators != null)
+            {
+                foreach (var trailingActivityIndicator in _trailingActivityIndicators)
+                {
+                    trailingActivityIndicator.Margin = busyIndicatorMargin;
+                    trailingActivityIndicator.WidthRequest = BusyIndicatorSize;
+                    trailingActivityIndicator.HeightRequest = BusyIndicatorSize;
+                }
+            }
         }
 
         private Thickness GetBusyIndicatorMargin()
@@ -780,16 +746,259 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 new Thickness(0);
         }
 
+        private void SetIconSize()
+        {
+            _leadingIconButton.WidthRequest = IconSize;
+            _leadingIconButton.HeightRequest = IconSize;
+
+            if (_trailingIconButtons != null)
+            {
+                foreach (var trailingIconButton in _trailingIconButtons)
+                {
+                    trailingIconButton.WidthRequest = IconSize;
+                    trailingIconButton.HeightRequest = IconSize;
+                }
+            }
+        }
+
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+
+            SetBindingContextToTrailingIcons();
+        }
+
+        private void SetBindingContextToTrailingIcons()
+        {
+            if (TrailingIcons != null)
+            {
+                foreach (var item in TrailingIcons)
+                {
+                    if (item is TrailingIcon trailingIcon)
+                    {
+                        trailingIcon.BindingContext = this.BindingContext;
+                    }
+                }
+            }
+        }
+
+        private void SetTrailingIcons()
+        {
+            RemoveTrailingIcons();
+
+            _trailingIcons = TrailingIcons;
+
+            if (TrailingIcons != null && TrailingIcons.Count > 0)
+            {
+                _trailingIconButtons = new List<MaterialIconButton>();
+                _trailingActivityIndicators = new List<MaterialProgressIndicator>();
+
+                SetBindingContextToTrailingIcons();
+
+                if (Type == MaterialTopAppBarType.CenterAligned)
+                {
+                    if (TrailingIcons.Count > 1)
+                    {
+                        Logger.Debug("CenterAligned type only allows one TrailingIcon, only the first icon button will be displayed");
+                    }
+
+                    if (TrailingIcons[0] is TrailingIcon trailingIcon)
+                    {
+                        AddTrailingIcon(trailingIcon, 0);
+                    }
+
+                    Grid.SetColumnSpan(_headlineLabel, 3);
+                    Grid.SetColumnSpan(_descriptionLabel, 3);
+                }
+                else
+                {
+                    if (TrailingIcons.Count > 3)
+                    {
+                        Logger.Debug("TrailingIcons supports a maximum of 3 icon buttons, only the 3 first icons button will be displayed");
+                    }
+
+                    if (TrailingIcons.Count >= 3)
+                    {
+                        _secondTrailingColumnDefinition = new ColumnDefinition { Width = SmallRowHeight };
+                        ColumnDefinitions.Add(_secondTrailingColumnDefinition);
+                        _thirdTrailingColumnDefinition = new ColumnDefinition { Width = SmallRowHeight };
+                        ColumnDefinitions.Add(_thirdTrailingColumnDefinition);
+
+                        Grid.SetColumnSpan(_headlineLabel, 5);
+                        Grid.SetColumnSpan(_descriptionLabel, 5);
+                    }
+                    else if (TrailingIcons.Count == 2)
+                    {
+                        _secondTrailingColumnDefinition = new ColumnDefinition { Width = SmallRowHeight };
+                        ColumnDefinitions.Add(_secondTrailingColumnDefinition);
+
+                        Grid.SetColumnSpan(_headlineLabel, 4);
+                        Grid.SetColumnSpan(_descriptionLabel, 4);
+                    }
+
+                    var trailingIconIndex = 0;
+                    foreach (var item in TrailingIcons)
+                    {
+                        if (item is TrailingIcon trailingIcon)
+                        {
+                            AddTrailingIcon(trailingIcon, trailingIconIndex);
+                            trailingIconIndex += 1;
+                        }
+                    }
+                }
+            }
+            else if (_headlineLabel != null)
+            {
+                Grid.SetColumnSpan(_headlineLabel, 3);
+                Grid.SetColumnSpan(_descriptionLabel, 3);
+            }
+        }
+
+        private void AddTrailingIcon(TrailingIcon trailingIcon, int trailingIconIndex)
+        {
+            if (trailingIcon == null)
+            {
+                return;
+            }
+
+            trailingIcon.Index = trailingIconIndex;
+
+            var trailingIconButtonsVerticalOptions = LayoutOptions.Center;
+
+            if (Type == MaterialTopAppBarType.Medium
+                || Type == MaterialTopAppBarType.Large)
+            {
+                trailingIconButtonsVerticalOptions = LayoutOptions.Start;
+            }
+
+            var trailingIconButton = new MaterialIconButton
+            {
+                ImageSource = trailingIcon.Icon,
+                Command = trailingIcon.Command,
+                IsBusy = trailingIcon.IsBusy,
+                VerticalOptions = trailingIconButtonsVerticalOptions,
+                HorizontalOptions = LayoutOptions.Center,
+                IsVisible = true
+            };
+            trailingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.AnimationProperty, new Binding(nameof(IconButtonAnimation), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.AnimationParameterProperty, new Binding(nameof(IconButtonAnimationParameter), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.CustomAnimationProperty, new Binding(nameof(IconButtonCustomAnimation), source: this));
+            _trailingIconButtons.Add(trailingIconButton);
+            this.Add(trailingIconButton, trailingIconIndex + 2, 0);
+
+            var busyIndicatorMargin = GetBusyIndicatorMargin();
+            var activityIndicatorTrailing = new MaterialProgressIndicator
+            {
+                VerticalOptions = trailingIconButtonsVerticalOptions,
+                HorizontalOptions = LayoutOptions.Center,
+                WidthRequest = BusyIndicatorSize,
+                HeightRequest = BusyIndicatorSize,
+                Margin = busyIndicatorMargin,
+                IsVisible = false
+            };
+            activityIndicatorTrailing.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
+            _trailingActivityIndicators.Add(activityIndicatorTrailing);
+            this.Add(activityIndicatorTrailing, trailingIconIndex + 2, 0);
+
+            trailingIcon.PropertyChanged += TrailingIcon_PropertyChanged;
+        }
+
+        private void TrailingIcon_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (sender is TrailingIcon trailingIcon
+                && trailingIcon.Index.HasValue)
+            {
+                if (e.PropertyName == TrailingIcon.IsBusyProperty.PropertyName)
+                {
+                    if (trailingIcon.IsBusy)
+                    {
+                        _trailingActivityIndicators[trailingIcon.Index.Value].IsVisible = true;
+                        _trailingIconButtons[trailingIcon.Index.Value].IsVisible = false;
+                    }
+                    else
+                    {
+                        _trailingActivityIndicators[trailingIcon.Index.Value].IsVisible = false;
+                        _trailingIconButtons[trailingIcon.Index.Value].IsVisible = true;
+                    }
+                }
+                else if (e.PropertyName == TrailingIcon.IsVisibleProperty.PropertyName)
+                {
+                    _trailingIconButtons[trailingIcon.Index.Value].IsVisible = trailingIcon.IsVisible;
+                }
+                else if (e.PropertyName == TrailingIcon.IsEnabledProperty.PropertyName)
+                {
+                    _trailingIconButtons[trailingIcon.Index.Value].IsEnabled = trailingIcon.IsEnabled;
+                }
+            }
+        }
+
+        private void RemoveTrailingIcons()
+        {
+            if (_trailingIconButtons != null)
+            {
+                foreach (var trailingIconButton in _trailingIconButtons)
+                {
+                    this.Remove(trailingIconButton);
+                }
+            }
+
+            _trailingIconButtons = null;
+
+            if (_trailingActivityIndicators != null)
+            {
+                foreach (var trailingActivityIndicator in _trailingActivityIndicators)
+                {
+                    this.Remove(trailingActivityIndicator);
+                }
+            }
+
+            _trailingActivityIndicators = null;
+
+            if (_secondTrailingColumnDefinition != null)
+            {
+                ColumnDefinitions.Remove(_secondTrailingColumnDefinition);
+            }
+
+            _secondTrailingColumnDefinition = null;
+
+            if (_thirdTrailingColumnDefinition != null)
+            {
+                ColumnDefinitions.Remove(_thirdTrailingColumnDefinition);
+            }
+
+            _thirdTrailingColumnDefinition = null;
+
+            if (_trailingIcons != null)
+            {
+                foreach (var item in _trailingIcons)
+                {
+                    if (item is TrailingIcon trailingIcon)
+                    {
+                        trailingIcon.PropertyChanged -= TrailingIcon_PropertyChanged;
+                    }
+                }
+            }
+        }
+
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (propertyName == nameof(Window)
                 && Window != null)
             {
                 // Window property is setted with a value when the view is appearing
+
                 if (!string.IsNullOrEmpty(ScrollViewName)
                         && (Type == MaterialTopAppBarType.Medium || Type == MaterialTopAppBarType.Large))
                 {
                     SetScrollViewAnimation();
+                }
+
+                if (TrailingIcons != null
+                    && (_trailingIconButtons == null || !_trailingIconButtons.Any()))
+                {
+                    SetTrailingIcons();
                 }
             }
 
@@ -842,6 +1051,18 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             _isCollapsed = false;
 
+            if (TrailingIcons != null)
+            {
+                if (TrailingIcons.Count == 3)
+                {
+                    Grid.SetColumnSpan(_headlineLabel, 5);
+                }
+                else if (TrailingIcons.Count == 2)
+                {
+                    Grid.SetColumnSpan(_headlineLabel, 4);
+                }
+            }
+
             var mainAnimation = new Animation();
             mainAnimation.Add(0, 1, new Animation(v => RowDefinitions[0].Height = new GridLength(v), minHeight, maxHeight, Easing.Linear));
             mainAnimation.Add(0, 1, new Animation(v => _headlineLabel.FontSize = v, minFontSize, maxFontSize, Easing.Linear));
@@ -852,6 +1073,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private void CollapseTopAppBar(int maxHeight, int minHeight, double maxFontSize, double minFontSize, int maxLabelLateralMargin, int minLabelLateralMargin)
         {
             _isCollapsed = true;
+
+            if (TrailingIcons != null)
+            {
+                Grid.SetColumnSpan(_headlineLabel, 3);
+            }
 
             var mainAnimation = new Animation();
             mainAnimation.Add(0, 1, new Animation(v => RowDefinitions[0].Height = new GridLength(v), maxHeight, minHeight, Easing.Linear));
