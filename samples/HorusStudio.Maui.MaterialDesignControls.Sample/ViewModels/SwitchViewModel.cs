@@ -7,10 +7,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        public override string Title => "Switchs";
-
-        [ObservableProperty]
-        private bool _isEnabled = true;
+        public override string Title => "Switches";
 
         [ObservableProperty]
         private bool _isToggled = true;

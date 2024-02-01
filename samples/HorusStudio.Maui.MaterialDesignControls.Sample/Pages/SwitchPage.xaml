@@ -181,7 +181,7 @@
                         SupportingTextColor="DarkGray"
                         SupportingFontFamily="FontRegular"
                         SupportingFontAttributes="Italic"
-                        SupportingSize="10"
+                        SupportingFontSize="10"
                         TextSide="Right"
                         Spacing="20"
                         ToggledCommand="{Binding SwitchTappedCommand}" />

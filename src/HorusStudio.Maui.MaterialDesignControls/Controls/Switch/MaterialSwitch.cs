@@ -31,7 +31,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static FontAttributes DefaultFontAttributes = FontAttributes.None;
         private readonly static SwitchTextSide DefaultTextSide = SwitchTextSide.Left;
         private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultSupportingSize = MaterialFontSize.BodySmall;
+        private readonly static double DefaultSupportingFontSize = MaterialFontSize.BodySmall;
         private readonly static string DefaultSupportingFontFamily = MaterialFontFamily.Default;
         private readonly static FontAttributes DefaultSupportingFontAttributes = FontAttributes.None;
         private readonly static double DefaultSpacing = 16.0;
@@ -175,9 +175,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
         public static readonly BindableProperty SupportingTextColorProperty = BindableProperty.Create(nameof(SupportingTextColor), typeof(Color), typeof(MaterialSwitch), defaultValue: DefaultSupportingTextColor);
 
         /// <summary>
-        /// The backing store for the <see cref="SupportingSize"/> bindable property.
+        /// The backing store for the <see cref="SupportingFontSize"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty SupportingSizeProperty = BindableProperty.Create(nameof(SupportingSize), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultSupportingSize);
+        public static readonly BindableProperty SupportingFontSizeProperty = BindableProperty.Create(nameof(SupportingFontSize), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultSupportingFontSize);
 
         /// <summary>
         /// The backing store for the <see cref="SupportingFontFamily"/> bindable property.
@@ -372,10 +372,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Gets or sets the size of the font for the supporting text of this switch. This is a bindable property.
         /// </summary>
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
-        public double SupportingSize
+        public double SupportingFontSize
         {
-            get { return (double)GetValue(SupportingSizeProperty); }
-            set { SetValue(SupportingSizeProperty, value); }
+            get { return (double)GetValue(SupportingFontSizeProperty); }
+            set { SetValue(SupportingFontSizeProperty, value); }
         }
 
         /// <summary>
@@ -592,7 +592,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             };
             _supportingTextLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SupportingTextColor), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(SupportingFontFamily), source: this));
-            _supportingTextLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingSize), source: this));
+            _supportingTextLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingFontSize), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(SupportingFontAttributes), source: this));
 
             _mainContainer.Children.Add(_switch);
