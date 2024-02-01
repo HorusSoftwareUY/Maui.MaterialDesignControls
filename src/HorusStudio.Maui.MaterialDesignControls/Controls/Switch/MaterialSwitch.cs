@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls
 {
@@ -25,7 +26,14 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
         private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
         private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
+
+#if IOS
+        // A border width 4 on iOS looks the same as the border width 2 recommended by Material Design
+        private readonly static double DefaultBorderWidth = 4;
+#else
         private readonly static double DefaultBorderWidth = 2;
+#endif
+
         private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
         private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
         private readonly static FontAttributes DefaultFontAttributes = FontAttributes.None;
@@ -459,9 +467,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private ColumnDefinition _rightColumnMainContainer;
         private MaterialLabel _textLabel;
         private Grid _switch;
-        private Frame _track;
-        private Frame _trackInner;
-        private Frame _thumb;
+        private Border _track;
+        private Border _thumb;
         private Image _icon;
         private MaterialLabel _supportingTextLabel;
 
@@ -518,44 +525,35 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 VerticalOptions = LayoutOptions.Center
             };
 
-            _trackInner = new Frame
+            _track = new Border
             {
                 Padding = 0,
-                HasShadow = false,
-                BorderColor = Colors.Transparent,
-                IsClippedToBounds = true
-            };
-
-            _trackInner.SetBinding(Microsoft.Maui.Controls.Frame.BackgroundColorProperty, new Binding(nameof(TrackColor), source: this));
-
-            SetBorderWidth();
-
-            _track = new Frame
-            {
-                Padding = 0,
-                CornerRadius = (float)(_trackHeight / 2),
+                StrokeShape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius((float)(_trackHeight / 2))
+                },
                 HeightRequest = _trackHeight,
                 WidthRequest = _trackWidth,
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
-                HasShadow = false,
-                BorderColor = Colors.Transparent,
-                IsClippedToBounds = true,
-                Content = _trackInner
+                VerticalOptions = LayoutOptions.Center
             };
 
-            _track.SetBinding(Microsoft.Maui.Controls.Frame.BackgroundColorProperty, new Binding(nameof(BorderColor), source: this));
+            _track.SetBinding(Border.BackgroundColorProperty, new Binding(nameof(TrackColor), source: this));
+            _track.SetBinding(Border.StrokeProperty, new Binding(nameof(BorderColor), source: this));
 
-            _thumb = new Frame
+            SetBorderWidth();
+
+            _thumb = new Border
             {
                 Padding = 0,
-                CornerRadius = (float)(_thumbSelectedSize / 2),
+                StrokeShape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius((float)(_thumbSelectedSize / 2))
+                },
                 HeightRequest = _thumbSelectedSize,
                 WidthRequest = _thumbSelectedSize,
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
-                HasShadow = false,
-                IsClippedToBounds = true
+                VerticalOptions = LayoutOptions.Center
             };
 
             _thumb.SetBinding(Microsoft.Maui.Controls.Frame.BackgroundColorProperty, new Binding(nameof(ThumbColor), source: this));
@@ -667,12 +665,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void SetBorderWidth()
         {
-            if (_trackInner != null)
+            if (_track != null)
             {
-                _trackInner.CornerRadius = (float)(_trackHeight / 2 - BorderWidth);
-                _trackInner.HeightRequest = _trackHeight - 2 * BorderWidth;
-                _trackInner.WidthRequest = _trackWidth - 2 * BorderWidth;
-                _trackInner.Margin = BorderWidth;
+                _track.StrokeThickness = BorderWidth;
             }
         }
 
