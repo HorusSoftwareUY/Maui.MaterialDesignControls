@@ -29,6 +29,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
         private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
         private readonly static FontAttributes DefaultFontAttributes = FontAttributes.None;
+        private readonly static TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
         private readonly static SwitchTextSide DefaultTextSide = SwitchTextSide.Left;
         private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
         private readonly static double DefaultSupportingFontSize = MaterialFontSize.BodySmall;
@@ -146,6 +147,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// The backing store for the <see cref="FontAttributes" /> bindable property.
         /// </summary>
         public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialSwitch), defaultValue: DefaultFontAttributes);
+
+        /// <summary>
+        /// The backing store for the <see cref="HorizontalTextAlignment" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(MaterialSwitch), defaultValue: DefaultHorizontalTextAlignment);
 
         /// <summary>
         /// The backing store for the <see cref="TextSide"/> bindable property.
@@ -337,6 +343,16 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             get => (FontAttributes)GetValue(FontAttributesProperty);
             set => SetValue(FontAttributesProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value that indicates the horizontal alignment of the text and supporting text.
+        /// This is a bindable property.
+        /// </summary>
+        public TextAlignment HorizontalTextAlignment
+        {
+            get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty);
+            set => SetValue(HorizontalTextAlignmentProperty, value);
         }
 
         /// <summary>
@@ -583,6 +599,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _textLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
             _textLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
             _textLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
+            _textLabel.SetBinding(MaterialLabel.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
 
             _supportingTextLabel = new MaterialLabel()
             {
@@ -594,6 +611,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _supportingTextLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(SupportingFontFamily), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingFontSize), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(SupportingFontAttributes), source: this));
+            _supportingTextLabel.SetBinding(MaterialLabel.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
 
             _mainContainer.Children.Add(_switch);
             _mainContainer.Children.Add(_textLabel);

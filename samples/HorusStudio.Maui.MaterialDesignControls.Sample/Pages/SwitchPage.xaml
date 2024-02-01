@@ -184,7 +184,8 @@
                         SupportingFontSize="10"
                         TextSide="Right"
                         Spacing="20"
-                        ToggledCommand="{Binding SwitchTappedCommand}" />
+                        ToggledCommand="{Binding SwitchTappedCommand}"
+                        HorizontalTextAlignment="Center" />
                     <material:MaterialSwitch
                         IsEnabled="True"
                         IsToggled="True"
