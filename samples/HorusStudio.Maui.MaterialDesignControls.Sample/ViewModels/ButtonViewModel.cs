@@ -11,9 +11,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public override string Title => "Buttons";
 
         [ObservableProperty]
-        private bool _buttonEnabled = true;
-
-        [ObservableProperty]
         private TextDecorations _decorations = TextDecorations.None;
 
         #endregion

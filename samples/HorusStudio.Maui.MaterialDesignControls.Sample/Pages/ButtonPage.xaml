@@ -272,7 +272,7 @@
                         Text="Custom"
                         HeightRequest="60"
                         CornerRadius="30"
-                        IsEnabled="{Binding ButtonEnabled}"
+                        IsEnabled="{Binding IsEnabled}"
                         Command="{Binding MaterialButton11Command}"
                         CommandParameter="Custom button clicked!"
                         BusyIndicatorColor="DarkCyan"
@@ -293,7 +293,7 @@
                         Type="Custom"
                         Text="Visual state"
                         ImageSource="plus.png"
-                        IsEnabled="{Binding ButtonEnabled}"
+                        IsEnabled="{Binding IsEnabled}"
                         Command="{Binding MaterialButton12Command}"
                         CommandParameter="Custom button with icon clicked!"
                         IsBusy="{Binding MaterialButton12Command.IsRunning}"
@@ -312,7 +312,7 @@
                         Grid.Row="1"
                         Grid.Column="1"
                         HorizontalOptions="Start"
-                        IsToggled="{Binding ButtonEnabled}" />
+                        IsToggled="{Binding IsEnabled}" />
                 </Grid>
             </Frame>
             <material:MaterialLabel Text="Use custom buttons if you need to combine properties from different button types." />
