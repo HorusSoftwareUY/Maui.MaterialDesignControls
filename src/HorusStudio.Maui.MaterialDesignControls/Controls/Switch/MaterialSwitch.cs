@@ -13,7 +13,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// </summary>
     public class MaterialSwitch : ContentView
     {
-        // TODO: Track color animation is commented on because it produces an issue on track color when you change the IsEnabled and IsToggled values
+        // TODO: Track color animation: change from on-track color to off-track color within the toggle animation
         // TODO: Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them
         // TODO: FontAttributes and SupportingFontAttributes don't work
 
@@ -681,12 +681,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, -_xReference)}
                 };
 
-                var changeTrackColorAnimation = GetChangeTrackColorAnimation(false);
-                if (changeTrackColorAnimation != null)
-                {
-                    animation.Add(0, 1, changeTrackColorAnimation);
-                }
-
                 if (_reduceThumbSize)
                 {
                     animation.Add(0, 1, new Animation(v => _thumb.Scale = v, 1, _thumbUnselectedWithoutIconScale));
@@ -725,12 +719,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, _xReference)}
                 };
 
-                var changeTrackColorAnimation = GetChangeTrackColorAnimation(true);
-                if (changeTrackColorAnimation != null)
-                {
-                    animation.Add(0, 1, changeTrackColorAnimation);
-                }
-
                 if (_reduceThumbSize)
                 {
                     animation.Add(0, 1, new Animation(v => _thumb.Scale = v, _thumbUnselectedWithoutIconScale, 1));
@@ -755,40 +743,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             SetIconSource();
             SetThumbSize();
-        }
-
-        private Animation GetChangeTrackColorAnimation(bool animationToOnSate)
-        {
-            //string fromState;
-            //string toState;
-
-            //if (animationToOnSate)
-            //{
-            //    fromState = IsEnabled ? SwitchCommonStates.Off : SwitchCommonStates.OffDisabled;
-            //    toState = IsEnabled ? SwitchCommonStates.On : SwitchCommonStates.OnDisabled;
-            //}
-            //else
-            //{
-            //    fromState = IsEnabled ? SwitchCommonStates.On : SwitchCommonStates.OnDisabled;
-            //    toState = IsEnabled ? SwitchCommonStates.Off : SwitchCommonStates.OffDisabled;
-            //}
-
-            //var trackColorFromValue = this.GetVisualStatePropertyValue(nameof(CommonStates), fromState, TrackColorProperty.PropertyName);
-            //var trackColorToValue = this.GetVisualStatePropertyValue(nameof(CommonStates), toState, TrackColorProperty.PropertyName);
-
-            //if (trackColorFromValue is Color trackColorFrom && trackColorToValue is Color trackColorTo)
-            //{
-            //    return new Animation(v =>
-            //    {
-            //        TrackColor = trackColorFrom.AnimateTo(trackColorTo, v);
-            //    }, 0, 0.1);
-            //}
-            //else
-            //{
-            //    return null;
-            //}
-
-            return null;
         }
 
         private void SetIconSource()
