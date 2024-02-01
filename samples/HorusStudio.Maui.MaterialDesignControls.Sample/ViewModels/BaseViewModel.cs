@@ -25,6 +25,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         bool _isVisible = true;
 
+        bool _alreadyOpenFlyout = false;
+
         #endregion Attributes & Properties
 
         public delegate Task DisplayAlertType(string title, string message, string cancel);
@@ -122,6 +124,17 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         protected void ToggleMenu()
         {
+            // Workaround to open the flyout on Android the first time
+            // https://github.com/dotnet/maui/issues/8226
+#if ANDROID
+            if (!_alreadyOpenFlyout)
+            {
+                Shell.Current.FlyoutBehavior = FlyoutBehavior.Locked;
+                Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
+                _alreadyOpenFlyout = true;
+            }
+#endif
+
             Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
         }
 
