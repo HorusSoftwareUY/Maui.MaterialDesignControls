@@ -134,7 +134,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="Text"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialSwitch), defaultValue: null);
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialSwitch self)
+            {
+                self.SetText();
+            }
+        });
 
         /// <summary>
         /// The backing store for the <see cref="TextColor"/> bindable property.
@@ -505,20 +511,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void CreateLayout()
         {
-            _mainContainer = new Grid
-            {
-                RowSpacing = 0
-            };
-            _mainContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-            _mainContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-
-            _leftColumnMainContainer = new ColumnDefinition(GridLength.Star);
-            _rightColumnMainContainer = new ColumnDefinition(_trackWidth);
-            _mainContainer.ColumnDefinitions.Add(_leftColumnMainContainer);
-            _mainContainer.ColumnDefinitions.Add(_rightColumnMainContainer);
-
-            _mainContainer.SetBinding(Grid.ColumnSpacingProperty, new Binding(nameof(Spacing), source: this));
-            _mainContainer.SetBinding(Grid.RowSpacingProperty, new Binding(nameof(TextSpacing), source: this));
+            HorizontalOptions = LayoutOptions.Center;
 
             _switch = new Grid
             {
@@ -587,12 +580,37 @@ namespace HorusStudio.Maui.MaterialDesignControls
             contentViewGesture.GestureRecognizers.Add(tapGestureRecognizer);
             _switch.Children.Add(contentViewGesture);
 
+            _xReference = ((_track.WidthRequest - _thumb.WidthRequest) / 2) - 5;
+            _thumb.TranslationX = !_isOnToggledState ? -_xReference : _xReference;
+
+            Content = _switch;
+        }
+
+        private void CreateLayoutWithTexts()
+        {
+            HorizontalOptions = LayoutOptions.Fill;
+
+            _mainContainer = new Grid
+            {
+                RowSpacing = 0
+            };
+            _mainContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+            _mainContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+
+            _leftColumnMainContainer = new ColumnDefinition(GridLength.Star);
+            _rightColumnMainContainer = new ColumnDefinition(_trackWidth);
+            _mainContainer.ColumnDefinitions.Add(_leftColumnMainContainer);
+            _mainContainer.ColumnDefinitions.Add(_rightColumnMainContainer);
+
+            _mainContainer.SetBinding(Grid.ColumnSpacingProperty, new Binding(nameof(Spacing), source: this));
+            _mainContainer.SetBinding(Grid.RowSpacingProperty, new Binding(nameof(TextSpacing), source: this));
+
             _textLabel = new MaterialLabel
             {
+                IsVisible = false,
                 VerticalTextAlignment = TextAlignment.Center,
                 LineBreakMode = LineBreakMode.TailTruncation
             };
-            _textLabel.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Text), source: this));
             _textLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
             _textLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
             _textLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
@@ -617,9 +635,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             UpdateLayoutAfterTextSideChanged(TextSide);
 
-            _xReference = ((_track.WidthRequest - _thumb.WidthRequest) / 2) - 5;
-            _thumb.TranslationX = !_isOnToggledState ? -_xReference : _xReference;
-
             Content = _mainContainer;
         }
 
@@ -630,11 +645,17 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 _leftColumnMainContainer.Width = GridLength.Star;
                 _rightColumnMainContainer.Width = _trackWidth;
 
-                Grid.SetRow(_textLabel, 0);
-                Grid.SetColumn(_textLabel, 0);
+                if (_textLabel != null)
+                {
+                    Grid.SetRow(_textLabel, 0);
+                    Grid.SetColumn(_textLabel, 0);
+                }
 
-                Grid.SetRow(_supportingTextLabel, 1);
-                Grid.SetColumn(_supportingTextLabel, 0);
+                if (_supportingTextLabel != null)
+                {
+                    Grid.SetRow(_supportingTextLabel, 1);
+                    Grid.SetColumn(_supportingTextLabel, 0);
+                }
 
                 Grid.SetRow(_switch, 0);
                 Grid.SetColumn(_switch, 1);
@@ -645,11 +666,17 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 _leftColumnMainContainer.Width = _trackWidth;
                 _rightColumnMainContainer.Width = GridLength.Star;
 
-                Grid.SetRow(_textLabel, 0);
-                Grid.SetColumn(_textLabel, 1);
+                if (_textLabel != null)
+                {
+                    Grid.SetRow(_textLabel, 0);
+                    Grid.SetColumn(_textLabel, 1);
+                }
 
-                Grid.SetRow(_supportingTextLabel, 1);
-                Grid.SetColumn(_supportingTextLabel, 1);
+                if (_supportingTextLabel != null)
+                {
+                    Grid.SetRow(_supportingTextLabel, 1);
+                    Grid.SetColumn(_supportingTextLabel, 1);
+                }
 
                 Grid.SetRow(_switch, 0);
                 Grid.SetColumn(_switch, 0);
@@ -657,10 +684,48 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }
         }
 
+        private void SetText()
+        {
+            if (string.IsNullOrEmpty(Text) && string.IsNullOrEmpty(SupportingText))
+            {
+                Content = _switch;
+            }
+            else if (!string.IsNullOrEmpty(Text))
+            {
+                if (_textLabel == null)
+                {
+                    CreateLayoutWithTexts();
+                }
+                else
+                {
+                    Content = _mainContainer;
+                }
+
+                _textLabel.Text = Text;
+                _textLabel.IsVisible = !string.IsNullOrEmpty(Text);
+            }
+        }
+
         private void SetSupportingText()
         {
-            _supportingTextLabel.Text = SupportingText;
-            _supportingTextLabel.IsVisible = !string.IsNullOrEmpty(SupportingText);
+            if (string.IsNullOrEmpty(Text) && string.IsNullOrEmpty(SupportingText))
+            {
+                Content = _switch;
+            }
+            else if (!string.IsNullOrEmpty(SupportingText))
+            {
+                if (_supportingTextLabel == null)
+                {
+                    CreateLayoutWithTexts();
+                }
+                else
+                {
+                    Content = _mainContainer;
+                }
+
+                _supportingTextLabel.Text = SupportingText;
+                _supportingTextLabel.IsVisible = !string.IsNullOrEmpty(SupportingText);
+            }
         }
 
         private void SetBorderWidth()

@@ -9,6 +9,13 @@
              x:DataType="vm:SwitchViewModel">
 
     <ContentPage.Resources>
+        <Style x:Key="SwitchContainer" TargetType="Grid">
+            <Setter Property="RowDefinitions" Value="Auto,Auto" />
+            <Setter Property="ColumnDefinitions" Value="*,*" />
+            <Setter Property="RowSpacing" Value="16" />
+            <Setter Property="ColumnSpacing" Value="16" />
+        </Style>
+
         <Style x:Key="VisualStateManagerStyle" TargetType="material:MaterialSwitch"> 
             <Setter Property="VisualStateManager.VisualStateGroups"> 
                 <VisualStateGroupList> 
@@ -53,6 +60,34 @@
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Switch's states" />
             <Frame Style="{StaticResource SurfaceContainer}">
+                <Grid
+                    Style="{StaticResource SwitchContainer}">
+                    <material:MaterialSwitch
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        IsEnabled="True"
+                        IsToggled="True" />
+                    <material:MaterialSwitch
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        IsEnabled="True"
+                        IsToggled="False" />
+                    <material:MaterialSwitch
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        IsEnabled="False"
+                        IsToggled="True" />
+                    <material:MaterialSwitch
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        IsEnabled="False"
+                        IsToggled="False" />
+                </Grid>
+            </Frame>
+            <material:MaterialLabel Text="Switches provide 4 default states (VisualState): On, Off, OnDisabled and OffDisabled." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Text on the left side" />
+            <Frame Style="{StaticResource SurfaceContainer}">
                 <VerticalStackLayout>
                     <material:MaterialSwitch
                         IsEnabled="True"
@@ -73,7 +108,7 @@
                         Text="Option D" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="Switches provide 4 default states (VisualState): On, Off, OnDisabled and OffDisabled." />
+            <material:MaterialLabel Text="With the TextSide property you can tell whether you want the text on the left or right." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Text on the right side" />
             <Frame Style="{StaticResource SurfaceContainer}">
@@ -124,44 +159,48 @@
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Icons" />
             <Frame Style="{StaticResource SurfaceContainer}">
-                <VerticalStackLayout>
+                <Grid
+                    Style="{StaticResource SwitchContainer}"
+                    RowDefinitions="Auto">
                     <material:MaterialSwitch
-                        Text="Option A"
-                        TextSide="Right"
                         SelectedIcon="volume.png"
                         UnselectedIcon="mute.png" />
                     <material:MaterialSwitch
-                        Text="Option B"
-                        TextSide="Right"
+                        Grid.Column="1"
                         SelectedIcon="volume.png" />
-                </VerticalStackLayout>
+                </Grid>
             </Frame>
             <material:MaterialLabel Text="With the TextSide property you can tell whether you want the text on the left or right." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Styles with VisualStateManager" />
             <Frame Style="{StaticResource SurfaceContainer}">
-                <VerticalStackLayout>
+                <Grid
+                    Style="{StaticResource SwitchContainer}">
                     <material:MaterialSwitch
+                        Grid.Row="0"
+                        Grid.Column="0"
                         IsEnabled="True"
                         IsToggled="True"
-                        Text="Option A"
                         Style="{StaticResource VisualStateManagerStyle}" />
                     <material:MaterialSwitch
+                        Grid.Row="1"
+                        Grid.Column="0"
                         IsEnabled="True"
                         IsToggled="False"
-                        Text="Option B"
                         Style="{StaticResource VisualStateManagerStyle}" />
                     <material:MaterialSwitch
+                        Grid.Row="0"
+                        Grid.Column="1"
                         IsEnabled="False"
                         IsToggled="True"
-                        Text="Option C"
                         Style="{StaticResource VisualStateManagerStyle}" />
                     <material:MaterialSwitch
+                        Grid.Row="1"
+                        Grid.Column="1"
                         IsEnabled="False"
                         IsToggled="False"
-                        Text="Option D"
                         Style="{StaticResource VisualStateManagerStyle}" />
-                </VerticalStackLayout>
+                </Grid>
             </Frame>
             <material:MaterialLabel Text="VisualStateManager allows you to configure TrackColor, BorderColor and ThumbColor." />
 
