@@ -17,6 +17,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static void ConfigureHandlers(IMauiHandlersCollection handlers)
         {
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
+            handlers.AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler));
         }
 
         private static void ConfigureLifeCycleEvents(ILifecycleBuilder appLifeCycle)
@@ -59,6 +60,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialButton.GetStyles());
             // Icon Button
             application.Resources.AddStyles(MaterialIconButton.GetStyles());
+            // MaterialInputBase
+            application.Resources.AddStyles(MaterialInputBase.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
