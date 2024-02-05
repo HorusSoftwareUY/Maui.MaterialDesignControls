@@ -15,27 +15,31 @@ namespace HorusStudio.Maui.MaterialDesignControls
     public class MaterialSwitch : ContentView
     {
         // TODO: Track color animation: change from on-track color to off-track color within the toggle animation
-        // TODO: Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them
-        // TODO: FontAttributes and SupportingFontAttributes don't work
+        // TODO: [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
 
         #region Attributes
 
         private readonly static bool DefaultIsToggled = false;
         private readonly static bool DefaultIsEnabled = true;
         private readonly static Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultTrackWidthRequest = 52;
-        private readonly static double DefaultTrackHeightRequest = 32;
-        private readonly static Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
-        private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-        private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
 
 #if IOS
+        private readonly static double DefaultTrackWidthRequest = 52;
+        private readonly static double DefaultTrackHeightRequest = 32;
+
         // A border width 4 on iOS looks the same as the border width 2 recommended by Material Design
         private readonly static double DefaultBorderWidth = 4;
 #else
+        // Sizes recommended by Material Design are increased by 4 points due to how the border is rendered in Android
+        private readonly static double DefaultTrackWidthRequest = 56;
+        private readonly static double DefaultTrackHeightRequest = 36;
+
         private readonly static double DefaultBorderWidth = 2;
 #endif
 
+        private readonly static Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
+        private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+        private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
         private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
         private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
         private readonly static FontAttributes DefaultFontAttributes = FontAttributes.None;
@@ -53,7 +57,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private readonly uint _toggleAnimationDuration = 150;
 
-        private readonly double _thumbSelectedSize = 24;
+        private readonly double _thumbTrackSizeDifference = 8;
         private readonly double _thumbUnselectedWithoutIconScale = 0.7;
 
         private bool _reduceThumbSize => UnselectedIcon == null;
@@ -720,7 +724,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             var trackWidth = TrackWidthRequest >= DefaultTrackWidthRequest ? TrackWidthRequest : DefaultTrackWidthRequest;
             var trackHeight = TrackHeightRequest >= DefaultTrackHeightRequest ? TrackHeightRequest : DefaultTrackHeightRequest;
-            var thumbSelectedSize = trackHeight - 8;
+            var thumbSelectedSize = trackHeight - _thumbTrackSizeDifference;
 
             _track.StrokeShape = new RoundRectangle
             {
@@ -743,10 +747,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 if (TextSide == SwitchTextSide.Left)
                 {
+                    _leftColumnMainContainer.Width = GridLength.Star;
                     _rightColumnMainContainer.Width = trackWidth;
                 }
                 else
                 {
+                    _leftColumnMainContainer.Width = trackWidth;
                     _rightColumnMainContainer.Width = GridLength.Star;
                 }
             }
@@ -1003,35 +1009,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 }
                 .GetValueForCurrentTheme<Color>());
 
-            //var offDisabledState = new VisualState { Name = SwitchCommonStates.OffDisabled };
-            //offDisabledState.Setters.Add(
-            //    MaterialSwitch.TrackColorProperty,
-            //    new AppThemeBindingExtension
-            //    {
-            //        Light = MaterialLightTheme.SurfaceContainerHighest,
-            //        Dark = MaterialDarkTheme.SurfaceContainerHighest
-            //    }
-            //    .GetValueForCurrentTheme<Color>()
-            //    .WithAlpha(0.12f));
-            //offDisabledState.Setters.Add(
-            //    MaterialSwitch.BorderColorProperty,
-            //    new AppThemeBindingExtension
-            //    {
-            //        Light = MaterialLightTheme.OnSurface,
-            //        Dark = MaterialDarkTheme.OnSurface
-            //    }
-            //    .GetValueForCurrentTheme<Color>()
-            //    .WithAlpha(0.38f));
-            //offDisabledState.Setters.Add(
-            //    MaterialSwitch.ThumbColorProperty,
-            //    new AppThemeBindingExtension
-            //    {
-            //        Light = MaterialLightTheme.OnSurface,
-            //        Dark = MaterialDarkTheme.OnSurface
-            //    }
-            //    .GetValueForCurrentTheme<Color>()
-            //    .WithAlpha(0.38f));
-
             var offDisabledState = new VisualState { Name = SwitchCommonStates.OffDisabled };
             offDisabledState.Setters.Add(
                 MaterialSwitch.TrackColorProperty,
@@ -1041,80 +1018,45 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     Dark = MaterialDarkTheme.SurfaceContainerHighest
                 }
                 .GetValueForCurrentTheme<Color>()
-                .WithAlpha(1f));
+                .WithAlpha(0.12f));
             offDisabledState.Setters.Add(
                 MaterialSwitch.BorderColorProperty,
                 new AppThemeBindingExtension
                 {
-                    Light = MaterialLightTheme.Outline,
-                    Dark = MaterialDarkTheme.Outline
+                    Light = MaterialLightTheme.OnSurface,
+                    Dark = MaterialDarkTheme.OnSurface
                 }
                 .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.38f));
+                .WithAlpha(0.12f));
             offDisabledState.Setters.Add(
                 MaterialSwitch.ThumbColorProperty,
                 new AppThemeBindingExtension
                 {
-                    Light = MaterialLightTheme.Outline,
-                    Dark = MaterialDarkTheme.Outline
+                    Light = MaterialLightTheme.OnSurface,
+                    Dark = MaterialDarkTheme.OnSurface
                 }
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.38f));
-
-            //var onDisabledState = new VisualState { Name = SwitchCommonStates.OnDisabled };
-            //onDisabledState.Setters.Add(
-            //    MaterialSwitch.TrackColorProperty,
-            //    new AppThemeBindingExtension
-            //    {
-            //        Light = MaterialLightTheme.OnSurface,
-            //        Dark = MaterialDarkTheme.OnSurface
-            //    }
-            //    .GetValueForCurrentTheme<Color>()
-            //    .WithAlpha(0.12f));
-            //onDisabledState.Setters.Add(
-            //    MaterialSwitch.BorderColorProperty,
-            //    new AppThemeBindingExtension
-            //    {
-            //        Light = MaterialLightTheme.OnSurface,
-            //        Dark = MaterialDarkTheme.OnSurface
-            //    }
-            //    .GetValueForCurrentTheme<Color>()
-            //    .WithAlpha(0.12f));
-            //onDisabledState.Setters.Add(
-            //    MaterialSwitch.ThumbColorProperty,
-            //    new AppThemeBindingExtension
-            //    {
-            //        Light = MaterialLightTheme.Surface,
-            //        Dark = MaterialDarkTheme.Surface
-            //    }
-            //    .GetValueForCurrentTheme<Color>()
-            //    .WithAlpha(0.38f));
 
             var onDisabledState = new VisualState { Name = SwitchCommonStates.OnDisabled };
             onDisabledState.Setters.Add(
                 MaterialSwitch.TrackColorProperty,
                 new AppThemeBindingExtension
                 {
-                    Light = MaterialLightTheme.Outline,
-                    Dark = MaterialDarkTheme.Outline
+                    Light = MaterialLightTheme.OnSurface,
+                    Dark = MaterialDarkTheme.OnSurface
                 }
                 .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.38f));
+                .WithAlpha(0.12f));
             onDisabledState.Setters.Add(
                 MaterialSwitch.BorderColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.Outline,
-                    Dark = MaterialDarkTheme.Outline
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.38f));
+                Colors.Transparent);
             onDisabledState.Setters.Add(
                 MaterialSwitch.ThumbColorProperty,
                 new AppThemeBindingExtension
                 {
-                    Light = MaterialLightTheme.SurfaceContainerHighest,
-                    Dark = MaterialDarkTheme.SurfaceContainerHighest
+                    Light = MaterialLightTheme.Surface,
+                    Dark = MaterialDarkTheme.Surface
                 }
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(1f));
