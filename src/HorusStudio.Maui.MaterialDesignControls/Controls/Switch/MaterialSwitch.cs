@@ -23,6 +23,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static bool DefaultIsToggled = false;
         private readonly static bool DefaultIsEnabled = true;
         private readonly static Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
+        private readonly static double DefaultTrackWidthRequest = 52;
+        private readonly static double DefaultTrackHeightRequest = 32;
         private readonly static Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
         private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
         private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
@@ -51,9 +53,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private readonly uint _toggleAnimationDuration = 150;
 
-        private readonly double _trackHeight = 32;
-        private readonly double _trackWidth = 52;
-
         private readonly double _thumbSelectedSize = 24;
         private readonly double _thumbUnselectedWithoutIconScale = 0.7;
 
@@ -69,6 +68,28 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// The backing store for the <see cref="TrackColor"/> bindable property.
         /// </summary>
         public static readonly BindableProperty TrackColorProperty = BindableProperty.Create(nameof(TrackColor), typeof(Color), typeof(MaterialSwitch), DefaultTrackColor);
+
+        /// <summary>
+        /// The backing store for the <see cref="TrackWidthRequest" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TrackWidthRequestProperty = BindableProperty.Create(nameof(TrackWidthRequest), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultTrackWidthRequest, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialSwitch self)
+            {
+                self.SetTrackAndThumbSizes();
+            }
+        });
+
+        /// <summary>
+        /// The backing store for the <see cref="TrackHeightRequest" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TrackHeightRequestProperty = BindableProperty.Create(nameof(TrackHeightRequest), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultTrackHeightRequest, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialSwitch self)
+            {
+                self.SetTrackAndThumbSizes();
+            }
+        });
 
         /// <summary>
         /// The backing store for the <see cref="BorderColor"/> bindable property.
@@ -241,6 +262,26 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             get => (Color)GetValue(TrackColorProperty);
             set => SetValue(TrackColorProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the desired width of the track. This is a bindable property.
+        /// </summary>
+        /// <remarks>The default and minimum value is 52.</remarks>
+        public double TrackWidthRequest
+        {
+            get => (double)GetValue(TrackWidthRequestProperty);
+            set => SetValue(TrackWidthRequestProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the desired height of the track. This is a bindable property.
+        /// </summary>
+        /// <remarks>The default and minimum value is 32.</remarks>
+        public double TrackHeightRequest
+        {
+            get => (double)GetValue(TrackHeightRequestProperty);
+            set => SetValue(TrackHeightRequestProperty, value);
         }
 
         /// <summary>
@@ -521,12 +562,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _track = new Border
             {
                 Padding = 0,
-                StrokeShape = new RoundRectangle
-                {
-                    CornerRadius = new CornerRadius((float)(_trackHeight / 2))
-                },
-                HeightRequest = _trackHeight,
-                WidthRequest = _trackWidth,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center
             };
@@ -539,17 +574,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _thumb = new Border
             {
                 Padding = 0,
-                StrokeShape = new RoundRectangle
-                {
-                    CornerRadius = new CornerRadius((float)(_thumbSelectedSize / 2))
-                },
-                HeightRequest = _thumbSelectedSize,
-                WidthRequest = _thumbSelectedSize,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center
             };
 
             _thumb.SetBinding(Microsoft.Maui.Controls.Frame.BackgroundColorProperty, new Binding(nameof(ThumbColor), source: this));
+
+            SetTrackAndThumbSizes();
 
             _icon = new Image
             {
@@ -580,9 +611,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             contentViewGesture.GestureRecognizers.Add(tapGestureRecognizer);
             _switch.Children.Add(contentViewGesture);
 
-            _xReference = ((_track.WidthRequest - _thumb.WidthRequest) / 2) - 5;
-            _thumb.TranslationX = !_isOnToggledState ? -_xReference : _xReference;
-
             Content = _switch;
         }
 
@@ -597,8 +625,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _mainContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
             _mainContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
 
+            var trackWidth = TrackWidthRequest >= DefaultTrackWidthRequest ? TrackWidthRequest : DefaultTrackWidthRequest;
+
             _leftColumnMainContainer = new ColumnDefinition(GridLength.Star);
-            _rightColumnMainContainer = new ColumnDefinition(_trackWidth);
+            _rightColumnMainContainer = new ColumnDefinition(trackWidth);
             _mainContainer.ColumnDefinitions.Add(_leftColumnMainContainer);
             _mainContainer.ColumnDefinitions.Add(_rightColumnMainContainer);
 
@@ -640,10 +670,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void UpdateLayoutAfterTextSideChanged(SwitchTextSide textSide)
         {
+            var trackWidth = TrackWidthRequest >= DefaultTrackWidthRequest ? TrackWidthRequest : DefaultTrackWidthRequest;
+
             if (textSide == SwitchTextSide.Left)
             {
                 _leftColumnMainContainer.Width = GridLength.Star;
-                _rightColumnMainContainer.Width = _trackWidth;
+                _rightColumnMainContainer.Width = trackWidth;
 
                 if (_textLabel != null)
                 {
@@ -663,7 +695,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }
             else
             {
-                _leftColumnMainContainer.Width = _trackWidth;
+                _leftColumnMainContainer.Width = trackWidth;
                 _rightColumnMainContainer.Width = GridLength.Star;
 
                 if (_textLabel != null)
@@ -681,6 +713,42 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 Grid.SetRow(_switch, 0);
                 Grid.SetColumn(_switch, 0);
                 Grid.SetRowSpan(_switch, 2);
+            }
+        }
+
+        private void SetTrackAndThumbSizes()
+        {
+            var trackWidth = TrackWidthRequest >= DefaultTrackWidthRequest ? TrackWidthRequest : DefaultTrackWidthRequest;
+            var trackHeight = TrackHeightRequest >= DefaultTrackHeightRequest ? TrackHeightRequest : DefaultTrackHeightRequest;
+            var thumbSelectedSize = trackHeight - 8;
+
+            _track.StrokeShape = new RoundRectangle
+            {
+                CornerRadius = new CornerRadius((float)(trackHeight / 2))
+            };
+            _track.HeightRequest = trackHeight;
+            _track.WidthRequest = trackWidth;
+
+            _thumb.StrokeShape = new RoundRectangle
+            {
+                CornerRadius = new CornerRadius((float)(thumbSelectedSize / 2))
+            };
+            _thumb.WidthRequest = thumbSelectedSize;
+            _thumb.HeightRequest = thumbSelectedSize;
+
+            _xReference = ((_track.WidthRequest - _thumb.WidthRequest) / 2) - 5;
+            _thumb.TranslationX = !_isOnToggledState ? -_xReference : _xReference;
+
+            if (_rightColumnMainContainer != null)
+            {
+                if (TextSide == SwitchTextSide.Left)
+                {
+                    _rightColumnMainContainer.Width = trackWidth;
+                }
+                else
+                {
+                    _rightColumnMainContainer.Width = GridLength.Star;
+                }
             }
         }
 

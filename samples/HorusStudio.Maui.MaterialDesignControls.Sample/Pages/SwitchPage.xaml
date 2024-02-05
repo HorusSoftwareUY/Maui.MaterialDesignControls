@@ -223,6 +223,8 @@
                         SupportingFontSize="10"
                         TextSide="Right"
                         Spacing="20"
+                        TrackWidthRequest="70"
+                        TrackHeightRequest="40"
                         ToggledCommand="{Binding SwitchTappedCommand}"
                         HorizontalTextAlignment="Center" />
                     <material:MaterialSwitch
