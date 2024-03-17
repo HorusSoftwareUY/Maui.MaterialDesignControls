@@ -20,7 +20,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         string _subtitle;
 
         [ObservableProperty]
-        private bool _isEnabled = true;
+        bool _isEnabled = true;
 
         [ObservableProperty]
         bool _isVisible = true;

@@ -18,6 +18,7 @@ public class MaterialButton : ContentView, ITouchable
     // TODO: Shadow doesn't react to VisualStateManager changes
     // TODO: ContentLayout is buggy
     // TODO: Add default Material behavior for pressed state on default styles (v2)
+    // TODO: [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
 
     #region Attributes
 
