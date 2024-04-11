@@ -1,11 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
-using Microsoft.Maui.Controls;
 
 namespace HorusStudio.Maui.MaterialDesignControls
 {
@@ -19,6 +15,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// </summary>
     public class MaterialTopAppBar : Grid
     {
+        // TODO: [iOS] The scroll animation has lag by the headline size change
+
         #region Attributes
 
         private readonly static MaterialTopAppBarType DefaultType = MaterialTopAppBarType.CenterAligned;
