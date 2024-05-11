@@ -1,5 +1,4 @@
-﻿using System;
-namespace HorusStudio.Maui.MaterialDesignControls;
+﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
 /// An <see cref="Entry" /> without border lines on every platform.
@@ -7,4 +6,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 public class BorderlessEntry : Entry
 {
     //TODO: Make this control internal
+
+    public BorderlessEntry()
+    { }
 }

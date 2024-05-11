@@ -1,4 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -7,29 +9,35 @@ public enum MaterialInputType
     Filled, Outlined
 }
 
-public partial class MaterialInputBase : ContentView
+public enum MaterialInputTypeStates
+{
+    FilledDisabled, FilledFocused, FilledNormal, OutlinedDisabled, OutlinedFocused, OutlinedNormal
+}
+
+public abstract partial class MaterialInputBase : ContentView
 {
     #region Attributes
 
     private readonly static MaterialInputType DefaultInputType = MaterialInputType.Filled;
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private readonly static Brush DefaultBackground = Colors.Transparent;
+    private readonly static bool DefaultIsEnabled = true;
+    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultIconTintColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
+    private readonly static Brush DefaultBackground = Entry.BackgroundProperty.DefaultValue as Brush;
     private readonly static Color DefaultBackgroundColor = Colors.Transparent;
     private readonly static double DefaultBorderWidth = 1;
-    private readonly static Color DefaultBorderColor = Colors.Transparent;
+    private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
     private readonly static CornerRadius DefaultCornerRadius = new(0);
 
-    private readonly Dictionary<MaterialInputType, object> _backgroundColors = new()
-    {
-        { MaterialInputType.Filled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest } },
-        { MaterialInputType.Outlined, new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimary, Dark = MaterialDarkTheme.OnPrimary } }
-    };
+    private readonly static TextAlignment DefaultMaterialInputBase = TextAlignment.Start;
 
-    private readonly Dictionary<MaterialInputType, object> _borderColors = new()
+    private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
-        { MaterialInputType.Filled, new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant } },
-        { MaterialInputType.Outlined, new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline } }
+        { MaterialInputTypeStates.FilledDisabled, new AppThemeBindingExtension { Light = Colors.LightGray, Dark = Colors.LightGray } },
+        { MaterialInputTypeStates.FilledFocused, new AppThemeBindingExtension { Light = Colors.LightBlue, Dark = Colors.LightBlue } },
+        { MaterialInputTypeStates.FilledNormal, new AppThemeBindingExtension { Light = Colors.LightGreen, Dark = Colors.LightGreen } },
+        { MaterialInputTypeStates.OutlinedDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
+        { MaterialInputTypeStates.OutlinedFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
+        { MaterialInputTypeStates.OutlinedNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } }
     };
 
     private readonly Dictionary<MaterialInputType, CornerRadius> _cornerRadius = new()
@@ -45,7 +53,7 @@ public partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="Type" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialInputType), typeof(MaterialInputBase), defaultValue: DefaultInputType, propertyChanged: (bindable, oldValue, newValue) =>
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialInputType), typeof(MaterialInputBase), defaultValue: DefaultInputType, defaultBindingMode: BindingMode.OneTime, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialInputBase self)
         {
@@ -54,31 +62,25 @@ public partial class MaterialInputBase : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Hint" /> bindable property.
+    /// The backing store for the <see cref="IsEnabled" /> bindable property.
     /// </summary>
-    internal static readonly BindableProperty HintProperty = BindableProperty.Create(nameof(Hint), typeof(string), typeof(MaterialInputBase));
+    public static new readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialInputBase), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialInputBase self)
+        {
+            self.SetIsEnabled(self.Type);
+        }
+    });
 
     /// <summary>
     /// The backing store for the <see cref="Label" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelProperty = BindableProperty.Create(nameof(Label), typeof(string), typeof(MaterialInputBase), propertyChanged: (bindable, _, _) =>
-    {
-        if (bindable is MaterialInputBase self)
-        {
-            self.Hint = self.Label ?? self.Placeholder;
-        }
-    });
+    public static readonly BindableProperty LabelProperty = BindableProperty.Create(nameof(Label), typeof(string), typeof(MaterialInputBase));
 
     /// <summary>
     /// The backing store for the <see cref="Placeholder" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(MaterialInputBase), propertyChanged: (bindable, _, _) =>
-    {
-        if (bindable is MaterialInputBase self)
-        {
-            self.Hint = self.Label ?? self.Placeholder;
-        }
-    });
+    public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(MaterialInputBase));
 
     /// <summary>
     /// The backing store for the <see cref="SupportingText" /> bindable property.
@@ -93,29 +95,12 @@ public partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="TextColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultTextColor, propertyChanged: (bindable, o, n) =>
-    {
-        if (bindable is MaterialInputBase self)
-        {
-            //self.SetTextColor(self.Type);
-        }
-    });
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="IconTintColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty IconTintColorProperty = BindableProperty.Create(nameof(IconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultTintColor, propertyChanged: (bindable, o, n) =>
-    {
-        if (bindable is MaterialInputBase self)
-        {
-            //self.SetTintColor(self.Type);
-        }
-    });
-
-    /// <summary>
-    /// The backing store for the <see cref="TintColor" /> bindable property.
-    /// </summary>
-    internal static readonly BindableProperty TintColorProperty = BindableProperty.Create(nameof(TintColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultTintColor);
+    public static readonly BindableProperty IconTintColorProperty = BindableProperty.Create(nameof(IconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultIconTintColor);
 
     /// <summary>
     /// The backing store for the <see cref="Background" /> bindable property.
@@ -124,7 +109,7 @@ public partial class MaterialInputBase : ContentView
     {
         if (bindable is MaterialInputBase self)
         {
-            //self.SetBackground(self.Type);
+            self.SetBackground(self.Type);
         }
     });
 
@@ -135,7 +120,7 @@ public partial class MaterialInputBase : ContentView
     {
         if (bindable is MaterialInputBase self)
         {
-            //self.SetBackgroundColor(self.Type);
+            self.SetBackgroundColor(self.Type);
         }
     });
 
@@ -147,53 +132,38 @@ public partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="BorderColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultBorderColor, propertyChanged: (bindable, o, n) =>
-    {
-        if (bindable is MaterialInputBase self)
-        {
-            //self.SetBorderColor(self.Type);
-        }
-    });
+    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultBorderColor);
 
     /// <summary>
     /// The backing store for the <see cref="CornerRadius"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialInputBase), defaultValue: DefaultCornerRadius);
+    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialInputBase), defaultValue: DefaultCornerRadius, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialInputBase self)
+        {
+            self.SetCornerRadius(self.Type);
+        }
+    });
 
     /// <summary>
     /// The backing store for the <see cref="LeadingIconSource" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LeadingIconSourceProperty = BindableProperty.Create(nameof(LeadingIconSource), typeof(ImageSource), typeof(MaterialInputBase), propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        //if (bindable is MaterialInputBase self)
-        //{
-        //    if ((newValue == null && oldValue != null) ||
-        //        (newValue is ImageSource newImage && (oldValue == null || (oldValue is ImageSource oldImage && !oldImage.Equals(newImage)))))
-        //    {
-        //        self.UpdatePadding();
-        //    }
-        //}
-    });
+    public static readonly BindableProperty LeadingIconSourceProperty = BindableProperty.Create(nameof(LeadingIconSource), typeof(ImageSource), typeof(MaterialInputBase));
 
     /// <summary>
     /// The backing store for the <see cref="TrailingIconSource" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TrailingIconSourceProperty = BindableProperty.Create(nameof(TrailingIconSource), typeof(ImageSource), typeof(MaterialInputBase), propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        //if (bindable is MaterialInputBase self)
-        //{
-        //    if ((newValue == null && oldValue != null) ||
-        //        (newValue is ImageSource newImage && (oldValue == null || (oldValue is ImageSource oldImage && !oldImage.Equals(newImage)))))
-        //    {
-        //        self.UpdatePadding();
-        //    }
-        //}
-    });
+    public static readonly BindableProperty TrailingIconSourceProperty = BindableProperty.Create(nameof(TrailingIconSource), typeof(ImageSource), typeof(MaterialInputBase));
 
     /// <summary>
     /// The backing store for the <see cref="IsFocused"/> bindable property.
     /// </summary>
     public static new readonly BindableProperty IsFocusedProperty = BindableProperty.Create(nameof(IsFocused), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
+
+    /// <summary>
+    /// The backing store for the <see cref="HorizontalTextAlignment"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(MaterialInputBase), defaultValue: DefaultMaterialInputBase);
 
     #endregion Bindable Properties
 
@@ -210,7 +180,16 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a <see cref="Brush"/> that describes the background of the button. This is a bindable property.
+    /// Gets or sets if the input is enabled or diabled. This is a bindable property.
+    /// </summary>
+    public new bool IsEnabled
+    {
+        get => (bool)GetValue(IsEnabledProperty);
+        set => SetValue(IsEnabledProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a <see cref="Brush"/> that describes the background of the input. This is a bindable property.
     /// </summary>
     public new Brush Background
     {
@@ -219,7 +198,7 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the background color of the button. This is a bindable property.
+    /// Gets or sets a color that describes the background color of the input. This is a bindable property.
     /// </summary>
     public new Color BackgroundColor
     {
@@ -228,7 +207,7 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the border stroke color of the button. This is a bindable property.
+    /// Gets or sets a color that describes the border stroke color of the input. This is a bindable property.
     /// </summary>
     /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0. On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor" /> is set to a non-default color.</remarks>
     public Color BorderColor
@@ -238,7 +217,7 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the corner radius for the button, in device-independent units. This is a bindable property.
+    /// Gets or sets the corner radius for the input, in device-independent units. This is a bindable property.
     /// </summary>
     public CornerRadius CornerRadius
     {
@@ -257,9 +236,9 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image on the Button. This is a bindable property.
+    /// Allows you to display a leading icon (bitmap image) on the input. This is a bindable property.
     /// </summary>
-    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
     public ImageSource LeadingIconSource
     {
         get => (ImageSource)GetValue(LeadingIconSourceProperty);
@@ -267,9 +246,9 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image on the Button. This is a bindable property.
+    /// Allows you to display a trailing icon (bitmap image) on the input. This is a bindable property.
     /// </summary>
-    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
     public ImageSource TrailingIconSource
     {
         get => (ImageSource)GetValue(TrailingIconSourceProperty);
@@ -277,10 +256,9 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text displayed as the content of the button.
+    /// Gets or sets the text displayed as the placeholder of the input.
     /// The default value is <see langword="null"/>. This is a bindable property.
     /// </summary>
-    /// <remarks>Changing the text of a button will trigger a layout cycle.</remarks>
     public string Placeholder
     {
         get => (string)GetValue(PlaceholderProperty);
@@ -288,10 +266,9 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text displayed as the content of the button.
+    /// Gets or sets the text displayed as the label of the input.
     /// The default value is <see langword="null"/>. This is a bindable property.
     /// </summary>
-    /// <remarks>Changing the text of a button will trigger a layout cycle.</remarks>
     public string Label
     {
         get => (string)GetValue(LabelProperty);
@@ -299,20 +276,9 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text displayed as the floating label of the input.
-    /// Takes value from <see cref="Label"/> or <see cref="Placeholder"/>. This is a bindable property.
-    /// </summary>
-    public string Hint
-    {
-        get => (string)GetValue(HintProperty);
-        internal set => SetValue(HintProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the text displayed as the content of the button.
+    /// Gets or sets the text displayed as the supporting text of the input.
     /// The default value is <see langword="null"/>. This is a bindable property.
     /// </summary>
-    /// <remarks>Changing the text of a button will trigger a layout cycle.</remarks>
     public string SupportingText
     {
         get => (string)GetValue(SupportingTextProperty);
@@ -320,10 +286,9 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text displayed as the content of the button.
+    /// Gets or sets the text displayed as the content of the input.
     /// The default value is <see langword="null"/>. This is a bindable property.
     /// </summary>
-    /// <remarks>Changing the text of a button will trigger a layout cycle.</remarks>
     public string Text
     {
         get => (string)GetValue(TextProperty);
@@ -331,7 +296,7 @@ public partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the text of the input. This is a bindable property.
     /// </summary>
     public Color TextColor
     {
@@ -339,46 +304,45 @@ public partial class MaterialInputBase : ContentView
         set => SetValue(TextColorProperty, value);
     }
 
+#nullable enable
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the leading and trailing button's icons of the input. This is a bindable property.
     /// </summary>
     public Color? IconTintColor
     {
         get => (Color?)GetValue(IconTintColorProperty);
         set => SetValue(IconTintColorProperty, value);
     }
+#nullable disable
 
-    /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button. This is a bindable property.
-    /// </summary>
-    public Color? TintColor
-    {
-        get => (Color?)GetValue(TintColorProperty);
-        set => SetValue(TintColorProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the shadow effect cast by the element. This is a bindable property.
-    /// </summary>
+    /// <inheritdoc/>
     public new bool IsFocused
     {
         get => (bool)GetValue(IsFocusedProperty);
         set => SetValue(IsFocusedProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the horizontal text alignment for the input. This is a bindable property.
+    /// </summary>
+    public TextAlignment HorizontalTextAlignment
+    {
+        get { return (TextAlignment)GetValue(HorizontalTextAlignmentProperty); }
+        set { SetValue(HorizontalTextAlignmentProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the command to invoke when the input is tapped.
+    /// </summary>
+    /// <remarks>This property is used internally and it's recommended to avoid setting it directly.</remarks>
+    public ICommand InputTapCommand { get; set; }
+
     #endregion Properties
-
-    #region Layout
-
-    //IMaterialInputBase _content;
-
-    #endregion
 
     public MaterialInputBase()
     {
         InitializeComponent();
 
-        CreateLayout();
         if (Type == DefaultInputType)
         {
             UpdateLayoutAfterTypeChanged(Type);
@@ -388,45 +352,57 @@ public partial class MaterialInputBase : ContentView
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
-        if (propertyName == nameof(Content) && Content != null)
+
+        System.Diagnostics.Debug.WriteLine($"============> OnPropertyChanged: {propertyName}");
+
+        if (propertyName == nameof(Window) && Window != null)
         {
-            Content.Focused += ContentFocusChanged;
-            Content.Unfocused += ContentFocusChanged;
+            // Window property is setted with a value when the view is appearing
+            OnAppearing();
         }
         else if (propertyName == nameof(Window) && Window == null)
         {
-            // Window property is setted on null when the view is dissapearing
-            // So we cleanup events/animations
-
-            if (Content != null)
-            {
-                Content.Focused -= ContentFocusChanged;
-                Content.Unfocused -= ContentFocusChanged;
-            }
+            // Window property is setted on null when the view is disappearing
+            OnDisappearing();
         }
     }
 
-    private void CreateLayout()
+    private void OnAppearing()
     {
+        // Add tap gesture to the input control to do focus
+        var border = (Border)GetTemplateChild("InputBorder");
+        if (border != null)
+        {
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Command = InputTapCommand;
+            border.GestureRecognizers.Add(tapGestureRecognizer);
+        }
+
+        OnControlAppearing();
     }
 
-    private void ContentFocusChanged(object sender, FocusEventArgs e)
+    protected abstract void OnControlAppearing();
+
+    private void OnDisappearing()
     {
-        IsFocused = e.IsFocused;
-        VisualStateManager.GoToState(this, IsFocused ? VisualStateManager.CommonStates.Focused : VisualStateManager.CommonStates.Normal);
+        OnControlDisappearing();
     }
 
-    //protected abstract View CreateView();
+    protected abstract void OnControlDisappearing();
 
     private void UpdateLayoutAfterTypeChanged(MaterialInputType type)
     {
         SetTemplate(type);
-        SetBackgroundColor(type);
-        SetBorderColor(type);
-        //SetTextColor(type);
-        //SetTintColor(type);
-        //SetShadow(type);
+        SetIsEnabled(type);
         SetCornerRadius(type);
+
+        UpdateLayoutAfterStatusChanged(type);
+    }
+
+    protected void UpdateLayoutAfterStatusChanged(MaterialInputType type)
+    {
+        SetBackground(type);
+        SetBackgroundColor(type);
     }
 
     private void SetTemplate(MaterialInputType type)
@@ -441,121 +417,346 @@ public partial class MaterialInputBase : ContentView
         }
     }
 
+    protected abstract void SetControlTemplate(MaterialInputType type);
+
+    protected MaterialInputTypeStates GetCurrentTypeState(MaterialInputType type)
+    {
+        if (IsFocused)
+            return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledFocused : MaterialInputTypeStates.OutlinedFocused;
+        else if (!IsEnabled)
+            return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledDisabled : MaterialInputTypeStates.OutlinedDisabled;
+        else
+            return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledNormal : MaterialInputTypeStates.OutlinedNormal;
+    }
+
+    protected string GetCurrentVisualState()
+    {
+        if (IsFocused)
+            return VisualStateManager.CommonStates.Focused;
+        else if (!IsEnabled)
+            return VisualStateManager.CommonStates.Disabled;
+        else
+            return VisualStateManager.CommonStates.Normal;
+    }
+
+    private void SetIsEnabled(MaterialInputType type)
+    {
+        SetControlIsEnabled();
+        VisualStateManager.GoToState(this, GetCurrentVisualState());
+        UpdateLayoutAfterStatusChanged(type);
+    }
+
+    protected abstract void SetControlIsEnabled();
+
+    private void SetBackground(MaterialInputType type)
+    {
+        System.Diagnostics.Debug.WriteLine($"============> SetBackground");
+
+        var inputBorder = (Border)GetTemplateChild("InputBorder");
+        if (inputBorder != null)
+        {
+            SetBackgroundToView(type, inputBorder);
+        }
+    }
+
+    private void SetBackgroundToView(MaterialInputType type, View view)
+    {
+        if (_backgroundColors.TryGetValue(GetCurrentTypeState(type), out object background) && background != null)
+        {
+            if ((Background == null && DefaultBackground != null) || !Background.Equals(DefaultBackground))
+            {
+                // Set by user
+                view.Background = Background;
+            }
+        }
+        else
+        {
+            // Unsupported for current input type, ignore
+            view.Background = DefaultBackground;
+        }
+    }
+
     private void SetBackgroundColor(MaterialInputType type)
     {
-        if (_backgroundColors.TryGetValue(type, out object background) && background != null)
-        {
-            // Default Material value according to Type
-            if (background is Color backgroundColor)
-            {
-                BackgroundColor = backgroundColor;
-            }
-            else if (background is AppThemeBindingExtension theme)
-            {
-                BackgroundColor = theme.GetValueForCurrentTheme<Color>();
-            }          
-        }
-    }
+        System.Diagnostics.Debug.WriteLine($"============> SetBackgroundColor");
 
-    private void SetBorderColor(MaterialInputType type)
-    {
-        if (_borderColors.TryGetValue(type, out object border) && border != null)
+        var inputBorder = (Border)GetTemplateChild("InputBorder");
+        if (inputBorder != null)
         {
-            // Default Material value according to Type
-            if (border is Color borderColor)
+            SetBackgroundColorToView(type, inputBorder);
+        }
+
+        if (type == MaterialInputType.Outlined)
+        {
+            var outlinedHint = (Label)GetTemplateChild("OutlinedHint");
+            if (outlinedHint != null)
             {
-                BorderColor = borderColor;
-            }
-            else if (border is AppThemeBindingExtension theme)
-            {
-                BorderColor = theme.GetValueForCurrentTheme<Color>();
+                SetBackgroundColorToView(type, outlinedHint);
             }
         }
     }
 
-    private void SetCornerRadius(MaterialInputType type)
+    private void SetBackgroundColorToView(MaterialInputType type, View view)
     {
-        if (_cornerRadius.TryGetValue(type, out CornerRadius cornerRadius))
+        if (_backgroundColors.TryGetValue(GetCurrentTypeState(type), out object background) && background != null)
         {
-            // Default Material value according to Type
-            CornerRadius = cornerRadius;
+            if ((BackgroundColor == null && DefaultBackgroundColor == null) || BackgroundColor.Equals(DefaultBackgroundColor))
+            {
+                // Default Material value according to Type
+                if (background is Color backgroundColor)
+                {
+                    view.BackgroundColor = backgroundColor;
+                }
+                else if (background is AppThemeBindingExtension theme)
+                {
+                    view.BackgroundColor = theme.GetValueForCurrentTheme<Color>();
+                }
+            }
+            else
+            {
+                // Set by user
+                view.BackgroundColor = BackgroundColor;
+            }
+        }
+        else
+        {
+            // Unsupported for current input type, ignore
+            view.BackgroundColor = DefaultBackgroundColor;
+        }
+    }
+
+    protected void SetCornerRadius(MaterialInputType type)
+    {
+        var inputBorder = (Border)GetTemplateChild("InputBorder");
+        if (inputBorder != null)
+        {
+            if (_cornerRadius.TryGetValue(type, out CornerRadius cornerRadius))
+            {
+                if (CornerRadius.Equals(DefaultCornerRadius))
+                {
+                    // Default Material value according to Type
+                    inputBorder.StrokeShape = new RoundRectangle { CornerRadius = cornerRadius };
+                }
+                else if (type == MaterialInputType.Outlined)
+                {
+                    // Set by user
+                    inputBorder.StrokeShape = new RoundRectangle { CornerRadius = CornerRadius };
+                }
+                else if (type == MaterialInputType.Filled
+                    && (CornerRadius.BottomLeft > 0 || CornerRadius.BottomRight > 0))
+                {
+                    // Set by user
+                    inputBorder.StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(CornerRadius.TopLeft, CornerRadius.TopRight, 0, 0) };
+                }
+            }
+            else
+            {
+                // Unsupported for current input type, ignore
+                inputBorder.StrokeShape = new RoundRectangle { CornerRadius = DefaultCornerRadius };
+            }
         }
     }
 
     #region Styles
 
-    internal static IEnumerable<Style> GetStyles()
+    protected static VisualStateGroupList GetBaseStyles()
     {
         var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
 
-        var disabledState = new VisualState { Name = ButtonCommonStates.Disabled };
-        disabledState.Setters.Add(
-            MaterialInputBase.BackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
+        //var disabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
+        //disabledState.Setters.Add(
+        //    MaterialInputBase.BackgroundColorProperty,
+        //    new AppThemeBindingExtension
+        //    {
+        //        Light = MaterialLightTheme.OnSurface,
+        //        Dark = MaterialDarkTheme.OnSurface
+        //    }
+        //    .GetValueForCurrentTheme<Color>()
+        //    .WithAlpha(0.12f));
 
-        disabledState.Setters.Add(
+        //disabledState.Setters.Add(
+        //    MaterialInputBase.TextColorProperty,
+        //    new AppThemeBindingExtension
+        //    {
+        //        Light = MaterialLightTheme.OnSurface,
+        //        Dark = MaterialDarkTheme.OnSurface
+        //    }
+        //    .GetValueForCurrentTheme<Color>()
+        //    .WithAlpha(0.38f));
+
+        //disabledState.Setters.Add(
+        //    MaterialInputBase.IconTintColorProperty,
+        //    new AppThemeBindingExtension
+        //    {
+        //        Light = MaterialLightTheme.OnSurface,
+        //        Dark = MaterialDarkTheme.OnSurface
+        //    }
+        //    .GetValueForCurrentTheme<Color>()
+        //    .WithAlpha(0.38f));
+
+        //disabledState.Setters.Add(MaterialButton.ShadowProperty, null);
+
+        //disabledState.Setters.Add(
+        //    MaterialInputBase.BorderColorProperty,
+        //    new AppThemeBindingExtension
+        //    {
+        //        Light = MaterialLightTheme.OnSurface,
+        //        Dark = MaterialDarkTheme.OnSurface
+        //    }
+        //    .GetValueForCurrentTheme<Color>()
+        //    .WithAlpha(0.12f));
+
+        //var focusedState = new VisualState { Name = VisualStateManager.CommonStates.Focused };
+        //focusedState.Setters.Add(
+        //    MaterialInputBase.BackgroundColorProperty,
+        //    Colors.Green);
+
+        //focusedState.Setters.Add(
+        //    MaterialInputBase.BorderColorProperty,
+        //    new AppThemeBindingExtension
+        //    {
+        //        Light = MaterialLightTheme.Primary,
+        //        Dark = MaterialDarkTheme.Primary
+        //    }
+        //    .GetValueForCurrentTheme<Color>());
+
+        //focusedState.Setters.Add(MaterialInputBase.BorderWidthProperty, 2);
+        //focusedState.Setters.Add(MaterialInputBase.CornerRadiusProperty, new CornerRadius(16));
+
+        //var normalState = new VisualState { Name = VisualStateManager.CommonStates.Normal };
+        //normalState.Setters.Add(
+        //    MaterialInputBase.BackgroundColorProperty,
+        //    Colors.Blue);
+
+        //normalState.Setters.Add(
+        //    MaterialInputBase.BorderColorProperty,
+        //    new AppThemeBindingExtension
+        //    {
+        //        Light = MaterialLightTheme.Primary,
+        //        Dark = MaterialDarkTheme.Primary
+        //    }
+        //    .GetValueForCurrentTheme<Color>());
+
+        //normalState.Setters.Add(MaterialInputBase.BorderWidthProperty, 2);
+        //normalState.Setters.Add(MaterialInputBase.CornerRadiusProperty, new CornerRadius(16));
+
+
+        //var filledDisabledState = new VisualState { Name = InputCommonStates.FilledDisabled };
+        //filledDisabledState.Setters.Add(
+        //    MaterialInputBase.BackgroundColorProperty,
+        //    Colors.LightGray);
+        //filledDisabledState.Setters.Add(
+        //    MaterialInputBase.TextColorProperty,
+        //    Colors.DarkGray);
+        //filledDisabledState.Setters.Add(
+        //    MaterialInputBase.BorderColorProperty,
+        //    Colors.DarkGray);
+
+        //var filledFocusedState = new VisualState { Name = InputCommonStates.FilledFocused };
+        //filledFocusedState.Setters.Add(
+        //    MaterialInputBase.BackgroundColorProperty,
+        //    Colors.LightBlue);
+        //filledFocusedState.Setters.Add(
+        //    MaterialInputBase.TextColorProperty,
+        //    Colors.Blue);
+        //filledFocusedState.Setters.Add(
+        //    MaterialInputBase.BorderColorProperty,
+        //    Colors.Blue);
+
+        //var filledNormalState = new VisualState { Name = InputCommonStates.FilledNormal };
+        //filledNormalState.Setters.Add(
+        //    MaterialInputBase.BackgroundColorProperty,
+        //    Colors.LightGreen);
+        //filledNormalState.Setters.Add(
+        //    MaterialInputBase.TextColorProperty,
+        //    Colors.Green);
+        //filledNormalState.Setters.Add(
+        //    MaterialInputBase.BorderColorProperty,
+        //    Colors.Green);
+
+        //commonStatesGroup.States.Add(filledNormalState);
+        //commonStatesGroup.States.Add(filledDisabledState);
+        //commonStatesGroup.States.Add(filledFocusedState);
+
+        //var outlinedDisabledState = new VisualState { Name = InputCommonStates.OutlinedDisabled };
+        //outlinedDisabledState.Setters.Add(
+        //    MaterialInputBase.BackgroundColorProperty,
+        //    MaterialLightTheme.SurfaceContainer);
+        //outlinedDisabledState.Setters.Add(
+        //    MaterialInputBase.TextColorProperty,
+        //    Colors.DarkGray);
+        //outlinedDisabledState.Setters.Add(
+        //    MaterialInputBase.BorderColorProperty,
+        //    Colors.DarkGray);
+
+        //var outlinedFocusedState = new VisualState { Name = InputCommonStates.OutlinedFocused };
+        //outlinedFocusedState.Setters.Add(
+        //    MaterialInputBase.BackgroundColorProperty,
+        //    MaterialLightTheme.SurfaceContainer);
+        //outlinedFocusedState.Setters.Add(
+        //    MaterialInputBase.TextColorProperty,
+        //    Colors.Blue);
+        //outlinedFocusedState.Setters.Add(
+        //    MaterialInputBase.BorderColorProperty,
+        //    Colors.Blue);
+
+        //var outlinedNormalState = new VisualState { Name = InputCommonStates.OutlinedNormal };
+        //outlinedNormalState.Setters.Add(
+        //    MaterialInputBase.BackgroundColorProperty,
+        //    MaterialLightTheme.SurfaceContainer);
+        //outlinedNormalState.Setters.Add(
+        //    MaterialInputBase.TextColorProperty,
+        //    Colors.Green);
+        //outlinedNormalState.Setters.Add(
+        //    MaterialInputBase.BorderColorProperty,
+        //    Colors.Green);
+
+        //commonStatesGroup.States.Add(outlinedNormalState);
+        //commonStatesGroup.States.Add(outlinedDisabledState);
+        //commonStatesGroup.States.Add(outlinedFocusedState);
+
+        //commonStatesGroup.States.Add(new VisualState { Name = VisualStateManager.CommonStates.Normal });
+        //commonStatesGroup.States.Add(new VisualState { Name = VisualStateManager.CommonStates.Disabled });
+        //commonStatesGroup.States.Add(new VisualState { Name = VisualStateManager.CommonStates.Focused });
+
+        var filledDisabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
+        filledDisabledState.Setters.Add(
             MaterialInputBase.TextColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        disabledState.Setters.Add(
+            Colors.DarkGray);
+        filledDisabledState.Setters.Add(
+            MaterialInputBase.BorderColorProperty,
+            Colors.DarkGray);
+        filledDisabledState.Setters.Add(
             MaterialInputBase.IconTintColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
+            Colors.DarkGray);
 
-        disabledState.Setters.Add(MaterialButton.ShadowProperty, null);
-
-        disabledState.Setters.Add(
+        var filledFocusedState = new VisualState { Name = VisualStateManager.CommonStates.Focused };
+        filledFocusedState.Setters.Add(
+            MaterialInputBase.TextColorProperty,
+            Colors.Blue);
+        filledFocusedState.Setters.Add(
             MaterialInputBase.BorderColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
+            Colors.Blue);
+        filledFocusedState.Setters.Add(
+            MaterialInputBase.IconTintColorProperty,
+            Colors.Blue);
 
-        var focusedState = new VisualState { Name = ButtonCommonStates.Focused };
-        focusedState.Setters.Add(
-            MaterialInputBase.BackgroundColorProperty,
-            Colors.Red);
-
-        focusedState.Setters.Add(
+        var filledNormalState = new VisualState { Name = VisualStateManager.CommonStates.Normal };
+        filledNormalState.Setters.Add(
+            MaterialInputBase.TextColorProperty,
+            DefaultTextColor);
+        filledNormalState.Setters.Add(
             MaterialInputBase.BorderColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Primary,
-                Dark = MaterialDarkTheme.Primary
-            }
-            .GetValueForCurrentTheme<Color>());
+            DefaultBorderColor);
+        filledNormalState.Setters.Add(
+            MaterialInputBase.IconTintColorProperty,
+            DefaultIconTintColor);
 
-        focusedState.Setters.Add(MaterialInputBase.BorderWidthProperty, 2);
-        focusedState.Setters.Add(MaterialInputBase.CornerRadiusProperty, new CornerRadius(16));
+        commonStatesGroup.States.Add(filledNormalState);
+        commonStatesGroup.States.Add(filledDisabledState);
+        commonStatesGroup.States.Add(filledFocusedState);
 
-        commonStatesGroup.States.Add(new VisualState { Name = ButtonCommonStates.Normal });
-        commonStatesGroup.States.Add(disabledState);
-        commonStatesGroup.States.Add(focusedState);
-
-        var style = new Style(typeof(MaterialInputBase)) { ApplyToDerivedTypes = true };
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        return new VisualStateGroupList() { commonStatesGroup };
     }
 
     #endregion Styles

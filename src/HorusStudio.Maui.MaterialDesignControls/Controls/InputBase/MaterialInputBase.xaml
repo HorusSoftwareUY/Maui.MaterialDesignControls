@@ -15,6 +15,7 @@
         <Thickness x:Key="DefaultSupportingTextMargin">16,4</Thickness>
 
         <converters:IsNotNullConverter x:Key="IsNotNull" />
+        <converters:IsNotNullOrEmptyConverter x:Key="IsNotNullOrEmpty" />
 
         <Style x:Key="MainContent" TargetType="StackLayout">
             <Setter Property="Orientation" Value="Horizontal" />
@@ -33,25 +34,45 @@
             <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.OnSurfaceVariant}" />
             <Setter Property="FontSize" Value="{x:Static material:MaterialFontSize.BodyLarge}" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="IsVisible" Value="false" />
             <Style.Triggers>
-                <DataTrigger TargetType="Label" Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="true">
-                    <Setter Property="IsVisible" Value="false" />
-                </DataTrigger>
+                <MultiTrigger TargetType="Label">
+                    <MultiTrigger.Conditions>
+                        <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
+                        <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="IsVisible" Value="true" />
+                </MultiTrigger>
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="SupportingText" TargetType="Label" BaseResourceKey="Placeholder">
+        <Style x:Key="SupportingText" TargetType="Label">
             <Setter Property="FontSize" Value="{x:Static material:MaterialFontSize.BodySmall}" />
             <Setter Property="Margin" Value="{StaticResource DefaultSupportingTextMargin}" />
+            <Setter Property="FontFamily" Value="{x:Static material:MaterialFontFamily.Default}" />
+            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.OnSurfaceVariant}" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="IsVisible" Value="false" />
+            <Style.Triggers>
+                <DataTrigger TargetType="Label" Binding="{Binding SupportingText, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="true">
+                    <Setter Property="IsVisible" Value="true" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="FilledHint" TargetType="Label" BaseResourceKey="SupportingText">
             <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.Primary}" />
             <Setter Property="Margin" Value="{OnPlatform Android='0,-22,0,0', Default='0,-1,0,0'}" />
+            <Setter Property="VerticalOptions" Value="Start" />
+            <Setter Property="IsVisible" Value="true" />
             <Style.Triggers>
-                <DataTrigger TargetType="Label" Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false">
+                <MultiTrigger TargetType="Label">
+                    <MultiTrigger.Conditions>
+                        <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
+                        <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                    </MultiTrigger.Conditions>
                     <Setter Property="IsVisible" Value="false" />
-                </DataTrigger>
+                </MultiTrigger>
             </Style.Triggers>
         </Style>
 
@@ -77,32 +98,48 @@
         <ControlTemplate x:Key="FilledControlTemplate">
             <VerticalStackLayout Spacing="0">
                 <Border
+                    x:Name="InputBorder"
                     HeightRequest="{StaticResource DefaultHeight}"
-                    BackgroundColor="{Binding BackgroundColor, Source={x:Reference InputBase}}"
+                    Background="{Binding Background, Source={x:Reference InputBase}}"
                     StrokeThickness="0">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="{Binding CornerRadius, Source={x:Reference InputBase}}" />
-                    </Border.StrokeShape>
 
                     <Grid>
                         <StackLayout Style="{StaticResource MainContent}">
-                            <material:MaterialIconButton Style="{StaticResource LeadingIcon}" ImageSource="{Binding LeadingIconSource, Source={x:Reference InputBase}}" IsVisible="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
+                            <material:MaterialIconButton
+                                Style="{StaticResource LeadingIcon}"
+                                IconTintColor="{Binding IconTintColor, Source={x:Reference InputBase}}"
+                                TintColor="{Binding TintColor, Source={x:Reference InputBase}}"
+                                ImageSource="{Binding LeadingIconSource, Source={x:Reference InputBase}}"
+                                IsVisible="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
 
-                            <Grid Style="{StaticResource FieldContainer}" BackgroundColor="Cyan">
-                                <Label Style="{StaticResource FilledHint}" Text="{Binding Hint, Source={x:Reference InputBase}}" />
-                                <ContentPresenter />
-                                <!--<material:BorderlessEntry Style="{StaticResource FilledEntry}" Text="{TemplateBinding Text, Mode=TwoWay}" />-->
-                                <Label Style="{StaticResource Placeholder}" Text="{Binding Placeholder, Source={x:Reference InputBase}}" />
+                            <Grid Style="{StaticResource FieldContainer}">
+                                <Label
+                                    Style="{StaticResource FilledHint}"
+                                    Text="{Binding Label, Source={x:Reference InputBase}}"
+                                    HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
+                                <ContentPresenter VerticalOptions="End" />
+                                <Label
+                                    Style="{StaticResource Placeholder}"
+                                    Text="{Binding Placeholder, Source={x:Reference InputBase}}"
+                                    HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
                             </Grid>
 
-                            <material:MaterialIconButton Style="{StaticResource TrailingIcon}" ImageSource="{Binding TrailingIconSource, Source={x:Reference InputBase}}" IsVisible="{Binding TrailingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
+                            <material:MaterialIconButton
+                                Style="{StaticResource TrailingIcon}"
+                                IconTintColor="{Binding IconTintColor, Source={x:Reference InputBase}}"
+                                TintColor="{Binding TintColor, Source={x:Reference InputBase}}"
+                                ImageSource="{Binding TrailingIconSource, Source={x:Reference InputBase}}"
+                                IsVisible="{Binding TrailingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
                         </StackLayout>
 
                         <BoxView HeightRequest="{Binding BorderWidth, Source={x:Reference InputBase}}" Color="{Binding BorderColor, Source={x:Reference InputBase}}" VerticalOptions="EndAndExpand" />
                     </Grid>
                 </Border>
 
-                <Label Style="{StaticResource SupportingText}" Text="{Binding SupportingText, Source={x:Reference InputBase}}" />
+                <Label
+                    Style="{StaticResource SupportingText}"
+                    Text="{Binding SupportingText, Source={x:Reference InputBase}}"
+                    HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
             </VerticalStackLayout>
         </ControlTemplate>
 
@@ -110,32 +147,48 @@
             <VerticalStackLayout Spacing="0">
                 <Grid>
                     <Border
+                        x:Name="InputBorder"
                         Margin="0,8,0,0"
                         HeightRequest="{StaticResource DefaultHeight}"
                         Stroke="{Binding BorderColor, Source={x:Reference InputBase}}"
-                        BackgroundColor="{Binding BackgroundColor, Source={x:Reference InputBase}}"
-                        StrokeThickness="{Binding BorderWidth, Source={x:Reference InputBase}}"
-                        x:Name="TextFieldBorder">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="{Binding CornerRadius, Source={x:Reference InputBase}}" />
-                        </Border.StrokeShape>
+                        Background="{Binding Background, Source={x:Reference InputBase}}"
+                        StrokeThickness="{Binding BorderWidth, Source={x:Reference InputBase}}">
 
                         <StackLayout Style="{StaticResource MainContent}">
-                            <material:MaterialIconButton Style="{StaticResource LeadingIcon}" ImageSource="{Binding LeadingIconSource, Source={x:Reference InputBase}}" IsVisible="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
+                            <material:MaterialIconButton
+                                Style="{StaticResource LeadingIcon}"
+                                IconTintColor="{Binding IconTintColor, Source={x:Reference InputBase}}"
+                                TintColor="{Binding TintColor, Source={x:Reference InputBase}}"
+                                ImageSource="{Binding LeadingIconSource, Source={x:Reference InputBase}}"
+                                IsVisible="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
 
-                            <Grid Style="{StaticResource FieldContainer}" BackgroundColor="Yellow">
+                            <Grid Style="{StaticResource FieldContainer}">
                                 <ContentPresenter />
-                                <!--<material:BorderlessEntry Style="{StaticResource OutlinedEntry}" Text="{TemplateBinding Text, Mode=TwoWay}" />-->
-                                <Label Style="{StaticResource Placeholder}" Text="{Binding Placeholder, Source={x:Reference InputBase}}" />
+                                <Label
+                                    Style="{StaticResource Placeholder}"
+                                    Text="{Binding Placeholder, Source={x:Reference InputBase}}"
+                                    HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
                             </Grid>
 
-                            <material:MaterialIconButton Style="{StaticResource TrailingIcon}" ImageSource="{Binding TrailingIconSource, Source={x:Reference InputBase}}" IsVisible="{Binding TrailingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
+                            <material:MaterialIconButton
+                                Style="{StaticResource TrailingIcon}"
+                                IconTintColor="{Binding IconTintColor, Source={x:Reference InputBase}}"
+                                TintColor="{Binding TintColor, Source={x:Reference InputBase}}"
+                                ImageSource="{Binding TrailingIconSource, Source={x:Reference InputBase}}"
+                                IsVisible="{Binding TrailingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
                         </StackLayout>
                     </Border>
-                    <Label Style="{StaticResource OutlinedHint}" Text="{Binding Hint, Source={x:Reference InputBase}}" BackgroundColor="{Binding Source={x:Reference TextFieldBorder}, Path=BackgroundColor}" />
+                    <Label
+                        x:Name="OutlinedHint"
+                        Style="{StaticResource OutlinedHint}"
+                        Text="{Binding Label, Source={x:Reference InputBase}}"
+                        HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
                 </Grid>
 
-                <Label Style="{StaticResource SupportingText}" Text="{Binding SupportingText, Source={x:Reference InputBase}}" />
+                <Label
+                    Style="{StaticResource SupportingText}"
+                    Text="{Binding SupportingText, Source={x:Reference InputBase}}"
+                    HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
             </VerticalStackLayout>
         </ControlTemplate>
 

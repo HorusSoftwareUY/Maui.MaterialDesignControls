@@ -60,8 +60,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialButton.GetStyles());
             // Icon Button
             application.Resources.AddStyles(MaterialIconButton.GetStyles());
-            // MaterialInputBase
-            application.Resources.AddStyles(MaterialInputBase.GetStyles());
+            // MaterialTextField
+            application.Resources.AddStyles(MaterialTextField.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
