@@ -20,17 +20,14 @@
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">
-
-                            <VisualState x:Name="Normal" />
                             <VisualState x:Name="Checked">
                                 <VisualState.Setters>
+                                    <Setter Property="Stroke"
+                                            Value="#FF3300" />
                                     <Setter TargetName="check"
                                             Property="Opacity"
                                             Value="1" />
                                     <Setter TargetName="uncheck"
-                                            Property="Opacity"
-                                            Value="0" />
-                                    <Setter TargetName="disable"
                                             Property="Opacity"
                                             Value="0" />
                                 </VisualState.Setters>
@@ -43,9 +40,10 @@
                                     <Setter TargetName="uncheck"
                                             Property="Opacity"
                                             Value="1" />
-                                    <Setter TargetName="disable"
-                                            Property="Opacity"
-                                            Value="0" />
+                                    <Setter Property="BackgroundColor"
+                                            Value="#F3F2F1" />
+                                    <Setter Property="Stroke"
+                                            Value="#F3F2F1" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -58,7 +56,7 @@
                           HeightRequest="18"
                           HorizontalOptions="Center"
                           VerticalOptions="Center">
-                        <Image Source="settings.png"
+                        <Image Source="radioButton_unchecked.png"
                                x:Name="uncheck"
                                WidthRequest="18"
                                Opacity="0"
@@ -67,16 +65,8 @@
                                VerticalOptions="Center" />
                         <Image x:Name="check"
                                Opacity="0"
-                               Source="horus_logo.png"
+                               Source="radioButton_checked.png"
                                WidthRequest="18"
-                               HeightRequest="18"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
-
-                        <Image x:Name="disable"
-                               Source="ic_dialog.png"
-                               WidthRequest="18"
-                               Opacity="0"
                                HeightRequest="18"
                                HorizontalOptions="Center"
                                VerticalOptions="Center" />
@@ -117,7 +107,7 @@
                 </BindableLayout.ItemTemplate>
             </VerticalStackLayout>
 
-            <Button Command="{Binding CheckedChangedCommand}"
+            <Button Command="{Binding CheckChangedCommand}"
                     Text="Check selected" />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
@@ -140,6 +130,17 @@
                                           IsChecked="True"
                                           IsEnabled="False"
                                           ControlTemplate="{StaticResource RadioButtonTemplate}" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Normal with events" />
+
+            <material:MaterialRadioButton ContentText="Radio button 1"
+                                          GroupName="Events"
+                                          CheckedChanged="MaterialRadioButton_CheckedChanged"/>
+            <material:MaterialRadioButton ContentText="Radio button 2"
+                                          GroupName="Events"
+                                          CommandCheckedChanged="{Binding CheckedChangedCommand}"
+                                          CommandCheckedChangedParameter="Selected/Unselected"/>
 
         </VerticalStackLayout>
     </ScrollView>
