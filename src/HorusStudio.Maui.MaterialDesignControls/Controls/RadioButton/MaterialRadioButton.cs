@@ -9,7 +9,6 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// </summary>
 public class MaterialRadioButton : ContentView, ITouchable
 {
-    //TODO: it is missing attachable properties for groupname and selectedvalue
     #region Attributes
     internal const string DefaultGroupName = "MaterialRadioButton.GroupName";
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
@@ -30,6 +29,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     private MaterialLabel _label;
     private RadioButton _radioButton;
     private Grid _mainLayout;
+    private Grid _radioButtonContainer;
 
     #endregion Layout
 
@@ -40,14 +40,21 @@ public class MaterialRadioButton : ContentView, ITouchable
     public static new readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(string), typeof(MaterialRadioButton), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="ContentText" /> bindable property.
+    /// The backing store for the <see cref="Text" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ContentTextProperty = BindableProperty.Create(nameof(ContentText), typeof(string), typeof(MaterialRadioButton), defaultValue: null);
+    public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialRadioButton), defaultValue: null);
 
+    //hide materiallabel
     /// <summary>
     /// The backing store for the <see cref="ControlTemplate" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty ControlTemplateProperty = BindableProperty.Create(nameof(ControlTemplate), typeof(ControlTemplate), typeof(MaterialRadioButton), defaultValue: null);
+    public static new readonly BindableProperty ControlTemplateProperty = BindableProperty.Create(nameof(ControlTemplate), typeof(ControlTemplate), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
+    {
+        if (bindableObject is MaterialRadioButton self && newValue is ControlTemplate controlTemplate)
+        {
+            self.OnControlTemplateChanged();
+        }
+    });
 
     /// <summary>
     /// The backing store for the <see cref="TextColor" /> bindable property.
@@ -59,9 +66,9 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public static readonly BindableProperty GroupNameProperty = BindableProperty.Create(nameof(GroupName), typeof(string), typeof(MaterialRadioButton), defaultValue: DefaultGroupName, propertyChanged: (bindableObject, oldValue, newValue) =>
     {
-        if (bindableObject is MaterialRadioButton self && oldValue is string oldGroupname && newValue is string newGroupname)
+        if (bindableObject is MaterialRadioButton self && oldValue is string oldGroupName && newValue is string newGroupName)
         {
-            self.OnGroupNamePropertyChanged(oldGroupname, newGroupname);
+            self.OnGroupNamePropertyChanged(oldGroupName, newGroupName);
         }
     });
 
@@ -185,12 +192,12 @@ public class MaterialRadioButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="ContentText" /> for the label. This is a bindable property.
+    /// Gets or sets the <see cref="Text" /> for the label. This is a bindable property.
     /// </summary>
-    public string ContentText
+    public string Text
     {
-        get { return (string)GetValue(ContentTextProperty); }
-        set { SetValue(ContentTextProperty, value); }
+        get { return (string)GetValue(TextProperty); }
+        set { SetValue(TextProperty, value); }
     }
 
     /// <summary>
@@ -393,16 +400,41 @@ public class MaterialRadioButton : ContentView, ITouchable
             }
         };
 
+        _radioButtonContainer = new Grid()
+        {
+            MinimumHeightRequest = 48,
+            MinimumWidthRequest = 48,
+            RowDefinitions = new()
+            {
+                new RowDefinition()
+                {
+                    Height = GridLength.Star
+                }
+            },
+            ColumnDefinitions = new()
+            {
+                new ColumnDefinition()
+                {
+                    Width = GridLength.Star
+                }
+            }
+        };
+
         _radioButton = new()
         {
             Margin = new Thickness(0),
             GroupName = GroupName,
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Center,
-            Padding = new Thickness(0)
+            Padding = new Thickness(0),
+            HeightRequest = 20,
+            WidthRequest = 20
         };
-
         _radioButton.CheckedChanged += RadioButton_CheckedChanged;
+        _radioButton.SetValue(Grid.RowProperty, 0);
+        _radioButton.SetValue(Grid.ColumnProperty, 0);
+
+        _radioButtonContainer.Children.Add(_radioButton);
 
         _radioButton.SetBinding(RadioButton.GroupNameProperty, new Binding(nameof(GroupName), source: this));
         _radioButton.SetBinding(RadioButton.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
@@ -413,12 +445,13 @@ public class MaterialRadioButton : ContentView, ITouchable
         _label = new()
         {
             TextColor = TextColor,
-            Text = ContentText,
+            Text = Text,
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Center,
         };
+        _label.SetValue(Grid.RowProperty, 0);
 
-        _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(ContentText), source: this));
+        _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Text), source: this));
         _label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
         _label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
         _label.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
@@ -466,6 +499,21 @@ public class MaterialRadioButton : ContentView, ITouchable
         this.IsChecked = e.Value;
     }
 
+    private void OnControlTemplateChanged()
+    {
+        _mainLayout.Children.Clear();
+        _mainLayout.ColumnDefinitions = new()
+                {
+                    new()
+                    {
+                        Width = GridLength.Star
+                    }
+                };
+
+        _radioButtonContainer.SetValue(Grid.ColumnProperty, 0);
+        _mainLayout.Children.Add(_radioButtonContainer);
+    }
+
     private void TextSideChanged(TextSide textSide)
     {
         switch (textSide)
@@ -484,13 +532,13 @@ public class MaterialRadioButton : ContentView, ITouchable
                     }
                 };
 
-                _radioButton.SetValue(Grid.ColumnProperty, 1);
+                _radioButtonContainer.SetValue(Grid.ColumnProperty, 1);
 
                 _label.Margin = new Thickness(0, 0, 10, 0);
                 _label.SetValue(Grid.ColumnProperty, 0);
 
                 _mainLayout.Children.Add(_label);
-                _mainLayout.Children.Add(_radioButton);
+                _mainLayout.Children.Add(_radioButtonContainer);
                 break;
             case TextSide.Right:
                 _mainLayout.Children.Clear();
@@ -505,12 +553,12 @@ public class MaterialRadioButton : ContentView, ITouchable
                         Width = GridLength.Star
                     }
                 };
-                _radioButton.SetValue(Grid.ColumnProperty, 0);
+                _radioButtonContainer.SetValue(Grid.ColumnProperty, 0);
 
                 _label.Margin = new Thickness(10, 0, 0, 0);
                 _label.SetValue(Grid.ColumnProperty, 1);
 
-                _mainLayout.Children.Add(_radioButton);
+                _mainLayout.Children.Add(_radioButtonContainer);
                 _mainLayout.Children.Add(_label);
                 break;
         }

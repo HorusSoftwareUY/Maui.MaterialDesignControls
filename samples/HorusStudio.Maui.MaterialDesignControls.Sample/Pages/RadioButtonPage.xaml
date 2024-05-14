@@ -9,13 +9,13 @@
                        x:DataType="vm:RadioButtonViewModel">
     <ContentPage.Resources>
         <ControlTemplate x:Key="RadioButtonTemplate">
-            <Border Stroke="#F3F2F1"
+            <Border Stroke="#b1b1b3"
                     StrokeThickness="2"
                     StrokeShape="RoundRectangle 10"
-                    BackgroundColor="#F3F2F1"
+                    HorizontalOptions="Center"
+                    BackgroundColor="#b1b1b3"
                     HeightRequest="90"
-                    WidthRequest="90"
-                    HorizontalOptions="Start"
+                    WidthRequest="150"
                     VerticalOptions="Start">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroupList>
@@ -23,7 +23,7 @@
                             <VisualState x:Name="Checked">
                                 <VisualState.Setters>
                                     <Setter Property="Stroke"
-                                            Value="#FF3300" />
+                                            Value="#247339" />
                                     <Setter TargetName="check"
                                             Property="Opacity"
                                             Value="1" />
@@ -41,9 +41,26 @@
                                             Property="Opacity"
                                             Value="1" />
                                     <Setter Property="BackgroundColor"
-                                            Value="#F3F2F1" />
+                                            Value="#b1b1b3" />
                                     <Setter Property="Stroke"
-                                            Value="#F3F2F1" />
+                                            Value="#b1b1b3" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter TargetName="disabled"
+                                            Property="Opacity"
+                                            Value="1" />
+                                    <Setter TargetName="check"
+                                            Property="Opacity"
+                                            Value="0" />
+                                    <Setter TargetName="uncheck"
+                                            Property="Opacity"
+                                            Value="0" />
+                                    <Setter Property="BackgroundColor"
+                                            Value="#b1b1b3" />
+                                    <Setter Property="Stroke"
+                                            Value="#b1b1b3" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -52,22 +69,29 @@
                 <Grid Margin="4"
                       WidthRequest="90">
                     <Grid Margin="0,0,4,0"
-                          WidthRequest="18"
-                          HeightRequest="18"
+                          WidthRequest="20"
+                          HeightRequest="20"
                           HorizontalOptions="Center"
                           VerticalOptions="Center">
-                        <Image Source="radioButton_unchecked.png"
+                        <Image Source="radiobutton_unchecked.png"
                                x:Name="uncheck"
-                               WidthRequest="18"
+                               WidthRequest="20"
                                Opacity="0"
-                               HeightRequest="18"
+                               HeightRequest="20"
                                HorizontalOptions="Center"
                                VerticalOptions="Center" />
                         <Image x:Name="check"
                                Opacity="0"
-                               Source="radioButton_checked.png"
-                               WidthRequest="18"
-                               HeightRequest="18"
+                               Source="radiobutton_checked.png"
+                               WidthRequest="20"
+                               HeightRequest="20"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                        <Image x:Name="disabled"
+                               Opacity="0"
+                               Source="horus_logo.svg"
+                               WidthRequest="20"
+                               HeightRequest="20"
                                HorizontalOptions="Center"
                                VerticalOptions="Center" />
                     </Grid>
@@ -76,6 +100,10 @@
             </Border>
         </ControlTemplate>
 
+        <Style TargetType="material:MaterialRadioButton" x:Key="MaterialRadioButtonWithControlTemplate">
+            <Setter Property="ControlTemplate"
+                    Value="{StaticResource RadioButtonTemplate}" />
+        </Style>
     </ContentPage.Resources>
 
     <ScrollView>
@@ -84,63 +112,76 @@
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
                                     Text="Normal" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialRadioButton Text="Radio button 1" />
+                    <material:MaterialRadioButton Text="Radio button 2" />
+                    <material:MaterialRadioButton Text="Radio button 3" />
+                    <material:MaterialRadioButton Text="Radio button 4 (Disabled)"
+                                                  IsEnabled="False" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="Normal Material Radio Buttons with default properties" />
 
-            <material:MaterialRadioButton ContentText="Radio button 1" />
-            <material:MaterialRadioButton ContentText="Radio button 2" />
-            <material:MaterialRadioButton ContentText="Radio button 3" />
-            <material:MaterialRadioButton ContentText="Radio button 4 (Disabled)" 
-                                          IsEnabled="False"/>
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
                                     Text="Using attachable properties" />
-            <VerticalStackLayout material:MaterialRadioButtonGroup.GroupName="testinggroup"
-                                 material:MaterialRadioButtonGroup.SelectedValue="{Binding CheckedColor}"
-                                 BindableLayout.ItemsSource="{Binding ItemsSourceColors}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="vm:CustomColor">
-                        <StackLayout>
-                            <material:MaterialRadioButton ContentText="{Binding Color}"
-                                                          Margin="0,0,0,10"
-                                                          Value="{Binding .}" />
-                        </StackLayout>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </VerticalStackLayout>
-
-            <Button Command="{Binding CheckChangedCommand}"
-                    Text="Check selected" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <VerticalStackLayout material:MaterialRadioButtonGroup.GroupName="testinggroup"
+                                         material:MaterialRadioButtonGroup.SelectedValue="{Binding CheckedColor}"
+                                         BindableLayout.ItemsSource="{Binding ItemsSourceColors}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:CustomColor">
+                                <StackLayout>
+                                    <material:MaterialRadioButton Text="{Binding Color}"
+                                                                  Margin="0,0,0,10"
+                                                                  Value="{Binding .}" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <material:MaterialButton Command="{Binding CheckChangedCommand}"
+                            Text="Check selected" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="We are creating radio buttons using an ItemsSource to check attachable properties and selected value" />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
                                     Text="Using control template and define a group name" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialRadioButton GroupName="ControlTemplate"
+                                                  Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
 
-            <material:MaterialRadioButton ContentText="Radio button 1"
-                                          GroupName="ControlTemplate"
-                                          ControlTemplate="{StaticResource RadioButtonTemplate}" />
+                    <material:MaterialRadioButton GroupName="ControlTemplate"
+                                                  Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
 
-            <material:MaterialRadioButton ContentText="Radio button 2"
-                                          GroupName="ControlTemplate"
-                                          ControlTemplate="{StaticResource RadioButtonTemplate}" />
-
-            <material:MaterialRadioButton ContentText="Radio button 3"
-                                          GroupName="ControlTemplate"
-                                          ControlTemplate="{StaticResource RadioButtonTemplate}" />
-
-            <material:MaterialRadioButton ContentText="Radio button 4 (disabled)"
-                                          GroupName="ControlTemplate"
-                                          IsChecked="True"
-                                          IsEnabled="False"
-                                          ControlTemplate="{StaticResource RadioButtonTemplate}" />
+                    <material:MaterialRadioButton GroupName="ControlTemplate"
+                                                  Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="Using Control Template to change the apparence of the Material Radio Button" />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
-                                    Text="Normal with events" />
+                                    Text="Custom events" />
 
-            <material:MaterialRadioButton ContentText="Radio button 1"
-                                          GroupName="Events"
-                                          CheckedChanged="MaterialRadioButton_CheckedChanged"/>
-            <material:MaterialRadioButton ContentText="Radio button 2"
-                                          GroupName="Events"
-                                          CommandCheckedChanged="{Binding CheckedChangedCommand}"
-                                          CommandCheckedChangedParameter="Selected/Unselected"/>
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialRadioButton Text="Radio button 1"
+                                                  GroupName="Events"
+                                                  CheckedChanged="MaterialRadioButton_CheckedChanged" />
+                    <material:MaterialRadioButton Text="Radio button 2"
+                                                  GroupName="Events"
+                                                  CommandCheckedChanged="{Binding CheckedChangedCommand}"
+                                                  CommandCheckedChangedParameter="Selected or Unselected" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="Using CheckedChanged event and CommandCheckedChanged" />
 
         </VerticalStackLayout>
     </ScrollView>
