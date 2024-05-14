@@ -50,7 +50,7 @@
 
         // Non material
         public static Color Text { get; set; } = Color.FromArgb("#1D1B20");
-        //public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
+        public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
         //public static Color DisableContainer { get; set; } = Color.FromArgb("#E5E3E8");
     }
 
@@ -104,7 +104,7 @@
 
         // Non material
         public static Color Text { get; set; } = Color.FromArgb("#E6E0E9");
-        //public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
+        public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
         //public static Color DisableContainer { get; set; } = Color.FromArgb("#E5E3E8");
     }
 }

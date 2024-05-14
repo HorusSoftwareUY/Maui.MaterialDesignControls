@@ -39,7 +39,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 .OnLaunched((_, _) =>
                 {
                     InitializeComponents();
-                }
+                }));
 #endif
         }
 
@@ -59,6 +59,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialButton.GetStyles());
             // Icon Button
             application.Resources.AddStyles(MaterialIconButton.GetStyles());
+            // Radio Button
+            application.Resources.AddStyles(MaterialRadioButton.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
