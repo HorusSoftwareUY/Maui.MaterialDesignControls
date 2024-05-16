@@ -9,7 +9,6 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// </summary>
 public class MaterialRadioButton : ContentView, ITouchable
 {
-    //TODO: iOS error with stroke color doesnt refresh custom radio button on handler
     //TODO: error with visual state manager stroke color doesnt refresh custom radio button on handler, if there soemthing disabled all controls appear disabled
 
     #region Attributes
@@ -485,6 +484,7 @@ public class MaterialRadioButton : ContentView, ITouchable
 
         TextSideChanged(TextSide);
         InternalCheckedHandler(IsChecked);
+        InternalEnabledHandler(IsEnabled);
 
         Behaviors.Add(new TouchBehavior());
 
@@ -591,7 +591,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     {
         if (isEnabled)
         {
-            VisualStateManager.GoToState(this, RadioButtonButtonCommonStates.Normal);
+            VisualStateManager.GoToState(this, RadioButtonButtonCommonStates.Unchecked);
         }
         else
         {
@@ -728,10 +728,21 @@ public class MaterialRadioButton : ContentView, ITouchable
             .GetValueForCurrentTheme<Color>()
             .WithAlpha(1f));
 
-        commonStatesGroup.States.Add(new VisualState { Name = RadioButtonButtonCommonStates.Normal });
+        var normalState = new VisualState { Name = RadioButtonButtonCommonStates.Normal };
+        normalState.Setters.Add(
+            MaterialRadioButton.StrokeColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurfaceVariant,
+                Dark = MaterialDarkTheme.OnSurfaceVariant
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(1f));
+
         commonStatesGroup.States.Add(disabledState);
         commonStatesGroup.States.Add(checkedState);
         commonStatesGroup.States.Add(uncheckedState);
+        commonStatesGroup.States.Add(normalState);
 
         var style = new Style(typeof(MaterialRadioButton));
         style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });

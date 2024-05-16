@@ -109,13 +109,13 @@
                TargetType="material:MaterialRadioButton">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
-                    <VisualStateGroup x:Name="CommonStates">
+                    <VisualStateGroup x:Name="States">
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
                                 <Setter Property="StrokeColor"
-                                        Value="DarkMagenta" />
+                                        Value="Orange" />
                                 <Setter Property="TextColor"
-                                        Value="DarkOliveGreen" />
+                                        Value="DarkRed" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="Disabled">
@@ -152,23 +152,25 @@
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <material:MaterialRadioButton Text="Radio button 2"
-                                          StrokeColor="Red" 
+            <!--<material:MaterialRadioButton Text="Radio button 2"
+                                          Style="{StaticResource VisualStateManagerStyle}"
                                           GroupName="testingstroke"/>
 
             <material:MaterialRadioButton Text="Radio button 3"
                                           GroupName="testingstroke"
-                                          StrokeColor="Red" />
+                                          IsEnabled="False"
+                                          Style="{StaticResource VisualStateManagerStyle}" />
+            
             <material:MaterialRadioButton Text="Radio button 4"
                                           GroupName="testingstroke"
-                                          StrokeColor="Red" />
+                                          Style="{StaticResource VisualStateManagerStyle}" />-->
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
                                     Text="Normal" />
             <Frame Style="{StaticResource SurfaceContainer}"
                    Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialRadioButton Text="Radio button 1" />
+                    <material:MaterialRadioButton Text="Radio button 1" StrokeColor="Red" />
                     <material:MaterialRadioButton Text="Radio button 2" />
                     <material:MaterialRadioButton Text="Radio button 2" />
                     <material:MaterialRadioButton Text="Radio button 3" />
