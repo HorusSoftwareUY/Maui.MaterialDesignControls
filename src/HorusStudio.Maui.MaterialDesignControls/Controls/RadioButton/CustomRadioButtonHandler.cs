@@ -9,7 +9,6 @@ partial class CustomRadioButtonHandler : RadioButtonHandler
 
 #if IOS || MACCATALYST
         Mapper.Add(nameof(CustomRadioButton.IsChecked), MapStrokeColor);
-        Mapper.Add(nameof(CustomRadioButton.IsEnabled), MapStrokeColor);
 #endif
     }
 }

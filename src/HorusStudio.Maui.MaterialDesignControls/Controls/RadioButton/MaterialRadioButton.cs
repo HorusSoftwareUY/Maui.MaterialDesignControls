@@ -9,8 +9,6 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// </summary>
 public class MaterialRadioButton : ContentView, ITouchable
 {
-    //TODO: error with visual state manager stroke color doesnt refresh custom radio button on handler, if there soemthing disabled all controls appear disabled
-
     #region Attributes
     internal const string DefaultGroupName = "MaterialRadioButton.GroupName";
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
@@ -52,7 +50,6 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialRadioButton), defaultValue: null);
 
-    //hide materiallabel
     /// <summary>
     /// The backing store for the <see cref="ControlTemplate" /> bindable property.
     /// </summary>
@@ -589,25 +586,27 @@ public class MaterialRadioButton : ContentView, ITouchable
 
     protected virtual void InternalEnabledHandler(bool isEnabled)
     {
-        if (isEnabled)
-        {
-            VisualStateManager.GoToState(this, RadioButtonButtonCommonStates.Unchecked);
-        }
-        else
-        {
-            VisualStateManager.GoToState(this, RadioButtonButtonCommonStates.Disabled);
-        }
+        ChangeVisualState();
     }
 
     protected virtual void InternalCheckedHandler(bool isChecked)
     {
-        if (isChecked)
+        ChangeVisualState();
+    }
+
+    protected override void ChangeVisualState()
+    {
+        if (!IsEnabled)
         {
-            VisualStateManager.GoToState(this, RadioButtonButtonCommonStates.Checked);
+            VisualStateManager.GoToState(this, RadioButtonCommonStates.Disabled);
+        }
+        else if (IsChecked)
+        {
+            VisualStateManager.GoToState(this, RadioButtonCommonStates.Checked);
         }
         else
         {
-            VisualStateManager.GoToState(this, RadioButtonButtonCommonStates.Unchecked);
+            VisualStateManager.GoToState(this, RadioButtonCommonStates.Unchecked);
         }
     }
 
@@ -683,7 +682,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     {
         var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
 
-        var disabledState = new VisualState { Name = RadioButtonButtonCommonStates.Disabled };
+        var disabledState = new VisualState { Name = RadioButtonCommonStates.Disabled };
 
         disabledState.Setters.Add(
             MaterialRadioButton.TextColorProperty,
@@ -705,7 +704,7 @@ public class MaterialRadioButton : ContentView, ITouchable
             .GetValueForCurrentTheme<Color>()
             .WithAlpha(0.38f));
 
-        var checkedState = new VisualState { Name = RadioButtonButtonCommonStates.Checked };
+        var checkedState = new VisualState { Name = RadioButtonCommonStates.Checked };
 
         checkedState.Setters.Add(
             MaterialRadioButton.StrokeColorProperty,
@@ -717,19 +716,8 @@ public class MaterialRadioButton : ContentView, ITouchable
             .GetValueForCurrentTheme<Color>()
             .WithAlpha(1f));
 
-        var uncheckedState = new VisualState { Name = RadioButtonButtonCommonStates.Unchecked };
+        var uncheckedState = new VisualState { Name = RadioButtonCommonStates.Unchecked };
         uncheckedState.Setters.Add(
-            MaterialRadioButton.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurfaceVariant,
-                Dark = MaterialDarkTheme.OnSurfaceVariant
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(1f));
-
-        var normalState = new VisualState { Name = RadioButtonButtonCommonStates.Normal };
-        normalState.Setters.Add(
             MaterialRadioButton.StrokeColorProperty,
             new AppThemeBindingExtension
             {
@@ -742,7 +730,6 @@ public class MaterialRadioButton : ContentView, ITouchable
         commonStatesGroup.States.Add(disabledState);
         commonStatesGroup.States.Add(checkedState);
         commonStatesGroup.States.Add(uncheckedState);
-        commonStatesGroup.States.Add(normalState);
 
         var style = new Style(typeof(MaterialRadioButton));
         style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
@@ -752,7 +739,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     #endregion Styles
 }
 
-public class RadioButtonButtonCommonStates : VisualStateManager.CommonStates
+public class RadioButtonCommonStates : VisualStateManager.CommonStates
 {
     public const string Checked = "Checked";
     public const string Unchecked = "Unchecked";

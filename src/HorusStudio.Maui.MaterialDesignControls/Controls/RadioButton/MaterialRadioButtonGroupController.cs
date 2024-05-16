@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-
-namespace HorusStudio.Maui.MaterialDesignControls;
+﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
 //We reuse some code from MAUI offical repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButtonGroupController.cs
 internal class MaterialRadioButtonGroupController

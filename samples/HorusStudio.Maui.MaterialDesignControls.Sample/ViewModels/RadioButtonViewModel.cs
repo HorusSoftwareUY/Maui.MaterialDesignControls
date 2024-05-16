@@ -16,17 +16,8 @@ public partial class RadioButtonViewModel : BaseViewModel
     [ObservableProperty]
     public CustomColor _checkedColor;
 
-
     [ObservableProperty]
-    public CustomColor _firstColor;
-
-
-    [ObservableProperty]
-    public CustomColor _secondColor;
-
-
-    [ObservableProperty]
-    public CustomColor _thirdColor;
+    public bool _isRadioButtonEnabled;
 
     #endregion
 
@@ -54,9 +45,6 @@ public partial class RadioButtonViewModel : BaseViewModel
             };
 
         CheckedColor = ItemsSourceColors.FirstOrDefault();
-        FirstColor = ItemsSourceColors[0];
-        SecondColor = ItemsSourceColors[1];
-        ThirdColor = ItemsSourceColors[2];
     }
 
     [ICommand]
@@ -72,7 +60,6 @@ public partial class RadioButtonViewModel : BaseViewModel
         await Task.Delay(TimeSpan.FromSeconds(2));
         await DisplayAlert(Title + " from Command", message.ToString(), "OK");
     }
-
 }
 
 public class CustomColor

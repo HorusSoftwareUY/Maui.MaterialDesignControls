@@ -60,7 +60,6 @@ internal class CustomRadioButtonView : Microsoft.Maui.Platform.ContentView
                 context.DrawPath(CGPathDrawingMode.FillStroke);
             }
         }
-        
     }
 
     private void ClearSublayers()
