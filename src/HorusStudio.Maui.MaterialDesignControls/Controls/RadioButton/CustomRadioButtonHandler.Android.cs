@@ -13,7 +13,7 @@ partial class CustomRadioButtonHandler
            
             if (handler.PlatformView != null && handler.PlatformView is Android.Widget.RadioButton androidRadioButton)
             {
-                androidRadioButton.ButtonTintList = Android.Content.Res.ColorStateList.ValueOf(strokeColor); ;
+                androidRadioButton.ButtonTintList = Android.Content.Res.ColorStateList.ValueOf(strokeColor);
             }
         }
     }
