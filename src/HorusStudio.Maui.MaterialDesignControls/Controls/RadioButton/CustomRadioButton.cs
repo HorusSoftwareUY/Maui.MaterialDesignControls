@@ -47,5 +47,4 @@ class CustomRadioButton : RadioButton
     {
         BackgroundColor = Color.FromArgb("#00FFFFFF");
     }
-
 }

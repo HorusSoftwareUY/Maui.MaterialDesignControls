@@ -216,7 +216,6 @@ public class MaterialRadioButton : ContentView, ITouchable
         set { SetValue(ControlTemplateProperty, value); }
     }
 
-
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the stroke of the radio button. This is a bindable property.
     /// </summary>

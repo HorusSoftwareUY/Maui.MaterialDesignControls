@@ -8,7 +8,8 @@ public static class MaterialRadioButtonGroup
     internal const string GroupSelectionChangedMessage = "MaterialRadioButtonGroupSelectionChanged";
     internal const string GroupValueChangedMessage = "MaterialRadioButtonGroupValueChanged";
 
-    static readonly BindableProperty RadioButtonGroupControllerProperty =
+    /// <summary>Bindable property for material radio button group controller property <c>GroupName</c>.</summary>
+    static readonly BindableProperty MaterialRadioButtonGroupControllerProperty =
         BindableProperty.CreateAttached("MaterialRadioButtonGroupController", typeof(MaterialRadioButtonGroupController), typeof(Microsoft.Maui.ILayout), default(MaterialRadioButtonGroupController),
         defaultValueCreator: (b) => {
 
@@ -17,14 +18,16 @@ public static class MaterialRadioButtonGroup
             },
         propertyChanged: (b, o, n) => OnControllerChanged(b, (MaterialRadioButtonGroupController)o, (MaterialRadioButtonGroupController)n));
 
-    static MaterialRadioButtonGroupController GetRadioButtonGroupController(BindableObject b)
+    static MaterialRadioButtonGroupController GetMaterialRadioButtonGroupController(BindableObject b)
     {
-        return (MaterialRadioButtonGroupController)b.GetValue(RadioButtonGroupControllerProperty);
+        return (MaterialRadioButtonGroupController)b.GetValue(MaterialRadioButtonGroupControllerProperty);
     }
+
+    /// <summary>Bindable property for group name property <c>GroupName</c>.</summary>
 
     public static readonly BindableProperty GroupNameProperty =
         BindableProperty.CreateAttached("MaterialGroupName", typeof(string), typeof(Microsoft.Maui.ILayout), null,
-        propertyChanged: (b, o, n) => { GetRadioButtonGroupController(b).GroupName = (string)n; });
+        propertyChanged: (b, o, n) => { GetMaterialRadioButtonGroupController(b).GroupName = (string)n; });
 
     public static string GetGroupName(BindableObject b)
     {
@@ -40,7 +43,7 @@ public static class MaterialRadioButtonGroup
     public static readonly BindableProperty SelectedValueProperty =
         BindableProperty.Create("MaterialSelectedValue", typeof(object), typeof(Microsoft.Maui.ILayout), null,
         defaultBindingMode: BindingMode.TwoWay,
-        propertyChanged: (b, o, n) => { GetRadioButtonGroupController(b).SelectedValue = n; });
+        propertyChanged: (b, o, n) => { GetMaterialRadioButtonGroupController(b).SelectedValue = n; });
 
     public static object GetSelectedValue(BindableObject bindableObject)
     {
