@@ -164,21 +164,25 @@
                 <VerticalStackLayout>
                     <material:MaterialRadioButton Text="Radio button 1" 
                                                   StrokeColor="DarkOrange" 
+                                                  GroupName="SettingProperties"
                                                   TextColor="DarkGreen" 
                                                   FontAttributes="Bold" />
                     
                     <material:MaterialRadioButton Text="Radio button 2"
                                                   StrokeColor="DarkOrange"
+                                                  GroupName="SettingProperties"
                                                   TextColor="DarkGreen"
                                                   CharacterSpacing="25" />
                     
                     <material:MaterialRadioButton Text="Radio button 3"
                                                   StrokeColor="DarkOrange"
+                                                  GroupName="SettingProperties"
                                                   FontSize="25"
                                                   TextColor="DarkGreen" />
                     
                     <material:MaterialRadioButton Text="Radio button 4"
                                                   StrokeColor="DarkOrange"
+                                                  GroupName="SettingProperties"
                                                   TextColor="DarkGreen"/>
                 </VerticalStackLayout>
             </Frame>

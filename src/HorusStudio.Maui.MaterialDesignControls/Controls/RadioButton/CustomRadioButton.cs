@@ -32,7 +32,7 @@ class CustomRadioButton : RadioButton
     }
 
     /// <summary>
-    /// Gets or sets <see cref="Color" /> for the stroke of the radio button.
+    /// Gets or sets <see cref="bool" /> to check if the user changes control template of the radio button.
     /// This is a bindable property.
     /// </summary>
     public bool IsControlTemplateByDefault

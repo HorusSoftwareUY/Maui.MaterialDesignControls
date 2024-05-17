@@ -256,7 +256,6 @@ public class MaterialRadioButton : ContentView, ITouchable
         set { SetValue(IsCheckedProperty, value); }
     }
 
-
     /// <summary>
     /// Gets or sets <see cref="IsEnabled" />  for the radio button. This is a bindable property.
     /// </summary>
@@ -342,7 +341,6 @@ public class MaterialRadioButton : ContentView, ITouchable
         set { SetValue(ValueProperty, value); }
     }
 
-
     /// <summary>
     /// Gets or sets an animation to be executed when radio button is clicked.
     /// The default value is <see cref="AnimationTypes.Fade"/>.
@@ -377,7 +375,6 @@ public class MaterialRadioButton : ContentView, ITouchable
         get => (ICustomAnimation)GetValue(CustomAnimationProperty);
         set => SetValue(CustomAnimationProperty, value);
     }
-
 
     /// <summary>
     /// Gets or sets the command to invoke when the radio button changes its status. This is a bindable property.

@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-//We reuse some thigs from MAUI official repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs
+//We reuse some code from MAUI official repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs
 public static class MaterialRadioButtonGroup
 {
     internal const string GroupSelectionChangedMessage = "MaterialRadioButtonGroupSelectionChanged";
@@ -93,7 +93,6 @@ public static class MaterialRadioButtonGroup
             parent = parent.Parent;
         return parent;
     }
-
 
     static void OnControllerChanged(BindableObject bindableObject, MaterialRadioButtonGroupController oldController,
         MaterialRadioButtonGroupController newController)
