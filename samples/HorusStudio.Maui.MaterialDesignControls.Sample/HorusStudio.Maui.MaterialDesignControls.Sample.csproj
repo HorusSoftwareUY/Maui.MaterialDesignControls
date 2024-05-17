@@ -59,4 +59,10 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\CheckboxPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
 </Project>

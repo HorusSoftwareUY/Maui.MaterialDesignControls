@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+                        xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+                        xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+                        x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.CheckboxPage"
+                        x:TypeArguments="vm:CheckboxViewModel"
+                        x:DataType="vm:CheckboxViewModel">
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource MainLayout}">
+            <material:MaterialLabel Text="{Binding Subtitle}" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Elevated" />
+
+            <CheckBox Color="Red"  />
+            <CheckBox Color="Red" />
+            <CheckBox Color="Red" />
+            <CheckBox Color="Red" />
+            <CheckBox Color="Red" />
+            <CheckBox Color="Red" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</local:BaseContentPage>
