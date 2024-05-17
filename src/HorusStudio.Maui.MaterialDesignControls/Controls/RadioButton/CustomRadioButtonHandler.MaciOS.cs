@@ -31,13 +31,19 @@ internal class CustomRadioButtonView : Microsoft.Maui.Platform.ContentView
     public Color StrokeColor { get; set; }
     public CustomRadioButton RadioButton { get; set; }
 
+    private bool _isSubLayerCleared = false;
+
     public override void Draw(CGRect rect)
     {
         base.Draw(rect);
 
         if (RadioButton is not null && RadioButton.IsControlTemplateByDefault)
         {
-            ClearSublayers();
+            if (!_isSubLayerCleared)
+            {
+                ClearSublayers();
+                _isSubLayerCleared = true;
+            }
 
             using var context = UIGraphics.GetCurrentContext();
             var lineWidth = 2f;
