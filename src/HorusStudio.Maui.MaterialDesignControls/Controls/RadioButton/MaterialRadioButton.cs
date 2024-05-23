@@ -84,7 +84,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     { 
         if(bindable is MaterialRadioButton self && newValue is bool value)
         {
-            self.InternalCheckedHandler(value);
+            self.ChangeVisualState();
 
             if (value)
                 MaterialRadioButtonGroup.UpdateRadioButtonGroup(self);
@@ -102,9 +102,9 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public static new readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialRadioButton), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
     {
-        if(bindable is MaterialRadioButton self && newValue is bool isEnabled)
+        if(bindable is MaterialRadioButton self && newValue is bool)
         {
-            self.InternalEnabledHandler(isEnabled);
+            self.ChangeVisualState();
         }
     });
 
@@ -476,8 +476,7 @@ public class MaterialRadioButton : ContentView, ITouchable
         _label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
 
         TextSideChanged(TextSide);
-        InternalCheckedHandler(IsChecked);
-        InternalEnabledHandler(IsEnabled);
+        //ChangeVisualState();
 
         Behaviors.Add(new TouchBehavior());
 
@@ -578,16 +577,6 @@ public class MaterialRadioButton : ContentView, ITouchable
                 _mainLayout.Children.Add(_label);
                 break;
         }
-    }
-
-    protected virtual void InternalEnabledHandler(bool isEnabled)
-    {
-        ChangeVisualState();
-    }
-
-    protected virtual void InternalCheckedHandler(bool isChecked)
-    {
-        ChangeVisualState();
     }
 
     protected override void ChangeVisualState()
