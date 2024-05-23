@@ -11,7 +11,7 @@ partial class CustomCheckboxHandler
         if (check is CustomCheckBox customCheckBox && handler.PlatformView != null && handler.PlatformView is CustomCheckboxView iosCheckboxView)
         {
             iosCheckboxView.Color = customCheckBox.Color;
-            iosCheckboxView.CheckColor = customCheckBox.CheckColor;
+            iosCheckboxView.CheckColor = customCheckBox.TickColor;
             iosCheckboxView.Checkbox = customCheckBox;
             iosCheckboxView.SetNeedsDisplay();
         }

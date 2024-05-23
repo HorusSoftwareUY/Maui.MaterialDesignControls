@@ -12,23 +12,127 @@
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
-                                    Text="Elevated" />
+                                    Text="Normal" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialCheckBox Text="Checkbox 1" />
+                    <material:MaterialCheckBox Text="Checkbox 2" />
+                    <material:MaterialCheckBox Text="Checkbox 3" />
+                    <material:MaterialCheckBox Text="Checkbox 4" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="Normal Material Checkbox with default properties" />
 
-            <!--<material:MaterialCheckBox Color="Red" Text="Hola" />
-            <material:MaterialCheckBox Color="Red"
-                                       Text="Hola" />-->
-            <material:MaterialCheckBox Color="Red"
-                                       CheckColor="Black"
-                                       Text="Hola" />
-            <!--<material:MaterialCheckBox TextSide="Left"
-                                       Text="Hola" />
-            <material:MaterialCheckBox TextSide="Left"
-                                       IsEnabled="False"
-                                       IsChecked="True"
-                                       Text="Hola" />
-            <material:MaterialCheckBox Text="Hola" 
-                                       IsEnabled="False"
-                                       TextSide="Left"/>-->
+            <!--<material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Changing some properties" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialRadioButton Text="Radio button 1"
+                                                  StrokeColor="DarkOrange"
+                                                  GroupName="SettingProperties"
+                                                  TextColor="DarkGreen"
+                                                  FontAttributes="Bold" />
+
+                    <material:MaterialRadioButton Text="Radio button 2"
+                                                  StrokeColor="DarkOrange"
+                                                  GroupName="SettingProperties"
+                                                  TextColor="DarkGreen"
+                                                  CharacterSpacing="25" />
+
+                    <material:MaterialRadioButton Text="Radio button 3"
+                                                  StrokeColor="DarkOrange"
+                                                  GroupName="SettingProperties"
+                                                  FontSize="25"
+                                                  TextColor="DarkGreen" />
+
+                    <material:MaterialRadioButton Text="Radio button 4"
+                                                  StrokeColor="DarkOrange"
+                                                  GroupName="SettingProperties"
+                                                  TextColor="DarkGreen" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="We can set stroke color, text color, text size, font attributes, text transform, group name, characters spacing and other properties." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Using attachable properties" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <VerticalStackLayout material:MaterialRadioButtonGroup.GroupName="testinggroup"
+                                         material:MaterialRadioButtonGroup.SelectedValue="{Binding CheckedColor}"
+                                         BindableLayout.ItemsSource="{Binding ItemsSourceColors}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:CustomColor">
+                                <StackLayout>
+                                    <material:MaterialRadioButton Text="{Binding Color}"
+                                                                  Value="{Binding .}" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <material:MaterialButton Command="{Binding CheckChangedCommand}"
+                                             Text="Check selected" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="We are creating radio buttons using an ItemsSource to check attachable properties and selected value" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Using control template and define a group name" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <material:MaterialRadioButton GroupName="ControlTemplate"
+                                                  Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
+
+                    <material:MaterialRadioButton GroupName="ControlTemplate"
+                                                  Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
+
+                    <material:MaterialRadioButton GroupName="ControlTemplate"
+                                                  Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
+                </HorizontalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="Using Control Template to change the apparence of the Material Radio Button" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Custom events, new style and text side changing" />
+
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialRadioButton Text="Radio button 1"
+                                                  GroupName="Events"
+                                                  Style="{StaticResource VisualStateManagerStyle}"
+                                                  TextSide="Left"
+                                                  IsEnabled="{Binding IsRadioButtonEnabled}"
+                                                  CheckedChanged="MaterialRadioButton_CheckedChanged" />
+                    <material:MaterialRadioButton Text="Radio button 2"
+                                                  GroupName="Events"
+                                                  TextSide="Left"
+                                                  IsEnabled="{Binding IsRadioButtonEnabled}"
+                                                  Style="{StaticResource VisualStateManagerStyle}"
+                                                  CommandCheckedChanged="{Binding CheckedChangedCommand}"
+                                                  CommandCheckedChangedParameter="Selected or Unselected" />
+                    <material:MaterialRadioButton Text="Radio button 3 (disabled)"
+                                                  GroupName="Events"
+                                                  TextSide="Left"
+                                                  IsEnabled="{Binding IsRadioButtonEnabled}"
+                                                  Style="{StaticResource VisualStateManagerStyle}" />
+
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <material:MaterialLabel Text="Is enabled"
+                                                HorizontalOptions="Start"
+                                                HorizontalTextAlignment="End"
+                                                VerticalTextAlignment="Center" />
+
+                        <Switch HorizontalOptions="Start"
+                                IsToggled="{Binding IsRadioButtonEnabled}" />
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="Setting events, new style using visual state manager and text side" />-->
 
         </VerticalStackLayout>
     </ScrollView>

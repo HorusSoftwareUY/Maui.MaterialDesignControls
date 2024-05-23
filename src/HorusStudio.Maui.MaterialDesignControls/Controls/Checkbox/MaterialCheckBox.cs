@@ -14,7 +14,6 @@ public class MaterialCheckBox : ContentView, ITouchable
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultCheckColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimary, Dark = MaterialDarkTheme.OnPrimary }.GetValueForCurrentTheme<Color>();
-
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
     private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
@@ -47,9 +46,9 @@ public class MaterialCheckBox : ContentView, ITouchable
     public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialCheckBox), defaultValue: DefaultColor);
 
     /// <summary>
-    /// The backing store for the <see cref="CheckColor" /> bindable property.
+    /// The backing store for the <see cref="TickColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CheckColorProperty = BindableProperty.Create(nameof(CheckColor), typeof(Color), typeof(MaterialCheckBox), defaultValue: DefaultColor);
+    public static readonly BindableProperty TickColorProperty = BindableProperty.Create(nameof(TickColor), typeof(Color), typeof(MaterialCheckBox), defaultValue: DefaultCheckColor);
 
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
@@ -68,7 +67,7 @@ public class MaterialCheckBox : ContentView, ITouchable
     {
         if (bindable is MaterialCheckBox self && newValue is bool value)
         {
-            self.InternalCheckedHandler(value);
+            self.ChangeVisualState();
 
             self.CheckedChanged?.Invoke(self, new CheckedChangedEventArgs(value));
             if (self.CommandCheckedChanged != null && self.CommandCheckedChanged.CanExecute(self.CommandCheckedChangedParameter))
@@ -83,9 +82,9 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </summary>
     public static new readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialCheckBox), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
     {
-        if (bindable is MaterialCheckBox self && newValue is bool isEnabled)
+        if (bindable is MaterialCheckBox self && newValue is bool)
         {
-            self.InternalEnabledHandler(isEnabled);
+            self.ChangeVisualState();
         }
     });
 
@@ -188,12 +187,13 @@ public class MaterialCheckBox : ContentView, ITouchable
 
 
     /// <summary>
-    /// Gets or sets the <see cref="Microsoft.Maui.Graphics.Color" /> for the check color. This is a bindable property.
+    /// Gets or sets the <see cref="Microsoft.Maui.Graphics.Color" /> for the tick color. This is a bindable property.
+    /// Only is supported on iOS
     /// </summary>
-    public Color CheckColor
+    public Color TickColor
     {
-        get { return (Color)GetValue(CheckColorProperty); }
-        set { SetValue(CheckColorProperty, value); }
+        get { return (Color)GetValue(TickColorProperty); }
+        set { SetValue(TickColorProperty, value); }
     }
 
     /// <summary>
@@ -415,7 +415,7 @@ public class MaterialCheckBox : ContentView, ITouchable
 #endif
         _checkbox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(IsChecked), source: this));
         _checkbox.SetBinding(CheckBox.ColorProperty, new Binding(nameof(Color), source: this));
-        _checkbox.SetBinding(CustomCheckBox.CheckColorProperty, new Binding(nameof(CheckColor), source: this));
+        _checkbox.SetBinding(CustomCheckBox.TickColorProperty, new Binding(nameof(TickColor), source: this));
 
         _label = new()
         {
@@ -436,8 +436,7 @@ public class MaterialCheckBox : ContentView, ITouchable
         _label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
 
         TextSideChanged(TextSide);
-        InternalCheckedHandler(IsChecked);
-        InternalEnabledHandler(IsEnabled);
+        ChangeVisualState();
 
         Behaviors.Add(new TouchBehavior());
 
@@ -529,16 +528,6 @@ public class MaterialCheckBox : ContentView, ITouchable
         }
     }
 
-    protected virtual void InternalEnabledHandler(bool isEnabled)
-    {
-        ChangeVisualState();
-    }
-
-    protected virtual void InternalCheckedHandler(bool isChecked)
-    {
-        ChangeVisualState();
-    }
-
     protected override void ChangeVisualState()
     {
         if (!IsEnabled)
@@ -588,7 +577,7 @@ public class MaterialCheckBox : ContentView, ITouchable
             .WithAlpha(0.38f));
 
         disabledState.Setters.Add(
-            MaterialCheckBox.CheckColorProperty,
+            MaterialCheckBox.TickColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.Surface,
@@ -610,7 +599,7 @@ public class MaterialCheckBox : ContentView, ITouchable
             .WithAlpha(1f));
 
         checkedState.Setters.Add(
-            MaterialCheckBox.CheckColorProperty,
+            MaterialCheckBox.TickColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnPrimary,

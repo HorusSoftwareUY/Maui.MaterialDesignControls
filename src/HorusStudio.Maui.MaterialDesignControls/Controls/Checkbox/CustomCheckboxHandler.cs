@@ -6,6 +6,6 @@ partial class CustomCheckboxHandler : CheckBoxHandler
     public CustomCheckboxHandler() : base(Mapper, CommandMapper)
     {
         Mapper.Add(nameof(CheckBox.Color), MapForeground);
-        Mapper.Add(nameof(CustomCheckBox.CheckColor), MapForeground);
+        Mapper.Add(nameof(CustomCheckBox.TickColor), MapForeground);
     }
 }
