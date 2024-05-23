@@ -62,7 +62,6 @@ internal class CustomCheckboxView : Microsoft.Maui.Platform.MauiCheckBox
                 context.StrokePath();
             }
         }
-
     }
 
     private void ClearSublayers()

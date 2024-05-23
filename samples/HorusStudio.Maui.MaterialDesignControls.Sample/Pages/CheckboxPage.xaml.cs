@@ -8,4 +8,10 @@ public partial class CheckboxPage :  BaseContentPage<CheckboxViewModel>
     {
         InitializeComponent();
     }
+
+    private void MaterialCheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        var selected = e.Value ? "yes" : "no";
+        DisplayAlert("Checkbox Event", $"Selected: {selected}", "OK");
+    }
 }
