@@ -14,12 +14,21 @@
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
                                     Text="Elevated" />
 
-            <CheckBox Color="Red"  />
-            <CheckBox Color="Red" />
-            <CheckBox Color="Red" />
-            <CheckBox Color="Red" />
-            <CheckBox Color="Red" />
-            <CheckBox Color="Red" />
+            <!--<material:MaterialCheckBox Color="Red" Text="Hola" />
+            <material:MaterialCheckBox Color="Red"
+                                       Text="Hola" />-->
+            <material:MaterialCheckBox Color="Red"
+                                       CheckColor="Black"
+                                       Text="Hola" />
+            <!--<material:MaterialCheckBox TextSide="Left"
+                                       Text="Hola" />
+            <material:MaterialCheckBox TextSide="Left"
+                                       IsEnabled="False"
+                                       IsChecked="True"
+                                       Text="Hola" />
+            <material:MaterialCheckBox Text="Hola" 
+                                       IsEnabled="False"
+                                       TextSide="Left"/>-->
 
         </VerticalStackLayout>
     </ScrollView>
