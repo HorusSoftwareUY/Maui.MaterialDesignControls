@@ -17,7 +17,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static void ConfigureHandlers(IMauiHandlersCollection handlers)
         {
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
-            handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
             handlers.AddHandler(typeof(CheckBox), typeof(CustomCheckboxHandler));
         }
 
@@ -61,8 +60,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialButton.GetStyles());
             // Icon Button
             application.Resources.AddStyles(MaterialIconButton.GetStyles());
-            // Radio Button
-            application.Resources.AddStyles(MaterialRadioButton.GetStyles());
             // Checkbox
             application.Resources.AddStyles(MaterialCheckBox.GetStyles());
         }

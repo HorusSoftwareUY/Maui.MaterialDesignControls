@@ -7,7 +7,7 @@ internal class CustomCheckBox : CheckBox
     /// <summary>
     /// The backing store for the <see cref="TickColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TickColorProperty = BindableProperty.Create(nameof(TickColor), typeof(Color), typeof(CustomRadioButton), defaultValue: null);
+    public static readonly BindableProperty TickColorProperty = BindableProperty.Create(nameof(TickColor), typeof(Color), typeof(CustomCheckBox), defaultValue: null);
 
     #endregion
 
