@@ -6,6 +6,8 @@ public class MaterialRating : ContentView
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultStrokeColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultStrokeThickness = 2.0;
+    private readonly static int DefaultItemsSize = 5;
+    private readonly static int DefaultItemsPerRow = 5;
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
     private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
@@ -104,15 +106,47 @@ public class MaterialRating : ContentView
     /// </summary>
     public static readonly BindableProperty StrokeThicknessProperty = BindableProperty.Create(nameof(StrokeThickness), typeof(double), typeof(MaterialRating), defaultValue: DefaultStrokeThickness);
 
+    /// <summary>
+    /// The backing store for the <see cref="SelectedIconSource" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SelectedIconSourceProperty = BindableProperty.Create(nameof(SelectedIconSource), typeof(ImageSource), typeof(MaterialRating), defaultValue: null);
 
+    /// <summary>
+    /// The backing store for the <see cref="UnselectedIconSource" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty UnselectedIconSourceProperty = BindableProperty.Create(nameof(UnselectedIconSource), typeof(ImageSource), typeof(MaterialRating), defaultValue: null);
 
+    /// <summary>
+    /// The backing store for the <see cref="SelectedIconsSource" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SelectedIconsSourceProperty = BindableProperty.Create(nameof(SelectedIconsSource), typeof(IEnumerable<ImageSource>), typeof(MaterialRating), defaultValue: null);
+
+    /// <summary>
+    /// The backing store for the <see cref="UnselectedIconsSource" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty UnselectedIconsSourceProperty = BindableProperty.Create(nameof(UnselectedIconsSource), typeof(IEnumerable<ImageSource>), typeof(MaterialRating), defaultValue: null);
+
+    /// <summary>
+    /// The backing store for the <see cref="UseSameIcon" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty UseSameIconProperty = BindableProperty.Create(nameof(UseSameIcon), typeof(bool), typeof(MaterialRating), defaultValue: true);
+
+    /// <summary>
+    /// The backing store for the <see cref="ItemsSize" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ItemsSizeProperty = BindableProperty.Create(nameof(ItemsSize), typeof(int), typeof(MaterialRating), defaultValue: DefaultItemsSize);
+
+    /// <summary>
+    /// The backing store for the <see cref="ItemsPerRow" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ItemsPerRowProperty = BindableProperty.Create(nameof(ItemsPerRow), typeof(int), typeof(MaterialRating), defaultValue: DefaultItemsPerRow);
 
     /// <summary>
     /// The backing store for the <see cref="Value"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialRating), defaultValue: null, propertyChanged: (bindableObject, _, _) =>
     {
-        if (bindableObject is MaterialRadioButton self)
+        if (bindableObject is MaterialRating self)
         {
             self.OnValuePropertyChanged();
         }
@@ -256,10 +290,80 @@ public class MaterialRating : ContentView
         set { SetValue(StrokeThicknessProperty, value); }
     }
 
+    /// <summary>
+    /// Allows you to display a bitmap image on the rating when is selected. This is a bindable property.
+    /// </summary>
+    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    public ImageSource SelectedIconSource
+    {
+        get => (ImageSource)GetValue(SelectedIconSourceProperty);
+        set => SetValue(SelectedIconSourceProperty, value);
+    }
 
     /// <summary>
-    /// Defines the casing of the label. 
-    /// The default value is <see cref="TextSide.Right"/>
+    /// Allows you to display a bitmap image on the rating when is unselected. This is a bindable property.
+    /// </summary>
+    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    public ImageSource UnselectedIconSource
+    {
+        get => (ImageSource)GetValue(UnselectedIconSourceProperty);
+        set => SetValue(UnselectedIconSourceProperty, value);
+    }
+
+    /// <summary>
+    /// Allows you to display a bitmap image diferent on each rating when is selected. This is a bindable property.
+    /// </summary>
+    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    public IEnumerable<ImageSource> SelectedIconsSource
+    {
+        get => (IEnumerable<ImageSource>)GetValue(SelectedIconsSourceProperty);
+        set => SetValue(SelectedIconsSourceProperty, value);
+    }
+
+    /// <summary>
+    /// Allows you to display a bitmap image diferent on each rating when is unselected. This is a bindable property.
+    /// </summary>
+    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    public IEnumerable<ImageSource> UnselectedIconsSource
+    {
+        get => (IEnumerable<ImageSource>)GetValue(UnselectedIconsSourceProperty);
+        set => SetValue(UnselectedIconsSourceProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets <see cref="UseSameIcon" />  for the rating control. This is a bindable property.
+    /// </summary>
+    public bool UseSameIcon
+    {
+        get { return (bool)GetValue(UseSameIconProperty); }
+        set { SetValue(UseSameIconProperty, value); }
+    }
+
+    /// <summary>
+    /// Defines the quantity of items on the rating
+    /// The default value is <value>5</value>.
+    /// This is a bindable property.
+    /// </summary>
+    public int ItemsSize
+    {
+        get { return (int)GetValue(ItemsSizeProperty); }
+        set { SetValue(ItemsSizeProperty, value); }
+    }
+
+    /// <summary>
+    /// Defines the quantity of items per row on the rating
+    /// The default value is <value>5</value>.
+    /// This is a bindable property.
+    /// </summary>
+    public int ItemsPerRow
+    {
+        get { return (int)GetValue(ItemsPerRowProperty); }
+        set { SetValue(ItemsPerRowProperty, value); }
+    }
+
+    /// <summary>
+    /// Defines the value of the Rating
+    /// The default value is <value>-1</value>.
     /// This is a bindable property.
     /// </summary>
     public object Value
@@ -272,63 +376,34 @@ public class MaterialRating : ContentView
 
     #region Constructors
 
-    public MaterialRadioButton()
+    public MaterialRating()
     {
         _mainLayout = new()
         {
             Margin = new Thickness(0),
             VerticalOptions = LayoutOptions.Center,
-            RowDefinitions = new()
-            {
-                new RowDefinition()
-                {
-                    Height = GridLength.Star
-                }
-            }
         };
 
-        _radioButtonContainer = new Grid()
-        {
-            MinimumHeightRequest = 48,
-            MinimumWidthRequest = 48,
-            RowDefinitions = new()
-            {
-                new RowDefinition()
-                {
-                    Height = GridLength.Star
-                }
-            },
-            ColumnDefinitions = new()
-            {
-                new ColumnDefinition()
-                {
-                    Width = GridLength.Star
-                }
-            }
-        };
+        //_radioButtonContainer = new Grid()
+        //{
+        //    MinimumHeightRequest = 48,
+        //    MinimumWidthRequest = 48,
+        //    RowDefinitions = new()
+        //    {
+        //        new RowDefinition()
+        //        {
+        //            Height = GridLength.Star
+        //        }
+        //    },
+        //    ColumnDefinitions = new()
+        //    {
+        //        new ColumnDefinition()
+        //        {
+        //            Width = GridLength.Star
+        //        }
+        //    }
+        //};
 
-        _radioButton = new()
-        {
-            Margin = new Thickness(0),
-            GroupName = GroupName,
-            VerticalOptions = LayoutOptions.Center,
-            HorizontalOptions = LayoutOptions.Center,
-            Padding = new Thickness(0),
-            MinimumHeightRequest = 20,
-            MinimumWidthRequest = 20
-        };
-        _radioButton.CheckedChanged += RadioButton_CheckedChanged;
-        _radioButton.SetValue(Grid.RowProperty, 0);
-        _radioButton.SetValue(Grid.ColumnProperty, 0);
-
-        _radioButtonContainer.Children.Add(_radioButton);
-
-        _radioButton.SetBinding(RadioButton.GroupNameProperty, new Binding(nameof(GroupName), source: this));
-        _radioButton.SetBinding(RadioButton.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
-        _radioButton.SetBinding(RadioButton.IsCheckedProperty, new Binding(nameof(IsChecked), source: this));
-        _radioButton.SetBinding(RadioButton.ValueProperty, new Binding(nameof(Value), source: this));
-        _radioButton.SetBinding(RadioButton.ControlTemplateProperty, new Binding(nameof(ControlTemplate), source: this));
-        _radioButton.SetBinding(CustomRadioButton.StrokeColorProperty, new Binding(nameof(StrokeColor), source: this));
 
         _label = new()
         {
@@ -347,11 +422,6 @@ public class MaterialRating : ContentView
         _label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
         _label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTransform), source: this));
-
-        TextSideChanged(TextSide);
-        //ChangeVisualState();
-
-        Behaviors.Add(new TouchBehavior());
 
         base.Content = _mainLayout;
     }
