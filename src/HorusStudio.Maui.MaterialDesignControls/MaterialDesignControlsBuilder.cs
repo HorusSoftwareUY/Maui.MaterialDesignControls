@@ -17,7 +17,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static void ConfigureHandlers(IMauiHandlersCollection handlers)
         {
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
-            handlers.AddHandler(typeof(CheckBox), typeof(CustomCheckboxHandler));
         }
 
         private static void ConfigureLifeCycleEvents(ILifecycleBuilder appLifeCycle)
@@ -60,8 +59,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialButton.GetStyles());
             // Icon Button
             application.Resources.AddStyles(MaterialIconButton.GetStyles());
-            // Checkbox
-            application.Resources.AddStyles(MaterialCheckBox.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)

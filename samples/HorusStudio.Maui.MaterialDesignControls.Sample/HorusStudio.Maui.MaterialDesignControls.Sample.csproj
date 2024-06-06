@@ -61,13 +61,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Pages\CheckboxPage.xaml.cs">
-	    <DependentUpon>CheckboxPage.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Pages\CheckboxPage.xaml">
+	  <MauiXaml Update="Pages\RatingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
