@@ -476,7 +476,6 @@ public class MaterialRadioButton : ContentView, ITouchable
         _label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
 
         TextSideChanged(TextSide);
-        //ChangeVisualState();
 
         Behaviors.Add(new TouchBehavior());
 
