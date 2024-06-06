@@ -1,5 +1,13 @@
 ﻿
+using Microsoft.Maui.Controls.Shapes;
+using System.Runtime.CompilerServices;
+using Path = Microsoft.Maui.Controls.Shapes.Path;
+
 namespace HorusStudio.Maui.MaterialDesignControls;
+
+/// <summary>
+/// A rating <see cref="View" /> allows users to view and set ratings that reflect degrees of satisfaction./>.
+/// </summary>
 public class MaterialRating : ContentView
 {
     #region Attributes
@@ -22,6 +30,7 @@ public class MaterialRating : ContentView
 
     private MaterialLabel _label;
     private Grid _mainLayout;
+    private Grid _containerLayout;
 
     #endregion Layout
 
@@ -42,7 +51,7 @@ public class MaterialRating : ContentView
     /// The backing store for the <see cref="FontFamily" /> bindable property.
     /// </summary>
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialRating), defaultValue: DefaultFontFamily);
-
+    
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
@@ -144,11 +153,11 @@ public class MaterialRating : ContentView
     /// <summary>
     /// The backing store for the <see cref="Value"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialRating), defaultValue: null, propertyChanged: (bindableObject, _, _) =>
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(int), typeof(MaterialRating), defaultBindingMode: BindingMode.TwoWay, defaultValue: -1, propertyChanged: (bindableObject, _, newValue) =>
     {
         if (bindableObject is MaterialRating self)
         {
-            self.OnValuePropertyChanged();
+            self.OnValuePropertyChanged(self, newValue);
         }
     });
 
@@ -366,9 +375,9 @@ public class MaterialRating : ContentView
     /// The default value is <value>-1</value>.
     /// This is a bindable property.
     /// </summary>
-    public object Value
+    public int Value
     {
-        get { return (object)GetValue(ValueProperty); }
+        get { return (int)GetValue(ValueProperty); }
         set { SetValue(ValueProperty, value); }
     }
 
@@ -382,28 +391,26 @@ public class MaterialRating : ContentView
         {
             Margin = new Thickness(0),
             VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Start,
+            RowDefinitions = new()
+            {
+                new()
+                {
+                    Height =  GridLength.Auto
+                },
+                new()
+                {
+                    Height = GridLength.Auto
+                }
+            },
+            ColumnDefinitions = new()
+            {
+                new()
+                {
+                    Width = GridLength.Star
+                }
+            }
         };
-
-        //_radioButtonContainer = new Grid()
-        //{
-        //    MinimumHeightRequest = 48,
-        //    MinimumWidthRequest = 48,
-        //    RowDefinitions = new()
-        //    {
-        //        new RowDefinition()
-        //        {
-        //            Height = GridLength.Star
-        //        }
-        //    },
-        //    ColumnDefinitions = new()
-        //    {
-        //        new ColumnDefinition()
-        //        {
-        //            Width = GridLength.Star
-        //        }
-        //    }
-        //};
-
 
         _label = new()
         {
@@ -422,247 +429,350 @@ public class MaterialRating : ContentView
         _label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
         _label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTransform), source: this));
+        _label.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+
+        _mainLayout.Children.Add(_label);
+
+        _containerLayout = new()
+        {
+            Padding = new Thickness(0),
+            ColumnSpacing = 0,
+            RowSpacing = 0,
+            HorizontalOptions = LayoutOptions.Fill
+        };
+
+        _containerLayout.SetBinding(Grid.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        _containerLayout.SetValue(Grid.RowProperty, 1);
+
+        _mainLayout.Children.Add(_containerLayout);
+
+        SetGridContent();
 
         base.Content = _mainLayout;
     }
 
     #endregion Constructors
 
-    #region ITouchable
+    #region Methods
 
-    public async void OnTouch(TouchType gestureType)
+    public void OnValuePropertyChanged(MaterialRating control, object newValue)
+    {
+        if (newValue is not null && int.TryParse(newValue.ToString(), out int value))
+        {
+            int idxPosition = 0;
+            foreach (object item in control._containerLayout.Children)
+                SetIconsRatingControl(item, value, idxPosition++);
+        }
+    }
+
+    /// <summary>
+    /// Set the content of the container of the ratings
+    /// </summary>
+    private void SetGridContent()
+    {
+        var useDefaultIcon = GetUseDefaultIcon();
+
+        // Populate grid
+        int rows = (int)Math.Ceiling(ItemsSize * 1.0 / ItemsPerRow * 1.0);
+
+        _containerLayout.RowDefinitions = new RowDefinitionCollection();
+        _containerLayout.ColumnDefinitions = new ColumnDefinitionCollection();
+        _containerLayout.Children.Clear();
+
+        AddRowsDefinitions(rows);
+        AddColumnsDefinitions();
+        PupulateGrid(rows, ItemsPerRow, ItemsSize, useDefaultIcon);
+    }
+
+    /// <summary>
+    /// Add all rating icons
+    /// </summary>
+    /// <param name="rows"></param>
+    /// <param name="columns"></param>
+    /// <param name="itemsSize"></param>
+    /// <param name="useDefaultIcon"></param>
+
+    private void PupulateGrid(int rows, int columns, int itemsSize, bool useDefaultIcon)
+    {
+        int populatedObjects = 0;
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                if (populatedObjects == itemsSize)
+                    break;
+
+                int value = populatedObjects;
+
+                ++populatedObjects;
+
+                if (!useDefaultIcon)
+                {
+                    AddMaterialIconAsRating(i, j, value, populatedObjects);
+                }
+                else
+                {
+                    AddCustomGridAsRating(i, j, value);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Add <see cref="CustomGrid" /> as rating icon
+    /// </summary>
+    /// <param name="row"></param>
+    /// <param name="column"></param>
+    /// <param name="value"></param>
+    /// <param name="populatedObjects"></param>
+    private void AddCustomGridAsRating(int row, int column, int value)
+    {
+        // Add element at row,column position on grid
+        var customGrid = new CustomGrid()
+        {
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            IsVisible = true,
+            Command = new Command((e) => OnTapped((int)(e))),
+            CommandParameter = value + 1,
+            Animation = Animation,
+            Padding = 4,
+            WidthRequest = 50,
+            HeightRequest = 50,
+            Margin = new Thickness(3),
+        };
+
+        if (AnimationParameter.HasValue)
+            customGrid.AnimationParameter = AnimationParameter;
+
+        customGrid.SetValue(Grid.RowProperty, row);
+        customGrid.SetValue(Grid.ColumnProperty, column);
+
+        customGrid.SetBinding(Grid.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+
+        SetIconsRatingControl(customGrid, this.Value);
+
+        _containerLayout.Children.Add(customGrid);
+    }
+
+    /// <summary>
+    /// Add <see cref="MaterialIconButton" /> as rating icon
+    /// </summary>
+    /// <param name="row"></param>
+    /// <param name="column"></param>
+    /// <param name="value"></param>
+    /// <param name="populatedObjects">this is used to know the position of the icon</param>
+    private void AddMaterialIconAsRating(int row, int column, int value, int populatedObjects)
+    {
+        // Add element at row,column position on grid
+        var customImageButton = new MaterialIconButton()
+        {
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Type = MaterialIconButtonType.Standard,
+            IsVisible = true,
+            Command = new Command((e) => OnTapped((int)(e))),
+            CommandParameter = value + 1,
+            Animation = Animation,
+            Padding = 4,
+            Margin = new Thickness(3)
+        };
+
+        if (AnimationParameter.HasValue)
+            customImageButton.AnimationParameter = AnimationParameter;
+
+        customImageButton.SetValue(Grid.RowProperty, row);
+        customImageButton.SetValue(Grid.ColumnProperty, column);
+
+        SetIconsRatingControl(customImageButton, this.Value, populatedObjects - 1);
+
+        _containerLayout.Children.Add(customImageButton);
+    }
+
+    /// <summary>
+    /// Add row definitions for rating container
+    /// </summary>
+    private void AddRowsDefinitions(int rows)
+    {
+        // Set row definitions of grid
+        for (int i = 0; i < rows; i++)
+            _containerLayout.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+    }
+
+    /// <summary>
+    /// Add columns definitions for rating container
+    /// </summary>
+    private void AddColumnsDefinitions()
+    {
+        // Set columns definitions of grid
+        for (int i = 0; i < ItemsPerRow; i++)
+            _containerLayout.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });// new GridLength(ItemsPerRow / 100.0, GridUnitType.Star) });
+    }
+
+    /// <summary>
+    /// Get if use the default icon, a star. 
+    /// </summary>
+    /// <returns>true if it should draw star; otherwise, false</returns>
+    private bool GetUseDefaultIcon()
+    {
+        return (UseSameIcon && SelectedIconSource is null) ||
+                (UseSameIcon && UnselectedIconSource is null) ||
+                (!UseSameIcon && SelectedIconsSource is null) ||
+                (!UseSameIcon && UnselectedIconsSource is null);
+    }
+
+    /// <summary>
+    /// Event to set the Value
+    /// </summary>
+    /// <param name="value">new value</param>
+    private void OnTapped(int value)
     {
         if (IsEnabled)
         {
-            await TouchAnimation.AnimateAsync(this, gestureType);
+            if (Value == 1 && value == 1)
+                Value = -1;
+            else
+                Value = value;
+        }
+    }
 
-            if (gestureType == TouchType.Released && !IsChecked)
+    /// <summary>
+    /// Set Image of the rating depeding of the value and item
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="value">rating value</param>
+    /// <param name="position">position of rating</param>
+    public void SetIconsRatingControl(object item, int value, int? position = null)
+    {
+        if (item is MaterialIconButton iconButton)
+        {
+            UpdateIconButtonAppearance(iconButton, value, position!.Value);
+        }
+        else if (item is CustomGrid gridContainer)
+        {
+            UpdateGridContainerAppearance(gridContainer, value);
+        }
+    }
+
+    /// <summary>
+    /// Set image of the icon container
+    /// </summary>
+    /// <param name="iconButton">icon container</param>
+    /// <param name="value">icon value</param>
+    /// <param name="position">is used to determinate the position of the icon</param>
+    private void UpdateIconButtonAppearance(MaterialIconButton iconButton, int value, int position)
+    {
+        bool isSelected = iconButton.CommandParameter != null && (int)iconButton.CommandParameter <= value;
+
+        if (isSelected)
+        {
+            if (UseSameIcon && SelectedIconSource != null)
             {
-                IsChecked = !IsChecked;
+                iconButton.ImageSource = SelectedIconSource;
             }
-        }
-    }
-
-    #endregion ITouchable
-
-    #region Events
-
-    public event EventHandler<CheckedChangedEventArgs> CheckedChanged;
-
-    #endregion Events
-
-    #region Methods
-
-    private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
-    {
-        this.IsChecked = e.Value;
-    }
-
-    private void OnControlTemplateChanged()
-    {
-        _mainLayout.Children.Clear();
-        _mainLayout.ColumnDefinitions = new()
+            else
+            {
+                var selectedIcon = SelectedIconsSource?.ElementAtOrDefault(position);
+                if (selectedIcon != null)
                 {
-                    new()
-                    {
-                        Width = GridLength.Star
-                    }
-                };
-
-        _radioButtonContainer.SetValue(Grid.ColumnProperty, 0);
-        _mainLayout.Children.Add(_radioButtonContainer);
-        _radioButton.IsControlTemplateByDefault = false;
-    }
-
-    private void TextSideChanged(TextSide textSide)
-    {
-        switch (textSide)
-        {
-            case TextSide.Left:
-                _mainLayout.Children.Clear();
-                _mainLayout.ColumnDefinitions = new()
-                {
-                    new()
-                    {
-                        Width = GridLength.Star
-                    },
-                    new()
-                    {
-                        Width = GridLength.Auto
-                    }
-                };
-
-                _radioButtonContainer.SetValue(Grid.ColumnProperty, 1);
-
-                _label.SetValue(Grid.ColumnProperty, 0);
-
-                _mainLayout.Children.Add(_label);
-                _mainLayout.Children.Add(_radioButtonContainer);
-                break;
-            case TextSide.Right:
-                _mainLayout.Children.Clear();
-                _mainLayout.ColumnDefinitions = new()
-                {
-                    new()
-                    {
-                        Width = GridLength.Auto
-                    },
-                    new()
-                    {
-                        Width = GridLength.Star
-                    }
-                };
-                _radioButtonContainer.SetValue(Grid.ColumnProperty, 0);
-
-                _label.SetValue(Grid.ColumnProperty, 1);
-
-                _mainLayout.Children.Add(_radioButtonContainer);
-                _mainLayout.Children.Add(_label);
-                break;
-        }
-    }
-
-    protected override void ChangeVisualState()
-    {
-        if (!IsEnabled)
-        {
-            VisualStateManager.GoToState(this, RadioButtonCommonStates.Disabled);
-        }
-        else if (IsChecked)
-        {
-            VisualStateManager.GoToState(this, RadioButtonCommonStates.Checked);
+                    iconButton.ImageSource = selectedIcon;
+                }
+            }
         }
         else
         {
-            VisualStateManager.GoToState(this, RadioButtonCommonStates.Unchecked);
-        }
-    }
-
-    void OnValuePropertyChanged()
-    {
-        if (string.IsNullOrEmpty(GroupName))
-        {
-            return;
-        }
-#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
-        MessagingCenter.Send(this, ValueChangedMessage,
-                    new MaterialRadioButtonValueChanged(MaterialRadioButtonGroup.GetVisualRoot(this)));
-#pragma warning restore CS0618 // Type or member is obsolete
-    }
-
-    void OnGroupNamePropertyChanged(string oldGroupName, string newGroupName)
-    {
-#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
-        if (!string.IsNullOrEmpty(newGroupName))
-        {
-            if (string.IsNullOrEmpty(oldGroupName))
+            if (UseSameIcon && UnselectedIconSource != null)
             {
-                MessagingCenter.Subscribe<MaterialRadioButton, MaterialRadioButtonGroupSelectionChanged>(this,
-                    MaterialRadioButtonGroup.GroupSelectionChangedMessage, HandleRadioButtonGroupSelectionChanged);
-                MessagingCenter.Subscribe<Element, MaterialRadioButtonGroupValueChanged>(this,
-                    MaterialRadioButtonGroup.GroupValueChangedMessage, HandleRadioButtonGroupValueChanged);
+                iconButton.ImageSource = UnselectedIconSource;
             }
-
-            MessagingCenter.Send(this, GroupNameChangedMessage,
-                new MaterialRadioButtonGroupNameChanged(MaterialRadioButtonGroup.GetVisualRoot(this), oldGroupName));
-        }
-        else
-        {
-            if (!string.IsNullOrEmpty(oldGroupName))
+            else
             {
-                MessagingCenter.Unsubscribe<MaterialRadioButton, MaterialRadioButtonGroupSelectionChanged>(this, MaterialRadioButtonGroup.GroupSelectionChangedMessage);
-                MessagingCenter.Unsubscribe<Element, MaterialRadioButtonGroupValueChanged>(this, MaterialRadioButtonGroup.GroupValueChangedMessage);
+                var unselectedIcon = UnselectedIconsSource?.ElementAtOrDefault(position);
+                if (unselectedIcon != null)
+                {
+                    iconButton.ImageSource = unselectedIcon;
+                }
             }
         }
-#pragma warning restore CS0618 // Type or member is obsolete
     }
 
-    void HandleRadioButtonGroupValueChanged(Element layout, MaterialRadioButtonGroupValueChanged args)
+    /// <summary>
+    /// Add a star to container with a value. If is selected, draws a filled start; otherwise, outline star
+    /// </summary>
+    /// <param name="gridContainer">star container</param>
+    /// <param name="value">star value</param>
+    private void UpdateGridContainerAppearance(CustomGrid gridContainer, int value)
     {
-        if (IsChecked || string.IsNullOrEmpty(GroupName) || GroupName != args.GroupName || !object.Equals(Value, args.Value) || !object.Equals(Value, args.Value) || !MatchesScope(args))
+        gridContainer.Children.Clear();
+        double size = Math.Min(gridContainer.Width, gridContainer.Height) - 10;
+        if (size < 1)
+            size = 40;
+
+        bool isSelected = gridContainer.CommandParameter != null && (int)gridContainer.CommandParameter <= value;
+        var starPath = new Path
         {
-            return;
+            Data = CreateStarPathGeometry(size, size),
+            Fill = isSelected ? new SolidColorBrush(StrokeColor) : null,
+            Stroke = new SolidColorBrush(StrokeColor),
+            StrokeThickness = StrokeThickness,
+            VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Center
+        };
+
+        gridContainer.Children.Add(starPath);
+    }
+
+    /// <summary>
+    /// Used to draw a star
+    /// </summary>
+    /// <returns>Path geometry of the star</returns>
+    private PathGeometry CreateStarPathGeometry(double width, double height)
+    {
+        // Define the points of the star based on the width and height
+        double centerX = width / 2;
+        double centerY = height / 2;
+        double radius = Math.Min(centerX, centerY);
+
+        var pathFigure = new PathFigure { StartPoint = new Point(centerX, centerY - radius) };
+
+        for (int i = 1; i < 10; i++)
+        {
+            double angle = Math.PI / 5 * i;
+            double x = centerX + radius * Math.Sin(angle) * (i % 2 == 0 ? 1 : 0.5);
+            double y = centerY - radius * Math.Cos(angle) * (i % 2 == 0 ? 1 : 0.5);
+            pathFigure.Segments.Add(new LineSegment { Point = new Point(x, y) });
         }
 
-        SetValue(IsCheckedProperty, true);
+        // Close the figure
+        pathFigure.IsClosed = true;
+
+        var pathGeometry = new PathGeometry();
+        pathGeometry.Figures.Add(pathFigure);
+        return pathGeometry;
     }
 
-    bool MatchesScope(MaterialRadioButtonScopeMessage message)
+    //We override this method to execute SetGridContent when some property of rating changed that is used to populate the rating icons
+    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
-        return MaterialRadioButtonGroup.GetVisualRoot(this) == message.Scope;
-    }
-
-    void HandleRadioButtonGroupSelectionChanged(MaterialRadioButton selected, MaterialRadioButtonGroupSelectionChanged args)
-    {
-        if (!IsChecked || selected == this || string.IsNullOrEmpty(GroupName) || GroupName != selected.GroupName || !MatchesScope(args))
+        switch (propertyName)
         {
-            return;
+            case nameof(ItemsSize):
+            case nameof(ItemsPerRow):
+            case nameof(UnselectedIconSource):
+            case nameof(SelectedIconSource):
+            case nameof(AnimationParameter):
+            case nameof(Animation):
+            case nameof(UseSameIcon):
+            case nameof(SelectedIconsSource):
+            case nameof(UnselectedIconsSource):
+                SetGridContent();
+                break;
+            default:
+                base.OnPropertyChanged(propertyName);
+                break;
         }
-
-        SetValue(IsCheckedProperty, false);
     }
 
     #endregion Methods
-
-    #region Styles
-
-    internal static IEnumerable<Style> GetStyles()
-    {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = RadioButtonCommonStates.Disabled };
-
-        disabledState.Setters.Add(
-            MaterialRadioButton.TextColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        disabledState.Setters.Add(
-            MaterialRadioButton.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        var checkedState = new VisualState { Name = RadioButtonCommonStates.Checked };
-
-        checkedState.Setters.Add(
-            MaterialRadioButton.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Primary,
-                Dark = MaterialDarkTheme.Primary
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(1f));
-
-        var uncheckedState = new VisualState { Name = RadioButtonCommonStates.Unchecked };
-        uncheckedState.Setters.Add(
-            MaterialRadioButton.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurfaceVariant,
-                Dark = MaterialDarkTheme.OnSurfaceVariant
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(1f));
-
-        commonStatesGroup.States.Add(disabledState);
-        commonStatesGroup.States.Add(checkedState);
-        commonStatesGroup.States.Add(uncheckedState);
-
-        var style = new Style(typeof(MaterialRadioButton));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
-    }
-    #endregion Styles
 }

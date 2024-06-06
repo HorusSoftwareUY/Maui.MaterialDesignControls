@@ -12,12 +12,67 @@
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
-                                    Text="Elevated" />
+                                    Text="Default" />
             <Frame Style="{StaticResource SurfaceContainer}"
                    Padding="16,32">
-                
+                <VerticalStackLayout>
+                    <material:MaterialRating Label="How do you rate....?" />
+                    <material:MaterialRating Label="How do you rate.... (Disabled)?"
+                                             Value="3"
+                                             IsEnabled="False" />
+                </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="Elevated buttons provide separation from a patterned background." />
+            <material:MaterialLabel Text="You can use MaterialRating with default properties." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Changing color of stroke and using a value" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialRating Label="How do you rate....?"
+                                             Value="{Binding Value}"
+                                             StrokeColor="Red" 
+                                             StrokeThickness="4"/>
+
+                    <material:MaterialButton Command="{Binding CheckValueCommand}"
+                                             Text="Check Value" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set stroke color, stroke thickness and use a bindable value" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Changing items size and icon" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialRating Label="How do you rate....?"
+                                             SelectedIconSource="star_selected.png"
+                                             UnselectedIconSource="star_unselected.png"
+                                             ItemsPerRow="6"
+                                             ItemsSize="12" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set the icon, items size, items per row and value" />
+
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Changing icons for all ratins" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialRating Label="How do you rate....?"
+                                             UseSameIcon="False"
+                                             SelectedIconsSource="{Binding SelectedIcons}"
+                                             UnselectedIconsSource="{Binding UnselectedIcons}"
+                                             LabelColor="DarkGreen"
+                                             LabelTransform="Uppercase"
+                                             FontSize="16"
+                                             FontAttributes="Bold"
+                                             ItemsPerRow="3"
+                                             ItemsSize="3" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can customize the icons for each rating setting UseSameIcon to false. You can set label properties too." />
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>
