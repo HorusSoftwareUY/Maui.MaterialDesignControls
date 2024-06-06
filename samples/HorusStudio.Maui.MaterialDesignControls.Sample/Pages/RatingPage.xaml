@@ -32,13 +32,14 @@
                     <material:MaterialRating Label="How do you rate....?"
                                              Value="{Binding Value}"
                                              StrokeColor="Red" 
+                                             Animation="Scale"
                                              StrokeThickness="4"/>
 
                     <material:MaterialButton Command="{Binding CheckValueCommand}"
                                              Text="Check Value" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can set stroke color, stroke thickness and use a bindable value" />
+            <material:MaterialLabel Text="You can set stroke color, stroke thickness, use a bindable value and change the animation" />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
                                     Text="Changing items size and icon" />
@@ -67,6 +68,18 @@
                                              LabelColor="DarkGreen"
                                              LabelTransform="Uppercase"
                                              FontSize="16"
+                                             FontAttributes="Bold"
+                                             ItemsPerRow="3"
+                                             ItemsSize="3" />
+                    <material:MaterialRating Label="How do you rate.... (disabled)?"
+                                             UseSameIcon="False"
+                                             SelectedIconsSource="{Binding SelectedIcons}"
+                                             UnselectedIconsSource="{Binding UnselectedIcons}"
+                                             LabelColor="DarkGreen"
+                                             LabelTransform="Uppercase"
+                                             FontSize="16"
+                                             Value="2"
+                                             IsEnabled="False"
                                              FontAttributes="Bold"
                                              ItemsPerRow="3"
                                              ItemsSize="3" />

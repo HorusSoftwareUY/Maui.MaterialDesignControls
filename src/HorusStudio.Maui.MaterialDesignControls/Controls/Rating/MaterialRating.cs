@@ -391,7 +391,7 @@ public class MaterialRating : ContentView
         {
             Margin = new Thickness(0),
             VerticalOptions = LayoutOptions.Center,
-            HorizontalOptions = LayoutOptions.Start,
+            HorizontalOptions = LayoutOptions.Fill,
             RowDefinitions = new()
             {
                 new()
@@ -435,6 +435,7 @@ public class MaterialRating : ContentView
 
         _containerLayout = new()
         {
+            Margin = new Thickness(0, 5, 0, 0),
             Padding = new Thickness(0),
             ColumnSpacing = 0,
             RowSpacing = 0,
@@ -533,7 +534,6 @@ public class MaterialRating : ContentView
         {
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
-            IsVisible = true,
             Command = new Command((e) => OnTapped((int)(e))),
             CommandParameter = value + 1,
             Animation = Animation,
@@ -584,6 +584,8 @@ public class MaterialRating : ContentView
 
         customImageButton.SetValue(Grid.RowProperty, row);
         customImageButton.SetValue(Grid.ColumnProperty, column);
+
+        customImageButton.SetBinding(MaterialIconButton.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
 
         SetIconsRatingControl(customImageButton, this.Value, populatedObjects - 1);
 
