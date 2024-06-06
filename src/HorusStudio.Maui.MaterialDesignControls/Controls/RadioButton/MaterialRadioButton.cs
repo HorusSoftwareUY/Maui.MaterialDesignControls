@@ -330,8 +330,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Defines the casing of the label. 
-    /// The default value is <see cref="TextSide.Right"/>
+    /// Defines the value of radio button selected
+    /// The default value is <see langword="null"/>
     /// This is a bindable property.
     /// </summary>
     public object Value
