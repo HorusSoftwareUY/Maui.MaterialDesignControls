@@ -460,9 +460,11 @@ public class MaterialRating : ContentView
     {
         if (newValue is not null && int.TryParse(newValue.ToString(), out int value))
         {
-            int idxPosition = 0;
-            foreach (object item in control._containerLayout.Children)
-                SetIconsRatingControl(item, value, idxPosition++);
+            for(int position = 0; position < control._containerLayout.Children.Count; position++)
+            {
+                var item = control._containerLayout.Children[position];
+                SetIconsRatingControl(item, value, position);
+            }
         }
     }
 
@@ -471,18 +473,29 @@ public class MaterialRating : ContentView
     /// </summary>
     private void SetGridContent()
     {
-        var useDefaultIcon = GetUseDefaultIcon();
+        var useDefaultIcon = GetIfUseDefaultIcon();
 
-        // Populate grid
-        int rows = (int)Math.Ceiling(ItemsSize * 1.0 / ItemsPerRow * 1.0);
+        var itemsSize = ItemsSize;
+        var useCustomIconsForEachRating = SelectedIconsSource is not null && UnselectedIconsSource is not null;
+        if (useCustomIconsForEachRating) 
+        {
+            itemsSize = Math.Min(SelectedIconsSource.Count(), UnselectedIconsSource.Count());
+        }
+
+        int rows = (int)Math.Ceiling(itemsSize * 1.0 / ItemsPerRow * 1.0);
+        var itemsPerRow = ItemsPerRow;
+        if (rows == 1 && useCustomIconsForEachRating)
+        {
+            itemsPerRow = Math.Min(SelectedIconsSource.Count(), UnselectedIconsSource.Count());
+        }
 
         _containerLayout.RowDefinitions = new RowDefinitionCollection();
         _containerLayout.ColumnDefinitions = new ColumnDefinitionCollection();
         _containerLayout.Children.Clear();
 
         AddRowsDefinitions(rows);
-        AddColumnsDefinitions();
-        PupulateGrid(rows, ItemsPerRow, ItemsSize, useDefaultIcon);
+        AddColumnsDefinitions(itemsPerRow);
+        PupulateGrid(rows, itemsPerRow, itemsSize, useDefaultIcon);
     }
 
     /// <summary>
@@ -502,7 +515,7 @@ public class MaterialRating : ContentView
             for (int j = 0; j < columns; j++)
             {
                 if (populatedObjects == itemsSize)
-                    break;
+                    return;
 
                 int value = populatedObjects;
 
@@ -605,18 +618,18 @@ public class MaterialRating : ContentView
     /// <summary>
     /// Add columns definitions for rating container
     /// </summary>
-    private void AddColumnsDefinitions()
+    private void AddColumnsDefinitions(int columns)
     {
         // Set columns definitions of grid
-        for (int i = 0; i < ItemsPerRow; i++)
-            _containerLayout.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });// new GridLength(ItemsPerRow / 100.0, GridUnitType.Star) });
+        for (int i = 0; i < columns; i++)
+            _containerLayout.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ItemsPerRow / 100.0, GridUnitType.Star) });
     }
 
     /// <summary>
     /// Get if use the default icon, a star. 
     /// </summary>
     /// <returns>true if it should draw star; otherwise, false</returns>
-    private bool GetUseDefaultIcon()
+    private bool GetIfUseDefaultIcon()
     {
         return (UseSameIcon && SelectedIconSource is null) ||
                 (UseSameIcon && UnselectedIconSource is null) ||

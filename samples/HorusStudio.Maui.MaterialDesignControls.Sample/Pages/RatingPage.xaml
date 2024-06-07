@@ -31,7 +31,7 @@
                 <VerticalStackLayout>
                     <material:MaterialRating Label="How do you rate....?"
                                              Value="{Binding Value}"
-                                             StrokeColor="Red" 
+                                             StrokeColor="Gold" 
                                              Animation="Scale"
                                              StrokeThickness="4"/>
 
@@ -57,7 +57,7 @@
 
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
-                                    Text="Changing icons for all ratins" />
+                                    Text="Changing icons for all ratings" />
             <Frame Style="{StaticResource SurfaceContainer}"
                    Padding="16,32">
                 <VerticalStackLayout>
@@ -68,21 +68,18 @@
                                              LabelColor="DarkGreen"
                                              LabelTransform="Uppercase"
                                              FontSize="16"
-                                             FontAttributes="Bold"
-                                             ItemsPerRow="3"
-                                             ItemsSize="3" />
+                                             FontAttributes="Bold" />
                     <material:MaterialRating Label="How do you rate.... (disabled)?"
                                              UseSameIcon="False"
                                              SelectedIconsSource="{Binding SelectedIcons}"
                                              UnselectedIconsSource="{Binding UnselectedIcons}"
                                              LabelColor="DarkGreen"
                                              LabelTransform="Uppercase"
+                                             Animation="Scale"
                                              FontSize="16"
                                              Value="2"
                                              IsEnabled="False"
-                                             FontAttributes="Bold"
-                                             ItemsPerRow="3"
-                                             ItemsSize="3" />
+                                             FontAttributes="Bold" />
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="You can customize the icons for each rating setting UseSameIcon to false. You can set label properties too." />

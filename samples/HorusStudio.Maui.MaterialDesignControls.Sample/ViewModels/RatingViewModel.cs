@@ -17,7 +17,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private int _value = 2;
 
-
         public override string Title => "Rating";
 
         #endregion
@@ -31,11 +30,15 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 "square_checked.png",
                 "square_checked.png",
                 "star_selected.png",
+                "square_checked.png",
+                "star_selected.png",
             };
 
             UnselectedIcons = new ObservableCollection<ImageSource>
             {
                 "square_unchecked.png",
+                "square_unchecked.png",
+                "star_unselected.png",
                 "square_unchecked.png",
                 "star_unselected.png",
             };
