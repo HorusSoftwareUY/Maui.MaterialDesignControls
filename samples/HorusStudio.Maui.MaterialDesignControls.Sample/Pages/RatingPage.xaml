@@ -53,12 +53,13 @@
                                              ItemsSize="12" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can set the icon, items size, items per row and value" />
+            <material:MaterialLabel Text="You can set the icon, items size and items per row" />
 
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
                                     Text="Changing icons for all ratings" />
             <Frame Style="{StaticResource SurfaceContainer}"
+                   BackgroundColor="White"
                    Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialRating Label="How do you rate....?"

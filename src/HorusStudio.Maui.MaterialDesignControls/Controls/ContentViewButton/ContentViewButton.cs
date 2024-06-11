@@ -1,12 +1,10 @@
-﻿
-
-using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-class CustomGrid : Grid, ITouchable
+class ContentViewButton : ContentView, ITouchable
 {
     #region Attributes
     private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
@@ -20,30 +18,30 @@ class CustomGrid : Grid, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Command" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(CustomGrid));
+    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ContentViewButton));
 
     /// <summary>
     /// The backing store for the <see cref="CommandParameter" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(CustomGrid));
+    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ContentViewButton));
 
 
     /// <summary>
     /// The backing store for the <see cref="Animation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(CustomGrid), defaultValue: DefaultAnimationType);
+    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(ContentViewButton), defaultValue: DefaultAnimationType);
 
     /// <summary>
     /// The backing store for the <see cref="AnimationParameter"/> bindable property.
     /// </summary>
 #nullable enable
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(CustomGrid), defaultValue: DefaultAnimationParameter);
+    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(ContentViewButton), defaultValue: DefaultAnimationParameter);
 #nullable disable
 
     /// <summary>
     /// The backing store for the <see cref="CustomAnimation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(CustomGrid));
+    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(ContentViewButton));
 
     #endregion Bindable properties
 
@@ -107,7 +105,7 @@ class CustomGrid : Grid, ITouchable
 
     #region Constructors
 
-    public CustomGrid()
+    public ContentViewButton()
     {
         SetTapGestureRecognizer();
         Behaviors.Add(new TouchBehavior());
@@ -131,14 +129,14 @@ class CustomGrid : Grid, ITouchable
 
     private void SetTapGestureRecognizer()
     {
-        this.GestureRecognizers.Clear();
+        GestureRecognizers.Clear();
         var tapGestureRecognizer = new TapGestureRecognizer
         {
             Command = Command,
             CommandParameter = CommandParameter
         };
 
-        this.GestureRecognizers.Add(tapGestureRecognizer);
+        GestureRecognizers.Add(tapGestureRecognizer);
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)

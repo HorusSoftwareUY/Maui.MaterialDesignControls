@@ -138,7 +138,7 @@ public class MaterialRating : ContentView
     /// <summary>
     /// The backing store for the <see cref="UseSameIcon" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty UseSameIconProperty = BindableProperty.Create(nameof(UseSameIcon), typeof(bool), typeof(MaterialRating), defaultValue: true);
+    public static readonly BindableProperty UseSameIconProperty = BindableProperty.Create(nameof(UseSameIcon), typeof(bool), typeof(MaterialRating), defaultBindingMode: BindingMode.OneWay, defaultValue: true);
 
     /// <summary>
     /// The backing store for the <see cref="ItemsSize" /> bindable property.
@@ -534,7 +534,7 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Add <see cref="CustomGrid" /> as rating icon
+    /// Add <see cref="ContentViewButton" /> as rating icon
     /// </summary>
     /// <param name="row"></param>
     /// <param name="column"></param>
@@ -543,7 +543,7 @@ public class MaterialRating : ContentView
     private void AddCustomGridAsRating(int row, int column, int value)
     {
         // Add element at row,column position on grid
-        var customGrid = new CustomGrid()
+        var customGrid = new ContentViewButton()
         {
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -584,12 +584,13 @@ public class MaterialRating : ContentView
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
             Type = MaterialIconButtonType.Standard,
-            IsVisible = true,
             Command = new Command((e) => OnTapped((int)(e))),
             CommandParameter = value + 1,
             Animation = Animation,
             Padding = 4,
-            Margin = new Thickness(3)
+            Margin = new Thickness(3),
+            Style = GetStyleForMaterialRating(),
+            UseTintColor = false
         };
 
         if (AnimationParameter.HasValue)
@@ -603,6 +604,25 @@ public class MaterialRating : ContentView
         SetIconsRatingControl(customImageButton, this.Value, populatedObjects - 1);
 
         _containerLayout.Children.Add(customImageButton);
+    }
+
+    /// <summary>
+    /// create a style for MaterialIconButton used in MaterialRating
+    /// </summary>
+    /// <returns>style</returns>
+    private Style GetStyleForMaterialRating()
+    {
+        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
+
+        var pressedState = new VisualState { Name = ButtonCommonStates.Pressed };
+
+        commonStatesGroup.States.Add(new VisualState { Name = ButtonCommonStates.Normal });
+        commonStatesGroup.States.Add(pressedState);
+
+        var style = new Style(typeof(MaterialIconButton));
+        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
+
+        return style;
     }
 
     /// <summary>
@@ -664,7 +684,7 @@ public class MaterialRating : ContentView
         {
             UpdateIconButtonAppearance(iconButton, value, position!.Value);
         }
-        else if (item is CustomGrid gridContainer)
+        else if (item is ContentViewButton gridContainer)
         {
             UpdateGridContainerAppearance(gridContainer, value);
         }
@@ -717,9 +737,8 @@ public class MaterialRating : ContentView
     /// </summary>
     /// <param name="gridContainer">star container</param>
     /// <param name="value">star value</param>
-    private void UpdateGridContainerAppearance(CustomGrid gridContainer, int value)
+    private void UpdateGridContainerAppearance(ContentViewButton gridContainer, int value)
     {
-        gridContainer.Children.Clear();
         double size = Math.Min(gridContainer.Width, gridContainer.Height) - 10;
         if (size < 1)
             size = 40;
@@ -735,7 +754,7 @@ public class MaterialRating : ContentView
             HorizontalOptions = LayoutOptions.Center
         };
 
-        gridContainer.Children.Add(starPath);
+        gridContainer.Content = starPath;
     }
 
     /// <summary>

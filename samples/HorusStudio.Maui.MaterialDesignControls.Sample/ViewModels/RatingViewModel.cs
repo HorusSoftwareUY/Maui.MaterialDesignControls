@@ -27,20 +27,20 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
             SelectedIcons = new ObservableCollection<ImageSource>
             {
-                "square_checked.png",
-                "square_checked.png",
-                "star_selected.png",
-                "square_checked.png",
-                "star_selected.png",
+                "verybad.png",
+                "bad.png",
+                "middle.png",
+                "good.png",
+                "verygood.png",
             };
 
             UnselectedIcons = new ObservableCollection<ImageSource>
             {
-                "square_unchecked.png",
-                "square_unchecked.png",
-                "star_unselected.png",
-                "square_unchecked.png",
-                "star_unselected.png",
+                "verybad_unselected.png",
+                "bad_unselected.png",
+                "middle_unselected.png",
+                "good_unselected.png",
+                "verygood_unselected.png",
             };
         }
 

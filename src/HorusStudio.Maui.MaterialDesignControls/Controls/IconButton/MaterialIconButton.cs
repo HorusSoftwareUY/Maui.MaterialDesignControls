@@ -252,6 +252,18 @@ public class MaterialIconButton : ContentView, ITouchable
         }
     });
 
+
+    /// <summary>
+    /// The backing store for the <see cref="UseTintColor"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty UseTintColorProperty = BindableProperty.Create(nameof(UseTintColor), typeof(bool), typeof(MaterialIconButton), defaultBindingMode: BindingMode.OneWay, defaultValue: true, propertyChanged: (bindable, _, newValue) =>
+    {
+        if (bindable is MaterialIconButton self && newValue is bool value && value)
+        {
+            self._image.Behaviors.Clear();
+        }
+    });
+
     #endregion Bindable Properties
 
     #region Properties
@@ -477,6 +489,18 @@ public class MaterialIconButton : ContentView, ITouchable
     {
         get { return (Shadow)GetValue(ShadowProperty); }
         set { SetValue(ShadowProperty, value); }
+    }
+
+
+    /// <summary>
+    /// Gets or sets if button should use tint color.
+    /// The default value is <see langword="true"/>.
+    /// This is a bindable property.
+    /// </summary>
+    public bool UseTintColor
+    {
+        get => (bool)GetValue(UseTintColorProperty);
+        set => SetValue(UseTintColorProperty, value);
     }
 
     #endregion Properties
