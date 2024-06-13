@@ -39,7 +39,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 .OnLaunched((_, _) =>
                 {
                     InitializeComponents();
-                }
+                }));
 #endif
         }
 
