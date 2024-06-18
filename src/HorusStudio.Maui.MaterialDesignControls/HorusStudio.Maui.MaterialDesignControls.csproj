@@ -40,4 +40,5 @@
 	  <Compile Remove="**\*.Windows.cs" />
 	  <None Include="**\*.Windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
+	
 </Project>

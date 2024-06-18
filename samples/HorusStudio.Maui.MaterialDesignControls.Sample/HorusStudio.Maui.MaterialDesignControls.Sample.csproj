@@ -59,4 +59,16 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Pages\SliderPage.xaml.cs">
+	    <DependentUpon>SliderPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\SliderPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
 </Project>

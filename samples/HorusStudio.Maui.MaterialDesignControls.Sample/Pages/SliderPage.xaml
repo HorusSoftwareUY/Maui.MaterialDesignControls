@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SliderPage"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+             x:TypeArguments="vm:SliderViewModel"
+             x:DataType="vm:SliderViewModel">
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource MainLayout}">
+            <material:MaterialLabel Text="{Binding Subtitle}" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Default" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+
+                    <material:MaterialSlider Label="Only label"
+                                             ValueChanged="MaterialSlider_ValueChanged"
+                                             MinimumLabel="---"
+                                             MaximumLabel="+++"
+                                             ThumbColor="Red"
+                                             MaximumTrackColor="Blue"
+                                             MinimumTrackColor="GreenYellow"
+                                             ThumbImageSource="ic_time.png" />
+                    <material:MaterialLabel x:Name="displayLabel"
+                                            Text="The Slider value will be show it here" />
+
+                    <material:MaterialSlider MaximumImageSource="ic_search.png"
+                                             Label="Only icons"
+                                             ShowIcons="True"
+                                             MinimumImageSource="ic_checkbox.png" />
+
+                    <material:MaterialSlider MaximumImageSource="ic_search.png"
+                                             Label="Only icons"
+                                             ShowIcons="True"
+                                             ThumbImageSource="ic_time.png"
+                                             MinimumImageSource="ic_checkbox.png" />
+
+                    <Slider Minimum="0"
+                            Maximum="10" />
+
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can use MaterialRating with default properties." />
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</local:BaseContentPage>
