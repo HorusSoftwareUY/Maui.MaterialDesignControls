@@ -2,58 +2,92 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-//We reuse some code from MAUI official repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs
+/// <summary>
+/// We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs">See here.</see>
+/// </summary>
 public static class MaterialRadioButtonGroup
 {
+    #region Attributes
+
     internal const string GroupSelectionChangedMessage = "MaterialRadioButtonGroupSelectionChanged";
     internal const string GroupValueChangedMessage = "MaterialRadioButtonGroupValueChanged";
 
-    /// <summary>Bindable property for material radio button group controller property <c>GroupName</c>.</summary>
+    #endregion Attributes
+
+    #region Properties
+
+    /// <summary>
+    /// The backing store for the <see cref="MaterialRadioButtonGroupController" /> bindable property.
+    /// </summary>
     static readonly BindableProperty MaterialRadioButtonGroupControllerProperty =
         BindableProperty.CreateAttached("MaterialRadioButtonGroupController", typeof(MaterialRadioButtonGroupController), typeof(Microsoft.Maui.ILayout), default(MaterialRadioButtonGroupController),
         defaultValueCreator: (b) => {
 
             return new MaterialRadioButtonGroupController(b as Microsoft.Maui.ILayout);
-            
-            },
+
+        },
         propertyChanged: (b, o, n) => OnControllerChanged(b, (MaterialRadioButtonGroupController)o, (MaterialRadioButtonGroupController)n));
 
-    static MaterialRadioButtonGroupController GetMaterialRadioButtonGroupController(BindableObject b)
+    /// <summary>
+    /// Returns the bindableObject's <see cref="MaterialRadioButtonGroupController" />
+    /// </summary>
+    /// <param name="bindableObject"></param>
+    /// <returns></returns>
+    static MaterialRadioButtonGroupController GetMaterialRadioButtonGroupController(BindableObject bindableObject)
     {
-        return (MaterialRadioButtonGroupController)b.GetValue(MaterialRadioButtonGroupControllerProperty);
+        return (MaterialRadioButtonGroupController)bindableObject.GetValue(MaterialRadioButtonGroupControllerProperty);
     }
 
-    /// <summary>Bindable property for group name property <c>GroupName</c>.</summary>
+    /// <summary>
+    /// The backing store for the <see cref="MaterialGroupName" /> bindable property.
+    /// </summary>
 
     public static readonly BindableProperty GroupNameProperty =
         BindableProperty.CreateAttached("MaterialGroupName", typeof(string), typeof(Microsoft.Maui.ILayout), null,
         propertyChanged: (b, o, n) => { GetMaterialRadioButtonGroupController(b).GroupName = (string)n; });
 
-    public static string GetGroupName(BindableObject b)
+    /// <summary>
+    /// Returns the bindableObject's group name
+    /// </summary>
+    public static string GetGroupName(BindableObject bindableObject)
     {
-        return (string)b.GetValue(GroupNameProperty);
+        return (string)bindableObject.GetValue(GroupNameProperty);
     }
 
-    public static void SetGroupName(BindableObject bindable, string groupName)
+    /// <summary>
+    /// Sets the bindableObject's group name
+    /// </summary>
+    public static void SetGroupName(BindableObject bindableObject, string groupName)
     {
-        bindable.SetValue(GroupNameProperty, groupName);
+        bindableObject.SetValue(GroupNameProperty, groupName);
     }
 
-    /// <summary>Bindable property for attached property <c>SelectedValue</c>.</summary>
+    /// <summary>
+    /// The backing store for the <see cref="MaterialSelectedValue" /> bindable property.
+    /// </summary>
     public static readonly BindableProperty SelectedValueProperty =
         BindableProperty.Create("MaterialSelectedValue", typeof(object), typeof(Microsoft.Maui.ILayout), null,
         defaultBindingMode: BindingMode.TwoWay,
         propertyChanged: (b, o, n) => { GetMaterialRadioButtonGroupController(b).SelectedValue = n; });
 
+    /// <summary>
+    /// Returns the bindableObject's selected value
+    /// </summary>
     public static object GetSelectedValue(BindableObject bindableObject)
     {
         return bindableObject.GetValue(SelectedValueProperty);
     }
 
-    public static void SetSelectedValue(BindableObject bindable, object selectedValue)
+    /// <summary>
+    /// Sets the bindableObject's selected value
+    /// </summary>
+    public static void SetSelectedValue(BindableObject bindableObject, object selectedValue)
     {
-        bindable.SetValue(SelectedValueProperty, selectedValue);
+        bindableObject.SetValue(SelectedValueProperty, selectedValue);
     }
+
+    #endregion Properties
+
 
     internal static void UpdateRadioButtonGroup(MaterialRadioButton radioButton)
     {
@@ -110,6 +144,9 @@ public static class MaterialRadioButtonGroup
     }
 }
 
+/// <summary>
+/// This class is used to store, set and get the GroupName and Selected Value. 
+/// </summary>
 internal abstract class MaterialRadioButtonScopeMessage
 {
     public Element Scope { get; }

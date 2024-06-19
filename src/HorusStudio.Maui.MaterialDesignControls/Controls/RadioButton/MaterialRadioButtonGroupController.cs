@@ -1,15 +1,23 @@
 ﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
-//We reuse some code from MAUI offical repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButtonGroupController.cs
+/// <summary>
+/// We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButtonGroupController.cs">See here.</see>
+/// This class acts like a controller to set group name and selected value.
+/// This help to use as attachable properties that properties.
+/// </summary>
 internal class MaterialRadioButtonGroupController
 {
+    #region Attributes
+
     readonly Element _layout;
     string _groupName;
     private object _selectedValue;
-
     public string GroupName { get => _groupName; set => SetGroupName(value); }
     public object SelectedValue { get => _selectedValue; set => SetSelectedValue(value); }
 
+    #endregion Attributes
+
+    #region Constructor
     public MaterialRadioButtonGroupController(Microsoft.Maui.ILayout layout)
     {
         if (layout is null)
@@ -34,6 +42,10 @@ internal class MaterialRadioButtonGroupController
             HandleRadioButtonValueChanged);
 #pragma warning restore CS0618 // Type or member is obsolete
     }
+
+    #endregion Constructor
+
+    #region Methods
 
     bool MatchesScope(MaterialRadioButtonScopeMessage message)
     {
@@ -121,7 +133,7 @@ internal class MaterialRadioButtonGroupController
 
         var currentName = radioButton.GroupName;
 
-        if (string.IsNullOrEmpty(currentName) || currentName == oldName || oldName is null )
+        if (string.IsNullOrEmpty(currentName) || currentName == oldName || oldName is null)
         {
             radioButton.GroupName = name;
         }
@@ -155,4 +167,6 @@ internal class MaterialRadioButtonGroupController
         _groupName = groupName;
         UpdateGroupNames(_layout, _groupName, oldName);
     }
+
+    #endregion Methods
 }
