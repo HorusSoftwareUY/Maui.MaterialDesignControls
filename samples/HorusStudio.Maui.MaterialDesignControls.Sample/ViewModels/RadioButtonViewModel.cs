@@ -50,14 +50,12 @@ public partial class RadioButtonViewModel : BaseViewModel
     [ICommand]
     private async Task CheckChanged()
     {
-        await Task.Delay(TimeSpan.FromSeconds(2));
         await DisplayAlert(Title, CheckedColor.Color ?? "none", "OK");
     }
 
     [ICommand]
     private async Task CheckedChanged(object message)
     {
-        await Task.Delay(TimeSpan.FromSeconds(2));
         await DisplayAlert(Title + " from Command", message.ToString(), "OK");
     }
 }

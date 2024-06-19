@@ -14,7 +14,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultStrokeColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
+    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
     private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
     internal const string GroupNameChangedMessage = "MaterialRadioButtonGroupNameChanged";
@@ -30,7 +30,6 @@ public class MaterialRadioButton : ContentView, ITouchable
     private MaterialLabel _label;
     private CustomRadioButton _radioButton;
     private Grid _mainLayout;
-    private Grid _radioButtonContainer;
 
     #endregion Layout
 
@@ -411,19 +410,6 @@ public class MaterialRadioButton : ContentView, ITouchable
                 {
                     Height = GridLength.Star
                 }
-            }
-        };
-
-        _radioButtonContainer = new Grid()
-        {
-            MinimumHeightRequest = 48,
-            MinimumWidthRequest = 48,
-            RowDefinitions = new()
-            {
-                new RowDefinition()
-                {
-                    Height = GridLength.Star
-                }
             },
             ColumnDefinitions = new()
             {
@@ -448,7 +434,7 @@ public class MaterialRadioButton : ContentView, ITouchable
         _radioButton.SetValue(Grid.RowProperty, 0);
         _radioButton.SetValue(Grid.ColumnProperty, 0);
 
-        _radioButtonContainer.Children.Add(_radioButton);
+        _mainLayout.Children.Add(_radioButton);
 
         _radioButton.SetBinding(RadioButton.GroupNameProperty, new Binding(nameof(GroupName), source: this));
         _radioButton.SetBinding(RadioButton.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
@@ -465,6 +451,7 @@ public class MaterialRadioButton : ContentView, ITouchable
             VerticalOptions = LayoutOptions.Center,
         };
         _label.SetValue(Grid.RowProperty, 0);
+        _label.SetValue(Grid.ColumnProperty, 1);
 
         _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Text), source: this));
         _label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
@@ -525,8 +512,8 @@ public class MaterialRadioButton : ContentView, ITouchable
                     }
                 };
 
-        _radioButtonContainer.SetValue(Grid.ColumnProperty, 0);
-        _mainLayout.Children.Add(_radioButtonContainer);
+        _radioButton.SetValue(Grid.ColumnProperty, 0);
+        _mainLayout.Children.Add(_radioButton);
         _radioButton.IsControlTemplateByDefault = false;
     }
 
@@ -548,12 +535,12 @@ public class MaterialRadioButton : ContentView, ITouchable
                     }
                 };
 
-                _radioButtonContainer.SetValue(Grid.ColumnProperty, 1);
+                _radioButton.SetValue(Grid.ColumnProperty, 1);
 
                 _label.SetValue(Grid.ColumnProperty, 0);
 
                 _mainLayout.Children.Add(_label);
-                _mainLayout.Children.Add(_radioButtonContainer);
+                _mainLayout.Children.Add(_radioButton);
                 break;
             case TextSide.Right:
                 _mainLayout.Children.Clear();
@@ -568,11 +555,11 @@ public class MaterialRadioButton : ContentView, ITouchable
                         Width = GridLength.Star
                     }
                 };
-                _radioButtonContainer.SetValue(Grid.ColumnProperty, 0);
+                _radioButton.SetValue(Grid.ColumnProperty, 0);
 
                 _label.SetValue(Grid.ColumnProperty, 1);
 
-                _mainLayout.Children.Add(_radioButtonContainer);
+                _mainLayout.Children.Add(_radioButton);
                 _mainLayout.Children.Add(_label);
                 break;
         }

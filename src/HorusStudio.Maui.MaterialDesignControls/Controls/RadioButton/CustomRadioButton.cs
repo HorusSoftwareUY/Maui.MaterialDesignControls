@@ -45,6 +45,7 @@ class CustomRadioButton : RadioButton
 
     public CustomRadioButton()
     {
-        BackgroundColor = Color.FromArgb("#00FFFFFF");
+        // We need to set the background color to transparent because by default the background is white or black on android and ios, respectively.
+        BackgroundColor = Colors.Transparent;
     }
 }
