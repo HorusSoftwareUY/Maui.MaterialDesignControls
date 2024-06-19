@@ -73,7 +73,7 @@
                           HeightRequest="20"
                           HorizontalOptions="Center"
                           VerticalOptions="Center">
-                        <Image Source="radiobutton_unchecked.png"
+                        <Image Source="radio_button_unchecked.png"
                                x:Name="uncheck"
                                WidthRequest="20"
                                Opacity="0"
@@ -82,14 +82,14 @@
                                VerticalOptions="Center" />
                         <Image x:Name="check"
                                Opacity="0"
-                               Source="radiobutton_checked.png"
+                               Source="radio_button_checked.png"
                                WidthRequest="20"
                                HeightRequest="20"
                                HorizontalOptions="Center"
                                VerticalOptions="Center" />
                         <Image x:Name="disabled"
                                Opacity="0"
-                               Source="checkbox_disabledchecked.png"
+                               Source="plus.png"
                                WidthRequest="20"
                                HeightRequest="20"
                                HorizontalOptions="Center"

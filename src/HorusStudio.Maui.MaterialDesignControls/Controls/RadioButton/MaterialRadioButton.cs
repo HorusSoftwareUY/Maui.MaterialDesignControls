@@ -1,4 +1,5 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Enums;
 using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -9,6 +10,9 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// </summary>
 public class MaterialRadioButton : ContentView, ITouchable
 {
+    // TODO: [iOS] FontAttributes doesn't work
+    // TODO: Using a control template does't work when define a custom style for disabled state
+
     #region Attributes
     internal const string DefaultGroupName = "MaterialRadioButton.GroupName";
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
@@ -190,7 +194,9 @@ public class MaterialRadioButton : ContentView, ITouchable
 
     #region Properties
     /// <summary>
-    /// Gets or sets the <see cref="Content" /> for the label. This is a bindable property.
+    /// Gets the <see cref="Content" /> for the RadioButton. This is a bindable property.
+    /// We disabled the set for this property because doesn't have sense set the content because we are setting with the
+    /// radio button and label.
     /// </summary>
     public new string Content
     {

@@ -51,8 +51,8 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Remove="Resources\Images\radioButton_checked.png" />
-	  <None Remove="Resources\Images\radioButton_unchecked.png" />
+	  <None Remove="Resources\Images\radio_button_checked.svg" />
+	  <None Remove="Resources\Images\radio_button_unchecked.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
