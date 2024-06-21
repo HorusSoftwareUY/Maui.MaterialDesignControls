@@ -304,7 +304,19 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="Value"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(MaterialSlider), defaultBindingMode: BindingMode.TwoWay, defaultValue: 0.0);
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(MaterialSlider), defaultBindingMode: BindingMode.TwoWay, defaultValue: 0.0, propertyChanged: (bindableObject, oldValue, newValue) => 
+    {
+        if (bindableObject is MaterialSlider self && newValue is double NewValue && oldValue is double OldValue)
+        {
+            if (NewValue >= self.Minimum && NewValue <= self.Maximum)
+                self._slider.Value = NewValue;
+            else
+                self.Value = self.Minimum;
+
+            ValueChangedEventArgs args = new ValueChangedEventArgs(OldValue, NewValue);
+            self.ValueChanged?.Invoke(self, args);
+        }
+    });
 
     /// <summary>
     /// The backing store for the <see cref="DragStartedCommand" /> bindable property.
@@ -647,8 +659,9 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
+    /// This property is mandatory that you set if you wanna a proper design.
     /// Allows you to set the color of the thumb shadow.
-    /// You should set as the background color of the slider's container.
+    /// You should set it equals to the background color of the slider's container.
     /// </summary>
     public Color ThumbBackgroundColor
     {
@@ -710,7 +723,7 @@ public class MaterialSlider : ContentView
 
     /// <summary>
     /// Defines the value of the slider
-    /// The default value is <value>0</value>.
+    /// The default value is <value>-1</value>.
     /// This is a bindable property.
     /// </summary>
     public double Value
@@ -994,10 +1007,7 @@ public class MaterialSlider : ContentView
 
     private void OnValueChanged(object sender, ValueChangedEventArgs e)
     {
-        if (ValueChanged is not null)
-        {
-            ValueChanged.Invoke(sender, e);
-        }
+        this.Value = e.NewValue;
     }
 
 

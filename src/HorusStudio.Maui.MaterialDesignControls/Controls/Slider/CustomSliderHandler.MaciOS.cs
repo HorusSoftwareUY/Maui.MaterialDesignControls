@@ -45,11 +45,20 @@ partial class CustomSliderHandler : ISliderHandler
             else
             {
                 var image = await customSlider.ThumbImageSource.ToUIImageAsync();
-                if (image != null)
+
+                if(image != null)
                 {
-                    control.SetThumbImage(image, UIControlState.Normal);
-                    control.SetThumbImage(image, UIControlState.Highlighted);
+                    CGSize thumbSize = new CGSize(customSlider.ThumbWidth, customSlider.ThumbHeight); 
+
+                    UIGraphics.BeginImageContextWithOptions(thumbSize, false, 0.0f);
+                    image.Draw(new CGRect(0, 0, thumbSize.Width, thumbSize.Height));
+                    UIImage resizedImage = UIGraphics.GetImageFromCurrentImageContext();
+                    UIGraphics.EndImageContext();
+
+                    control.SetThumbImage(resizedImage, UIControlState.Normal);
+                    control.SetThumbImage(resizedImage, UIControlState.Highlighted);
                 }
+                
             }
         }
     }

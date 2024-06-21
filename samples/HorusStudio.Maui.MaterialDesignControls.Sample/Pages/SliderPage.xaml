@@ -14,20 +14,63 @@
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
-
                     <material:MaterialSlider 
                         Label="Only label"
-                        ValueChanged="MaterialSlider_ValueChanged"
-                        MinimumLabel="---"
-                        MaximumLabel="+++"
                         ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
-                    
-                    <material:MaterialLabel x:Name="displayLabel" Text="The Slider value will be show it here" />
 
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can use MaterialRating with default properties." />
+            <material:MaterialLabel Text="You can use MaterialRating with default properties, but you need to set the thumb background color equals to the container slider background color." />
 
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Defining a event value changed" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialSlider 
+                        Label="Event"
+                        ValueChanged="MaterialSlider_ValueChanged"
+                        Minimum="1"
+                        Maximum="10"
+                        MinimumLabel="-"
+                        MaximumLabel="+"
+                        ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
+
+                    <material:MaterialLabel x:Name="displayLabel"  Text="The Slider value will be show it here." />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set a ValueChanged Event. You can set labels for left and right sides and minimum and maximum values." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing some properties" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialSlider 
+                        Label="Changing the colors of track and thumb"
+                        ThumbColor="DarkRed"
+                        MinimumTrackColor="Gray"
+                        MaximumTrackColor="LightGray"
+                        MinimumImageSource="volum_out.png"
+                        MaximumImageSource="volum_in.png"
+                        ShowIcons="True"
+                        ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set the thumb color, the track maximum color and the track minimum color. And set icons for left and right sides." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a thumb image" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialSlider 
+                        Label="Thumb icon"
+                        MinimumLabel="0"
+                        MaximumLabel="10"
+                        Minimum="0"
+                        ThumbHeight="35"
+                        ThumbWidth="35"
+                        TrackHeight="10"
+                        Maximum="10"
+                        ThumbImageSource="icon_opacity.png" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set the thumb image source. Set the track height, thumb height and thumb width." />
 
         </VerticalStackLayout>
     </ScrollView>
