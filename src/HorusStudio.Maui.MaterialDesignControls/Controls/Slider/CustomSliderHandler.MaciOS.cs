@@ -16,18 +16,29 @@ partial class CustomSliderHandler : ISliderHandler
 
             control.UserInteractionEnabled = customSlider.UserInteractionEnabled;
 
-            control.SetTrackHeight(customSlider.TrackHeight, customSlider.MinimumTrackColor.ToPlatform(), customSlider.MaximumTrackColor.ToPlatform(), customSlider.TrackCornerRadius);
+            control.SetTrackDesign(customSlider.TrackHeight, customSlider.MinimumTrackColor.ToPlatform(), customSlider.MaximumTrackColor.ToPlatform(), customSlider.TrackCornerRadius);
 
             if (customSlider.ThumbImageSource == null)
             {
-                var thumbWidth = 4; 
-                var thumbHeight = 44;
-                UIGraphics.BeginImageContext(new CGSize(thumbWidth, thumbHeight));
+                nfloat padding = 5;
+                nfloat thumbWidthWithPadding = customSlider.ThumbWidth + 2 * padding;
+                nfloat thumbHeightWithPadding = customSlider.ThumbHeight + 2 * padding;
+
+                UIGraphics.BeginImageContextWithOptions(new CGSize(thumbWidthWithPadding, thumbHeightWithPadding), false, 0.0f);
                 var thumbContext = UIGraphics.GetCurrentContext();
+
+                UIColor backgroundColor = customSlider.ThumbBackgroundColor.ToPlatform();
+                thumbContext.SetFillColor(backgroundColor.CGColor);
+                thumbContext.FillRect(new CGRect(0, 0, thumbWidthWithPadding, thumbHeightWithPadding));
+
                 thumbContext.SetFillColor(customSlider.ThumbColor.ToPlatform().CGColor);
-                thumbContext.FillRect(new CGRect(0, 0, thumbWidth, thumbHeight));
+                UIBezierPath thumbPath = UIBezierPath.FromRoundedRect(new CGRect(padding, padding, customSlider.ThumbWidth, customSlider.ThumbHeight), customSlider.TrackCornerRadius);
+                thumbContext.AddPath(thumbPath.CGPath);
+                thumbContext.FillPath();
+
                 var thumbImage = UIGraphics.GetImageFromCurrentImageContext();
                 UIGraphics.EndImageContext();
+
                 control.SetThumbImage(thumbImage, UIControlState.Normal);
                 control.SetThumbImage(thumbImage, UIControlState.Highlighted);
             }
@@ -46,21 +57,17 @@ partial class CustomSliderHandler : ISliderHandler
 
 public static class UISliderExtensions
 {
-    public static void SetTrackHeight(this UISlider slider, double height, UIColor minimumTrackColor, UIColor maximumTrackColor, int cornerRadius)
+    public static void SetTrackDesign(this UISlider slider, double height, UIColor minimumTrackColor, UIColor maximumTrackColor, int cornerRadius)
     {
-        var radii = new CGSize(cornerRadius / 3, cornerRadius / 3);
-
         UIGraphics.BeginImageContextWithOptions(new CGSize(slider.Bounds.Width, height), false, 0);
-        var context = UIGraphics.GetCurrentContext();
-        var minPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width, height), UIRectCorner.AllCorners, radii);
+        var minPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width, height), cornerRadius / 3);
         minimumTrackColor.SetFill();
         minPath.Fill();
         UIImage minTrackImage = UIGraphics.GetImageFromCurrentImageContext();
         UIGraphics.EndImageContext();
 
         UIGraphics.BeginImageContextWithOptions(new CGSize(slider.Bounds.Width, height), false, 0);
-        context = UIGraphics.GetCurrentContext();
-        var maxPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width, height), UIRectCorner.AllCorners, radii);
+        var maxPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width, height), cornerRadius / 3);
         maximumTrackColor.SetFill();
         maxPath.Fill();
         UIImage maxTrackImage = UIGraphics.GetImageFromCurrentImageContext();

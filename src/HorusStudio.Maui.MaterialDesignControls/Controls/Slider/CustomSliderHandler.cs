@@ -1,9 +1,4 @@
 ﻿using Microsoft.Maui.Handlers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 partial class CustomSliderHandler : SliderHandler
@@ -11,5 +6,11 @@ partial class CustomSliderHandler : SliderHandler
     public CustomSliderHandler() : base(Mapper, CommandMapper)
     {
         Mapper.Add(nameof(CustomSlider.TrackHeight), MapDesignProperties);
+        Mapper.Add(nameof(CustomSlider.TrackCornerRadius), MapDesignProperties);
+        Mapper.Add(nameof(CustomSlider.ThumbBackgroundColor), MapDesignProperties);
+        Mapper.Add(nameof(CustomSlider.ThumbColor), MapDesignProperties);
+        Mapper.Add(nameof(CustomSlider.ThumbImageSource), MapDesignProperties);
+        Mapper.Add(nameof(CustomSlider.ThumbHeight), MapDesignProperties);
+        Mapper.Add(nameof(CustomSlider.ThumbWidth), MapDesignProperties);
     }
 }

@@ -845,7 +845,6 @@ public class MaterialSlider : ContentView
         _minimumLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(MinimumFontSize), source: this));
         _minimumLabel.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(MinimumLabelTransform), source: this));
         _minimumLabel.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
-        _minimumLabel.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(MinimumLabelIsVisible), source: this));
         _minimumLabel.SetValue(Grid.RowProperty, 0);
         _minimumLabel.SetValue(Grid.ColumnProperty, 0);
 
@@ -862,7 +861,6 @@ public class MaterialSlider : ContentView
             Margin = new Thickness(0, 0, 5, 0)
         };
         _minimumImage.SetBinding(Image.SourceProperty, new Binding(nameof(MinimumImageSource), source: this));
-        _minimumImage.SetBinding(Image.IsVisibleProperty, new Binding(nameof(MinimumImageIsVisible), source: this));
 
         _minimumImage.SetValue(Grid.RowProperty, 0);
         _minimumImage.SetValue(Grid.ColumnProperty, 0);
@@ -920,7 +918,6 @@ public class MaterialSlider : ContentView
         _maximumLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(MaximumFontSize), source: this));
         _maximumLabel.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(MaximumLabelTransform), source: this));
         _maximumLabel.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
-        _maximumLabel.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(MaximumLabelIsVisible), source: this));
 
         _maximumLabel.SetValue(Grid.RowProperty, 0);
         _maximumLabel.SetValue(Grid.ColumnProperty, 2);
@@ -938,7 +935,6 @@ public class MaterialSlider : ContentView
             Margin = new Thickness(5, 0, 0, 0)
         };
         _maximumImage.SetBinding(Image.SourceProperty, new Binding(nameof(MaximumImageSource), source: this));
-        _maximumImage.SetBinding(Image.IsVisibleProperty, new Binding(nameof(MaximumImageIsVisible), source: this));
 
         _maximumImage.SetValue(Grid.RowProperty, 0);
         _maximumImage.SetValue(Grid.ColumnProperty, 2);
