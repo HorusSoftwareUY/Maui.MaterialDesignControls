@@ -11,6 +11,7 @@ using ShapeDrawable = Android.Graphics.Drawables.ShapeDrawable;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Paint = Android.Graphics.Paint;
 using Color = Android.Graphics.Color;
+using Microsoft.Maui;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -22,8 +23,6 @@ partial class CustomSliderHandler
         {
             var activeTrackColor = customSlider.MinimumTrackColor.ToPlatform();
             var inactiveTrackColor = customSlider.MaximumTrackColor.ToPlatform();
-
-            control.SetPadding(0, 0, control.Thumb.IntrinsicWidth, 0);
 
             BuildVersionCodes androidVersion = Build.VERSION.SdkInt;
             if (androidVersion >= BuildVersionCodes.M)
@@ -62,6 +61,8 @@ partial class CustomSliderHandler
 
             if (customSlider.ThumbImageSource == null && customSlider.ThumbColor != null)
             {
+                var thumbDrawable = new VerticalBarDrawable(customSlider.ThumbColor.ToPlatform(), customSlider.ThumbWidth, customSlider.ThumbHeight, customSlider.TrackCornerRadius, customSlider.TrackHeight, customSlider.ThumbBackgroundColor?.ToPlatform() ?? Color.Transparent);
+                control.SetThumb(thumbDrawable);
                 control.Thumb.SetColorFilter(new PorterDuffColorFilter(customSlider.ThumbColor.ToPlatform(), PorterDuff.Mode.SrcIn));
             }
 
@@ -76,15 +77,8 @@ partial class CustomSliderHandler
                 control.Thumb.Mutate().SetAlpha(0);
                 control.Enabled = false;
             }
-           
-            if(customSlider.ThumbImageSource is null)
-            {
-                int thumbWidth = 4;
-                int thumbHeight = 44;
-                var thumbDrawable = new VerticalBarDrawable(customSlider.ThumbColor.ToPlatform(), thumbWidth, thumbHeight);
-                control.SetThumb(thumbDrawable);
-            }
-            else
+
+            if (customSlider.ThumbImageSource is not null)
             {
                 Drawable thumb = control.Thumb;
                 int thumbTop = (control.Height / 2 - thumb.IntrinsicHeight / 2);
@@ -95,17 +89,23 @@ partial class CustomSliderHandler
     }
 }
 
-public class VerticalBarDrawable : Drawable
+class VerticalBarDrawable : Drawable
 {
     private readonly Paint _paint;
     private readonly int _width;
     private readonly int _height;
+    private readonly int _cornerRadius;
+    private readonly int _trackHeight;
+    private readonly Paint _backgroundPaint;
 
-    public VerticalBarDrawable(Color color, int width, int height)
+    public VerticalBarDrawable(Color color, int width, int height, int cornerRadius, int trackHeight, Color backgroundColor)
     {
-        _paint = new Paint { Color = color };
+        _paint = new Paint { Color = color, AntiAlias = true };
+        _backgroundPaint = new Paint { Color = backgroundColor, AntiAlias = true };
         _width = width * 2;
         _height = height;
+        _trackHeight = trackHeight * 2;
+        _cornerRadius = cornerRadius;
     }
 
     public override void Draw(Canvas canvas)
@@ -113,8 +113,19 @@ public class VerticalBarDrawable : Drawable
         Android.Graphics.Rect bounds = Bounds;
         int centerX = bounds.CenterX();
         int centerY = bounds.CenterY();
+        int _padding = 15;
 
-        canvas.DrawRect(centerX - _width + 20, centerY - _height, centerX + _width - 10, centerY + _height, _paint);
+        Android.Graphics.RectF backgroundRect = new Android.Graphics.RectF(
+            centerX - _width / 2 - _padding,
+            centerY - _trackHeight,
+            centerX + _width / 2 + _padding,
+            centerY + _trackHeight);
+
+        canvas.DrawRoundRect(backgroundRect, _cornerRadius, _cornerRadius, _backgroundPaint);
+
+        Android.Graphics.RectF rect = new Android.Graphics.RectF(centerX - _width, centerY - _height, centerX + _width, centerY + _height);
+
+        canvas.DrawRoundRect(rect, _cornerRadius, _cornerRadius, _paint);
     }
 
     public override void SetAlpha(int alpha)

@@ -11,36 +11,18 @@
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}"
-                                    Text="Default" />
-            <Frame Style="{StaticResource SurfaceContainer}"
-                   Padding="16,32">
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
 
-                    <material:MaterialSlider Label="Only label"
-                                             ValueChanged="MaterialSlider_ValueChanged"
-                                             MinimumLabel="---"
-                                             MaximumLabel="+++"
-                                             ThumbColor="Red"
-                                             MaximumTrackColor="Blue"
-                                             MinimumTrackColor="GreenYellow"
-                                             ThumbImageSource="ic_time.png" />
-                    <material:MaterialLabel x:Name="displayLabel"
-                                            Text="The Slider value will be show it here" />
-
-                    <material:MaterialSlider MaximumImageSource="ic_search.png"
-                                             Label="Only icons"
-                                             ShowIcons="True"
-                                             MinimumImageSource="ic_checkbox.png" />
-
-                    <material:MaterialSlider MaximumImageSource="ic_search.png"
-                                             Label="Only icons"
-                                             ShowIcons="True"
-                                             ThumbImageSource="ic_time.png"
-                                             MinimumImageSource="ic_checkbox.png" />
-
-                    <Slider Minimum="0"
-                            Maximum="10" />
+                    <material:MaterialSlider 
+                        Label="Only label"
+                        ValueChanged="MaterialSlider_ValueChanged"
+                        MinimumLabel="---"
+                        MaximumLabel="+++"
+                        ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
+                    
+                    <material:MaterialLabel x:Name="displayLabel" Text="The Slider value will be show it here" />
 
                 </VerticalStackLayout>
             </Frame>

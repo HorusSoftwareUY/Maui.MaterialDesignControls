@@ -23,6 +23,8 @@ public class MaterialSlider : ContentView
     private bool MinimumLabelIsVisible = false;
     private bool MaximumImageIsVisible = false;
     private bool MaximumLabelIsVisible = false;
+    private readonly static int DefaultThumbWidth = 4;
+    private readonly static int DefaultThumbHeight = 44;
 
     #endregion Attributes
 
@@ -254,6 +256,20 @@ public class MaterialSlider : ContentView
     /// </summary>
     public static readonly BindableProperty ThumbImageSourceeProperty = BindableProperty.Create(nameof(ThumbImageSource), typeof(ImageSource), typeof(MaterialSlider), defaultValue: null);
 
+    /// <summary>
+    /// The backing store for the <see cref="ThumbBackgroundColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ThumbBackgroundColorProperty = BindableProperty.Create(nameof(ThumbBackgroundColor), typeof(Color), typeof(MaterialSlider), defaultValue: null);
+
+    /// <summary>
+    /// The backing store for the <see cref="ThumbWidth" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ThumbWidthProperty = BindableProperty.Create(nameof(ThumbWidth), typeof(int), typeof(MaterialSlider), defaultValue: DefaultThumbWidth);
+
+    /// <summary>
+    /// The backing store for the <see cref="ThumbHeight" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ThumbHeightProperty = BindableProperty.Create(nameof(ThumbHeight), typeof(int), typeof(MaterialSlider), defaultValue: DefaultThumbHeight);
 
     #endregion Thumb
 
@@ -577,7 +593,6 @@ public class MaterialSlider : ContentView
         set { SetValue(MaximumProperty, value); }
     }
 
-
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the minimum track color. This is a bindable property.
     /// </summary>
@@ -600,7 +615,6 @@ public class MaterialSlider : ContentView
         set { SetValue(TrackHeightProperty, value); }
     }
 
-
     /// <summary>
     /// Gets or sets <see cref="TrackCornerRadius" />  for the slider control. This is a bindable property.
     /// </summary>
@@ -622,7 +636,6 @@ public class MaterialSlider : ContentView
         set { SetValue(ThumbColorProperty, value); }
     }
 
-
     /// <summary>
     /// Allows you to display a bitmap image on the thumb. This is a bindable property.
     /// </summary>
@@ -631,6 +644,36 @@ public class MaterialSlider : ContentView
     {
         get => (ImageSource)GetValue(ThumbImageSourceeProperty);
         set => SetValue(ThumbImageSourceeProperty, value);
+    }
+
+    /// <summary>
+    /// Allows you to set the color of the thumb shadow.
+    /// You should set as the background color of the slider's container.
+    /// </summary>
+    public Color ThumbBackgroundColor
+    {
+        get => (Color)GetValue(ThumbBackgroundColorProperty);
+        set => SetValue(ThumbBackgroundColorProperty, value);
+    }
+
+    /// <summary>
+    /// Allows you to set the thumb width
+    /// The default value is <value>4</value>
+    /// </summary>
+    public int ThumbWidth
+    {
+        get => (int)GetValue(ThumbWidthProperty);
+        set => SetValue(ThumbWidthProperty, value);
+    }
+
+    /// <summary>
+    /// Allows you to set the thumb height
+    /// The default value is <value>44</value>
+    /// </summary>
+    public int ThumbHeight
+    {
+        get => (int)GetValue(ThumbHeightProperty);
+        set => SetValue(ThumbHeightProperty, value);
     }
 
     #endregion Thumb
@@ -790,7 +833,7 @@ public class MaterialSlider : ContentView
             Text = MinimumLabel,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
-            Margin = new Thickness(0, 0, 10, 0)
+            Margin = new Thickness(0, 0, 5, 0)
         };
 
         _minimumLabel.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(MinimumLabel), source: this));
@@ -816,7 +859,7 @@ public class MaterialSlider : ContentView
             VerticalOptions = LayoutOptions.Center,
             WidthRequest = 24,
             HeightRequest = 24,
-            Margin = new Thickness(0, 0, 10, 0)
+            Margin = new Thickness(0, 0, 5, 0)
         };
         _minimumImage.SetBinding(Image.SourceProperty, new Binding(nameof(MinimumImageSource), source: this));
         _minimumImage.SetBinding(Image.IsVisibleProperty, new Binding(nameof(MinimumImageIsVisible), source: this));
@@ -845,6 +888,9 @@ public class MaterialSlider : ContentView
         _slider.SetBinding(CustomSlider.TrackHeightProperty, new Binding(nameof(TrackHeight), source: this));
         _slider.SetBinding(CustomSlider.TrackCornerRadiusProperty, new Binding(nameof(TrackCornerRadius), source: this));
         _slider.SetBinding(CustomSlider.UserInteractionEnabledProperty, new Binding(nameof(UserInteractionEnabled), source: this));
+        _slider.SetBinding(CustomSlider.ThumbBackgroundColorProperty, new Binding(nameof(ThumbBackgroundColor), source: this));
+        _slider.SetBinding(CustomSlider.ThumbWidthProperty, new Binding(nameof(ThumbWidth), source: this));
+        _slider.SetBinding(CustomSlider.ThumbHeightProperty, new Binding(nameof(ThumbHeight), source: this));
 
         _slider.SetValue(Grid.RowProperty, 0);
         _slider.SetValue(Grid.ColumnProperty, 1);
@@ -862,7 +908,7 @@ public class MaterialSlider : ContentView
             Text = MaximumLabel,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
-            Margin = new Thickness(10, 0, 0, 0)
+            Margin = new Thickness(5, 0, 0, 0)
         };
 
         _maximumLabel.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(MaximumLabel), source: this));
@@ -889,7 +935,7 @@ public class MaterialSlider : ContentView
             VerticalOptions = LayoutOptions.Center,
             WidthRequest = 24,
             HeightRequest = 24,
-            Margin = new Thickness(10, 0, 0, 0)
+            Margin = new Thickness(5, 0, 0, 0)
         };
         _maximumImage.SetBinding(Image.SourceProperty, new Binding(nameof(MaximumImageSource), source: this));
         _maximumImage.SetBinding(Image.IsVisibleProperty, new Binding(nameof(MaximumImageIsVisible), source: this));
