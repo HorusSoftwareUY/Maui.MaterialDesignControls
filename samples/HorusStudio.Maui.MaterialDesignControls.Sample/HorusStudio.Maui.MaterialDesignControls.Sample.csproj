@@ -50,6 +50,10 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Resources\Images\radio_button_checked.svg" />
+	  <None Remove="Resources\Images\radio_button_unchecked.svg" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
@@ -64,10 +68,16 @@
 	  <Compile Update="Pages\CheckboxPage.xaml.cs">
 	    <DependentUpon>CheckboxPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\RadioButtonPage.xaml.cs">
+	    <DependentUpon>RadioButtonPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Pages\CheckboxPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\RadioButtonPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
