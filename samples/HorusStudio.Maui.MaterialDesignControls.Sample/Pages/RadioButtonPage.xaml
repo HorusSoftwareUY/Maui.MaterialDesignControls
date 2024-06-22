@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                        xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
@@ -9,14 +9,15 @@
                        x:DataType="vm:RadioButtonViewModel">
     <ContentPage.Resources>
         <ControlTemplate x:Key="RadioButtonTemplate">
-            <Border Stroke="#b1b1b3"
-                    StrokeThickness="2"
-                    StrokeShape="RoundRectangle 10"
-                    HorizontalOptions="Center"
-                    BackgroundColor="#b1b1b3"
-                    HeightRequest="90"
-                    WidthRequest="90"
-                    VerticalOptions="Start">
+            <Border
+                Stroke="#b1b1b3"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 10"
+                HorizontalOptions="Center"
+                BackgroundColor="#b1b1b3"
+                HeightRequest="60"
+                WidthRequest="60"
+                VerticalOptions="Start">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">
@@ -66,34 +67,39 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </VisualStateManager.VisualStateGroups>
-                <Grid Margin="4"
-                      WidthRequest="90">
-                    <Grid Margin="0,0,4,0"
-                          WidthRequest="20"
-                          HeightRequest="20"
-                          HorizontalOptions="Center"
-                          VerticalOptions="Center">
-                        <Image Source="radio_button_unchecked.png"
-                               x:Name="uncheck"
-                               WidthRequest="20"
-                               Opacity="0"
-                               HeightRequest="20"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
-                        <Image x:Name="check"
-                               Opacity="0"
-                               Source="radio_button_checked.png"
-                               WidthRequest="20"
-                               HeightRequest="20"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
-                        <Image x:Name="disabled"
-                               Opacity="0"
-                               Source="plus.png"
-                               WidthRequest="20"
-                               HeightRequest="20"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
+                <Grid
+                    Margin="4"
+                    WidthRequest="90">
+                    <Grid
+                        Margin="0,0,4,0"
+                        WidthRequest="20"
+                        HeightRequest="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <Image
+                            Source="radio_button_unchecked.png"
+                            x:Name="uncheck"
+                            WidthRequest="20"
+                            Opacity="0"
+                            HeightRequest="20"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                        <Image
+                            x:Name="check"
+                            Opacity="0"
+                            Source="radio_button_checked.png"
+                            WidthRequest="20"
+                            HeightRequest="20"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                        <Image
+                            x:Name="disabled"
+                            Opacity="0"
+                            Source="plus.png"
+                            WidthRequest="20"
+                            HeightRequest="20"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
                     </Grid>
                     <ContentPresenter />
                 </Grid>
@@ -213,7 +219,7 @@
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using control template and define a group name" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
                     <material:MaterialRadioButton 
                         GroupName="ControlTemplate"
                         Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
