@@ -48,9 +48,16 @@ partial class CustomSliderHandler : ISliderHandler
 
                 if(image != null)
                 {
-                    CGSize thumbSize = new CGSize(customSlider.ThumbWidth, customSlider.ThumbHeight); 
+                    CGSize thumbSize = new CGSize(customSlider.ThumbWidth, customSlider.ThumbHeight);
+
+                    UIColor backgroundColor = customSlider.ThumbBackgroundColor.ToPlatform();
 
                     UIGraphics.BeginImageContextWithOptions(thumbSize, false, 0.0f);
+
+                    CGContext context = UIGraphics.GetCurrentContext();
+                    context.SetFillColor(backgroundColor.CGColor);
+                    context.FillRect(new CGRect(0, 0, thumbSize.Width, thumbSize.Height));
+
                     image.Draw(new CGRect(0, 0, thumbSize.Width, thumbSize.Height));
                     UIImage resizedImage = UIGraphics.GetImageFromCurrentImageContext();
                     UIGraphics.EndImageContext();
@@ -58,7 +65,6 @@ partial class CustomSliderHandler : ISliderHandler
                     control.SetThumbImage(resizedImage, UIControlState.Normal);
                     control.SetThumbImage(resizedImage, UIControlState.Highlighted);
                 }
-                
             }
         }
     }

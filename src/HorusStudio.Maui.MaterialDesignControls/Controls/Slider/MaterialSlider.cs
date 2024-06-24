@@ -38,6 +38,7 @@ public class MaterialSlider : ContentView
     private Image _maximumImage;
     private Grid _mainLayout;
     private Grid _containerLayout;
+    private Image _backgroundImage;
 
     #endregion Layout
 
@@ -242,6 +243,17 @@ public class MaterialSlider : ContentView
     /// </summary>
     public static readonly BindableProperty TrackCornerRadiusProperty = BindableProperty.Create(nameof(TrackCornerRadius), typeof(int), typeof(MaterialSlider), defaultValue: 6);
 
+    /// <summary>
+    /// The backing store for the <see cref="TrackImageSource" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty TrackImageSourceProperty = BindableProperty.Create(nameof(TrackImageSource), typeof(ImageSource), typeof(MaterialSlider), defaultValue: null, propertyChanged: (bindableObject, _, newValue) => 
+    { 
+        if (bindableObject is MaterialSlider self)
+        {
+            self.SetBackgroundImage();
+        }
+    });
+
     #endregion Track
 
     #region Thumb
@@ -304,19 +316,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="Value"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(MaterialSlider), defaultBindingMode: BindingMode.TwoWay, defaultValue: 0.0, propertyChanged: (bindableObject, oldValue, newValue) => 
-    {
-        if (bindableObject is MaterialSlider self && newValue is double NewValue && oldValue is double OldValue)
-        {
-            if (NewValue >= self.Minimum && NewValue <= self.Maximum)
-                self._slider.Value = NewValue;
-            else
-                self.Value = self.Minimum;
-
-            ValueChangedEventArgs args = new ValueChangedEventArgs(OldValue, NewValue);
-            self.ValueChanged?.Invoke(self, args);
-        }
-    });
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(MaterialSlider), defaultBindingMode: BindingMode.TwoWay, defaultValue: 0.0);
 
     /// <summary>
     /// The backing store for the <see cref="DragStartedCommand" /> bindable property.
@@ -635,6 +635,16 @@ public class MaterialSlider : ContentView
         get { return (int)GetValue(TrackCornerRadiusProperty); }
         set { SetValue(TrackCornerRadiusProperty, value); }
     }
+
+    /// <summary>
+    /// Gets or sets <see cref="TrackImageSource" />  for the slider control. This is a bindable property.
+    /// </summary>
+    public ImageSource TrackImageSource
+    {
+        get { return (ImageSource)GetValue(TrackImageSourceProperty); }
+        set { SetValue(TrackImageSourceProperty, value); }
+    }
+
     #endregion Track
 
     #region Thumb
@@ -650,6 +660,7 @@ public class MaterialSlider : ContentView
 
     /// <summary>
     /// Allows you to display a bitmap image on the thumb. This is a bindable property.
+    /// As recomendation, on iOS you should set the thumb background color.
     /// </summary>
     /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
     public ImageSource ThumbImageSource
@@ -723,7 +734,7 @@ public class MaterialSlider : ContentView
 
     /// <summary>
     /// Defines the value of the slider
-    /// The default value is <value>-1</value>.
+    /// The default value is 0
     /// This is a bindable property.
     /// </summary>
     public double Value
@@ -758,8 +769,8 @@ public class MaterialSlider : ContentView
     {
         _mainLayout = new()
         {
-            Margin = new Thickness(0),
-            VerticalOptions = LayoutOptions.Center,
+            Margin = new Thickness(0, 10),
+            VerticalOptions = LayoutOptions.Fill,
             HorizontalOptions = LayoutOptions.Fill,
             RowDefinitions = new()
             {
@@ -769,7 +780,7 @@ public class MaterialSlider : ContentView
                 },
                 new()
                 {
-                    Height = GridLength.Auto
+                    Height = GridLength.Star
                 }
             },
             ColumnDefinitions = new()
@@ -812,11 +823,7 @@ public class MaterialSlider : ContentView
             {
                 new()
                 {
-                    Height =  GridLength.Auto
-                },
-                new()
-                {
-                    Height = GridLength.Auto
+                    Height =  GridLength.Star
                 }
             },
             ColumnDefinitions = new()
@@ -834,10 +841,23 @@ public class MaterialSlider : ContentView
                     Width = GridLength.Auto
                 }
             },
-            VerticalOptions = LayoutOptions.Center
+            VerticalOptions = LayoutOptions.Fill
         };
 
         _containerLayout.SetValue(Grid.RowProperty, 1);
+
+        _backgroundImage = new()
+        {
+            IsVisible = false,
+            Aspect = Aspect.AspectFit,
+            Margin = new Thickness(10, 0)
+        };
+
+        _backgroundImage.SetValue(Grid.RowProperty, 0);
+        _backgroundImage.SetValue(Grid.ColumnProperty, 1);
+
+        _containerLayout.Children.Add(_backgroundImage);
+        _backgroundImage.SetBinding(Image.SourceProperty, new Binding(nameof(TrackImageSource), source: this));
 
         _minimumLabel = new()
         {
@@ -1008,8 +1028,19 @@ public class MaterialSlider : ContentView
     private void OnValueChanged(object sender, ValueChangedEventArgs e)
     {
         this.Value = e.NewValue;
+
+        if (ValueChanged is not null)
+        {
+            ValueChanged.Invoke(sender, e);
+        }
     }
 
+    private void SetBackgroundImage()
+    {
+        this.MinimumTrackColor = Colors.Transparent;
+        this.MaximumTrackColor = Colors.Transparent;
+        _backgroundImage.IsVisible = TrackImageSource is not null;
+    }
 
     /// <summary>
     /// Used to draw a star

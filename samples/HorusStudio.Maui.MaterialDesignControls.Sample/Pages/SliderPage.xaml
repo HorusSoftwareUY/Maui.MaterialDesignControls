@@ -10,14 +10,13 @@
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
-
+            
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialSlider 
                         Label="Only label"
                         ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
-
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="You can use MaterialRating with default properties, but you need to set the thumb background color equals to the container slider background color." />
@@ -38,7 +37,7 @@
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="You can set a ValueChanged Event. You can set labels for left and right sides and minimum and maximum values." />
-
+            
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing some properties" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
@@ -67,10 +66,25 @@
                         ThumbWidth="35"
                         TrackHeight="10"
                         Maximum="10"
+                        ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
                         ThumbImageSource="icon_opacity.png" />
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="You can set the thumb image source. Set the track height, thumb height and thumb width." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a track image" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialSlider 
+                        Label="Track image"
+                        Minimum="0"
+                        ThumbColor="Black"
+                        Maximum="10"
+                        ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                        TrackImageSource="scale.png" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set the track as an image source." />
 
         </VerticalStackLayout>
     </ScrollView>

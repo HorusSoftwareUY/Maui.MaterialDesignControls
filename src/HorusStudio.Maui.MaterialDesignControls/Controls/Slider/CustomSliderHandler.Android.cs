@@ -11,13 +11,13 @@ using ShapeDrawable = Android.Graphics.Drawables.ShapeDrawable;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Paint = Android.Graphics.Paint;
 using Color = Android.Graphics.Color;
-using Microsoft.Maui;
+using Android.Content;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 partial class CustomSliderHandler
 {
-    public static void MapDesignProperties(ISliderHandler handler, ISlider slider)
+    public async static void MapDesignProperties(ISliderHandler handler, ISlider slider)
     {
         if (slider is CustomSlider customSlider && handler.PlatformView is SeekBar control)
         {
@@ -80,12 +80,38 @@ partial class CustomSliderHandler
 
             if (customSlider.ThumbImageSource is not null)
             {
-                Drawable thumb = control.Thumb;
-                int thumbTop = (control.Height / 2 - thumb.IntrinsicHeight / 2);
-                thumb.SetBounds(thumb.Bounds.Left, thumbTop, thumb.Bounds.Left + thumb.IntrinsicWidth, thumbTop + thumb.IntrinsicHeight);
-                control.SetPadding(thumb.IntrinsicWidth / 2, 0, thumb.IntrinsicWidth / 2, 0);
+                var drawable = await GetDrawableAsync(customSlider.ThumbImageSource, customSlider.ThumbWidth, customSlider.ThumbHeight, handler.MauiContext, MauiApplication.Current.ApplicationContext);
+                if (drawable is not null)
+                {
+                    control.SetThumb(drawable);
+                }
             }
         }
+    }
+
+    private static async Task<Drawable> GetDrawableAsync(ImageSource imageSource, int width, int height, IMauiContext context, Context androidContext)
+    {
+        if (imageSource == null)
+            return null;
+
+        var serviceProvider = MauiApplication.Current.Services;
+        var provider = serviceProvider.GetRequiredService<IImageSourceServiceProvider>();
+        var service = provider.GetRequiredImageSourceService(imageSource);
+
+        var result = await service.GetPlatformImageAsync(imageSource, context);
+
+        if (result == null)
+            return null;
+
+        var drawable = result.Value;
+
+        if (drawable is BitmapDrawable bitmapDrawable)
+        {
+            var bitmap = Bitmap.CreateScaledBitmap(bitmapDrawable.Bitmap, width * 2, height * 2, true);
+            return new BitmapDrawable(androidContext.Resources, bitmap);
+        }
+
+        return drawable;
     }
 }
 
