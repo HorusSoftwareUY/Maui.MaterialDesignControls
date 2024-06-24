@@ -14,18 +14,24 @@ public class MaterialSlider : ContentView
     #region Attributes
 
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultHandleColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultMinimumTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultMaximumTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SecondaryContainer, Dark = MaterialDarkTheme.SecondaryContainer }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultValueIndicatorBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultValueIndicatorTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
     private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
+    private readonly static double DefaultValueIndicatorFontSize = MaterialFontSize.BodyMedium;
     private bool MinimumImageIsVisible = false;
     private bool MinimumLabelIsVisible = false;
     private bool MaximumImageIsVisible = false;
     private bool MaximumLabelIsVisible = false;
     private readonly static int DefaultThumbWidth = 4;
+    private readonly static int DefaultValueIndicatorSize = 44;
     private readonly static int DefaultThumbHeight = 44;
+
+    private bool _isDragging = false;
 
     #endregion Attributes
 
@@ -40,6 +46,9 @@ public class MaterialSlider : ContentView
     private Grid _mainLayout;
     private Grid _containerLayout;
     private Image _backgroundImage;
+
+    private Ellipse _valueIndicatorContainer;
+    private MaterialLabel _valueIndicatorText;
 
     #endregion Layout
 
@@ -262,7 +271,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="ThumbColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(nameof(ThumbColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultHandleColor);
+    public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(nameof(ThumbColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultThumbColor);
 
     /// <summary>
     /// The backing store for the <see cref="ThumbImageSource" /> bindable property.
@@ -285,6 +294,49 @@ public class MaterialSlider : ContentView
     public static readonly BindableProperty ThumbHeightProperty = BindableProperty.Create(nameof(ThumbHeight), typeof(int), typeof(MaterialSlider), defaultValue: DefaultThumbHeight);
 
     #endregion Thumb
+
+    #region ValueIndicator
+
+    /// <summary>
+    /// The backing store for the <see cref="ValueIndicatorBackgroundColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ValueIndicatorBackgroundColorProperty = BindableProperty.Create(nameof(ValueIndicatorBackgroundColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorBackgroundColor, propertyChanged: (BindableObject, _, newValue) =>
+    {
+        if (BindableObject is MaterialSlider self && newValue is Color newBackgorundColor)
+        {
+            self._valueIndicatorContainer.Fill = new SolidColorBrush(newBackgorundColor);
+            self._valueIndicatorContainer.Stroke = new SolidColorBrush(newBackgorundColor);
+        }
+    });
+
+    /// <summary>
+    /// The backing store for the <see cref="ValueIndicatorSize" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ValueIndicatorSizeProperty = BindableProperty.Create(nameof(ValueIndicatorSize), typeof(int), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorSize);
+
+    /// <summary>
+    /// The backing store for the <see cref="ShowValueIndicator" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ShowValueIndicatorProperty = BindableProperty.Create(nameof(ShowValueIndicator), typeof(bool), typeof(MaterialSlider), defaultValue: true, propertyChanged: (bindableObject, _, newValue) => 
+    {
+        if(bindableObject is MaterialSlider self && newValue is bool value)
+        {
+
+            self.Padding = value ? new Thickness(0, self.ValueIndicatorSize / 1.5, 0, 10) : new Thickness(0);
+        }
+    });
+
+    /// <summary>
+    /// The backing store for the <see cref="ValueIndicatorTextColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ValueIndicatorTextColorProperty = BindableProperty.Create(nameof(ValueIndicatorTextColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorTextColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="ValueIndicatorFontSize" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ValueIndicatorFontSizeProperty = BindableProperty.Create(nameof(ValueIndicatorFontSize), typeof(double), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorFontSize);
+
+    #endregion ValueIndicator
 
     /// <summary>
     /// The backing store for the <see cref="IsEnabled" /> bindable property.
@@ -703,6 +755,56 @@ public class MaterialSlider : ContentView
 
     #endregion Thumb
 
+    #region ValueIndicator
+
+    /// <summary>
+    /// This property is to set the background color of the value indicator
+    /// </summary>
+    public Color ValueIndicatorBackgroundColor
+    {
+        get => (Color)GetValue(ValueIndicatorBackgroundColorProperty);
+        set => SetValue(ValueIndicatorBackgroundColorProperty, value);
+    }
+
+    /// <summary>
+    /// Allows you to set the value indicator size
+    /// The default value is <value>44</value>
+    /// </summary>
+    public int ValueIndicatorSize
+    {
+        get => (int)GetValue(ValueIndicatorSizeProperty);
+        set => SetValue(ValueIndicatorSizeProperty, value);
+    }
+
+    /// <summary>
+    /// Defines if show or not the value indicator
+    /// </summary>
+    public bool ShowValueIndicator
+    {
+        get { return (bool)GetValue(ShowValueIndicatorProperty); }
+        set { SetValue(ShowValueIndicatorProperty, value); }
+    }
+
+    /// <summary>
+    /// This property is to set the text color of the value indicator
+    /// </summary>
+    public Color ValueIndicatorTextColor
+    {
+        get => (Color)GetValue(ValueIndicatorTextColorProperty);
+        set => SetValue(ValueIndicatorTextColorProperty, value);
+    }
+
+    /// <summary>
+    /// This property is to set the value indicator's font size 
+    /// </summary>
+    public double ValueIndicatorFontSize
+    {
+        get => (double)GetValue(ValueIndicatorFontSizeProperty);
+        set => SetValue(ValueIndicatorFontSizeProperty, value);
+    }
+
+    #endregion ValueIndicator
+
     /// <summary>
     /// Gets or sets <see cref="ShowIcons" />  for the slider control. This is a bindable property.
     /// This property is used to show the icons even when minimum/maximum label is seted. 
@@ -768,9 +870,12 @@ public class MaterialSlider : ContentView
 
     public MaterialSlider()
     {
+        Padding = ShowValueIndicator ? new Thickness(0, ValueIndicatorSize / 1.5, 0, 10) : new Thickness(0);
+
         _mainLayout = new()
         {
-            Margin = new Thickness(0, 10),
+            IsClippedToBounds = true,
+            Margin = new Thickness(0, 0),
             VerticalOptions = LayoutOptions.Fill,
             HorizontalOptions = LayoutOptions.Fill,
             RowDefinitions = new()
@@ -977,9 +1082,42 @@ public class MaterialSlider : ContentView
 
         _containerLayout.Children.Add(_maximumImage);
 
+        _valueIndicatorContainer = new Ellipse
+        {
+            WidthRequest = ValueIndicatorSize,
+            HeightRequest = ValueIndicatorSize,
+            Fill = new SolidColorBrush(ValueIndicatorBackgroundColor),
+            Stroke = new SolidColorBrush(ValueIndicatorBackgroundColor),
+            StrokeThickness = 2,
+            VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Center,
+            IsVisible = false,
+        };
+        _valueIndicatorContainer.SetValue(Grid.RowSpanProperty, 2);
+
+        _valueIndicatorContainer.SetBinding(Ellipse.WidthRequestProperty, new Binding(nameof(ValueIndicatorSize), source: this));
+        _valueIndicatorContainer.SetBinding(Ellipse.HeightRequestProperty, new Binding(nameof(ValueIndicatorSize), source: this));
+
+        _valueIndicatorText = new MaterialLabel
+        {
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            TextColor = DefaultTextColor,
+            FontSize = DefaultFontSize,
+            IsVisible = false,
+            MaxLines = 1,
+        };
+        _valueIndicatorText.SetValue(Grid.RowSpanProperty, 2);
+
+        _valueIndicatorText.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(ValueIndicatorTextColor), source: this));
+        _valueIndicatorText.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(ValueIndicatorFontSize), source: this));
+
         _mainLayout.Children.Add(_containerLayout);
+        _mainLayout.Children.Add(_valueIndicatorContainer);
+        _mainLayout.Children.Add(_valueIndicatorText);
 
         base.Content = _mainLayout;
+        _mainLayout.IsClippedToBounds = false;
     }
 
     #endregion Constructors
@@ -1012,30 +1150,24 @@ public class MaterialSlider : ContentView
 
     private void OnDragStarted(object sender, EventArgs e)
     {
-        //Start animation with circle
-        if (DragStarted != null)
-        {
-            DragStarted.Invoke(sender, e);
-        }
+        _isDragging = true;
+        DragStarted?.Invoke(sender, e);
     }
 
     private void OnDragCompleted(object sender, EventArgs e)
     {
-        //Stop animation with circle
-        if (DragCompleted != null)
-        {
-            DragCompleted.Invoke(sender, e);
-        }
+        _valueIndicatorContainer.IsVisible = false;
+        _valueIndicatorText.IsVisible = false;
+        _isDragging = false;
+        DragCompleted?.Invoke(sender, e);
     }
 
     private void OnValueChanged(object sender, ValueChangedEventArgs e)
     {
         this.Value = e.NewValue;
+        UpdateThumbLabelPosition();
 
-        if (ValueChanged is not null)
-        {
-            ValueChanged.Invoke(sender, e);
-        }
+        ValueChanged?.Invoke(sender, e);
     }
 
     private void SetBackgroundImage()
@@ -1045,33 +1177,22 @@ public class MaterialSlider : ContentView
         _backgroundImage.IsVisible = TrackImageSource is not null;
     }
 
-    /// <summary>
-    /// Used to draw a star
-    /// </summary>
-    /// <returns>Path geometry of the star</returns>
-    private PathGeometry CreateStarPathGeometry(double width, double height)
+    private void UpdateThumbLabelPosition()
     {
-        // Define the points of the star based on the width and height
-        double centerX = width / 2;
-        double centerY = height / 2;
-        double radius = Math.Min(centerX, centerY);
-
-        var pathFigure = new PathFigure { StartPoint = new Point(centerX, centerY - radius) };
-
-        for (int i = 1; i < 10; i++)
+        if (_isDragging && ShowValueIndicator)
         {
-            double angle = Math.PI / 5 * i;
-            double x = centerX + radius * Math.Sin(angle) * (i % 2 == 0 ? 1 : 0.5);
-            double y = centerY - radius * Math.Cos(angle) * (i % 2 == 0 ? 1 : 0.5);
-            pathFigure.Segments.Add(new LineSegment { Point = new Point(x, y) });
+            _valueIndicatorContainer.IsVisible = true;
+            _valueIndicatorText.IsVisible = true;
+
+            double thumbX = (_slider.Value - _slider.Minimum) / (_slider.Maximum - _slider.Minimum) * (_slider.Width - _valueIndicatorContainer.Width);
+            _valueIndicatorContainer.TranslationX = thumbX - _slider.Width / 2 + _valueIndicatorContainer.Width / 2;
+            _valueIndicatorText.TranslationX = thumbX - _slider.Width / 2 + _valueIndicatorContainer.Width / 2;
+
+            _valueIndicatorText.Text = _slider.Value.ToString("N2");
+
+            _valueIndicatorContainer.TranslationY = ThumbHeight / -1.5;
+            _valueIndicatorText.TranslationY = ThumbHeight / -1.5;
         }
-
-        // Close the figure
-        pathFigure.IsClosed = true;
-
-        var pathGeometry = new PathGeometry();
-        pathGeometry.Figures.Add(pathFigure);
-        return pathGeometry;
     }
 
     #endregion Methods

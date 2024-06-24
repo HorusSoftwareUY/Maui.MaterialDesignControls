@@ -29,6 +29,7 @@
                         ValueChanged="MaterialSlider_ValueChanged"
                         Minimum="1"
                         Maximum="10"
+                        ShowValueIndicator="False"
                         MinimumLabel="-"
                         MaximumLabel="+"
                         ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
@@ -46,13 +47,15 @@
                         ThumbColor="DarkRed"
                         MinimumTrackColor="Gray"
                         MaximumTrackColor="LightGray"
+                        ValueIndicatorBackgroundColor="DarkBlue"
+                        ValueIndicatorSize="40"
                         MinimumImageSource="volum_out.png"
                         MaximumImageSource="volum_in.png"
                         ShowIcons="True"
                         ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can set the thumb color, the track maximum color and the track minimum color. And set icons for left and right sides." />
+            <material:MaterialLabel Text="You can set the thumb color, the track maximum color and the track minimum color. And set icons for left and right sides. Change the value indicator background color or size. Or simply, no show the value indicator." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a thumb image" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
