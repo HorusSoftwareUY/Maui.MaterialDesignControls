@@ -256,9 +256,9 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="UseTintColor"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty UseTintColorProperty = BindableProperty.Create(nameof(UseTintColor), typeof(bool), typeof(MaterialIconButton), defaultBindingMode: BindingMode.OneWay, defaultValue: true, propertyChanged: (bindable, _, newValue) =>
+    public static readonly BindableProperty UseTintColorProperty = BindableProperty.Create(nameof(UseTintColor), typeof(bool), typeof(MaterialIconButton), defaultBindingMode: BindingMode.OneTime, defaultValue: true, propertyChanged: (bindable, _, newValue) =>
     {
-        if (bindable is MaterialIconButton self && newValue is bool value && value)
+        if (bindable is MaterialIconButton self && newValue is bool value && !value)
         {
             self._image.Behaviors.Clear();
         }
