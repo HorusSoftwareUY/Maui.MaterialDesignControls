@@ -1,5 +1,4 @@
 ﻿
-
 namespace HorusStudio.Maui.MaterialDesignControls;
 class CustomSlider : Slider
 {

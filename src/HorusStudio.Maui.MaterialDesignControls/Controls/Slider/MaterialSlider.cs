@@ -1,7 +1,8 @@
-﻿using Microsoft.Maui.Controls.Shapes;
-using System.Runtime.CompilerServices;
+﻿using Microsoft.Maui.Controls.PlatformConfiguration;
+using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
+using Microsoft.Maui.Controls.Shapes;
 using System.Windows.Input;
-using Path = Microsoft.Maui.Controls.Shapes.Path;
+using Slider = Microsoft.Maui.Controls.Slider;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -905,6 +906,8 @@ public class MaterialSlider : ContentView
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Center,
         };
+
+        _slider.On<iOS>().SetUpdateOnTap(true);
 
         _slider.SetBinding(Slider.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         _slider.SetBinding(Slider.MinimumProperty, new Binding(nameof(Minimum), source: this));
