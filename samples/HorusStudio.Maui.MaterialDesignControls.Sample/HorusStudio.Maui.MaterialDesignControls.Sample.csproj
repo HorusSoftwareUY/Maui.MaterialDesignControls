@@ -64,6 +64,10 @@
 	  <None Remove="Resources\Images\verygood.png" />
 	  <None Remove="Resources\Images\verygood_unselected.png" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Resources\Images\radio_button_checked.svg" />
+	  <None Remove="Resources\Images\radio_button_unchecked.svg" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
@@ -72,6 +76,18 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Pages\RadioButtonPage.xaml.cs">
+	    <DependentUpon>RadioButtonPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\RadioButtonPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
