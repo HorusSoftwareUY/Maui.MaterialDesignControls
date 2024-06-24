@@ -48,7 +48,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async Task CheckValue()
         {
-            await Task.Delay(TimeSpan.FromSeconds(2));
             await DisplayAlert(Title, $"The value is {Value}", "OK");
         }
     }
