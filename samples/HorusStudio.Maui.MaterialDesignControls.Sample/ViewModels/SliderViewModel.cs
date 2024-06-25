@@ -12,7 +12,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public override string Title => "Slider";
 
-        #endregion
+        #endregion Attributes & Properties
 
         public SliderViewModel()
         {

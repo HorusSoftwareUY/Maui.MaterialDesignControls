@@ -1,5 +1,9 @@
 ﻿
 namespace HorusStudio.Maui.MaterialDesignControls;
+
+/// <summary>
+/// This class is a custom control that helps map some new Slider properties
+/// </summary>
 class CustomSlider : Slider
 {
     #region Bindable Properties
@@ -23,7 +27,6 @@ class CustomSlider : Slider
     /// The backing store for the <see cref="ThumbBackgroundColor" /> bindable property.
     /// </summary>
     public static readonly BindableProperty ThumbBackgroundColorProperty = BindableProperty.Create(nameof(ThumbBackgroundColor), typeof(Color), typeof(CustomSlider), defaultValue: null);
-
 
     /// <summary>
     /// The backing store for the <see cref="ThumbWidth" /> bindable property.
@@ -58,7 +61,6 @@ class CustomSlider : Slider
         get { return (int)GetValue(TrackHeightProperty); }
         set { SetValue(TrackHeightProperty, value); }
     }
-
 
     /// <summary>
     /// Gets or sets <see cref="TrackCornerRadius" /> for the slider.

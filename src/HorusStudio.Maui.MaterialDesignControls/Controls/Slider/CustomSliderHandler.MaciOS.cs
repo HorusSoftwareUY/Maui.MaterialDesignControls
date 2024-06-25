@@ -18,7 +18,7 @@ partial class CustomSliderHandler : ISliderHandler
 
             control.SetTrackDesign(customSlider.TrackHeight, customSlider.MinimumTrackColor.ToPlatform(), customSlider.MaximumTrackColor.ToPlatform(), customSlider.TrackCornerRadius);
 
-            if (customSlider.ThumbImageSource == null)
+            if (customSlider.ThumbImageSource is null)
             {
                 nfloat padding = 5;
                 nfloat thumbWidthWithPadding = customSlider.ThumbWidth + 2 * padding;
@@ -46,7 +46,7 @@ partial class CustomSliderHandler : ISliderHandler
             {
                 var image = await customSlider.ThumbImageSource.ToUIImageAsync();
 
-                if(image != null)
+                if(image is not null)
                 {
                     CGSize thumbSize = new CGSize(customSlider.ThumbWidth, customSlider.ThumbHeight);
 

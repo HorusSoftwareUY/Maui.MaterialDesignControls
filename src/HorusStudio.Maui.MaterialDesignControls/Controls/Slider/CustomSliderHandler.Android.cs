@@ -59,11 +59,19 @@ partial class CustomSliderHandler
                 control.ProgressBackgroundTintMode = PorterDuff.Mode.SrcIn;
             }
 
-            if (customSlider.ThumbImageSource == null && customSlider.ThumbColor != null)
+            if (customSlider.ThumbImageSource is null && customSlider.ThumbColor is not null)
             {
                 var thumbDrawable = new VerticalBarDrawable(customSlider.ThumbColor.ToPlatform(), customSlider.ThumbWidth, customSlider.ThumbHeight, customSlider.TrackCornerRadius, customSlider.TrackHeight, customSlider.ThumbBackgroundColor?.ToPlatform() ?? Color.Transparent);
                 control.SetThumb(thumbDrawable);
                 control.Thumb.SetColorFilter(new PorterDuffColorFilter(customSlider.ThumbColor.ToPlatform(), PorterDuff.Mode.SrcIn));
+            }
+            else
+            {
+                var drawable = await GetDrawableAsync(customSlider.ThumbImageSource, customSlider.ThumbWidth, customSlider.ThumbHeight, handler.MauiContext, MauiApplication.Current.ApplicationContext);
+                if (drawable is not null)
+                {
+                    control.SetThumb(drawable);
+                }
             }
 
             if (customSlider.UserInteractionEnabled)
@@ -76,15 +84,6 @@ partial class CustomSliderHandler
                 control.SplitTrack = false;
                 control.Thumb.Mutate().SetAlpha(0);
                 control.Enabled = false;
-            }
-
-            if (customSlider.ThumbImageSource is not null)
-            {
-                var drawable = await GetDrawableAsync(customSlider.ThumbImageSource, customSlider.ThumbWidth, customSlider.ThumbHeight, handler.MauiContext, MauiApplication.Current.ApplicationContext);
-                if (drawable is not null)
-                {
-                    control.SetThumb(drawable);
-                }
             }
         }
     }

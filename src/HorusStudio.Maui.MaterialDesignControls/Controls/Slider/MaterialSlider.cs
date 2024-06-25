@@ -217,7 +217,6 @@ public class MaterialSlider : ContentView
     /// </summary>
     public static readonly BindableProperty MaximumLabelTransformProperty = BindableProperty.Create(nameof(MaximumLabelTransform), typeof(TextTransform), typeof(MaterialSlider), defaultValue: TextTransform.Default);
 
-
     /// <summary>
     /// The backing store for the <see cref="MaximumImageSource" /> bindable property.
     /// </summary>
@@ -466,6 +465,7 @@ public class MaterialSlider : ContentView
     #endregion Label
 
     #region Minimum
+
     /// <summary>
     /// Gets or sets the text for the minimum label. This is a bindable property.
     /// </summary>
