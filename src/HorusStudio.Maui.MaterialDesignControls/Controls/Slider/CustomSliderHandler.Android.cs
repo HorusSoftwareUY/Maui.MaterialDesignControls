@@ -127,7 +127,7 @@ class VerticalBarDrawable : Drawable
     {
         _paint = new Paint { Color = color, AntiAlias = true };
         _backgroundPaint = new Paint { Color = backgroundColor, AntiAlias = true };
-        _width = width * 2;
+        _width = width;
         _height = height;
         _trackHeight = trackHeight * 2;
         _cornerRadius = cornerRadius;

@@ -2,6 +2,7 @@
 using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 using Microsoft.Maui.Controls.Shapes;
 using System.Windows.Input;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using Slider = Microsoft.Maui.Controls.Slider;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -23,7 +24,7 @@ public class MaterialSlider : ContentView
     private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
     private readonly static double DefaultValueIndicatorFontSize = MaterialFontSize.BodyMedium;
-    private readonly static string DefaultValueIndicatorFormat = "N2";
+    private readonly static string DefaultValueIndicatorFormat = "{0:0.00}";
     private bool MinimumImageIsVisible = false;
     private bool MinimumLabelIsVisible = false;
     private bool MaximumImageIsVisible = false;
@@ -809,7 +810,9 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// This property is to set the value indicator's format
+    /// This property is to set the value indicator's format. This uses the format using <see cref="string.Format(string, object?)"/> 
+    /// to show the value in the specified format. 
+    /// The default value is <value>{0:0.00}</value>
     /// </summary>
     public string ValueIndicatorFormat
     {
@@ -1202,7 +1205,7 @@ public class MaterialSlider : ContentView
             _valueIndicatorContainer.TranslationX = thumbX - _slider.Width / 2 + _valueIndicatorContainer.Width / 2;
             _valueIndicatorText.TranslationX = thumbX - _slider.Width / 2 + _valueIndicatorContainer.Width / 2;
 
-            _valueIndicatorText.Text = _slider.Value.ToString(ValueIndicatorFormat);
+            _valueIndicatorText.Text = string.Format(ValueIndicatorFormat, _slider.Value);
 
 #if IOS || MACCATALYST
             _valueIndicatorContainer.TranslationY = ThumbHeight * -0.8;

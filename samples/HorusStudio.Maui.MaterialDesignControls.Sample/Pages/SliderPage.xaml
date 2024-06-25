@@ -52,7 +52,6 @@
                         MinimumTrackColor="Gray"
                         MaximumTrackColor="LightGray"
                         ValueIndicatorBackgroundColor="DarkBlue"
-                        ValueIndicatorFormat="N1"
                         ValueIndicatorSize="40"
                         MinimumImageSource="volum_out.png"
                         MaximumImageSource="volum_in.png"
@@ -85,9 +84,11 @@
                 <VerticalStackLayout>
                     <material:MaterialSlider 
                         Label="Track image"
-                        Minimum="0"
+                        Minimum="16"
                         ThumbColor="Black"
-                        Maximum="10"
+                        ValueIndicatorFormat="'{0:0.0}º C'"
+                        ValueIndicatorFontSize="12"
+                        Maximum="32"
                         ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
                         TrackImageSource="scale.png" />
                 </VerticalStackLayout>
