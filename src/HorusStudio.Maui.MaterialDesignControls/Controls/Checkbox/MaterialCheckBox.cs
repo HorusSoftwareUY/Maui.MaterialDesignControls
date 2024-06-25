@@ -8,15 +8,17 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// <summary>
 /// A Checkbox <see cref="View" /> let users select one or more items from a list, or turn an item on or off and follows Material Design Guidelines <see href="https://m3.material.io/components/checkbox/overview" />.
 /// </summary>
-
 public class MaterialCheckBox : ContentView, ITouchable
 {
+    // TODO: [iOS] FontAttributes doesn't work
+
     #region Attributes
+
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultCheckColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimary, Dark = MaterialDarkTheme.OnPrimary }.GetValueForCurrentTheme<Color>();
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
+    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
     private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
 #nullable enable
@@ -31,11 +33,11 @@ public class MaterialCheckBox : ContentView, ITouchable
     private CustomCheckBox _checkbox;
     private Grid _mainLayout;
     private BoxView _boxView;
-    private Grid _checkboxContainer;
 
     #endregion Layout
 
     #region Bindable Properties
+
     /// <summary>
     /// The backing store for the <see cref="Content" /> bindable property.
     /// </summary>
@@ -160,8 +162,11 @@ public class MaterialCheckBox : ContentView, ITouchable
     #endregion Bindable Properties
 
     #region Properties
+
     /// <summary>
-    /// Gets or sets the <see cref="Content" /> for the label. This is a bindable property.
+    /// Gets the <see cref="Content" /> for the RadioButton. This is a bindable property.
+    /// We disabled the set for this property because doesn't have sense set the content because we are setting with the
+    /// checkbox and label.
     /// </summary>
     public new string Content
     {
@@ -185,7 +190,6 @@ public class MaterialCheckBox : ContentView, ITouchable
         get { return (Color)GetValue(ColorProperty); }
         set { SetValue(ColorProperty, value); }
     }
-
 
     /// <summary>
     /// Gets or sets the <see cref="Microsoft.Maui.Graphics.Color" /> for the tick color. This is a bindable property.
@@ -353,21 +357,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     {
         _mainLayout = new()
         {
-            Margin = new Thickness(0),
+            Margin = new Thickness(0, 0, 0, 5),
             VerticalOptions = LayoutOptions.Center,
-            RowDefinitions = new()
-            {
-                new RowDefinition()
-                {
-                    Height = GridLength.Star
-                }
-            }
-        };
-
-        _checkboxContainer = new Grid()
-        {
-            MinimumHeightRequest = 48,
-            MinimumWidthRequest = 48,
             RowDefinitions = new()
             {
                 new RowDefinition()
@@ -386,23 +377,23 @@ public class MaterialCheckBox : ContentView, ITouchable
 
         _checkbox = new()
         {
-            Margin = new Thickness(0),
+            Margin = new Thickness(0,0,10,0),
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Center,
-            MinimumHeightRequest = 18,
-            MinimumWidthRequest = 18,
+            MinimumHeightRequest = 20,
+            MinimumWidthRequest = 20,
             IsEnabled = false,
         };
         _checkbox.SetValue(Grid.RowProperty, 0);
         _checkbox.SetValue(Grid.ColumnProperty, 0);
 
-        _checkboxContainer.Children.Add(_checkbox);
+        _mainLayout.Children.Add(_checkbox);
 
 #if ANDROID
         _boxView = new()
         {
-            BackgroundColor = Color.FromArgb("#00FFFFFF"),
-            Color = Color.FromArgb("#00FFFFFF")
+            BackgroundColor = Colors.Transparent,
+            Color = Colors.Transparent
         };
         _boxView.SetValue(Grid.RowProperty, 0);
         _boxView.SetValue(Grid.ColumnProperty, 0);
@@ -411,9 +402,9 @@ public class MaterialCheckBox : ContentView, ITouchable
         tapGestureRecognizer.Tapped += OnCheckBoxTapped;
         _boxView.GestureRecognizers.Add(tapGestureRecognizer);
 
-
-        _checkboxContainer.Children.Add(_boxView);
+        _mainLayout.Children.Add(_boxView);
 #endif
+
         _checkbox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(IsChecked), source: this));
         _checkbox.SetBinding(CheckBox.ColorProperty, new Binding(nameof(Color), source: this));
         _checkbox.SetBinding(CustomCheckBox.TickColorProperty, new Binding(nameof(TickColor), source: this));
@@ -426,6 +417,7 @@ public class MaterialCheckBox : ContentView, ITouchable
             VerticalOptions = LayoutOptions.Center,
         };
         _label.SetValue(Grid.RowProperty, 0);
+        _label.SetValue(Grid.ColumnProperty, 1);
 
         _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Text), source: this));
         _label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
@@ -443,8 +435,6 @@ public class MaterialCheckBox : ContentView, ITouchable
 
         base.Content = _mainLayout;
     }
-
-
 
     #endregion Constructors
 
@@ -483,10 +473,11 @@ public class MaterialCheckBox : ContentView, ITouchable
 
     private void TextSideChanged(TextSide textSide)
     {
+        _mainLayout.Children.Clear();
+
         switch (textSide)
         {
             case TextSide.Left:
-                _mainLayout.Children.Clear();
                 _mainLayout.ColumnDefinitions = new()
                 {
                     new()
@@ -499,15 +490,18 @@ public class MaterialCheckBox : ContentView, ITouchable
                     }
                 };
 
-                _checkboxContainer.SetValue(Grid.ColumnProperty, 1);
+                _checkbox.SetValue(Grid.ColumnProperty, 1);
 
                 _label.SetValue(Grid.ColumnProperty, 0);
 
                 _mainLayout.Children.Add(_label);
-                _mainLayout.Children.Add(_checkboxContainer);
+                _mainLayout.Children.Add(_checkbox);
+#if ANDROID
+                _boxView.SetValue(Grid.ColumnProperty, 1);
+                _mainLayout.Children.Add(_boxView);
+#endif
                 break;
             case TextSide.Right:
-                _mainLayout.Children.Clear();
                 _mainLayout.ColumnDefinitions = new()
                 {
                     new()
@@ -519,11 +513,16 @@ public class MaterialCheckBox : ContentView, ITouchable
                         Width = GridLength.Star
                     }
                 };
-                _checkboxContainer.SetValue(Grid.ColumnProperty, 0);
+                _checkbox.SetValue(Grid.ColumnProperty, 0);
 
                 _label.SetValue(Grid.ColumnProperty, 1);
 
-                _mainLayout.Children.Add(_checkboxContainer);
+                _mainLayout.Children.Add(_checkbox);
+
+#if ANDROID
+                _boxView.SetValue(Grid.ColumnProperty, 0);
+                _mainLayout.Children.Add(_boxView);
+#endif
                 _mainLayout.Children.Add(_label);
                 break;
         }
@@ -543,9 +542,7 @@ public class MaterialCheckBox : ContentView, ITouchable
         {
             VisualStateManager.GoToState(this, CheckboxCommonStates.Unchecked);
         }
-    }
-
-    
+    }  
 
     #endregion Methods
 
@@ -573,16 +570,6 @@ public class MaterialCheckBox : ContentView, ITouchable
             {
                 Light = MaterialLightTheme.OnSurface,
                 Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        disabledState.Setters.Add(
-            MaterialCheckBox.TickColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Surface,
-                Dark = MaterialDarkTheme.Surface
             }
             .GetValueForCurrentTheme<Color>()
             .WithAlpha(0.38f));
@@ -629,6 +616,7 @@ public class MaterialCheckBox : ContentView, ITouchable
 
         return new List<Style> { style };
     }
+
     #endregion Styles
 }
 

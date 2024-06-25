@@ -1,5 +1,8 @@
 ﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// This class is a custom control that helps map some new CheckBox properties
+/// </summary>
 internal class CustomCheckBox : CheckBox
 {
     #region Bindable Properties

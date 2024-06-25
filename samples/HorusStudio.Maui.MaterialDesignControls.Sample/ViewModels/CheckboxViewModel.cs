@@ -11,6 +11,9 @@ public partial class CheckboxViewModel : BaseViewModel
     [ObservableProperty]
     public bool _isCheckboxEnabled;
 
+    [ObservableProperty]
+    public bool _value;
+
     #endregion
 
     public CheckboxViewModel()
@@ -21,7 +24,12 @@ public partial class CheckboxViewModel : BaseViewModel
     [ICommand]
     private async Task CheckedChanged(object message)
     {
-        await Task.Delay(TimeSpan.FromSeconds(2));
         await DisplayAlert(Title + " from Command", message.ToString(), "OK");
+    }
+
+    [ICommand]
+    private async Task CheckValue()
+    {
+        await DisplayAlert("Checkbox", $"Value = {Value}", "OK");
     }
 }
