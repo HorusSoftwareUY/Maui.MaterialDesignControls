@@ -23,6 +23,7 @@ public class MaterialSlider : ContentView
     private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
     private readonly static double DefaultValueIndicatorFontSize = MaterialFontSize.BodyMedium;
+    private readonly static string DefaultValueIndicatorFormat = "N2";
     private bool MinimumImageIsVisible = false;
     private bool MinimumLabelIsVisible = false;
     private bool MaximumImageIsVisible = false;
@@ -46,7 +47,6 @@ public class MaterialSlider : ContentView
     private Grid _mainLayout;
     private Grid _containerLayout;
     private Image _backgroundImage;
-
     private Ellipse _valueIndicatorContainer;
     private MaterialLabel _valueIndicatorText;
 
@@ -335,6 +335,11 @@ public class MaterialSlider : ContentView
     /// The backing store for the <see cref="ValueIndicatorFontSize" /> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueIndicatorFontSizeProperty = BindableProperty.Create(nameof(ValueIndicatorFontSize), typeof(double), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorFontSize);
+
+    /// <summary>
+    /// The backing store for the <see cref="ValueIndicatorFormat" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ValueIndicatorFormatProperty = BindableProperty.Create(nameof(ValueIndicatorFormat), typeof(string), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorFormat);
 
     #endregion ValueIndicator
 
@@ -803,6 +808,15 @@ public class MaterialSlider : ContentView
         set => SetValue(ValueIndicatorFontSizeProperty, value);
     }
 
+    /// <summary>
+    /// This property is to set the value indicator's format
+    /// </summary>
+    public string ValueIndicatorFormat
+    {
+        get => (string)GetValue(ValueIndicatorFormatProperty);
+        set => SetValue(ValueIndicatorFormatProperty, value);
+    }
+
     #endregion ValueIndicator
 
     /// <summary>
@@ -1188,12 +1202,17 @@ public class MaterialSlider : ContentView
             _valueIndicatorContainer.TranslationX = thumbX - _slider.Width / 2 + _valueIndicatorContainer.Width / 2;
             _valueIndicatorText.TranslationX = thumbX - _slider.Width / 2 + _valueIndicatorContainer.Width / 2;
 
-            _valueIndicatorText.Text = _slider.Value.ToString("N2");
+            _valueIndicatorText.Text = _slider.Value.ToString(ValueIndicatorFormat);
 
+#if IOS || MACCATALYST
+            _valueIndicatorContainer.TranslationY = ThumbHeight * -0.8;
+            _valueIndicatorText.TranslationY = ThumbHeight * -0.8;
+#else
             _valueIndicatorContainer.TranslationY = ThumbHeight / -1.5;
             _valueIndicatorText.TranslationY = ThumbHeight / -1.5;
+#endif
         }
     }
 
-    #endregion Methods
+#endregion Methods
 }
