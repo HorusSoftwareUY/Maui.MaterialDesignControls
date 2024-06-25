@@ -86,7 +86,7 @@
                         Label="Track image"
                         Minimum="16"
                         ThumbColor="Black"
-                        ValueIndicatorFormat="'{0:0.0}º C'"
+                        ValueIndicatorFormat="{Binding ValueFormat}"
                         ValueIndicatorFontSize="12"
                         Maximum="32"
                         ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"

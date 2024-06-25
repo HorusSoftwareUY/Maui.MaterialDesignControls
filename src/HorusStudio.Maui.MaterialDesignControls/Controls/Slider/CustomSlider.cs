@@ -4,7 +4,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// <summary>
 /// This class is a custom control that helps map some new Slider properties
 /// </summary>
-class CustomSlider : Slider
+internal class CustomSlider : Slider
 {
     #region Bindable Properties
 

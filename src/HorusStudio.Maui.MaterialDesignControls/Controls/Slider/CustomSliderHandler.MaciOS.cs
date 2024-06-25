@@ -54,7 +54,7 @@ partial class CustomSliderHandler : ISliderHandler
 
                     UIGraphics.BeginImageContextWithOptions(thumbSize, false, 0.0f);
 
-                    CGContext context = UIGraphics.GetCurrentContext();
+                    using var context = UIGraphics.GetCurrentContext();
                     context.SetFillColor(backgroundColor.CGColor);
                     context.FillRect(new CGRect(0, 0, thumbSize.Width, thumbSize.Height));
 
