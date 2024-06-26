@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Maui.Controls.Shapes;
+﻿using Microsoft.Maui.Controls.Shapes;
 using System.Runtime.CompilerServices;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
@@ -35,7 +34,6 @@ public class MaterialRating : ContentView
     #endregion Layout
 
     #region Bindable Properties
-
 
     /// <summary>
     /// The backing store for the <see cref="Label" /> bindable property.
