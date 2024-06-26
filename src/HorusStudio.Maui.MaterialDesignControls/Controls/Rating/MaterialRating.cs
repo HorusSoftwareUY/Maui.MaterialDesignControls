@@ -16,7 +16,7 @@ public class MaterialRating : ContentView
     private readonly static int DefaultItemsSize = 5;
     private readonly static int DefaultItemsPerRow = 5;
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
+    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
     private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
 #nullable enable
