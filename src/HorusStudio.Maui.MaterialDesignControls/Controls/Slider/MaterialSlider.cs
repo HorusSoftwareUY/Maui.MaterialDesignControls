@@ -2,13 +2,12 @@
 using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 using Microsoft.Maui.Controls.Shapes;
 using System.Windows.Input;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using Slider = Microsoft.Maui.Controls.Slider;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A slider <see cref="View" /> let users make selections from a range of values./>.
+/// A slider <see cref="View" /> that lets users make selections from a range of values.
 /// </summary>
 public class MaterialSlider : ContentView
 {
@@ -438,7 +437,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
+    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true.
     /// </summary>
     public bool FontAutoScalingEnabled
     {
@@ -463,6 +462,7 @@ public class MaterialSlider : ContentView
         get { return (TextTransform)GetValue(LabelTransformProperty); }
         set { SetValue(LabelTransformProperty, value); }
     }
+
     #endregion Label
 
     #region Minimum
@@ -513,7 +513,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
+    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true.
     /// </summary>
     public bool MinimumFontAutoScalingEnabled
     {
@@ -540,7 +540,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image instead of label on minimum side This is a bindable property.
+    /// Allows you to display a bitmap image instead of a label on the minimum side. This is a bindable property.
     /// </summary>
     public ImageSource MinimumImageSource
     {
@@ -549,7 +549,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines the minimum value of the slider
+    /// Defines the minimum value of the slider.
     /// The default value is <value>0</value>.
     /// This is a bindable property.
     /// </summary>
@@ -618,7 +618,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
+    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true.
     /// </summary>
     public bool MaximumFontAutoScalingEnabled
     {
@@ -645,7 +645,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image instead of label on maximum side This is a bindable property.
+    /// Allows you to display a bitmap image instead of a label on the maximum side. This is a bindable property.
     /// </summary>
     public ImageSource MaximumImageSource
     {
@@ -654,7 +654,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines the maximum value of the slider
+    /// Defines the maximum value of the slider.
     /// The default value is <value>1</value>.
     /// This is a bindable property.
     /// </summary>
@@ -665,7 +665,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the minimum track color. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the maximum track color. This is a bindable property.
     /// </summary>
     public Color MaximumTrackColor
     {
@@ -678,7 +678,7 @@ public class MaterialSlider : ContentView
     #region Track
 
     /// <summary>
-    /// Gets or sets <see cref="TrackHeight" />  for the slider control. This is a bindable property.
+    /// Gets or sets the <see cref="TrackHeight" /> for the slider control. This is a bindable property.
     /// </summary>
     public int TrackHeight
     {
@@ -687,7 +687,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets <see cref="TrackCornerRadius" />  for the slider control. This is a bindable property.
+    /// Gets or sets the <see cref="TrackCornerRadius" /> for the slider control. This is a bindable property.
     /// </summary>
     public int TrackCornerRadius
     {
@@ -696,7 +696,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets <see cref="TrackImageSource" />  for the slider control. This is a bindable property.
+    /// Gets or sets the <see cref="TrackImageSource" /> for the slider control. This is a bindable property.
     /// </summary>
     public ImageSource TrackImageSource
     {
@@ -719,9 +719,9 @@ public class MaterialSlider : ContentView
 
     /// <summary>
     /// Allows you to display a bitmap image on the thumb. This is a bindable property.
-    /// As recomendation, on iOS you should set the thumb background color.
+    /// As a recommendation, on iOS you should set the thumb background color.
     /// </summary>
-    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    /// <remarks>For more options, see <see cref="ImageButton"/>.</remarks>
     public ImageSource ThumbImageSource
     {
         get => (ImageSource)GetValue(ThumbImageSourceeProperty);
@@ -729,9 +729,9 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// This property is mandatory that you set if you wanna a proper design.
+    /// This property is mandatory to set if you want a proper design.
     /// Allows you to set the color of the thumb shadow.
-    /// You should set it equals to the background color of the slider's container.
+    /// You should set it equal to the background color of the slider's container.
     /// </summary>
     public Color ThumbBackgroundColor
     {
@@ -740,8 +740,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Allows you to set the thumb width
-    /// The default value is <value>4</value>
+    /// Allows you to set the thumb width.
+    /// The default value is <value>4</value>.
     /// </summary>
     public int ThumbWidth
     {
@@ -750,8 +750,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Allows you to set the thumb height
-    /// The default value is <value>44</value>
+    /// Allows you to set the thumb height.
+    /// The default value is <value>44</value>.
     /// </summary>
     public int ThumbHeight
     {
@@ -764,7 +764,7 @@ public class MaterialSlider : ContentView
     #region ValueIndicator
 
     /// <summary>
-    /// This property is to set the background color of the value indicator
+    /// Sets the background color of the value indicator.
     /// </summary>
     public Color ValueIndicatorBackgroundColor
     {
@@ -773,8 +773,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Allows you to set the value indicator size
-    /// The default value is <value>44</value>
+    /// Allows you to set the value indicator size.
+    /// The default value is <value>44</value>.
     /// </summary>
     public int ValueIndicatorSize
     {
@@ -783,7 +783,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines if show or not the value indicator
+    /// Defines whether to show the value indicator.
     /// </summary>
     public bool ShowValueIndicator
     {
@@ -792,7 +792,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// This property is to set the text color of the value indicator
+    /// Sets the text color of the value indicator.
     /// </summary>
     public Color ValueIndicatorTextColor
     {
@@ -801,7 +801,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// This property is to set the value indicator's font size 
+    /// Sets the value indicator's font size.
     /// </summary>
     public double ValueIndicatorFontSize
     {
@@ -810,9 +810,9 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// This property is to set the value indicator's format. This uses the format using <see cref="string.Format(string, object?)"/> 
+    /// Sets the value indicator's format. This uses the format from <see cref="string.Format(string, object?)"/> 
     /// to show the value in the specified format. 
-    /// The default value is <value>{0:0.00}</value>
+    /// The default value is <value>{0:0.00}</value>.
     /// </summary>
     public string ValueIndicatorFormat
     {
@@ -823,10 +823,10 @@ public class MaterialSlider : ContentView
     #endregion ValueIndicator
 
     /// <summary>
-    /// Gets or sets <see cref="ShowIcons" />  for the slider control. This is a bindable property.
-    /// This property is used to show the icons even when minimum/maximum label is seted. 
-    /// If the value is true, show icons. Other case, no show icons even when they was seted.
-    /// The default value is <value>false</value>
+    /// Gets or sets the <see cref="ShowIcons" /> property for the slider control. This is a bindable property.
+    /// This property is used to show the icons even when the minimum/maximum label is set. 
+    /// If the value is true, icons are shown. Otherwise, icons are not shown even when they are set.
+    /// The default value is <value>false</value>.
     /// </summary>
     public bool ShowIcons
     {
@@ -835,7 +835,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets <see cref="UserInteractionEnabled" />  for the slider control. This is a bindable property.
+    /// Gets or sets the <see cref="UserInteractionEnabled" /> property for the slider control. This is a bindable property.
     /// </summary>
     public bool UserInteractionEnabled
     {
@@ -844,7 +844,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets <see cref="IsEnabled" />  for the slider control. This is a bindable property.
+    /// Gets or sets the <see cref="IsEnabled" /> property for the slider control. This is a bindable property.
     /// </summary>
     public new bool IsEnabled
     {
@@ -853,8 +853,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines the value of the slider
-    /// The default value is 0
+    /// Defines the value of the slider.
+    /// The default value is 0.
     /// This is a bindable property.
     /// </summary>
     public double Value
@@ -882,6 +882,7 @@ public class MaterialSlider : ContentView
     }
 
     #endregion Properties
+
 
     #region Constructors
 
