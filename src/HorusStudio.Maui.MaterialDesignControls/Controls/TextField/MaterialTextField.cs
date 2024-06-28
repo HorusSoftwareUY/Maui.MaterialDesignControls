@@ -14,6 +14,9 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(BorderlessEntry.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         _entry.SetBinding(BorderlessEntry.TextColorProperty, new Binding(nameof(TextColor), source: this));
         _entry.SetBinding(BorderlessEntry.TextProperty, new Binding(nameof(Text), source: this));
+        _entry.SetBinding(BorderlessEntry.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        _entry.SetBinding(BorderlessEntry.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+
 
         InputTapCommand = new Command(() => _entry.Focus());
 

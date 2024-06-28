@@ -28,7 +28,9 @@ public abstract partial class MaterialInputBase : ContentView
     private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
     private readonly static CornerRadius DefaultCornerRadius = new(0);
 
-    private readonly static TextAlignment DefaultMaterialInputBase = TextAlignment.Start;
+    private readonly static TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
+    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
+    private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
@@ -163,7 +165,17 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="HorizontalTextAlignment"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(MaterialInputBase), defaultValue: DefaultMaterialInputBase);
+    public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(MaterialInputBase), defaultValue: DefaultHorizontalTextAlignment);
+
+    /// <summary>
+    /// The backing store for the <see cref="FontFamily"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialInputBase), defaultValue: DefaultFontFamily);
+
+    /// <summary>
+    /// The backing store for the <see cref="FontSize"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultFontSize);
 
     #endregion Bindable Properties
 
@@ -336,6 +348,24 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     /// <remarks>This property is used internally and it's recommended to avoid setting it directly.</remarks>
     public ICommand InputTapCommand { get; set; }
+
+    /// <summary>
+    /// Gets or sets the font family for the input. This is a bindable property.
+    /// </summary>
+    public string FontFamily
+    {
+        get { return (string)GetValue(FontFamilyProperty); }
+        set { SetValue(FontFamilyProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the font size for the input. This is a bindable property.
+    /// </summary>
+    public double FontSize
+    {
+        get { return (double)GetValue(FontSizeProperty); }
+        set { SetValue(FontSizeProperty, value); }
+    }
 
     #endregion Properties
 

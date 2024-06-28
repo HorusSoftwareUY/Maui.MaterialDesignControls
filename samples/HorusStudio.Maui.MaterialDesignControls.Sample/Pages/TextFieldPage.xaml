@@ -24,7 +24,7 @@
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <material:MaterialTextField Placeholder="Hola que tal...?" Label="Label text"  />
+                <material:MaterialTextField Placeholder="Hola que tal...?" FontSize="25"  />
             </Frame>
             <material:MaterialLabel Text="Filled buttons have high visual impact when used for important actions." />
 
@@ -33,6 +33,8 @@
                 <material:MaterialTextField Type="Outlined" Placeholder="Outlined con placeholder" />
             </Frame>
             <material:MaterialLabel Text="Filled buttons have high visual impact when used for important actions." />
+
+            <Entry Placeholder="Testing entry" />
 
         </VerticalStackLayout>
     </ScrollView>
