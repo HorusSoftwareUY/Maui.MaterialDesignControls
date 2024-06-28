@@ -1,4 +1,4 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Utils;
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.LifecycleEvents;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -17,6 +17,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static void ConfigureHandlers(IMauiHandlersCollection handlers)
         {
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
+            handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
             handlers.AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler));
         }
 
@@ -40,7 +41,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 .OnLaunched((_, _) =>
                 {
                     InitializeComponents();
-                }
+                }));
 #endif
         }
 
@@ -60,6 +61,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialButton.GetStyles());
             // Icon Button
             application.Resources.AddStyles(MaterialIconButton.GetStyles());
+            // Radio Button
+            application.Resources.AddStyles(MaterialRadioButton.GetStyles());
             // MaterialTextField
             application.Resources.AddStyles(MaterialTextField.GetStyles());
         }

@@ -24,6 +24,8 @@
     /// </summary>
     public class MaterialLabel : Label
     {
+        // TODO: [iOS] FontAttributes doesn't work
+
         #region Attributes
 
         private readonly static LabelTypes DefaultType = LabelTypes.BodyMedium;

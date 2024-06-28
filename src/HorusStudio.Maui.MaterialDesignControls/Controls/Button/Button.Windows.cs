@@ -1,5 +1,4 @@
-﻿using System;
-using NativeButton = object;
+﻿using NativeButton = object;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
