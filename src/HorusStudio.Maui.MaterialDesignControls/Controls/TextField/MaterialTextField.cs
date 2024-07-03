@@ -35,23 +35,21 @@ public class MaterialTextField : MaterialInputBase
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
-        if(_entry != null)
+#if ANDROID
+        if (_entry == null) return;
+
+        switch (type)
         {
-            if (type == MaterialInputType.Filled)
-            {
-                _entry.VerticalOptions = LayoutOptions.FillAndExpand;
-                _entry.Margin = DeviceInfo.Platform == DevicePlatform.Android ?
-                    new Thickness(0, 0, 0, -10) :
-                    new Thickness(0, 0, 0, -1);
-            }
-            else if (type == MaterialInputType.Outlined)
-            {
+            case MaterialInputType.Filled:
+                _entry.VerticalOptions = LayoutOptions.End;
+                _entry.Margin = new Thickness(0, 0, 0, -10);
+                break;
+            case MaterialInputType.Outlined:
                 _entry.VerticalOptions = LayoutOptions.Center;
-                _entry.Margin = DeviceInfo.Platform == DevicePlatform.Android ?
-                    new Thickness(0, -7.5) :
-                    new Thickness(0);
-            }
+                _entry.Margin = new Thickness(0, -7.5);
+                break;
         }
+#endif
     }
 
     protected override void SetControlIsEnabled()

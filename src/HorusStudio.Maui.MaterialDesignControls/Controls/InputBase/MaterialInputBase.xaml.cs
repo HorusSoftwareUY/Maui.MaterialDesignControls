@@ -645,20 +645,11 @@ public abstract partial class MaterialInputBase : ContentView
 
     private static Thickness GetDefaultLabelMargin(MaterialInputType type)
     {
-#if ANDROID
-
         return type switch
         {
             MaterialInputType.Outlined => new Thickness(12, 0, 0, 0),
             _ => new Thickness(0, -10, 0, 0)
         };
-#else
-        return type switch
-        {
-            MaterialInputType.Outlined => new Thickness(12, 0, 0, 0),
-            _ => new Thickness(0, -1, 0, 0)
-        };
-#endif
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)

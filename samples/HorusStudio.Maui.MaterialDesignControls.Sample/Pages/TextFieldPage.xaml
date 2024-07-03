@@ -34,8 +34,6 @@
             </Frame>
             <material:MaterialLabel Text="Filled buttons have high visual impact when used for important actions." />
 
-            <Entry Placeholder="Testing entry" />
-
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>
