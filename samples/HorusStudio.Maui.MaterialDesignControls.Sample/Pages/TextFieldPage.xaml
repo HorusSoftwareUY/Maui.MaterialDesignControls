@@ -24,7 +24,7 @@
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <material:MaterialTextField Placeholder="Hola que tal...?" FontSize="25"  />
+                <material:MaterialTextField Placeholder="Hola que tal...?" />
             </Frame>
             <material:MaterialLabel Text="Filled buttons have high visual impact when used for important actions." />
 

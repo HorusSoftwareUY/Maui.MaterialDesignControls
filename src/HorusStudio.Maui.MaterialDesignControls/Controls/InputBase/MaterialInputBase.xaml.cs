@@ -31,6 +31,12 @@ public abstract partial class MaterialInputBase : ContentView
     private readonly static TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
+    private readonly static Color DefaultPlaceHolderColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultLabelColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
+    private readonly static double DefaultLabelSize = MaterialFontSize.BodyLarge;
+    private readonly static Thickness DefaultLabelMargin = new Thickness(0);
+    private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
+    private readonly static double DefaultSupportingSize = MaterialFontSize.BodySmall;
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
@@ -82,7 +88,13 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="Placeholder" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(MaterialInputBase));
+    public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(MaterialInputBase), propertyChanged: (bindableObject, _, newValue) =>
+    {
+        if(bindableObject is MaterialInputBase self && newValue is string value && string.IsNullOrWhiteSpace(self.Label))
+        {
+            self.Label = value;
+        }
+    });
 
     /// <summary>
     /// The backing store for the <see cref="SupportingText" /> bindable property.
@@ -177,13 +189,98 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultFontSize);
 
+    /// <summary>
+    /// The backing store for the <see cref="PlaceholderColor"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultPlaceHolderColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="LabelColor"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultLabelColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="LabelSize"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty LabelSizeProperty = BindableProperty.Create(nameof(LabelSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultLabelSize);
+    
+    /// <summary>
+    /// The backing store for the <see cref="LabelFontFamily"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty LabelFontFamilyProperty = BindableProperty.Create(nameof(LabelFontFamily), typeof(string), typeof(MaterialInputBase), defaultValue: DefaultFontFamily);
+
+    /// <summary>
+    /// The backing store for the <see cref="LabelMargin"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty LabelMarginProperty = BindableProperty.Create(nameof(LabelMargin), typeof(Thickness), typeof(MaterialInputBase), defaultValue: DefaultLabelMargin);
+
+    /// <summary>
+    /// The backing store for the <see cref="LabelLineBreakMode"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty LabelLineBreakModeProperty = BindableProperty.Create(nameof(LabelLineBreakMode), typeof(LineBreakMode), typeof(MaterialInputBase), defaultValue: LineBreakMode.NoWrap);
+
+    /// <summary>
+    /// The backing store for the <see cref="SupportingTextColor"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SupportingTextColorProperty = BindableProperty.Create(nameof(SupportingTextColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultSupportingTextColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="SupportingFontSize"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SupportingFontSizeProperty = BindableProperty.Create(nameof(SupportingFontSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultSupportingSize);
+
+    /// <summary>
+    /// The backing store for the <see cref="SupportingFontFamily"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SupportingFontFamilyProperty = BindableProperty.Create(nameof(SupportingFontFamily), typeof(string), typeof(MaterialInputBase), defaultValue: DefaultFontFamily);
+
+    /// <summary>
+    /// The backing store for the <see cref="SupportingMargin"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SupportingMarginProperty = BindableProperty.Create(nameof(SupportingMargin), typeof(Thickness), typeof(MaterialInputBase), defaultValue: new Thickness(16, 4, 16, 0));
+
+    /// <summary>
+    /// The backing store for the <see cref="SupportingLineBreakMode"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SupportingLineBreakModeProperty = BindableProperty.Create(nameof(SupportingLineBreakMode), typeof(LineBreakMode), typeof(MaterialInputBase), defaultValue: LineBreakMode.NoWrap);
+
+    /// <summary>
+    /// The backing store for the <see cref="LeadingIconCommand"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty LeadingIconCommandProperty = BindableProperty.Create(nameof(LeadingIconCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
+
+    /// <summary>
+    /// The backing store for the <see cref="LeadingIconCommandParameter"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty LeadingIconCommandParameterProperty = BindableProperty.Create(nameof(LeadingIconCommandParameter), typeof(object), typeof(MaterialInputBase), defaultValue: null);
+
+    /// <summary>
+    /// The backing store for the <see cref="TrailingIconCommand"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty TrailingIconCommandProperty = BindableProperty.Create(nameof(TrailingIconCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
+
+    /// <summary>
+    /// The backing store for the <see cref="TrailingIconCommandParameter"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty TrailingIconCommandParameterProperty = BindableProperty.Create(nameof(LeadingIconCommandParameter), typeof(object), typeof(MaterialInputBase), defaultValue: null);
+
+    /// <summary>
+    /// The backing store for the <see cref="FocusedCommand"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty FocusedCommandProperty = BindableProperty.Create(nameof(FocusedCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
+
+    /// <summary>
+    /// The backing store for the <see cref="FocusedCommand"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty UnfocusedCommandProperty = BindableProperty.Create(nameof(UnfocusedCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
+
     #endregion Bindable Properties
 
     #region Properties
 
     /// <summary>
     /// Gets or sets the input type according to <see cref="MaterialInputType"/> enum.
-    /// The default value is <see cref="MaterialInputBaseType.Filled"/>. This is a bindable property.
+    /// The default value is <see cref="MaterialInputType.Filled"/>. This is a bindable property.
     /// </summary>
     public MaterialInputType Type
     {
@@ -367,7 +464,166 @@ public abstract partial class MaterialInputBase : ContentView
         set { SetValue(FontSizeProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the place holder color for the input. This is a bindable property.
+    /// </summary>
+    public Color PlaceholderColor
+    {
+        get { return (Color)GetValue(PlaceholderColorProperty); }
+        set { SetValue(PlaceholderColorProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the label color. This is a bindable property.
+    /// </summary>
+    public Color LabelColor
+    {
+        get { return (Color)GetValue(LabelColorProperty); }
+        set { SetValue(LabelColorProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the label size. This is a bindable property.
+    /// </summary>
+    public double LabelSize
+    {
+        get { return (double)GetValue(LabelSizeProperty); }
+        set { SetValue(LabelSizeProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the label font family. This is a bindable property.
+    /// </summary>
+    public string LabelFontFamily
+    {
+        get { return (string)GetValue(LabelFontFamilyProperty); }
+        set { SetValue(LabelFontFamilyProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the label margin. This is a bindable property.
+    /// The default value is <value>0</value>
+    /// </summary>
+    public Thickness LabelMargin
+    {
+        get { return (Thickness)GetValue(LabelMarginProperty); }
+        set { SetValue(LabelMarginProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the label line break mode. This is a bindable property.
+    /// The default value is <value><see cref="LineBreakMode.NoWrap"/></value>
+    /// </summary>
+    public LineBreakMode LabelLineBreakMode
+    {
+        get { return (LineBreakMode)GetValue(LabelLineBreakModeProperty); }
+        set { SetValue(LabelLineBreakModeProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the supporting text color. This is a bindable property.
+    /// </summary>
+    public Color SupportingTextColor
+    {
+        get { return (Color)GetValue(SupportingTextColorProperty); }
+        set { SetValue(SupportingTextColorProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the font family for the input. This is a bindable property.
+    /// </summary>
+    public string SupportingFontFamily
+    {
+        get { return (string)GetValue(SupportingFontFamilyProperty); }
+        set { SetValue(SupportingFontFamilyProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the font size for the input. This is a bindable property.
+    /// </summary>
+    public double SupportingFontSize
+    {
+        get { return (double)GetValue(SupportingFontSizeProperty); }
+        set { SetValue(SupportingFontSizeProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the label margin. This is a bindable property.
+    /// The default value is <value>Thickness(16, 4)</value>
+    /// </summary>
+    public Thickness SupportingMargin
+    {
+        get { return (Thickness)GetValue(SupportingMarginProperty); }
+        set { SetValue(SupportingMarginProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets the supporting line break mode. This is a bindable property.
+    /// The default value is <value><see cref="LineBreakMode.NoWrap"/></value>
+    /// </summary>
+    public LineBreakMode SupportingLineBreakMode
+    {
+        get { return (LineBreakMode)GetValue(SupportingLineBreakModeProperty); }
+        set { SetValue(SupportingLineBreakModeProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets a Leading icon command. This is a bindable property.
+    /// </summary>
+    public ICommand LeadingIconCommand
+    {
+        get { return (ICommand)GetValue(LeadingIconCommandProperty); }
+        set { SetValue(LeadingIconCommandProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets a Leading icon command parameter. This is a bindable property.
+    /// </summary>
+    public object LeadingIconCommandParameter
+    {
+        get { return GetValue(LeadingIconCommandParameterProperty); }
+        set { SetValue(LeadingIconCommandParameterProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets a Trailing Icon command. This is a bindable property.
+    /// </summary>
+    public ICommand TrailingIconCommand
+    {
+        get { return (ICommand)GetValue(TrailingIconCommandProperty); }
+        set { SetValue(TrailingIconCommandProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets a Trailing Icon command parameter. This is a bindable property.
+    /// </summary>
+    public object TrailingIconCommandParameter
+    {
+        get { return GetValue(TrailingIconCommandParameterProperty); }
+        set { SetValue(TrailingIconCommandParameterProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets a focused command. This is a bindable property.
+    /// </summary>
+    public ICommand FocusedCommand
+    {
+        get { return (ICommand)GetValue(FocusedCommandProperty); }
+        set { SetValue(FocusedCommandProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets a unfocused command. This is a bindable property.
+    /// </summary>
+    public ICommand UnfocusedCommand
+    {
+        get { return (ICommand)GetValue(UnfocusedCommandProperty); }
+        set { SetValue(UnfocusedCommandProperty, value); }
+    }
+
     #endregion Properties
+
+    #region Constructor
 
     public MaterialInputBase()
     {
@@ -377,6 +633,32 @@ public abstract partial class MaterialInputBase : ContentView
         {
             UpdateLayoutAfterTypeChanged(Type);
         }
+    }
+
+    #endregion Constructor
+
+    #region Methods
+    private void SetLabelMargin(MaterialInputType type)
+    {
+        LabelMargin = GetDefaultLabelMargin(type);
+    }
+
+    private static Thickness GetDefaultLabelMargin(MaterialInputType type)
+    {
+#if ANDROID
+
+        return type switch
+        {
+            MaterialInputType.Outlined => new Thickness(12, 0, 0, 0),
+            _ => new Thickness(0, -10, 0, 0)
+        };
+#else
+        return type switch
+        {
+            MaterialInputType.Outlined => new Thickness(12, 0, 0, 0),
+            _ => new Thickness(0, -1, 0, 0)
+        };
+#endif
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -425,6 +707,7 @@ public abstract partial class MaterialInputBase : ContentView
         SetTemplate(type);
         SetIsEnabled(type);
         SetCornerRadius(type);
+        SetLabelMargin(type);
 
         UpdateLayoutAfterStatusChanged(type);
     }
@@ -586,6 +869,8 @@ public abstract partial class MaterialInputBase : ContentView
             }
         }
     }
+
+    #endregion Methods
 
     #region Styles
 

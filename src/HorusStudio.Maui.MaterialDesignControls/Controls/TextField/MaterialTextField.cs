@@ -2,6 +2,8 @@
 
 public class MaterialTextField : MaterialInputBase
 {
+    //TODO: error on goback and open again the view.
+
     private BorderlessEntry _entry;
 
     public MaterialTextField()
@@ -16,7 +18,7 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(BorderlessEntry.TextProperty, new Binding(nameof(Text), source: this));
         _entry.SetBinding(BorderlessEntry.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
         _entry.SetBinding(BorderlessEntry.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-
+        _entry.SetBinding(BorderlessEntry.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
 
         InputTapCommand = new Command(() => _entry.Focus());
 
@@ -33,19 +35,22 @@ public class MaterialTextField : MaterialInputBase
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
-        if (type == MaterialInputType.Filled)
+        if(_entry != null)
         {
-            //_entry.VerticalOptions = LayoutOptions.End;
-            //_entry.Margin = DeviceInfo.Platform == DevicePlatform.Android ?
-            //    new Thickness(0, 0, 0, -10) :
-            //    new Thickness(0, 0, 0, -1);
-        }
-        else if (type == MaterialInputType.Outlined)
-        {
-            _entry.VerticalOptions = LayoutOptions.Center;
-            _entry.Margin = DeviceInfo.Platform == DevicePlatform.Android ?
-                new Thickness(0, -7.5) :
-                new Thickness(0);
+            if (type == MaterialInputType.Filled)
+            {
+                _entry.VerticalOptions = LayoutOptions.FillAndExpand;
+                _entry.Margin = DeviceInfo.Platform == DevicePlatform.Android ?
+                    new Thickness(0, 0, 0, -10) :
+                    new Thickness(0, 0, 0, -1);
+            }
+            else if (type == MaterialInputType.Outlined)
+            {
+                _entry.VerticalOptions = LayoutOptions.Center;
+                _entry.Margin = DeviceInfo.Platform == DevicePlatform.Android ?
+                    new Thickness(0, -7.5) :
+                    new Thickness(0);
+            }
         }
     }
 
@@ -60,6 +65,8 @@ public class MaterialTextField : MaterialInputBase
         // Setup events/animations
         _entry.Focused += ContentFocusChanged;
         _entry.Unfocused += ContentFocusChanged;
+
+        SetControlTemplate(Type);
     }
 
     protected override void OnControlDisappearing()
@@ -74,6 +81,25 @@ public class MaterialTextField : MaterialInputBase
         IsFocused = e.IsFocused;
         VisualStateManager.GoToState(this, GetCurrentVisualState());
         UpdateLayoutAfterStatusChanged(Type);
+        
+        if(CanExecuteFocusedCommand())
+        {
+            FocusedCommand.Execute(null);
+        }
+        else if(CanExecuteUnfocusedCommand())
+        {
+            UnfocusedCommand?.Execute(null);
+        }
+    }
+
+    private bool CanExecuteFocusedCommand()
+    {
+        return IsFocused && (FocusedCommand?.CanExecute(null) ?? false);
+    }
+
+    private bool CanExecuteUnfocusedCommand()
+    {
+        return !IsFocused && (UnfocusedCommand?.CanExecute(null) ?? false);
     }
 
     internal static IEnumerable<Style> GetStyles()

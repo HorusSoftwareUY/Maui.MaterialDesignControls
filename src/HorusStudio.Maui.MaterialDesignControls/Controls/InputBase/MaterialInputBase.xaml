@@ -80,7 +80,7 @@
             <Setter Property="HorizontalOptions" Value="Start" />
             <Setter Property="VerticalOptions" Value="Start" />
             <!--<Setter Property="Margin" Value="12,-12,0,0" />-->
-            <Setter Property="Margin" Value="12,0,0,0" />
+            <!--<Setter Property="Margin" Value="12,0,0,0" />-->
             <Setter Property="Padding" Value="4,0" />
         </Style>
 
@@ -110,16 +110,24 @@
                                 IconTintColor="{Binding IconTintColor, Source={x:Reference InputBase}}"
                                 TintColor="{Binding TintColor, Source={x:Reference InputBase}}"
                                 ImageSource="{Binding LeadingIconSource, Source={x:Reference InputBase}}"
+                                Command="{Binding LeadingIconCommand, Source={x:Reference InputBase}}"
+                                CommandParameter="{Binding LeadingIconCommandParameter, Source={x:Reference InputBase}}"
                                 IsVisible="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
 
                             <Grid Style="{StaticResource FieldContainer}">
                                 <Label
                                     Style="{StaticResource FilledHint}"
                                     Text="{Binding Label, Source={x:Reference InputBase}}"
+                                    TextColor="{Binding LabelColor, Source={x:Reference InputBase}}"
+                                    FontFamily="{Binding LabelFontFamily, Source={x:Reference InputBase}}"
+                                    LineBreakMode="{Binding LabelLineBreakMode, Source={x:Reference InputBase}}"
+                                    Margin="{Binding LabelMargin, Source={x:Reference InputBase}}"
+                                    FontSize="{Binding LabelSize, Source={x:Reference InputBase}}"
                                     HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
-                                <ContentPresenter VerticalOptions="End" />
+                                <ContentPresenter VerticalOptions="End"  />
                                 <Label
                                     Style="{StaticResource Placeholder}"
+                                    TextColor="{Binding PlaceholderColor, Source={x:Reference InputBase}}"
                                     Text="{Binding Placeholder, Source={x:Reference InputBase}}"
                                     HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
                             </Grid>
@@ -129,6 +137,8 @@
                                 IconTintColor="{Binding IconTintColor, Source={x:Reference InputBase}}"
                                 TintColor="{Binding TintColor, Source={x:Reference InputBase}}"
                                 ImageSource="{Binding TrailingIconSource, Source={x:Reference InputBase}}"
+                                Command="{Binding TrailingIconCommand, Source={x:Reference InputBase}}"
+                                CommandParameter="{Binding TrailingIconCommandParameter, Source={x:Reference InputBase}}"
                                 IsVisible="{Binding TrailingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
                         </StackLayout>
 
@@ -139,6 +149,11 @@
                 <Label
                     Style="{StaticResource SupportingText}"
                     Text="{Binding SupportingText, Source={x:Reference InputBase}}"
+                    TextColor="{Binding SupportingTextColor, Source={x:Reference InputBase}}"
+                    FontFamily="{Binding SupportingFontFamily, Source={x:Reference InputBase}}"
+                    Margin="{Binding SupportingMargin, Source={x:Reference InputBase}}"
+                    FontSize="{Binding SupportingFontSize, Source={x:Reference InputBase}}"
+                    LineBreakMode="{Binding SupportingLineBreakMode, Source={x:Reference InputBase}}"
                     HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
             </VerticalStackLayout>
         </ControlTemplate>
@@ -160,12 +175,15 @@
                                 IconTintColor="{Binding IconTintColor, Source={x:Reference InputBase}}"
                                 TintColor="{Binding TintColor, Source={x:Reference InputBase}}"
                                 ImageSource="{Binding LeadingIconSource, Source={x:Reference InputBase}}"
+                                Command="{Binding LeadingIconCommand, Source={x:Reference InputBase}}"
+                                CommandParameter="{Binding LeadingIconCommandParameter, Source={x:Reference InputBase}}"
                                 IsVisible="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
 
                             <Grid Style="{StaticResource FieldContainer}">
-                                <ContentPresenter />
+                                <ContentPresenter VerticalOptions="Center"/>
                                 <Label
                                     Style="{StaticResource Placeholder}"
+                                    TextColor="{Binding PlaceholderColor, Source={x:Reference InputBase}}"
                                     Text="{Binding Placeholder, Source={x:Reference InputBase}}"
                                     HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
                             </Grid>
@@ -175,6 +193,8 @@
                                 IconTintColor="{Binding IconTintColor, Source={x:Reference InputBase}}"
                                 TintColor="{Binding TintColor, Source={x:Reference InputBase}}"
                                 ImageSource="{Binding TrailingIconSource, Source={x:Reference InputBase}}"
+                                Command="{Binding TrailingIconCommand, Source={x:Reference InputBase}}"
+                                CommandParameter="{Binding TrailingIconCommandParameter, Source={x:Reference InputBase}}"
                                 IsVisible="{Binding TrailingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
                         </StackLayout>
                     </Border>
@@ -182,12 +202,22 @@
                         x:Name="OutlinedHint"
                         Style="{StaticResource OutlinedHint}"
                         Text="{Binding Label, Source={x:Reference InputBase}}"
+                        TextColor="{Binding LabelColor, Source={x:Reference InputBase}}"
+                        FontSize="{Binding LabelSize, Source={x:Reference InputBase}}"
+                        FontFamily="{Binding LabelFontFamily, Source={x:Reference InputBase}}"
+                        Margin="{Binding LabelMargin, Source={x:Reference InputBase}}"
+                        LineBreakMode="{Binding LabelLineBreakMode, Source={x:Reference InputBase}}"
                         HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
                 </Grid>
 
                 <Label
                     Style="{StaticResource SupportingText}"
                     Text="{Binding SupportingText, Source={x:Reference InputBase}}"
+                    TextColor="{Binding SupportingTextColor, Source={x:Reference InputBase}}"
+                    FontFamily="{Binding SupportingFontFamily, Source={x:Reference InputBase}}"
+                    Margin="{Binding SupportingMargin, Source={x:Reference InputBase}}"
+                    FontSize="{Binding SupportingFontSize, Source={x:Reference InputBase}}"
+                    LineBreakMode="{Binding SupportingLineBreakMode, Source={x:Reference InputBase}}"
                     HorizontalTextAlignment="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
             </VerticalStackLayout>
         </ControlTemplate>

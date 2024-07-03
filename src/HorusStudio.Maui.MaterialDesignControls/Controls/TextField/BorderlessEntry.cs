@@ -7,6 +7,5 @@ public class BorderlessEntry : Entry
 {
     //TODO: Make this control internal
 
-    public BorderlessEntry()
-    { }
+    public BorderlessEntry(){ }
 }
