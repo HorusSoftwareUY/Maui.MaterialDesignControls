@@ -17,23 +17,23 @@
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Borderless Entry" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <material:BorderlessEntry Placeholder="Enter text..." PlaceholderColor="DarkBlue" />
-            </Frame>
-
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <material:MaterialTextField Placeholder="Hola que tal...?" />
+                <VerticalStackLayout>
+                    <material:MaterialTextField Placeholder="Enter text here" />
+                </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="Filled buttons have high visual impact when used for important actions." />
+            <material:MaterialLabel Text="An input control with a filled background, featuring a movable label, placeholder text, and optional icons." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <material:MaterialTextField Type="Outlined" Placeholder="Outlined con placeholder" />
+                <VerticalStackLayout>
+                    <material:MaterialTextField Type="Outlined"
+                                                Placeholder="Enter text here" />
+                </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="Filled buttons have high visual impact when used for important actions." />
-
+            <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." />
+            
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>

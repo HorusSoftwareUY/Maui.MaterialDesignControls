@@ -27,7 +27,6 @@ public abstract partial class MaterialInputBase : ContentView
     private readonly static double DefaultBorderWidth = 1;
     private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
     private readonly static CornerRadius DefaultCornerRadius = new(0);
-
     private readonly static TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
@@ -35,8 +34,14 @@ public abstract partial class MaterialInputBase : ContentView
     private readonly static Color DefaultLabelColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultLabelSize = MaterialFontSize.BodyLarge;
     private readonly static Thickness DefaultLabelMargin = new Thickness(0);
-    private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultSupportingSize = MaterialFontSize.BodySmall;
+    private readonly static AnimationOnErrorTypes DefaultAnimationType = AnimationOnErrorTypes.Shake;
+    private readonly static Color DefaultAnimationBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.ErrorContainer, Dark = MaterialDarkTheme.ErrorContainer }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultAnimationBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
+#nullable enable
+    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+#nullable disable
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
@@ -99,12 +104,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="SupportingText" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialInputBase));
-
-    /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialInputBase), defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialInputBase), validateValue: OnValidateSupportText);
 
     /// <summary>
     /// The backing store for the <see cref="TextColor" /> bindable property.
@@ -274,6 +274,32 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public static readonly BindableProperty UnfocusedCommandProperty = BindableProperty.Create(nameof(UnfocusedCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
 
+    /// <summary>
+    /// The backing store for the <see cref="AnimationOnError"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty AnimationOnErrorProperty = BindableProperty.Create(nameof(AnimationOnError), typeof(AnimationOnErrorTypes), typeof(MaterialInputBase), defaultValue: DefaultAnimationType);
+
+    /// <summary>
+    /// The backing store for the <see cref="AnimationParameter"/> bindable property.
+    /// </summary>
+#nullable enable
+    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialInputBase), defaultValue: DefaultAnimationParameter);
+#nullable disable
+
+    /// <summary>
+    /// The backing store for the <see cref="CustomAnimation"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialInputBase));
+
+    /// <summary>
+    /// The backing store for the <see cref="AnimationBackgroundColor"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty AnimationBackgroundColorProperty = BindableProperty.Create(nameof(AnimationBackgroundColor), typeof(Color), typeof(MaterialInputBase), DefaultAnimationBackgroundColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="AnimationBorderColor"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty AnimationBorderColorProperty = BindableProperty.Create(nameof(AnimationBorderColor), typeof(Color), typeof(MaterialInputBase), DefaultAnimationBorderColor);
     #endregion Bindable Properties
 
     #region Properties
@@ -395,16 +421,6 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text displayed as the content of the input.
-    /// The default value is <see langword="null"/>. This is a bindable property.
-    /// </summary>
-    public string Text
-    {
-        get => (string)GetValue(TextProperty);
-        set => SetValue(TextProperty, value);
-    }
-
-    /// <summary>
     /// Gets or sets the <see cref="Color" /> for the text of the input. This is a bindable property.
     /// </summary>
     public Color TextColor
@@ -436,8 +452,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public TextAlignment HorizontalTextAlignment
     {
-        get { return (TextAlignment)GetValue(HorizontalTextAlignmentProperty); }
-        set { SetValue(HorizontalTextAlignmentProperty, value); }
+        get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty);
+        set => SetValue(HorizontalTextAlignmentProperty, value);
     }
 
     /// <summary>
@@ -451,8 +467,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public string FontFamily
     {
-        get { return (string)GetValue(FontFamilyProperty); }
-        set { SetValue(FontFamilyProperty, value); }
+        get => (string)GetValue(FontFamilyProperty);
+        set => SetValue(FontFamilyProperty, value);
     }
 
     /// <summary>
@@ -460,8 +476,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public double FontSize
     {
-        get { return (double)GetValue(FontSizeProperty); }
-        set { SetValue(FontSizeProperty, value); }
+        get => (double)GetValue(FontSizeProperty);
+        set => SetValue(FontSizeProperty, value);
     }
 
     /// <summary>
@@ -469,8 +485,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public Color PlaceholderColor
     {
-        get { return (Color)GetValue(PlaceholderColorProperty); }
-        set { SetValue(PlaceholderColorProperty, value); }
+        get => (Color)GetValue(PlaceholderColorProperty);
+        set => SetValue(PlaceholderColorProperty, value);
     }
 
     /// <summary>
@@ -478,8 +494,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public Color LabelColor
     {
-        get { return (Color)GetValue(LabelColorProperty); }
-        set { SetValue(LabelColorProperty, value); }
+        get => (Color)GetValue(LabelColorProperty);
+        set => SetValue(LabelColorProperty, value);
     }
 
     /// <summary>
@@ -487,7 +503,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public double LabelSize
     {
-        get { return (double)GetValue(LabelSizeProperty); }
+        get => (double)GetValue(LabelSizeProperty);
         set { SetValue(LabelSizeProperty, value); }
     }
 
@@ -496,8 +512,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public string LabelFontFamily
     {
-        get { return (string)GetValue(LabelFontFamilyProperty); }
-        set { SetValue(LabelFontFamilyProperty, value); }
+        get => (string)GetValue(LabelFontFamilyProperty);
+        set => SetValue(LabelFontFamilyProperty, value);
     }
 
     /// <summary>
@@ -506,8 +522,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public Thickness LabelMargin
     {
-        get { return (Thickness)GetValue(LabelMarginProperty); }
-        set { SetValue(LabelMarginProperty, value); }
+        get => (Thickness)GetValue(LabelMarginProperty);
+        set => SetValue(LabelMarginProperty, value);
     }
 
     /// <summary>
@@ -516,8 +532,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public LineBreakMode LabelLineBreakMode
     {
-        get { return (LineBreakMode)GetValue(LabelLineBreakModeProperty); }
-        set { SetValue(LabelLineBreakModeProperty, value); }
+        get => (LineBreakMode)GetValue(LabelLineBreakModeProperty);
+        set => SetValue(LabelLineBreakModeProperty, value);
     }
 
     /// <summary>
@@ -525,8 +541,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public Color SupportingTextColor
     {
-        get { return (Color)GetValue(SupportingTextColorProperty); }
-        set { SetValue(SupportingTextColorProperty, value); }
+        get => (Color)GetValue(SupportingTextColorProperty);
+        set => SetValue(SupportingTextColorProperty, value);
     }
 
     /// <summary>
@@ -534,8 +550,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public string SupportingFontFamily
     {
-        get { return (string)GetValue(SupportingFontFamilyProperty); }
-        set { SetValue(SupportingFontFamilyProperty, value); }
+        get => (string)GetValue(SupportingFontFamilyProperty);
+        set => SetValue(SupportingFontFamilyProperty, value);
     }
 
     /// <summary>
@@ -543,8 +559,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public double SupportingFontSize
     {
-        get { return (double)GetValue(SupportingFontSizeProperty); }
-        set { SetValue(SupportingFontSizeProperty, value); }
+        get => (double)GetValue(SupportingFontSizeProperty);
+        set => SetValue(SupportingFontSizeProperty, value);
     }
 
     /// <summary>
@@ -553,8 +569,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public Thickness SupportingMargin
     {
-        get { return (Thickness)GetValue(SupportingMarginProperty); }
-        set { SetValue(SupportingMarginProperty, value); }
+        get => (Thickness)GetValue(SupportingMarginProperty);
+        set => SetValue(SupportingMarginProperty, value);
     }
 
     /// <summary>
@@ -563,8 +579,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public LineBreakMode SupportingLineBreakMode
     {
-        get { return (LineBreakMode)GetValue(SupportingLineBreakModeProperty); }
-        set { SetValue(SupportingLineBreakModeProperty, value); }
+        get => (LineBreakMode)GetValue(SupportingLineBreakModeProperty);
+        set => SetValue(SupportingLineBreakModeProperty, value);
     }
 
     /// <summary>
@@ -572,8 +588,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public ICommand LeadingIconCommand
     {
-        get { return (ICommand)GetValue(LeadingIconCommandProperty); }
-        set { SetValue(LeadingIconCommandProperty, value); }
+        get => (ICommand)GetValue(LeadingIconCommandProperty);
+        set => SetValue(LeadingIconCommandProperty, value);
     }
 
     /// <summary>
@@ -581,8 +597,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public object LeadingIconCommandParameter
     {
-        get { return GetValue(LeadingIconCommandParameterProperty); }
-        set { SetValue(LeadingIconCommandParameterProperty, value); }
+        get => GetValue(LeadingIconCommandParameterProperty);
+        set => SetValue(LeadingIconCommandParameterProperty, value);
     }
 
     /// <summary>
@@ -590,8 +606,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public ICommand TrailingIconCommand
     {
-        get { return (ICommand)GetValue(TrailingIconCommandProperty); }
-        set { SetValue(TrailingIconCommandProperty, value); }
+        get => (ICommand)GetValue(TrailingIconCommandProperty);
+        set => SetValue(TrailingIconCommandProperty, value);
     }
 
     /// <summary>
@@ -599,8 +615,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public object TrailingIconCommandParameter
     {
-        get { return GetValue(TrailingIconCommandParameterProperty); }
-        set { SetValue(TrailingIconCommandParameterProperty, value); }
+        get => GetValue(TrailingIconCommandParameterProperty);
+        set => SetValue(TrailingIconCommandParameterProperty, value);
     }
 
     /// <summary>
@@ -608,8 +624,8 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public ICommand FocusedCommand
     {
-        get { return (ICommand)GetValue(FocusedCommandProperty); }
-        set { SetValue(FocusedCommandProperty, value); }
+        get => (ICommand)GetValue(FocusedCommandProperty);
+        set => SetValue(FocusedCommandProperty, value);
     }
 
     /// <summary>
@@ -617,8 +633,61 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public ICommand UnfocusedCommand
     {
-        get { return (ICommand)GetValue(UnfocusedCommandProperty); }
-        set { SetValue(UnfocusedCommandProperty, value); }
+        get => (ICommand)GetValue(UnfocusedCommandProperty);
+        set => SetValue(UnfocusedCommandProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets if animate on error. This is a bindable property.
+    /// </summary>
+    public AnimationOnErrorTypes AnimationOnError
+    {
+        get => (AnimationOnErrorTypes)GetValue(AnimationOnErrorProperty);
+        set => SetValue(AnimationOnErrorProperty, value);
+    }
+
+#nullable enable
+    /// <summary>
+    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
+    /// The default value is <see langword="null"/>.
+    /// This is a bindable property.
+    /// </summary>
+    public double? AnimationParameter
+    {
+        get => (double?)GetValue(AnimationParameterProperty);
+        set => SetValue(AnimationParameterProperty, value);
+    }
+#nullable disable
+
+    /// <summary>
+    /// Gets or sets a custom animation to be executed when the input has an error.
+    /// The default value is <see langword="null"/>.
+    /// This is a bindable property.
+    /// </summary>
+    public ICustomAnimation CustomAnimation
+    {
+        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
+        set => SetValue(CustomAnimationProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a a background color to animate when the input has an error
+    /// This is a bindable property.
+    /// </summary>
+    public Color AnimationBackgroundColor
+    {
+        get => (Color)GetValue(AnimationBackgroundColorProperty);
+        set => SetValue(AnimationBackgroundColorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a a border color to animate when the input has an error
+    /// This is a bindable property.
+    /// </summary>
+    public Color AnimationBorderColor
+    {
+        get => (Color)GetValue(AnimationBorderColorProperty);
+        set => SetValue(AnimationBorderColorProperty, value);
     }
 
     #endregion Properties
@@ -638,6 +707,21 @@ public abstract partial class MaterialInputBase : ContentView
     #endregion Constructor
 
     #region Methods
+    private static bool OnValidateSupportText(BindableObject bindable, object value)
+    {
+        if (bindable is MaterialInputBase self && self.CanAnimateControl(self, value as string))
+        {
+            Task.Run(async () => await self.AnimateAsync());
+        }
+
+        return true;
+    }
+
+    private bool CanAnimateControl(MaterialInputBase self, string newValue)
+    {
+        return self.AnimationOnError != AnimationOnErrorTypes.None && !string.IsNullOrEmpty(newValue);
+    }
+
     private void SetLabelMargin(MaterialInputType type)
     {
         LabelMargin = GetDefaultLabelMargin(type);
@@ -682,6 +766,7 @@ public abstract partial class MaterialInputBase : ContentView
         }
 
         OnControlAppearing();
+        SetControlTemplate(Type);
     }
 
     protected abstract void OnControlAppearing();
@@ -860,6 +945,132 @@ public abstract partial class MaterialInputBase : ContentView
             }
         }
     }
+
+    #region Animation
+
+    public async Task AnimateAsync()
+    {
+        if (this.AnimationOnError != AnimationOnErrorTypes.None && this.IsEnabled)
+        {
+            if (this.AnimationOnError == AnimationOnErrorTypes.Shake)
+                await AnimateShakeAsync(this);
+            else if (this.AnimationOnError == AnimationOnErrorTypes.BackgroundColorAnimation)
+                AnimateBackgroundColor(this, this.AnimationBackgroundColor, Easing.Linear);
+            else if (this.AnimationOnError == AnimationOnErrorTypes.BorderColorAnimation)
+                AnimateBorderColor(this, this.AnimationBorderColor, Easing.Linear);
+            else if (this.AnimationOnError == AnimationOnErrorTypes.Custom && this.CustomAnimation != null)
+                await this.CustomAnimation.SetAnimationAsync(this);
+
+            await RestoreAnimationAsync(this);
+        }
+    }
+
+    private async Task RestoreAnimationAsync(MaterialInputBase view)
+    {
+        if (this.AnimationOnError != AnimationOnErrorTypes.None)
+        {
+            if (this.AnimationOnError == AnimationOnErrorTypes.Shake)
+                view.TranslationX = 0;
+            else if (this.AnimationOnError == AnimationOnErrorTypes.Custom && this.CustomAnimation != null)
+                await this.CustomAnimation.RestoreAnimationAsync(view);
+        }
+    }
+
+    public async Task AnimateShakeAsync(MaterialInputBase view)
+    {
+        const uint timeout = 50;
+        await view.TranslateTo(-15, 0, timeout);
+        await view.TranslateTo(15, 0, timeout);
+        await view.TranslateTo(-10, 0, timeout);
+        await view.TranslateTo(10, 0, timeout);
+        await view.TranslateTo(-5, 0, timeout);
+        await view.TranslateTo(5, 0, timeout);
+    }
+
+    public void AnimateBackgroundColor(MaterialInputBase view, Color toColor, Easing easing)
+    {
+        Color fromColor = view.BackgroundColor;
+
+        try
+        {
+            //solo cambiando el color
+            //view.BackgroundColor = toColor;
+            //Dispatcher.StartTimer(TimeSpan.FromMilliseconds(250), () =>
+            //{
+            //    view.BackgroundColor = fromColor;
+            //    view.SetBackgroundColor(view.Type);
+            //    return false;
+            //});
+
+            //Con Animación
+            var animation = new Animation(v =>
+            {
+                view.BackgroundColor = Color.FromRgba(
+                    fromColor.Red + v * (toColor.Red - fromColor.Red),
+                    fromColor.Green + v * (toColor.Green - fromColor.Green),
+                    fromColor.Blue + v * (toColor.Blue - fromColor.Blue),
+                    fromColor.Alpha + v * (toColor.Alpha - fromColor.Alpha));
+            }, 0, 1);
+
+            animation.Commit(view, "BackgroundColorTo", 16, 500, easing, (v, c) =>
+            {
+                view.BackgroundColor = fromColor;
+                view.SetBackgroundColor(view.Type);
+            });
+        }
+        catch
+        {
+            view.BackgroundColor = fromColor;
+        }
+    }
+
+    public void AnimateBorderColor(MaterialInputBase view, Color toColor, Easing easing)
+    {
+        Color fromColor = view.BorderColor;
+
+        try
+        {
+            var animation = new Animation(v =>
+            {
+                view.BorderColor = Color.FromRgba(
+                    fromColor.Red + v * (toColor.Red - fromColor.Red),
+                    fromColor.Green + v * (toColor.Green - fromColor.Green),
+                    fromColor.Blue + v * (toColor.Blue - fromColor.Blue),
+                    fromColor.Alpha + v * (toColor.Alpha - fromColor.Alpha));
+            }, 0, 1);
+
+            var reverseAnimation = new Animation(v =>
+            {
+                view.BorderColor = Color.FromRgba(
+                    toColor.Red + v * (fromColor.Red - toColor.Red),
+                    toColor.Green + v * (fromColor.Green - toColor.Green),
+                    toColor.Blue + v * (fromColor.Blue - toColor.Blue),
+                    toColor.Alpha + v * (fromColor.Alpha - toColor.Alpha));
+            }, 0, 1);
+
+            animation.Commit(view, "BorderColorTo", 16, 250, easing, (v, c) =>
+            {
+                reverseAnimation.Commit(view, "BorderColorFrom", 16, 250, easing);
+            });
+
+        }
+        catch
+        {
+            view.BorderColor = fromColor;
+        }
+    }
+
+    Color InterpolateColor(Color fromColor, Color toColor, double t)
+    {
+        byte r = (byte)(fromColor.Red + t * (toColor.Red - fromColor.Red));
+        byte g = (byte)(fromColor.Green + t * (toColor.Green - fromColor.Green));
+        byte b = (byte)(fromColor.Blue + t * (toColor.Blue - fromColor.Blue));
+        byte a = (byte)(fromColor.Alpha + t * (toColor.Alpha - fromColor.Alpha));
+
+        return new Color(r, g, b, a);
+    }
+
+    #endregion Animation
 
     #endregion Methods
 

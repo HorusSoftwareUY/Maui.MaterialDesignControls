@@ -3,9 +3,7 @@
 /// <summary>
 /// An <see cref="Entry" /> without border lines on every platform.
 /// </summary>
-public class BorderlessEntry : Entry
+internal class BorderlessEntry : Entry
 {
-    //TODO: Make this control internal
-
     public BorderlessEntry(){ }
 }

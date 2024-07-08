@@ -475,8 +475,8 @@ public class MaterialIconButton : ContentView, ITouchable
     /// </summary>
     public new Shadow Shadow
     {
-        get { return (Shadow)GetValue(ShadowProperty); }
-        set { SetValue(ShadowProperty, value); }
+        get => (Shadow)GetValue(ShadowProperty);
+        set => SetValue(ShadowProperty, value);
     }
 
     #endregion Properties

@@ -200,7 +200,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public new string Content
     {
-        get { return (string)GetValue(ContentProperty); }
+        get => (string)GetValue(ContentProperty);
     }
 
     /// <summary>
@@ -208,8 +208,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public string Text
     {
-        get { return (string)GetValue(TextProperty); }
-        set { SetValue(TextProperty, value); }
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
     }
 
     /// <summary>
@@ -217,8 +217,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public new ControlTemplate ControlTemplate
     {
-        get { return (ControlTemplate)GetValue(ControlTemplateProperty); }
-        set { SetValue(ControlTemplateProperty, value); }
+        get => (ControlTemplate)GetValue(ControlTemplateProperty);
+        set => SetValue(ControlTemplateProperty, value);
     }
 
     /// <summary>
@@ -226,8 +226,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public Color StrokeColor
     {
-        get { return (Color)GetValue(StrokeColorProperty); }
-        set { SetValue(StrokeColorProperty, value); }
+        get => (Color)GetValue(StrokeColorProperty);
+        set => SetValue(StrokeColorProperty, value);
     }
 
     /// <summary>
@@ -235,8 +235,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public Color TextColor
     {
-        get { return (Color)GetValue(TextColorProperty); }
-        set { SetValue(TextColorProperty, value); }
+        get => (Color)GetValue(TextColorProperty);
+        set => SetValue(TextColorProperty, value);
     }
 
     /// <summary>
@@ -246,8 +246,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public string GroupName
     {
-        get { return (string)GetValue(GroupNameProperty); }
-        set { SetValue(GroupNameProperty, value); }
+        get => (string)GetValue(GroupNameProperty);
+        set => SetValue(GroupNameProperty, value);
     }
 
     /// <summary>
@@ -256,8 +256,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public bool IsChecked
     {
-        get { return (bool)GetValue(IsCheckedProperty); }
-        set { SetValue(IsCheckedProperty, value); }
+        get => (bool)GetValue(IsCheckedProperty);
+        set => SetValue(IsCheckedProperty, value);
     }
 
     /// <summary>
@@ -265,8 +265,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public new bool IsEnabled
     {
-        get { return (bool)GetValue(IsEnabledProperty); }
-        set { SetValue(IsEnabledProperty, value); }
+        get =>(bool)GetValue(IsEnabledProperty);
+        set => SetValue(IsEnabledProperty, value);
     }
 
     /// <summary>
@@ -274,8 +274,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public string FontFamily
     {
-        get { return (string)GetValue(FontFamilyProperty); }
-        set { SetValue(FontFamilyProperty, value); }
+        get => (string)GetValue(FontFamilyProperty);
+        set => SetValue(FontFamilyProperty, value);
     }
 
     /// <summary>
@@ -283,8 +283,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public double CharacterSpacing
     {
-        get { return (double)GetValue(CharacterSpacingProperty); }
-        set { SetValue(CharacterSpacingProperty, value); }
+        get => (double)GetValue(CharacterSpacingProperty);
+        set => SetValue(CharacterSpacingProperty, value);
     }
 
     /// <summary>
@@ -292,8 +292,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public FontAttributes FontAttributes
     {
-        get { return (FontAttributes)GetValue(FontAttributesProperty); }
-        set { SetValue(FontAttributesProperty, value); }
+        get => (FontAttributes)GetValue(FontAttributesProperty);
+        set => SetValue(FontAttributesProperty, value);
     }
 
     /// <summary>
@@ -301,8 +301,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public bool FontAutoScalingEnabled
     {
-        get { return (bool)GetValue(FontAutoScalingEnabledProperty); }
-        set { SetValue(FontAutoScalingEnabledProperty, value); }
+        get => (bool)GetValue(FontAutoScalingEnabledProperty);
+        set => SetValue(FontAutoScalingEnabledProperty, value);
     }
 
     /// <summary>
@@ -310,8 +310,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public double FontSize
     {
-        get { return (double)GetValue(FontSizeProperty); }
-        set { SetValue(FontSizeProperty, value); }
+        get => (double)GetValue(FontSizeProperty);
+        set => SetValue(FontSizeProperty, value);
     }
 
     /// <summary>
@@ -319,8 +319,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public TextTransform TextTransform
     {
-        get { return (TextTransform)GetValue(TextTransformProperty); }
-        set { SetValue(TextTransformProperty, value); }
+        get => (TextTransform)GetValue(TextTransformProperty);
+        set => SetValue(TextTransformProperty, value); 
     }
 
     /// <summary>
@@ -330,8 +330,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public TextSide TextSide
     {
-        get { return (TextSide)GetValue(TextSideProperty); }
-        set { SetValue(TextSideProperty, value); }
+        get => (TextSide)GetValue(TextSideProperty);
+        set => SetValue(TextSideProperty, value);
     }
 
     /// <summary>
@@ -341,8 +341,8 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// </summary>
     public object Value
     {
-        get { return (object)GetValue(ValueProperty); }
-        set { SetValue(ValueProperty, value); }
+        get => (object)GetValue(ValueProperty);
+        set => SetValue(ValueProperty, value);
     }
 
     /// <summary>

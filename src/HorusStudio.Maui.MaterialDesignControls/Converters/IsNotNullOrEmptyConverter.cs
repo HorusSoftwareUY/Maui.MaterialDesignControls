@@ -6,7 +6,7 @@ public class IsNotNullOrEmptyConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value == null)
+       if (value == null)
             return false;
         else if (value is string text)
             return !string.IsNullOrEmpty(text);

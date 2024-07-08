@@ -60,7 +60,10 @@
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="FilledHint" TargetType="Label" BaseResourceKey="SupportingText">
+        <Style x:Key="FilledHint" TargetType="Label">
+            <Setter Property="FontSize" Value="{x:Static material:MaterialFontSize.BodySmall}" />
+            <Setter Property="Margin" Value="{StaticResource DefaultSupportingTextMargin}" />
+            <Setter Property="FontFamily" Value="{x:Static material:MaterialFontFamily.Default}" />
             <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.Primary}" />
             <Setter Property="Margin" Value="{OnPlatform Android='0,-22,0,0', Default='0,-1,0,0'}" />
             <Setter Property="VerticalOptions" Value="Start" />

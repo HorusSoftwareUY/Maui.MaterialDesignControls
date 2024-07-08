@@ -85,8 +85,8 @@
         /// </summary>
         public LabelTypes Type
         {
-            get { return (LabelTypes)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
+            get => (LabelTypes)GetValue(TypeProperty);
+            set => SetValue(TypeProperty, value);
         }
 
         /// <summary>
@@ -94,8 +94,8 @@
         /// </summary>
         public new string FontFamily
         {
-            get { return (string)GetValue(FontFamilyProperty); }
-            set { SetValue(FontFamilyProperty, value); }
+            get => (string)GetValue(FontFamilyProperty);
+            set => SetValue(FontFamilyProperty, value);
         }
 
         /// <summary>
@@ -103,8 +103,8 @@
         /// </summary>
         public string FontFamilyRegular
         {
-            get { return (string)GetValue(FontFamilyRegularProperty); }
-            set { SetValue(FontFamilyRegularProperty, value); }
+            get => (string)GetValue(FontFamilyRegularProperty);
+            set => SetValue(FontFamilyRegularProperty, value);
         }
 
         /// <summary>
@@ -112,8 +112,8 @@
         /// </summary>
         public string FontFamilyMedium
         {
-            get { return (string)GetValue(FontFamilyMediumProperty); }
-            set { SetValue(FontFamilyMediumProperty, value); }
+            get => (string)GetValue(FontFamilyMediumProperty);
+            set => SetValue(FontFamilyMediumProperty, value);
         }
 
         /// <summary>
@@ -121,8 +121,8 @@
         /// </summary>
         public new Color TextColor
         {
-            get { return (Color)GetValue(TextColorProperty); }
-            set { SetValue(TextColorProperty, value); }
+            get => (Color)GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value);
         }
 
         #endregion Properties
