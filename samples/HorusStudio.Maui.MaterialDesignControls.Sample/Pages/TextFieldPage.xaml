@@ -7,12 +7,6 @@
                        x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TextFieldPage"
                        x:TypeArguments="vm:TextFieldViewModel"
                        x:DataType="vm:TextFieldViewModel">
-
-    <ContentPage.Resources>
-
-
-    </ContentPage.Resources>
-
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
@@ -33,6 +27,77 @@
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using commands and some configuration" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialTextField Type="Filled"
+                                                Keyboard="Numeric"
+                                                ReturnType="Search"
+                                                LeadingIconSource="ic_search.png"
+                                                LeadingIconCommand="{Binding LeadingActionCommand}"
+                                                Focused="MaterialTextField_Focused"
+                                                Unfocused="MaterialTextField_Focused"
+                                                ClearButtonVisibility="WhileEditing"
+                                                Placeholder="Enter text here" />
+                    <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can change the return type, keyboard, define events as focused, unfocused or text changed, trailing icon or leading icon and clear button visibility." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and return command" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialTextField MaxLength="10"
+                                                Type="Outlined"
+                                                ReturnCommand="{Binding ReturnCommand}"
+                                                ReturnType="Done"
+                                                TextColor="DarkGoldenrod"
+                                                LabelColor="DarkGreen"
+                                                BorderColor="DarkGray"
+                                                PlaceholderColor="DarkBlue"
+                                                Placeholder="Enter text here" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set a max length." />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialTextField Text="{Binding Text}"
+                                                SupportingText="{Binding SupportingTextValue}"
+                                                Type="Filled"
+                                                TrailingIconSource="on_error.png"
+                                                ShowTrailingIconOnlyOnError="True"
+                                                HasError="{Binding HasAnError}"
+                                                Placeholder="Enter text here" />
+                    <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can bind the text, set a supporting text and use an animation when an errors occured." />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialTextField Type="Outlined"
+                                                Label="New Info"
+                                                IsEnabled="False"
+                                                Text="Information here" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can disabled a text field." />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Read only" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialTextField Type="Filled"
+                                                IsPassword="True"
+                                                Label="Password"
+                                                IsReadOnly="True"
+                                                Text="Text here" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set read only and is password." />
             
         </VerticalStackLayout>
     </ScrollView>

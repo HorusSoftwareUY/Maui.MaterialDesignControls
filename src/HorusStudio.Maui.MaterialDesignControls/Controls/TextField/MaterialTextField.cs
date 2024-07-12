@@ -4,13 +4,13 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 public class MaterialTextField : MaterialInputBase
 {
-    //TODO: is code property ?
-    //TODO:; add cursor color?
     //TODO [iOS] FontAttributes doesn´t work
 
     #region Attributes
 
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private readonly static Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 
@@ -48,14 +48,23 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(BorderlessEntry.ClearButtonVisibilityProperty, new Binding(nameof(ClearButtonVisibility), source: this));
         _entry.SetBinding(BorderlessEntry.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _entry.SetBinding(BorderlessEntry.IsTextPredictionEnabledProperty, new Binding(nameof(IsTextPredictionEnabled), source: this));
+        _entry.SetBinding(BorderlessEntry.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
+        _entry.SetBinding(BorderlessEntry.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
+        _entry.SetBinding(BorderlessEntry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
+        _entry.SetBinding(BorderlessEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
 
-        InputTapCommand = new Command(() => _entry.Focus());
+        InputTapCommand = new Command(() =>  _entry.Focus());
 
 #if ANDROID
         _entry.ReturnCommand = new Command(() =>
         {
             var view = _entry.Handler.PlatformView as Android.Views.View;
             view?.ClearFocus();
+
+            if (ReturnCommand?.CanExecute(ReturnCommandParameter) ?? false)
+            {
+                ReturnCommand.Execute(ReturnCommandParameter);
+            }
         });
 #endif
         _entry.TextChanged += TxtEntry_TextChanged;
@@ -147,6 +156,26 @@ public class MaterialTextField : MaterialInputBase
     /// The backing store for the <see cref="IsTextPredictionEnabled" /> bindable property.
     /// </summary>
     public static readonly BindableProperty IsTextPredictionEnabledProperty = BindableProperty.Create(nameof(IsTextPredictionEnabled), typeof(bool), typeof(MaterialTextField), defaultValue: true);
+
+    /// <summary>
+    /// The backing store for the <see cref="IsSpellCheckEnabled" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty IsSpellCheckEnabledProperty = BindableProperty.Create(nameof(IsSpellCheckEnabled), typeof(bool), typeof(MaterialTextField), defaultValue: null);
+
+    /// <summary>
+    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTextField), defaultValue: DefaultCharacterSpacing);
+
+    /// <summary>
+    /// The backing store for the <see cref="IsReadOnly" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty IsReadOnlyProperty = BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(MaterialTextField), defaultValue: false);
+
+    /// <summary>
+    /// The backing store for the <see cref="CursorColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialTextField), defaultValue: DefaultCursorColor);
 
     #endregion BindableProperties
 
@@ -298,6 +327,60 @@ public class MaterialTextField : MaterialInputBase
         set => SetValue(IsTextPredictionEnabledProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets a value that controls whether spell checking is enabled.
+    /// <value>true if spell checking is enabled. Otherwise false.</value>
+    /// </summary>
+    /// <remarks>
+    /// To be added.
+    /// </remarks>
+    public bool IsSpellCheckEnabled
+    {
+        get => (bool)GetValue(IsSpellCheckEnabledProperty);
+        set => SetValue(IsSpellCheckEnabledProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value that indicates the number of device-independent units that
+    /// should be in between characters in the text displayed by the Entry. Applies to
+    /// Text and Placeholder.
+    /// <value>The number of device-independent units that should be in between characters in the text.</value>
+    /// </summary>
+    /// <remarks>
+    /// To be added.
+    /// </remarks>
+    public double CharacterSpacing
+    {
+        get => (double)GetValue(CharacterSpacingProperty);
+        set => SetValue(CharacterSpacingProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a value that indicates whether user should be prevented from modifying the text. Default is false.
+    /// <value>If true, user cannot modify text. Else, false.</value>
+    /// </summary>
+    /// <remarks>
+    /// The IsReadonly property does not alter the visual appearance of the control,  unlike the IsEnabled property that also changes the visual appearance of the control
+    /// </remarks>
+    public bool IsReadOnly
+    {
+        get => (bool)GetValue(IsReadOnlyProperty);
+        set => SetValue(IsReadOnlyProperty, value);
+    }
+
+
+    /// <summary>
+    /// Gets or sets a color of the caret indicator.
+    /// </summary>
+    /// <remarks>
+    /// This Property only works on iOS and 'ndroid' 29 or later
+    /// </remarks>
+    public Color CursorColor
+    {
+        get => (Color)GetValue(CursorColorProperty);
+        set => SetValue(CursorColorProperty, value);
+    }
+
     #endregion Properties
 
     #region Events
@@ -333,7 +416,7 @@ public class MaterialTextField : MaterialInputBase
         {
             case MaterialInputType.Filled:
                 _entry.VerticalOptions = LayoutOptions.End;
-                _entry.Margin = new Thickness(0, 0, 0, -10);
+                _entry.Margin = new Thickness(0, 0, 0, -8);
                 break;
             case MaterialInputType.Outlined:
                 _entry.VerticalOptions = LayoutOptions.Center;
@@ -367,35 +450,28 @@ public class MaterialTextField : MaterialInputBase
     {
         IsFocused = e.IsFocused;
         VisualStateManager.GoToState(this, GetCurrentVisualState());
-        UpdateLayoutAfterStatusChanged(Type);
+        UpdateLayoutAfterTypeChanged(Type);
 
-        if (CanExecuteFocusedCommand())
+        if (IsFocused || CanExecuteFocusedCommand())
         {
-            FocusedCommand.Execute(null);
-            
+            FocusedCommand?.Execute(null);
+            Focused?.Invoke(this, e);
         }
-        else if (CanExecuteUnfocusedCommand())
+        else if (!IsFocused || CanExecuteUnfocusedCommand())
         {
             UnfocusedCommand?.Execute(null);
-        }
-        else if(IsFocused && Focused is not null)
-        {
-            Focused.Invoke(this, e);
-        }
-        else if (!IsFocused && Unfocused is not null)
-        {
-            Unfocused.Invoke(this, e);
+            Unfocused?.Invoke(this, e);
         }
     }
 
     private bool CanExecuteFocusedCommand()
     {
-        return IsFocused && (FocusedCommand?.CanExecute(null) ?? false);
+        return FocusedCommand?.CanExecute(null) ?? false;
     }
 
     private bool CanExecuteUnfocusedCommand()
     {
-        return !IsFocused && (UnfocusedCommand?.CanExecute(null) ?? false);
+        return UnfocusedCommand?.CanExecute(null) ?? false;
     }
 
     #endregion Methods
@@ -404,7 +480,30 @@ public class MaterialTextField : MaterialInputBase
     internal static IEnumerable<Style> GetStyles()
     {
         var style = new Style(typeof(MaterialTextField)) { ApplyToDerivedTypes = true };
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, MaterialInputBase.GetBaseStyles());
+
+        var baseStyles = MaterialInputBase.GetBaseStyles();
+
+        var errorFocusedGroup = baseStyles.First(g => g.Name.Equals(nameof(VisualStateManager.CommonStates)));
+        baseStyles.Remove(errorFocusedGroup);
+
+        var errorFocusedStates = errorFocusedGroup.States.First(s => s.Name.Equals(MaterialInputCommonStates.ErrorFocused));
+
+        errorFocusedGroup.States.Remove(errorFocusedStates);
+
+        errorFocusedStates.Setters.Add(
+            MaterialTextField.CursorColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.Error,
+                Dark = MaterialDarkTheme.Error
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        errorFocusedGroup.States.Add(errorFocusedStates);
+        baseStyles.Add(errorFocusedGroup);
+
+        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
+
         return new List<Style> { style };
     }
 

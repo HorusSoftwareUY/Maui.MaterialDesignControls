@@ -8,4 +8,6 @@ partial class BorderlessEntryHandler
     {
         handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
     }
+
+    public static void MapCursorColor(IEntryHandler handler, IEntry entry) { }
 }

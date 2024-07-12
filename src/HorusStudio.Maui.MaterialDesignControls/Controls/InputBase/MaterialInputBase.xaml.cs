@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -11,7 +12,7 @@ public enum MaterialInputType
 
 public enum MaterialInputTypeStates
 {
-    FilledDisabled, FilledFocused, FilledNormal, OutlinedDisabled, OutlinedFocused, OutlinedNormal
+    FilledDisabled, FilledFocused, FilledNormal, OutlinedDisabled, OutlinedFocused, OutlinedNormal, Error, ErrorFocused
 }
 
 public abstract partial class MaterialInputBase : ContentView
@@ -20,43 +21,51 @@ public abstract partial class MaterialInputBase : ContentView
 
     private readonly static MaterialInputType DefaultInputType = MaterialInputType.Filled;
     private readonly static bool DefaultIsEnabled = true;
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultIconTintColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     private readonly static Brush DefaultBackground = Entry.BackgroundProperty.DefaultValue as Brush;
-    private readonly static Color DefaultBackgroundColor = Colors.Transparent;
+    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultBorderWidth = 1;
-    private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     private readonly static CornerRadius DefaultCornerRadius = new(0);
     private readonly static TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
     private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private readonly static Color DefaultPlaceHolderColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultLabelColor = new AppThemeBindingExtension { Light = Colors.Green, Dark = Colors.Green }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultPlaceHolderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultLabelSize = MaterialFontSize.BodyLarge;
     private readonly static Thickness DefaultLabelMargin = new Thickness(0);
-    private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultSupportingSize = MaterialFontSize.BodySmall;
-    private readonly static AnimationOnErrorTypes DefaultAnimationType = AnimationOnErrorTypes.Shake;
-    private readonly static Color DefaultAnimationBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.ErrorContainer, Dark = MaterialDarkTheme.ErrorContainer }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultAnimationBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
-#nullable enable
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
-#nullable disable
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
-        { MaterialInputTypeStates.FilledDisabled, new AppThemeBindingExtension { Light = Colors.LightGray, Dark = Colors.LightGray } },
-        { MaterialInputTypeStates.FilledFocused, new AppThemeBindingExtension { Light = Colors.LightBlue, Dark = Colors.LightBlue } },
-        { MaterialInputTypeStates.FilledNormal, new AppThemeBindingExtension { Light = Colors.LightGreen, Dark = Colors.LightGreen } },
+        { MaterialInputTypeStates.FilledDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer.WithAlpha(0.04f), Dark = MaterialLightTheme.SurfaceContainer.WithAlpha(0.04f) } },
+        { MaterialInputTypeStates.FilledFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer } },
+        { MaterialInputTypeStates.FilledNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer } },
         { MaterialInputTypeStates.OutlinedDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
         { MaterialInputTypeStates.OutlinedFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
-        { MaterialInputTypeStates.OutlinedNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } }
+        { MaterialInputTypeStates.OutlinedNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
+        { MaterialInputTypeStates.Error, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
+        { MaterialInputTypeStates.ErrorFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
     };
 
     private readonly Dictionary<MaterialInputType, CornerRadius> _cornerRadius = new()
     {
         { MaterialInputType.Filled, new CornerRadius(4,4,0,0) },
         { MaterialInputType.Outlined, new CornerRadius(4) }
+    };
+
+    private readonly Dictionary<MaterialInputTypeStates, double> _borderWidths = new()
+    {
+        { MaterialInputTypeStates.FilledDisabled, 1 },
+        { MaterialInputTypeStates.FilledFocused, 2 },
+        { MaterialInputTypeStates.FilledNormal, 1},
+        { MaterialInputTypeStates.OutlinedDisabled, 1 },
+        { MaterialInputTypeStates.OutlinedFocused, 2 },
+        { MaterialInputTypeStates.OutlinedNormal, 1 },
+        { MaterialInputTypeStates.Error, 1 },
+        { MaterialInputTypeStates.ErrorFocused, 2 }
     };
 
     #endregion Attributes
@@ -104,7 +113,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="SupportingText" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialInputBase), validateValue: OnValidateSupportText);
+    public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialInputBase));
 
     /// <summary>
     /// The backing store for the <see cref="TextColor" /> bindable property.
@@ -112,9 +121,14 @@ public abstract partial class MaterialInputBase : ContentView
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="IconTintColor" /> bindable property.
+    /// The backing store for the <see cref="LeadingIconTintColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty IconTintColorProperty = BindableProperty.Create(nameof(IconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultIconTintColor);
+    public static readonly BindableProperty LeadingIconTintColorProperty = BindableProperty.Create(nameof(LeadingIconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultIconTintColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="TrailingIconTintColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty TrailingIconTintColorProperty = BindableProperty.Create(nameof(TrailingIconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultIconTintColor);
 
     /// <summary>
     /// The backing store for the <see cref="Background" /> bindable property.
@@ -275,31 +289,21 @@ public abstract partial class MaterialInputBase : ContentView
     public static readonly BindableProperty UnfocusedCommandProperty = BindableProperty.Create(nameof(UnfocusedCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimationOnError"/> bindable property.
+    /// The backing store for the <see cref="HasError"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationOnErrorProperty = BindableProperty.Create(nameof(AnimationOnError), typeof(AnimationOnErrorTypes), typeof(MaterialInputBase), defaultValue: DefaultAnimationType);
+    public static readonly BindableProperty HasErrorProperty = BindableProperty.Create(nameof(HasError), typeof(bool), typeof(MaterialInputBase), defaultValue: false, propertyChanged: (bindableObject, _, newValue) =>
+    {
+        if (bindableObject is MaterialInputBase self)
+        {
+            self.UpdateLayoutAfterTypeChanged(self.Type);
+        }
+    });
 
     /// <summary>
-    /// The backing store for the <see cref="AnimationParameter"/> bindable property.
+    /// The backing store for the <see cref="ShowTrailingIconOnlyOnError"/> bindable property.
     /// </summary>
-#nullable enable
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialInputBase), defaultValue: DefaultAnimationParameter);
-#nullable disable
+    public static readonly BindableProperty ShowTrailingIconOnlyOnErrorProperty = BindableProperty.Create(nameof(ShowTrailingIconOnlyOnError), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
 
-    /// <summary>
-    /// The backing store for the <see cref="CustomAnimation"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialInputBase));
-
-    /// <summary>
-    /// The backing store for the <see cref="AnimationBackgroundColor"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty AnimationBackgroundColorProperty = BindableProperty.Create(nameof(AnimationBackgroundColor), typeof(Color), typeof(MaterialInputBase), DefaultAnimationBackgroundColor);
-
-    /// <summary>
-    /// The backing store for the <see cref="AnimationBorderColor"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty AnimationBorderColorProperty = BindableProperty.Create(nameof(AnimationBorderColor), typeof(Color), typeof(MaterialInputBase), DefaultAnimationBorderColor);
     #endregion Bindable Properties
 
     #region Properties
@@ -431,12 +435,23 @@ public abstract partial class MaterialInputBase : ContentView
 
 #nullable enable
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the leading and trailing button's icons of the input. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the leading button icon of the input. This is a bindable property.
     /// </summary>
-    public Color? IconTintColor
+    public Color? LeadingIconTintColor
     {
-        get => (Color?)GetValue(IconTintColorProperty);
-        set => SetValue(IconTintColorProperty, value);
+        get => (Color?)GetValue(LeadingIconTintColorProperty);
+        set => SetValue(LeadingIconTintColorProperty, value);
+    }
+#nullable disable
+
+#nullable enable
+    /// <summary>
+    /// Gets or sets the <see cref="Color" /> for the trailing button icon of the input. This is a bindable property.
+    /// </summary>
+    public Color? TrailingIconTintColor
+    {
+        get => (Color?)GetValue(TrailingIconTintColorProperty);
+        set => SetValue(TrailingIconTintColorProperty, value);
     }
 #nullable disable
 
@@ -638,56 +653,22 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets if animate on error. This is a bindable property.
+    /// Gets or sets if the input has an error. This is a bindable property.
     /// </summary>
-    public AnimationOnErrorTypes AnimationOnError
+    public bool HasError
     {
-        get => (AnimationOnErrorTypes)GetValue(AnimationOnErrorProperty);
-        set => SetValue(AnimationOnErrorProperty, value);
-    }
-
-#nullable enable
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-    /// The default value is <see langword="null"/>.
-    /// This is a bindable property.
-    /// </summary>
-    public double? AnimationParameter
-    {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
-    }
-#nullable disable
-
-    /// <summary>
-    /// Gets or sets a custom animation to be executed when the input has an error.
-    /// The default value is <see langword="null"/>.
-    /// This is a bindable property.
-    /// </summary>
-    public ICustomAnimation CustomAnimation
-    {
-        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-        set => SetValue(CustomAnimationProperty, value);
+        get => (bool)GetValue(HasErrorProperty);
+        set => SetValue(HasErrorProperty, value);
     }
 
     /// <summary>
-    /// Gets or sets a a background color to animate when the input has an error
-    /// This is a bindable property.
+    /// Gets or sets if show the trailing icon only on error. This is a bindable property.
+    /// <value>The default value is false.</value>
     /// </summary>
-    public Color AnimationBackgroundColor
+    public bool ShowTrailingIconOnlyOnError
     {
-        get => (Color)GetValue(AnimationBackgroundColorProperty);
-        set => SetValue(AnimationBackgroundColorProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets a a border color to animate when the input has an error
-    /// This is a bindable property.
-    /// </summary>
-    public Color AnimationBorderColor
-    {
-        get => (Color)GetValue(AnimationBorderColorProperty);
-        set => SetValue(AnimationBorderColorProperty, value);
+        get => (bool)GetValue(ShowTrailingIconOnlyOnErrorProperty);
+        set => SetValue(ShowTrailingIconOnlyOnErrorProperty, value);
     }
 
     #endregion Properties
@@ -707,20 +688,6 @@ public abstract partial class MaterialInputBase : ContentView
     #endregion Constructor
 
     #region Methods
-    private static bool OnValidateSupportText(BindableObject bindable, object value)
-    {
-        if (bindable is MaterialInputBase self && self.CanAnimateControl(self, value as string))
-        {
-            Task.Run(async () => await self.AnimateAsync());
-        }
-
-        return true;
-    }
-
-    private bool CanAnimateControl(MaterialInputBase self, string newValue)
-    {
-        return self.AnimationOnError != AnimationOnErrorTypes.None && !string.IsNullOrEmpty(newValue);
-    }
 
     private void SetLabelMargin(MaterialInputType type)
     {
@@ -778,17 +745,26 @@ public abstract partial class MaterialInputBase : ContentView
 
     protected abstract void OnControlDisappearing();
 
-    private void UpdateLayoutAfterTypeChanged(MaterialInputType type)
+    protected void UpdateLayoutAfterTypeChanged(MaterialInputType type)
     {
         SetTemplate(type);
         SetIsEnabled(type);
         SetCornerRadius(type);
         SetLabelMargin(type);
+        SetBorderWidth(type);
 
         UpdateLayoutAfterStatusChanged(type);
     }
 
-    protected void UpdateLayoutAfterStatusChanged(MaterialInputType type)
+    private void SetBorderWidth(MaterialInputType type)
+    {
+        if (_borderWidths.TryGetValue(GetCurrentTypeState(type), out double borderWidth))
+        {
+            this.BorderWidth = borderWidth;
+        }
+    }
+
+    private void UpdateLayoutAfterStatusChanged(MaterialInputType type)
     {
         SetBackground(type);
         SetBackgroundColor(type);
@@ -811,7 +787,9 @@ public abstract partial class MaterialInputBase : ContentView
     protected MaterialInputTypeStates GetCurrentTypeState(MaterialInputType type)
     {
         if (IsFocused)
-            return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledFocused : MaterialInputTypeStates.OutlinedFocused;
+            return HasError ? MaterialInputTypeStates.ErrorFocused : type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledFocused : MaterialInputTypeStates.OutlinedFocused;
+        else if (HasError)
+            return MaterialInputTypeStates.Error;
         else if (!IsEnabled)
             return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledDisabled : MaterialInputTypeStates.OutlinedDisabled;
         else
@@ -821,11 +799,13 @@ public abstract partial class MaterialInputBase : ContentView
     protected string GetCurrentVisualState()
     {
         if (IsFocused)
-            return VisualStateManager.CommonStates.Focused;
+            return HasError ? MaterialInputCommonStates.ErrorFocused : MaterialInputCommonStates.Focused;
+        else if (HasError)
+            return MaterialInputCommonStates.Error;
         else if (!IsEnabled)
-            return VisualStateManager.CommonStates.Disabled;
-        else
-            return VisualStateManager.CommonStates.Normal;
+            return MaterialInputCommonStates.Disabled;
+        
+        return MaterialInputCommonStates.Normal;
     }
 
     private void SetIsEnabled(MaterialInputType type)
@@ -946,132 +926,6 @@ public abstract partial class MaterialInputBase : ContentView
         }
     }
 
-    #region Animation
-
-    public async Task AnimateAsync()
-    {
-        if (this.AnimationOnError != AnimationOnErrorTypes.None && this.IsEnabled)
-        {
-            if (this.AnimationOnError == AnimationOnErrorTypes.Shake)
-                await AnimateShakeAsync(this);
-            else if (this.AnimationOnError == AnimationOnErrorTypes.BackgroundColorAnimation)
-                AnimateBackgroundColor(this, this.AnimationBackgroundColor, Easing.Linear);
-            else if (this.AnimationOnError == AnimationOnErrorTypes.BorderColorAnimation)
-                AnimateBorderColor(this, this.AnimationBorderColor, Easing.Linear);
-            else if (this.AnimationOnError == AnimationOnErrorTypes.Custom && this.CustomAnimation != null)
-                await this.CustomAnimation.SetAnimationAsync(this);
-
-            await RestoreAnimationAsync(this);
-        }
-    }
-
-    private async Task RestoreAnimationAsync(MaterialInputBase view)
-    {
-        if (this.AnimationOnError != AnimationOnErrorTypes.None)
-        {
-            if (this.AnimationOnError == AnimationOnErrorTypes.Shake)
-                view.TranslationX = 0;
-            else if (this.AnimationOnError == AnimationOnErrorTypes.Custom && this.CustomAnimation != null)
-                await this.CustomAnimation.RestoreAnimationAsync(view);
-        }
-    }
-
-    public async Task AnimateShakeAsync(MaterialInputBase view)
-    {
-        const uint timeout = 50;
-        await view.TranslateTo(-15, 0, timeout);
-        await view.TranslateTo(15, 0, timeout);
-        await view.TranslateTo(-10, 0, timeout);
-        await view.TranslateTo(10, 0, timeout);
-        await view.TranslateTo(-5, 0, timeout);
-        await view.TranslateTo(5, 0, timeout);
-    }
-
-    public void AnimateBackgroundColor(MaterialInputBase view, Color toColor, Easing easing)
-    {
-        Color fromColor = view.BackgroundColor;
-
-        try
-        {
-            //solo cambiando el color
-            //view.BackgroundColor = toColor;
-            //Dispatcher.StartTimer(TimeSpan.FromMilliseconds(250), () =>
-            //{
-            //    view.BackgroundColor = fromColor;
-            //    view.SetBackgroundColor(view.Type);
-            //    return false;
-            //});
-
-            //Con Animación
-            var animation = new Animation(v =>
-            {
-                view.BackgroundColor = Color.FromRgba(
-                    fromColor.Red + v * (toColor.Red - fromColor.Red),
-                    fromColor.Green + v * (toColor.Green - fromColor.Green),
-                    fromColor.Blue + v * (toColor.Blue - fromColor.Blue),
-                    fromColor.Alpha + v * (toColor.Alpha - fromColor.Alpha));
-            }, 0, 1);
-
-            animation.Commit(view, "BackgroundColorTo", 16, 500, easing, (v, c) =>
-            {
-                view.BackgroundColor = fromColor;
-                view.SetBackgroundColor(view.Type);
-            });
-        }
-        catch
-        {
-            view.BackgroundColor = fromColor;
-        }
-    }
-
-    public void AnimateBorderColor(MaterialInputBase view, Color toColor, Easing easing)
-    {
-        Color fromColor = view.BorderColor;
-
-        try
-        {
-            var animation = new Animation(v =>
-            {
-                view.BorderColor = Color.FromRgba(
-                    fromColor.Red + v * (toColor.Red - fromColor.Red),
-                    fromColor.Green + v * (toColor.Green - fromColor.Green),
-                    fromColor.Blue + v * (toColor.Blue - fromColor.Blue),
-                    fromColor.Alpha + v * (toColor.Alpha - fromColor.Alpha));
-            }, 0, 1);
-
-            var reverseAnimation = new Animation(v =>
-            {
-                view.BorderColor = Color.FromRgba(
-                    toColor.Red + v * (fromColor.Red - toColor.Red),
-                    toColor.Green + v * (fromColor.Green - toColor.Green),
-                    toColor.Blue + v * (fromColor.Blue - toColor.Blue),
-                    toColor.Alpha + v * (fromColor.Alpha - toColor.Alpha));
-            }, 0, 1);
-
-            animation.Commit(view, "BorderColorTo", 16, 250, easing, (v, c) =>
-            {
-                reverseAnimation.Commit(view, "BorderColorFrom", 16, 250, easing);
-            });
-
-        }
-        catch
-        {
-            view.BorderColor = fromColor;
-        }
-    }
-
-    Color InterpolateColor(Color fromColor, Color toColor, double t)
-    {
-        byte r = (byte)(fromColor.Red + t * (toColor.Red - fromColor.Red));
-        byte g = (byte)(fromColor.Green + t * (toColor.Green - fromColor.Green));
-        byte b = (byte)(fromColor.Blue + t * (toColor.Blue - fromColor.Blue));
-        byte a = (byte)(fromColor.Alpha + t * (toColor.Alpha - fromColor.Alpha));
-
-        return new Color(r, g, b, a);
-    }
-
-    #endregion Animation
-
     #endregion Methods
 
     #region Styles
@@ -1080,201 +934,259 @@ public abstract partial class MaterialInputBase : ContentView
     {
         var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
 
-        //var disabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
-        //disabledState.Setters.Add(
-        //    MaterialInputBase.BackgroundColorProperty,
-        //    new AppThemeBindingExtension
-        //    {
-        //        Light = MaterialLightTheme.OnSurface,
-        //        Dark = MaterialDarkTheme.OnSurface
-        //    }
-        //    .GetValueForCurrentTheme<Color>()
-        //    .WithAlpha(0.12f));
+        var disabled = new VisualState { Name = MaterialInputCommonStates.Disabled };
 
-        //disabledState.Setters.Add(
-        //    MaterialInputBase.TextColorProperty,
-        //    new AppThemeBindingExtension
-        //    {
-        //        Light = MaterialLightTheme.OnSurface,
-        //        Dark = MaterialDarkTheme.OnSurface
-        //    }
-        //    .GetValueForCurrentTheme<Color>()
-        //    .WithAlpha(0.38f));
-
-        //disabledState.Setters.Add(
-        //    MaterialInputBase.IconTintColorProperty,
-        //    new AppThemeBindingExtension
-        //    {
-        //        Light = MaterialLightTheme.OnSurface,
-        //        Dark = MaterialDarkTheme.OnSurface
-        //    }
-        //    .GetValueForCurrentTheme<Color>()
-        //    .WithAlpha(0.38f));
-
-        //disabledState.Setters.Add(MaterialButton.ShadowProperty, null);
-
-        //disabledState.Setters.Add(
-        //    MaterialInputBase.BorderColorProperty,
-        //    new AppThemeBindingExtension
-        //    {
-        //        Light = MaterialLightTheme.OnSurface,
-        //        Dark = MaterialDarkTheme.OnSurface
-        //    }
-        //    .GetValueForCurrentTheme<Color>()
-        //    .WithAlpha(0.12f));
-
-        //var focusedState = new VisualState { Name = VisualStateManager.CommonStates.Focused };
-        //focusedState.Setters.Add(
-        //    MaterialInputBase.BackgroundColorProperty,
-        //    Colors.Green);
-
-        //focusedState.Setters.Add(
-        //    MaterialInputBase.BorderColorProperty,
-        //    new AppThemeBindingExtension
-        //    {
-        //        Light = MaterialLightTheme.Primary,
-        //        Dark = MaterialDarkTheme.Primary
-        //    }
-        //    .GetValueForCurrentTheme<Color>());
-
-        //focusedState.Setters.Add(MaterialInputBase.BorderWidthProperty, 2);
-        //focusedState.Setters.Add(MaterialInputBase.CornerRadiusProperty, new CornerRadius(16));
-
-        //var normalState = new VisualState { Name = VisualStateManager.CommonStates.Normal };
-        //normalState.Setters.Add(
-        //    MaterialInputBase.BackgroundColorProperty,
-        //    Colors.Blue);
-
-        //normalState.Setters.Add(
-        //    MaterialInputBase.BorderColorProperty,
-        //    new AppThemeBindingExtension
-        //    {
-        //        Light = MaterialLightTheme.Primary,
-        //        Dark = MaterialDarkTheme.Primary
-        //    }
-        //    .GetValueForCurrentTheme<Color>());
-
-        //normalState.Setters.Add(MaterialInputBase.BorderWidthProperty, 2);
-        //normalState.Setters.Add(MaterialInputBase.CornerRadiusProperty, new CornerRadius(16));
-
-
-        //var filledDisabledState = new VisualState { Name = InputCommonStates.FilledDisabled };
-        //filledDisabledState.Setters.Add(
-        //    MaterialInputBase.BackgroundColorProperty,
-        //    Colors.LightGray);
-        //filledDisabledState.Setters.Add(
-        //    MaterialInputBase.TextColorProperty,
-        //    Colors.DarkGray);
-        //filledDisabledState.Setters.Add(
-        //    MaterialInputBase.BorderColorProperty,
-        //    Colors.DarkGray);
-
-        //var filledFocusedState = new VisualState { Name = InputCommonStates.FilledFocused };
-        //filledFocusedState.Setters.Add(
-        //    MaterialInputBase.BackgroundColorProperty,
-        //    Colors.LightBlue);
-        //filledFocusedState.Setters.Add(
-        //    MaterialInputBase.TextColorProperty,
-        //    Colors.Blue);
-        //filledFocusedState.Setters.Add(
-        //    MaterialInputBase.BorderColorProperty,
-        //    Colors.Blue);
-
-        //var filledNormalState = new VisualState { Name = InputCommonStates.FilledNormal };
-        //filledNormalState.Setters.Add(
-        //    MaterialInputBase.BackgroundColorProperty,
-        //    Colors.LightGreen);
-        //filledNormalState.Setters.Add(
-        //    MaterialInputBase.TextColorProperty,
-        //    Colors.Green);
-        //filledNormalState.Setters.Add(
-        //    MaterialInputBase.BorderColorProperty,
-        //    Colors.Green);
-
-        //commonStatesGroup.States.Add(filledNormalState);
-        //commonStatesGroup.States.Add(filledDisabledState);
-        //commonStatesGroup.States.Add(filledFocusedState);
-
-        //var outlinedDisabledState = new VisualState { Name = InputCommonStates.OutlinedDisabled };
-        //outlinedDisabledState.Setters.Add(
-        //    MaterialInputBase.BackgroundColorProperty,
-        //    MaterialLightTheme.SurfaceContainer);
-        //outlinedDisabledState.Setters.Add(
-        //    MaterialInputBase.TextColorProperty,
-        //    Colors.DarkGray);
-        //outlinedDisabledState.Setters.Add(
-        //    MaterialInputBase.BorderColorProperty,
-        //    Colors.DarkGray);
-
-        //var outlinedFocusedState = new VisualState { Name = InputCommonStates.OutlinedFocused };
-        //outlinedFocusedState.Setters.Add(
-        //    MaterialInputBase.BackgroundColorProperty,
-        //    MaterialLightTheme.SurfaceContainer);
-        //outlinedFocusedState.Setters.Add(
-        //    MaterialInputBase.TextColorProperty,
-        //    Colors.Blue);
-        //outlinedFocusedState.Setters.Add(
-        //    MaterialInputBase.BorderColorProperty,
-        //    Colors.Blue);
-
-        //var outlinedNormalState = new VisualState { Name = InputCommonStates.OutlinedNormal };
-        //outlinedNormalState.Setters.Add(
-        //    MaterialInputBase.BackgroundColorProperty,
-        //    MaterialLightTheme.SurfaceContainer);
-        //outlinedNormalState.Setters.Add(
-        //    MaterialInputBase.TextColorProperty,
-        //    Colors.Green);
-        //outlinedNormalState.Setters.Add(
-        //    MaterialInputBase.BorderColorProperty,
-        //    Colors.Green);
-
-        //commonStatesGroup.States.Add(outlinedNormalState);
-        //commonStatesGroup.States.Add(outlinedDisabledState);
-        //commonStatesGroup.States.Add(outlinedFocusedState);
-
-        //commonStatesGroup.States.Add(new VisualState { Name = VisualStateManager.CommonStates.Normal });
-        //commonStatesGroup.States.Add(new VisualState { Name = VisualStateManager.CommonStates.Disabled });
-        //commonStatesGroup.States.Add(new VisualState { Name = VisualStateManager.CommonStates.Focused });
-
-        var filledDisabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
-        filledDisabledState.Setters.Add(
+        disabled.Setters.Add(
             MaterialInputBase.TextColorProperty,
-            Colors.DarkGray);
-        filledDisabledState.Setters.Add(
-            MaterialInputBase.BorderColorProperty,
-            Colors.DarkGray);
-        filledDisabledState.Setters.Add(
-            MaterialInputBase.IconTintColorProperty,
-            Colors.DarkGray);
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.38f));
 
-        var filledFocusedState = new VisualState { Name = VisualStateManager.CommonStates.Focused };
-        filledFocusedState.Setters.Add(
+        disabled.Setters.Add(
+            MaterialInputBase.LabelColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.38f));
+
+        disabled.Setters.Add(
+            MaterialInputBase.SupportingTextColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.38f));
+
+        disabled.Setters.Add(
+            MaterialInputBase.LeadingIconTintColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.38f));
+
+        disabled.Setters.Add(
+            MaterialInputBase.TrailingIconTintColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.38f));
+
+        disabled.Setters.Add(MaterialButton.ShadowProperty, null);
+
+        disabled.Setters.Add(
+            MaterialInputBase.BorderColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.38f));
+
+        var focused = new VisualState { Name = MaterialInputCommonStates.Focused };
+
+        focused.Setters.Add(
             MaterialInputBase.TextColorProperty,
-            Colors.Blue);
-        filledFocusedState.Setters.Add(
-            MaterialInputBase.BorderColorProperty,
-            Colors.Blue);
-        filledFocusedState.Setters.Add(
-            MaterialInputBase.IconTintColorProperty,
-            Colors.Blue);
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>());
 
-        var filledNormalState = new VisualState { Name = VisualStateManager.CommonStates.Normal };
-        filledNormalState.Setters.Add(
+        focused.Setters.Add(
+            MaterialInputBase.LabelColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.Primary,
+                Dark = MaterialDarkTheme.Primary
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        focused.Setters.Add(
+            MaterialInputBase.SupportingTextColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurfaceVariant,
+                Dark = MaterialDarkTheme.OnSurfaceVariant
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        focused.Setters.Add(
+            MaterialInputBase.LeadingIconTintColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurfaceVariant,
+                Dark = MaterialDarkTheme.OnSurfaceVariant
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        focused.Setters.Add(
+            MaterialInputBase.TrailingIconTintColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurfaceVariant,
+                Dark = MaterialDarkTheme.OnSurfaceVariant
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        focused.Setters.Add(MaterialButton.ShadowProperty, null);
+
+        focused.Setters.Add(
+            MaterialInputBase.BorderColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.Primary,
+                Dark = MaterialDarkTheme.Primary
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        var normal = new VisualState { Name = MaterialInputCommonStates.Normal };
+
+        normal.Setters.Add(
             MaterialInputBase.TextColorProperty,
-            DefaultTextColor);
-        filledNormalState.Setters.Add(
-            MaterialInputBase.BorderColorProperty,
-            DefaultBorderColor);
-        filledNormalState.Setters.Add(
-            MaterialInputBase.IconTintColorProperty,
-            DefaultIconTintColor);
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>());
 
-        commonStatesGroup.States.Add(filledNormalState);
-        commonStatesGroup.States.Add(filledDisabledState);
-        commonStatesGroup.States.Add(filledFocusedState);
+        normal.Setters.Add(
+            MaterialInputBase.LabelColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurfaceVariant,
+                Dark = MaterialDarkTheme.OnSurfaceVariant
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        normal.Setters.Add(
+            MaterialInputBase.SupportingTextColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurfaceVariant,
+                Dark = MaterialDarkTheme.OnSurfaceVariant
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        normal.Setters.Add(
+            MaterialInputBase.LeadingIconTintColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurfaceVariant,
+                Dark = MaterialDarkTheme.OnSurfaceVariant
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        normal.Setters.Add(
+            MaterialInputBase.TrailingIconTintColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurfaceVariant,
+                Dark = MaterialDarkTheme.OnSurfaceVariant
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        normal.Setters.Add(MaterialButton.ShadowProperty, null);
+
+        normal.Setters.Add(
+            MaterialInputBase.BorderColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurfaceVariant,
+                Dark = MaterialDarkTheme.OnSurfaceVariant
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        var error = new VisualState { Name = MaterialInputCommonStates.Error };
+
+        error.Setters.Add(
+            MaterialInputBase.TextColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        error.Setters.Add(
+            MaterialInputBase.LabelColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.Error,
+                Dark = MaterialDarkTheme.Error
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        error.Setters.Add(
+            MaterialInputBase.SupportingTextColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.Error,
+                Dark = MaterialDarkTheme.Error
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        error.Setters.Add(
+            MaterialInputBase.BorderColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.Error,
+                Dark = MaterialDarkTheme.Error
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        error.Setters.Add(
+            MaterialInputBase.LeadingIconTintColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurfaceVariant,
+                Dark = MaterialDarkTheme.OnSurfaceVariant
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        error.Setters.Add(
+            MaterialInputBase.TrailingIconTintColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.Error,
+                Dark = MaterialDarkTheme.Error
+            }
+            .GetValueForCurrentTheme<Color>());
+
+        var errorFocused = new VisualState { Name = MaterialInputCommonStates.ErrorFocused };
+        error.Setters.ToList().ForEach(s => errorFocused.Setters.Add(s));
+
+        commonStatesGroup.States.Add(disabled);
+        commonStatesGroup.States.Add(normal);
+        commonStatesGroup.States.Add(focused);
+        commonStatesGroup.States.Add(error);
+        commonStatesGroup.States.Add(errorFocused);
 
         return new VisualStateGroupList() { commonStatesGroup };
     }
 
     #endregion Styles
+}
+
+public class MaterialInputCommonStates : VisualStateManager.CommonStates
+{
+    public const string Error = "Error";
+    public const string ErrorFocused = "ErrorFocused";
 }

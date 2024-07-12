@@ -1,6 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-using System;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
@@ -11,10 +10,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public override string Title => "Text fields";
 
         [ObservableProperty]
-        private string _supportingTextValue = "";
+        private string _supportingTextValue = "Enter the value.";
 
         [ObservableProperty]
         private string _text = "";
+
+        [ObservableProperty]
+        private bool _hasAnError = false;
 
         #endregion
 
@@ -26,12 +28,26 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private void CheckTextField()
         {
-            SupportingTextValue = String.Empty;
+            SupportingTextValue = "Enter the value.";
+            HasAnError = false;
 
             if (string.IsNullOrWhiteSpace(Text))
             {
-                SupportingTextValue = "You should enter a value";
+                SupportingTextValue = "You should enter a valid value.";
+                HasAnError = true;
             }
+        }
+
+        [ICommand]
+        private void LeadingAction()
+        {
+            DisplayAlert("Leading", "Command for leading icon.", "OK");
+        }
+
+        [ICommand]
+        private void Return()
+        {
+            DisplayAlert("Return", "Command for return type.", "OK");
         }
     }
 }
