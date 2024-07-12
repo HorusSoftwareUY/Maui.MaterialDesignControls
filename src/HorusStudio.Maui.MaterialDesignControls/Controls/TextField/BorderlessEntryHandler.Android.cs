@@ -1,9 +1,6 @@
 ﻿using Microsoft.Maui.Handlers;
-using Android.Graphics;
-using Android.Graphics.Drawables;
 using Microsoft.Maui.Platform;
 using Android.OS;
-using Android.Widget;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -26,6 +23,5 @@ partial class BorderlessEntryHandler
                 editText.TextCursorDrawable.SetTint(customEntry.CursorColor.ToPlatform());
             }
         }
-        
     }
 }

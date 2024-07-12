@@ -2,9 +2,6 @@
 {
     public enum AnimationTypes
     {
-        None, 
-        Fade, 
-        Scale, 
-        Custom
+        None, Fade, Scale, Custom
     }
 }

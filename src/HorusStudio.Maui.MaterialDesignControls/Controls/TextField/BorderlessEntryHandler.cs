@@ -4,9 +4,9 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 partial class BorderlessEntryHandler : EntryHandler
 {
-	public BorderlessEntryHandler(): base(Mapper, CommandMapper)
-	{
-		Mapper.Add(nameof(BorderlessEntry), MapBorder);
+    public BorderlessEntryHandler() : base(Mapper, CommandMapper)
+    {
+        Mapper.Add(nameof(BorderlessEntry), MapBorder);
         Mapper.Add(nameof(BorderlessEntry.CursorColor), MapCursorColor);
     }
 }

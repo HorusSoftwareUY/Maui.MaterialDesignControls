@@ -368,7 +368,6 @@ public class MaterialTextField : MaterialInputBase
         set => SetValue(IsReadOnlyProperty, value);
     }
 
-
     /// <summary>
     /// Gets or sets a color of the caret indicator.
     /// </summary>
