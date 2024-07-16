@@ -46,7 +46,7 @@
                     <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can change the return type, keyboard, define events as focused, unfocused or text changed, trailing icon or leading icon and clear button visibility." />
+            <material:MaterialLabel Text="You can change the return type, keyboard, define events like focused, unfocused or text changed, trailing icon or leading icon and clear button visibility." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and return command" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
