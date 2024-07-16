@@ -69,10 +69,16 @@
 	  <Compile Update="Pages\RadioButtonPage.xaml.cs">
 	    <DependentUpon>RadioButtonPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\MultilineTextFieldPage.xaml.cs">
+	    <DependentUpon>MultilineTextFieldPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Pages\RadioButtonPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\MultilineTextFieldPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

@@ -65,6 +65,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialRadioButton.GetStyles());
             // MaterialTextField
             application.Resources.AddStyles(MaterialTextField.GetStyles());
+            // Multiline Text Field
+            application.Resources.AddStyles(MaterialMultilineTextField.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
