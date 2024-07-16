@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -303,6 +302,11 @@ public abstract partial class MaterialInputBase : ContentView
     /// The backing store for the <see cref="ShowTrailingIconOnlyOnError"/> bindable property.
     /// </summary>
     public static readonly BindableProperty ShowTrailingIconOnlyOnErrorProperty = BindableProperty.Create(nameof(ShowTrailingIconOnlyOnError), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
+
+    /// <summary>
+    /// The backing store for the <see cref="HeightRequest" /> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialInputBase), defaultValue: 48.0);
 
     #endregion Bindable Properties
 
@@ -669,6 +673,15 @@ public abstract partial class MaterialInputBase : ContentView
     {
         get => (bool)GetValue(ShowTrailingIconOnlyOnErrorProperty);
         set => SetValue(ShowTrailingIconOnlyOnErrorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the height request
+    /// </summary>
+    public new double HeightRequest
+    {
+        get => (double)GetValue(HeightRequestProperty);
+        set => SetValue(HeightRequestProperty, value);
     }
 
     #endregion Properties

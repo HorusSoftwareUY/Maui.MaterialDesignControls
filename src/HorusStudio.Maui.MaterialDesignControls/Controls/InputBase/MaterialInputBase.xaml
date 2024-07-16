@@ -136,10 +136,10 @@
         </Style>
 
         <ControlTemplate x:Key="FilledControlTemplate">
-            <VerticalStackLayout Spacing="0">
+            <VerticalStackLayout Spacing="0" x:Name="ContainerFilled">
                 <Border
                     x:Name="InputBorder"
-                    HeightRequest="{StaticResource DefaultHeight}"
+                    HeightRequest="{Binding HeightRequest, Source={x:Reference InputBase}}"
                     Background="{Binding Background, Source={x:Reference InputBase}}"
                     StrokeThickness="0">
 
@@ -207,12 +207,12 @@
         </ControlTemplate>
 
         <ControlTemplate x:Key="OutlinedControlTemplate">
-            <VerticalStackLayout Spacing="0">
+            <VerticalStackLayout Spacing="0" x:Name="ContainerOutlined">
                 <Grid>
                     <Border
                         x:Name="InputBorder"
                         Margin="0,8,0,0"
-                        HeightRequest="{StaticResource DefaultHeight}"
+                        HeightRequest="{Binding HeightRequest, Source={x:Reference InputBase}}"
                         Stroke="{Binding BorderColor, Source={x:Reference InputBase}}"
                         Background="{Binding Background, Source={x:Reference InputBase}}"
                         StrokeThickness="{Binding BorderWidth, Source={x:Reference InputBase}}">

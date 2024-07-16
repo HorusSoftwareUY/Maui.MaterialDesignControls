@@ -16,7 +16,7 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     #region Layout
 
-    private Editor _entry;
+    private CustomEditor _editor;
 
     #endregion Layout
 
@@ -24,47 +24,37 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     public MaterialMultilineTextField()
     {
-        _entry = new Editor
+        _editor = new CustomEditor
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand
+            HorizontalOptions = LayoutOptions.FillAndExpand,
+            //HeightRequest = -1.0
         };
 
-        _entry.SetBinding(Editor.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
-        _entry.SetBinding(Editor.TextColorProperty, new Binding(nameof(TextColor), source: this));
-        _entry.SetBinding(Editor.TextProperty, new Binding(nameof(Text), source: this));
-        _entry.SetBinding(Editor.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-        _entry.SetBinding(Editor.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-        _entry.SetBinding(Editor.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
-        _entry.SetBinding(Editor.KeyboardProperty, new Binding(nameof(Keyboard), source: this));
-        _entry.SetBinding(Editor.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
-        _entry.SetBinding(Editor.MaxLengthProperty, new Binding(nameof(MaxLength), source: this));
-        _entry.SetBinding(Editor.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
-        _entry.SetBinding(Editor.VerticalTextAlignmentProperty, new Binding(nameof(VerticalTextAlignment), source: this));
-        _entry.SetBinding(Editor.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
-        _entry.SetBinding(Editor.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
-        _entry.SetBinding(Editor.IsTextPredictionEnabledProperty, new Binding(nameof(IsTextPredictionEnabled), source: this));
-        _entry.SetBinding(Editor.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
-        _entry.SetBinding(Editor.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
-        _entry.SetBinding(Editor.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
-        //_entry.SetBinding(Editor.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
+        _editor.SetBinding(Editor.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+        _editor.SetBinding(Editor.TextColorProperty, new Binding(nameof(TextColor), source: this));
+        _editor.SetBinding(Editor.TextProperty, new Binding(nameof(Text), source: this));
+        _editor.SetBinding(Editor.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        _editor.SetBinding(Editor.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        _editor.SetBinding(Editor.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
+        _editor.SetBinding(Editor.KeyboardProperty, new Binding(nameof(Keyboard), source: this));
+        _editor.SetBinding(Editor.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
+        _editor.SetBinding(Editor.MaxLengthProperty, new Binding(nameof(MaxLength), source: this));
+        _editor.SetBinding(Editor.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
+        _editor.SetBinding(Editor.VerticalTextAlignmentProperty, new Binding(nameof(VerticalTextAlignment), source: this));
+        _editor.SetBinding(Editor.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
+        _editor.SetBinding(Editor.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
+        _editor.SetBinding(Editor.IsTextPredictionEnabledProperty, new Binding(nameof(IsTextPredictionEnabled), source: this));
+        _editor.SetBinding(Editor.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
+        _editor.SetBinding(Editor.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
+        _editor.SetBinding(Editor.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
+        _editor.SetBinding(CustomEditor.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
+        _editor.SetBinding(Editor.AutoSizeProperty, new Binding(nameof(AutoSize), source: this));
 
-        InputTapCommand = new Command(() => _entry.Focus());
+        InputTapCommand = new Command(() => _editor.Focus());
 
-//#if ANDROID
-//        _entry.ReturnCommand = new Command(() =>
-//        {
-//            var view = _entry.Handler.PlatformView as Android.Views.View;
-//            view?.ClearFocus();
+        _editor.TextChanged += TxtEditor_TextChanged;
 
-//            if (ReturnCommand?.CanExecute(ReturnCommandParameter) ?? false)
-//            {
-//                ReturnCommand.Execute(ReturnCommandParameter);
-//            }
-//        });
-//#endif
-        _entry.TextChanged += TxtEntry_TextChanged;
-
-        Content = _entry;
+        Content = _editor;
     }
 
     #endregion Constructor
@@ -83,7 +73,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     {
         if (bindableObject is MaterialMultilineTextField self && newValue is Keyboard value)
         {
-            self._entry.Keyboard = value;
+            self._editor.Keyboard = value;
         }
     });
 
@@ -146,6 +136,17 @@ public class MaterialMultilineTextField : MaterialInputBase
     /// The backing store for the <see cref="CursorColor" /> bindable property.
     /// </summary>
     public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialMultilineTextField), defaultValue: DefaultCursorColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="AutoSize" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty AutoSizeProperty = BindableProperty.Create(nameof(AutoSize), typeof(EditorAutoSizeOption), typeof(MaterialMultilineTextField), defaultValue: EditorAutoSizeOption.Disabled, propertyChanged: (bindableObject, _, newValue) => 
+    {
+        if (bindableObject is MaterialMultilineTextField self && newValue is EditorAutoSizeOption autoSizeOption)
+        {
+            self.UpdateEditorHeight(autoSizeOption);
+        }
+    });
 
     #endregion BindableProperties
 
@@ -302,6 +303,20 @@ public class MaterialMultilineTextField : MaterialInputBase
         set => SetValue(CursorColorProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets a value that controls whether the editor will change size to accommodate
+    /// input as the user enters it.
+    /// <value>Whether the editor will change size to accommodate input as the user enters it.</value>
+    /// </summary>
+    /// <remarks>
+    /// Automatic resizing is turned off by default.
+    /// </remarks>
+    public EditorAutoSizeOption AutoSize
+    {
+        get => (EditorAutoSizeOption)GetValue(AutoSizeProperty);
+        set => SetValue(AutoSizeProperty, value);
+    }
+
     #endregion Properties
 
     #region Events
@@ -316,32 +331,48 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     #region Methods
 
-    private void TxtEntry_TextChanged(object sender, TextChangedEventArgs e)
+    private void TxtEditor_TextChanged(object sender, TextChangedEventArgs e)
     {
-        var changedByTextTransform = Text != null && _entry.Text != null && Text.ToLower() == _entry.Text.ToLower();
-        this.Text = this._entry.Text;
+        var changedByTextTransform = Text != null && _editor.Text != null && Text.ToLower() == _editor.Text.ToLower();
+        this.Text = this._editor.Text;
 
         if (!changedByTextTransform)
         {
             this.TextChangedCommand?.Execute(null);
             this.TextChanged?.Invoke(this, e);
         }
+
+        UpdateEditorHeight(AutoSize);
     }
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
+        if (_editor == null) return;
+
 #if ANDROID
-        if (_entry == null) return;
+        switch (type)
+        {
+            case MaterialInputType.Filled:
+                _editor.VerticalOptions = LayoutOptions.End;
+                _editor.Margin = new Thickness(0, 0, 0, -8);
+                break;
+            case MaterialInputType.Outlined:
+                _editor.VerticalOptions = LayoutOptions.Center;
+                _editor.Margin = new Thickness(0, -7.5);
+                break;
+        }
+
+#elif IOS || MACCATALYST
 
         switch (type)
         {
             case MaterialInputType.Filled:
-                _entry.VerticalOptions = LayoutOptions.End;
-                _entry.Margin = new Thickness(0, 0, 0, -8);
+                _editor.VerticalOptions = LayoutOptions.Fill;
+                _editor.Margin = new Thickness(-5, 0, 0, -8);
                 break;
             case MaterialInputType.Outlined:
-                _entry.VerticalOptions = LayoutOptions.Center;
-                _entry.Margin = new Thickness(0, -7.5);
+                _editor.VerticalOptions = LayoutOptions.Fill;
+                _editor.Margin = new Thickness(-5, -7.5);
                 break;
         }
 #endif
@@ -349,22 +380,22 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     protected override void SetControlIsEnabled()
     {
-        if (_entry != null)
-            _entry.IsEnabled = IsEnabled;
+        if (_editor != null)
+            _editor.IsEnabled = IsEnabled;
     }
 
     protected override void OnControlAppearing()
     {
         // Setup events/animations
-        _entry.Focused += ContentFocusChanged;
-        _entry.Unfocused += ContentFocusChanged;
+        _editor.Focused += ContentFocusChanged;
+        _editor.Unfocused += ContentFocusChanged;
     }
 
     protected override void OnControlDisappearing()
     {
         // Cleanup events/animations
-        _entry.Focused -= ContentFocusChanged;
-        _entry.Unfocused -= ContentFocusChanged;
+        _editor.Focused -= ContentFocusChanged;
+        _editor.Unfocused -= ContentFocusChanged;
     }
 
     private void ContentFocusChanged(object sender, FocusEventArgs e)
@@ -393,6 +424,15 @@ public class MaterialMultilineTextField : MaterialInputBase
     private bool CanExecuteUnfocusedCommand()
     {
         return UnfocusedCommand?.CanExecute(null) ?? false;
+    }
+
+    private void UpdateEditorHeight(EditorAutoSizeOption autoSizeOption)
+    {
+        if (autoSizeOption == EditorAutoSizeOption.TextChanges)
+        {
+            this.HeightRequest = -1.0;
+            this.InvalidateMeasure();
+        }
     }
 
     #endregion Methods

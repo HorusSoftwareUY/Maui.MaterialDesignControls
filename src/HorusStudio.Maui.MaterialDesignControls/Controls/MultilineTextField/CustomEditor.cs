@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
-namespace HorusStudio.Maui.MaterialDesignControls;
+
+/// <summary>
+/// An <see cref="Editor" /> without active indicator
+/// </summary>
 internal class CustomEditor : Editor
 {
     #region Bindable Properties

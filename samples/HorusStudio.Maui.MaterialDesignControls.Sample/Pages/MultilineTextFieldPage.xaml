@@ -29,33 +29,29 @@
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." />
-            <!--
+            
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using commands and some configuration" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialTextField 
+                    <material:MaterialMultilineTextField 
                         Type="Filled"
                         Keyboard="Numeric"
-                        ReturnType="Search"
                         LeadingIconSource="ic_search.png"
                         LeadingIconCommand="{Binding LeadingActionCommand}"
                         Focused="MaterialTextField_Focused"
                         Unfocused="MaterialTextField_Focused"
-                        ClearButtonVisibility="WhileEditing"
                         Placeholder="Enter text here" />
                     <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can change the return type, keyboard, define events as focused, unfocused or text changed, trailing icon or leading icon and clear button visibility." />
+            <material:MaterialLabel Text="You can change the return type, keyboard, define events like focused, unfocused or text changed and trailing icon or leading icon." />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and return command" />
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and other properties" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialTextField 
+                    <material:MaterialMultilineTextField 
                         MaxLength="10"
                         Type="Outlined"
-                        ReturnCommand="{Binding ReturnCommand}"
-                        ReturnType="Done"
                         TextColor="DarkGoldenrod"
                         LabelColor="DarkGreen"
                         BorderColor="DarkGray"
@@ -68,7 +64,7 @@
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialTextField 
+                    <material:MaterialMultilineTextField 
                         Text="{Binding Text}"
                         SupportingText="{Binding SupportingTextValue}"
                         Type="Filled"
@@ -84,28 +80,40 @@
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialTextField 
+                    <material:MaterialMultilineTextField 
                         Type="Outlined"
+                        HeightRequest="150"
                         Label="New Info"
                         IsEnabled="False"
-                        Text="Information here" />
+                        Text="{Binding Observation}" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can disabled a text field." />
+            <material:MaterialLabel Text="You can disabled a multiline text field." />
             
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Read only" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialTextField 
-                        Type="Filled"
-                        IsPassword="True"
-                        Label="Password"
+                    <material:MaterialMultilineTextField 
+                        Type="Outlined"
+                        HeightRequest="150"
+                        Label="New Info"
                         IsReadOnly="True"
-                        Text="Text here" />
+                        Text="{Binding Observation}" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can set read only and is password." />-->
+            <material:MaterialLabel Text="You can set read only and is password." />
             
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Auto size" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialMultilineTextField 
+                        Type="Outlined"
+                        AutoSize="TextChanges"
+                        Placeholder="Enter text here" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set auto size." />
+
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>
