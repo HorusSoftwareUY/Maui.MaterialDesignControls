@@ -27,7 +27,7 @@ public class MaterialMultilineTextField : MaterialInputBase
         _editor = new CustomEditor
         {
             HorizontalOptions = LayoutOptions.FillAndExpand,
-            //HeightRequest = -1.0
+            HeightRequest = -1.0
         };
 
         _editor.SetBinding(Editor.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
@@ -50,7 +50,9 @@ public class MaterialMultilineTextField : MaterialInputBase
         _editor.SetBinding(CustomEditor.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
         _editor.SetBinding(Editor.AutoSizeProperty, new Binding(nameof(AutoSize), source: this));
 
-        InputTapCommand = new Command(() => _editor.Focus());
+        InputTapCommand = new Command(() => {
+            if (!IsReadOnly) _editor.Focus();
+        });
 
         _editor.TextChanged += TxtEditor_TextChanged;
 
@@ -367,12 +369,14 @@ public class MaterialMultilineTextField : MaterialInputBase
         switch (type)
         {
             case MaterialInputType.Filled:
-                _editor.VerticalOptions = LayoutOptions.Fill;
-                _editor.Margin = new Thickness(-5, 0, 0, -8);
+                _editor.VerticalOptions = LayoutOptions.End;
+                if (HeightRequest <= 48)
+                    _editor.Margin = new Thickness(-5, 0, 0, -8);
                 break;
             case MaterialInputType.Outlined:
-                _editor.VerticalOptions = LayoutOptions.Fill;
-                _editor.Margin = new Thickness(-5, -7.5);
+                _editor.VerticalOptions = LayoutOptions.Center;
+                if (HeightRequest <= 48)
+                    _editor.Margin = new Thickness(-5, -7.5);
                 break;
         }
 #endif

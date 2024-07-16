@@ -101,7 +101,7 @@
                         Text="{Binding Observation}" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can set read only and is password." />
+            <material:MaterialLabel Text="You can set read only." />
             
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Auto size" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
