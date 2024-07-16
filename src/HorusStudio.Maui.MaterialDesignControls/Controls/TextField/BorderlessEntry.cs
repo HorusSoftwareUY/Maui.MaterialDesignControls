@@ -10,7 +10,7 @@ internal class BorderlessEntry : Entry
     /// <summary>
     /// The backing store for the <see cref="CursorColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(CustomRadioButton), defaultValue: null);
+    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(BorderlessEntry), defaultValue: null);
 
     #endregion
 
