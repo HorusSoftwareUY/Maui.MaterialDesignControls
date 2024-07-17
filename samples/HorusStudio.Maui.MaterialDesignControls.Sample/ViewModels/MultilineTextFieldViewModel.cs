@@ -47,12 +47,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             DisplayAlert("Leading", "Command for leading icon.", "OK");
         }
-
-        [ICommand]
-        private void Return()
-        {
-            DisplayAlert("Return", "Command for return type.", "OK");
-        }
     }
 }
 

@@ -49,6 +49,7 @@ public class MaterialMultilineTextField : MaterialInputBase
         _editor.SetBinding(Editor.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
         _editor.SetBinding(CustomEditor.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
         _editor.SetBinding(Editor.AutoSizeProperty, new Binding(nameof(AutoSize), source: this));
+        _editor.SetBinding(Editor.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
 
         InputTapCommand = new Command(() => {
             if (!IsReadOnly) _editor.Focus();
@@ -142,7 +143,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="AutoSize" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty AutoSizeProperty = BindableProperty.Create(nameof(AutoSize), typeof(EditorAutoSizeOption), typeof(MaterialMultilineTextField), defaultValue: EditorAutoSizeOption.Disabled, propertyChanged: (bindableObject, _, newValue) => 
+    public static readonly BindableProperty AutoSizeProperty = BindableProperty.Create(nameof(AutoSize), typeof(EditorAutoSizeOption), typeof(MaterialMultilineTextField), defaultValue: EditorAutoSizeOption.TextChanges, propertyChanged: (bindableObject, _, newValue) => 
     {
         if (bindableObject is MaterialMultilineTextField self && newValue is EditorAutoSizeOption autoSizeOption)
         {
@@ -351,35 +352,28 @@ public class MaterialMultilineTextField : MaterialInputBase
     {
         if (_editor == null) return;
 
+
+        switch (type)
+        {
+            case MaterialInputType.Filled:
+                _editor.VerticalOptions = LayoutOptions.End;
 #if ANDROID
-        switch (type)
-        {
-            case MaterialInputType.Filled:
-                _editor.VerticalOptions = LayoutOptions.End;
-                _editor.Margin = new Thickness(0, 0, 0, -8);
-                break;
-            case MaterialInputType.Outlined:
-                _editor.VerticalOptions = LayoutOptions.Center;
-                _editor.Margin = new Thickness(0, -7.5);
-                break;
-        }
-
+                _editor.Margin = new Thickness(0, 0, 0, -15);
 #elif IOS || MACCATALYST
-
-        switch (type)
-        {
-            case MaterialInputType.Filled:
-                _editor.VerticalOptions = LayoutOptions.End;
                 if (HeightRequest <= 48)
-                    _editor.Margin = new Thickness(-5, 0, 0, -8);
+                    _editor.Margin = new Thickness(-5, 0, 0, -15);
+#endif
                 break;
             case MaterialInputType.Outlined:
                 _editor.VerticalOptions = LayoutOptions.Center;
+#if ANDROID
+                _editor.Margin = new Thickness(-3, -7.5, 0, -7.5);
+#elif IOS || MACCATALYST
                 if (HeightRequest <= 48)
                     _editor.Margin = new Thickness(-5, -7.5);
+#endif
                 break;
         }
-#endif
     }
 
     protected override void SetControlIsEnabled()

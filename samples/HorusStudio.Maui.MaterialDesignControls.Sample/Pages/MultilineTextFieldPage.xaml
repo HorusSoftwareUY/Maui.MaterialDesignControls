@@ -25,18 +25,19 @@
                 <VerticalStackLayout>
                     <material:MaterialMultilineTextField 
                         Type="Outlined"
+                        AutoSize="Disabled"
                         Placeholder="Enter text here" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." />
+            <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, auto size by default is Enabled, but in this example is disabeld." />
             
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using commands and some configuration" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialMultilineTextField 
                         Type="Filled"
-                        Keyboard="Numeric"
-                        LeadingIconSource="ic_search.png"
+                        Keyboard="Email"
+                        LeadingIconSource="info.png"
                         LeadingIconCommand="{Binding LeadingActionCommand}"
                         Focused="MaterialTextField_Focused"
                         Unfocused="MaterialTextField_Focused"
@@ -49,10 +50,16 @@
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and other properties" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
+                    <!--TODO: fix height request--> 
+                    <!--TODO: add text vertical aligment-->
                     <material:MaterialMultilineTextField 
-                        MaxLength="10"
+                        MaxLength="100"
                         Type="Outlined"
+                        VerticalTextAlignment="End"
+                        HorizontalTextAlignment="Start"
                         TextColor="DarkGoldenrod"
+                        HeightRequest="100"
+                        AutoSize="Disabled"
                         LabelColor="DarkGreen"
                         BorderColor="DarkGray"
                         PlaceholderColor="DarkBlue"
@@ -60,7 +67,6 @@
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set a max length." />
-            
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
@@ -102,17 +108,6 @@
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="You can set read only." />
-            
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Auto size" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <VerticalStackLayout>
-                    <material:MaterialMultilineTextField 
-                        Type="Outlined"
-                        AutoSize="TextChanges"
-                        Placeholder="Enter text here" />
-                </VerticalStackLayout>
-            </Frame>
-            <material:MaterialLabel Text="You can set auto size." />
 
         </VerticalStackLayout>
     </ScrollView>
