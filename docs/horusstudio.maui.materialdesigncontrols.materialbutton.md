@@ -14,6 +14,8 @@ Gets or sets an animation to be executed when button is clicked.
 
 Property Type: [AnimationTypes](./horusstudio.maui.materialdesigncontrols.animationtypes.md)<br>
 
+Default: The default value is [AnimationTypes.Fade](./horusstudio.maui.materialdesigncontrols.animationtypes.md#fade).
+
 ### <a id="properties-animationparameter"/>**AnimationParameter**
 
 Gets or sets the parameter to pass to the [MaterialButton.Animation](./horusstudio.maui.materialdesigncontrols.materialbutton.md#animation) property.

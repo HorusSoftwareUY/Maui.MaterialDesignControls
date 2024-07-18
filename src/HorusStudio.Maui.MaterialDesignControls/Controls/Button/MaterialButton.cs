@@ -579,6 +579,9 @@ public class MaterialButton : ContentView, ITouchable
     /// The default value is <see cref="AnimationTypes.Fade"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// The default value is <see cref="AnimationTypes.Fade"/>.
+    /// </default>
     public AnimationTypes Animation
     {
         get => (AnimationTypes)GetValue(AnimationProperty);
