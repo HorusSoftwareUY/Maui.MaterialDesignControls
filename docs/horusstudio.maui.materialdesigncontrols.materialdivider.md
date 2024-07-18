@@ -10,7 +10,7 @@ Namespace: HorusStudio.Maui.MaterialDesignControls
 
 Gets or sets the [MaterialDivider.Color](./horusstudio.maui.materialdesigncontrols.materialdivider.md#color) of the divider. This is a bindable property.
 
-Property Type: Color<br>
+Property type: Color<br>
 
 ### <a id="properties-heightrequest"/>**HeightRequest**
 
@@ -18,4 +18,4 @@ Gets or sets the desired height override of this element.
  The default value is 1.
  This is a bindable property.
 
-Property Type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>

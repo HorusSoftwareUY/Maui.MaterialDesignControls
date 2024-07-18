@@ -11,9 +11,13 @@ public enum MaterialButtonType
     Elevated, 
     /// <summary>Filled button</summary>
     Filled, 
+    /// <summary>Filled tonal button</summary>
     Tonal, 
+    /// <summary>Outlined button</summary>
     Outlined, 
+    /// <summary>Text button</summary>
     Text, 
+    /// <summary>Custom button</summary>
     Custom
 }
 
