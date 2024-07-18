@@ -4,9 +4,17 @@ using static Microsoft.Maui.Controls.Button;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+
 public enum MaterialButtonType
 {
-    Elevated, Filled, Tonal, Outlined, Text, Custom
+    /// <summary>Elevated button</summary>
+    Elevated, 
+    /// <summary>Filled button</summary>
+    Filled, 
+    Tonal, 
+    Outlined, 
+    Text, 
+    Custom
 }
 
 /// <summary>

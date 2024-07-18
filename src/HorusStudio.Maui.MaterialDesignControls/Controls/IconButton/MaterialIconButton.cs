@@ -386,6 +386,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <value>Default null</value>
     public double? AnimationParameter
     {
         get => (double?)GetValue(AnimationParameterProperty);
