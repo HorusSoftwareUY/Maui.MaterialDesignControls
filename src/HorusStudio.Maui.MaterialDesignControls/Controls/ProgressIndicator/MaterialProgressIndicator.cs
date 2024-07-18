@@ -122,8 +122,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public MaterialProgressIndicatorType Type
         {
-            get { return (MaterialProgressIndicatorType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
+            get => (MaterialProgressIndicatorType)GetValue(TypeProperty);
+            set => SetValue(TypeProperty, value);
         }
 
         /// <summary>
@@ -131,8 +131,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public Color IndicatorColor
         {
-            get { return (Color)GetValue(IndicatorColorProperty); }
-            set { SetValue(IndicatorColorProperty, value); }
+            get => (Color)GetValue(IndicatorColorProperty);
+            set => SetValue(IndicatorColorProperty, value);
         }
 
         /// <summary>
@@ -141,8 +141,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <remarks>This property will not have an effect unless <see cref="MaterialProgressIndicator.Type" /> is set to <see cref="MaterialProgressIndicatorType.Linear"/>.</remarks>
         public Color TrackColor
         {
-            get { return (Color)GetValue(TrackColorProperty); }
-            set { SetValue(TrackColorProperty, value); }
+            get => (Color)GetValue(TrackColorProperty);
+            set => SetValue(TrackColorProperty, value);
         }
 
         /// <summary>

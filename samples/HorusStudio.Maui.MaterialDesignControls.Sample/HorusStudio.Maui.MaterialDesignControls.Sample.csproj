@@ -51,6 +51,7 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Resources\Images\on_error.svg" />
 	  <None Remove="Resources\Images\radio_button_checked.svg" />
 	  <None Remove="Resources\Images\radio_button_unchecked.svg" />
 	</ItemGroup>
@@ -68,10 +69,16 @@
 	  <Compile Update="Pages\RadioButtonPage.xaml.cs">
 	    <DependentUpon>RadioButtonPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\MultilineTextFieldPage.xaml.cs">
+	    <DependentUpon>MultilineTextFieldPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Pages\RadioButtonPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\MultilineTextFieldPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

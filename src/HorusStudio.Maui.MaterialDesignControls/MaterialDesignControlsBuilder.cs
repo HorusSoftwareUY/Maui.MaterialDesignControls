@@ -1,4 +1,4 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Utils;
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.LifecycleEvents;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -18,6 +18,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
             handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
+            handlers.AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler));
+            handlers.AddHandler(typeof(CustomEditor), typeof(CustomEditorHandler));
         }
 
         private static void ConfigureLifeCycleEvents(ILifecycleBuilder appLifeCycle)
@@ -62,6 +64,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialIconButton.GetStyles());
             // Radio Button
             application.Resources.AddStyles(MaterialRadioButton.GetStyles());
+            // MaterialTextField
+            application.Resources.AddStyles(MaterialTextField.GetStyles());
+            // Multiline Text Field
+            application.Resources.AddStyles(MaterialMultilineTextField.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
