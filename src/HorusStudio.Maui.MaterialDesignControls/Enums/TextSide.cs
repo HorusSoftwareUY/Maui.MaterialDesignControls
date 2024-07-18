@@ -2,5 +2,8 @@
 
 public enum TextSide
 {
-    Right, Left
+    /// <summary> Right </summary>
+    Right,
+    /// <summary> Left </summary>
+    Left
 }

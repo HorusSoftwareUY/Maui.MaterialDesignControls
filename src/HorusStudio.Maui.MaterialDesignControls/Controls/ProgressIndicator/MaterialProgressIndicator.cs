@@ -4,7 +4,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
 {
     public enum MaterialProgressIndicatorType
     {
-        Circular, Linear
+        /// <summary> Circular </summary>
+        Circular, 
+        /// <summary> Linear </summary>
+        Linear
     }
 
     /// <summary>
@@ -118,8 +121,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets the progress indicator type according to <see cref="MaterialProgressIndicatorType"/> enum.
-        /// The default value is <see cref="MaterialProgressIndicatorType.Circular"/>. This is a bindable property.
+        /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see cref="MaterialProgressIndicatorType.Circular"/>
+        /// </default>
         public MaterialProgressIndicatorType Type
         {
             get => (MaterialProgressIndicatorType)GetValue(TypeProperty);
@@ -147,9 +153,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets if progress indicator is visible.
-        /// The default value is <see langword="true"/>.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// True
+        /// </default>
         public new bool IsVisible
         {
             get => (bool)GetValue(IsVisibleProperty);

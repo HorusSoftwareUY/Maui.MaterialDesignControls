@@ -258,8 +258,11 @@ public class MaterialIconButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets the button type according to <see cref="MaterialIconButtonType"/> enum.
-    /// The default value is <see cref="MaterialIconButtonType.Filled"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialIconButtonType.Filled"/>
+    /// </default>
     public MaterialIconButtonType Type
     {
         get => (MaterialIconButtonType)GetValue(TypeProperty);
@@ -267,7 +270,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the command to invoke when the button is activated. This is a bindable property.
+    /// Gets or sets the command to invoke when the button is activated.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
     public ICommand Command
@@ -278,8 +282,11 @@ public class MaterialIconButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Null
+    /// </default>
     public object CommandParameter
     {
         get => GetValue(CommandParameterProperty);
@@ -287,7 +294,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the padding for the button. This is a bindable property.
+    /// Gets or sets the padding for the button.
+    /// This is a bindable property.
     /// </summary>
     public new Thickness Padding
     {
@@ -296,7 +304,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets a <see cref="Brush"/> that describes the background of the button. This is a bindable property.
+    /// Gets or sets a <see cref="Brush"/> that describes the background of the button.
+    /// This is a bindable property.
     /// </summary>
     public new Brush Background
     {
@@ -305,7 +314,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the background color of the button. This is a bindable property.
+    /// Gets or sets a color that describes the background color of the button.
+    /// This is a bindable property.
     /// </summary>
     public new Color BackgroundColor
     {
@@ -314,7 +324,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the border stroke color of the button. This is a bindable property.
+    /// Gets or sets a color that describes the border stroke color of the button.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0. On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor" /> is set to a non-default color.</remarks>
     public Color BorderColor
@@ -324,7 +335,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the corner radius for the button, in device-independent units. This is a bindable property.
+    /// Gets or sets the corner radius for the button, in device-independent units.
+    /// This is a bindable property.
     /// </summary>
     public int CornerRadius
     {
@@ -333,7 +345,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the width of the border, in device-independent units. This is a bindable property.
+    /// Gets or sets the width of the border, in device-independent units.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>Set this value to a non-zero value in order to have a visible border.</remarks>
     public double BorderWidth
@@ -343,7 +356,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image on the Button. This is a bindable property.
+    /// Allows you to display a bitmap image on the Button.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
     public ImageSource ImageSource
@@ -353,7 +367,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
  
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// This is a bindable property.
     /// </summary>
     public Color IconTintColor
     {
@@ -362,7 +377,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// This is a bindable property.
     /// </summary>
     public Color TintColor
     {
@@ -372,9 +388,11 @@ public class MaterialIconButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets an animation to be executed when button is clicked.
-    /// The default value is <see cref="AnimationTypes.Fade"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="AnimationTypes.Fade"/>
+    /// </default>
     public AnimationTypes Animation
     {
         get => (AnimationTypes)GetValue(AnimationProperty);
@@ -383,10 +401,11 @@ public class MaterialIconButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-    /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
-    /// <value>Default null</value>
+    /// <default>
+    /// Null
+    /// </default>
     public double? AnimationParameter
     {
         get => (double?)GetValue(AnimationParameterProperty);
@@ -395,9 +414,11 @@ public class MaterialIconButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets a custom animation to be executed when button is clicked.
-    /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Null
+    /// </default>
     public ICustomAnimation CustomAnimation
     {
         get => (ICustomAnimation)GetValue(CustomAnimationProperty);
@@ -405,10 +426,14 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the desired height override of this element. This is a bindable property.
+    /// Gets or sets the desired height override of this element.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>
-    /// <para>The default value is -1, which means the value is unset; the effective minimum height will be zero.</para>
+    /// <default>
+    /// -1
+    /// </default>
+    /// <para>Which means the value is unset; the effective minimum height will be zero.</para>
     /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
     /// </remarks>
     public new double HeightRequest
@@ -418,10 +443,14 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the desired width override of this element. This is a bindable property.
+    /// Gets or sets the desired width override of this element.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// -1
+    /// </default>
     /// <remarks>
-    /// <para>The default value is -1, which means the value is unset; the effective minimum width will be zero.</para>
+    /// <para>Which means the value is unset; the effective minimum width will be zero.</para>
     /// <para><see cref="WidthRequest"/> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest"/> will change the resulting width of the element during the next layout pass.</para>
     /// </remarks>
     public new double WidthRequest
@@ -432,9 +461,11 @@ public class MaterialIconButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets if button is on busy state (executing Command).
-    /// The default value is <see langword="false"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// False
+    /// </default>
     public bool IsBusy
     {
         get => (bool)GetValue(IsBusyProperty);
@@ -472,7 +503,8 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the shadow effect cast by the element. This is a bindable property.
+    /// Gets or sets the shadow effect cast by the element.
+    /// This is a bindable property.
     /// </summary>
     public new Shadow Shadow
     {

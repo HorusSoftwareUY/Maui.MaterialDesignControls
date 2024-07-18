@@ -2,6 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// Use a text field when someone needs to enter text into a UI, such as filling in contact or payment information.
+/// </summary>
 public class MaterialMultilineTextField : MaterialInputBase
 {
     //TODO [iOS] FontAttributes doesn´t work
@@ -157,8 +160,11 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Null
+    /// </default>
     public string Text
     {
         get => (string)GetValue(TextProperty);
@@ -231,9 +237,13 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     /// <summary>
     /// Determines whether or not the font of this entry should scale automatically according
-    /// to the operating system settings. Default value is true. This is a bindable property.
+    /// to the operating system settings.
+    /// This is a bindable property.
     /// Default value is true
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
     /// <remarks>
     /// Typically this should always be enabled for accessibility reasons.
     /// </remarks>
@@ -245,8 +255,10 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     /// <summary>
     /// Determines whether text prediction and automatic text correction is enabled.
-    /// Default value is true.
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
     public bool IsTextPredictionEnabled
     {
         get => (bool)GetValue(IsTextPredictionEnabledProperty);
@@ -255,10 +267,9 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     /// <summary>
     /// Gets or sets a value that controls whether spell checking is enabled.
-    /// <value>true if spell checking is enabled. Otherwise false.</value>
     /// </summary>
     /// <remarks>
-    /// To be added.
+    /// true if spell checking is enabled. Otherwise false.
     /// </remarks>
     public bool IsSpellCheckEnabled
     {
@@ -270,10 +281,9 @@ public class MaterialMultilineTextField : MaterialInputBase
     /// Gets or sets a value that indicates the number of device-independent units that
     /// should be in between characters in the text displayed by the Entry. Applies to
     /// Text and Placeholder.
-    /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
     /// <remarks>
-    /// To be added.
+    /// The number of device-independent units that should be in between characters in the text.
     /// </remarks>
     public double CharacterSpacing
     {

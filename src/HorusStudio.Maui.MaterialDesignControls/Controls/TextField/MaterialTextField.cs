@@ -2,6 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// Use a text field when someone needs to enter text into a UI, such as filling in contact or payment information.
+/// </summary>
 public class MaterialTextField : MaterialInputBase
 {
     //TODO [iOS] FontAttributes doesn´t work
@@ -183,8 +186,11 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>.
+    /// </default>
     public string Text
     {
         get => (string)GetValue(TextProperty);
@@ -192,7 +198,8 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets if the input is password. This is a bindable property.
+    /// Gets or sets if the input is password.
+    /// This is a bindable property.
     /// </summary>
     public bool IsPassword
     {
@@ -201,7 +208,8 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets input's keyboard. This is a bindable property.
+    /// Gets or sets input's keyboard.
+    /// This is a bindable property.
     /// </summary>
     public Keyboard Keyboard
     {
@@ -210,7 +218,8 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets input's texttransform. This is a bindable property.
+    /// Gets or sets input's texttransform.
+    /// This is a bindable property.
     /// </summary>
     public TextTransform TextTransform
     {
@@ -219,7 +228,8 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    ///  Determines what the return key on the on-screen keyboard should look like. This is a bindable property.
+    ///  Determines what the return key on the on-screen keyboard should look like.
+    /// This is a bindable property.
     /// </summary>
     public ReturnType ReturnType
     {
@@ -229,7 +239,8 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Gets or sets the command to run when the user presses the return key, either
-    /// physically or on the on-screen keyboard. This is a bindable property.
+    /// physically or on the on-screen keyboard.
+    /// This is a bindable property.
     /// </summary>
     public ICommand ReturnCommand
     {
@@ -239,7 +250,8 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Gets or sets the parameter object for the Microsoft.Maui.Controls.Entry.ReturnCommand
-    /// that can be used to provide extra information. This is a bindable property.
+    /// that can be used to provide extra information.
+    /// This is a bindable property.
     /// </summary>
     public object ReturnCommandParameter
     {
@@ -248,7 +260,8 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets input's max length. This is a bindable property.
+    /// Gets or sets input's max length.
+    /// This is a bindable property.
     /// </summary>
     public int MaxLength
     {
@@ -257,7 +270,8 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets input's cursor position. This is a bindable property.
+    /// Gets or sets input's cursor position.
+    /// This is a bindable property.
     /// </summary>
     public int CursorPosition
     {
@@ -266,7 +280,8 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets input's text changed command. This is a bindable property.
+    /// Gets or sets input's text changed command.
+    /// This is a bindable property.
     /// </summary>
     public ICommand TextChangedCommand
     {
@@ -275,7 +290,7 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets the vertical text alignment. This is a bindable property.
+    /// Gets or sets the vertical text alignment.This is a bindable property.
     /// </summary>
     public TextAlignment VerticalTextAlignment
     {
@@ -285,7 +300,8 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Gets or sets a value that indicates whether the font for the text of this entry
-    /// is bold, italic, or neither. This is a bindable property.
+    /// is bold, italic, or neither.
+    /// This is a bindable property.
     /// </summary>
     public FontAttributes FontAttributes
     {
@@ -294,8 +310,8 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Determines the behavior of the clear text button on this entry. This is a bindable
-    /// property.
+    /// Determines the behavior of the clear text button on this entry.
+    /// This is a bindable property.
     /// </summary>
     public ClearButtonVisibility ClearButtonVisibility
     {
@@ -305,9 +321,12 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Determines whether or not the font of this entry should scale automatically according
-    /// to the operating system settings. Default value is true. This is a bindable property.
-    /// Default value is true
+    /// to the operating system settings.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
     /// <remarks>
     /// Typically this should always be enabled for accessibility reasons.
     /// </remarks>
@@ -319,8 +338,10 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Determines whether text prediction and automatic text correction is enabled.
-    /// Default value is true.
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
     public bool IsTextPredictionEnabled
     {
         get => (bool)GetValue(IsTextPredictionEnabledProperty);
@@ -329,10 +350,9 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Gets or sets a value that controls whether spell checking is enabled.
-    /// <value>true if spell checking is enabled. Otherwise false.</value>
     /// </summary>
     /// <remarks>
-    /// To be added.
+    /// True if spell checking is enabled. Otherwise false.
     /// </remarks>
     public bool IsSpellCheckEnabled
     {
@@ -344,10 +364,9 @@ public class MaterialTextField : MaterialInputBase
     /// Gets or sets a value that indicates the number of device-independent units that
     /// should be in between characters in the text displayed by the Entry. Applies to
     /// Text and Placeholder.
-    /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
     /// <remarks>
-    /// To be added.
+    /// The number of device-independent units that should be in between characters in the text.
     /// </remarks>
     public double CharacterSpacing
     {
@@ -357,8 +376,10 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Gets or sets a value that indicates whether user should be prevented from modifying the text. Default is false.
-    /// <value>If true, user cannot modify text. Else, false.</value>
     /// </summary>
+    /// <default>
+    /// If true, user cannot modify text. Else, false.
+    /// </default>
     /// <remarks>
     /// The IsReadonly property does not alter the visual appearance of the control,  unlike the IsEnabled property that also changes the visual appearance of the control
     /// </remarks>
@@ -372,7 +393,7 @@ public class MaterialTextField : MaterialInputBase
     /// Gets or sets a color of the caret indicator.
     /// </summary>
     /// <remarks>
-    /// This Property only works on iOS and 'ndroid' 29 or later
+    /// This Property only works on iOS and 'Android' 29 or later
     /// </remarks>
     public Color CursorColor
     {

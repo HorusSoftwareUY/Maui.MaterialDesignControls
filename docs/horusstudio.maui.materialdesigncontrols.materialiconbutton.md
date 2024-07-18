@@ -9,7 +9,6 @@ Namespace: HorusStudio.Maui.MaterialDesignControls
 ### <a id="properties-animation"/>**Animation**
 
 Gets or sets an animation to be executed when button is clicked.
- The default value is [AnimationTypes.Fade](./horusstudio.maui.materialdesigncontrols.animationtypes.md#fade).
  This is a bindable property.
 
 Property type: [AnimationTypes](./horusstudio.maui.materialdesigncontrols.animationtypes.md)<br>
@@ -21,30 +20,35 @@ Property type: [AnimationTypes](./horusstudio.maui.materialdesigncontrols.animat
 | Scale | 2 | Scale animation |
 | Custom | 3 | Custom animation |
 
+Default value: [AnimationTypes.Fade](./horusstudio.maui.materialdesigncontrols.animationtypes.md#fade)
+
 ### <a id="properties-animationparameter"/>**AnimationParameter**
 
 Gets or sets the parameter to pass to the [MaterialIconButton.Animation](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#animation) property.
- The default value is null.
  This is a bindable property.
 
 Property type: [Nullable&lt;Double&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Default null
+
+Default value: Null
 
 ### <a id="properties-background"/>**Background**
 
-Gets or sets a  that describes the background of the button. This is a bindable property.
+Gets or sets a  that describes the background of the button.
+ This is a bindable property.
 
 Property type: Brush<br>
 
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
-Gets or sets a color that describes the background color of the button. This is a bindable property.
+Gets or sets a color that describes the background color of the button.
+ This is a bindable property.
 
 Property type: Color<br>
 
 ### <a id="properties-bordercolor"/>**BorderColor**
 
-Gets or sets a color that describes the border stroke color of the button. This is a bindable property.
+Gets or sets a color that describes the border stroke color of the button.
+ This is a bindable property.
 
 Property type: Color<br>
 
@@ -52,7 +56,8 @@ Remarks: This property has no effect if  is set to 0. On Android this property w
 
 ### <a id="properties-borderwidth"/>**BorderWidth**
 
-Gets or sets the width of the border, in device-independent units. This is a bindable property.
+Gets or sets the width of the border, in device-independent units.
+ This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -74,7 +79,8 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 
 ### <a id="properties-command"/>**Command**
 
-Gets or sets the command to invoke when the button is activated. This is a bindable property.
+Gets or sets the command to invoke when the button is activated.
+ This is a bindable property.
 
 Property type: ICommand<br>
 
@@ -83,23 +89,27 @@ Remarks: This property is used to associate a command with an instance of a butt
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
 Gets or sets the parameter to pass to the [MaterialIconButton.Command](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#command) property.
- The default value is null. This is a bindable property.
+ This is a bindable property.
 
 Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
 
+Default value: Null
+
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
-Gets or sets the corner radius for the button, in device-independent units. This is a bindable property.
+Gets or sets the corner radius for the button, in device-independent units.
+ This is a bindable property.
 
 Property type: [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### <a id="properties-customanimation"/>**CustomAnimation**
 
 Gets or sets a custom animation to be executed when button is clicked.
- The default value is null.
  This is a bindable property.
 
 Property type: [ICustomAnimation](./horusstudio.maui.materialdesigncontrols.icustomanimation.md)<br>
+
+Default value: Null
 
 ### <a id="properties-custombusyindicator"/>**CustomBusyIndicator**
 
@@ -110,23 +120,28 @@ Property type: View<br>
 
 ### <a id="properties-heightrequest"/>**HeightRequest**
 
-Gets or sets the desired height override of this element. This is a bindable property.
+Gets or sets the desired height override of this element.
+ This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-Remarks: The default value is -1, which means the value is unset; the effective minimum height will be zero.
+Remarks: -1
+
+Which means the value is unset; the effective minimum height will be zero.
 
 [MaterialIconButton.HeightRequest](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#heightrequest) does not immediately change the Bounds of an element; setting the [MaterialIconButton.HeightRequest](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#heightrequest) will change the resulting height of the element during the next layout pass.
 
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
-Gets or sets the  for the text of the button. This is a bindable property.
+Gets or sets the  for the text of the button.
+ This is a bindable property.
 
 Property type: Color<br>
 
 ### <a id="properties-imagesource"/>**ImageSource**
 
-Allows you to display a bitmap image on the Button. This is a bindable property.
+Allows you to display a bitmap image on the Button.
+ This is a bindable property.
 
 Property type: ImageSource<br>
 
@@ -135,48 +150,57 @@ Remarks: For more options have a look at .
 ### <a id="properties-isbusy"/>**IsBusy**
 
 Gets or sets if button is on busy state (executing Command).
- The default value is false.
  This is a bindable property.
 
 Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
+Default value: False
+
 ### <a id="properties-padding"/>**Padding**
 
-Gets or sets the padding for the button. This is a bindable property.
+Gets or sets the padding for the button.
+ This is a bindable property.
 
 Property type: Thickness<br>
 
 ### <a id="properties-shadow"/>**Shadow**
 
-Gets or sets the shadow effect cast by the element. This is a bindable property.
+Gets or sets the shadow effect cast by the element.
+ This is a bindable property.
 
 Property type: Shadow<br>
 
 ### <a id="properties-tintcolor"/>**TintColor**
 
-Gets or sets the  for the text of the button. This is a bindable property.
+Gets or sets the  for the text of the button.
+ This is a bindable property.
 
 Property type: Color<br>
 
 ### <a id="properties-type"/>**Type**
 
 Gets or sets the button type according to [MaterialIconButtonType](./horusstudio.maui.materialdesigncontrols.materialiconbuttontype.md) enum.
- The default value is [MaterialIconButtonType.Filled](./horusstudio.maui.materialdesigncontrols.materialiconbuttontype.md#filled). This is a bindable property.
+ This is a bindable property.
 
 Property type: [MaterialIconButtonType](./horusstudio.maui.materialdesigncontrols.materialiconbuttontype.md)<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
 
+Default value: [MaterialIconButtonType.Filled](./horusstudio.maui.materialdesigncontrols.materialiconbuttontype.md#filled)
+
 ### <a id="properties-widthrequest"/>**WidthRequest**
 
-Gets or sets the desired width override of this element. This is a bindable property.
+Gets or sets the desired width override of this element.
+ This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-Remarks: The default value is -1, which means the value is unset; the effective minimum width will be zero.
+Remarks: Which means the value is unset; the effective minimum width will be zero.
 
 [MaterialIconButton.WidthRequest](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#widthrequest) does not immediately change the Bounds of an element; setting the [MaterialIconButton.HeightRequest](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#heightrequest) will change the resulting width of the element during the next layout pass.
+
+Default value: -1
 
 ## Events
 

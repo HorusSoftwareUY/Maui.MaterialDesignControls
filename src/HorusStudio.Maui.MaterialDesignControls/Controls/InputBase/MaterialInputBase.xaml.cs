@@ -6,12 +6,30 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 public enum MaterialInputType
 {
-    Filled, Outlined
+    /// <summary> Filled </summary>
+    Filled, 
+    /// <summary> Outlined </summary>
+    Outlined
 }
 
 public enum MaterialInputTypeStates
 {
-    FilledDisabled, FilledFocused, FilledNormal, OutlinedDisabled, OutlinedFocused, OutlinedNormal, Error, ErrorFocused
+    /// <summary> Filled disabled </summary>
+    FilledDisabled, 
+    /// <summary> Filled focused </summary>
+    FilledFocused, 
+    /// <summary> Filled normal </summary>
+    FilledNormal, 
+    /// <summary> Outlined disabled </summary>
+    OutlinedDisabled, 
+    /// <summary> Outlined focused </summary>
+    OutlinedFocused, 
+    /// <summary> Outlined normal </summary>
+    OutlinedNormal, 
+    /// <summary> Error </summary>
+    Error, 
+    /// <summary> Error focused </summary>
+    ErrorFocused
 }
 
 public abstract partial class MaterialInputBase : ContentView
@@ -314,8 +332,11 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the input type according to <see cref="MaterialInputType"/> enum.
-    /// The default value is <see cref="MaterialInputType.Filled"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialInputType.Filled"/>
+    /// </default>
     public MaterialInputType Type
     {
         get => (MaterialInputType)GetValue(TypeProperty);
@@ -323,7 +344,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets if the input is enabled or diabled. This is a bindable property.
+    /// Gets or sets if the input is enabled or diabled.
+    /// This is a bindable property.
     /// </summary>
     public new bool IsEnabled
     {
@@ -332,7 +354,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a <see cref="Brush"/> that describes the background of the input. This is a bindable property.
+    /// Gets or sets a <see cref="Brush"/> that describes the background of the input.
+    /// This is a bindable property.
     /// </summary>
     public new Brush Background
     {
@@ -341,7 +364,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the background color of the input. This is a bindable property.
+    /// Gets or sets a color that describes the background color of the input.
+    /// This is a bindable property.
     /// </summary>
     public new Color BackgroundColor
     {
@@ -350,7 +374,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the border stroke color of the input. This is a bindable property.
+    /// Gets or sets a color that describes the border stroke color of the input.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0. On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor" /> is set to a non-default color.</remarks>
     public Color BorderColor
@@ -360,7 +385,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the corner radius for the input, in device-independent units. This is a bindable property.
+    /// Gets or sets the corner radius for the input, in device-independent units.
+    /// This is a bindable property.
     /// </summary>
     public CornerRadius CornerRadius
     {
@@ -369,7 +395,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the width of the border, in device-independent units. This is a bindable property.
+    /// Gets or sets the width of the border, in device-independent units.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>Set this value to a non-zero value in order to have a visible border.</remarks>
     public double BorderWidth
@@ -379,7 +406,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a leading icon (bitmap image) on the input. This is a bindable property.
+    /// Allows you to display a leading icon (bitmap image) on the input.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
     public ImageSource LeadingIconSource
@@ -389,7 +417,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a trailing icon (bitmap image) on the input. This is a bindable property.
+    /// Allows you to display a trailing icon (bitmap image) on the input.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
     public ImageSource TrailingIconSource
@@ -400,8 +429,11 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the text displayed as the placeholder of the input.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public string Placeholder
     {
         get => (string)GetValue(PlaceholderProperty);
@@ -410,8 +442,11 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the text displayed as the label of the input.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public string Label
     {
         get => (string)GetValue(LabelProperty);
@@ -420,8 +455,11 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the text displayed as the supporting text of the input.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public string SupportingText
     {
         get => (string)GetValue(SupportingTextProperty);
@@ -429,7 +467,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the input. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the text of the input.
+    /// This is a bindable property.
     /// </summary>
     public Color TextColor
     {
@@ -439,7 +478,8 @@ public abstract partial class MaterialInputBase : ContentView
 
 #nullable enable
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the leading button icon of the input. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the leading button icon of the input.
+    /// This is a bindable property.
     /// </summary>
     public Color? LeadingIconTintColor
     {
@@ -450,7 +490,8 @@ public abstract partial class MaterialInputBase : ContentView
 
 #nullable enable
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the trailing button icon of the input. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the trailing button icon of the input.
+    /// This is a bindable property.
     /// </summary>
     public Color? TrailingIconTintColor
     {
@@ -467,7 +508,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the horizontal text alignment for the input. This is a bindable property.
+    /// Gets or sets the horizontal text alignment for the input.
+    /// This is a bindable property.
     /// </summary>
     public TextAlignment HorizontalTextAlignment
     {
@@ -482,7 +524,8 @@ public abstract partial class MaterialInputBase : ContentView
     public ICommand InputTapCommand { get; set; }
 
     /// <summary>
-    /// Gets or sets the font family for the input. This is a bindable property.
+    /// Gets or sets the font family for the input.
+    /// This is a bindable property.
     /// </summary>
     public string FontFamily
     {
@@ -491,7 +534,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font size for the input. This is a bindable property.
+    /// Gets or sets the font size for the input.
+    /// This is a bindable property.
     /// </summary>
     public double FontSize
     {
@@ -500,7 +544,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the place holder color for the input. This is a bindable property.
+    /// Gets or sets the place holder color for the input.
+    /// This is a bindable property.
     /// </summary>
     public Color PlaceholderColor
     {
@@ -509,7 +554,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the label color. This is a bindable property.
+    /// Gets or sets the label color.
+    /// This is a bindable property.
     /// </summary>
     public Color LabelColor
     {
@@ -518,7 +564,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the label size. This is a bindable property.
+    /// Gets or sets the label size.
+    /// This is a bindable property.
     /// </summary>
     public double LabelSize
     {
@@ -527,7 +574,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the label font family. This is a bindable property.
+    /// Gets or sets the label font family.
+    /// This is a bindable property.
     /// </summary>
     public string LabelFontFamily
     {
@@ -537,8 +585,10 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the label margin. This is a bindable property.
-    /// The default value is <value>0</value>
     /// </summary>
+    /// <default>
+    /// 0
+    /// </default>
     public Thickness LabelMargin
     {
         get => (Thickness)GetValue(LabelMarginProperty);
@@ -547,8 +597,10 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the label line break mode. This is a bindable property.
-    /// The default value is <value><see cref="LineBreakMode.NoWrap"/></value>
     /// </summary>
+    /// <default>
+    /// <see cref="LineBreakMode.NoWrap"/>
+    /// </default>
     public LineBreakMode LabelLineBreakMode
     {
         get => (LineBreakMode)GetValue(LabelLineBreakModeProperty);
@@ -556,7 +608,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the supporting text color. This is a bindable property.
+    /// Gets or sets the supporting text color.
+    /// This is a bindable property.
     /// </summary>
     public Color SupportingTextColor
     {
@@ -565,7 +618,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font family for the input. This is a bindable property.
+    /// Gets or sets the font family for the input.
+    /// This is a bindable property.
     /// </summary>
     public string SupportingFontFamily
     {
@@ -574,7 +628,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font size for the input. This is a bindable property.
+    /// Gets or sets the font size for the input.
+    /// This is a bindable property.
     /// </summary>
     public double SupportingFontSize
     {
@@ -583,9 +638,12 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the label margin. This is a bindable property.
-    /// The default value is <value>Thickness(16, 4)</value>
+    /// Gets or sets the label margin.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Thickness(16, 4)
+    /// </default>
     public Thickness SupportingMargin
     {
         get => (Thickness)GetValue(SupportingMarginProperty);
@@ -594,8 +652,10 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the supporting line break mode. This is a bindable property.
-    /// The default value is <value><see cref="LineBreakMode.NoWrap"/></value>
     /// </summary>
+    /// <default>
+    /// <see cref="LineBreakMode.NoWrap"/>
+    /// </default>
     public LineBreakMode SupportingLineBreakMode
     {
         get => (LineBreakMode)GetValue(SupportingLineBreakModeProperty);
@@ -603,7 +663,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a Leading icon command. This is a bindable property.
+    /// Gets or sets a Leading icon command.
+    /// This is a bindable property.
     /// </summary>
     public ICommand LeadingIconCommand
     {
@@ -612,7 +673,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a Leading icon command parameter. This is a bindable property.
+    /// Gets or sets a Leading icon command parameter.
+    /// This is a bindable property.
     /// </summary>
     public object LeadingIconCommandParameter
     {
@@ -621,7 +683,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a Trailing Icon command. This is a bindable property.
+    /// Gets or sets a Trailing Icon command.
+    /// This is a bindable property.
     /// </summary>
     public ICommand TrailingIconCommand
     {
@@ -630,7 +693,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a Trailing Icon command parameter. This is a bindable property.
+    /// Gets or sets a Trailing Icon command parameter.
+    /// This is a bindable property.
     /// </summary>
     public object TrailingIconCommandParameter
     {
@@ -639,7 +703,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a focused command. This is a bindable property.
+    /// Gets or sets a focused command.
+    /// This is a bindable property.
     /// </summary>
     public ICommand FocusedCommand
     {
@@ -648,7 +713,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a unfocused command. This is a bindable property.
+    /// Gets or sets a unfocused command.
+    /// This is a bindable property.
     /// </summary>
     public ICommand UnfocusedCommand
     {
@@ -657,7 +723,8 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets if the input has an error. This is a bindable property.
+    /// Gets or sets if the input has an error.
+    /// This is a bindable property.
     /// </summary>
     public bool HasError
     {
@@ -666,9 +733,12 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets if show the trailing icon only on error. This is a bindable property.
-    /// <value>The default value is false.</value>
+    /// Gets or sets if show the trailing icon only on error.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// False
+    /// </default>
     public bool ShowTrailingIconOnlyOnError
     {
         get => (bool)GetValue(ShowTrailingIconOnlyOnErrorProperty);

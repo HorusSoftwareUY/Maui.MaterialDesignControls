@@ -39,9 +39,11 @@
 
         /// <summary>
         /// Gets or sets the desired height override of this element.
-        /// The default value is 1.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// 1
+        /// </default>
         public new double HeightRequest
         {
             get => (double)GetValue(HeightRequestProperty);
