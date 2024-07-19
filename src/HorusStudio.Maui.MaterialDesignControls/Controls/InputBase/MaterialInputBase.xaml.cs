@@ -599,7 +599,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// Gets or sets the label line break mode. This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="LineBreakMode.NoWrap"/>
+    /// LineBreakMode.NoWrap
     /// </default>
     public LineBreakMode LabelLineBreakMode
     {
@@ -654,7 +654,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// Gets or sets the supporting line break mode. This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="LineBreakMode.NoWrap"/>
+    /// LineBreakMode.NoWrap
     /// </default>
     public LineBreakMode SupportingLineBreakMode
     {

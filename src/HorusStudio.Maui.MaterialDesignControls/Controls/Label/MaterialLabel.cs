@@ -35,7 +35,7 @@
     }
 
     /// <summary>
-    /// A label <see cref="View" /> that helps make writing legible and beautiful, and follows Material Design Guidelines <see href="https://m3.material.io/styles/typography/overview" />.
+    /// A label <see cref="View" /> that helps make writing legible and beautiful, and follows Material Design Guidelines <see href="https://m3.material.io/styles/typography/overview">See here. </see>.
     /// </summary>
     public class MaterialLabel : Label
     {

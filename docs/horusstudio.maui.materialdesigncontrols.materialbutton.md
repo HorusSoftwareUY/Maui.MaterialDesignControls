@@ -1,6 +1,6 @@
 # MaterialButton
 
-A button  that reacts to touch events and follows Material Design Guidelines .
+A button  that reacts to touch events and follows Material Design Guidelines [See here. ](https://m3.material.io/components/buttons/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -11,7 +11,7 @@ Namespace: HorusStudio.Maui.MaterialDesignControls
 Gets or sets an animation to be executed when button is clicked.
  This is a bindable property.
 
-Property type: [AnimationTypes](./horusstudio.maui.materialdesigncontrols.animationtypes.md)<br>
+Property type: AnimationTypes<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
@@ -20,11 +20,11 @@ Property type: [AnimationTypes](./horusstudio.maui.materialdesigncontrols.animat
 | Scale | 2 | Scale animation |
 | Custom | 3 | Custom animation |
 
-Default value: [AnimationTypes.Fade](./horusstudio.maui.materialdesigncontrols.animationtypes.md#fade).
+Default value: AnimationTypes.Fade.
 
 ### <a id="properties-animationparameter"/>**AnimationParameter**
 
-Gets or sets the parameter to pass to the [MaterialButton.Animation](./horusstudio.maui.materialdesigncontrols.materialbutton.md#animation) property.
+Gets or sets the parameter to pass to the MaterialButton.Animation property.
  This is a bindable property.
 
 Property type: [Nullable&lt;Double&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
@@ -79,7 +79,7 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 
 ### <a id="properties-characterspacing"/>**CharacterSpacing**
 
-Gets or sets the spacing between each of the characters of [MaterialButton.Text](./horusstudio.maui.materialdesigncontrols.materialbutton.md#text) when displayed on the button.
+Gets or sets the spacing between each of the characters of MaterialButton.Text when displayed on the button.
  This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
@@ -95,7 +95,7 @@ Remarks: This property is used to associate a command with an instance of a butt
 
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
-Gets or sets the parameter to pass to the [MaterialButton.Command](./horusstudio.maui.materialdesigncontrols.materialbutton.md#command) property.
+Gets or sets the parameter to pass to the MaterialButton.Command property.
 
 Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
 
@@ -120,7 +120,7 @@ Property type: [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)
 Gets or sets a custom animation to be executed when button is clicked.
  This is a bindable property.
 
-Property type: [ICustomAnimation](./horusstudio.maui.materialdesigncontrols.icustomanimation.md)<br>
+Property type: ICustomAnimation<br>
 
 Default value: Null
 
@@ -145,9 +145,9 @@ Determines whether or not the font of this entry should scale automatically acco
 
 Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Remarks: Typically this should always be enabled for accessibility reasons.
-
 Default value: True
+
+Remarks: Typically this should always be enabled for accessibility reasons.
 
 ### <a id="properties-fontfamily"/>**FontFamily**
 
@@ -170,11 +170,11 @@ Gets or sets the desired height override of this element.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
+Default value: -1
+
 Remarks: which means the value is unset; the effective minimum height will be zero.
 
-[MaterialButton.HeightRequest](./horusstudio.maui.materialdesigncontrols.materialbutton.md#heightrequest) does not immediately change the Bounds of an element; setting the [MaterialButton.HeightRequest](./horusstudio.maui.materialdesigncontrols.materialbutton.md#heightrequest) will change the resulting height of the element during the next layout pass.
-
-Default value: -1
+MaterialButton.HeightRequest does not immediately change the Bounds of an element; setting the MaterialButton.HeightRequest will change the resulting height of the element during the next layout pass.
 
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
@@ -203,7 +203,7 @@ Default value: False
 
 ### <a id="properties-linebreakmode"/>**LineBreakMode**
 
-Determines how [MaterialButton.Text](./horusstudio.maui.materialdesigncontrols.materialbutton.md#text) is shown when the length is overflowing the size of this button.
+Determines how MaterialButton.Text is shown when the length is overflowing the size of this button.
  This is a bindable property.
 
 Property type: LineBreakMode<br>
@@ -228,9 +228,9 @@ Gets or sets the text displayed as the content of the button.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-Remarks: Changing the text of a button will trigger a layout cycle.
-
 Default value: Null
+
+Remarks: Changing the text of a button will trigger a layout cycle.
 
 ### <a id="properties-textcolor"/>**TextColor**
 
@@ -241,14 +241,14 @@ Property type: Color<br>
 
 ### <a id="properties-textdecorations"/>**TextDecorations**
 
-Gets or sets [MaterialButton.TextDecorations](./horusstudio.maui.materialdesigncontrols.materialbutton.md#textdecorations) for the text of the button.
+Gets or sets MaterialButton.TextDecorations for the text of the button.
  This is a bindable property.
 
 Property type: TextDecorations<br>
 
 ### <a id="properties-texttransform"/>**TextTransform**
 
-Applies text transformation to the [MaterialButton.Text](./horusstudio.maui.materialdesigncontrols.materialbutton.md#text) displayed on this button.
+Applies text transformation to the MaterialButton.Text displayed on this button.
  This is a bindable property.
 
 Property type: TextTransform<br>
@@ -262,9 +262,9 @@ Property type: Color<br>
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the button type according to [MaterialButtonType](./horusstudio.maui.materialdesigncontrols.materialbuttontype.md) enum.
+Gets or sets the button type according to MaterialButtonType enum.
 
-Property type: [MaterialButtonType](./horusstudio.maui.materialdesigncontrols.materialbuttontype.md)<br>
+Property type: MaterialButtonType<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
@@ -275,7 +275,7 @@ Property type: [MaterialButtonType](./horusstudio.maui.materialdesigncontrols.ma
 | Text | 4 | Text button |
 | Custom | 5 | Custom button |
 
-Default value: [MaterialButtonType.Filled](./horusstudio.maui.materialdesigncontrols.materialbuttontype.md#filled)
+Default value: MaterialButtonType.Filled
 
 ## Events
 

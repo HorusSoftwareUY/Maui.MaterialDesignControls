@@ -33,21 +33,21 @@ Gets or sets the  for the track of the progress indicator. This is a bindable pr
 
 Property type: Color<br>
 
-Remarks: This property will not have an effect unless [MaterialProgressIndicator.Type](./horusstudio.maui.materialdesigncontrols.materialprogressindicator.md#type) is set to [MaterialProgressIndicatorType.Linear](./horusstudio.maui.materialdesigncontrols.materialprogressindicatortype.md#linear).
+Remarks: This property will not have an effect unless MaterialProgressIndicator.Type is set to MaterialProgressIndicatorType.Linear.
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the progress indicator type according to [MaterialProgressIndicatorType](./horusstudio.maui.materialdesigncontrols.materialprogressindicatortype.md) enum.
+Gets or sets the progress indicator type according to MaterialProgressIndicatorType enum.
  This is a bindable property.
 
-Property type: [MaterialProgressIndicatorType](./horusstudio.maui.materialdesigncontrols.materialprogressindicatortype.md)<br>
+Property type: MaterialProgressIndicatorType<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
 | Circular | 0 | Circular |
 | Linear | 1 | Linear |
 
-Default value: [MaterialProgressIndicatorType.Circular](./horusstudio.maui.materialdesigncontrols.materialprogressindicatortype.md#circular)
+Default value: MaterialProgressIndicatorType.Circular
 
 ### <a id="properties-widthrequest"/>**WidthRequest**
 

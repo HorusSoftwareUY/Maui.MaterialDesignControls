@@ -1,6 +1,6 @@
 # MaterialLabel
 
-A label  that helps make writing legible and beautiful, and follows Material Design Guidelines .
+A label  that helps make writing legible and beautiful, and follows Material Design Guidelines [See here. ](https://m3.material.io/styles/typography/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -36,10 +36,10 @@ Property type: Color<br>
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the label type according to [LabelTypes](./horusstudio.maui.materialdesigncontrols.labeltypes.md) enum.
+Gets or sets the label type according to LabelTypes enum.
  This property handle internally the FontFamily, CharacterSpacing and FontSize properties.
 
-Property type: [LabelTypes](./horusstudio.maui.materialdesigncontrols.labeltypes.md)<br>
+Property type: LabelTypes<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
@@ -59,4 +59,4 @@ Property type: [LabelTypes](./horusstudio.maui.materialdesigncontrols.labeltypes
 | LabelMedium | 13 | Tablet: 15, Phone: 12 |
 | LabelSmall | 14 | Tablet: 14, Phone: 11 |
 
-Default value: [LabelTypes.BodyMedium](./horusstudio.maui.materialdesigncontrols.labeltypes.md#bodymedium)
+Default value: LabelTypes.BodyMedium

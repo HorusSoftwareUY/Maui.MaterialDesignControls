@@ -6,11 +6,20 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 public enum MaterialIconButtonType
 {
-    Filled, Tonal, Outlined, Standard, Custom
+    /// <summary> Filled material icon button </summary>
+    Filled, 
+    /// <summary> Tonal material icon button </summary>
+    Tonal, 
+    /// <summary> Outlined material icon button </summary>
+    Outlined, 
+    /// <summary> Standard material icon button </summary>
+    Standard,
+    /// <summary> Custom material icon button </summary>
+    Custom
 }
 
 /// <summary>
-/// An icon button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/icon-buttons/overview" />.
+/// An icon button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/icon-buttons/overview">See here. </see>.
 /// </summary>
 public class MaterialIconButton : ContentView, ITouchable
 {

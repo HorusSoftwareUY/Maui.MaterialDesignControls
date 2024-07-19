@@ -1,6 +1,6 @@
 # MaterialIconButton
 
-An icon button  that reacts to touch events and follows Material Design Guidelines .
+An icon button  that reacts to touch events and follows Material Design Guidelines [See here. ](https://m3.material.io/components/icon-buttons/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -11,7 +11,7 @@ Namespace: HorusStudio.Maui.MaterialDesignControls
 Gets or sets an animation to be executed when button is clicked.
  This is a bindable property.
 
-Property type: [AnimationTypes](./horusstudio.maui.materialdesigncontrols.animationtypes.md)<br>
+Property type: AnimationTypes<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
@@ -20,11 +20,11 @@ Property type: [AnimationTypes](./horusstudio.maui.materialdesigncontrols.animat
 | Scale | 2 | Scale animation |
 | Custom | 3 | Custom animation |
 
-Default value: [AnimationTypes.Fade](./horusstudio.maui.materialdesigncontrols.animationtypes.md#fade)
+Default value: AnimationTypes.Fade
 
 ### <a id="properties-animationparameter"/>**AnimationParameter**
 
-Gets or sets the parameter to pass to the [MaterialIconButton.Animation](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#animation) property.
+Gets or sets the parameter to pass to the MaterialIconButton.Animation property.
  This is a bindable property.
 
 Property type: [Nullable&lt;Double&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
@@ -88,7 +88,7 @@ Remarks: This property is used to associate a command with an instance of a butt
 
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
-Gets or sets the parameter to pass to the [MaterialIconButton.Command](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#command) property.
+Gets or sets the parameter to pass to the MaterialIconButton.Command property.
  This is a bindable property.
 
 Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
@@ -107,7 +107,7 @@ Property type: [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)
 Gets or sets a custom animation to be executed when button is clicked.
  This is a bindable property.
 
-Property type: [ICustomAnimation](./horusstudio.maui.materialdesigncontrols.icustomanimation.md)<br>
+Property type: ICustomAnimation<br>
 
 Default value: Null
 
@@ -129,7 +129,7 @@ Remarks: -1
 
 Which means the value is unset; the effective minimum height will be zero.
 
-[MaterialIconButton.HeightRequest](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#heightrequest) does not immediately change the Bounds of an element; setting the [MaterialIconButton.HeightRequest](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#heightrequest) will change the resulting height of the element during the next layout pass.
+MaterialIconButton.HeightRequest does not immediately change the Bounds of an element; setting the MaterialIconButton.HeightRequest will change the resulting height of the element during the next layout pass.
 
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
@@ -179,15 +179,20 @@ Property type: Color<br>
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the button type according to [MaterialIconButtonType](./horusstudio.maui.materialdesigncontrols.materialiconbuttontype.md) enum.
+Gets or sets the button type according to MaterialIconButtonType enum.
  This is a bindable property.
 
-Property type: [MaterialIconButtonType](./horusstudio.maui.materialdesigncontrols.materialiconbuttontype.md)<br>
+Property type: MaterialIconButtonType<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
+| Filled | 0 | Filled material icon button |
+| Tonal | 1 | Tonal material icon button |
+| Outlined | 2 | Outlined material icon button |
+| Standard | 3 | Standard material icon button |
+| Custom | 4 | Custom material icon button |
 
-Default value: [MaterialIconButtonType.Filled](./horusstudio.maui.materialdesigncontrols.materialiconbuttontype.md#filled)
+Default value: MaterialIconButtonType.Filled
 
 ### <a id="properties-widthrequest"/>**WidthRequest**
 
@@ -196,11 +201,11 @@ Gets or sets the desired width override of this element.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
+Default value: -1
+
 Remarks: Which means the value is unset; the effective minimum width will be zero.
 
-[MaterialIconButton.WidthRequest](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#widthrequest) does not immediately change the Bounds of an element; setting the [MaterialIconButton.HeightRequest](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md#heightrequest) will change the resulting width of the element during the next layout pass.
-
-Default value: -1
+MaterialIconButton.WidthRequest does not immediately change the Bounds of an element; setting the MaterialIconButton.HeightRequest will change the resulting width of the element during the next layout pass.
 
 ## Events
 

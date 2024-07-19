@@ -100,9 +100,9 @@ Determines whether or not the font of this entry should scale automatically acco
 
 Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Remarks: Typically this should always be enabled for accessibility reasons.
-
 Default value: True
+
+Remarks: Typically this should always be enabled for accessibility reasons.
 
 ### <a id="properties-fontfamily"/>**FontFamily**
 
@@ -166,9 +166,9 @@ Gets or sets a value that indicates whether user should be prevented from modify
 
 Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Remarks: The IsReadonly property does not alter the visual appearance of the control, unlike the IsEnabled property that also changes the visual appearance of the control
-
 Default value: If true, user cannot modify text. Else, false.
+
+Remarks: The IsReadonly property does not alter the visual appearance of the control, unlike the IsEnabled property that also changes the visual appearance of the control
 
 ### <a id="properties-isspellcheckenabled"/>**IsSpellCheckEnabled**
 
@@ -222,7 +222,7 @@ Gets or sets the label line break mode. This is a bindable property.
 
 Property type: LineBreakMode<br>
 
-Default value:
+Default value: LineBreakMode.NoWrap
 
 ### <a id="properties-labelmargin"/>**LabelMargin**
 
@@ -260,7 +260,7 @@ Allows you to display a leading icon (bitmap image) on the input.
 
 Property type: ImageSource<br>
 
-Remarks: For more options have a look at [MaterialIconButton](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md).
+Remarks: For more options have a look at MaterialIconButton.
 
 ### <a id="properties-leadingicontintcolor"/>**LeadingIconTintColor**
 
@@ -344,7 +344,7 @@ Gets or sets the supporting line break mode. This is a bindable property.
 
 Property type: LineBreakMode<br>
 
-Default value:
+Default value: LineBreakMode.NoWrap
 
 ### <a id="properties-supportingmargin"/>**SupportingMargin**
 
@@ -422,7 +422,7 @@ Allows you to display a trailing icon (bitmap image) on the input.
 
 Property type: ImageSource<br>
 
-Remarks: For more options have a look at [MaterialIconButton](./horusstudio.maui.materialdesigncontrols.materialiconbutton.md).
+Remarks: For more options have a look at MaterialIconButton.
 
 ### <a id="properties-trailingicontintcolor"/>**TrailingIconTintColor**
 
@@ -433,17 +433,17 @@ Property type: Color<br>
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the input type according to [MaterialInputType](./horusstudio.maui.materialdesigncontrols.materialinputtype.md) enum.
+Gets or sets the input type according to MaterialInputType enum.
  This is a bindable property.
 
-Property type: [MaterialInputType](./horusstudio.maui.materialdesigncontrols.materialinputtype.md)<br>
+Property type: MaterialInputType<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
 | Filled | 0 | Filled |
 | Outlined | 1 | Outlined |
 
-Default value: [MaterialInputType.Filled](./horusstudio.maui.materialdesigncontrols.materialinputtype.md#filled)
+Default value: MaterialInputType.Filled
 
 ### <a id="properties-unfocusedcommand"/>**UnfocusedCommand**
 

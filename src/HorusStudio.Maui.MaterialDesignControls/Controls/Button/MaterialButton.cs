@@ -22,7 +22,7 @@ public enum MaterialButtonType
 }
 
 /// <summary>
-/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/buttons/overview" />.
+/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/buttons/overview">See here. </see>.
 /// </summary>
 public class MaterialButton : ContentView, ITouchable
 {
