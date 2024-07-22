@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
@@ -25,6 +24,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new MenuItemViewModel { Title = "Progress indicators", ViewModel = typeof(ProgressIndicatorViewModel) },
                 new MenuItemViewModel { Title = "Icon buttons", ViewModel = typeof(IconButtonViewModel) },
                 new MenuItemViewModel { Title = "Cards", ViewModel = typeof(CardViewModel) },
+                new MenuItemViewModel { Title = "Radio button", Icon = "ic_radio.png", ViewModel = typeof(RadioButtonViewModel) }
             };
         }
 
