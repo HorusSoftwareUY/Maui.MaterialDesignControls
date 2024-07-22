@@ -22,7 +22,7 @@ public enum MaterialButtonType
 }
 
 /// <summary>
-/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/buttons/overview">See here. </see>.
+/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/buttons/overview">See here. </see>
 /// </summary>
 public class MaterialButton : ContentView, ITouchable
 {
@@ -649,8 +649,9 @@ public class MaterialButton : ContentView, ITouchable
     /// -1
     /// </default>
     /// <remarks>
-    /// <para>which means the value is unset; the effective minimum height will be zero.</para>
-    /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
+    /// which means the value is unset; the effective minimum height will be zero.
+    /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element.</para>
+    /// <para>setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
     /// </remarks>
     public new double HeightRequest
     {

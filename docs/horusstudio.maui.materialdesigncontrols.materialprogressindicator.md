@@ -1,6 +1,6 @@
 # MaterialProgressIndicator
 
-A progress indicator  that show the status of a process and follows Material Design Guidelines.
+A progress indicator  that show the status of a process and follows Material Design Guidelines. [See here. ](https://m3.material.io/components/progress-indicators/overview)
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -12,11 +12,15 @@ Gets or sets height of the progress indicator. This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
+<br>
+
 ### <a id="properties-indicatorcolor"/>**IndicatorColor**
 
 Gets or sets the  for the active indicator of the progress indicator. This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-isvisible"/>**IsVisible**
 
@@ -27,6 +31,8 @@ Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.bool
 
 Default value: True
 
+<br>
+
 ### <a id="properties-trackcolor"/>**TrackColor**
 
 Gets or sets the  for the track of the progress indicator. This is a bindable property.
@@ -34,6 +40,8 @@ Gets or sets the  for the track of the progress indicator. This is a bindable pr
 Property type: Color<br>
 
 Remarks: This property will not have an effect unless MaterialProgressIndicator.Type is set to MaterialProgressIndicatorType.Linear.
+
+<br>
 
 ### <a id="properties-type"/>**Type**
 
@@ -49,8 +57,12 @@ Property type: MaterialProgressIndicatorType<br>
 
 Default value: MaterialProgressIndicatorType.Circular
 
+<br>
+
 ### <a id="properties-widthrequest"/>**WidthRequest**
 
 Gets or sets width of the progress indicator. This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+<br>

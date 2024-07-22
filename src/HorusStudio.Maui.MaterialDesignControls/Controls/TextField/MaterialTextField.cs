@@ -3,7 +3,7 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// Use a text field when someone needs to enter text into a UI, such as filling in contact or payment information.
+/// Use a text field when someone needs to enter text into a UI, such as filling in contact or payment information <see href="https://m3.material.io/components/text-fields/overview">See here. </see>
 /// </summary>
 public class MaterialTextField : MaterialInputBase
 {

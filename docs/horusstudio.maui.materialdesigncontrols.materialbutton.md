@@ -1,6 +1,6 @@
 # MaterialButton
 
-A button  that reacts to touch events and follows Material Design Guidelines [See here. ](https://m3.material.io/components/buttons/overview).
+A button  that reacts to touch events and follows Material Design Guidelines [See here. ](https://m3.material.io/components/buttons/overview)
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -22,6 +22,8 @@ Property type: AnimationTypes<br>
 
 Default value: AnimationTypes.Fade.
 
+<br>
+
 ### <a id="properties-animationparameter"/>**AnimationParameter**
 
 Gets or sets the parameter to pass to the MaterialButton.Animation property.
@@ -31,6 +33,8 @@ Property type: [Nullable&lt;Double&gt;](https://docs.microsoft.com/en-us/dotnet/
 
 Default value: Null
 
+<br>
+
 ### <a id="properties-background"/>**Background**
 
 Gets or sets a  that describes the background of the button.
@@ -38,12 +42,16 @@ Gets or sets a  that describes the background of the button.
 
 Property type: Brush<br>
 
+<br>
+
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Gets or sets a color that describes the background color of the button.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-bordercolor"/>**BorderColor**
 
@@ -54,6 +62,8 @@ Property type: Color<br>
 
 Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
 
+<br>
+
 ### <a id="properties-borderwidth"/>**BorderWidth**
 
 Gets or sets the width of the border, in device-independent units.
@@ -63,12 +73,16 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 
 Remarks: Set this value to a non-zero value in order to have a visible border.
 
+<br>
+
 ### <a id="properties-busyindicatorcolor"/>**BusyIndicatorColor**
 
 Gets or sets the  for the busy indicator.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-busyindicatorsize"/>**BusyIndicatorSize**
 
@@ -77,12 +91,16 @@ Gets or sets the size for the busy indicator.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
+<br>
+
 ### <a id="properties-characterspacing"/>**CharacterSpacing**
 
 Gets or sets the spacing between each of the characters of MaterialButton.Text when displayed on the button.
  This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+<br>
 
 ### <a id="properties-command"/>**Command**
 
@@ -93,6 +111,8 @@ Property type: ICommand<br>
 
 Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
 
+<br>
+
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
 Gets or sets the parameter to pass to the MaterialButton.Command property.
@@ -101,6 +121,8 @@ Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.objec
 
 Default value: null
 
+<br>
+
 ### <a id="properties-contentlayout"/>**ContentLayout**
 
 Gets or sets an object that controls the position of the button image and the spacing between the button's image and the button's text.
@@ -108,12 +130,16 @@ Gets or sets an object that controls the position of the button image and the sp
 
 Property type: ButtonContentLayout<br>
 
+<br>
+
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
 Gets or sets the corner radius for the button, in device-independent units.
  This is a bindable property.
 
 Property type: [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+<br>
 
 ### <a id="properties-customanimation"/>**CustomAnimation**
 
@@ -124,6 +150,8 @@ Property type: ICustomAnimation<br>
 
 Default value: Null
 
+<br>
+
 ### <a id="properties-custombusyindicator"/>**CustomBusyIndicator**
 
 Gets or sets a custom  for busy indicator.
@@ -131,12 +159,16 @@ Gets or sets a custom  for busy indicator.
 
 Property type: View<br>
 
+<br>
+
 ### <a id="properties-fontattributes"/>**FontAttributes**
 
 Gets or sets a value that indicates whether the font for the text of this button is bold, italic, or neither.
  This is a bindable property.
 
 Property type: FontAttributes<br>
+
+<br>
 
 ### <a id="properties-fontautoscalingenabled"/>**FontAutoScalingEnabled**
 
@@ -149,6 +181,8 @@ Default value: True
 
 Remarks: Typically this should always be enabled for accessibility reasons.
 
+<br>
+
 ### <a id="properties-fontfamily"/>**FontFamily**
 
 Gets or sets the font family for the text of this entry.
@@ -156,12 +190,16 @@ Gets or sets the font family for the text of this entry.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+<br>
+
 ### <a id="properties-fontsize"/>**FontSize**
 
 Gets or sets the size of the font for the text of this entry.
  This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+<br>
 
 ### <a id="properties-heightrequest"/>**HeightRequest**
 
@@ -173,8 +211,10 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 Default value: -1
 
 Remarks: which means the value is unset; the effective minimum height will be zero.
+  - MaterialButton.HeightRequest does not immediately change the Bounds of an element.
+ - setting the MaterialButton.HeightRequest will change the resulting height of the element during the next layout pass.
 
-MaterialButton.HeightRequest does not immediately change the Bounds of an element; setting the MaterialButton.HeightRequest will change the resulting height of the element during the next layout pass.
+<br>
 
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
@@ -182,6 +222,8 @@ Gets or sets the  for the text of the button.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-imagesource"/>**ImageSource**
 
@@ -192,6 +234,8 @@ Property type: ImageSource<br>
 
 Remarks: For more options have a look at .
 
+<br>
+
 ### <a id="properties-isbusy"/>**IsBusy**
 
 Gets or sets if button is on busy state (executing Command).
@@ -201,12 +245,16 @@ Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.bool
 
 Default value: False
 
+<br>
+
 ### <a id="properties-linebreakmode"/>**LineBreakMode**
 
 Determines how MaterialButton.Text is shown when the length is overflowing the size of this button.
  This is a bindable property.
 
 Property type: LineBreakMode<br>
+
+<br>
 
 ### <a id="properties-padding"/>**Padding**
 
@@ -215,12 +263,16 @@ Gets or sets the padding for the button.
 
 Property type: Thickness<br>
 
+<br>
+
 ### <a id="properties-shadow"/>**Shadow**
 
 Gets or sets the shadow effect cast by the element.
  This is a bindable property.
 
 Property type: Shadow<br>
+
+<br>
 
 ### <a id="properties-text"/>**Text**
 
@@ -232,12 +284,16 @@ Default value: Null
 
 Remarks: Changing the text of a button will trigger a layout cycle.
 
+<br>
+
 ### <a id="properties-textcolor"/>**TextColor**
 
 Gets or sets the  for the text of the button.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-textdecorations"/>**TextDecorations**
 
@@ -246,6 +302,8 @@ Gets or sets MaterialButton.TextDecorations for the text of the button.
 
 Property type: TextDecorations<br>
 
+<br>
+
 ### <a id="properties-texttransform"/>**TextTransform**
 
 Applies text transformation to the MaterialButton.Text displayed on this button.
@@ -253,12 +311,16 @@ Applies text transformation to the MaterialButton.Text displayed on this button.
 
 Property type: TextTransform<br>
 
+<br>
+
 ### <a id="properties-tintcolor"/>**TintColor**
 
 Gets or sets the  for the text of the button.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-type"/>**Type**
 
@@ -277,24 +339,36 @@ Property type: MaterialButtonType<br>
 
 Default value: MaterialButtonType.Filled
 
+<br>
+
 ## Events
 
 ### <a id="events-clicked"/>**Clicked**
 
 Occurs when the button is clicked/tapped.
 
+<br>
+
 ### <a id="events-focused"/>**Focused**
 
 Occurs when the button is focused.
+
+<br>
 
 ### <a id="events-pressed"/>**Pressed**
 
 Occurs when the button is pressed.
 
+<br>
+
 ### <a id="events-released"/>**Released**
 
 Occurs when the button is released.
 
+<br>
+
 ### <a id="events-unfocused"/>**Unfocused**
 
 Occurs when the button is unfocused.
+
+<br>

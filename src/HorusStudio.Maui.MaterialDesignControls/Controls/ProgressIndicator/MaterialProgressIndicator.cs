@@ -11,7 +11,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     }
 
     /// <summary>
-    /// A progress indicator <see cref="View" /> that show the status of a process and follows Material Design Guidelines.
+    /// A progress indicator <see cref="View" /> that show the status of a process and follows Material Design Guidelines. <see href="https://m3.material.io/components/progress-indicators/overview">See here. </see>
     /// </summary>
     public class MaterialProgressIndicator : ContentView
     {

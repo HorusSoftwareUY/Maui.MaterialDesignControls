@@ -19,7 +19,7 @@ public enum MaterialIconButtonType
 }
 
 /// <summary>
-/// An icon button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/icon-buttons/overview">See here. </see>.
+/// An icon button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/icon-buttons/overview">See here. </see>
 /// </summary>
 public class MaterialIconButton : ContentView, ITouchable
 {
@@ -438,12 +438,13 @@ public class MaterialIconButton : ContentView, ITouchable
     /// Gets or sets the desired height override of this element.
     /// This is a bindable property.
     /// </summary>
-    /// <remarks>
     /// <default>
     /// -1
     /// </default>
-    /// <para>Which means the value is unset; the effective minimum height will be zero.</para>
-    /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
+    /// <remarks>
+    /// Which means the value is unset; the effective minimum height will be zero.
+    /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element.</para>
+    /// <para>setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
     /// </remarks>
     public new double HeightRequest
     {
@@ -459,8 +460,9 @@ public class MaterialIconButton : ContentView, ITouchable
     /// -1
     /// </default>
     /// <remarks>
-    /// <para>Which means the value is unset; the effective minimum width will be zero.</para>
-    /// <para><see cref="WidthRequest"/> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest"/> will change the resulting width of the element during the next layout pass.</para>
+    /// Which means the value is unset; the effective minimum width will be zero.
+    /// <para><see cref="WidthRequest"/> does not immediately change the Bounds of an element.</para>
+    /// <para>setting the <see cref="HeightRequest"/> will change the resulting width of the element during the next layout pass.</para>
     /// </remarks>
     public new double WidthRequest
     {

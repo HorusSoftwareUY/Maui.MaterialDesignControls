@@ -1,6 +1,6 @@
 # MaterialLabel
 
-A label  that helps make writing legible and beautiful, and follows Material Design Guidelines [See here. ](https://m3.material.io/styles/typography/overview).
+A label  that helps make writing legible and beautiful, and follows Material Design Guidelines [See here. ](https://m3.material.io/styles/typography/overview)
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -13,12 +13,16 @@ Gets or sets the font family for the label.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+<br>
+
 ### <a id="properties-fontfamilymedium"/>**FontFamilyMedium**
 
 Gets or sets the medium font family for the label.
  This is a bindable property.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+<br>
 
 ### <a id="properties-fontfamilyregular"/>**FontFamilyRegular**
 
@@ -27,12 +31,16 @@ Gets or sets the regular font family for the label.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+<br>
+
 ### <a id="properties-textcolor"/>**TextColor**
 
 Gets or sets the  for the text of the label.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-type"/>**Type**
 
@@ -60,3 +68,5 @@ Property type: LabelTypes<br>
 | LabelSmall | 14 | Tablet: 14, Phone: 11 |
 
 Default value: LabelTypes.BodyMedium
+
+<br>

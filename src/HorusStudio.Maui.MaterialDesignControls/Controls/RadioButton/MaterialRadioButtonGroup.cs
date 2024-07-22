@@ -3,7 +3,8 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs">See here.</see>
+/// A RadioButtonGroup <see cref="View" /> let people select one option from a set of options and follows Material Design Guidelines <see href="https://m3.material.io/components/radio-button/overview">See here. </see>
+/// We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs">See here. </see>
 /// </summary>
 public static class MaterialRadioButtonGroup
 {

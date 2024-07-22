@@ -1,6 +1,6 @@
 # MaterialMultilineTextField
 
-Use a text field when someone needs to enter text into a UI, such as filling in contact or payment information.
+Use a text field when someone needs to enter text into a UI, such as filling in contact or payment information [See here. ](https://m3.material.io/components/text-fields/overview)
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -16,6 +16,8 @@ Property type: EditorAutoSizeOption<br>
 
 Remarks: Automatic resizing is turned off by default.
 
+<br>
+
 ### <a id="properties-background"/>**Background**
 
 Gets or sets a  that describes the background of the input.
@@ -23,12 +25,16 @@ Gets or sets a  that describes the background of the input.
 
 Property type: Brush<br>
 
+<br>
+
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Gets or sets a color that describes the background color of the input.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-bordercolor"/>**BorderColor**
 
@@ -39,6 +45,8 @@ Property type: Color<br>
 
 Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
 
+<br>
+
 ### <a id="properties-borderwidth"/>**BorderWidth**
 
 Gets or sets the width of the border, in device-independent units.
@@ -47,6 +55,8 @@ Gets or sets the width of the border, in device-independent units.
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 Remarks: Set this value to a non-zero value in order to have a visible border.
+
+<br>
 
 ### <a id="properties-characterspacing"/>**CharacterSpacing**
 
@@ -58,12 +68,16 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 
 Remarks: The number of device-independent units that should be in between characters in the text.
 
+<br>
+
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
 Gets or sets the corner radius for the input, in device-independent units.
  This is a bindable property.
 
 Property type: CornerRadius<br>
+
+<br>
 
 ### <a id="properties-cursorcolor"/>**CursorColor**
 
@@ -73,11 +87,15 @@ Property type: Color<br>
 
 Remarks: This Property only works on iOS and 'ndroid' 29 or later
 
+<br>
+
 ### <a id="properties-cursorposition"/>**CursorPosition**
 
 Gets or sets input's cursor position. This is a bindable property.
 
 Property type: [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+<br>
 
 ### <a id="properties-focusedcommand"/>**FocusedCommand**
 
@@ -86,12 +104,16 @@ Gets or sets a focused command.
 
 Property type: ICommand<br>
 
+<br>
+
 ### <a id="properties-fontattributes"/>**FontAttributes**
 
 Gets or sets a value that indicates whether the font for the text of this entry
  is bold, italic, or neither. This is a bindable property.
 
 Property type: FontAttributes<br>
+
+<br>
 
 ### <a id="properties-fontautoscalingenabled"/>**FontAutoScalingEnabled**
 
@@ -106,12 +128,16 @@ Default value: True
 
 Remarks: Typically this should always be enabled for accessibility reasons.
 
+<br>
+
 ### <a id="properties-fontfamily"/>**FontFamily**
 
 Gets or sets the font family for the input.
  This is a bindable property.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+<br>
 
 ### <a id="properties-fontsize"/>**FontSize**
 
@@ -120,6 +146,8 @@ Gets or sets the font size for the input.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
+<br>
+
 ### <a id="properties-haserror"/>**HasError**
 
 Gets or sets if the input has an error.
@@ -127,11 +155,15 @@ Gets or sets if the input has an error.
 
 Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
+<br>
+
 ### <a id="properties-heightrequest"/>**HeightRequest**
 
 Gets or sets the height request
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+<br>
 
 ### <a id="properties-horizontaltextalignment"/>**HorizontalTextAlignment**
 
@@ -139,6 +171,8 @@ Gets or sets the horizontal text alignment for the input.
  This is a bindable property.
 
 Property type: TextAlignment<br>
+
+<br>
 
 ### <a id="properties-inputtapcommand"/>**InputTapCommand**
 
@@ -148,12 +182,16 @@ Property type: ICommand<br>
 
 Remarks: This property is used internally and it's recommended to avoid setting it directly.
 
+<br>
+
 ### <a id="properties-isenabled"/>**IsEnabled**
 
 Gets or sets if the input is enabled or diabled.
  This is a bindable property.
 
 Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+<br>
 
 ### <a id="properties-isreadonly"/>**IsReadOnly**
 
@@ -164,6 +202,8 @@ Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.bool
 
 Remarks: The IsReadonly property does not alter the visual appearance of the control, unlike the IsEnabled property that also changes the visual appearance of the control
 
+<br>
+
 ### <a id="properties-isspellcheckenabled"/>**IsSpellCheckEnabled**
 
 Gets or sets a value that controls whether spell checking is enabled.
@@ -171,6 +211,8 @@ Gets or sets a value that controls whether spell checking is enabled.
 Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Remarks: true if spell checking is enabled. Otherwise false.
+
+<br>
 
 ### <a id="properties-istextpredictionenabled"/>**IsTextPredictionEnabled**
 
@@ -180,11 +222,15 @@ Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.bool
 
 Default value: True
 
+<br>
+
 ### <a id="properties-keyboard"/>**Keyboard**
 
 Gets or sets input's keyboard. This is a bindable property.
 
 Property type: Keyboard<br>
+
+<br>
 
 ### <a id="properties-label"/>**Label**
 
@@ -195,6 +241,8 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 
 Default value: null
 
+<br>
+
 ### <a id="properties-labelcolor"/>**LabelColor**
 
 Gets or sets the label color.
@@ -202,12 +250,16 @@ Gets or sets the label color.
 
 Property type: Color<br>
 
+<br>
+
 ### <a id="properties-labelfontfamily"/>**LabelFontFamily**
 
 Gets or sets the label font family.
  This is a bindable property.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+<br>
 
 ### <a id="properties-labellinebreakmode"/>**LabelLineBreakMode**
 
@@ -217,6 +269,8 @@ Property type: LineBreakMode<br>
 
 Default value: LineBreakMode.NoWrap
 
+<br>
+
 ### <a id="properties-labelmargin"/>**LabelMargin**
 
 Gets or sets the label margin. This is a bindable property.
@@ -225,12 +279,16 @@ Property type: Thickness<br>
 
 Default value: 0
 
+<br>
+
 ### <a id="properties-labelsize"/>**LabelSize**
 
 Gets or sets the label size.
  This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+<br>
 
 ### <a id="properties-leadingiconcommand"/>**LeadingIconCommand**
 
@@ -239,12 +297,16 @@ Gets or sets a Leading icon command.
 
 Property type: ICommand<br>
 
+<br>
+
 ### <a id="properties-leadingiconcommandparameter"/>**LeadingIconCommandParameter**
 
 Gets or sets a Leading icon command parameter.
  This is a bindable property.
 
 Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+
+<br>
 
 ### <a id="properties-leadingiconsource"/>**LeadingIconSource**
 
@@ -255,6 +317,8 @@ Property type: ImageSource<br>
 
 Remarks: For more options have a look at MaterialIconButton.
 
+<br>
+
 ### <a id="properties-leadingicontintcolor"/>**LeadingIconTintColor**
 
 Gets or sets the  for the leading button icon of the input.
@@ -262,11 +326,15 @@ Gets or sets the  for the leading button icon of the input.
 
 Property type: Color<br>
 
+<br>
+
 ### <a id="properties-maxlength"/>**MaxLength**
 
 Gets or sets input's max length. This is a bindable property.
 
 Property type: [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+<br>
 
 ### <a id="properties-placeholder"/>**Placeholder**
 
@@ -277,12 +345,16 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 
 Default value: null
 
+<br>
+
 ### <a id="properties-placeholdercolor"/>**PlaceholderColor**
 
 Gets or sets the place holder color for the input.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-showtrailingicononlyonerror"/>**ShowTrailingIconOnlyOnError**
 
@@ -293,12 +365,16 @@ Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.bool
 
 Default value: False
 
+<br>
+
 ### <a id="properties-supportingfontfamily"/>**SupportingFontFamily**
 
 Gets or sets the font family for the input.
  This is a bindable property.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+<br>
 
 ### <a id="properties-supportingfontsize"/>**SupportingFontSize**
 
@@ -307,6 +383,8 @@ Gets or sets the font size for the input.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
+<br>
+
 ### <a id="properties-supportinglinebreakmode"/>**SupportingLineBreakMode**
 
 Gets or sets the supporting line break mode. This is a bindable property.
@@ -314,6 +392,8 @@ Gets or sets the supporting line break mode. This is a bindable property.
 Property type: LineBreakMode<br>
 
 Default value: LineBreakMode.NoWrap
+
+<br>
 
 ### <a id="properties-supportingmargin"/>**SupportingMargin**
 
@@ -324,6 +404,8 @@ Property type: Thickness<br>
 
 Default value: Thickness(16, 4)
 
+<br>
+
 ### <a id="properties-supportingtext"/>**SupportingText**
 
 Gets or sets the text displayed as the supporting text of the input.
@@ -333,12 +415,16 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 
 Default value: null
 
+<br>
+
 ### <a id="properties-supportingtextcolor"/>**SupportingTextColor**
 
 Gets or sets the supporting text color.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-text"/>**Text**
 
@@ -349,11 +435,15 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 
 Default value: Null
 
+<br>
+
 ### <a id="properties-textchangedcommand"/>**TextChangedCommand**
 
 Gets or sets input's text changed command. This is a bindable property.
 
 Property type: ICommand<br>
+
+<br>
 
 ### <a id="properties-textcolor"/>**TextColor**
 
@@ -362,11 +452,15 @@ Gets or sets the  for the text of the input.
 
 Property type: Color<br>
 
+<br>
+
 ### <a id="properties-texttransform"/>**TextTransform**
 
 Gets or sets input's texttransform. This is a bindable property.
 
 Property type: TextTransform<br>
+
+<br>
 
 ### <a id="properties-trailingiconcommand"/>**TrailingIconCommand**
 
@@ -375,12 +469,16 @@ Gets or sets a Trailing Icon command.
 
 Property type: ICommand<br>
 
+<br>
+
 ### <a id="properties-trailingiconcommandparameter"/>**TrailingIconCommandParameter**
 
 Gets or sets a Trailing Icon command parameter.
  This is a bindable property.
 
 Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+
+<br>
 
 ### <a id="properties-trailingiconsource"/>**TrailingIconSource**
 
@@ -391,12 +489,16 @@ Property type: ImageSource<br>
 
 Remarks: For more options have a look at MaterialIconButton.
 
+<br>
+
 ### <a id="properties-trailingicontintcolor"/>**TrailingIconTintColor**
 
 Gets or sets the  for the trailing button icon of the input.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-type"/>**Type**
 
@@ -412,6 +514,8 @@ Property type: MaterialInputType<br>
 
 Default value: MaterialInputType.Filled
 
+<br>
+
 ### <a id="properties-unfocusedcommand"/>**UnfocusedCommand**
 
 Gets or sets a unfocused command.
@@ -419,8 +523,12 @@ Gets or sets a unfocused command.
 
 Property type: ICommand<br>
 
+<br>
+
 ### <a id="properties-verticaltextalignment"/>**VerticalTextAlignment**
 
 Gets or sets the vertical text alignment. This is a bindable property.
 
 Property type: TextAlignment<br>
+
+<br>

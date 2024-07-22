@@ -1,6 +1,6 @@
 # MaterialIconButton
 
-An icon button  that reacts to touch events and follows Material Design Guidelines [See here. ](https://m3.material.io/components/icon-buttons/overview).
+An icon button  that reacts to touch events and follows Material Design Guidelines [See here. ](https://m3.material.io/components/icon-buttons/overview)
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -22,6 +22,8 @@ Property type: AnimationTypes<br>
 
 Default value: AnimationTypes.Fade
 
+<br>
+
 ### <a id="properties-animationparameter"/>**AnimationParameter**
 
 Gets or sets the parameter to pass to the MaterialIconButton.Animation property.
@@ -31,6 +33,8 @@ Property type: [Nullable&lt;Double&gt;](https://docs.microsoft.com/en-us/dotnet/
 
 Default value: Null
 
+<br>
+
 ### <a id="properties-background"/>**Background**
 
 Gets or sets a  that describes the background of the button.
@@ -38,12 +42,16 @@ Gets or sets a  that describes the background of the button.
 
 Property type: Brush<br>
 
+<br>
+
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Gets or sets a color that describes the background color of the button.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-bordercolor"/>**BorderColor**
 
@@ -54,6 +62,8 @@ Property type: Color<br>
 
 Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
 
+<br>
+
 ### <a id="properties-borderwidth"/>**BorderWidth**
 
 Gets or sets the width of the border, in device-independent units.
@@ -63,6 +73,8 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 
 Remarks: Set this value to a non-zero value in order to have a visible border.
 
+<br>
+
 ### <a id="properties-busyindicatorcolor"/>**BusyIndicatorColor**
 
 Gets or sets the  for the busy indicator.
@@ -70,12 +82,16 @@ Gets or sets the  for the busy indicator.
 
 Property type: Color<br>
 
+<br>
+
 ### <a id="properties-busyindicatorsize"/>**BusyIndicatorSize**
 
 Gets or sets the size for the busy indicator.
  This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+<br>
 
 ### <a id="properties-command"/>**Command**
 
@@ -86,6 +102,8 @@ Property type: ICommand<br>
 
 Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
 
+<br>
+
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
 Gets or sets the parameter to pass to the MaterialIconButton.Command property.
@@ -95,12 +113,16 @@ Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.objec
 
 Default value: Null
 
+<br>
+
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
 Gets or sets the corner radius for the button, in device-independent units.
  This is a bindable property.
 
 Property type: [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+<br>
 
 ### <a id="properties-customanimation"/>**CustomAnimation**
 
@@ -111,12 +133,16 @@ Property type: ICustomAnimation<br>
 
 Default value: Null
 
+<br>
+
 ### <a id="properties-custombusyindicator"/>**CustomBusyIndicator**
 
 Gets or sets a custom  for busy indicator.
  This is a bindable property.
 
 Property type: View<br>
+
+<br>
 
 ### <a id="properties-heightrequest"/>**HeightRequest**
 
@@ -125,11 +151,13 @@ Gets or sets the desired height override of this element.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-Remarks: -1
+Default value: -1
 
-Which means the value is unset; the effective minimum height will be zero.
+Remarks: Which means the value is unset; the effective minimum height will be zero.
+  - MaterialIconButton.HeightRequest does not immediately change the Bounds of an element.
+ - setting the MaterialIconButton.HeightRequest will change the resulting height of the element during the next layout pass.
 
-MaterialIconButton.HeightRequest does not immediately change the Bounds of an element; setting the MaterialIconButton.HeightRequest will change the resulting height of the element during the next layout pass.
+<br>
 
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
@@ -137,6 +165,8 @@ Gets or sets the  for the text of the button.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-imagesource"/>**ImageSource**
 
@@ -147,6 +177,8 @@ Property type: ImageSource<br>
 
 Remarks: For more options have a look at .
 
+<br>
+
 ### <a id="properties-isbusy"/>**IsBusy**
 
 Gets or sets if button is on busy state (executing Command).
@@ -156,12 +188,16 @@ Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.bool
 
 Default value: False
 
+<br>
+
 ### <a id="properties-padding"/>**Padding**
 
 Gets or sets the padding for the button.
  This is a bindable property.
 
 Property type: Thickness<br>
+
+<br>
 
 ### <a id="properties-shadow"/>**Shadow**
 
@@ -170,12 +206,16 @@ Gets or sets the shadow effect cast by the element.
 
 Property type: Shadow<br>
 
+<br>
+
 ### <a id="properties-tintcolor"/>**TintColor**
 
 Gets or sets the  for the text of the button.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-type"/>**Type**
 
@@ -194,6 +234,8 @@ Property type: MaterialIconButtonType<br>
 
 Default value: MaterialIconButtonType.Filled
 
+<br>
+
 ### <a id="properties-widthrequest"/>**WidthRequest**
 
 Gets or sets the desired width override of this element.
@@ -204,8 +246,10 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 Default value: -1
 
 Remarks: Which means the value is unset; the effective minimum width will be zero.
+  - MaterialIconButton.WidthRequest does not immediately change the Bounds of an element.
+ - setting the MaterialIconButton.HeightRequest will change the resulting width of the element during the next layout pass.
 
-MaterialIconButton.WidthRequest does not immediately change the Bounds of an element; setting the MaterialIconButton.HeightRequest will change the resulting width of the element during the next layout pass.
+<br>
 
 ## Events
 
@@ -213,10 +257,16 @@ MaterialIconButton.WidthRequest does not immediately change the Bounds of an ele
 
 Occurs when the button is clicked/tapped.
 
+<br>
+
 ### <a id="events-pressed"/>**Pressed**
 
 Occurs when the button is pressed.
 
+<br>
+
 ### <a id="events-released"/>**Released**
 
 Occurs when the button is released.
+
+<br>

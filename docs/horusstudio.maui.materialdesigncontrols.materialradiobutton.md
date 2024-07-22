@@ -1,6 +1,6 @@
 # MaterialRadioButton
 
-A RadioButton  let people select one option from a set of options and follows Material Design Guidelines [See here. ](https://m3.material.io/components/radio-button/overview).
+A RadioButton  let people select one option from a set of options and follows Material Design Guidelines [See here. ](https://m3.material.io/components/radio-button/overview)
  We reuse some code from MAUI official repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButton.cs
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
@@ -23,6 +23,8 @@ Property type: AnimationTypes<br>
 
 Default value: AnimationTypes.Fade
 
+<br>
+
 ### <a id="properties-animationparameter"/>**AnimationParameter**
 
 Gets or sets the parameter to pass to the MaterialRadioButton.Animation property.
@@ -32,12 +34,16 @@ Property type: [Nullable&lt;Double&gt;](https://docs.microsoft.com/en-us/dotnet/
 
 Default value: null
 
+<br>
+
 ### <a id="properties-characterspacing"/>**CharacterSpacing**
 
 Gets or sets the spacing between characters of the label.
  This is a bindable property.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+<br>
 
 ### <a id="properties-commandcheckedchanged"/>**CommandCheckedChanged**
 
@@ -48,6 +54,8 @@ Property type: ICommand<br>
 
 Remarks: This property is used to associate a command with an instance of a radio button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
 
+<br>
+
 ### <a id="properties-commandcheckedchangedparameter"/>**CommandCheckedChangedParameter**
 
 Gets or sets the parameter to pass to the MaterialRadioButton.CommandCheckedChangedParameter property.
@@ -56,6 +64,8 @@ Gets or sets the parameter to pass to the MaterialRadioButton.CommandCheckedChan
 Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 Default value: null
+
+<br>
 
 ### <a id="properties-content"/>**Content**
 
@@ -66,12 +76,16 @@ Gets the MaterialRadioButton.Content for the RadioButton.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+<br>
+
 ### <a id="properties-controltemplate"/>**ControlTemplate**
 
 Gets or sets the MaterialRadioButton.ControlTemplate for the radio button.
  This is a bindable property.
 
 Property type: ControlTemplate<br>
+
+<br>
 
 ### <a id="properties-customanimation"/>**CustomAnimation**
 
@@ -82,12 +96,16 @@ Property type: ICustomAnimation<br>
 
 Default value: null
 
+<br>
+
 ### <a id="properties-fontattributes"/>**FontAttributes**
 
 Gets or sets the text style of the label.
  This is a bindable property.
 
 Property type: FontAttributes<br>
+
+<br>
 
 ### <a id="properties-fontautoscalingenabled"/>**FontAutoScalingEnabled**
 
@@ -97,12 +115,16 @@ Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.bool
 
 Default value: True
 
+<br>
+
 ### <a id="properties-fontfamily"/>**FontFamily**
 
 Gets or sets the font family for the label.
  This is a bindable property.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+<br>
 
 ### <a id="properties-fontsize"/>**FontSize**
 
@@ -111,6 +133,8 @@ Defines the font size of the label.
 
 Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
+<br>
+
 ### <a id="properties-groupname"/>**GroupName**
 
 Gets or sets the [String](https://docs.microsoft.com/en-us/dotnet/api/system.string) GroupName for the radio button. 
@@ -118,7 +142,9 @@ Gets or sets the [String](https://docs.microsoft.com/en-us/dotnet/api/system.str
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-Default value: DefaultGroupName
+Default value: MaterialRadioButton.GroupName
+
+<br>
 
 ### <a id="properties-ischecked"/>**IsChecked**
 
@@ -127,12 +153,16 @@ Gets or sets MaterialRadioButton.IsChecked for the radio button.
 
 Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
+<br>
+
 ### <a id="properties-isenabled"/>**IsEnabled**
 
 Gets or sets MaterialRadioButton.IsEnabled for the radio button.
  This is a bindable property.
 
 Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+<br>
 
 ### <a id="properties-strokecolor"/>**StrokeColor**
 
@@ -141,6 +171,8 @@ Gets or sets the  for the stroke of the radio button.
 
 Property type: Color<br>
 
+<br>
+
 ### <a id="properties-text"/>**Text**
 
 Gets or sets the MaterialRadioButton.Text for the label.
@@ -148,12 +180,16 @@ Gets or sets the MaterialRadioButton.Text for the label.
 
 Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+<br>
+
 ### <a id="properties-textcolor"/>**TextColor**
 
 Gets or sets the MaterialRadioButton.TextColor for the text of the label.
  This is a bindable property.
 
 Property type: Color<br>
+
+<br>
 
 ### <a id="properties-textside"/>**TextSide**
 
@@ -164,12 +200,16 @@ Property type: TextSide<br>
 
 Default value: TextSide.Left
 
+<br>
+
 ### <a id="properties-texttransform"/>**TextTransform**
 
 Defines the casing of the label.
  This is a bindable property.
 
 Property type: TextTransform<br>
+
+<br>
 
 ### <a id="properties-value"/>**Value**
 
@@ -179,3 +219,5 @@ Defines the value of radio button selected
 Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 Default value: null
+
+<br>

@@ -5,7 +5,7 @@ using System.Windows.Input;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A RadioButton <see cref="View" /> let people select one option from a set of options and follows Material Design Guidelines <see href="https://m3.material.io/components/radio-button/overview">See here. </see>.
+/// A RadioButton <see cref="View" /> let people select one option from a set of options and follows Material Design Guidelines <see href="https://m3.material.io/components/radio-button/overview">See here. </see>
 /// We reuse some code from MAUI official repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButton.cs
 /// </summary>
 public class MaterialRadioButton : ContentView, ITouchable
@@ -270,7 +270,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// DefaultGroupName
+    /// <see cref="DefaultGroupName"> MaterialRadioButton.GroupName </see>
     /// </default>
     public string GroupName
     {
