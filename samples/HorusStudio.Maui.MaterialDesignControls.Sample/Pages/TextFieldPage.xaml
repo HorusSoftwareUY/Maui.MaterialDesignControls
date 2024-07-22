@@ -79,7 +79,7 @@
                     <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can bind the text, set a supporting text and use an animation when an errors occured." />
+            <material:MaterialLabel Text="You can bind the text, set a supporting text and use an state when an error occured." />
             
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
