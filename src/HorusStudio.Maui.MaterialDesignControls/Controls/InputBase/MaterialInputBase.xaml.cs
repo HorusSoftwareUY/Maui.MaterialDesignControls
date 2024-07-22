@@ -304,6 +304,11 @@ public abstract partial class MaterialInputBase : ContentView
     /// </summary>
     public static readonly BindableProperty ShowTrailingIconOnlyOnErrorProperty = BindableProperty.Create(nameof(ShowTrailingIconOnlyOnError), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
 
+    /// <summary>
+    /// The backing store for the <see cref="ShowPlaceholder"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ShowPlaceholderProperty = BindableProperty.Create(nameof(ShowPlaceholder), typeof(bool), typeof(MaterialInputBase), defaultValue: true);
+
     #endregion Bindable Properties
 
     #region Properties
@@ -669,6 +674,17 @@ public abstract partial class MaterialInputBase : ContentView
     {
         get => (bool)GetValue(ShowTrailingIconOnlyOnErrorProperty);
         set => SetValue(ShowTrailingIconOnlyOnErrorProperty, value);
+    }
+
+
+    /// <summary>
+    /// Gets or sets if show the placeholder. 
+    /// <value>The default value is true.</value>
+    /// </summary>
+    public bool ShowPlaceholder
+    {
+        get => (bool)GetValue(ShowPlaceholderProperty);
+        set => SetValue(ShowPlaceholderProperty, value);
     }
 
     #endregion Properties
