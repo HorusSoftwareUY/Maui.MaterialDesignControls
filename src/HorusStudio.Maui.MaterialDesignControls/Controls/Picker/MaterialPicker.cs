@@ -5,8 +5,6 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 public class MaterialPicker : MaterialInputBase
 {
-    //TODO: on go back and come back, the label is not visible, is when loses the focus? 
-
     #region Attributes
 
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
