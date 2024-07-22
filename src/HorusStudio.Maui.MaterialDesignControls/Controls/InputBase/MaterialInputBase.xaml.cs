@@ -654,7 +654,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// Gets or sets the supporting line break mode. This is a bindable property.
     /// </summary>
     /// <default>
-    /// LineBreakMode.NoWrap
+    /// <see cref="LineBreakMode.NoWrap"> LineBreakMode.NoWrap</see>
     /// </default>
     public LineBreakMode SupportingLineBreakMode
     {
