@@ -46,7 +46,7 @@
                     <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can change the return type, keyboard, define events as focused, unfocused or text changed, trailing icon or leading icon and clear button visibility." />
+            <material:MaterialLabel Text="You can change the return type, keyboard, define events like focused, unfocused or text changed, trailing icon or leading icon and clear button visibility." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and return command" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
@@ -79,7 +79,7 @@
                     <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can bind the text, set a supporting text and use an animation when an errors occured." />
+            <material:MaterialLabel Text="You can bind the text, set a supporting text and use an state when an error occured." />
             
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
