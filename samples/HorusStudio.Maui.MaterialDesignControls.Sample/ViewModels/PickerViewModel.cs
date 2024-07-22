@@ -25,6 +25,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private CustomColor _selectedColor;
 
+        [ObservableProperty]
+        private CustomColor _selectedDisabledColor;
+
         #endregion
 
         public PickerViewModel()
@@ -53,6 +56,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     Id = 3
                 }
             };
+
+            SelectedDisabledColor = ColorsSource.First();
         }
 
         [ICommand]

@@ -99,12 +99,11 @@
                         Type="Outlined"
                         Placeholder="Select a new color"
                         IsEnabled="False"
-                        SelectedItem="{Binding SelectedColor}"
+                        SelectedItem="{Binding SelectedDisabledColor}"
                         ItemsSource="{Binding ColorsSource}" />
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="You can disabled a picker." />
-            
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>

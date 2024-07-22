@@ -41,11 +41,11 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _picker.SetBinding(Picker.TitleProperty, new Binding(nameof(Placeholder), source: this));
         _picker.SetBinding(Picker.TitleColorProperty, new Binding(nameof(PlaceholderColor), source: this));
-        _picker.SetBinding(Picker.IsFocusedProperty, new Binding(nameof(IsFocused), source: this));
 
         _picker.SelectedIndexChanged += Picker_SelectedIndexChanged;
 
         Content = _picker;
+        Text = String.Empty;
     }
 
     #endregion Constructor
@@ -229,15 +229,16 @@ public class MaterialPicker : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets the text displayed as the content of the input.
+    /// Gets or sets the text displayed as the content of the input. This property cannot be changed by the user.
     /// The default value is <see langword="null"/>. This is a bindable property.
     /// </summary>
-    public string Text
+    public string Text 
     {
         get
-        { 
+        {
             return SelectedIndex == -1 ? null : SelectedIndex.ToString();
         }
+        set => SetValue(TextProperty, SelectedIndex == -1 ? null : SelectedIndex.ToString());
     }
 
     #endregion Properties
@@ -262,12 +263,10 @@ public class MaterialPicker : MaterialInputBase
         switch (type)
         {
             case MaterialInputType.Filled:
-                _picker.VerticalOptions = LayoutOptions.End;
-                //_entry.Margin = new Thickness(0, 0, 0, -8);
+                _picker.VerticalOptions = LayoutOptions.Center;
                 break;
             case MaterialInputType.Outlined:
                 _picker.VerticalOptions = LayoutOptions.Center;
-                //_entry.Margin = new Thickness(0, -7.5);
                 break;
         }
 #endif
@@ -416,6 +415,8 @@ public class MaterialPicker : MaterialInputBase
                 index++;
             }
         }
+        this.Text = String.Empty;
+        this._picker.Unfocus();
     }
 
     private void Picker_ItemsSourceChanged(object sender, NotifyCollectionChangedEventArgs e)
