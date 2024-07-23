@@ -11,7 +11,7 @@
     <ContentPage.Resources>
         <Style x:Key="GridBadgeContainer" TargetType="Grid">
             <Setter Property="RowDefinitions" Value="Auto" />
-            <Setter Property="ColumnDefinitions" Value="*,32,*,32,*" />
+            <Setter Property="ColumnDefinitions" Value="*,42,*,42,*" />
             <Setter Property="RowSpacing" Value="16" />
             <Setter Property="ColumnSpacing" Value="16" />
         </Style>
@@ -52,7 +52,7 @@
 
                     <Image Source="horus_logo.png" Grid.Column="3" WidthRequest="32" HeightRequest="32"/>
                     <material:MaterialBadge Grid.Column="3"
-                                            Text="999"
+                                            Text="999+"
                                             BackgroundColor="Green"
                                             VerticalOptions="Start"
                                             HorizontalOptions="End"/>

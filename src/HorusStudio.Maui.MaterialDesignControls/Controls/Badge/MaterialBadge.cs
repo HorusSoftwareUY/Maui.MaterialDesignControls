@@ -17,8 +17,8 @@ public class MaterialBadge : ContentView
 
     private readonly static MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
     private readonly static string DefaultText = string.Empty;
-    private readonly static Color DefaultTextColor = MaterialLightTheme.Primary;
-    private readonly static Color DefaultBackgroundColor = MaterialLightTheme.OnPrimary;
+    private readonly static Color DefaultTextColor = MaterialLightTheme.OnError;
+    private readonly static Color DefaultBackgroundColor = MaterialLightTheme.Error;
     private readonly static double DefaultFontSize = MaterialFontSize.LabelSmall;
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
     private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(6);
@@ -255,7 +255,7 @@ public class MaterialBadge : ContentView
         {
             BackgroundColor = this.BackgroundColor,
             CornerRadius = this.CornerRadius,
-            Padding = new Thickness(0)
+            Padding = this.Padding
         };
 
         this._lblText = new Label()
@@ -278,6 +278,8 @@ public class MaterialBadge : ContentView
         
         this._frmContainer.Content = this._lblText;
         this.Content = this._frmContainer;
+        
+        ResizeControl();
     }
     
     private void UpdateLayoutAfterTypeChanged(MaterialBadgeType type)
@@ -298,26 +300,21 @@ public class MaterialBadge : ContentView
 
         if (type is MaterialBadgeType.Small) this._frmContainer.Padding = new Thickness(0);
         if (type is MaterialBadgeType.Small) this.WidthRequest = 6;
-        if (type is MaterialBadgeType.Large) ResizeControl();
     }
 
     private void ResizeControl()
     {
-        if (!string.IsNullOrEmpty(this._lblText.Text) && this._lblText.Text.Length >= 1)
-        {
-            this._frmContainer.Padding = new Thickness(4, 0);
-            this._frmContainer.WidthRequest = -1;
-        }
-        else
-        {
-            this._frmContainer.Padding = new Thickness(0);
-            this._frmContainer.WidthRequest = 6;
-        }
+        this._frmContainer.Padding = (!string.IsNullOrEmpty(this._lblText.Text) && this._lblText.Text.Length >= 2)? new Thickness(4, 0) : new Thickness(0);
+        this._frmContainer.WidthRequest = -1;
     }
 
     private void SetText(MaterialBadgeType type)
     {
-        if (type is MaterialBadgeType.Large) _lblText.Text = Text; ResizeControl();
+        if (type is MaterialBadgeType.Large && !string.IsNullOrEmpty(Text))
+        {
+            _lblText.Text = Text; 
+            ResizeControl();
+        }
     }
 
     private void SetBackgroundColor(MaterialBadgeType type)
