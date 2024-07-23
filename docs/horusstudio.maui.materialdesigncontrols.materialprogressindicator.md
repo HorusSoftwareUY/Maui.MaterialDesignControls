@@ -4,6 +4,10 @@ A progress indicator  that show the status of a process and follows Material Des
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
+Inherits from: MaterialProgressIndicator → [ContentView](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.contentview)
+
+<br>
+
 ## Properties
 
 ### <a id="properties-heightrequest"/>**HeightRequest**
@@ -18,7 +22,7 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 
 Gets or sets the  for the active indicator of the progress indicator. This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -37,7 +41,7 @@ Default value: True
 
 Gets or sets the  for the track of the progress indicator. This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 Remarks: This property will not have an effect unless MaterialProgressIndicator.Type is set to MaterialProgressIndicatorType.Linear.
 

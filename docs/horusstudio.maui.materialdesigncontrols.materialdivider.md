@@ -4,13 +4,17 @@ A divider  that group content in lists or other containers and follows Material 
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
+Inherits from: MaterialDivider → [BoxView](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.boxview)
+
+<br>
+
 ## Properties
 
 ### <a id="properties-color"/>**Color**
 
 Gets or sets the MaterialDivider.Color of the divider. This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 

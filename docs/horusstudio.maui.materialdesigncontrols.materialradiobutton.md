@@ -5,6 +5,10 @@ A RadioButton  let people select one option from a set of options and follows Ma
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
+Inherits from: MaterialRadioButton → [ContentView](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.contentview)
+
+<br>
+
 ## Properties
 
 ### <a id="properties-animation"/>**Animation**
@@ -83,7 +87,7 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 Gets or sets the MaterialRadioButton.ControlTemplate for the radio button.
  This is a bindable property.
 
-Property type: ControlTemplate<br>
+Property type: [ControlTemplate](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.controltemplate)<br>
 
 <br>
 
@@ -103,7 +107,7 @@ Default value: null
 Gets or sets the text style of the label.
  This is a bindable property.
 
-Property type: FontAttributes<br>
+Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.fontattributes)<br>
 
 <br>
 
@@ -169,7 +173,7 @@ Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.bool
 Gets or sets the  for the stroke of the radio button.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -187,7 +191,7 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 Gets or sets the MaterialRadioButton.TextColor for the text of the label.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -207,7 +211,7 @@ Default value: TextSide.Left
 Defines the casing of the label.
  This is a bindable property.
 
-Property type: TextTransform<br>
+Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.texttransform)<br>
 
 <br>
 

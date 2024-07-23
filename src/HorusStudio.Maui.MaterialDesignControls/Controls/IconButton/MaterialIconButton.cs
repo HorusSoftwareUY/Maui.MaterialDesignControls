@@ -442,9 +442,8 @@ public class MaterialIconButton : ContentView, ITouchable
     /// -1
     /// </default>
     /// <remarks>
-    /// Which means the value is unset; the effective minimum height will be zero.
-    /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element.</para>
-    /// <para>setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
+    /// <para>which means the value is unset; the effective minimum height will be zero.</para>
+    /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
     /// </remarks>
     public new double HeightRequest
     {

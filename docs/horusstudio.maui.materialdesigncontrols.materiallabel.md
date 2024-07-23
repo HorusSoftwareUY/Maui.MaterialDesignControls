@@ -4,6 +4,10 @@ A label  that helps make writing legible and beautiful, and follows Material Des
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
+Inherits from: MaterialLabel → [Label](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.label)
+
+<br>
+
 ## Properties
 
 ### <a id="properties-fontfamily"/>**FontFamily**
@@ -38,7 +42,7 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 Gets or sets the  for the text of the label.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 

@@ -4,6 +4,10 @@ An icon button  that reacts to touch events and follows Material Design Guidelin
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
+Inherits from: MaterialIconButton → [ContentView](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.contentview)
+
+<br>
+
 ## Properties
 
 ### <a id="properties-animation"/>**Animation**
@@ -40,7 +44,7 @@ Default value: Null
 Gets or sets a  that describes the background of the button.
  This is a bindable property.
 
-Property type: Brush<br>
+Property type: [Brush](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.brush)<br>
 
 <br>
 
@@ -49,7 +53,7 @@ Property type: Brush<br>
 Gets or sets a color that describes the background color of the button.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -58,7 +62,7 @@ Property type: Color<br>
 Gets or sets a color that describes the border stroke color of the button.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
 
@@ -80,7 +84,7 @@ Remarks: Set this value to a non-zero value in order to have a visible border.
 Gets or sets the  for the busy indicator.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -140,7 +144,7 @@ Default value: Null
 Gets or sets a custom  for busy indicator.
  This is a bindable property.
 
-Property type: View<br>
+Property type: [View](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.view)<br>
 
 <br>
 
@@ -153,9 +157,10 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 
 Default value: -1
 
-Remarks: Which means the value is unset; the effective minimum height will be zero.
-  - MaterialIconButton.HeightRequest does not immediately change the Bounds of an element.
- - setting the MaterialIconButton.HeightRequest will change the resulting height of the element during the next layout pass.
+Remarks:
+
+- which means the value is unset; the effective minimum height will be zero.
+ - MaterialIconButton.HeightRequest does not immediately change the Bounds of an element; setting the MaterialIconButton.HeightRequest will change the resulting height of the element during the next layout pass.
 
 <br>
 
@@ -164,7 +169,7 @@ Remarks: Which means the value is unset; the effective minimum height will be ze
 Gets or sets the  for the text of the button.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -173,7 +178,7 @@ Property type: Color<br>
 Allows you to display a bitmap image on the Button.
  This is a bindable property.
 
-Property type: ImageSource<br>
+Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
 Remarks: For more options have a look at .
 
@@ -195,7 +200,7 @@ Default value: False
 Gets or sets the padding for the button.
  This is a bindable property.
 
-Property type: Thickness<br>
+Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
 
 <br>
 
@@ -204,7 +209,7 @@ Property type: Thickness<br>
 Gets or sets the shadow effect cast by the element.
  This is a bindable property.
 
-Property type: Shadow<br>
+Property type: [Shadow](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.shadow)<br>
 
 <br>
 
@@ -213,7 +218,7 @@ Property type: Shadow<br>
 Gets or sets the  for the text of the button.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -245,7 +250,9 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 
 Default value: -1
 
-Remarks: Which means the value is unset; the effective minimum width will be zero.
+Remarks:
+
+Which means the value is unset; the effective minimum width will be zero.
   - MaterialIconButton.WidthRequest does not immediately change the Bounds of an element.
  - setting the MaterialIconButton.HeightRequest will change the resulting width of the element during the next layout pass.
 

@@ -4,6 +4,10 @@ Use a text field when someone needs to enter text into a UI, such as filling in 
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
+Inherits from: MaterialTextField → MaterialInputBase
+
+<br>
+
 ## Properties
 
 ### <a id="properties-background"/>**Background**
@@ -11,7 +15,7 @@ Namespace: HorusStudio.Maui.MaterialDesignControls
 Gets or sets a  that describes the background of the input.
  This is a bindable property.
 
-Property type: Brush<br>
+Property type: [Brush](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.brush)<br>
 
 <br>
 
@@ -20,7 +24,7 @@ Property type: Brush<br>
 Gets or sets a color that describes the background color of the input.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -29,7 +33,7 @@ Property type: Color<br>
 Gets or sets a color that describes the border stroke color of the input.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
 
@@ -63,7 +67,7 @@ Remarks: The number of device-independent units that should be in between charac
 Determines the behavior of the clear text button on this entry.
  This is a bindable property.
 
-Property type: ClearButtonVisibility<br>
+Property type: [ClearButtonVisibility](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.clearbuttonvisibility)<br>
 
 <br>
 
@@ -72,7 +76,7 @@ Property type: ClearButtonVisibility<br>
 Gets or sets the corner radius for the input, in device-independent units.
  This is a bindable property.
 
-Property type: CornerRadius<br>
+Property type: [CornerRadius](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.cornerradius)<br>
 
 <br>
 
@@ -80,7 +84,7 @@ Property type: CornerRadius<br>
 
 Gets or sets a color of the caret indicator.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 Remarks: This Property only works on iOS and 'Android' 29 or later
 
@@ -110,7 +114,7 @@ Gets or sets a value that indicates whether the font for the text of this entry
  is bold, italic, or neither.
  This is a bindable property.
 
-Property type: FontAttributes<br>
+Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.fontattributes)<br>
 
 <br>
 
@@ -168,7 +172,7 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 Gets or sets the horizontal text alignment for the input.
  This is a bindable property.
 
-Property type: TextAlignment<br>
+Property type: [TextAlignment](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.textalignment)<br>
 
 <br>
 
@@ -237,7 +241,7 @@ Default value: True
 Gets or sets input's keyboard.
  This is a bindable property.
 
-Property type: Keyboard<br>
+Property type: [Keyboard](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.keyboard)<br>
 
 <br>
 
@@ -257,7 +261,7 @@ Default value: null
 Gets or sets the label color.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -274,7 +278,7 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 
 Gets or sets the label line break mode. This is a bindable property.
 
-Property type: LineBreakMode<br>
+Property type: [LineBreakMode](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.linebreakmode)<br>
 
 Default value: LineBreakMode.NoWrap
 
@@ -284,7 +288,7 @@ Default value: LineBreakMode.NoWrap
 
 Gets or sets the label margin. This is a bindable property.
 
-Property type: Thickness<br>
+Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
 
 Default value: 0
 
@@ -322,7 +326,7 @@ Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.objec
 Allows you to display a leading icon (bitmap image) on the input.
  This is a bindable property.
 
-Property type: ImageSource<br>
+Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
 Remarks: For more options have a look at MaterialIconButton.
 
@@ -333,7 +337,7 @@ Remarks: For more options have a look at MaterialIconButton.
 Gets or sets the  for the leading button icon of the input.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -362,7 +366,7 @@ Default value: null
 Gets or sets the place holder color for the input.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -391,7 +395,7 @@ Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.objec
 Determines what the return key on the on-screen keyboard should look like.
  This is a bindable property.
 
-Property type: ReturnType<br>
+Property type: [ReturnType](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.returntype)<br>
 
 <br>
 
@@ -428,7 +432,7 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 
 Gets or sets the supporting line break mode. This is a bindable property.
 
-Property type: LineBreakMode<br>
+Property type: [LineBreakMode](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.linebreakmode)<br>
 
 Default value: LineBreakMode.NoWrap
 
@@ -439,7 +443,7 @@ Default value: LineBreakMode.NoWrap
 Gets or sets the label margin.
  This is a bindable property.
 
-Property type: Thickness<br>
+Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
 
 Default value: Thickness(16, 4)
 
@@ -461,7 +465,7 @@ Default value: null
 Gets or sets the supporting text color.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -490,7 +494,7 @@ Property type: ICommand<br>
 Gets or sets the  for the text of the input.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -499,7 +503,7 @@ Property type: Color<br>
 Gets or sets input's texttransform.
  This is a bindable property.
 
-Property type: TextTransform<br>
+Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.texttransform)<br>
 
 <br>
 
@@ -526,7 +530,7 @@ Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.objec
 Allows you to display a trailing icon (bitmap image) on the input.
  This is a bindable property.
 
-Property type: ImageSource<br>
+Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
 Remarks: For more options have a look at MaterialIconButton.
 
@@ -537,7 +541,7 @@ Remarks: For more options have a look at MaterialIconButton.
 Gets or sets the  for the trailing button icon of the input.
  This is a bindable property.
 
-Property type: Color<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -570,6 +574,6 @@ Property type: ICommand<br>
 
 Gets or sets the vertical text alignment.This is a bindable property.
 
-Property type: TextAlignment<br>
+Property type: [TextAlignment](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.textalignment)<br>
 
 <br>
