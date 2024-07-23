@@ -68,7 +68,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
             if (SelectedColor is null)
             {
-                SupportingTextValue = "You should enter a valid value.";
+                SupportingTextValue = "You should select a color.";
                 HasAnError = true;
             }
         }

@@ -52,8 +52,10 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Resources\Images\on_error.svg" />
+	  <None Remove="Resources\Images\picker_arrow.svg" />
 	  <None Remove="Resources\Images\radio_button_checked.svg" />
 	  <None Remove="Resources\Images\radio_button_unchecked.svg" />
+	  <None Remove="Resources\Images\select_color.svg" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -16,6 +16,7 @@
                 <VerticalStackLayout>
                     <material:MaterialPicker 
                         ItemsSource="{Binding ItemsSource}"
+                        TrailingIconSource="picker_arrow.png"
                         Placeholder="Select an option" />
                 </VerticalStackLayout>
             </Frame>
@@ -27,6 +28,7 @@
                     <material:MaterialPicker 
                         Type="Outlined"
                         ItemsSource="{Binding ItemsSource}"
+                        TrailingIconSource="picker_arrow.png"
                         Placeholder="Select an option" />
                 </VerticalStackLayout>
             </Frame>
@@ -38,7 +40,8 @@
                     <material:MaterialPicker 
                         ItemsSource="{Binding ColorsSource}"
                         PropertyPath="Color"
-                        LeadingIconSource="ic_search.png"
+                        LeadingIconSource="select_color.png"
+                        TrailingIconSource="picker_arrow.png"
                         LeadingIconCommand="{Binding LeadingActionCommand}"
                         Focused="MaterialPicker_Focused"
                         Unfocused="MaterialPicker_Focused"
@@ -56,6 +59,7 @@
                         Type="Outlined"
                         ItemsSource="{Binding ItemsSource}"
                         SelectedIndexChanged="MaterialPicker_SelectedIndexChanged"
+                        TrailingIconSource="picker_arrow.png"
                         TextColor="DarkGoldenrod"
                         LabelColor="DarkGreen"
                         BorderColor="DarkGray"
@@ -99,6 +103,7 @@
                         Type="Outlined"
                         Placeholder="Select a new color"
                         IsEnabled="False"
+                        TrailingIconSource="picker_arrow.png"
                         SelectedItem="{Binding SelectedDisabledColor}"
                         ItemsSource="{Binding ColorsSource}" />
                 </VerticalStackLayout>

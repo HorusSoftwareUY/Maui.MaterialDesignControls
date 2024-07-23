@@ -122,9 +122,11 @@ public class MaterialPicker : MaterialInputBase
 
     /// <summary>
     /// Determines whether or not the font of this entry should scale automatically according
-    /// to the operating system settings. Default value is true. This is a bindable property.
-    /// Default value is true
+    /// to the operating system settings. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
     /// <remarks>
     /// Typically this should always be enabled for accessibility reasons.
     /// </remarks>
@@ -228,8 +230,11 @@ public class MaterialPicker : MaterialInputBase
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input. This property cannot be changed by the user.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public string Text 
     {
         get
