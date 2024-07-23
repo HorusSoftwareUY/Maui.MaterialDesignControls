@@ -7,12 +7,30 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 public enum MaterialInputType
 {
-    Filled, Outlined
+    /// <summary>Filled input type</summary>
+    Filled,
+    /// <summary>Outlined input type</summary>
+    Outlined
 }
 
 public enum MaterialInputTypeStates
 {
-    FilledDisabled, FilledFocused, FilledNormal, OutlinedDisabled, OutlinedFocused, OutlinedNormal, Error, ErrorFocused
+    /// <summary>Filled disabled state</summary>
+    FilledDisabled,
+    /// <summary>Filled focused state</summary>
+    FilledFocused,
+    /// <summary>Filled normal state</summary>
+    FilledNormal,
+    /// <summary>Outlined disabled state</summary>
+    OutlinedDisabled,
+    /// <summary>Outlined focused state</summary>
+    OutlinedFocused,
+    /// <summary>Outlined normal state</summary>
+    OutlinedNormal,
+    /// <summary>Error state</summary>
+    Error,
+    /// <summary>Error focused state</summary>
+    ErrorFocused
 }
 
 public abstract partial class MaterialInputBase : ContentView
@@ -310,8 +328,11 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the input type according to <see cref="MaterialInputType"/> enum.
-    /// The default value is <see cref="MaterialInputType.Filled"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialInputType.Filled"/>
+    /// </default>
     public MaterialInputType Type
     {
         get => (MaterialInputType)GetValue(TypeProperty);
@@ -396,8 +417,11 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the text displayed as the placeholder of the input.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public string Placeholder
     {
         get => (string)GetValue(PlaceholderProperty);
@@ -406,8 +430,11 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the text displayed as the label of the input.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public string Label
     {
         get => (string)GetValue(LabelProperty);
@@ -416,8 +443,11 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the text displayed as the supporting text of the input.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public string SupportingText
     {
         get => (string)GetValue(SupportingTextProperty);
@@ -543,8 +573,10 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the label line break mode. This is a bindable property.
-    /// The default value is <value><see cref="LineBreakMode.NoWrap"/></value>
     /// </summary>
+    /// <default>
+    /// <see cref="LineBreakMode.NoWrap"/>
+    /// </default>
     public LineBreakMode LabelLineBreakMode
     {
         get => (LineBreakMode)GetValue(LabelLineBreakModeProperty);
@@ -580,8 +612,10 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the label margin. This is a bindable property.
-    /// The default value is <value>Thickness(16, 4)</value>
     /// </summary>
+    /// <default>
+    /// Thickness(16, 4)
+    /// </default>
     public Thickness SupportingMargin
     {
         get => (Thickness)GetValue(SupportingMarginProperty);
@@ -590,8 +624,10 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets the supporting line break mode. This is a bindable property.
-    /// The default value is <value><see cref="LineBreakMode.NoWrap"/></value>
-    /// </summary>
+    /// </summary>    
+    /// <default>
+    /// <see cref="LineBreakMode.NoWrap"/>
+    /// </default>
     public LineBreakMode SupportingLineBreakMode
     {
         get => (LineBreakMode)GetValue(SupportingLineBreakModeProperty);
@@ -663,8 +699,10 @@ public abstract partial class MaterialInputBase : ContentView
 
     /// <summary>
     /// Gets or sets if show the trailing icon only on error. This is a bindable property.
-    /// <value>The default value is false.</value>
-    /// </summary>
+    /// </summary>    
+    /// <default>
+    /// false
+    /// </default>
     public bool ShowTrailingIconOnlyOnError
     {
         get => (bool)GetValue(ShowTrailingIconOnlyOnErrorProperty);

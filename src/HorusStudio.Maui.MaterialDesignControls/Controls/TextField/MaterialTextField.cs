@@ -183,8 +183,11 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public string Text
     {
         get => (string)GetValue(TextProperty);
@@ -306,8 +309,10 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Determines whether or not the font of this entry should scale automatically according
     /// to the operating system settings. Default value is true. This is a bindable property.
-    /// Default value is true
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
     /// <remarks>
     /// Typically this should always be enabled for accessibility reasons.
     /// </remarks>
@@ -319,8 +324,10 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Determines whether text prediction and automatic text correction is enabled.
-    /// Default value is true.
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
     public bool IsTextPredictionEnabled
     {
         get => (bool)GetValue(IsTextPredictionEnabledProperty);
@@ -356,9 +363,12 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets a value that indicates whether user should be prevented from modifying the text. Default is false.
+    /// Gets or sets a value that indicates whether user should be prevented from modifying the text.
     /// <value>If true, user cannot modify text. Else, false.</value>
     /// </summary>
+    /// <default>
+    /// False
+    /// </default>
     /// <remarks>
     /// The IsReadonly property does not alter the visual appearance of the control,  unlike the IsEnabled property that also changes the visual appearance of the control
     /// </remarks>
