@@ -100,18 +100,4 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             ColorsSource.Add(new CustomColor { Id = ColorsSource.Count + 1, Color = $"New Color {ColorsSource.Count + 1}" });
         }
     }
-
-
-    public class Weight
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        // We override this method only to show a Custom Object without set PropertyPath/SecondaryPropertyPath in Full API example.
-        public override string ToString()
-        {
-            return Name;
-        }
-    }
 }
