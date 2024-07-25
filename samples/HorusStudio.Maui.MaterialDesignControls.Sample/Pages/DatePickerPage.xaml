@@ -20,6 +20,9 @@
             </Frame>
             <material:MaterialLabel Text="An input control with a filled background, featuring a movable label, placeholder text, and optional icons." />
 
+            <DatePicker MinimumDate="01/01/2022"
+                        MaximumDate="12/31/2022" />
+
             <!--<material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
