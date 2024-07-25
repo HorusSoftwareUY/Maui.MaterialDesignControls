@@ -22,7 +22,7 @@ internal class CustomPicker : Picker
     #region Properties
 
     /// <summary>
-    /// Gets or sets place holder.
+    /// Gets or sets placeholder.
     /// This is a bindable property.
     /// </summary>
     public string Placeholder
@@ -32,7 +32,7 @@ internal class CustomPicker : Picker
     }
 
     /// <summary>
-    /// Gets or sets <see cref="Color" /> for the stroke of the radio button.
+    /// Gets or sets <see cref="Color" /> for the placeholder
     /// This is a bindable property.
     /// </summary>
     public Color PlaceholderColor
