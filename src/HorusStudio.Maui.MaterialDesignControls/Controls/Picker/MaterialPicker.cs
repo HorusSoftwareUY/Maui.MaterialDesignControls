@@ -229,7 +229,7 @@ public class MaterialPicker : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets the text displayed as the content of the input. This property cannot be changed by the user.
+    /// Gets or sets the text This property cannot be changed by the user.
     /// This is a bindable property.
     /// </summary>
     /// <default>
