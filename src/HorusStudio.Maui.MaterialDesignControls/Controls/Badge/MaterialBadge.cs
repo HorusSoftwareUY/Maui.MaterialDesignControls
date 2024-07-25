@@ -17,24 +17,12 @@ public class MaterialBadge : ContentView
 
     private readonly static MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
     private readonly static string DefaultText = string.Empty;
-    private readonly static Color DefaultTextColor = MaterialLightTheme.OnError;
-    private readonly static Color DefaultBackgroundColor = MaterialLightTheme.Error;
+    private readonly static Color DefaultTextColor = ((Application.Current!.RequestedTheme == AppTheme.Light) ? MaterialLightTheme.OnError : MaterialDarkTheme.OnError)?? MaterialLightTheme.OnError;
+    private readonly static Color DefaultBackgroundColor = ((Application.Current!.RequestedTheme == AppTheme.Light) ? MaterialLightTheme.Error : MaterialDarkTheme.Error)?? MaterialLightTheme.Error;
     private readonly static double DefaultFontSize = MaterialFontSize.LabelSmall;
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(6);
+    private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(8);
     private readonly static Thickness DefaultPadding = new Thickness(16, 0);
-    
-    private readonly Dictionary<MaterialBadgeType, object> _textColors = new()
-    {
-        { MaterialBadgeType.Small, new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError } },
-        { MaterialBadgeType.Large, new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError } }
-    };
-    
-    private readonly Dictionary<MaterialBadgeType, object> _backgroundColors = new()
-    {
-        { MaterialBadgeType.Small, new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error } },
-        { MaterialBadgeType.Large, new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error } }
-    };
     
     #endregion
 
@@ -114,7 +102,13 @@ public class MaterialBadge : ContentView
     /// The backing store for the <see cref="Padding" />
     /// bindable property.
     /// </summary>
-    public static readonly new BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialBadge), defaultValue: DefaultPadding);
+    public static readonly new BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialBadge), defaultValue: DefaultPadding, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialBadge self)
+        {
+            self.SetPadding(self.Type);
+        }
+    });
     
     #endregion
 
@@ -125,7 +119,7 @@ public class MaterialBadge : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialBadgeType.Small"> MaterialBadgeType.Small </see>
+    /// <see cref="MaterialBadgeType.Large"> MaterialBadgeType.Large </see>
     /// </default>
     public MaterialBadgeType Type
     {
@@ -138,9 +132,8 @@ public class MaterialBadge : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="Empty"/>
     /// </default>
-    /// <remarks>Changing the text of a badge will trigger a layout cycle.</remarks>
     public string Text
     {
         get => (string)GetValue(TextProperty);
@@ -152,7 +145,7 @@ public class MaterialBadge : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="Color.Transparent"> Color.Transparent </see>
+    /// Theme: Light: <see cref="MaterialLightTheme.OnError">MaterialLightTheme.OnError</see> / #FFFFFF - Dark: <see cref="MaterialDarkTheme.OnError">MaterialDarkTheme.OnError</see> / #601410
     /// </default>
     /// <remarks> The text color may be affected by the following cases:
     /// <para>Badge type is small, the text color is not defined.</para>
@@ -169,7 +162,7 @@ public class MaterialBadge : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// 0
+    /// <see cref="MaterialFontSize.LabelSmall">MaterialFontSize.LabelSmall</see> / Tablet: 14 - Phone: 11
     /// </default>
     /// <remarks> The font size may be affected by the following cases:
     /// <para>Badge type is small, the font size not change.</para>
@@ -186,6 +179,9 @@ public class MaterialBadge : ContentView
     /// Gets or sets the font family for the text of this badge.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
+    /// </default>
     public string FontFamily
     {
         get => (string)GetValue(FontFamilyProperty);
@@ -195,6 +191,9 @@ public class MaterialBadge : ContentView
     /// <summary>
     /// Gets or sets a color that describes the background color of the badge.
     /// This is a bindable property.
+    /// <default>
+    /// Theme: Light: <see cref="MaterialLightTheme.Error">MaterialLightTheme.Error</see> / #B3261E - Dark: <see cref="MaterialDarkTheme.Error">MaterialDarkTheme.Error</see> / #F2B8B5
+    /// </default>
     /// </summary>
     public new Color BackgroundColor
     {
@@ -207,7 +206,7 @@ public class MaterialBadge : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="DefaultCornerRadius">6</see>
+    /// <see cref="DefaultCornerRadius">8</see>
     /// </default>
     public CornerRadius CornerRadius
     {
@@ -251,33 +250,32 @@ public class MaterialBadge : ContentView
         HorizontalOptions = LayoutOptions.Center;
         VerticalOptions = LayoutOptions.Center;
         
-        this._frmContainer = new MaterialCard()
+        _frmContainer = new MaterialCard()
         {
-            BackgroundColor = this.BackgroundColor,
-            CornerRadius = this.CornerRadius,
-            Padding = this.Padding
+            BackgroundColor = BackgroundColor,
+            CornerRadius = CornerRadius,
+            Padding = Padding
         };
 
-        this._lblText = new Label()
+        _lblText = new Label()
         {
-            TextColor = this.TextColor,
-            FontSize = this.FontSize,
-            FontFamily = this.FontFamily,
+            TextColor = TextColor,
+            FontSize = FontSize,
+            FontFamily = FontFamily,
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalTextAlignment = TextAlignment.Center,
         };
 
-        _frmContainer.SetBinding(MaterialBadge.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
-        _frmContainer.SetBinding(MaterialBadge.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
-        _frmContainer.SetBinding(MaterialBadge.PaddingProperty, new Binding(nameof(Padding), source: this));
+        _frmContainer.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
+        _frmContainer.SetBinding(MaterialCard.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
 
-        _lblText.SetBinding(MaterialBadge.TextProperty, new Binding(nameof(Text), source: this));
-        _lblText.SetBinding(MaterialBadge.TextColorProperty, new Binding(nameof(TextColor), source: this));
-        _lblText.SetBinding(MaterialBadge.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-        _lblText.SetBinding(MaterialBadge.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        _lblText.SetBinding(Label.TextProperty, new Binding(nameof(Text), source: this));
+        _lblText.SetBinding(Label.TextColorProperty, new Binding(nameof(TextColor), source: this));
+        _lblText.SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        _lblText.SetBinding(Label.FontSizeProperty, new Binding(nameof(FontSize), source: this));
         
-        this._frmContainer.Content = this._lblText;
-        this.Content = this._frmContainer;
+        _frmContainer.Content = _lblText;
+        Content = _frmContainer;
         
         ResizeControl();
     }
@@ -292,20 +290,23 @@ public class MaterialBadge : ContentView
 
     private void SetSizeControl(MaterialBadgeType type)
     {
-        this.HeightRequest = (type is MaterialBadgeType.Small) ? 6 : 16;
-        this.CornerRadius = new CornerRadius((type is MaterialBadgeType.Small) ? 3 : 8);
-        this.MinimumWidthRequest = (type is MaterialBadgeType.Small) ? 6 : 16;
-        this.MinimumHeightRequest = (type is MaterialBadgeType.Small) ? 6 : 16;
-        this._lblText.IsVisible = (type is not MaterialBadgeType.Small);
+        HeightRequest = (type is MaterialBadgeType.Small) ? 6 : 16;
+        CornerRadius = new CornerRadius((type is MaterialBadgeType.Small) ? 3 : 8);
+        MinimumWidthRequest = (type is MaterialBadgeType.Small) ? 6 : 16;
+        MinimumHeightRequest = (type is MaterialBadgeType.Small) ? 6 : 16;
+        _lblText.IsVisible = (type is not MaterialBadgeType.Small);
 
-        if (type is MaterialBadgeType.Small) this._frmContainer.Padding = new Thickness(0);
-        if (type is MaterialBadgeType.Small) this.WidthRequest = 6;
+        if (type is MaterialBadgeType.Small)
+        {
+            _frmContainer.Padding = new Thickness(0);
+            WidthRequest = 6;
+        }
     }
 
     private void ResizeControl()
     {
-        this._frmContainer.Padding = (!string.IsNullOrEmpty(this._lblText.Text) && this._lblText.Text.Length >= 2)? new Thickness(4, 0) : new Thickness(0);
-        this._frmContainer.WidthRequest = -1;
+        _frmContainer.Padding = (!string.IsNullOrEmpty(_lblText.Text) && _lblText.Text.Length >= 2)? new Thickness(4, 0) : new Thickness(0);
+        _frmContainer.WidthRequest = -1;
     }
 
     private void SetText(MaterialBadgeType type)
@@ -319,59 +320,16 @@ public class MaterialBadge : ContentView
 
     private void SetBackgroundColor(MaterialBadgeType type)
     {
-        if (_backgroundColors.TryGetValue(type, out object background) && background != null)
-        {
-            if ((BackgroundColor == null && DefaultBackgroundColor == null) || BackgroundColor.Equals(DefaultBackgroundColor))
-            {
-                // Default Material value according to Type
-                if (background is Color backgroundColor)
-                {
-                    _frmContainer.BackgroundColor = backgroundColor;
-                }
-                else if (background is AppThemeBindingExtension theme)
-                {
-                    _frmContainer.BackgroundColor = theme.GetValueForCurrentTheme<Color>();
-                }
-            }
-            else
-            {
-                // Set by user
-                _frmContainer.BackgroundColor = BackgroundColor;
-            }
-        }
-        else
-        {
-            // Unsupported for current Badge type, ignore
-            _frmContainer.BackgroundColor = DefaultBackgroundColor;
-        }
+        _frmContainer.BackgroundColor = BackgroundColor ?? DefaultBackgroundColor;
     }
 
     private void SetTextColor(MaterialBadgeType type)
     {
-        if (_textColors.TryGetValue(type, out object text) && text != null)
-        {
-            if ((TextColor == null && DefaultTextColor == null) || TextColor.Equals(DefaultTextColor))
-            {
-                // Default Material value according to Type
-                if (text is Color textColor)
-                {
-                    _lblText.TextColor = textColor;
-                }
-                else if (text is AppThemeBindingExtension theme)
-                {
-                    _lblText.TextColor = theme.GetValueForCurrentTheme<Color>();
-                }
-            }
-            else
-            {
-                // Set by user
-                _lblText.TextColor = TextColor;
-            }
-        }
-        else
-        {
-            // Unsupported for current Badge type, ignore
-            _lblText.TextColor = DefaultTextColor;
-        }
+        _lblText.TextColor = TextColor ?? DefaultTextColor;
+    }
+
+    private void SetPadding(MaterialBadgeType type)
+    {
+        _frmContainer.Padding = Padding;
     }
 }
