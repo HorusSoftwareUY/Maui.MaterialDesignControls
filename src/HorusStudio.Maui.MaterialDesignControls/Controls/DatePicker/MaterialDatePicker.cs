@@ -14,7 +14,7 @@ public class MaterialDatePicker : MaterialInputBase
 
     #region Layout
 
-    private DatePicker _datePicker;
+    private CustomDatePicker _datePicker;
 
     #endregion Layout
 
@@ -22,12 +22,13 @@ public class MaterialDatePicker : MaterialInputBase
 
     public MaterialDatePicker()
     {
-        _datePicker = new DatePicker
+        _datePicker = new CustomDatePicker
         {
             HorizontalOptions = LayoutOptions.FillAndExpand
         };
 
-        //_datePicker.SetBinding(DatePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+        _datePicker.SetBinding(DatePicker.DateProperty, new Binding(nameof(Date), source: this));
+        _datePicker.SetBinding(CustomDatePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         _datePicker.SetBinding(DatePicker.TextColorProperty, new Binding(nameof(TextColor), source: this));
         //_datePicker.SetBinding(DatePicker.TextProperty, new Binding(nameof(Text), source: this));
         _datePicker.SetBinding(DatePicker.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
@@ -77,13 +78,14 @@ public class MaterialDatePicker : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialTextField), defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialDatePicker), defaultValue: null);
 
+#nullable enable
     /// <summary>
-    /// The backing store for the <see cref="IsPassword" /> bindable property.
+    /// The backing store for the <see cref="Date" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(nameof(IsPassword), typeof(bool), typeof(MaterialTextField), defaultValue: false);
-
+    public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime?), typeof(MaterialDatePicker), defaultValue: null, propertyChanged: OnDateChanged, defaultBindingMode: BindingMode.TwoWay);
+#nullable disable
     ///// <summary>
     ///// The backing store for the <see cref="Keyboard" /> bindable property.
     ///// </summary>
@@ -180,7 +182,7 @@ public class MaterialDatePicker : MaterialInputBase
     #region Properties
 
     /// <summary>
-    /// Gets or sets the text displayed as the content of the input.
+    /// Gets or sets the text displayed as the content of the input. This property cannot be changed by the user.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -188,18 +190,26 @@ public class MaterialDatePicker : MaterialInputBase
     /// </default>
     public string Text
     {
-        get => (string)GetValue(TextProperty);
-        set => SetValue(TextProperty, value);
+        //TODO: remove this
+        //get => (string)GetValue(TextProperty);
+        //set => SetValue(TextProperty, value);
+        get
+        {
+            return Date.HasValue ? Date.ToString() : null;
+        }
+        set => SetValue(TextProperty, Date.HasValue ? Date.ToString() : null);
     }
 
+#nullable enable
     /// <summary>
-    /// Gets or sets if the input is password. This is a bindable property.
+    /// Gets or sets the Date. This is a bindable property.
     /// </summary>
-    public bool IsPassword
+    public DateTime? Date
     {
-        get => (bool)GetValue(IsPasswordProperty);
-        set => SetValue(IsPasswordProperty, value);
+        get => (DateTime?)GetValue(DateProperty);
+        set => SetValue(DateProperty, value);
     }
+#nullable disable
 
     ///// <summary>
     ///// Gets or sets input's keyboard. This is a bindable property.
@@ -392,7 +402,7 @@ public class MaterialDatePicker : MaterialInputBase
 
     #region Events
 
-    public event EventHandler TextChanged;
+    public event EventHandler DateSelected;
 
     public new event EventHandler<FocusEventArgs> Focused;
 
@@ -401,6 +411,12 @@ public class MaterialDatePicker : MaterialInputBase
     #endregion Events
 
     #region Methods
+
+    private static void OnDateChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = (MaterialDatePicker)bindable;
+        control._datePicker.CustomDate = (DateTime?)newValue;
+    }
 
     //private void TxtEntry_TextChanged(object sender, TextChangedEventArgs e)
     //{
@@ -486,28 +502,9 @@ public class MaterialDatePicker : MaterialInputBase
     #region Styles
     internal static IEnumerable<Style> GetStyles()
     {
-        var style = new Style(typeof(MaterialTextField)) { ApplyToDerivedTypes = true };
+        var style = new Style(typeof(MaterialDatePicker)) { ApplyToDerivedTypes = true };
 
         var baseStyles = MaterialInputBase.GetBaseStyles();
-
-        var errorFocusedGroup = baseStyles.First(g => g.Name.Equals(nameof(VisualStateManager.CommonStates)));
-        baseStyles.Remove(errorFocusedGroup);
-
-        var errorFocusedStates = errorFocusedGroup.States.First(s => s.Name.Equals(MaterialInputCommonStates.ErrorFocused));
-
-        errorFocusedGroup.States.Remove(errorFocusedStates);
-
-        errorFocusedStates.Setters.Add(
-            MaterialTextField.CursorColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Error,
-                Dark = MaterialDarkTheme.Error
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        errorFocusedGroup.States.Add(errorFocusedStates);
-        baseStyles.Add(errorFocusedGroup);
 
         style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
 
