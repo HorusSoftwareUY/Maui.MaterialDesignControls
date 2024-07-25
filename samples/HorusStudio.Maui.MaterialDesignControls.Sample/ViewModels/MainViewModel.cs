@@ -25,7 +25,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new MenuItemViewModel { Title = "Icon buttons", Icon = "ic_icon_button.png", ViewModel = typeof(IconButtonViewModel) },
                 new MenuItemViewModel { Title = "Cards", Icon = "ic_card.png", ViewModel = typeof(CardViewModel) },
                 new MenuItemViewModel { Title = "Radio button", Icon = "ic_radio.png", ViewModel = typeof(RadioButtonViewModel) },
-                new MenuItemViewModel { Title = "Text fields", Icon = "ic_entry.png", ViewModel = typeof(TextFieldViewModel) }
+                new MenuItemViewModel { Title = "Text fields", Icon = "ic_entry.png", ViewModel = typeof(TextFieldViewModel) },
+                new MenuItemViewModel { Title = "Date picker", Icon = "ic_date.png", ViewModel = typeof(DatePickerViewModel) }
             };
         }
 
