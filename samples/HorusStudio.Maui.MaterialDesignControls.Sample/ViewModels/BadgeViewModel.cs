@@ -3,8 +3,8 @@ using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
-	public partial class BadgeViewModel : BaseViewModel
-	{
+    public partial class BadgeViewModel : BaseViewModel
+    {
         #region Attributes & Properties
 
         public override string Title => "MaterialBadge";
@@ -19,23 +19,18 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             Subtitle = "Badges show notifications, counts, or status information on navigation items and icons";
         }
 
-        public override void Appearing()
-        {
-            base.Appearing();
-            ChangeCounterCommand.Execute(null);
-        }
-
         [ICommand]
         private void ChangeCounter()
         {
-            int numberRandom = GenerateRamdomNumber();
-            Counter = (numberRandom == 1000) ? "999+" : $"{numberRandom}";
-        }
-
-        private int GenerateRamdomNumber()
-        {
-            Random rnd = new Random();
-            return rnd.Next(1, 1000);
+            Counter = Counter switch
+            {
+                "" => "0",
+                "0" => "10",
+                "10" => "100",
+                "100" => "999+",
+                "999+" => string.Empty,
+                _ => Counter
+            };
         }
     }
 }

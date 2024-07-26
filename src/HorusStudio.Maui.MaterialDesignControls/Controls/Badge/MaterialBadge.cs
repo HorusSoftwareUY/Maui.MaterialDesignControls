@@ -17,8 +17,8 @@ public class MaterialBadge : ContentView
 
     private readonly static MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
     private readonly static string DefaultText = string.Empty;
-    private readonly static Color DefaultTextColor = ((Application.Current!.RequestedTheme == AppTheme.Light) ? MaterialLightTheme.OnError : MaterialDarkTheme.OnError)?? MaterialLightTheme.OnError;
-    private readonly static Color DefaultBackgroundColor = ((Application.Current!.RequestedTheme == AppTheme.Light) ? MaterialLightTheme.Error : MaterialDarkTheme.Error)?? MaterialLightTheme.Error;
+    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultFontSize = MaterialFontSize.LabelSmall;
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
     private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(8);
@@ -60,13 +60,7 @@ public class MaterialBadge : ContentView
     /// The backing store for the <see cref="TextColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialBadge), defaultValue: DefaultTextColor, propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        if (bindable is MaterialBadge self)
-        {
-            self.SetTextColor(self.Type);
-        }
-    });
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialBadge), defaultValue: DefaultTextColor);
     
     /// <summary>
     /// The backing store for the <see cref="FontSize" />
@@ -84,13 +78,7 @@ public class MaterialBadge : ContentView
     /// The backing store for the <see cref="BackgroundColor" />
     /// bindable property.
     /// </summary>
-    public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialBadge), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
-    {
-        if (bindable is MaterialBadge self)
-        {
-            self.SetBackgroundColor(self.Type);
-        }
-    });
+    public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialBadge), defaultValue: DefaultBackgroundColor);
     
     /// <summary>
     /// The backing store for the <see cref="CornerRadius"/>
@@ -145,7 +133,7 @@ public class MaterialBadge : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// Theme: Light: <see cref="MaterialLightTheme.OnError">MaterialLightTheme.OnError</see> / #FFFFFF - Dark: <see cref="MaterialDarkTheme.OnError">MaterialDarkTheme.OnError</see> / #601410
+    /// Theme: Light: <see cref="MaterialLightTheme.OnError">MaterialLightTheme.OnError</see> - Dark: <see cref="MaterialDarkTheme.OnError">MaterialDarkTheme.OnError</see>
     /// </default>
     /// <remarks> The text color may be affected by the following cases:
     /// <para>Badge type is small, the text color is not defined.</para>
@@ -192,7 +180,7 @@ public class MaterialBadge : ContentView
     /// Gets or sets a color that describes the background color of the badge.
     /// This is a bindable property.
     /// <default>
-    /// Theme: Light: <see cref="MaterialLightTheme.Error">MaterialLightTheme.Error</see> / #B3261E - Dark: <see cref="MaterialDarkTheme.Error">MaterialDarkTheme.Error</see> / #F2B8B5
+    /// Theme: Light: <see cref="MaterialLightTheme.Error">MaterialLightTheme.Error</see> - Dark: <see cref="MaterialDarkTheme.Error">MaterialDarkTheme.Error</see>
     /// </default>
     /// </summary>
     public new Color BackgroundColor
@@ -282,8 +270,6 @@ public class MaterialBadge : ContentView
     
     private void UpdateLayoutAfterTypeChanged(MaterialBadgeType type)
     {
-        SetBackgroundColor(type);
-        SetTextColor(type);
         SetText(type);
         SetSizeControl(type);
     }
@@ -311,21 +297,8 @@ public class MaterialBadge : ContentView
 
     private void SetText(MaterialBadgeType type)
     {
-        if (type is MaterialBadgeType.Large && !string.IsNullOrEmpty(Text))
-        {
-            _lblText.Text = Text; 
-            ResizeControl();
-        }
-    }
-
-    private void SetBackgroundColor(MaterialBadgeType type)
-    {
-        _frmContainer.BackgroundColor = BackgroundColor ?? DefaultBackgroundColor;
-    }
-
-    private void SetTextColor(MaterialBadgeType type)
-    {
-        _lblText.TextColor = TextColor ?? DefaultTextColor;
+        _lblText.Text = Text;
+        ResizeControl();
     }
 
     private void SetPadding(MaterialBadgeType type)

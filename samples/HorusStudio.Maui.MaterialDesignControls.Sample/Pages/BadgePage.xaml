@@ -63,52 +63,50 @@
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Large Type" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <Grid Style="{StaticResource GridBadgeContainer}">
+                <Grid Style="{StaticResource GridBadgeContainer}" Grid.RowDefinitions="*,Auto">
 
                     <Grid
-                        Grid.ColumnSpan="2"
-                        ColumnDefinitions="*,*"
-                        RowDefinitions="*,Auto">
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
 
-                        <Grid
-                            Grid.Column="0"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
+                        <Image
+                            Source="horus_logo.png"/>
 
-                            <Image
-                                Source="horus_logo.png"/>
-
-                            <material:MaterialBadge
-                                VerticalOptions="Start"
-                                HorizontalOptions="End"/>
-
-                        </Grid>
-
-                        <Grid
-                            Grid.Column="1"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-
-                            <Image
-                                Source="horus_logo.png"/>
-
-                            <material:MaterialBadge
-                                Text="{Binding Counter}"
-                                BackgroundColor="Green"
-                                VerticalOptions="Start"
-                                HorizontalOptions="End"/>
-
-                        </Grid>
-
-                        <material:MaterialButton
-                            Type="Text"
-                            Text="Change counter"
-                            Grid.ColumnSpan="2"
-                            Grid.Row="1"
-                            VerticalOptions="End"
-                            Command="{Binding ChangeCounterCommand}"/>
+                        <material:MaterialBadge
+                            Text="{Binding Counter}"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"/>
 
                     </Grid>
+
+                    <Grid
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+
+                        <Image
+                            Source="horus_logo.png"/>
+
+                        <material:MaterialBadge
+                            Text="{Binding Counter}"
+                            BackgroundColor="Green"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"/>
+
+                    </Grid>
+
+                    <material:MaterialButton
+                        Type="Text"
+                        Text="Change counter"
+                        Grid.ColumnSpan="2"
+                        Grid.Row="1"
+                        HorizontalOptions="Center"
+                        VerticalOptions="End"
+                        HeightRequest="10"
+                        Command="{Binding ChangeCounterCommand}"/>
 
                 </Grid>
             </Frame>
