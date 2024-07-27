@@ -61,6 +61,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialButton.GetStyles());
             // Icon Button
             application.Resources.AddStyles(MaterialIconButton.GetStyles());
+            // Card
+            application.Resources.AddStyles(MaterialCard.GetStyles());
             // Radio Button
             application.Resources.AddStyles(MaterialRadioButton.GetStyles());
             // Checkbox
