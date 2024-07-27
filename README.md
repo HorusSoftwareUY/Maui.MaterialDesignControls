@@ -4,10 +4,126 @@
 
 MaterialDesignControls Plugin for .Net MAUI, provides a collection of .Net MAUI controls that follow the [Material Design Guidelines](https://m3.material.io/)
 
+## Demo
 
-## Coming soon
-[.NET MAUI](https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui)            
-We're developing the next version of the plugin for .NET MAUI, bringing you exciting features and improvements.
+[TODO:VIDEO_DEMO]
 
-[Google Material Design 3](https://m3.material.io/)            
-We're currently upgrading the suite to incorporate the Google Material 3 guidelines. 
+## Content table
+- [Setup](#setup)
+- [Platform support](#platform-support)
+- [API Usage](#api-usage)
+- [Controls](#controls)
+- [Styles](#styles)
+- [Sample app](#sample-app)
+- [Developed by](#developed-by)
+- [Contributions](#contributions)
+- [License](#license)
+
+## Setup
+* Available on NuGet: [TODO:ADD_NUGET_LINK]
+* Install into your .NET MAUI project.
+
+## Platform support
+MaterialDesignControls Plugin provides cross-platform controls for:
+* .NET 7
+* Android
+* iOS
+* tvOS (upcoming)
+* macOS (upcoming)
+* Windows (upcoming)
+
+## API Usage
+You must configure MaterialDesignControls in your `MauiProgram` when you `Build()` your `MauiApp`:
+```C#
+var builder = MauiApp.CreateBuilder();
+builder
+    .UseMauiApp<App>()
+    .ConfigureMaterialDesignControls();           
+```
+
+You must add this namespace to your XAML files to use Material Design controls:
+```XML
+xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+```
+
+## Controls
+* [MaterialBadge](docs/materialbadge.md)
+* [MaterialButton](docs/materialbutton.md)
+* [MaterialCard](docs/materialcard.md)
+* [MaterialCheckbox](docs/materialcheckbox.md)
+* [MaterialDivider](docs/materialdivider.md)
+* [MaterialIconButton](docs/materialiconbutton.md)
+* [MaterialLabel](docs/materiallabel.md)
+* [MaterialProgressIndicator](docs/materialprogressindicator.md)
+* [MaterialRadioButton](docs/materialradiobutton.md)
+
+### Coming soon
+* MaterialChips
+* MaterialChipsGroup
+* MaterialDatePicker
+* MaterialEditor
+* MaterialEntry
+* MaterialCodeEntry
+* MaterialField
+* MaterialPicker
+* MaterialDoublePicker
+* MaterialSelection
+* MaterialTimePicker
+* MaterialRating
+* MaterialSlider
+* MaterialSegmented
+* MaterialFloatingButton
+* MaterialSwitch
+* MaterialTopAppBar
+* MaterialNavigationDrawer
+* MaterialCustomControl
+* MaterialSearch
+* MaterialSnackBar
+* MaterialDialog
+* MaterialBottomSheet
+
+## Styles
+You can override default colors, font sizes, font families, and other styles to apply to all Material Design controls:
+* [MaterialAnimation](docs/horusstudio.maui.materialdesigncontrols.materialanimation.md)
+* [MaterialLightTheme](docs/horusstudio.maui.materialdesigncontrols.materiallighttheme.md)
+* [MaterialDarkTheme](docs/horusstudio.maui.materialdesigncontrols.materialdarktheme.md)
+* [MaterialElevation](docs/horusstudio.maui.materialdesigncontrols.materialelevation.md)
+* [MaterialFontFamily](docs/horusstudio.maui.materialdesigncontrols.materialfontfamily.md)
+* [MaterialFontSize](docs/horusstudio.maui.materialdesigncontrols.materialfontsize.md)
+* [MaterialFontTracking](docs/horusstudio.maui.materialdesigncontrols.materialfonttracking.md)
+
+You must configure default styles in your MauiProgram when you Build() your MauiApp:
+```C#
+builder.Services.ConfigureMaterial();
+```
+```C#
+private static IServiceCollection ConfigureMaterial(this IServiceCollection services)
+{
+    MaterialFontFamily.Medium = FontMedium;
+    MaterialFontFamily.Regular = FontRegular;
+    MaterialFontFamily.Default = MaterialFontFamily.Regular;
+
+    MaterialLightTheme.Primary = Color.FromArgb("#6750A4");
+    MaterialLightTheme.Secondary = Color.FromArgb("#625B71");
+
+    MaterialDarkTheme.Primary = Color.FromArgb("#D0BCFF");
+    MaterialDarkTheme.Secondary = Color.FromArgb("#CCC2DC");
+
+    return services;
+}
+```
+
+## Sample app
+https://github.com/HorusSoftwareUY/Maui.MaterialDesignControls/tree/master/samples/HorusStudio.Maui.MaterialDesignControls.Sample
+
+## Developed by
+<a href="http://horus.com.uy"><img src="https://assets-global.website-files.com/64a7016392b0b7da3a8604e3/64a7016392b0b7da3a8604ed_horus.svg" width="128"></a>
+
+
+## Contributions
+Contributions are welcome! If you find a bug want a feature added please report it.
+
+If you want to contribute code please file an issue, create a branch, and file a pull request.
+
+## License 
+MIT License - see LICENSE.txt
