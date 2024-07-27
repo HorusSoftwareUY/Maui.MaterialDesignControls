@@ -17,6 +17,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public BadgeViewModel()
         {
             Subtitle = "Badges show notifications, counts, or status information on navigation items and icons";
+            Counter = "1";
         }
 
         [ICommand]
@@ -24,8 +25,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             Counter = Counter switch
             {
-                "" => "0",
-                "0" => "10",
+                "" => "1",
+                "1" => "10",
                 "10" => "100",
                 "100" => "999+",
                 "999+" => string.Empty,
