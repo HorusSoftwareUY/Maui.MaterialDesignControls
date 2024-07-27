@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <local:BaseContentPage  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                         xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
@@ -51,9 +51,12 @@
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Normal" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout Spacing="0">
-                    <material:MaterialCheckBox Text="Checkbox 1" />
-                    <material:MaterialCheckBox Text="Checkbox 2" />
-                    <material:MaterialCheckBox Text="Checkbox 3" />
+                    <material:MaterialCheckBox
+                        Text="Checkbox 1" />
+                    <material:MaterialCheckBox
+                        Text="Checkbox 2" />
+                    <material:MaterialCheckBox
+                        Text="Checkbox 3" />
                     <material:MaterialCheckBox 
                         Text="Checkbox 4 (disabled)"
                         IsEnabled="False" />
@@ -136,8 +139,14 @@
                         Style="{StaticResource VisualStateManagerStyle}" />
 
                     <HorizontalStackLayout HorizontalOptions="Center">
-                        <material:MaterialLabel Text="Is enabled" HorizontalOptions="Start" HorizontalTextAlignment="End" VerticalTextAlignment="Center" />
-                        <Switch HorizontalOptions="Start" IsToggled="{Binding IsCheckboxEnabled}" />
+                        <material:MaterialLabel
+                            Text="Is enabled"
+                            HorizontalOptions="Start"
+                            HorizontalTextAlignment="End"
+                            VerticalTextAlignment="Center" />
+                        <Switch
+                            HorizontalOptions="Start"
+                            IsToggled="{Binding IsCheckboxEnabled}" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Frame>

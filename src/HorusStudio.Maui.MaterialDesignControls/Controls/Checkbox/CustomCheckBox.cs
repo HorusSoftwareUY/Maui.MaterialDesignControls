@@ -17,10 +17,9 @@ internal class CustomCheckBox : CheckBox
     #region Properties
 
     /// <summary>
-    /// Gets or sets <see cref="Color" /> for the tick of checkbox
-    /// Only is supported on iOS
-    /// This is a bindable property.
+    /// Gets or sets <see cref="Color" /> for the tick of checkbox. This is a bindable property.
     /// </summary>
+    /// <remarks>Only is supported on iOS</remarks>
     public Color TickColor
     {
         get => (Color)GetValue(TickColorProperty);
