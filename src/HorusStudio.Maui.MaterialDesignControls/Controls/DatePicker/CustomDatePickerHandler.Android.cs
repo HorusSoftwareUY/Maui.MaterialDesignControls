@@ -19,64 +19,6 @@ partial class CustomDatePickerHandler
 
     }
 
-    //protected override MauiDatePicker CreatePlatformView()
-    //{
-    //    var mauiDatePicker = new MauiDatePicker(Context)
-    //    {
-    //        Focusable = false,
-    //        Clickable = true
-    //    };
-    //    UpdatePlaceholder(mauiDatePicker);
-
-    //    mauiDatePicker.Click += (sender, args) =>
-    //    {
-    //        ShowDatePicker();
-    //    };
-
-    //    mauiDatePicker.FocusChange += (sender, args) => {
-    //        if (VirtualView is CustomDatePicker customDatePicker)
-    //        {
-    //            customDatePicker.RaiseFocusChanged(new FocusEventArgs(customDatePicker, args.HasFocus));
-    //        }
-    //    };
-
-    //    return mauiDatePicker;
-    //}
-
-    //private void ShowDatePicker()
-    //{
-    //    if (VirtualView is CustomDatePicker customDatePicker)
-    //    {
-    //        var today = DateTime.Today;
-    //        var datePickerDialog = new DatePickerDialog(Context,
-    //            (s, e) =>
-    //            {
-    //                customDatePicker.CustomDate = e.Date;
-    //                PlatformView.Text = e.Date.ToString(customDatePicker.Format);
-    //            },
-    //            today.Year , today.Month - 1, today.Day);
-            
-    //        datePickerDialog.Show();
-    //    }
-    //}
-
-    private void UpdatePlaceholder(MauiDatePicker datePicker)
-    {
-        if (VirtualView is CustomDatePicker customDatePicker)
-        {
-            if (!customDatePicker.CustomDate.HasValue && !string.IsNullOrEmpty(customDatePicker.Placeholder))
-            {
-                //PlatformView.Text = null;
-                //PlatformView.Hint = customDatePicker.Placeholder;
-                //PlatformView.SetHintTextColor(customDatePicker.PlaceholderColor.ToPlatform());
-
-                datePicker.Text = null;
-                datePicker.Hint = customDatePicker.Placeholder;
-                datePicker.SetHintTextColor(customDatePicker.PlaceholderColor.ToPlatform());
-            }
-        }
-    }
-
     public static void MapHorizontalTextAlignment(IDatePickerHandler handler, IDatePicker picker)
     {
         if (picker is CustomDatePicker customPicker)
@@ -96,6 +38,60 @@ partial class CustomDatePickerHandler
                 handler.PlatformView.SetHintTextColor(customDatePicker.PlaceholderColor.ToPlatform());
             }
         }
+    }
+
+    public static void MapIsFocused(IDatePickerHandler handler, IDatePicker datePicker)
+    {
+        if (handler.PlatformView.IsFocused == datePicker.IsFocused) return;
+
+        if (datePicker.IsFocused)
+        {
+            handler.PlatformView.RequestFocus();
+        }
+        else
+        {
+            handler.PlatformView.ClearFocus();
+        }
+    }
+
+    private DatePickerDialog? _dialog;
+
+    protected override DatePickerDialog CreateDatePickerDialog(int year, int month, int day)
+    {
+        _dialog = base.CreateDatePickerDialog(year, month, day);
+        return _dialog;
+    }
+
+    protected override void ConnectHandler(MauiDatePicker platformView)
+    {
+        base.ConnectHandler(platformView);
+        if (_dialog != null)
+        {
+            _dialog.ShowEvent += OnDialogShown;
+            _dialog.DismissEvent += OnDialogDismissed;
+        }
+    }
+
+    protected override void DisconnectHandler(MauiDatePicker platformView)
+    {
+        if (_dialog != null)
+        {
+            _dialog.ShowEvent -= OnDialogShown;
+            _dialog.DismissEvent -= OnDialogDismissed;
+        }
+        base.DisconnectHandler(platformView);
+
+        _dialog = null;
+    }
+
+    private void OnDialogShown(object sender, EventArgs e)
+    {
+        this.VirtualView.IsFocused = true;
+    }
+
+    private void OnDialogDismissed(object sender, EventArgs e)
+    {
+        this.VirtualView.IsFocused = false;
     }
 }
 

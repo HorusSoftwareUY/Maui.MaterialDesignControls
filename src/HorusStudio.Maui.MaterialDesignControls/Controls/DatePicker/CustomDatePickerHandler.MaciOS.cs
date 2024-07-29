@@ -43,6 +43,37 @@ partial class CustomDatePickerHandler
                 { }
             }
         }
+    }
 
+    public static void MapIsFocused(IDatePickerHandler handler, IDatePicker datePicker)
+    {
+        if (handler.PlatformView.Focused == datePicker.IsFocused) return;
+
+        if (datePicker.IsFocused)
+        {
+            handler.PlatformView.BecomeFirstResponder();
+        }
+        else
+        {
+            handler.PlatformView.ResignFirstResponder();
+        }
+    }
+
+    //TODO: check this method
+    //protected override void ConnectHandler(UIDatePicker platformView)
+    //{
+    //    base.ConnectHandler(platformView);
+    //    platformView.EditingDidBegin += OnEditingDidBegin;
+    //    platformView.EditingDidEnd += OnEditingDidEnd;
+    //}
+
+    private void OnEditingDidBegin(object sender, EventArgs e)
+    {
+        this.VirtualView.IsFocused = true;
+    }
+
+    private void OnEditingDidEnd(object sender, EventArgs e)
+    {
+        this.VirtualView.IsFocused = false;
     }
 }

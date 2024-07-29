@@ -9,5 +9,6 @@ partial class CustomDatePickerHandler : DatePickerHandler
         Mapper.Add(nameof(CustomDatePicker.HorizontalTextAlignment), MapHorizontalTextAlignment);
         Mapper.Add(nameof(CustomDatePicker.Placeholder), MapPlaceholder);
         Mapper.Add(nameof(CustomDatePicker.PlaceholderColor), MapPlaceholder);
+        Mapper.Add(nameof(CustomDatePicker.IsFocused), MapIsFocused);
     }
 }
