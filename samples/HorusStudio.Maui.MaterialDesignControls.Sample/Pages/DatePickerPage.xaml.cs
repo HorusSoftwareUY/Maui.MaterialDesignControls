@@ -9,9 +9,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             InitializeComponent();
         }
 
-        private void MaterialTextField_Focused(object sender, FocusEventArgs e)
+        private void DatePicker_Focused(object sender, FocusEventArgs e)
         {
-            //Labelfocused.Text = e.IsFocused ? "Focused" : "Unfocused";
+            Labelfocused.Text = e.IsFocused ? "Focused" : "Unfocused";
         }
     }
 }

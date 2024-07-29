@@ -10,30 +10,36 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public override string Title => "Date picker";
 
         [ObservableProperty]
-        private string _supportingTextValue = "Enter the value.";
+        private string _supportingTextValue = "Select a date.";
 
         [ObservableProperty]
-        private string _text = "";
+        private DateTime? _date = null;
 
         [ObservableProperty]
         private bool _hasAnError = false;
+
+        [ObservableProperty]
+        private DateTime _minimumDate = DateTime.Today.AddYears(-1);
+
+        [ObservableProperty]
+        private DateTime _maximumDate = DateTime.Today.AddMonths(-1);
 
         #endregion
 
         public DatePickerViewModel()
         {
-            Subtitle = "Text fields let users enter text into a UI. They typically appear in forms and dialogs.";
+            Subtitle = "Date picker let users to select a date. They typically appear in forms and dialogs.";
         }
 
         [ICommand]
         private void CheckTextField()
         {
-            SupportingTextValue = "Enter the value.";
+            SupportingTextValue = "Select a date.";
             HasAnError = false;
 
-            if (string.IsNullOrWhiteSpace(Text))
+            if (!Date.HasValue)
             {
-                SupportingTextValue = "You should enter a valid value.";
+                SupportingTextValue = "You should select a valid date.";
                 HasAnError = true;
             }
         }
@@ -45,9 +51,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private void Return()
+        private void ClearDate()
         {
-            DisplayAlert("Return", "Command for return type.", "OK");
+            Date = null;
         }
     }
 }

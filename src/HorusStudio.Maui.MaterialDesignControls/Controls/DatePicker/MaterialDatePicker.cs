@@ -4,6 +4,9 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 public class MaterialDatePicker : MaterialInputBase
 {
+    //TODO: Focus on DatePicker doesn´t work
+    //TODO: Date is not null
+
     #region Attributes
 
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
@@ -41,12 +44,15 @@ public class MaterialDatePicker : MaterialInputBase
         _datePicker.SetBinding(CustomDatePicker.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
         _datePicker.SetBinding(CustomDatePicker.PlaceholderProperty, new Binding(nameof(Placeholder), source: this));
 
-        InputTapCommand = new Command(() => 
-        { 
+        //This doesnt work.
+        InputTapCommand = new Command(() =>
+        {
             _datePicker.Focus(); 
         });
 
         Content = _datePicker;
+
+        Text = String.Empty;
     }
 
     #endregion Constructor
@@ -78,22 +84,22 @@ public class MaterialDatePicker : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="Format" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(MaterialDatePicker), defaultValue: null);
+    public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(MaterialDatePicker), defaultValue: "MM/dd/yyyy");
 
     /// <summary>
     /// The backing store for the <see cref="FontAttributes" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialTextField), defaultValue: null);
+    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialDatePicker), defaultValue: null);
 
     /// <summary>
     /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialTextField), defaultValue: true);
+    public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialDatePicker), defaultValue: true);
 
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTextField), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialDatePicker), defaultValue: DefaultCharacterSpacing);
 
     #endregion BindableProperties
 
@@ -156,6 +162,9 @@ public class MaterialDatePicker : MaterialInputBase
     /// <value>
     /// A valid date format.
     /// </value>
+    /// <default>
+    /// MM/dd/yyyy
+    /// </default>
     /// <remarks>
     /// Format string is the same is passed to DateTime.ToString (string format).
     /// </remarks>
@@ -226,22 +235,22 @@ public class MaterialDatePicker : MaterialInputBase
         control._datePicker.CustomDate = (DateTime?)newValue;                                                                                                                                                                                                                                                                                   
 
         control.DateSelected?.Invoke(control, new DateChangedEventArgs((DateTime)oldValue, (DateTime)newValue));
+
+        control.Text = String.Empty;
     }
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
-#if ANDROID
         if (_datePicker == null) return;
 
+#if ANDROID
         switch (type)
         {
             case MaterialInputType.Filled:
-                _datePicker.VerticalOptions = LayoutOptions.End;
-                _datePicker.Margin = new Thickness(0, 0, 0, -8);
+                _datePicker.VerticalOptions = LayoutOptions.Center;
                 break;
             case MaterialInputType.Outlined:
                 _datePicker.VerticalOptions = LayoutOptions.Center;
-                _datePicker.Margin = new Thickness(0, -7.5);
                 break;
         }
 #endif
@@ -258,10 +267,12 @@ public class MaterialDatePicker : MaterialInputBase
         // Setup events/animations
         _datePicker.Focused += ContentFocusChanged;
         _datePicker.Unfocused += ContentFocusChanged;
+
     }
 
     protected override void OnControlDisappearing()
     {
+        //TODO: Focus on DatePicker doesn´t work
         // Cleanup events/animations
         _datePicker.Focused -= ContentFocusChanged;
         _datePicker.Unfocused -= ContentFocusChanged;
