@@ -19,6 +19,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
             handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
+            handlers.AddHandler(typeof(CheckBox), typeof(CustomCheckboxHandler));
             handlers.AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler));
             handlers.AddHandler(typeof(CustomDatePicker), typeof(CustomDatePickerHandler));
         }
@@ -67,6 +68,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialCard.GetStyles());
             // Radio Button
             application.Resources.AddStyles(MaterialRadioButton.GetStyles());
+            // Checkbox
+            application.Resources.AddStyles(MaterialCheckBox.GetStyles());
             // MaterialTextField
             application.Resources.AddStyles(MaterialTextField.GetStyles());
             // DatePicker
