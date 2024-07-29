@@ -42,6 +42,8 @@ public class MaterialPicker : MaterialInputBase
 
         _picker.SelectedIndexChanged += Picker_SelectedIndexChanged;
 
+        InputTapCommand = new Command(() => _picker.Focus());
+
         Content = _picker;
         Text = String.Empty;
     }
