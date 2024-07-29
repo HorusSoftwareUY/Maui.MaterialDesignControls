@@ -193,6 +193,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     #endregion Bindable Properties
 
     #region Properties
+
     /// <summary>
     /// Gets the <see cref="Content" /> for the RadioButton. This is a bindable property.
     /// We disabled the set for this property because doesn't have sense set the content because we are setting with the
