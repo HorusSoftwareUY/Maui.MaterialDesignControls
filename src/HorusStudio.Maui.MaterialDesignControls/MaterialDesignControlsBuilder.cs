@@ -64,6 +64,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialCard.GetStyles());
             // Radio Button
             application.Resources.AddStyles(MaterialRadioButton.GetStyles());
+            // Chips
+            application.Resources.AddStyles(MaterialChips.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
