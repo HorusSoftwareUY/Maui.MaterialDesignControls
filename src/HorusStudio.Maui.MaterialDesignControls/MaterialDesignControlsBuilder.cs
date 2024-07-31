@@ -18,6 +18,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
             handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
+            handlers.AddHandler(typeof(CheckBox), typeof(CustomCheckboxHandler));
             handlers.AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
         }
 
@@ -61,8 +62,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialButton.GetStyles());
             // Icon Button
             application.Resources.AddStyles(MaterialIconButton.GetStyles());
+            // Card
+            application.Resources.AddStyles(MaterialCard.GetStyles());
             // Radio Button
             application.Resources.AddStyles(MaterialRadioButton.GetStyles());
+            // Checkbox
+            application.Resources.AddStyles(MaterialCheckBox.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
