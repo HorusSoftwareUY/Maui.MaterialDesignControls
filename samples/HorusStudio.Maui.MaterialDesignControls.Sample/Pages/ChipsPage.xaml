@@ -58,44 +58,126 @@
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="TEST" />
-            <Frame Style="{StaticResource SurfaceContainer}" BackgroundColor="White" Padding="16,32">
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Suggestion Chips" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <Grid Style="{StaticResource GridChipsContainer}">
                     
                     <material:MaterialChips
                         Grid.Column="0"
                         Grid.Row="0"
-                        Type="Filter"
-                        LeadingIcon="plus.png"
                         IsEnabled="{Binding IsEnabledState}"
-                        TrailingIcon="ic_floating.png"
-                        Text="Filter chip"
-                        Style="{StaticResource VisualStateManagerStyle}"/>
+                        Text="{Binding TextChipSuggestion}"/>
                     
                     <material:MaterialChips
                         Grid.Column="1"
                         Grid.Row="0"
+                        TrailingIcon="horus_logo.png"
+                        Text="Suggestion trailing"/>
+                    
+                    <material:MaterialChips
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        LeadingIcon="plus.png"
+                        Text="Suggestion leading"/>
+                    
+                    <material:MaterialChips
+                        Grid.Column="1"
+                        Grid.Row="1"
                         Type="Normal"
-                        TrailingIcon="ic_floating.png"
-                        Text="Filter chip"/>
+                        LeadingIcon="plus.png"
+                        Text="Suggestion both"
+                        TrailingIcon="horus_logo.png"/>
+                    
+                </Grid>
+            </Frame>
+            <material:MaterialLabel 
+                Text="Suggestion chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters." />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filter Chips" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource GridChipsContainer}">
+                    
+                    <material:MaterialChips
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        IsEnabled="{Binding IsEnabledState}"
+                        Type="Filter"
+                        Text="{Binding TextChipFilter}"/>
+                    
+                    <material:MaterialChips
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Type="Filter"
+                        TrailingIcon="horus_logo.png"
+                        Text="Filter trailing"/>
                     
                     <material:MaterialChips
                         Grid.Column="0"
                         Grid.Row="1"
                         Type="Filter"
-                        Text="Filter chip"
+                        LeadingIcon="plus.png"
+                        Text="Filter leading"
                         Command="{Binding SetEnabledCommand}"/>
                     
                     <material:MaterialChips
                         Grid.Column="1"
                         Grid.Row="1"
-                        Type="Normal"
+                        Type="Filter"
                         LeadingIcon="plus.png"
-                        Text="Filter chip"
+                        Text="Filter both"
+                        TrailingIcon="horus_logo.png"/>
+                    
+                </Grid>
+            </Frame>
+            <material:MaterialLabel 
+                Text="Tapping on a filter chip activates it and appends a leading checkmark icon to the starting edge of the chip label." />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API Chips" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource GridChipsContainer}">
+                    
+                    <material:MaterialChips
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        FontSize="20"
+                        IsEnabled="{Binding IsEnabledState}"
+                        Text="{Binding TextChipFilter}"
+                        Style="{StaticResource VisualStateManagerStyle}"/>
+                    
+                    <material:MaterialChips
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        BorderWidth="4"
+                        Type="Filter"
+                        TrailingIcon="horus_logo.png"
+                        TrailingIconTintColor="Blue"
+                        Text="Filter trailing"
+                        Style="{StaticResource VisualStateManagerStyle}"/>
+                    
+                    <material:MaterialChips
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Type="Filter"
+                        IsSelected="True"
+                        LeadingIcon="plus.png"
+                        LeadingIconTintColor="Red"
+                        Text="Filter leading"
+                        Command="{Binding SetEnabledCommand}"
+                        Style="{StaticResource VisualStateManagerStyle}"/>
+                    
+                    <material:MaterialChips
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        CornerRadius="0"
+                        LeadingIcon="plus.png"
+                        Text="Filter both"
+                        TrailingIcon="horus_logo.png"
                         Style="{StaticResource VisualStateManagerStyle}"/>
                     
                 </Grid>
             </Frame>
+            <material:MaterialLabel 
+                Text="You can modify the chip as you require, this is useful when you need to add it to specific spaces or follow the required layout throughout your app." />
 
         </VerticalStackLayout>
     </ScrollView>

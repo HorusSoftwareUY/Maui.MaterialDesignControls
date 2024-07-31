@@ -8,16 +8,25 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
+        private const string SuggestionText = "Suggestion";
+        private const string FilterText = "Filter";
+
         public override string Title => "Chips";
 
         [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(TextChipSuggestion))]
+        [AlsoNotifyChangeFor(nameof(TextChipFilter))]
         private bool _isEnabledState;
+
+        public string TextChipSuggestion => (IsEnabledState) ? SuggestionText : $"{SuggestionText} disabled";
+        
+        public string TextChipFilter => (IsEnabledState) ? FilterText : $"{FilterText} disabled";
 
         #endregion
 
         public ChipsViewModel()
         {
-            Subtitle = "";
+            Subtitle = "Chips help people enter information, make selections, filter content, or trigger actions";
         }
 
         [ICommand]
