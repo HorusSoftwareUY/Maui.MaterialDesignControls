@@ -79,12 +79,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\CheckboxPage.xaml.cs">
+	    <DependentUpon>CheckboxPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\RadioButtonPage.xaml.cs">
 	    <DependentUpon>RadioButtonPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\CheckboxPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\RadioButtonPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

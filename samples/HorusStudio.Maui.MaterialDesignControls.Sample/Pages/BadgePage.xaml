@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.BadgePage"
+             x:TypeArguments="vm:BadgeViewModel"
+             x:DataType="vm:BadgeViewModel">
+
+    <ContentPage.Resources>
+        <Style x:Key="GridBadgeContainer" TargetType="Grid">
+            <Setter Property="RowDefinitions" Value="Auto" />
+            <Setter Property="ColumnDefinitions" Value="*,*" />
+            <Setter Property="RowSpacing" Value="16" />
+            <Setter Property="ColumnSpacing" Value="16" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource MainLayout}">
+
+            <material:MaterialLabel Text="{Binding Subtitle}" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Small Type" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource GridBadgeContainer}">
+
+                    <Grid
+                        Grid.Column="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+
+                        <Image
+                            Source="horus_logo.png"/>
+
+                        <material:MaterialBadge
+                            Type="Small"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"/>
+
+                    </Grid>
+
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+
+                        <Image
+                            Source="horus_logo.png"/>
+
+                        <material:MaterialBadge
+                            Type="Small"
+                            BackgroundColor="Green"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"/>
+
+                    </Grid>
+
+                </Grid>
+            </Frame>
+            <material:MaterialLabel
+                Text="A small badge is a simple circle, used to indicate an unread notification."/>
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Large Type" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32,16,16">
+                <Grid Style="{StaticResource GridBadgeContainer}" Grid.RowDefinitions="*,Auto">
+
+                    <Grid
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+
+                        <Image
+                            Source="horus_logo.png"/>
+
+                        <material:MaterialBadge
+                            Text="{Binding Counter}"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"/>
+
+                    </Grid>
+
+                    <Grid
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+
+                        <Image
+                            Source="horus_logo.png"/>
+
+                        <material:MaterialBadge
+                            Text="{Binding Counter}"
+                            BackgroundColor="Green"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"/>
+
+                    </Grid>
+
+                    <material:MaterialButton
+                        Type="Text"
+                        Text="Change counter"
+                        Grid.ColumnSpan="2"
+                        Grid.Row="1"
+                        HorizontalOptions="Center"
+                        Command="{Binding ChangeCounterCommand}"/>
+                </Grid>
+            </Frame>
+            <material:MaterialLabel
+                Text="A large badge contains label text communicating item count information."/>
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <Grid Style="{StaticResource GridBadgeContainer}">
+
+                    <material:MaterialBadge
+                        Text="999+"
+                        Type="Large"
+                        TextColor="White"
+                        FontSize="25"
+                        BackgroundColor="{StaticResource Primary}"
+                        HeightRequest="75"
+                        CornerRadius="8"
+                        Padding="6,0"
+                        Grid.Column="0"/>
+
+                    <material:MaterialBadge
+                        Text="999+"
+                        Type="Large"
+                        TextColor="Black"
+                        FontSize="16"
+                        BackgroundColor="Green"
+                        HeightRequest="50"
+                        CornerRadius="50"
+                        Padding="6,0"
+                        Grid.Column="1"/>
+
+                </Grid>
+            </Frame>
+            <material:MaterialLabel
+                Text="A custom badge contains label text communicating item count information and complete personalization, visit our documentation on github"/>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</local:BaseContentPage>
