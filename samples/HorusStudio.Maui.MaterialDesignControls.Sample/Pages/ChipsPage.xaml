@@ -43,7 +43,7 @@
                         </VisualState>
                          <VisualState x:Name="Unselected">
                             <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="LightGreen" />
+                                <Setter Property="BackgroundColor" Value="Brown" />
                                 <Setter Property="ShadowColor" Value="Green" />
                                 <Setter Property="BorderColor" Value="Red" />
                             </VisualState.Setters>
