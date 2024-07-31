@@ -6,7 +6,8 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 public class MaterialDatePicker : MaterialInputBase
 {
     //TODO: [iOS] Font attributes doesn´t work
-    //TODO: [iOS] focus doesn´t work
+    //TODO: [iOS] Horizontal Text Aligment doesn´t work when there is a date selected
+
     #region Attributes
 
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();

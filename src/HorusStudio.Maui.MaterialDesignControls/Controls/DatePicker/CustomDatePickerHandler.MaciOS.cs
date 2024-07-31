@@ -8,24 +8,49 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 partial class CustomDatePickerHandler
 {
-    public static void MapBorder(IDatePickerHandler handler, IDatePicker picker)
+#if IOS
+    protected override void ConnectHandler(MauiDatePicker platformView)
+    {
+        base.ConnectHandler(platformView);
+        platformView.EditingDidBegin += OnEditingDidBegin;
+        platformView.EditingDidEnd += OnEditingDidEnd;
+    }
+
+    protected override void DisconnectHandler(MauiDatePicker platformView)
+    {
+        base.DisconnectHandler(platformView);
+        platformView.EditingDidBegin -= OnEditingDidBegin;
+        platformView.EditingDidEnd -= OnEditingDidEnd;
+    }
+#endif
+
+    public static void MapBorder(IDatePickerHandler handler, IDatePicker datePicker)
     {
         handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
         handler.PlatformView.Layer.BorderWidth = 0;
+#if IOS
+        handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+        if (datePicker is CustomDatePicker customDatePicker && handler is UITextField control)
+        {
+            control.TextAlignment = TextAlignmentHelper.Convert(customDatePicker.HorizontalTextAlignment);
+        }
+#endif
     }
 
-    public static void MapHorizontalTextAlignment(IDatePickerHandler handler, IDatePicker picker)
+    public static void MapHorizontalTextAlignment(IDatePickerHandler handler, IDatePicker datePicker)
     {
-        if (picker is CustomDatePicker customPicker && handler is UITextField control)
+        if (datePicker is CustomDatePicker customPicker && handler is UITextField control)
         {
             control.TextAlignment = TextAlignmentHelper.Convert(customPicker.HorizontalTextAlignment);
         }
     }
 
-    public static void MapPlaceholder(IDatePickerHandler handler, IDatePicker picker)
+    public static void MapPlaceholder(IDatePickerHandler handler, IDatePicker datePicker)
     {
-        if (picker is CustomDatePicker customDatePicker && handler is UITextField control)
+        if (datePicker is CustomDatePicker customDatePicker && handler is UITextField control)
         {
+            control.TextAlignment = TextAlignmentHelper.Convert(customDatePicker.HorizontalTextAlignment);
+
             if (!customDatePicker.CustomDate.HasValue && !string.IsNullOrEmpty(customDatePicker.Placeholder))
             {
                 control.Text = null;
@@ -57,23 +82,11 @@ partial class CustomDatePickerHandler
         {
             handler.PlatformView.ResignFirstResponder();
         }
-    }
 
-    //protected override void ConnectHandler(UIDatePicker platformView)
-    //{
-    //    base.DisconnectHandler(platformView);
-    //}
-
-    //protected override void ConnectHandler(UIDatePicker platformView)
-    //{
-    //    base.ConnectHandler(platformView);
-    //    platformView.EditingDidBegin += OnEditingDidBegin;
-    //    platformView.EditingDidEnd += OnEditingDidEnd;
-    //}
-
-    protected override void DisconnectHandler(MauiDatePicker platformView)
-    {
-        base.DisconnectHandler(platformView);
+        if (datePicker is CustomDatePicker customDatePicker && handler is UITextField control)
+        {
+            control.TextAlignment = TextAlignmentHelper.Convert(customDatePicker.HorizontalTextAlignment);
+        }
     }
 
     private void OnEditingDidBegin(object sender, EventArgs e)

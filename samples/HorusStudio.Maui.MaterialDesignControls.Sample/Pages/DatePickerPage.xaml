@@ -11,7 +11,7 @@
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <!--<material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialDatePicker 
@@ -43,7 +43,7 @@
                     <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can define events like focused, unfocused or text changed, trailing icon or leading icon." /> -->
+            <material:MaterialLabel Text="You can define events like focused, unfocused or text changed, trailing icon or leading icon." /> 
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing default style" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
@@ -55,6 +55,7 @@
                         MaximumDate="{Binding MaximumDate}"
                         MinimumDate="{Binding MinimumDate}"
                         LabelColor="DarkGreen"
+                        FontAttributes="Bold"
                         BorderColor="DarkGray"
                         PlaceholderColor="DarkBlue"
                         Placeholder="Select a date" />
@@ -81,7 +82,7 @@
             </Frame>
             <material:MaterialLabel Text="You can bind the date, set a supporting text and use an state when an error occured." />
             
-            <!--<material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialDatePicker 
@@ -91,7 +92,7 @@
                         Date="10/12/2024" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can disabled a date picker." />-->
+            <material:MaterialLabel Text="You can disabled a date picker." />
             
         </VerticalStackLayout>
     </ScrollView>
