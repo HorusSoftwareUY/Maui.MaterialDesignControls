@@ -26,16 +26,13 @@ public enum MaterialButtonType
 /// </summary>
 /// <example>
 ///
-/// <h3>XAML namespace</h3>
-/// <code>
-/// <xaml>
-/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-/// </xaml>
-/// </code>
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/button.gif</img>
 ///
 /// <h3>XAML sample</h3>
 /// <code>
 /// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
 /// &lt;material:MaterialButton
 ///     Type="Elevated"
 ///     Text="Confirm"
@@ -55,22 +52,29 @@ public enum MaterialButtonType
 /// };
 ///</code>
 ///
+/// </example>
+/// <todoList>
 /// <h3>Known issues and pending features</h3>
-/// <list type="bullet">
+/// <list type="list">
 ///         <item>
+///             <term></term>
 ///             <description>[iOS] IconTintColor doesn't react to VisualStateManager changes.</description>
 ///         </item>
 ///         <item>
+///             <term></term>
 ///             <description>Shadow doesn't react to VisualStateManager changes.</description>
 ///         </item>
 ///         <item>
+///             <term></term>
 ///             <description>ContentLayout is buggy.</description>
 ///         </item>
 ///         <item>
+///             <term></term>
 ///             <description>Add default Material behavior for pressed state on default styles (v2).</description>
 ///         </item>
 ///     </list>
-/// </example>
+/// </todoList>
+/// 
 public class MaterialButton : ContentView, ITouchable
 {
     // TODO: [iOS] IconTintColor doesn't react to VisualStateManager changes

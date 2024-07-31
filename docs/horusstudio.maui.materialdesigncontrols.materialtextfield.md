@@ -35,9 +35,7 @@ Gets or sets a color that describes the border stroke color of the input.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-**Remarks:**
-
-This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
+Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
 
 <br>
 
@@ -48,9 +46,7 @@ Gets or sets the width of the border, in device-independent units.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-**Remarks:**
-
-Set this value to a non-zero value in order to have a visible border.
+Remarks: Set this value to a non-zero value in order to have a visible border.
 
 <br>
 
@@ -62,9 +58,7 @@ Gets or sets a value that indicates the number of device-independent units that
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-**Remarks:**
-
-The number of device-independent units that should be in between characters in the text.
+Remarks: The number of device-independent units that should be in between characters in the text.
 
 <br>
 
@@ -92,9 +86,7 @@ Gets or sets a color of the caret indicator.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-**Remarks:**
-
-This Property only works on iOS and 'Android' 29 or later
+Remarks: This Property only works on iOS and 'Android' 29 or later
 
 <br>
 
@@ -136,9 +128,7 @@ Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boo
 
 Default value: True
 
-**Remarks:**
-
-Typically this should always be enabled for accessibility reasons.
+Remarks: Typically this should always be enabled for accessibility reasons.
 
 <br>
 
@@ -192,9 +182,7 @@ Gets or sets the command to invoke when the input is tapped.
 
 Property type: ICommand<br>
 
-**Remarks:**
-
-This property is used internally and it's recommended to avoid setting it directly.
+Remarks: This property is used internally and it's recommended to avoid setting it directly.
 
 <br>
 
@@ -224,9 +212,7 @@ Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boo
 
 Default value: If true, user cannot modify text. Else, false.
 
-**Remarks:**
-
-The IsReadonly property does not alter the visual appearance of the control, unlike the IsEnabled property that also changes the visual appearance of the control
+Remarks: The IsReadonly property does not alter the visual appearance of the control, unlike the IsEnabled property that also changes the visual appearance of the control
 
 <br>
 
@@ -236,9 +222,7 @@ Gets or sets a value that controls whether spell checking is enabled.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-**Remarks:**
-
-True if spell checking is enabled. Otherwise false.
+Remarks: True if spell checking is enabled. Otherwise false.
 
 <br>
 
@@ -344,9 +328,7 @@ Allows you to display a leading icon (bitmap image) on the input.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-**Remarks:**
-
-For more options have a look at MaterialIconButton.
+Remarks: For more options have a look at MaterialIconButton.
 
 <br>
 
@@ -550,9 +532,7 @@ Allows you to display a trailing icon (bitmap image) on the input.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-**Remarks:**
-
-For more options have a look at MaterialIconButton.
+Remarks: For more options have a look at MaterialIconButton.
 
 <br>
 

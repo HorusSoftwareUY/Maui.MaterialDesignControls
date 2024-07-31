@@ -8,10 +8,23 @@ Inherits from: MaterialButton → [ContentView](https://learn.microsoft.com/en-u
 
 <br>
 
+![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/button.gif)
+
+### XAML sample
+
+```csharp
+xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+
+<material:MaterialButton
+    Type="Elevated"
+    Text="Confirm"
+    Command="{Binding ButtonCommand}"
+    IsBusy="{Binding ButtonCommand.IsRunning}"/>
+```
+
 ### C# sample
 
 ```csharp
-
 var button = new MaterialButton
 {
     Type = MaterialButtonType.Filled,
@@ -19,16 +32,6 @@ var button = new MaterialButton
     Command = ButtonCommand,
     IsBusy = ButtonCommand.IsRunning
 };
-```
-
-### XAML sample
-
-```csharp
-<material:MaterialButton
-    Type="Elevated"
-    Text="Confirm"
-    Command="{Binding ButtonCommand}"
-    IsBusy="{Binding ButtonCommand.IsRunning}">
 ```
 
 ## Properties
@@ -87,9 +90,7 @@ Gets or sets a color that describes the border stroke color of the button.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-**Remarks:**
-
-This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
+Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
 
 <br>
 
@@ -100,9 +101,7 @@ Gets or sets the width of the border, in device-independent units.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-**Remarks:**
-
-Set this value to a non-zero value in order to have a visible border.
+Remarks: Set this value to a non-zero value in order to have a visible border.
 
 <br>
 
@@ -140,9 +139,7 @@ Gets or sets the command to invoke when the button is activated.
 
 Property type: ICommand<br>
 
-**Remarks:**
-
-This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
+Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
 
 <br>
 
@@ -212,9 +209,7 @@ Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boo
 
 Default value: True
 
-**Remarks:**
-
-Typically this should always be enabled for accessibility reasons.
+Remarks: Typically this should always be enabled for accessibility reasons.
 
 <br>
 
@@ -245,9 +240,12 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 Default value: -1
 
-**Remarks:**
+Remarks:
 
+- <para>which means the value is unset; the effective minimum height will be zero.</para>
 
+- <para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialButton.HeightRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialButton.HeightRequest" /> will change the resulting height of the element during the next layout pass.</para>
 
 <br>
 
@@ -267,9 +265,7 @@ Allows you to display a bitmap image on the Button.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-**Remarks:**
-
-For more options have a look at .
+Remarks: For more options have a look at .
 
 <br>
 
@@ -319,9 +315,7 @@ Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.stri
 
 Default value: Null
 
-**Remarks:**
-
-Changing the text of a button will trigger a layout cycle.
+Remarks: Changing the text of a button will trigger a layout cycle.
 
 <br>
 
@@ -411,3 +405,10 @@ Occurs when the button is released.
 Occurs when the button is unfocused.
 
 <br>
+
+### Known issues and pending features
+
+- **[iOS] IconTintColor doesn't react to VisualStateManager changes.**
+- **Shadow doesn't react to VisualStateManager changes.**
+- **ContentLayout is buggy.**
+- **Add default Material behavior for pressed state on default styles (v2).**

@@ -64,9 +64,7 @@ Gets or sets a color that describes the border stroke color of the button.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-**Remarks:**
-
-This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
+Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
 
 <br>
 
@@ -77,9 +75,7 @@ Gets or sets the width of the border, in device-independent units.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-**Remarks:**
-
-Set this value to a non-zero value in order to have a visible border.
+Remarks: Set this value to a non-zero value in order to have a visible border.
 
 <br>
 
@@ -108,9 +104,7 @@ Gets or sets the command to invoke when the button is activated.
 
 Property type: ICommand<br>
 
-**Remarks:**
-
-This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
+Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
 
 <br>
 
@@ -163,9 +157,12 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 Default value: -1
 
-**Remarks:**
+Remarks:
 
+- <para>which means the value is unset; the effective minimum height will be zero.</para>
 
+- <para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest" /> will change the resulting height of the element during the next layout pass.</para>
 
 <br>
 
@@ -185,9 +182,7 @@ Allows you to display a bitmap image on the Button.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-**Remarks:**
-
-For more options have a look at .
+Remarks: For more options have a look at .
 
 <br>
 
@@ -257,9 +252,12 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 Default value: -1
 
-**Remarks:**
+Remarks: Which means the value is unset; the effective minimum width will be zero.
 
-Which means the value is unset; the effective minimum width will be zero.
+- <para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.WidthRequest" /> does not immediately change the Bounds of an element.</para>
+
+- <para>setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest" /> will change the resulting width of the element during the next layout pass.</para>
 
 <br>
 

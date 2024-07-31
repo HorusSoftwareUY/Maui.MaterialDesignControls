@@ -43,9 +43,7 @@ Gets or sets the  for the track of the progress indicator. This is a bindable pr
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-**Remarks:**
-
-This property will not have an effect unless MaterialProgressIndicator.Type is set to MaterialProgressIndicatorType.Linear.
+Remarks: This property will not have an effect unless MaterialProgressIndicator.Type is set to MaterialProgressIndicatorType.Linear.
 
 <br>
 
