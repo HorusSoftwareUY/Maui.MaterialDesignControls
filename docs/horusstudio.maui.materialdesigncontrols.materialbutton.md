@@ -1,12 +1,35 @@
 # MaterialButton
 
-A button  that reacts to touch events and follows Material Design Guidelines [See here. ](https://m3.material.io/components/buttons/overview)
+A button  that reacts to touch events and follows Material Design Guidelines [](https://m3.material.io/components/buttons/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
 Inherits from: MaterialButton → [ContentView](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.contentview)
 
 <br>
+
+### C# sample
+
+```csharp
+
+var button = new MaterialButton
+{
+    Type = MaterialButtonType.Filled,
+    Text = "Save",
+    Command = ButtonCommand,
+    IsBusy = ButtonCommand.IsRunning
+};
+```
+
+### XAML sample
+
+```csharp
+<material:MaterialButton
+    Type="Elevated"
+    Text="Confirm"
+    Command="{Binding ButtonCommand}"
+    IsBusy="{Binding ButtonCommand.IsRunning}">
+```
 
 ## Properties
 
@@ -33,7 +56,7 @@ Default value: AnimationTypes.Fade.
 Gets or sets the parameter to pass to the MaterialButton.Animation property.
  This is a bindable property.
 
-Property type: [Nullable&lt;Double&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 Default value: Null
 
@@ -64,7 +87,9 @@ Gets or sets a color that describes the border stroke color of the button.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
+**Remarks:**
+
+This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
 
 <br>
 
@@ -73,9 +98,11 @@ Remarks: This property has no effect if  is set to 0. On Android this property w
 Gets or sets the width of the border, in device-independent units.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-Remarks: Set this value to a non-zero value in order to have a visible border.
+**Remarks:**
+
+Set this value to a non-zero value in order to have a visible border.
 
 <br>
 
@@ -93,7 +120,7 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 Gets or sets the size for the busy indicator.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 <br>
 
@@ -102,7 +129,7 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 Gets or sets the spacing between each of the characters of MaterialButton.Text when displayed on the button.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 <br>
 
@@ -113,7 +140,9 @@ Gets or sets the command to invoke when the button is activated.
 
 Property type: ICommand<br>
 
-Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
+**Remarks:**
+
+This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
 
 <br>
 
@@ -121,7 +150,7 @@ Remarks: This property is used to associate a command with an instance of a butt
 
 Gets or sets the parameter to pass to the MaterialButton.Command property.
 
-Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 Default value: null
 
@@ -141,7 +170,7 @@ Property type: [ButtonContentLayout](https://learn.microsoft.com/en-us/dotnet/ap
 Gets or sets the corner radius for the button, in device-independent units.
  This is a bindable property.
 
-Property type: [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 <br>
 
@@ -179,11 +208,13 @@ Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/mic
 Determines whether or not the font of this entry should scale automatically according to the operating system settings.
  This is a bindable property.
 
-Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Default value: True
 
-Remarks: Typically this should always be enabled for accessibility reasons.
+**Remarks:**
+
+Typically this should always be enabled for accessibility reasons.
 
 <br>
 
@@ -192,7 +223,7 @@ Remarks: Typically this should always be enabled for accessibility reasons.
 Gets or sets the font family for the text of this entry.
  This is a bindable property.
 
-Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 <br>
 
@@ -201,7 +232,7 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 Gets or sets the size of the font for the text of this entry.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 <br>
 
@@ -210,14 +241,13 @@ Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.doubl
 Gets or sets the desired height override of this element.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 Default value: -1
 
-Remarks:
+**Remarks:**
 
-- which means the value is unset; the effective minimum height will be zero.
- - MaterialButton.HeightRequest does not immediately change the Bounds of an element; setting the MaterialButton.HeightRequest will change the resulting height of the element during the next layout pass.
+
 
 <br>
 
@@ -237,7 +267,9 @@ Allows you to display a bitmap image on the Button.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-Remarks: For more options have a look at .
+**Remarks:**
+
+For more options have a look at .
 
 <br>
 
@@ -246,7 +278,7 @@ Remarks: For more options have a look at .
 Gets or sets if button is on busy state (executing Command).
  This is a bindable property.
 
-Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Default value: False
 
@@ -283,11 +315,13 @@ Property type: [Shadow](https://learn.microsoft.com/en-us/dotnet/api/microsoft.m
 
 Gets or sets the text displayed as the content of the button.
 
-Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 Default value: Null
 
-Remarks: Changing the text of a button will trigger a layout cycle.
+**Remarks:**
+
+Changing the text of a button will trigger a layout cycle.
 
 <br>
 

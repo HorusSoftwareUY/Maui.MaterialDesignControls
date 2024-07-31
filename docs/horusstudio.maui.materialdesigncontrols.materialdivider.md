@@ -23,8 +23,10 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 Gets or sets the desired height override of this element.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 Default value: 1
 
 <br>
+
+## Events

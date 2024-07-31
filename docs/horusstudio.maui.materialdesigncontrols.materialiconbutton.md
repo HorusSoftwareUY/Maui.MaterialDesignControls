@@ -33,7 +33,7 @@ Default value: AnimationTypes.Fade
 Gets or sets the parameter to pass to the MaterialIconButton.Animation property.
  This is a bindable property.
 
-Property type: [Nullable&lt;Double&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 Default value: Null
 
@@ -64,7 +64,9 @@ Gets or sets a color that describes the border stroke color of the button.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
+**Remarks:**
+
+This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
 
 <br>
 
@@ -73,9 +75,11 @@ Remarks: This property has no effect if  is set to 0. On Android this property w
 Gets or sets the width of the border, in device-independent units.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-Remarks: Set this value to a non-zero value in order to have a visible border.
+**Remarks:**
+
+Set this value to a non-zero value in order to have a visible border.
 
 <br>
 
@@ -93,7 +97,7 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 Gets or sets the size for the busy indicator.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 <br>
 
@@ -104,7 +108,9 @@ Gets or sets the command to invoke when the button is activated.
 
 Property type: ICommand<br>
 
-Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
+**Remarks:**
+
+This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
 
 <br>
 
@@ -113,7 +119,7 @@ Remarks: This property is used to associate a command with an instance of a butt
 Gets or sets the parameter to pass to the MaterialIconButton.Command property.
  This is a bindable property.
 
-Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 Default value: Null
 
@@ -124,7 +130,7 @@ Default value: Null
 Gets or sets the corner radius for the button, in device-independent units.
  This is a bindable property.
 
-Property type: [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 <br>
 
@@ -153,14 +159,13 @@ Property type: [View](https://learn.microsoft.com/en-us/dotnet/api/microsoft.mau
 Gets or sets the desired height override of this element.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 Default value: -1
 
-Remarks:
+**Remarks:**
 
-- which means the value is unset; the effective minimum height will be zero.
- - MaterialIconButton.HeightRequest does not immediately change the Bounds of an element; setting the MaterialIconButton.HeightRequest will change the resulting height of the element during the next layout pass.
+
 
 <br>
 
@@ -180,7 +185,9 @@ Allows you to display a bitmap image on the Button.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-Remarks: For more options have a look at .
+**Remarks:**
+
+For more options have a look at .
 
 <br>
 
@@ -189,7 +196,7 @@ Remarks: For more options have a look at .
 Gets or sets if button is on busy state (executing Command).
  This is a bindable property.
 
-Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Default value: False
 
@@ -246,15 +253,13 @@ Default value: MaterialIconButtonType.Filled
 Gets or sets the desired width override of this element.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 Default value: -1
 
-Remarks:
+**Remarks:**
 
 Which means the value is unset; the effective minimum width will be zero.
-  - MaterialIconButton.WidthRequest does not immediately change the Bounds of an element.
- - setting the MaterialIconButton.HeightRequest will change the resulting width of the element during the next layout pass.
 
 <br>
 

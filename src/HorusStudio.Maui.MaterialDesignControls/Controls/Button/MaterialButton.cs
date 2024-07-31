@@ -22,8 +22,55 @@ public enum MaterialButtonType
 }
 
 /// <summary>
-/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/buttons/overview">See here. </see>
+/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/buttons/overview" />.
 /// </summary>
+/// <example>
+///
+/// <h3>XAML namespace</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// </xaml>
+/// </code>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// &lt;material:MaterialButton
+///     Type="Elevated"
+///     Text="Confirm"
+///     Command="{Binding ButtonCommand}"
+///     IsBusy="{Binding ButtonCommand.IsRunning}"/&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var button = new MaterialButton
+/// {
+///     Type = MaterialButtonType.Filled,
+///     Text = "Save",
+///     Command = ButtonCommand,
+///     IsBusy = ButtonCommand.IsRunning
+/// };
+///</code>
+///
+/// <h3>Known issues and pending features</h3>
+/// <list type="bullet">
+///         <item>
+///             <description>[iOS] IconTintColor doesn't react to VisualStateManager changes.</description>
+///         </item>
+///         <item>
+///             <description>Shadow doesn't react to VisualStateManager changes.</description>
+///         </item>
+///         <item>
+///             <description>ContentLayout is buggy.</description>
+///         </item>
+///         <item>
+///             <description>Add default Material behavior for pressed state on default styles (v2).</description>
+///         </item>
+///     </list>
+/// </example>
 public class MaterialButton : ContentView, ITouchable
 {
     // TODO: [iOS] IconTintColor doesn't react to VisualStateManager changes

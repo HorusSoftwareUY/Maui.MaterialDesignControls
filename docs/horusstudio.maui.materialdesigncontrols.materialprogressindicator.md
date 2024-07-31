@@ -14,7 +14,7 @@ Inherits from: MaterialProgressIndicator → [ContentView](https://learn.microso
 
 Gets or sets height of the progress indicator. This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 <br>
 
@@ -31,7 +31,7 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 Gets or sets if progress indicator is visible.
  This is a bindable property.
 
-Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Default value: True
 
@@ -43,7 +43,9 @@ Gets or sets the  for the track of the progress indicator. This is a bindable pr
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Remarks: This property will not have an effect unless MaterialProgressIndicator.Type is set to MaterialProgressIndicatorType.Linear.
+**Remarks:**
+
+This property will not have an effect unless MaterialProgressIndicator.Type is set to MaterialProgressIndicatorType.Linear.
 
 <br>
 
@@ -67,6 +69,8 @@ Default value: MaterialProgressIndicatorType.Circular
 
 Gets or sets width of the progress indicator. This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 <br>
+
+## Events

@@ -34,7 +34,7 @@ Default value: AnimationTypes.Fade
 Gets or sets the parameter to pass to the MaterialRadioButton.Animation property.
  This is a bindable property.
 
-Property type: [Nullable&lt;Double&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 Default value: null
 
@@ -45,7 +45,7 @@ Default value: null
 Gets or sets the spacing between characters of the label.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 <br>
 
@@ -56,7 +56,9 @@ Gets or sets the command to invoke when the radio button changes its status.
 
 Property type: ICommand<br>
 
-Remarks: This property is used to associate a command with an instance of a radio button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
+**Remarks:**
+
+This property is used to associate a command with an instance of a radio button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
 
 <br>
 
@@ -65,7 +67,7 @@ Remarks: This property is used to associate a command with an instance of a radi
 Gets or sets the parameter to pass to the MaterialRadioButton.CommandCheckedChangedParameter property.
  This is a bindable property.
 
-Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 Default value: null
 
@@ -78,7 +80,7 @@ Gets the MaterialRadioButton.Content for the RadioButton.
  We disabled the set for this property because doesn't have sense set the content because we are setting with the
  radio button and label.
 
-Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 <br>
 
@@ -115,7 +117,7 @@ Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/mic
 
 Defines whether an app's UI reflects text scaling preferences set in the operating system.
 
-Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Default value: True
 
@@ -126,7 +128,7 @@ Default value: True
 Gets or sets the font family for the label.
  This is a bindable property.
 
-Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 <br>
 
@@ -135,16 +137,16 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 Defines the font size of the label.
  This is a bindable property.
 
-Property type: [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 <br>
 
 ### <a id="properties-groupname"/>**GroupName**
 
-Gets or sets the [String](https://docs.microsoft.com/en-us/dotnet/api/system.string) GroupName for the radio button. 
+Gets or sets the [String](https://learn.microsoft.com/en-us/dotnet/api/system.string) GroupName for the radio button. 
  This is a bindable property.
 
-Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 Default value: MaterialRadioButton.GroupName
 
@@ -155,7 +157,7 @@ Default value: MaterialRadioButton.GroupName
 Gets or sets MaterialRadioButton.IsChecked for the radio button. 
  This is a bindable property.
 
-Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 <br>
 
@@ -164,7 +166,7 @@ Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.bool
 Gets or sets MaterialRadioButton.IsEnabled for the radio button.
  This is a bindable property.
 
-Property type: [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 <br>
 
@@ -182,7 +184,7 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 Gets or sets the MaterialRadioButton.Text for the label.
  This is a bindable property.
 
-Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 <br>
 
@@ -220,8 +222,10 @@ Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/micr
 Defines the value of radio button selected
  This is a bindable property.
 
-Property type: [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 Default value: null
 
 <br>
+
+## Events

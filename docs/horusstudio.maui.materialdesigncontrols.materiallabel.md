@@ -15,7 +15,7 @@ Inherits from: MaterialLabel → [Label](https://learn.microsoft.com/en-us/dotne
 Gets or sets the font family for the label.
  This is a bindable property.
 
-Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 <br>
 
@@ -24,7 +24,7 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 Gets or sets the medium font family for the label.
  This is a bindable property.
 
-Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 <br>
 
@@ -33,7 +33,7 @@ Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.strin
 Gets or sets the regular font family for the label.
  This is a bindable property.
 
-Property type: [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 <br>
 
@@ -74,3 +74,5 @@ Property type: LabelTypes<br>
 Default value: LabelTypes.BodyMedium
 
 <br>
+
+## Events
