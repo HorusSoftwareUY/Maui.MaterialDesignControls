@@ -6,7 +6,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 public class MaterialDatePicker : MaterialInputBase
 {
     //TODO: [iOS] Font attributes doesn´t work
-    //TODO: focus doesn´t work on iOS
+    //TODO: [iOS] focus doesn´t work
     #region Attributes
 
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
@@ -244,12 +244,12 @@ public class MaterialDatePicker : MaterialInputBase
 
         control._datePicker.CustomDate = (DateTime?)newValue;                                                                                                                                                                                                                                                                                   
         control.DateSelected?.Invoke(control, new DateChangedEventArgs((DateTime)oldValue, (DateTime)newValue));
-        control.Text = String.Empty;
         control._datePicker.IsVisible = true;
 
         if (newValue is null)
             control._datePicker.IsVisible = false;
 
+        control.Text = String.Empty;
     }
 
     protected override void SetControlTemplate(MaterialInputType type)
