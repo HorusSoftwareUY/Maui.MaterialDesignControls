@@ -6,7 +6,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     public partial class DatePickerViewModel : BaseViewModel
     {
         #region Attributes & Properties
-
         public override string Title => "Date picker";
 
         [ObservableProperty]

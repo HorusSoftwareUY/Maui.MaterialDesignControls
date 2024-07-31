@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Handlers;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
+
 partial class CustomDatePickerHandler : DatePickerHandler
 {
     public CustomDatePickerHandler() : base(Mapper, CommandMapper)

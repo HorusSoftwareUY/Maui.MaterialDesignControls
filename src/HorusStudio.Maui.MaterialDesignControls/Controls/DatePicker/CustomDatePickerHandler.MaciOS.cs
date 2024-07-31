@@ -59,7 +59,11 @@ partial class CustomDatePickerHandler
         }
     }
 
-    //TODO: check this method
+    //protected override void ConnectHandler(UIDatePicker platformView)
+    //{
+    //    base.DisconnectHandler(platformView);
+    //}
+
     //protected override void ConnectHandler(UIDatePicker platformView)
     //{
     //    base.ConnectHandler(platformView);
@@ -67,12 +71,17 @@ partial class CustomDatePickerHandler
     //    platformView.EditingDidEnd += OnEditingDidEnd;
     //}
 
+    protected override void DisconnectHandler(MauiDatePicker platformView)
+    {
+        base.DisconnectHandler(platformView);
+    }
+
     private void OnEditingDidBegin(object sender, EventArgs e)
     {
         this.VirtualView.IsFocused = true;
     }
 
-    private void OnEditingDidEnd(object sender, EventArgs e)
+    public void OnEditingDidEnd(object sender, EventArgs e)
     {
         this.VirtualView.IsFocused = false;
     }

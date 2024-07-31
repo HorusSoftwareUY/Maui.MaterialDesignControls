@@ -1,5 +1,4 @@
 ﻿using Android.App;
-using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.Handlers;
@@ -29,13 +28,13 @@ partial class CustomDatePickerHandler
 
     public static void MapPlaceholder(IDatePickerHandler handler, IDatePicker picker)
     {
-        if (picker is CustomDatePicker customDatePicker && handler.PlatformView is MauiDatePicker datePicker)
+        if (picker is CustomDatePicker customDatePicker && handler.PlatformView is AppCompatEditText datePicker)
         {
             if (!customDatePicker.CustomDate.HasValue && !string.IsNullOrEmpty(customDatePicker.Placeholder))
             {
-                handler.PlatformView.Text = null;
-                handler.PlatformView.Hint = customDatePicker.Placeholder;
-                handler.PlatformView.SetHintTextColor(customDatePicker.PlaceholderColor.ToPlatform());
+                datePicker.Text = null;
+                datePicker.Hint = customDatePicker.Placeholder;
+                datePicker.SetHintTextColor(customDatePicker.PlaceholderColor.ToPlatform());
             }
         }
     }

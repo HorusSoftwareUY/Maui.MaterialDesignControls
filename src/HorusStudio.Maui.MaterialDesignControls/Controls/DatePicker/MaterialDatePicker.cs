@@ -1,12 +1,12 @@
-﻿using System.Windows.Input;
+﻿using Microsoft.Maui.Handlers;
+using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 public class MaterialDatePicker : MaterialInputBase
 {
-    //TODO: Focus on DatePicker doesn´t work
-    //TODO: Date is not null
-
+    //TODO: [iOS] Font attributes doesn´t work
+    //TODO: focus doesn´t work on iOS
     #region Attributes
 
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
@@ -27,7 +27,8 @@ public class MaterialDatePicker : MaterialInputBase
     {
         _datePicker = new CustomDatePicker
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand
+            HorizontalOptions = LayoutOptions.FillAndExpand,
+            IsVisible = false
         };
 
         _datePicker.SetBinding(DatePicker.DateProperty, new Binding(nameof(Date), source: this));
@@ -44,10 +45,14 @@ public class MaterialDatePicker : MaterialInputBase
         _datePicker.SetBinding(CustomDatePicker.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
         _datePicker.SetBinding(CustomDatePicker.PlaceholderProperty, new Binding(nameof(Placeholder), source: this));
 
-        //This doesnt work.
         InputTapCommand = new Command(() =>
         {
-            _datePicker.Focus(); 
+#if ANDROID
+            var handler = _datePicker.Handler as IDatePickerHandler;
+            handler.PlatformView.PerformClick();
+#elif IOS || MACCATALYST
+            _datePicker.Focus();
+#endif
         });
 
         Content = _datePicker;
@@ -77,7 +82,7 @@ public class MaterialDatePicker : MaterialInputBase
     public static readonly BindableProperty MinimumDateProperty = BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(MaterialDatePicker), defaultValue: DateTime.MinValue);
 
     /// <summary>
-    /// The backing store for the <see cref="Date" /> bindable property.
+    /// The backing store for the <see cref="MaximumDate" /> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumDateProperty = BindableProperty.Create(nameof(MaximumDate), typeof(DateTime), typeof(MaterialDatePicker), defaultValue: DateTime.MaxValue);
 
@@ -232,11 +237,19 @@ public class MaterialDatePicker : MaterialInputBase
     private static void OnDateChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var control = (MaterialDatePicker)bindable;
+
+        //If we set maximum date, date picker control set as default date.
+        if (newValue is DateTime date && date == control.MaximumDate)
+            return;
+
         control._datePicker.CustomDate = (DateTime?)newValue;                                                                                                                                                                                                                                                                                   
-
         control.DateSelected?.Invoke(control, new DateChangedEventArgs((DateTime)oldValue, (DateTime)newValue));
-
         control.Text = String.Empty;
+        control._datePicker.IsVisible = true;
+
+        if (newValue is null)
+            control._datePicker.IsVisible = false;
+
     }
 
     protected override void SetControlTemplate(MaterialInputType type)
