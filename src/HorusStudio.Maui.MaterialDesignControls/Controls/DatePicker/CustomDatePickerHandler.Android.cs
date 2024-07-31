@@ -15,7 +15,6 @@ partial class CustomDatePickerHandler
         handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Colors.Transparent.ToPlatform());
 
         handler.PlatformView.SetPadding(0, 0, 0, 0);
-
     }
 
     public static void MapHorizontalTextAlignment(IDatePickerHandler handler, IDatePicker picker)

@@ -286,7 +286,6 @@ public class MaterialDatePicker : MaterialInputBase
 
     protected override void OnControlDisappearing()
     {
-        //TODO: Focus on DatePicker doesn´t work
         // Cleanup events/animations
         _datePicker.Focused -= ContentFocusChanged;
         _datePicker.Unfocused -= ContentFocusChanged;
