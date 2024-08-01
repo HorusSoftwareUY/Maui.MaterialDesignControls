@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TimePickerPage"
+             x:TypeArguments="vm:TimePickerViewModel"
+             x:DataType="vm:TimePickerViewModel">
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource MainLayout}">
+            <material:MaterialLabel Text="{Binding Subtitle}" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Filled" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialTimePicker Placeholder="Creation date" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="A time picker control with a filled background, featuring a movable label, placeholder text, and optional icons." />
+
+            <!--<material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Outlined" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialDatePicker Type="Outlined"
+                                                 Placeholder="Select a born date" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="A date picker control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Using commands and some configuration" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialDatePicker Type="Filled"
+                                                 LeadingIconSource="ic_search.png"
+                                                 LeadingIconCommand="{Binding LeadingActionCommand}"
+                                                 Focused="DatePicker_Focused"
+                                                 Unfocused="DatePicker_Focused"
+                                                 Placeholder="Select a valid date" />
+                    <material:MaterialLabel x:Name="Labelfocused"
+                                            Text="Unfocused" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can define events like focused, unfocused or text changed, trailing icon or leading icon." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Changing default style" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialDatePicker Type="Outlined"
+                                                 HorizontalTextAlignment="Center"
+                                                 TextColor="DarkGoldenrod"
+                                                 MaximumDate="{Binding MaximumDate}"
+                                                 MinimumDate="{Binding MinimumDate}"
+                                                 LabelColor="DarkGreen"
+                                                 FontAttributes="Bold"
+                                                 BorderColor="DarkGray"
+                                                 PlaceholderColor="DarkBlue"
+                                                 Placeholder="Select a date" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set minimum/maximum date." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Using supporting text and checking errors" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialDatePicker Date="{Binding Date}"
+                                                 SupportingText="{Binding SupportingTextValue}"
+                                                 Type="Filled"
+                                                 TrailingIconSource="on_error.png"
+                                                 ShowTrailingIconOnlyOnError="True"
+                                                 HasError="{Binding HasAnError}"
+                                                 Placeholder="Select the moving date" />
+                    <HorizontalStackLayout>
+                        <material:MaterialButton Command="{Binding CheckTextFieldCommand}"
+                                                 Text="Check Value" />
+                        <material:MaterialButton Command="{Binding ClearDateCommand}"
+                                                 Text="Clear Value" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can bind the date, set a supporting text and use an state when an error occured." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Disabled" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialDatePicker Type="Outlined"
+                                                 Label="Born date"
+                                                 IsEnabled="False"
+                                                 Date="10/12/2024" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can disabled a date picker." />-->
+
+        </VerticalStackLayout>
+    </ScrollView>
+</local:BaseContentPage>
