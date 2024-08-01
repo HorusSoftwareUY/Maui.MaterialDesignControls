@@ -268,9 +268,9 @@ public class MaterialTimePicker : MaterialInputBase
             UnfocusedCommand?.Execute(null);
             Unfocused?.Invoke(this, e);
 
-            // Set the default date if the user doesn't select anything
-            //if (!this._timePicker.CustomDate.HasValue)
-            //    Time = this._timePicker.InternalDateTime;
+            //Set the default date if the user doesn't select anything
+            if (!this._timePicker.CustomTime.HasValue)
+                Time = this._timePicker.InternalTime;
         }
     }
 

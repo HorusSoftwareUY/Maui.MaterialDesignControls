@@ -32,16 +32,23 @@ partial class CustomTimePickerHandler
 #if IOS
         handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
-        if (timePicker is CustomTimePicker && handler is UITextField control && UIDevice.CurrentDevice.CheckSystemVersion(13, 2))
+        var checkUseWheelsPickerStyle = CheckUseWheelsPickerStyle(timePicker, handler);
+        if (checkUseWheelsPickerStyle.Item1)
         {
             try
             {
-                UIDatePicker pickers = (UIDatePicker)control.InputView;
+                UIDatePicker pickers = (UIDatePicker)checkUseWheelsPickerStyle.Item2.InputView;
                 pickers.PreferredDatePickerStyle = UIDatePickerStyle.Wheels;
             }
             catch (Exception)
             { }
         }
+    }
+
+    private static (bool, UITextField) CheckUseWheelsPickerStyle(ITimePicker timePicker, ITimePickerHandler handler)
+    {
+
+        return (timePicker is CustomTimePicker && handler is UITextField && UIDevice.CurrentDevice.CheckSystemVersion(13, 2), (UITextField)handler);
     }
 
     public static void MapHorizontalTextAlignment(ITimePickerHandler handler, ITimePicker timePicker)
@@ -51,29 +58,6 @@ partial class CustomTimePickerHandler
             control.TextAlignment = TextAlignmentHelper.Convert(customPicker.HorizontalTextAlignment);
         }
     }
-
-    //public static void MapPlaceholder(ITimePickerHandler handler, ITimePicker picker)
-    //{
-    //    if (datePicker is CustomDatePicker customDatePicker && handler is UITextField control)
-    //    {
-    //        if (!customDatePicker.CustomDate.HasValue && !string.IsNullOrEmpty(customDatePicker.Placeholder))
-    //        {
-    //            control.Text = null;
-    //            control.AttributedPlaceholder = new NSAttributedString(customDatePicker.Placeholder, foregroundColor: customDatePicker.PlaceholderColor.ToPlatform());
-    //        }
-
-    //        if (UIDevice.CurrentDevice.CheckSystemVersion(13, 2))
-    //        {
-    //            try
-    //            {
-    //                UIDatePicker pickers = (UIDatePicker)control.InputView;
-    //                pickers.PreferredDatePickerStyle = UIDatePickerStyle.Wheels;
-    //            }
-    //            catch (Exception)
-    //            { }
-    //        }
-    //    }
-    //}
 
     public static void MapIsFocused(ITimePickerHandler handler, ITimePicker timePicker)
     {

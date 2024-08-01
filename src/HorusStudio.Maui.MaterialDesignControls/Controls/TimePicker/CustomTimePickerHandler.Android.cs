@@ -23,19 +23,6 @@ partial class CustomTimePickerHandler
         }
     }
 
-    //public static void MapPlaceholder(ITimePickerHandler handler, ITimePicker timePicker)
-    //{
-    //    if (timePicker is CustomTimePicker customTimePicker && handler.PlatformView is AppCompatEditText datePicker)
-    //    {
-    //        if (!customTimePicker.CustomTime.HasValue && !string.IsNullOrEmpty(customTimePicker.Placeholder))
-    //        {
-    //            datePicker.Text = null;
-    //            datePicker.Hint = customTimePicker.Placeholder;
-    //            datePicker.SetHintTextColor(customTimePicker.PlaceholderColor.ToPlatform());
-    //        }
-    //    }
-    //}
-
     public static void MapIsFocused(ITimePickerHandler handler, ITimePicker timePicker)
     {
         if (handler.PlatformView.IsFocused == timePicker.IsFocused) return;
@@ -48,6 +35,7 @@ partial class CustomTimePickerHandler
         {
             handler.PlatformView.ClearFocus();
         }
+
     }
 
     private TimePickerDialog? _dialog;

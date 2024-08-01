@@ -11,6 +11,6 @@ public partial class TimePickerPage : BaseContentPage<TimePickerViewModel>
 
     private void TimePicker_Focused(object sender, FocusEventArgs e)
     {
-        //Labelfocused.Text = e.IsFocused ? "Focused" : "Unfocused";
+        Labelfocused.Text = e.IsFocused ? "Focused" : "Unfocused";
     }
 }

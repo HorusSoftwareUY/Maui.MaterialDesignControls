@@ -12,16 +12,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private string _supportingTextValue = "Select a date.";
 
         [ObservableProperty]
-        private DateTime? _date = null;
+        private TimeSpan? _time = null;
 
         [ObservableProperty]
         private bool _hasAnError = false;
-
-        [ObservableProperty]
-        private DateTime _minimumDate = DateTime.Today.AddYears(-1);
-
-        [ObservableProperty]
-        private DateTime _maximumDate = DateTime.Today.AddMonths(-1);
 
         #endregion
 
@@ -36,7 +30,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             SupportingTextValue = "Select a time.";
             HasAnError = false;
 
-            if (!Date.HasValue)
+            if (!Time.HasValue)
             {
                 SupportingTextValue = "You should select a valid time.";
                 HasAnError = true;
@@ -50,9 +44,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private void ClearDate()
+        private void ClearTime()
         {
-            Date = null;
+            Time = null;
         }
     }
 }

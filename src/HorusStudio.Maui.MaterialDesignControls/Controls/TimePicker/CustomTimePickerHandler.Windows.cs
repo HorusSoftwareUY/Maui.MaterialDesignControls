@@ -11,7 +11,5 @@ partial class CustomTimePickerHandler
 
     public static void MapHorizontalTextAlignment(ITimePickerHandler handler, ITimePicker timePicker) { }
 
-    public static void MapPlaceholder(ITimePickerHandler handler, ITimePicker timePicker) { }
-
     public static void MapIsFocused(ITimePickerHandler handler, ITimePicker timePicker) { }
 }

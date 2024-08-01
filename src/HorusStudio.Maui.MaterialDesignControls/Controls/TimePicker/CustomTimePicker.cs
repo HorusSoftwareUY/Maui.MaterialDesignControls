@@ -22,6 +22,11 @@ internal class CustomTimePicker : TimePicker
         }
     }
 
+    public TimeSpan InternalTime
+    {
+        get { return base.Time; }
+    }
+
     #endregion Attributes
 
     #region Bindable Properties
