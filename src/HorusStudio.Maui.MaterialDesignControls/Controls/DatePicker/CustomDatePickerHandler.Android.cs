@@ -1,6 +1,5 @@
 ﻿using Android.App;
-using AndroidX.AppCompat.Widget;
-using HorusStudio.Maui.MaterialDesignControls.Utils;
+using HorusStudio.Maui.MaterialDesignControls.Helpers;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 
@@ -22,19 +21,6 @@ partial class CustomDatePickerHandler
         if (picker is CustomDatePicker customPicker)
         {
             handler.PlatformView.Gravity = TextAlignmentHelper.ConvertToGravityFlags(customPicker.HorizontalTextAlignment);
-        }
-    }
-
-    public static void MapPlaceholder(IDatePickerHandler handler, IDatePicker picker)
-    {
-        if (picker is CustomDatePicker customDatePicker && handler.PlatformView is AppCompatEditText datePicker)
-        {
-            if (!customDatePicker.CustomDate.HasValue && !string.IsNullOrEmpty(customDatePicker.Placeholder))
-            {
-                datePicker.Text = null;
-                datePicker.Hint = customDatePicker.Placeholder;
-                datePicker.SetHintTextColor(customDatePicker.PlaceholderColor.ToPlatform());
-            }
         }
     }
 

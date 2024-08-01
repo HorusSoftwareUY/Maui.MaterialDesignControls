@@ -1,7 +1,8 @@
-﻿using Foundation;
-using HorusStudio.Maui.MaterialDesignControls.Utils;
+﻿using HorusStudio.Maui.MaterialDesignControls.Helpers;
 using Microsoft.Maui.Handlers;
+#if IOS
 using Microsoft.Maui.Platform;
+#endif
 using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -31,6 +32,17 @@ partial class CustomDatePickerHandler
 #if IOS
         handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
+
+        if (datePicker is CustomDatePicker && handler is UITextField control && UIDevice.CurrentDevice.CheckSystemVersion(13, 2))
+        {
+            try
+            {
+                UIDatePicker pickers = (UIDatePicker)control.InputView;
+                pickers.PreferredDatePickerStyle = UIDatePickerStyle.Wheels;
+            }
+            catch (Exception)
+            { }
+        }
     }
 
     public static void MapHorizontalTextAlignment(IDatePickerHandler handler, IDatePicker datePicker)
@@ -38,29 +50,6 @@ partial class CustomDatePickerHandler
         if (datePicker is CustomDatePicker customPicker && handler is UITextField control)
         {
             control.TextAlignment = TextAlignmentHelper.Convert(customPicker.HorizontalTextAlignment);
-        }
-    }
-
-    public static void MapPlaceholder(IDatePickerHandler handler, IDatePicker datePicker)
-    {
-        if (datePicker is CustomDatePicker customDatePicker && handler is UITextField control)
-        {
-            if (!customDatePicker.CustomDate.HasValue && !string.IsNullOrEmpty(customDatePicker.Placeholder))
-            {
-                control.Text = null;
-                control.AttributedPlaceholder = new NSAttributedString(customDatePicker.Placeholder, foregroundColor: customDatePicker.PlaceholderColor.ToPlatform());
-            }
-
-            if (UIDevice.CurrentDevice.CheckSystemVersion(13, 2))
-            {
-                try
-                {
-                    UIDatePicker pickers = (UIDatePicker)control.InputView;
-                    pickers.PreferredDatePickerStyle = UIDatePickerStyle.Wheels;
-                }
-                catch (Exception)
-                { }
-            }
         }
     }
 

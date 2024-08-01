@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace HorusStudio.Maui.MaterialDesignControls.Utils;
+namespace HorusStudio.Maui.MaterialDesignControls.Helpers;
 
 public static class TextAlignmentHelper
 {
