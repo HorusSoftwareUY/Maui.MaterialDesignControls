@@ -43,17 +43,9 @@ partial class CustomTimePickerHandler
     protected override TimePickerDialog CreateTimePickerDialog(int hour, int minute)
     {
         _dialog = base.CreateTimePickerDialog(hour, minute);
+        _dialog.ShowEvent += OnDialogShown;
+        _dialog.DismissEvent += OnDialogDismissed;
         return _dialog;
-    }
-
-    protected override void ConnectHandler(MauiTimePicker platformView)
-    {
-        base.ConnectHandler(platformView);
-        if (_dialog != null)
-        {
-            _dialog.ShowEvent += OnDialogShown;
-            _dialog.DismissEvent += OnDialogDismissed;
-        }
     }
 
     protected override void DisconnectHandler(MauiTimePicker platformView)
