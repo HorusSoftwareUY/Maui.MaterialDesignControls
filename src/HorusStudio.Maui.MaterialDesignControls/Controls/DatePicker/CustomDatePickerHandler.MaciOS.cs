@@ -30,10 +30,6 @@ partial class CustomDatePickerHandler
         handler.PlatformView.Layer.BorderWidth = 0;
 #if IOS
         handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
-        if (datePicker is CustomDatePicker customDatePicker && handler is UITextField control)
-        {
-            control.TextAlignment = TextAlignmentHelper.Convert(customDatePicker.HorizontalTextAlignment);
-        }
 #endif
     }
 
@@ -49,8 +45,6 @@ partial class CustomDatePickerHandler
     {
         if (datePicker is CustomDatePicker customDatePicker && handler is UITextField control)
         {
-            control.TextAlignment = TextAlignmentHelper.Convert(customDatePicker.HorizontalTextAlignment);
-
             if (!customDatePicker.CustomDate.HasValue && !string.IsNullOrEmpty(customDatePicker.Placeholder))
             {
                 control.Text = null;
@@ -81,11 +75,6 @@ partial class CustomDatePickerHandler
         else
         {
             handler.PlatformView.ResignFirstResponder();
-        }
-
-        if (datePicker is CustomDatePicker customDatePicker && handler is UITextField control)
-        {
-            control.TextAlignment = TextAlignmentHelper.Convert(customDatePicker.HorizontalTextAlignment);
         }
     }
 
