@@ -37,9 +37,9 @@ public class MaterialTimePicker : MaterialInputBase
         _timePicker.SetBinding(TimePicker.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
         _timePicker.SetBinding(TimePicker.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _timePicker.SetBinding(TimePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
-        //_timePicker.SetBinding(CustomDatePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
-        //_timePicker.SetBinding(CustomDatePicker.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
-        //_timePicker.SetBinding(CustomDatePicker.PlaceholderProperty, new Binding(nameof(Placeholder), source: this));
+        _timePicker.SetBinding(CustomTimePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+        _timePicker.SetBinding(CustomTimePicker.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
+        _timePicker.SetBinding(CustomTimePicker.PlaceholderProperty, new Binding(nameof(Placeholder), source: this));
 
         InputTapCommand = new Command(() =>
         {

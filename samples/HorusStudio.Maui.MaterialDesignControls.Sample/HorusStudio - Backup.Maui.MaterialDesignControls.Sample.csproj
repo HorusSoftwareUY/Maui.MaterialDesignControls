@@ -72,9 +72,6 @@
 	  <Compile Update="Pages\RadioButtonPage.xaml.cs">
 	    <DependentUpon>RadioButtonPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\DatePickerPage.xaml.cs">
-	    <DependentUpon>DatePickerPage.xaml</DependentUpon>
-	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -82,9 +79,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\RadioButtonPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\DatePickerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\TimePickerPage.xaml">
