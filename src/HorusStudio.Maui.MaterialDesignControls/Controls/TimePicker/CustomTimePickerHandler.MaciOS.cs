@@ -33,11 +33,11 @@ partial class CustomTimePickerHandler
         handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
         var checkUseWheelsPickerStyle = CheckUseWheelsPickerStyle(timePicker, handler);
-        if (checkUseWheelsPickerStyle.Item1)
+        if (checkUseWheelsPickerStyle && handler is UITextField control)
         {
             try
             {
-                UIDatePicker pickers = (UIDatePicker)checkUseWheelsPickerStyle.Item2.InputView;
+                UIDatePicker pickers = (UIDatePicker)control.InputView;
                 pickers.PreferredDatePickerStyle = UIDatePickerStyle.Wheels;
             }
             catch (Exception)
@@ -45,10 +45,10 @@ partial class CustomTimePickerHandler
         }
     }
 
-    private static (bool, UITextField) CheckUseWheelsPickerStyle(ITimePicker timePicker, ITimePickerHandler handler)
+    private static bool CheckUseWheelsPickerStyle(ITimePicker timePicker, ITimePickerHandler handler)
     {
 
-        return (timePicker is CustomTimePicker && handler is UITextField && UIDevice.CurrentDevice.CheckSystemVersion(13, 2), (UITextField)handler);
+        return timePicker is CustomTimePicker && handler is UITextField && UIDevice.CurrentDevice.CheckSystemVersion(13, 2);
     }
 
     public static void MapHorizontalTextAlignment(ITimePickerHandler handler, ITimePicker timePicker)
