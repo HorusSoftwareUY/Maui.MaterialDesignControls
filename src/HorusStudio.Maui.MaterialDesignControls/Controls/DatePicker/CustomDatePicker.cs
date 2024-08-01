@@ -1,7 +1,7 @@
 ﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// An <see cref="Picker" /> without border lines on every platform.
+/// An <see cref="DatePicker" /> without border lines on every platform.
 /// </summary>
 internal class CustomDatePicker : DatePicker
 {
