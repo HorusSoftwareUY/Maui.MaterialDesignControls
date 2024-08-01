@@ -20,6 +20,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
             handlers.AddHandler(typeof(CheckBox), typeof(CustomCheckboxHandler));
             handlers.AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler));
+            handlers.AddHandler(typeof(CustomTimePicker), typeof(CustomTimePickerHandler));
         }
 
         private static void ConfigureLifeCycleEvents(ILifecycleBuilder appLifeCycle)

@@ -17,22 +17,23 @@
             <Frame Style="{StaticResource SurfaceContainer}"
                    Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialTimePicker Placeholder="Creation date" />
+                    <material:MaterialTimePicker Placeholder="Creation time" />
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="A time picker control with a filled background, featuring a movable label, placeholder text, and optional icons." />
 
-            <!--<material:MaterialLabel Style="{StaticResource SectionTitle}"
+           <material:MaterialLabel Style="{StaticResource SectionTitle}"
                                     Text="Outlined" />
             <Frame Style="{StaticResource SurfaceContainer}"
                    Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialDatePicker Type="Outlined"
-                                                 Placeholder="Select a born date" />
+                    <material:MaterialTimePicker Type="Outlined"
+                                                 Placeholder="Select a time" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="A date picker control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." />
+            <material:MaterialLabel Text="A time picker control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." />
 
+            <!--
             <material:MaterialLabel Style="{StaticResource SectionTitle}"
                                     Text="Using commands and some configuration" />
             <Frame Style="{StaticResource SurfaceContainer}"

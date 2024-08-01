@@ -1,0 +1,92 @@
+﻿using Android.App;
+using HorusStudio.Maui.MaterialDesignControls.Helpers;
+using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
+
+namespace HorusStudio.Maui.MaterialDesignControls;
+partial class CustomTimePickerHandler
+{
+    public static void MapBorder(ITimePickerHandler handler, ITimePicker timePicker)
+    {
+        handler.PlatformView.Background = null;
+        handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+        handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Colors.Transparent.ToPlatform());
+
+        handler.PlatformView.SetPadding(0, 0, 0, 0);
+    }
+
+    public static void MapHorizontalTextAlignment(ITimePickerHandler handler, ITimePicker timePicker)
+    {
+        if (timePicker is CustomTimePicker customPicker)
+        {
+            handler.PlatformView.Gravity = TextAlignmentHelper.ConvertToGravityFlags(customPicker.HorizontalTextAlignment);
+        }
+    }
+
+    //public static void MapPlaceholder(ITimePickerHandler handler, ITimePicker timePicker)
+    //{
+    //    if (timePicker is CustomTimePicker customTimePicker && handler.PlatformView is AppCompatEditText datePicker)
+    //    {
+    //        if (!customTimePicker.CustomTime.HasValue && !string.IsNullOrEmpty(customTimePicker.Placeholder))
+    //        {
+    //            datePicker.Text = null;
+    //            datePicker.Hint = customTimePicker.Placeholder;
+    //            datePicker.SetHintTextColor(customTimePicker.PlaceholderColor.ToPlatform());
+    //        }
+    //    }
+    //}
+
+    public static void MapIsFocused(ITimePickerHandler handler, ITimePicker timePicker)
+    {
+        if (handler.PlatformView.IsFocused == timePicker.IsFocused) return;
+
+        if (timePicker.IsFocused)
+        {
+            handler.PlatformView.RequestFocus();
+        }
+        else
+        {
+            handler.PlatformView.ClearFocus();
+        }
+    }
+
+    private TimePickerDialog? _dialog;
+
+    protected override TimePickerDialog CreateTimePickerDialog(int hour, int minute)
+    {
+        _dialog = base.CreateTimePickerDialog(hour, minute);
+        return _dialog;
+    }
+
+    protected override void ConnectHandler(MauiTimePicker platformView)
+    {
+        base.ConnectHandler(platformView);
+        if (_dialog != null)
+        {
+            _dialog.ShowEvent += OnDialogShown;
+            _dialog.DismissEvent += OnDialogDismissed;
+        }
+    }
+
+    protected override void DisconnectHandler(MauiTimePicker platformView)
+    {
+        if (_dialog != null)
+        {
+            _dialog.ShowEvent -= OnDialogShown;
+            _dialog.DismissEvent -= OnDialogDismissed;
+        }
+        base.DisconnectHandler(platformView);
+
+        _dialog = null;
+    }
+
+    private void OnDialogShown(object sender, EventArgs e)
+    {
+        this.VirtualView.IsFocused = true;
+    }
+
+    private void OnDialogDismissed(object sender, EventArgs e)
+    {
+        this.VirtualView.IsFocused = false;
+    }
+}

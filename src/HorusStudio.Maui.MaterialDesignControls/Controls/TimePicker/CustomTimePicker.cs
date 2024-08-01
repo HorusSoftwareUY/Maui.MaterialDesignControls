@@ -76,10 +76,4 @@ internal class CustomTimePicker : TimePicker
     }
 
     #endregion
-
-    #region Constructor
-
-    public CustomTimePicker() { }
-
-    #endregion Constructor
 }

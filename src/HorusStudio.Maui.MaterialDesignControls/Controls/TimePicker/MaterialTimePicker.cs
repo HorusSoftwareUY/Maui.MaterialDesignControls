@@ -129,7 +129,6 @@ public class MaterialTimePicker : MaterialInputBase
     }
 #nullable disable
 
-    //TODO: change default value
     /// <summary>
     /// The format of the time to display to the user. This is a bindable property.
     /// </summary>
@@ -205,11 +204,7 @@ public class MaterialTimePicker : MaterialInputBase
     {
         var control = (MaterialTimePicker)bindable;
 
-        ////If we set maximum date, date picker control set as default date.
-        //if (newValue is DateTime date && date == control.MaximumDate)
-        //    return;
-
-        //control._timePicker.CustomDate = (DateTime?)newValue;
+        control._timePicker.CustomTime = (TimeSpan?)newValue;
         control._timePicker.IsVisible = true;
 
         if (newValue is null)
