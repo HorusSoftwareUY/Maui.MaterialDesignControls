@@ -18,10 +18,7 @@ internal class CustomDatePicker : DatePicker
             if (this.customDate.HasValue)
             {
                 base.Date = this.customDate.Value;
-                EmptyDate = false;
             }
-            else
-                EmptyDate = true;
         }
     }
 
@@ -48,11 +45,6 @@ internal class CustomDatePicker : DatePicker
     /// The backing store for the <see cref="HorizontalTextAlignment" /> bindable property.
     /// </summary>
     public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(CustomDatePicker), defaultValue: null);
-
-    /// <summary>
-    /// The backing store for the <see cref="EmptyDate" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty EmptyDateProperty = BindableProperty.Create(nameof(EmptyDate), typeof(bool), typeof(CustomDatePicker), defaultValue: true);
 
     #endregion
 
@@ -88,22 +80,6 @@ internal class CustomDatePicker : DatePicker
         set => SetValue(HorizontalTextAlignmentProperty, value);
     }
 
-    /// <summary>
-    /// Gets or sets if have and empty date.
-    /// This is a bindable property.
-    /// </summary>
-    public bool EmptyDate
-    {
-        get => (bool)GetValue(EmptyDateProperty);
-        set => SetValue(EmptyDateProperty, value);
-    }
-
     #endregion
-
-    #region Constructor
-
-    public CustomDatePicker() { }
-
-    #endregion Constructor
 }
 
