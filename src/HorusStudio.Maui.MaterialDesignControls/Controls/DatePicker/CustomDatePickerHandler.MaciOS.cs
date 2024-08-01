@@ -33,7 +33,8 @@ partial class CustomDatePickerHandler
         handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
 
-        if (datePicker is CustomDatePicker && handler is UITextField control && UIDevice.CurrentDevice.CheckSystemVersion(13, 2))
+        var checkUseWheelsPickerStyle = CheckUseWheelsPickerStyle(datePicker, handler);
+        if (checkUseWheelsPickerStyle && handler is UITextField control)
         {
             try
             {
@@ -43,6 +44,11 @@ partial class CustomDatePickerHandler
             catch (Exception)
             { }
         }
+    }
+
+    private static bool CheckUseWheelsPickerStyle(IDatePicker datePicker, IDatePickerHandler handler)
+    {
+        return datePicker is CustomDatePicker && handler is UITextField && UIDevice.CurrentDevice.CheckSystemVersion(13, 2);
     }
 
     public static void MapHorizontalTextAlignment(IDatePickerHandler handler, IDatePicker datePicker)
