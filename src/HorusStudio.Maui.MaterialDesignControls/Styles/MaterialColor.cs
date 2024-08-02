@@ -1,5 +1,8 @@
 ﻿namespace HorusStudio.Maui.MaterialDesignControls
 {
+    /// <summary>
+    /// Baseline is the default static color scheme. It uses accessible color pairings and includes colors for both light and dark themes.
+    /// </summary>
     public static class MaterialLightTheme
     {
         // Primary colors
@@ -54,6 +57,9 @@
         //public static Color DisableContainer { get; set; } = Color.FromArgb("#E5E3E8");
     }
 
+    /// <summary>
+    /// Baseline is the default static color scheme. It uses accessible color pairings and includes colors for both light and dark themes.
+    /// </summary>
     public class MaterialDarkTheme
     {
         // Primary colors
