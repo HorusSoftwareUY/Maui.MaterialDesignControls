@@ -40,6 +40,7 @@
                                 <Setter Property="ShadowColor" Value="Green" />
                                 <Setter Property="BorderColor" Value="Transparent" />
                                 <Setter Property="LeadingIconTintColor" Value="Green"/>
+                                <Setter Property="TrailingIconTintColor" Value="Blue"/>
                             </VisualState.Setters>
                         </VisualState>
                          <VisualState x:Name="Unselected">
@@ -47,6 +48,8 @@
                                 <Setter Property="BackgroundColor" Value="LightGreen" />
                                 <Setter Property="ShadowColor" Value="Green" />
                                 <Setter Property="BorderColor" Value="Red" />
+                                <Setter Property="LeadingIconTintColor" Value="Black"/>
+                                <Setter Property="TrailingIconTintColor" Value="White"/>
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -152,7 +155,6 @@
                         BorderWidth="4"
                         Type="Filter"
                         TrailingIcon="horus_logo.png"
-                        TrailingIconTintColor="Blue"
                         Text="Filter trailing"
                         Style="{StaticResource VisualStateManagerStyle}"/>
                     
@@ -162,7 +164,6 @@
                         Type="Filter"
                         IsSelected="True"
                         LeadingIcon="plus.png"
-                        LeadingIconTintColor="Red"
                         Text="Filter leading"
                         Command="{Binding SetEnabledCommand}"
                         Style="{StaticResource VisualStateManagerStyle}"/>

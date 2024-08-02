@@ -7,13 +7,42 @@ public enum MaterialChipsType
 {
     /// <summary>Filter chips</summary>
     Filter,
-    /// <summary>Normal chips</summary>
+    /// <summary>assist, input and suggestion chips</summary>
     Normal
 }
 
 /// <summary>
 /// A Chips help people enter information, make selections, filter content, or trigger actions <see href="https://m3.material.io/components/chips/overview">see here.</see>
 /// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialChips.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialChips
+///        Type="Normal"
+///        LeadingIcon="plus.png"
+///        Text="Suggestion both"
+///        TrailingIcon="horus_logo.png"/&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var chips = new MaterialChips
+/// {
+///     Type = MaterialChipsType.Normal,
+///     LeadingIcon = "plus.png",
+///     Text = "Suggestion both",
+///     TrailingIcon="horus_logo.png"
+/// };
+///</code>
+///
+/// </example>
 public class MaterialChips : ContentView, ITouchable
 {
     #region Attributes
@@ -24,8 +53,8 @@ public class MaterialChips : ContentView, ITouchable
     private readonly static Thickness DefaultPadding = new Thickness(16, 0);
     private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
     private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
-    private readonly static ImageSource DefaultLeadingIcon = Image.SourceProperty.DefaultValue as ImageSource;
-    private readonly static ImageSource DefaultTrailingIcon = Image.SourceProperty.DefaultValue as ImageSource;
+    private readonly static ImageSource DefaultLeadingIcon = null;
+    private readonly static ImageSource DefaultTrailingIcon = null;
     private readonly static Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
     private readonly static string DefaultText = string.Empty;
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
@@ -171,25 +200,13 @@ public class MaterialChips : ContentView, ITouchable
     /// The backing store for the <see cref="LeadingIconTintColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty LeadingIconTintColorProperty = BindableProperty.Create(nameof(LeadingIconTintColor), typeof(Color), typeof(MaterialChips), defaultValue: DefaultIconTintColor, propertyChanged: (bindable, olvalue, newValue) =>
-    {
-        if (bindable is MaterialChips self)
-        {
-            self.SetTintColorLeading(self.Type);
-        }
-    });
+    public static readonly BindableProperty LeadingIconTintColorProperty = BindableProperty.Create(nameof(LeadingIconTintColor), typeof(Color), typeof(MaterialChips), defaultValue: DefaultIconTintColor);
 
     /// <summary>
     /// The backing store for the <see cref="TrailingIconTintColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TrailingIconTintColorProperty = BindableProperty.Create(nameof(TrailingIconTintColor), typeof(Color), typeof(MaterialChips), defaultValue: DefaultIconTintColor, propertyChanged: (bindable, olvalue, newValue) =>
-    {
-        if (bindable is MaterialChips self)
-        {
-            self.SetTintColorTrailing(self.Type);
-        }
-    });
+    public static readonly BindableProperty TrailingIconTintColorProperty = BindableProperty.Create(nameof(TrailingIconTintColor), typeof(Color), typeof(MaterialChips), defaultValue: DefaultIconTintColor);
 
     /// <summary>
     /// The backing store for the <see cref="ShadowColor" />
@@ -216,8 +233,8 @@ public class MaterialChips : ContentView, ITouchable
     /// <see cref="MaterialChipsType.Normal">MaterialChipsType.Normal</see>
     /// </default>
     /// <remarks>
-    /// <para>Normal chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters.</para>
-    /// <para>Filter chips use tags or descriptive words to filter content. They can be a good alternative to segmented buttons or checkboxes when viewing a list or search results.</para>
+    /// <para>Normal: They are for the types assist, input amd suggestion, chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters.</para>
+    /// <para>Filter: chips use tags or descriptive words to filter content. They can be a good alternative to segmented buttons or checkboxes when viewing a list or search results.</para>
     /// </remarks>
     public MaterialChipsType Type
     {
@@ -562,7 +579,7 @@ public class MaterialChips : ContentView, ITouchable
             {
                 IsSelected = !IsSelected;
                 UpdatePadding();
-                if(Type == MaterialChipsType.Filter) VisualStateManager.GoToState(this, (IsSelected) ? ChipsCommonStates.Selected : ChipsCommonStates.Unselected);
+                VisualStateManager.GoToState(this, (IsSelected) ? ChipsCommonStates.Selected : ChipsCommonStates.Unselected);
             }
 
             OnTouch(TouchType.Released);
@@ -576,8 +593,8 @@ public class MaterialChips : ContentView, ITouchable
     private MaterialCard _container;
     private HorizontalStackLayout _hStack;
     private Label _textLabel;
-    private ImageCustom _leadingIcon;
-    private ImageCustom _trailingIcon;
+    private Image _leadingIcon;
+    private Image _trailingIcon;
 
     #endregion
 
@@ -605,7 +622,7 @@ public class MaterialChips : ContentView, ITouchable
             ShadowColor = ShadowColor
         };
 
-        _leadingIcon = new ImageCustom()
+        _leadingIcon = new Image()
         {
             Margin = new Thickness(0),
             Aspect = Aspect.AspectFit,
@@ -613,8 +630,11 @@ public class MaterialChips : ContentView, ITouchable
             IsVisible = false,
             HeightRequest = 18,
             WidthRequest = 18,
-            IconTintColor = LeadingIconTintColor
         };
+        
+        var IconTintColorLeading = new IconTintColorBehavior();
+        IconTintColorLeading.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(LeadingIconTintColor), source: this));
+        _leadingIcon.Behaviors.Add(IconTintColorLeading);
         
         _textLabel = new Label()
         {
@@ -626,7 +646,7 @@ public class MaterialChips : ContentView, ITouchable
             TextColor = TextColor
         };
         
-        _trailingIcon = new ImageCustom()
+        _trailingIcon = new Image()
         {
             Margin = new Thickness(0),
             Aspect = Aspect.AspectFit,
@@ -634,8 +654,11 @@ public class MaterialChips : ContentView, ITouchable
             IsVisible = false,
             HeightRequest = 18,
             WidthRequest = 18,
-            IconTintColor = TrailingIconTintColor
         };
+        
+        var IconTintColosTrailing = new IconTintColorBehavior();
+        IconTintColosTrailing.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(TrailingIconTintColor), source: this));
+        _trailingIcon.Behaviors.Add(IconTintColosTrailing);
 
         _hStack = new HorizontalStackLayout()
         {
@@ -663,45 +686,38 @@ public class MaterialChips : ContentView, ITouchable
         _container.SetBinding(MaterialCard.ShadowProperty, new Binding(nameof(Shadow), source: this));
         _container.SetBinding(MaterialCard.ShadowColorProperty, new Binding(nameof(ShadowColor), source: this));
         
-        _leadingIcon.SetBinding(ImageCustom.SourceProperty, new Binding(nameof(LeadingIcon), source: this));
-        _trailingIcon.SetBinding(ImageCustom.SourceProperty, new Binding(nameof(TrailingIcon), source: this));
+        _leadingIcon.SetBinding(Image.SourceProperty, new Binding(nameof(LeadingIcon), source: this));
+        _trailingIcon.SetBinding(Image.SourceProperty, new Binding(nameof(TrailingIcon), source: this));
+        
+        _container.Clicked += InternalPressedHandler;
 
         _container.Content = _hStack;
         Content = _container;
-        
-        SetType(Type);
     }
 
     #endregion
 
     #region Setters
 
-    private void SetTintColorLeading(MaterialChipsType type)
-    {
-        _leadingIcon.TintColor = LeadingIconTintColor;
-    }
-    
-    private void SetTintColorTrailing(MaterialChipsType type)
-    {
-        _trailingIcon.TintColor = TrailingIconTintColor;
-    }
-
     private void SetType(MaterialChipsType type)
     {
         if (type == MaterialChipsType.Normal)
         {
             VisualStateManager.GoToState(this, ChipsCommonStates.Normal);
-            _container.Clicked -= InternalPressedHandler;
         }
         else
         {
-            VisualStateManager.GoToState(this, (IsSelected)? ChipsCommonStates.Selected : ChipsCommonStates.Unselected);
-            _container.Clicked += InternalPressedHandler;
+            if (IsSelected)
+            {
+                VisualStateManager.GoToState(this, ChipsCommonStates.Selected);
+            }
+            else
+            {
+                VisualStateManager.GoToState(this, ChipsCommonStates.Unselected);
+            }
         }
-        
-        UpdatePadding();
     }
-
+ 
     private void UpdatePadding()
     {
         if ((LeadingIcon != null && !LeadingIcon.IsEmpty) && (TrailingIcon != null && !TrailingIcon.IsEmpty))
