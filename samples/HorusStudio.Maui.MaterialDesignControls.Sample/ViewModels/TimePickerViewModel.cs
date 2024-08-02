@@ -6,10 +6,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     public partial class TimePickerViewModel : BaseViewModel
     {
         #region Attributes & Properties
-        public override string Title => "Date picker";
+        public override string Title => "Time picker";
 
         [ObservableProperty]
-        private string _supportingTextValue = "Select a date.";
+        private string _supportingTextValue = "Select a time.";
 
         [ObservableProperty]
         private TimeSpan? _time = null;
