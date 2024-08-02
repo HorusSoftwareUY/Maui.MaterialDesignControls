@@ -36,14 +36,15 @@
                         </VisualState>
                         <VisualState x:Name="Selected">
                             <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="LightGreen" />
+                                <Setter Property="BackgroundColor" Value="White" />
                                 <Setter Property="ShadowColor" Value="Green" />
-                                <Setter Property="BorderColor" Value="Red" />
+                                <Setter Property="BorderColor" Value="Transparent" />
+                                <Setter Property="LeadingIconTintColor" Value="Green"/>
                             </VisualState.Setters>
                         </VisualState>
                          <VisualState x:Name="Unselected">
                             <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="Brown" />
+                                <Setter Property="BackgroundColor" Value="LightGreen" />
                                 <Setter Property="ShadowColor" Value="Green" />
                                 <Setter Property="BorderColor" Value="Red" />
                             </VisualState.Setters>
@@ -139,6 +140,7 @@
                     <material:MaterialChips
                         Grid.Column="0"
                         Grid.Row="0"
+                        Type="Filter"
                         FontSize="20"
                         IsEnabled="{Binding IsEnabledState}"
                         Text="{Binding TextChipFilter}"
