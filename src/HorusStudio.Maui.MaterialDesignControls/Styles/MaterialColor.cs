@@ -163,149 +163,149 @@
     {
         // Primary colors
         /// <default>
-        /// #D0BCFF <span style="background-color:#D0BCFF;color:#D0BCFF;">MD</span>
+        /// #D0BCFF <img>https://placehold.co/15x15/D0BCFF/D0BCFF.png</img>
         /// </default>
         public static Color Primary { get; set; } = Color.FromArgb("#D0BCFF");
         /// <default>
-        /// #381E72 <span style="background-color:#381E72;color:#381E72;">MD</span>
+        /// #381E72 <img>https://placehold.co/15x15/381E72/381E72.png</img>
         /// </default>
         public static Color OnPrimary { get; set; } = Color.FromArgb("#381E72");
         /// <default>
-        /// #4F378B <span style="background-color:#4F378B;color:#4F378B;">MD</span>
+        /// #4F378B <img>https://placehold.co/15x15/4F378B/4F378B.png</img>
         /// </default>
         public static Color PrimaryContainer { get; set; } = Color.FromArgb("#4F378B");
         /// <default>
-        /// #EADDFF <span style="background-color:#EADDFF;color:#EADDFF;">MD</span>
+        /// #EADDFF <img>https://placehold.co/15x15/EADDFF/EADDFF.png</img>
         /// </default>
         public static Color OnPrimaryContainer { get; set; } = Color.FromArgb("#EADDFF");
 
         // Secondary colors
         /// <default>
-        /// #CCC2DC <span style="background-color:#CCC2DC;color:#CCC2DC;">MD</span>
+        /// #CCC2DC <img>https://placehold.co/15x15/CCC2DC/CCC2DC.png</img>
         /// </default>
         public static Color Secondary { get; set; } = Color.FromArgb("#CCC2DC");
         /// <default>
-        /// #332D41 <span style="background-color:#332D41;color:#332D41;">MD</span>
+        /// #332D41 <img>https://placehold.co/15x15/332D41/332D41.png</img>
         /// </default>
         public static Color OnSecondary { get; set; } = Color.FromArgb("#332D41");
         /// <default>
-        /// #4A4458 <span style="background-color:#4A4458;color:#4A4458;">MD</span>
+        /// #4A4458 <img>https://placehold.co/15x15/4A4458/4A4458.png</img>
         /// </default>
         public static Color SecondaryContainer { get; set; } = Color.FromArgb("#4A4458");
         /// <default>
-        /// #E8DEF8 <span style="background-color:#E8DEF8;color:#E8DEF8;">MD</span>
+        /// #E8DEF8 <img>https://placehold.co/15x15/E8DEF8/E8DEF8.png</img>
         /// </default>
         public static Color OnSecondaryContainer { get; set; } = Color.FromArgb("#E8DEF8");
 
         // Error colors
         /// <default>
-        /// #F2B8B5 <span style="background-color:#F2B8B5;color:#F2B8B5;">MD</span>
+        /// #F2B8B5 <img>https://placehold.co/15x15/F2B8B5/F2B8B5.png</img>
         /// </default>
         public static Color Error { get; set; } = Color.FromArgb("#F2B8B5");
         /// <default>
-        /// #601410 <span style="background-color:#601410;color:#601410;">MD</span>
+        /// #601410 <img>https://placehold.co/15x15/601410/601410.png</img>
         /// </default>
         public static Color OnError { get; set; } = Color.FromArgb("#601410");
         /// <default>
-        /// #8C1D18 <span style="background-color:#8C1D18;color:#8C1D18;">MD</span>
+        /// #8C1D18 <img>https://placehold.co/15x15/8C1D18/8C1D18.png</img>
         /// </default>
         public static Color ErrorContainer { get; set; } = Color.FromArgb("#8C1D18");
         /// <default>
-        /// #F9DEDC <span style="background-color:#F9DEDC;color:#F9DEDC;">MD</span>
+        /// #F9DEDC <img>https://placehold.co/15x15/F9DEDC/F9DEDC.png</img>
         /// </default>
         public static Color OnErrorContainer { get; set; } = Color.FromArgb("#F9DEDC");
 
         // Surface colors
         /// <default>
-        /// #141218 <span style="background-color:#141218;color:#141218;">MD</span>
+        /// #141218 <img>https://placehold.co/15x15/141218/141218.png</img>
         /// </default>
         public static Color Surface { get; set; } = Color.FromArgb("#141218");
         /// <default>
-        /// #E6E0E9 <span style="background-color:#E6E0E9;color:#E6E0E9;">MD</span>
+        /// #E6E0E9 <img>https://placehold.co/15x15/E6E0E9/E6E0E9.png</img>
         /// </default>
         public static Color OnSurface { get; set; } = Color.FromArgb("#E6E0E9");
         /// <default>
-        /// #49454F <span style="background-color:#49454F;color:#49454F;">MD</span>
+        /// #49454F <img>https://placehold.co/15x15/49454F/49454F.png</img>
         /// </default>
         public static Color SurfaceVariant { get; set; } = Color.FromArgb("#49454F");
         /// <default>
-        /// #CAC4D0 <span style="background-color:#CAC4D0;color:#CAC4D0;">MD</span>
+        /// #CAC4D0 <img>https://placehold.co/15x15/CAC4D0/CAC4D0.png</img>
         /// </default>
         public static Color OnSurfaceVariant { get; set; } = Color.FromArgb("#CAC4D0");
         /// <default>
-        /// #36343B <span style="background-color:#36343B;color:#36343B;">MD</span>
+        /// #36343B <img>https://placehold.co/15x15/36343B/36343B.png</img>
         /// </default>
         public static Color SurfaceContainerHighest { get; set; } = Color.FromArgb("#36343B");
         /// <default>
-        /// #2B2930 <span style="background-color:#2B2930;color:#2B2930;">MD</span>
+        /// #2B2930 <img>https://placehold.co/15x15/2B2930/2B2930.png</img>
         /// </default>
         public static Color SurfaceContainerHigh { get; set; } = Color.FromArgb("#2B2930");
         /// <default>
-        /// #211F26 <span style="background-color:#211F26;color:#211F26;">MD</span>
+        /// #211F26 <img>https://placehold.co/15x15/211F26/211F26.png</img>
         /// </default>
         public static Color SurfaceContainer { get; set; } = Color.FromArgb("#211F26");
         /// <default>
-        /// #1D1B20 <span style="background-color:#1D1B20;color:#1D1B20;">MD</span>
+        /// #1D1B20 <img>https://placehold.co/15x15/1D1B20/1D1B20.png</img>
         /// </default>
         public static Color SurfaceContainerLow { get; set; } = Color.FromArgb("#1D1B20");
         /// <default>
-        /// #0F0D13 <span style="background-color:#0F0D13;color:#0F0D13;">MD</span>
+        /// #0F0D13 <img>https://placehold.co/15x15/0F0D13/0F0D13.png</img>
         /// </default>
         public static Color SurfaceContainerLowest { get; set; } = Color.FromArgb("#0F0D13");
         /// <default>
-        /// #E6E0E9 <span style="background-color:#E6E0E9;color:#E6E0E9;">MD</span>
+        /// #E6E0E9 <img>https://placehold.co/15x15/E6E0E9/E6E0E9.png</img>
         /// </default>
         public static Color InverseSurface { get; set; } = Color.FromArgb("#E6E0E9");
         /// <default>
-        /// #322F35 <span style="background-color:#322F35;color:#322F35;">MD</span>
+        /// #322F35 <img>https://placehold.co/15x15/322F35/322F35.png</img>
         /// </default>
         public static Color InverseOnSurface { get; set; } = Color.FromArgb("#322F35");
         /// <default>
-        /// #D0BCFF <span style="background-color:#D0BCFF;color:#D0BCFF;">MD</span>
+        /// #D0BCFF <img>https://placehold.co/15x15/D0BCFF/D0BCFF.png</img>
         /// </default>
         public static Color SurfaceTint { get; set; } = Color.FromArgb("#D0BCFF");
         /// <default>
-        /// #D0BCFF <span style="background-color:#D0BCFF;color:#D0BCFF;">MD</span>
+        /// #D0BCFF <img>https://placehold.co/15x15/D0BCFF/D0BCFF.png</img>
         /// </default>
         public static Color SurfaceTintColor { get; set; } = Color.FromArgb("#D0BCFF");
 
         // Outline colors
         /// <default>
-        /// #938F99 <span style="background-color:#938F99;color:#938F99;">MD</span>
+        /// #938F99 <img>https://placehold.co/15x15/938F99/938F99.png</img>
         /// </default>
         public static Color Outline { get; set; } = Color.FromArgb("#938F99");
         /// <default>
-        /// #49454F <span style="background-color:#49454F;color:#49454F;">MD</span>
+        /// #49454F <img>https://placehold.co/15x15/49454F/49454F.png</img>
         /// </default>
         public static Color OutlineVariant { get; set; } = Color.FromArgb("#49454F");
 
         // Add-on primary colors
         /// <default>
-        /// #6750A4 <span style="background-color:#6750A4;color:#6750A4;">MD</span>
+        /// #6750A4 <img>https://placehold.co/15x15/6750A4/6750A4.png</img>
         /// </default>
         public static Color InversePrimary { get; set; } = Color.FromArgb("#6750A4");
 
         // Add-on surface colors
         /// <default>
-        /// #3B383E <span style="background-color:#3B383E;color:#3B383E;">MD</span>
+        /// #3B383E <img>https://placehold.co/15x15/3B383E/3B383E.png</img>
         /// </default>
         public static Color SurfaceBright { get; set; } = Color.FromArgb("#3B383E");
         /// <default>
-        /// #141218 <span style="background-color:#141218;color:#141218;">MD</span>
+        /// #141218 <img>https://placehold.co/15x15/141218/141218.png</img>
         /// </default>
         public static Color SurfaceDim { get; set; } = Color.FromArgb("#141218");
         /// <default>
-        /// #000000 <span style="background-color:#000000;color:#000000;">MD</span>
+        /// #000000 <img>https://placehold.co/15x15/000000/000000.png</img>
         /// </default>
         public static Color Scrim { get; set; } = Color.FromArgb("#000000");
         /// <default>
-        /// #000000 <span style="background-color:#000000;color:#000000;">MD</span>
+        /// #000000 <img>https://placehold.co/15x15/000000/000000.png</img>
         /// </default>
         public static Color Shadow { get; set; } = Color.FromArgb("#000000");
 
         // Non material
         /// <default>
-        /// #E6E0E9 <span style="background-color:#E6E0E9;color:#E6E0E9;">MD</span>
+        /// #E6E0E9 <img>https://placehold.co/15x15/E6E0E9/E6E0E9.png</img>
         /// </default>
         public static Color Text { get; set; } = Color.FromArgb("#E6E0E9");
         //public static Color Disable { get; set; } = Color.FromArgb("#9791A1");

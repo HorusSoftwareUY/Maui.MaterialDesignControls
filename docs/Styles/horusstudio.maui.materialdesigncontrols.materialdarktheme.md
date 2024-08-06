@@ -12,7 +12,7 @@ Namespace: HorusStudio.Maui.MaterialDesignControls
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #F2B8B5 <span style="background-color:#F2B8B5;color:#F2B8B5;">MD</span>
+Default value: #F2B8B5 ![](https://placehold.co/15x15/F2B8B5/F2B8B5.png)
 
 <br>
 
@@ -20,7 +20,7 @@ Default value: #F2B8B5 <span style="background-color:#F2B8B5;color:#F2B8B5;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #8C1D18 <span style="background-color:#8C1D18;color:#8C1D18;">MD</span>
+Default value: #8C1D18 ![](https://placehold.co/15x15/8C1D18/8C1D18.png)
 
 <br>
 
@@ -28,7 +28,7 @@ Default value: #8C1D18 <span style="background-color:#8C1D18;color:#8C1D18;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #322F35 <span style="background-color:#322F35;color:#322F35;">MD</span>
+Default value: #322F35 ![](https://placehold.co/15x15/322F35/322F35.png)
 
 <br>
 
@@ -36,7 +36,7 @@ Default value: #322F35 <span style="background-color:#322F35;color:#322F35;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #6750A4 <span style="background-color:#6750A4;color:#6750A4;">MD</span>
+Default value: #6750A4 ![](https://placehold.co/15x15/6750A4/6750A4.png)
 
 <br>
 
@@ -44,7 +44,7 @@ Default value: #6750A4 <span style="background-color:#6750A4;color:#6750A4;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #E6E0E9 <span style="background-color:#E6E0E9;color:#E6E0E9;">MD</span>
+Default value: #E6E0E9 ![](https://placehold.co/15x15/E6E0E9/E6E0E9.png)
 
 <br>
 
@@ -52,7 +52,7 @@ Default value: #E6E0E9 <span style="background-color:#E6E0E9;color:#E6E0E9;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #601410 <span style="background-color:#601410;color:#601410;">MD</span>
+Default value: #601410 ![](https://placehold.co/15x15/601410/601410.png)
 
 <br>
 
@@ -60,7 +60,7 @@ Default value: #601410 <span style="background-color:#601410;color:#601410;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #F9DEDC <span style="background-color:#F9DEDC;color:#F9DEDC;">MD</span>
+Default value: #F9DEDC ![](https://placehold.co/15x15/F9DEDC/F9DEDC.png)
 
 <br>
 
@@ -68,7 +68,7 @@ Default value: #F9DEDC <span style="background-color:#F9DEDC;color:#F9DEDC;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #381E72 <span style="background-color:#381E72;color:#381E72;">MD</span>
+Default value: #381E72 ![](https://placehold.co/15x15/381E72/381E72.png)
 
 <br>
 
@@ -76,7 +76,7 @@ Default value: #381E72 <span style="background-color:#381E72;color:#381E72;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #EADDFF <span style="background-color:#EADDFF;color:#EADDFF;">MD</span>
+Default value: #EADDFF ![](https://placehold.co/15x15/EADDFF/EADDFF.png)
 
 <br>
 
@@ -84,7 +84,7 @@ Default value: #EADDFF <span style="background-color:#EADDFF;color:#EADDFF;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #332D41 <span style="background-color:#332D41;color:#332D41;">MD</span>
+Default value: #332D41 ![](https://placehold.co/15x15/332D41/332D41.png)
 
 <br>
 
@@ -92,7 +92,7 @@ Default value: #332D41 <span style="background-color:#332D41;color:#332D41;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #E8DEF8 <span style="background-color:#E8DEF8;color:#E8DEF8;">MD</span>
+Default value: #E8DEF8 ![](https://placehold.co/15x15/E8DEF8/E8DEF8.png)
 
 <br>
 
@@ -100,7 +100,7 @@ Default value: #E8DEF8 <span style="background-color:#E8DEF8;color:#E8DEF8;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #E6E0E9 <span style="background-color:#E6E0E9;color:#E6E0E9;">MD</span>
+Default value: #E6E0E9 ![](https://placehold.co/15x15/E6E0E9/E6E0E9.png)
 
 <br>
 
@@ -108,7 +108,7 @@ Default value: #E6E0E9 <span style="background-color:#E6E0E9;color:#E6E0E9;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #CAC4D0 <span style="background-color:#CAC4D0;color:#CAC4D0;">MD</span>
+Default value: #CAC4D0 ![](https://placehold.co/15x15/CAC4D0/CAC4D0.png)
 
 <br>
 
@@ -116,7 +116,7 @@ Default value: #CAC4D0 <span style="background-color:#CAC4D0;color:#CAC4D0;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #938F99 <span style="background-color:#938F99;color:#938F99;">MD</span>
+Default value: #938F99 ![](https://placehold.co/15x15/938F99/938F99.png)
 
 <br>
 
@@ -124,7 +124,7 @@ Default value: #938F99 <span style="background-color:#938F99;color:#938F99;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #49454F <span style="background-color:#49454F;color:#49454F;">MD</span>
+Default value: #49454F ![](https://placehold.co/15x15/49454F/49454F.png)
 
 <br>
 
@@ -132,7 +132,7 @@ Default value: #49454F <span style="background-color:#49454F;color:#49454F;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #D0BCFF <span style="background-color:#D0BCFF;color:#D0BCFF;">MD</span>
+Default value: #D0BCFF ![](https://placehold.co/15x15/D0BCFF/D0BCFF.png)
 
 <br>
 
@@ -140,7 +140,7 @@ Default value: #D0BCFF <span style="background-color:#D0BCFF;color:#D0BCFF;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #4F378B <span style="background-color:#4F378B;color:#4F378B;">MD</span>
+Default value: #4F378B ![](https://placehold.co/15x15/4F378B/4F378B.png)
 
 <br>
 
@@ -148,7 +148,7 @@ Default value: #4F378B <span style="background-color:#4F378B;color:#4F378B;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #000000 <span style="background-color:#000000;color:#000000;">MD</span>
+Default value: #000000 ![](https://placehold.co/15x15/000000/000000.png)
 
 <br>
 
@@ -156,7 +156,7 @@ Default value: #000000 <span style="background-color:#000000;color:#000000;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #CCC2DC <span style="background-color:#CCC2DC;color:#CCC2DC;">MD</span>
+Default value: #CCC2DC ![](https://placehold.co/15x15/CCC2DC/CCC2DC.png)
 
 <br>
 
@@ -164,7 +164,7 @@ Default value: #CCC2DC <span style="background-color:#CCC2DC;color:#CCC2DC;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #4A4458 <span style="background-color:#4A4458;color:#4A4458;">MD</span>
+Default value: #4A4458 ![](https://placehold.co/15x15/4A4458/4A4458.png)
 
 <br>
 
@@ -172,7 +172,7 @@ Default value: #4A4458 <span style="background-color:#4A4458;color:#4A4458;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #000000 <span style="background-color:#000000;color:#000000;">MD</span>
+Default value: #000000 ![](https://placehold.co/15x15/000000/000000.png)
 
 <br>
 
@@ -180,7 +180,7 @@ Default value: #000000 <span style="background-color:#000000;color:#000000;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #141218 <span style="background-color:#141218;color:#141218;">MD</span>
+Default value: #141218 ![](https://placehold.co/15x15/141218/141218.png)
 
 <br>
 
@@ -188,7 +188,7 @@ Default value: #141218 <span style="background-color:#141218;color:#141218;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #3B383E <span style="background-color:#3B383E;color:#3B383E;">MD</span>
+Default value: #3B383E ![](https://placehold.co/15x15/3B383E/3B383E.png)
 
 <br>
 
@@ -196,7 +196,7 @@ Default value: #3B383E <span style="background-color:#3B383E;color:#3B383E;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #211F26 <span style="background-color:#211F26;color:#211F26;">MD</span>
+Default value: #211F26 ![](https://placehold.co/15x15/211F26/211F26.png)
 
 <br>
 
@@ -204,7 +204,7 @@ Default value: #211F26 <span style="background-color:#211F26;color:#211F26;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #2B2930 <span style="background-color:#2B2930;color:#2B2930;">MD</span>
+Default value: #2B2930 ![](https://placehold.co/15x15/2B2930/2B2930.png)
 
 <br>
 
@@ -212,7 +212,7 @@ Default value: #2B2930 <span style="background-color:#2B2930;color:#2B2930;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #36343B <span style="background-color:#36343B;color:#36343B;">MD</span>
+Default value: #36343B ![](https://placehold.co/15x15/36343B/36343B.png)
 
 <br>
 
@@ -220,7 +220,7 @@ Default value: #36343B <span style="background-color:#36343B;color:#36343B;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #1D1B20 <span style="background-color:#1D1B20;color:#1D1B20;">MD</span>
+Default value: #1D1B20 ![](https://placehold.co/15x15/1D1B20/1D1B20.png)
 
 <br>
 
@@ -228,7 +228,7 @@ Default value: #1D1B20 <span style="background-color:#1D1B20;color:#1D1B20;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #0F0D13 <span style="background-color:#0F0D13;color:#0F0D13;">MD</span>
+Default value: #0F0D13 ![](https://placehold.co/15x15/0F0D13/0F0D13.png)
 
 <br>
 
@@ -236,7 +236,7 @@ Default value: #0F0D13 <span style="background-color:#0F0D13;color:#0F0D13;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #141218 <span style="background-color:#141218;color:#141218;">MD</span>
+Default value: #141218 ![](https://placehold.co/15x15/141218/141218.png)
 
 <br>
 
@@ -244,7 +244,7 @@ Default value: #141218 <span style="background-color:#141218;color:#141218;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #D0BCFF <span style="background-color:#D0BCFF;color:#D0BCFF;">MD</span>
+Default value: #D0BCFF ![](https://placehold.co/15x15/D0BCFF/D0BCFF.png)
 
 <br>
 
@@ -252,7 +252,7 @@ Default value: #D0BCFF <span style="background-color:#D0BCFF;color:#D0BCFF;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #D0BCFF <span style="background-color:#D0BCFF;color:#D0BCFF;">MD</span>
+Default value: #D0BCFF ![](https://placehold.co/15x15/D0BCFF/D0BCFF.png)
 
 <br>
 
@@ -260,7 +260,7 @@ Default value: #D0BCFF <span style="background-color:#D0BCFF;color:#D0BCFF;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #49454F <span style="background-color:#49454F;color:#49454F;">MD</span>
+Default value: #49454F ![](https://placehold.co/15x15/49454F/49454F.png)
 
 <br>
 
@@ -268,6 +268,6 @@ Default value: #49454F <span style="background-color:#49454F;color:#49454F;">MD<
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #E6E0E9 <span style="background-color:#E6E0E9;color:#E6E0E9;">MD</span>
+Default value: #E6E0E9 ![](https://placehold.co/15x15/E6E0E9/E6E0E9.png)
 
 <br>
