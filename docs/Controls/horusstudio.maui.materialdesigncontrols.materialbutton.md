@@ -8,34 +8,67 @@ Inherits from: MaterialButton → [ContentView](https://learn.microsoft.com/en-u
 
 <br>
 
+![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialButton.gif)
+
+### XAML sample
+
+```csharp
+xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+
+<material:MaterialButton
+    Type="Elevated"
+    Text="Confirm"
+    Command="{Binding ButtonCommand}"
+    IsBusy="{Binding ButtonCommand.IsRunning}"/>
+```
+
+### C# sample
+
+```csharp
+var button = new MaterialButton
+{
+    Type = MaterialButtonType.Filled,
+    Text = "Save",
+    Command = ButtonCommand,
+    IsBusy = ButtonCommand.IsRunning
+};
+```
+
 ## Properties
 
 ### <a id="properties-animation"/>**Animation**
 
 Gets or sets an animation to be executed when button is clicked.
- The default value is AnimationTypes.Fade.
  This is a bindable property.
 
 Property type: AnimationTypes<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
+| None | 0 | None |
+| Fade | 1 | Fade |
+| Scale | 2 | Scale |
+| Custom | 3 | Custom |
+
+Default value: AnimationTypes.Fade.
 
 <br>
 
 ### <a id="properties-animationparameter"/>**AnimationParameter**
 
 Gets or sets the parameter to pass to the MaterialButton.Animation property.
- The default value is null.
  This is a bindable property.
 
 Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+Default value: Null
 
 <br>
 
 ### <a id="properties-background"/>**Background**
 
-Gets or sets a  that describes the background of the button. This is a bindable property.
+Gets or sets a  that describes the background of the button.
+ This is a bindable property.
 
 Property type: [Brush](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.brush)<br>
 
@@ -43,7 +76,8 @@ Property type: [Brush](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
-Gets or sets a color that describes the background color of the button. This is a bindable property.
+Gets or sets a color that describes the background color of the button.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -51,7 +85,8 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 
 ### <a id="properties-bordercolor"/>**BorderColor**
 
-Gets or sets a color that describes the border stroke color of the button. This is a bindable property.
+Gets or sets a color that describes the border stroke color of the button.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -61,7 +96,8 @@ Remarks: This property has no effect if  is set to 0. On Android this property w
 
 ### <a id="properties-borderwidth"/>**BorderWidth**
 
-Gets or sets the width of the border, in device-independent units. This is a bindable property.
+Gets or sets the width of the border, in device-independent units.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -98,7 +134,8 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 ### <a id="properties-command"/>**Command**
 
-Gets or sets the command to invoke when the button is activated. This is a bindable property.
+Gets or sets the command to invoke when the button is activated.
+ This is a bindable property.
 
 Property type: ICommand<br>
 
@@ -109,9 +146,10 @@ Remarks: This property is used to associate a command with an instance of a butt
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
 Gets or sets the parameter to pass to the MaterialButton.Command property.
- The default value is null. This is a bindable property.
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
+
+Default value: null
 
 <br>
 
@@ -126,7 +164,8 @@ Property type: [ButtonContentLayout](https://learn.microsoft.com/en-us/dotnet/ap
 
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
-Gets or sets the corner radius for the button, in device-independent units. This is a bindable property.
+Gets or sets the corner radius for the button, in device-independent units.
+ This is a bindable property.
 
 Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
@@ -135,10 +174,11 @@ Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32
 ### <a id="properties-customanimation"/>**CustomAnimation**
 
 Gets or sets a custom animation to be executed when button is clicked.
- The default value is null.
  This is a bindable property.
 
 Property type: ICustomAnimation<br>
+
+Default value: Null
 
 <br>
 
@@ -162,10 +202,12 @@ Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/mic
 
 ### <a id="properties-fontautoscalingenabled"/>**FontAutoScalingEnabled**
 
-Determines whether or not the font of this entry should scale automatically according to the operating system settings. Default value is true.
+Determines whether or not the font of this entry should scale automatically according to the operating system settings.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+Default value: True
 
 Remarks: Typically this should always be enabled for accessibility reasons.
 
@@ -173,7 +215,8 @@ Remarks: Typically this should always be enabled for accessibility reasons.
 
 ### <a id="properties-fontfamily"/>**FontFamily**
 
-Gets or sets the font family for the text of this entry. This is a bindable property.
+Gets or sets the font family for the text of this entry.
+ This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -181,7 +224,8 @@ Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.stri
 
 ### <a id="properties-fontsize"/>**FontSize**
 
-Gets or sets the size of the font for the text of this entry. This is a bindable property.
+Gets or sets the size of the font for the text of this entry.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -189,13 +233,16 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 ### <a id="properties-heightrequest"/>**HeightRequest**
 
-Gets or sets the desired height override of this element. This is a bindable property.
+Gets or sets the desired height override of this element.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
+Default value: -1
+
 Remarks:
 
-- <para>The default value is -1, which means the value is unset; the effective minimum height will be zero.</para>
+- <para>which means the value is unset; the effective minimum height will be zero.</para>
 
 - <para>
   <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialButton.HeightRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialButton.HeightRequest" /> will change the resulting height of the element during the next layout pass.</para>
@@ -204,7 +251,8 @@ Remarks:
 
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
-Gets or sets the  for the text of the button. This is a bindable property.
+Gets or sets the  for the text of the button.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -212,7 +260,8 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 
 ### <a id="properties-imagesource"/>**ImageSource**
 
-Allows you to display a bitmap image on the Button. This is a bindable property.
+Allows you to display a bitmap image on the Button.
+ This is a bindable property.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
@@ -223,10 +272,11 @@ Remarks: For more options have a look at .
 ### <a id="properties-isbusy"/>**IsBusy**
 
 Gets or sets if button is on busy state (executing Command).
- The default value is false.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+Default value: False
 
 <br>
 
@@ -241,7 +291,8 @@ Property type: [LineBreakMode](https://learn.microsoft.com/en-us/dotnet/api/micr
 
 ### <a id="properties-padding"/>**Padding**
 
-Gets or sets the padding for the button. This is a bindable property.
+Gets or sets the padding for the button.
+ This is a bindable property.
 
 Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
 
@@ -249,7 +300,7 @@ Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsof
 
 ### <a id="properties-shadow"/>**Shadow**
 
-Gets or sets the shadow effect cast by the element. This is a bindable property.
+Gets or sets the shadow effect cast by the element.
  This is a bindable property.
 
 Property type: [Shadow](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.shadow)<br>
@@ -259,9 +310,10 @@ Property type: [Shadow](https://learn.microsoft.com/en-us/dotnet/api/microsoft.m
 ### <a id="properties-text"/>**Text**
 
 Gets or sets the text displayed as the content of the button.
- The default value is null. This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Default value: Null
 
 Remarks: Changing the text of a button will trigger a layout cycle.
 
@@ -269,7 +321,8 @@ Remarks: Changing the text of a button will trigger a layout cycle.
 
 ### <a id="properties-textcolor"/>**TextColor**
 
-Gets or sets the  for the text of the button. This is a bindable property.
+Gets or sets the  for the text of the button.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -295,7 +348,8 @@ Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/micr
 
 ### <a id="properties-tintcolor"/>**TintColor**
 
-Gets or sets the  for the text of the button. This is a bindable property.
+Gets or sets the  for the text of the button.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -304,12 +358,19 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 ### <a id="properties-type"/>**Type**
 
 Gets or sets the button type according to MaterialButtonType enum.
- The default value is MaterialButtonType.Filled. This is a bindable property.
 
 Property type: MaterialButtonType<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
+| Elevated | 0 | Elevated button |
+| Filled | 1 | Filled button |
+| Tonal | 2 | Filled tonal button |
+| Outlined | 3 | Outlined button |
+| Text | 4 | Text button |
+| Custom | 5 | Custom button |
+
+Default value: MaterialButtonType.Filled
 
 <br>
 
@@ -344,3 +405,10 @@ Occurs when the button is released.
 Occurs when the button is unfocused.
 
 <br>
+
+## Known issues and pending features
+
+- [iOS] IconTintColor doesn't react to VisualStateManager changes.
+- Shadow doesn't react to VisualStateManager changes.
+- ContentLayout is buggy.
+- Add default Material behavior for pressed state on default styles (v2).

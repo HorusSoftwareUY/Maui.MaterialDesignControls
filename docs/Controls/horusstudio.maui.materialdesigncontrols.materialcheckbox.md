@@ -8,6 +8,26 @@ Inherits from: MaterialCheckBox → [ContentView](https://learn.microsoft.com/en
 
 <br>
 
+![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialCheckBox.jpg)
+
+### XAML sample
+
+```csharp
+xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+
+<material:MaterialCheckBox
+        Text="Checkbox 1"/>
+```
+
+### C# sample
+
+```csharp
+var checkBox = new MaterialCheckBox()
+{
+    Text = "Checkbox 1"
+};
+```
+
 ## Properties
 
 ### <a id="properties-animation"/>**Animation**
@@ -18,8 +38,12 @@ Property type: AnimationTypes<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
+| None | 0 | None |
+| Fade | 1 | Fade |
+| Scale | 2 | Scale |
+| Custom | 3 | Custom |
 
-Default value: The default value is AnimationTypes.Fade.
+Default value: AnimationTypes.Fade
 
 <br>
 
@@ -29,7 +53,7 @@ Gets or sets the parameter to pass to the MaterialCheckBox.Animation property. T
 
 Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
-Default value: The default value is null.
+Default value: null.
 
 <br>
 
@@ -43,9 +67,12 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 ### <a id="properties-color"/>**Color**
 
-Gets or sets the  for the checkbox color. This is a bindable property.
+Gets or sets the  for the checkbox color.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Theme: Light: MaterialLightTheme.Primary - Dark: MaterialDarkTheme.Primary
 
 <br>
 
@@ -65,13 +92,14 @@ Gets or sets the parameter to pass to the MaterialCheckBox.CommandCheckedChanged
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
-Default value: The default value is null.
+Default value: null.
 
 <br>
 
 ### <a id="properties-content"/>**Content**
 
-Gets the MaterialCheckBox.Content for the RadioButton. This is a bindable property.
+Gets the MaterialCheckBox.Content for the RadioButton.
+ This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -85,7 +113,7 @@ Gets or sets a custom animation to be executed when checkbox is clicked. This is
 
 Property type: ICustomAnimation<br>
 
-Default value: The default value is null.
+Default value: null.
 
 <br>
 
@@ -103,15 +131,18 @@ Defines whether an app's UI reflects text scaling preferences set in the operati
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: The default value of this property is true.
+Default value: True
 
 <br>
 
 ### <a id="properties-fontfamily"/>**FontFamily**
 
-Gets or sets the font family for the label. This is a bindable property.
+Gets or sets the font family for the label.
+ This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Default value: MaterialFontFamily.Default
 
 <br>
 
@@ -121,13 +152,18 @@ Defines the font size of the label. This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
+Default value: MaterialFontSize.BodyLarge
+
 <br>
 
 ### <a id="properties-ischecked"/>**IsChecked**
 
-Gets or sets MaterialCheckBox.IsChecked for the checkbox. This is a bindable property.
+Gets or sets MaterialCheckBox.IsChecked for the checkbox.
+ This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+Default value: null
 
 <br>
 
@@ -137,21 +173,29 @@ Gets or sets MaterialCheckBox.IsEnabled for the checkbox. This is a bindable pro
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
+Default value: False
+
 <br>
 
 ### <a id="properties-text"/>**Text**
 
-Gets or sets the MaterialCheckBox.Text for the label. This is a bindable property.
+Gets or sets the MaterialCheckBox.Text for the label.
+ This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Default value: null
 
 <br>
 
 ### <a id="properties-textcolor"/>**TextColor**
 
-Gets or sets the MaterialCheckBox.TextColor for the text of the label. This is a bindable property.
+Gets or sets the MaterialCheckBox.TextColor for the text of the label.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Theme: Light: MaterialLightTheme.Text - Dark: MaterialDarkTheme.Text
 
 <br>
 
@@ -161,7 +205,7 @@ Defines the location of the label. This is a bindable property.
 
 Property type: TextSide<br>
 
-Default value: The default value is TextSide.Left.
+Default value: TextSide.Left
 
 <br>
 
@@ -175,12 +219,19 @@ Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/micr
 
 ### <a id="properties-tickcolor"/>**TickColor**
 
-Gets or sets the  for the tick color. This is a bindable property.
+Gets or sets the  for the tick color.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Theme: Light: MaterialLightTheme.OnPrimary - Dark: MaterialDarkTheme.OnPrimary
 
 Remarks: Only is supported on iOS.
 
 <br>
 
 ## Events
+
+## Known issues and pending features
+
+- [iOS] FontAttributes doesn't work

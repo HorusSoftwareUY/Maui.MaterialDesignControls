@@ -11,9 +11,13 @@
 
     public enum TouchType
     {
+        /// <summary> Pressed </summary>
         Pressed,
+        /// <summary> Released </summary>
         Released,
+        /// <summary> Cancelled </summary>
         Cancelled,
+        /// <summary> Ignored </summary>
         Ignored
     }
 }

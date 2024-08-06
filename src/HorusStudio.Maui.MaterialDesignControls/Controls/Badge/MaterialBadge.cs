@@ -9,8 +9,31 @@ public enum MaterialBadgeType
 }
 
 /// <summary>
-/// Badges show notifications, counts, or status information on navigation items and icons <see href="https://m3.material.io/components/badges/overview"> see here.</see>
+/// Badges show notifications, counts, or status information on navigation items and icons <see href="https://m3.material.io/components/badges/overview">see here.</see>
 /// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialBadge.jpg</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialBadge
+///        Text="badge"/&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var badgeSmall = new MaterialBadge()
+/// {
+///     Type = MaterialBadgeType.Small, 
+///     Text = "Badge small"
+/// };
+/// </code>
+/// </example>
 public class MaterialBadge : ContentView
 {
     #region Attributes

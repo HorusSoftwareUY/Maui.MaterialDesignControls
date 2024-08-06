@@ -1,23 +1,77 @@
-﻿using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
-using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls
 {
     public enum MaterialCardType
     {
-        Elevated, Filled, Outlined, Custom
+        /// <summary>Elevated</summary>
+        Elevated, 
+        /// <summary>Filled</summary>
+        Filled, 
+        /// <summary>Outlined</summary>
+        Outlined, 
+        /// <summary>Custom</summary>
+        Custom
     }
 
     /// <summary>
-    /// A card <see cref="View" /> that display content and actions about a single subject, and follows Material Design Guidelines <see href="https://m3.material.io/components/cards/overview" />.
+    /// A card <see cref="View" /> that display content and actions about a single subject, and follows Material Design Guidelines <see href="https://m3.material.io/components/cards/overview">See here</see>.
     /// </summary>
+    /// <example>
+    ///
+    /// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialCard.jpg</img>
+    ///
+    /// <h3>XAML sample</h3>
+    /// <code>
+    /// <xaml>
+    /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    /// 
+    /// &lt;material:MaterialCard
+    ///         Type="Elevated"&gt;
+    ///             &lt;VerticalStackLayout
+    ///             Spacing="8"&gt;
+    ///                 &lt;material:MaterialLabel
+    ///                     Type="TitleMedium"
+    ///                     Text="Elevated type"/&gt;
+    ///                 &lt;material:MaterialLabel
+    ///                     Text="Elevated cards provide separation from a patterned background."/&gt;
+    ///             &lt;/VerticalStackLayout&gt;
+    ///  &lt;/material:MaterialCard/&gt;
+    /// </xaml>
+    /// </code>
+    /// 
+    /// <h3>C# sample</h3>
+    /// <code>
+    /// var label = new MaterialLabel()
+    /// {
+    ///     Text = "This a card."
+    /// };
+    /// 
+    /// var vStack = new VerticalStackLayout()
+    /// {
+    ///     label
+    /// };
+    ///     
+    /// var card = new MaterialCard()
+    /// {
+    ///     Type = MaterialCardType.Elevated,
+    ///     Content = vStack
+    /// };
+    ///</code>
+    ///
+    /// </example>
+    /// <todoList>
+    /// <list type="list">
+    ///         <item>
+    ///             <term></term>
+    ///             <description>Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them</description>
+    ///         </item>
+    ///     </list>
+    /// </todoList>
     public class MaterialCard : Border, ITouchable
     {
-        // TODO: Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them
-
         #region Attributes
 
         private readonly static MaterialCardType DefaultCardType = MaterialCardType.Filled;
@@ -175,8 +229,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets the card type according to <see cref="MaterialCardType"/> enum.
-        /// The default value is <see cref="MaterialCardType.Filled"/>. This is a bindable property.
+        /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see cref="MaterialCardType.Filled">MaterialCardType.Filled</see>
+        /// </default>
         public MaterialCardType Type
         {
             get => (MaterialCardType)GetValue(TypeProperty);
@@ -195,8 +252,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
-        /// The default value is <see langword="null"/>. This is a bindable property.
+        /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see langword="null"/>.
+        /// </default>
         public object CommandParameter
         {
             get => GetValue(CommandParameterProperty);
@@ -205,9 +265,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets an animation to be executed when card is clicked.
-        /// The default value is <see cref="AnimationTypes.Fade"/>.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>
+        /// </default>
         public AnimationTypes Animation
         {
             get => (AnimationTypes)GetValue(AnimationProperty);
@@ -217,9 +279,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 #nullable enable
         /// <summary>
         /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-        /// The default value is <see langword="null"/>.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see langword="null"/>
+        /// </default>
         public double? AnimationParameter
         {
             get => (double?)GetValue(AnimationParameterProperty);
@@ -229,9 +293,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets a custom animation to be executed when card is clicked.
-        /// The default value is <see langword="null"/>.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see langword="null"/>
+        /// </default>
         public ICustomAnimation CustomAnimation
         {
             get => (ICustomAnimation)GetValue(CustomAnimationProperty);
@@ -239,7 +305,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets a color that describes the shadow color of the card. This is a bindable property.
+        /// Gets or sets a color that describes the shadow color of the card.
+        /// This is a bindable property.
         /// </summary>
         public Color ShadowColor
         {
@@ -248,7 +315,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets a color that describes the background color of the card. This is a bindable property.
+        /// Gets or sets a color that describes the background color of the card.
+        /// This is a bindable property.
         /// </summary>
         public new Color BackgroundColor
         {
@@ -257,7 +325,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets a color that describes the border stroke color of the card. This is a bindable property.
+        /// Gets or sets a color that describes the border stroke color of the card.
+        /// This is a bindable property.
         /// </summary>
         /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0.</remarks>
         public Color BorderColor
@@ -267,7 +336,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the corner radius for the card, in device-independent units. This is a bindable property.
+        /// Gets or sets the corner radius for the card, in device-independent units.
+        /// This is a bindable property.
         /// </summary>
         public CornerRadius CornerRadius
         {
@@ -276,7 +346,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the width of the border, in device-independent units. This is a bindable property.
+        /// Gets or sets the width of the border, in device-independent units.
+        /// This is a bindable property.
         /// </summary>
         /// <remarks>Set this value to a non-zero value in order to have a visible border.</remarks>
         public float BorderWidth
@@ -286,7 +357,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the shadow effect cast by the element. This is a bindable property.
+        /// Gets or sets the shadow effect cast by the element.
         /// This is a bindable property.
         /// </summary>
         public new Shadow Shadow

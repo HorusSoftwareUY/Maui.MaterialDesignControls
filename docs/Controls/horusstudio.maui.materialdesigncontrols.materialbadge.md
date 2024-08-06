@@ -1,12 +1,33 @@
 # MaterialBadge
 
-Badges show notifications, counts, or status information on navigation items and icons [ see here.](https://m3.material.io/components/badges/overview)
+Badges show notifications, counts, or status information on navigation items and icons [see here.](https://m3.material.io/components/badges/overview)
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
 Inherits from: MaterialBadge → [ContentView](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.contentview)
 
 <br>
+
+![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialBadge.jpg)
+
+### XAML sample
+
+```csharp
+xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+
+<material:MaterialBadge
+       Text="badge"/>
+```
+
+### C# sample
+
+```csharp
+var badgeSmall = new MaterialBadge()
+{
+    Type = MaterialBadgeType.Small, 
+    Text = "Badge small"
+};
+```
 
 ## Properties
 
