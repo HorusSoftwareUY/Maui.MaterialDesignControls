@@ -7,7 +7,7 @@ public enum MaterialChipsType
 {
     /// <summary>Filter chips</summary>
     Filter,
-    /// <summary>assist, input and suggestion chips</summary>
+    /// <summary>Assist, input and suggestion chips</summary>
     Normal
 }
 
@@ -223,7 +223,6 @@ public class MaterialChips : ContentView, ITouchable
     #endregion
 
     #region Properties
-
 
     /// <summary>
     /// Gets or sets type Chips.
