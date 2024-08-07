@@ -11,6 +11,16 @@ public enum MaterialChipsType
     Normal
 }
 
+public enum IconStateType
+{
+    /// <summary>Visible both icon when selected</summary>
+    BothVisible,
+    /// <summary>Visible only Leading icon when selected</summary>
+    LeadingVisible,
+    /// <summary>Visible only Trailing icon when selected</summary>
+    TrailingVisible
+}
+
 /// <summary>
 /// A Chips help people enter information, make selections, filter content, or trigger actions <see href="https://m3.material.io/components/chips/overview">see here.</see>
 /// </summary>
@@ -48,7 +58,9 @@ public class MaterialChips : ContentView, ITouchable
     #region Attributes
 
     private readonly static MaterialChipsType DefaultChipsType = MaterialChipsType.Normal;
+    private readonly static IconStateType DefaultIconStateOnSelection = IconStateType.BothVisible;
     private readonly static bool DefaultIsSelected = false;
+    private readonly static bool DefaultIsEnabled = true;
     private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(8);
     private readonly static Thickness DefaultPadding = new Thickness(16, 0);
     private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
@@ -78,7 +90,18 @@ public class MaterialChips : ContentView, ITouchable
     {
         if (bindable is MaterialChips self)
         {
-            self.SetType(self.Type);
+            self.SetState(self.Type);
+        }
+    });
+    
+    /// <summary>
+    /// The backing store for the <see cref="IconStateOnSelection" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty IconStateOnSelectionProperty = BindableProperty.Create(nameof(IconStateOnSelection), typeof(IconStateType), typeof(MaterialChips), defaultValue: DefaultIconStateOnSelection, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialChips self)
+        {
+            self.UpdatePadding();
         }
     });
 
@@ -98,7 +121,25 @@ public class MaterialChips : ContentView, ITouchable
     /// Gets or sets the state when the Chips is selected.
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(MaterialChips), defaultValue: DefaultIsSelected);
+    public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(MaterialChips), defaultValue: DefaultIsSelected, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialChips self)
+        {
+            self.SetState(self.Type);
+        }
+    });
+    
+    /// <summary>
+    /// Gets or sets the state when the Chips is selected.
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialChips), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialChips self)
+        {
+            self.SetState(self.Type);
+        }
+    });
     
     /// <summary>
     /// The backing store for the <see cref="Padding" />
@@ -242,6 +283,19 @@ public class MaterialChips : ContentView, ITouchable
     }
     
     /// <summary>
+    /// Gets or sets the badge type according to <see cref="IconStateType"/> enum.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="IconStateType.BothVisible">IconStateType.BothVisible</see>
+    /// </default>
+    public IconStateType IconStateOnSelection
+    {
+        get => (IconStateType)GetValue(IconStateOnSelectionProperty);
+        set => SetValue(IconStateOnSelectionProperty, value);
+    }
+    
+    /// <summary>
     /// Gets or sets the command to invoke when the Chips is activated.
     /// This is a bindable property.
     /// </summary>
@@ -281,6 +335,19 @@ public class MaterialChips : ContentView, ITouchable
     {
         get => (bool)GetValue(IsSelectedProperty);
         set => SetValue(IsSelectedProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets the state when the Chips is enabled.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="True"/>
+    /// </default>
+    public bool IsEnabled
+    {
+        get => (bool)GetValue(IsEnabledProperty);
+        set => SetValue(IsEnabledProperty, value);
     }
     
     /// <summary>
@@ -623,7 +690,7 @@ public class MaterialChips : ContentView, ITouchable
 
         _leadingIcon = new Image()
         {
-            Margin = new Thickness(0),
+            Margin = new Thickness(0,0,8,0),
             Aspect = Aspect.AspectFit,
             Source = LeadingIcon,
             IsVisible = false,
@@ -642,12 +709,13 @@ public class MaterialChips : ContentView, ITouchable
             BackgroundColor = Colors.Transparent,
             Text = Text,
             Margin = new Thickness(0),
-            TextColor = TextColor
+            TextColor = TextColor,
+            LineBreakMode = LineBreakMode.TailTruncation
         };
         
         _trailingIcon = new Image()
         {
-            Margin = new Thickness(0),
+            Margin = new Thickness(8,0,0,0),
             Aspect = Aspect.AspectFit,
             Source = TrailingIcon,
             IsVisible = false,
@@ -684,6 +752,7 @@ public class MaterialChips : ContentView, ITouchable
         _container.SetBinding(MaterialCard.StrokeProperty, new Binding(nameof(BorderColor), source: this));
         _container.SetBinding(MaterialCard.ShadowProperty, new Binding(nameof(Shadow), source: this));
         _container.SetBinding(MaterialCard.ShadowColorProperty, new Binding(nameof(ShadowColor), source: this));
+        _container.SetBinding(MaterialCard.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         
         _leadingIcon.SetBinding(Image.SourceProperty, new Binding(nameof(LeadingIcon), source: this));
         _trailingIcon.SetBinding(Image.SourceProperty, new Binding(nameof(TrailingIcon), source: this));
@@ -698,7 +767,7 @@ public class MaterialChips : ContentView, ITouchable
 
     #region Setters
 
-    private void SetType(MaterialChipsType type)
+    private void SetState(MaterialChipsType type)
     {
         if (type == MaterialChipsType.Normal)
         {
@@ -715,65 +784,50 @@ public class MaterialChips : ContentView, ITouchable
                 VisualStateManager.GoToState(this, ChipsCommonStates.Unselected);
             }
         }
+
+        if (!IsEnabled)
+        {
+            VisualStateManager.GoToState(this, ChipsCommonStates.Disabled);
+        }
     }
  
     private void UpdatePadding()
     {
-        if ((LeadingIcon != null && !LeadingIcon.IsEmpty) && (TrailingIcon != null && !TrailingIcon.IsEmpty))
-        {
-            if (Type == MaterialChipsType.Normal)
-            {
-                _leadingIcon.IsVisible = true;
-                _container.Padding = new Thickness(8, 0, 8, 0);
-                _leadingIcon.Margin = new Thickness(0, 0, 8, 0);
-            }
-            else
-            {
-                _container.Padding = (IsSelected) ? new Thickness(8, 0, 8, 0) : new Thickness(16,0,8, 0);
-                _leadingIcon.Margin = (IsSelected) ? new Thickness(0, 0, 8, 0) : new Thickness(0);
-                _leadingIcon.IsVisible = IsSelected;
-            }
-            
-            _trailingIcon.Margin = new Thickness(8, 0, 0, 0);
-            _trailingIcon.IsVisible = true;
-            return;
-        }
+        bool containLeadingIcon = (LeadingIcon != null && !LeadingIcon.IsEmpty);
+        bool containTrailingIcon = (TrailingIcon != null && !TrailingIcon.IsEmpty);
         
-        if ((LeadingIcon != null && !LeadingIcon.IsEmpty) && !(TrailingIcon != null && TrailingIcon.IsEmpty))
+        if (Type == MaterialChipsType.Normal)
         {
-            if (Type == MaterialChipsType.Normal)
-            {
-                _leadingIcon.IsVisible = true;
-                _container.Padding = new Thickness(8, 0, 16, 0);
-                _leadingIcon.Margin = new Thickness(0, 0, 8, 0);
-            }
-            else
-            {
-                _container.Padding = (IsSelected) ? new Thickness(8, 0, 16, 0) : new Thickness(16, 0);
-                _leadingIcon.Margin = (IsSelected) ? new Thickness(0, 0, 8, 0) : new Thickness(0);
-                _leadingIcon.IsVisible = IsSelected;
-            }
-
-            _trailingIcon.Margin = new Thickness(0, 0, 0, 0);
-            _trailingIcon.IsVisible = false;
-            return;
+            _container.Padding = new Thickness(containLeadingIcon ? 8 : 16, 0, containTrailingIcon ? 8 : 16, 0);
+            _leadingIcon.IsVisible = containLeadingIcon;
+            _trailingIcon.IsVisible = containTrailingIcon;
         }
-        
-        if (!(LeadingIcon != null && LeadingIcon.IsEmpty) && (TrailingIcon != null && !TrailingIcon.IsEmpty))
+        else
         {
-            _container.Padding = new Thickness(16, 0, 8, 0);
-            _leadingIcon.Margin = new Thickness(0, 0, 0, 0);
-            _trailingIcon.Margin = new Thickness(8, 0, 0, 0);
-            _leadingIcon.IsVisible = false;
-            _trailingIcon.IsVisible = true;
-            return;
+            switch (IconStateOnSelection)
+            {
+                case IconStateType.BothVisible:
+                    _container.Padding = new Thickness((containLeadingIcon && IsSelected) ? 8 : 16, 0, (containTrailingIcon && IsSelected) ? 8 : 16, 0);
+                    _leadingIcon.IsVisible = containLeadingIcon && IsSelected;
+                    _trailingIcon.IsVisible = containTrailingIcon && IsSelected;
+                    break;
+                case IconStateType.LeadingVisible:
+                    _container.Padding = new Thickness((containLeadingIcon && IsSelected) ? 8 : 16, 0, 16, 0);
+                    _leadingIcon.IsVisible = containLeadingIcon && IsSelected;
+                    _trailingIcon.IsVisible = false;
+                    break;
+                case IconStateType.TrailingVisible:
+                    _container.Padding = new Thickness(16, 0, (containTrailingIcon && IsSelected) ? 8 : 16, 0);
+                    _leadingIcon.IsVisible = false;
+                    _trailingIcon.IsVisible = containTrailingIcon && IsSelected;
+                    break;
+                default:
+                    _container.Padding = new Thickness((containLeadingIcon && IsSelected) ? 8 : 16, 0, (containTrailingIcon && IsSelected) ? 8 : 16, 0);
+                    _leadingIcon.IsVisible = containLeadingIcon && IsSelected;
+                    _trailingIcon.IsVisible = containTrailingIcon && IsSelected;
+                    break;
+            }
         }
-
-        _container.Padding = new Thickness(16,0);
-        _leadingIcon.Margin = new Thickness(0, 0, 0, 0);
-        _trailingIcon.Margin = new Thickness(0, 0, 0, 0);
-        _leadingIcon.IsVisible = false;
-        _trailingIcon.IsVisible = false;
     }
 
     #endregion

@@ -8,19 +8,22 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        private const string SuggestionText = "Suggestion";
-        private const string FilterText = "Filter";
-
         public override string Title => "Chips";
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(TextChipSuggestion))]
-        [AlsoNotifyChangeFor(nameof(TextChipFilter))]
         private bool _isEnabledState;
-
-        public string TextChipSuggestion => (IsEnabledState) ? SuggestionText : $"{SuggestionText} disabled";
         
-        public string TextChipFilter => (IsEnabledState) ? FilterText : $"{FilterText} disabled";
+        [ObservableProperty]
+        private bool _chipsFilterA;
+        
+        [ObservableProperty]
+        private bool _chipsFilterB;
+        
+        [ObservableProperty]
+        private bool _chipsFilterC;
+        
+        [ObservableProperty]
+        private bool _chipsFilterD;
 
         #endregion
 
@@ -30,9 +33,34 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private void SetEnabled()
+        private async void TappedChips()
         {
-            IsEnabledState = !IsEnabledState;
+            await DisplayAlert(Title, "Chips tapped!", "OK");
+        }
+        
+        [ICommand]
+        private async void TappedChipsFilter(string chip)
+        {
+            switch (chip)
+            {
+                case "A":
+                    ChipsFilterA = !ChipsFilterA;
+                    await DisplayAlert(Title, $"Chips A {((ChipsFilterA) ? "selected" : "not selected")}", "OK");
+                    break;
+                case "B":
+                    ChipsFilterB = !ChipsFilterB;
+                    await DisplayAlert(Title, $"Chips B {((ChipsFilterB) ? "selected" : "not selected")}", "OK");
+                    break;
+                case "C":
+                    ChipsFilterC = !ChipsFilterC;
+                    await DisplayAlert(Title, $"Chips C {((ChipsFilterC) ? "selected" : "not selected")}", "OK");
+                    break;
+                case "D":
+                    ChipsFilterD = !ChipsFilterD;
+                    await DisplayAlert(Title, $"Chips D {((ChipsFilterD) ? "selected" : "not selected")}", "OK");
+                    break;
+            }
+            
         }
     }
 }
