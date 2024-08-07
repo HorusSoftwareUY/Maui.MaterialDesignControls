@@ -47,7 +47,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 ```
 
 ## Controls
-* [MaterialBadge](docs/controls/horusstudio.maui.materialdesigncontrols.materialbadge.md)
+* [MaterialBadge](docs/Controls/horusstudio.maui.materialdesigncontrols.materialbadge.md)
 * [MaterialButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialbutton.md)
 * [MaterialCard](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcard.md)
 * [MaterialCheckbox](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcheckbox.md)
