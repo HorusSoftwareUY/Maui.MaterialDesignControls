@@ -47,15 +47,15 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 ```
 
 ## Controls
-* [MaterialBadge](docs/materialbadge.md)
-* [MaterialButton](docs/materialbutton.md)
-* [MaterialCard](docs/materialcard.md)
-* [MaterialCheckbox](docs/materialcheckbox.md)
-* [MaterialDivider](docs/materialdivider.md)
-* [MaterialIconButton](docs/materialiconbutton.md)
-* [MaterialLabel](docs/materiallabel.md)
-* [MaterialProgressIndicator](docs/materialprogressindicator.md)
-* [MaterialRadioButton](docs/materialradiobutton.md)
+* [MaterialBadge](docs/controls/horusstudio.maui.materialdesigncontrols.materialbadge.md)
+* [MaterialButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialbutton.md)
+* [MaterialCard](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcard.md)
+* [MaterialCheckbox](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcheckbox.md)
+* [MaterialDivider](docs/Controls/horusstudio.maui.materialdesigncontrols.materialdivider.md)
+* [MaterialIconButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialiconbutton.md)
+* [MaterialLabel](docs/Controls/horusstudio.maui.materialdesigncontrols.materiallabel.md)
+* [MaterialProgressIndicator](docs/Controls/horusstudio.maui.materialdesigncontrols.materialprogressindicator.md)
+* [MaterialRadioButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialradiobutton.md)
 
 ### Coming soon
 * MaterialChips
