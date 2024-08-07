@@ -84,13 +84,13 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 
 ## Styles
 You can override default colors, font sizes, font families, and other styles to apply to all Material Design controls:
-* [MaterialAnimation](docs/horusstudio.maui.materialdesigncontrols.materialanimation.md)
-* [MaterialLightTheme](docs/horusstudio.maui.materialdesigncontrols.materiallighttheme.md)
-* [MaterialDarkTheme](docs/horusstudio.maui.materialdesigncontrols.materialdarktheme.md)
-* [MaterialElevation](docs/horusstudio.maui.materialdesigncontrols.materialelevation.md)
-* [MaterialFontFamily](docs/horusstudio.maui.materialdesigncontrols.materialfontfamily.md)
-* [MaterialFontSize](docs/horusstudio.maui.materialdesigncontrols.materialfontsize.md)
-* [MaterialFontTracking](docs/horusstudio.maui.materialdesigncontrols.materialfonttracking.md)
+* [MaterialAnimation](docs/Styles/horusstudio.maui.materialdesigncontrols.materialanimation.md)
+* [MaterialLightTheme](docs/Styles/horusstudio.maui.materialdesigncontrols.materiallighttheme.md)
+* [MaterialDarkTheme](docs/Styles/horusstudio.maui.materialdesigncontrols.materialdarktheme.md)
+* [MaterialElevation](docs/Styles/horusstudio.maui.materialdesigncontrols.materialelevation.md)
+* [MaterialFontFamily](docs/Styles/horusstudio.maui.materialdesigncontrols.materialfontfamily.md)
+* [MaterialFontSize](docs/Styles/horusstudio.maui.materialdesigncontrols.materialfontsize.md)
+* [MaterialFontTracking](docs/Styles/horusstudio.maui.materialdesigncontrols.materialfonttracking.md)
 
 You must configure default styles in your MauiProgram when you Build() your MauiApp:
 ```C#
