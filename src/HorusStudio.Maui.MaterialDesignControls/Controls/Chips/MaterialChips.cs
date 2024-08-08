@@ -35,6 +35,7 @@ public enum IconStateType
 /// 
 /// &lt;material:MaterialChips
 ///        Type="Normal"
+///        IconStateOnSelection="BothVisible"
 ///        LeadingIcon="plus.png"
 ///        Text="Suggestion both"
 ///        TrailingIcon="horus_logo.png"/&gt;
@@ -46,20 +47,18 @@ public enum IconStateType
 /// var chips = new MaterialChips
 /// {
 ///     Type = MaterialChipsType.Normal,
+///     IconStateOnSelection = IconStateType.BothVisible,
 ///     LeadingIcon = "plus.png",
 ///     Text = "Suggestion both",
 ///     TrailingIcon="horus_logo.png"
 /// };
 ///</code>
 ///
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ChipsPage.xaml)
+/// 
 /// </example>
 /// <todoList>
-/// <list type="list">
-///         <item>
-///             <term></term>
-///             <description>.NET 7 not work LineBreakMode</description>
-///         </item>
-///     </list>
+/// * .NET 7 not work LineBreakMode.
 /// </todoList>
 public class MaterialChips : ContentView, ITouchable
 {

@@ -111,9 +111,7 @@
                         IsEnabled="{Binding IsEnabledState}"
                         Type="Filter"
                         Text="Filter A"
-                        IsSelected="{Binding ChipsFilterA}"
-                        Command="{Binding TappedChipsFilterCommand}"
-                        CommandParameter="A"/>
+                        IsSelected="{Binding ChipsFilterA}"/>
                     
                     <material:MaterialChips
                         Grid.Column="1"
@@ -121,9 +119,7 @@
                         Type="Filter"
                         TrailingIcon="horus_logo.png"
                         Text="Filter B"
-                        IsSelected="{Binding ChipsFilterB}"
-                        Command="{Binding TappedChipsFilterCommand}"
-                        CommandParameter="B"/>
+                        IsSelected="{Binding ChipsFilterB}"/>
                     
                     <material:MaterialChips
                         Grid.Column="0"
@@ -131,9 +127,7 @@
                         Type="Filter"
                         LeadingIcon="plus.png"
                         Text="Filter C"
-                        IsSelected="{Binding ChipsFilterC}"
-                        Command="{Binding TappedChipsFilterCommand}"
-                        CommandParameter="C"/>
+                        IsSelected="{Binding ChipsFilterC}"/>
                     
                     <material:MaterialChips
                         Grid.Column="1"
@@ -142,9 +136,7 @@
                         LeadingIcon="plus.png"
                         Text="Filter D"
                         TrailingIcon="horus_logo.png"
-                        IsSelected="{Binding ChipsFilterD}"
-                        Command="{Binding TappedChipsFilterCommand}"
-                        CommandParameter="D"/>
+                        IsSelected="{Binding ChipsFilterD}"/>
                     
                 </Grid>
             </Frame>
@@ -187,6 +179,8 @@
                     <material:MaterialChips
                         Grid.Column="1"
                         Grid.Row="1"
+                        HeightRequest="42"
+                        WidthRequest="140"
                         CornerRadius="0"
                         LeadingIcon="plus.png"
                         Text="Full API D"
@@ -195,10 +189,17 @@
                         TrailingIcon="horus_logo.png"
                         Style="{StaticResource VisualStateManagerStyle}"/>
                     
+                    <material:MaterialLabel
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Text="Is enabled"
+                        HorizontalTextAlignment="End"
+                        VerticalTextAlignment="Center" />
+                    
                     <Switch
                         Grid.Row="2"
-                        Grid.ColumnSpan="2"
-                        HorizontalOptions="Center"
+                        Grid.Column="1"
+                        HorizontalOptions="Start"
                         IsToggled="{Binding IsEnabledState}"/>
                     
                 </Grid>
