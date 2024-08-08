@@ -272,5 +272,5 @@ Occurs when the radio button is switched
 
 ## Known issues and pending features
 
-- [iOS] FontAttributes doesn't work.
-- Using a control template does't work when define a custom style for disabled state.
+* [iOS] FontAttributes doesn't work.
+ * Using a control template doesn't work when define a custom style for disabled state.

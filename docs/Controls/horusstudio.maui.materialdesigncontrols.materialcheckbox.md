@@ -246,4 +246,4 @@ Occurs when the checkbox is checked / unchecked
 
 ## Known issues and pending features
 
-- [iOS] FontAttributes doesn't work
+* [iOS] FontAttributes doesn't work.

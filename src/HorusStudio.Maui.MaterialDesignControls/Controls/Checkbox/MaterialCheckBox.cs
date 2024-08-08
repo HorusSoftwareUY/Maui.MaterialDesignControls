@@ -41,12 +41,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/CheckboxPage.xaml)
 /// 
 /// <todoList>
-/// <list type="list">
-///         <item>
-///             <term></term>
-///             <description>[iOS] FontAttributes doesn't work</description>
-///         </item>
-///     </list>
+/// * [iOS] FontAttributes doesn't work.
 /// </todoList>
 public class MaterialCheckBox : ContentView, ITouchable
 {

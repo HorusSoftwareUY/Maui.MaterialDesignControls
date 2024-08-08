@@ -56,24 +56,10 @@ public enum MaterialButtonType
 /// 
 /// </example>
 /// <todoList>
-/// <list type="list">
-///         <item>
-///             <term></term>
-///             <description>[iOS] IconTintColor doesn't react to VisualStateManager changes.</description>
-///         </item>
-///         <item>
-///             <term></term>
-///             <description>Shadow doesn't react to VisualStateManager changes.</description>
-///         </item>
-///         <item>
-///             <term></term>
-///             <description>ContentLayout is buggy.</description>
-///         </item>
-///         <item>
-///             <term></term>
-///             <description>Add default Material behavior for pressed state on default styles (v2).</description>
-///         </item>
-///     </list>
+/// * [iOS] IconTintColor doesn't react to VisualStateManager changes.
+/// * Shadow doesn't react to VisualStateManager changes.
+/// * ContentLayout is buggy.
+/// * Add default Material behavior for pressed state on default styles (v2).
 /// </todoList>
 public class MaterialButton : ContentView, ITouchable
 {

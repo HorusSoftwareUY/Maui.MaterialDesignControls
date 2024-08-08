@@ -415,7 +415,7 @@ Occurs when the button is unfocused.
 
 ## Known issues and pending features
 
-- [iOS] IconTintColor doesn't react to VisualStateManager changes.
-- Shadow doesn't react to VisualStateManager changes.
-- ContentLayout is buggy.
-- Add default Material behavior for pressed state on default styles (v2).
+* [iOS] IconTintColor doesn't react to VisualStateManager changes.
+ * Shadow doesn't react to VisualStateManager changes.
+ * ContentLayout is buggy.
+ * Add default Material behavior for pressed state on default styles (v2).

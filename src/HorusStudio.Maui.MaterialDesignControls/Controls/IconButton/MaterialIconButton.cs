@@ -52,16 +52,8 @@ public enum MaterialIconButtonType
 ///
 /// </example>
 /// <todoList>
-/// <list type="list">
-///         <item>
-///             <term></term>
-///             <description>Shadow doesn't react to VisualStateManager changes.</description>
-///         </item>
-///         <item>
-///             <term></term>
-///             <description>Add default Material behavior for pressed state on default styles (v2).</description>
-///         </item>
-///     </list>
+/// * Shadow doesn't react to VisualStateManager changes.
+/// * Add default Material behavior for pressed state on default styles (v2).
 /// </todoList>
 public class MaterialIconButton : ContentView, ITouchable
 {

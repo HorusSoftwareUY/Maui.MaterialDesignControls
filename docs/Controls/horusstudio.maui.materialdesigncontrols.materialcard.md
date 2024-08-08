@@ -213,4 +213,4 @@ Occurs when the card is released.
 
 ## Known issues and pending features
 
-- Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them
+* Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them.

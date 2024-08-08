@@ -65,12 +65,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     ///
     /// </example>
     /// <todoList>
-    /// <list type="list">
-    ///         <item>
-    ///             <term></term>
-    ///             <description>Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them</description>
-    ///         </item>
-    ///     </list>
+    ///  * Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them.
     /// </todoList>
     public class MaterialCard : Border, ITouchable
     {

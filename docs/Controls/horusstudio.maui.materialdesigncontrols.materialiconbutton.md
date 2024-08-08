@@ -310,5 +310,5 @@ Occurs when the button is released.
 
 ## Known issues and pending features
 
-- Shadow doesn't react to VisualStateManager changes.
-- Add default Material behavior for pressed state on default styles (v2).
+* Shadow doesn't react to VisualStateManager changes.
+ * Add default Material behavior for pressed state on default styles (v2).

@@ -65,12 +65,7 @@
     /// 
     /// </example>
     /// <todoList>
-    /// <list type="list">
-    ///         <item>
-    ///             <term></term>
-    ///             <description>[iOS] FontAttributes doesn't work</description>
-    ///         </item>
-    ///     </list>
+    /// * [iOS] FontAttributes doesn't work.
     /// </todoList>
     public class MaterialLabel : Label
     {

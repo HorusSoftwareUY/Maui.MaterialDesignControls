@@ -40,16 +40,8 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// </example>
 /// <todoList>
-/// <list type="list">
-///         <item>
-///             <term></term>
-///             <description>[iOS] FontAttributes doesn't work.</description>
-///         </item>
-///         <item>
-///             <term></term>
-///             <description>Using a control template does't work when define a custom style for disabled state.</description>
-///         </item>
-///     </list>
+/// * [iOS] FontAttributes doesn't work.
+/// * Using a control template doesn't work when define a custom style for disabled state.
 /// </todoList>
 public class MaterialRadioButton : ContentView, ITouchable
 {
