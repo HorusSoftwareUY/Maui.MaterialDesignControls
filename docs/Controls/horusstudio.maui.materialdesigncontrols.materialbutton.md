@@ -34,6 +34,8 @@ var button = new MaterialButton
 };
 ```
 
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ButtonPage.xaml)
+
 ## Properties
 
 ### <a id="properties-animation"/>**Animation**
@@ -61,7 +63,7 @@ Gets or sets the parameter to pass to the MaterialButton.Animation property.
 
 Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
-Default value: Null
+Default value: null
 
 <br>
 
@@ -80,6 +82,8 @@ Gets or sets a color that describes the background color of the button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Light: MaterialLightTheme.Primary - Dark: MaterialDarkTheme.Primary
 
 <br>
 
@@ -178,7 +182,7 @@ Gets or sets a custom animation to be executed when button is clicked.
 
 Property type: ICustomAnimation<br>
 
-Default value: Null
+Default value: null
 
 <br>
 
@@ -313,7 +317,7 @@ Gets or sets the text displayed as the content of the button.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-Default value: Null
+Default value: null
 
 Remarks: Changing the text of a button will trigger a layout cycle.
 
@@ -325,6 +329,8 @@ Gets or sets the  for the text of the button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Light: MaterialLightTheme.OnPrimary - Dark: MaterialDarkTheme.OnPrimary
 
 <br>
 
@@ -358,6 +364,7 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 ### <a id="properties-type"/>**Type**
 
 Gets or sets the button type according to MaterialButtonType enum.
+ This is a bindable property.
 
 Property type: MaterialButtonType<br>
 

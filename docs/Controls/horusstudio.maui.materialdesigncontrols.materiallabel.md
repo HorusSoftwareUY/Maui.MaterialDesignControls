@@ -30,6 +30,8 @@ var label = new MaterialLabel()
 };
 ```
 
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/LabelPage.xaml)
+
 ## Properties
 
 ### <a id="properties-fontfamily"/>**FontFamily**
@@ -96,8 +98,6 @@ Property type: LabelTypes<br>
 Default value: LabelTypes.BodyMedium
 
 <br>
-
-## Events
 
 ## Known issues and pending features
 

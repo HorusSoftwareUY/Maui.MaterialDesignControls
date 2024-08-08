@@ -29,16 +29,16 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     /// 
     /// &lt;material:MaterialCard
-    ///         Type="Elevated"&gt;
-    ///             &lt;VerticalStackLayout
-    ///             Spacing="8"&gt;
-    ///                 &lt;material:MaterialLabel
-    ///                     Type="TitleMedium"
-    ///                     Text="Elevated type"/&gt;
-    ///                 &lt;material:MaterialLabel
-    ///                     Text="Elevated cards provide separation from a patterned background."/&gt;
-    ///             &lt;/VerticalStackLayout&gt;
-    ///  &lt;/material:MaterialCard/&gt;
+    ///     Type="Elevated"&gt;
+    ///     &lt;VerticalStackLayout
+    ///         Spacing="8"&gt;
+    ///         &lt;material:MaterialLabel
+    ///             Type="TitleMedium"
+    ///             Text="Elevated type"/&gt;
+    ///         &lt;material:MaterialLabel
+    ///             Text="Elevated cards provide separation from a patterned background."/&gt;
+    ///     &lt;/VerticalStackLayout&gt;
+    /// &lt;/material:MaterialCard/&gt;
     /// </xaml>
     /// </code>
     /// 
@@ -60,6 +60,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
     ///     Content = vStack
     /// };
     ///</code>
+    ///
+    /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/CardPage.xaml)
     ///
     /// </example>
     /// <todoList>

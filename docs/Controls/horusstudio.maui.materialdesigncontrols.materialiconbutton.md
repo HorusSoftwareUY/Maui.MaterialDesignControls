@@ -33,6 +33,8 @@ var iconButton = new MaterialIconButton()
 };
 ```
 
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/IconButtonPage.xaml)
+
 ## Properties
 
 ### <a id="properties-animation"/>**Animation**

@@ -17,7 +17,10 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// <xaml>
 /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 /// 
-/// &lt;material:MaterialRadioButton 
+/// &lt;material:MaterialRadioButton
+///         TextSide="Left"
+///         CommandCheckedChanged="{Binding CheckedChangedCommand}"
+///         CommandCheckedChangedParameter="Selected or Unselected"
 ///         Text="Radio button 1"/&gt;
 /// </xaml>
 /// </code>
@@ -26,9 +29,15 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// <code>
 /// var radioButton = new MaterialRadioButton()
 /// {
-///     Text = "Radio button 1"
+///     Text = "Radio button 1",
+///     TextSide = TextSide.Left,
+///     CommandCheckedChanged = viewModel.CheckChangedCommand,
+///     CommandCheckedChangedParameter = "Selected or Unselected"
 /// };
 ///</code>
+///
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ProgressIndicatorPage.xaml)
+/// 
 /// </example>
 /// <todoList>
 /// <list type="list">
@@ -584,6 +593,9 @@ public class MaterialRadioButton : ContentView, ITouchable
 
     #region Events
 
+    /// <summary>
+    /// Occurs when the radio button is switched 
+    /// </summary>
     public event EventHandler<CheckedChangedEventArgs> CheckedChanged;
 
     #endregion Events

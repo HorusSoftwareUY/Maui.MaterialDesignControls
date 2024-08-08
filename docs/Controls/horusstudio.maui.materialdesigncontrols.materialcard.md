@@ -16,16 +16,16 @@ Inherits from: MaterialCard → [Border](https://learn.microsoft.com/en-us/dotne
 xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 
 <material:MaterialCard
-        Type="Elevated">
-            <VerticalStackLayout
-            Spacing="8">
-                <material:MaterialLabel
-                    Type="TitleMedium"
-                    Text="Elevated type"/>
-                <material:MaterialLabel
-                    Text="Elevated cards provide separation from a patterned background."/>
-            </VerticalStackLayout>
- </material:MaterialCard/>
+    Type="Elevated">
+    <VerticalStackLayout
+        Spacing="8">
+        <material:MaterialLabel
+            Type="TitleMedium"
+            Text="Elevated type"/>
+        <material:MaterialLabel
+            Text="Elevated cards provide separation from a patterned background."/>
+    </VerticalStackLayout>
+</material:MaterialCard/>
 ```
 
 ### C# sample
@@ -47,6 +47,8 @@ var card = new MaterialCard()
     Content = vStack
 };
 ```
+
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/CardPage.xaml)
 
 ## Properties
 

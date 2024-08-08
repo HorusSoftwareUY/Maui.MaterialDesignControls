@@ -7,10 +7,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
 	public static class MaterialElevation
 	{
         /// <default>
-        /// Brush = Material.Shadow
-        /// Radius = Android: 5 - MacOS,Windows,iOS: 1.5f
-        /// Opacity = Android: 0.3f - MacOS,Windows,iOS: 0.35f
-        /// Offset = Android: new Point(-0.5, 2) - MacOS,Windows,iOS: new Point(0, 1.5)
+        /// <br> Brush = Material.Shadow </br>
+        /// <br> Radius = Android: 5 / MacOS,Windows,iOS: 1.5f </br>
+        /// <br> Opacity = Android: 0.3f / MacOS,Windows,iOS: 0.35f </br>
+        /// <br> Offset = Android: new Point(-0.5, 2) / MacOS,Windows,iOS: new Point(0, 1.5) </br>
         /// </default>
         public static Shadow Level1 { get; set; } = new Shadow
         {
@@ -21,10 +21,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         };
 
         /// <default>
-        /// Brush = Material.Shadow
-        /// Radius = Android: 7 - MacOS,Windows,iOS: 1.8f
-        /// Opacity = Android: 0.35f - MacOS,Windows,iOS: 0.38f
-        /// Offset = Android: new Point(-1, 2.5) - MacOS,Windows,iOS: new Point(0, 2)
+        /// <br> Brush = Material.Shadow </br>
+        /// <br> Radius = Android: 7 / MacOS,Windows,iOS: 1.8f </br>
+        /// <br> Opacity = Android: 0.35f / MacOS,Windows,iOS: 0.38f </br>
+        /// <br> Offset = Android: new Point(-1, 2.5) / MacOS,Windows,iOS: new Point(0, 2) </br>
         /// </default>
         public static Shadow Level2 { get; set; } = new Shadow
         {
@@ -35,10 +35,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         };
 
         /// <default>
-        /// Brush = Material.Shadow
-        /// Radius = Android: 10 - MacOS,Windows,iOS: 2.4f
-        /// Opacity = Android: 0.4f - MacOS,Windows,iOS: 0.38f
-        /// Offset = Android: new Point(-1.5, 4) - MacOS,Windows,iOS: new Point(0, 2.4)
+        /// <br> Brush = Material.Shadow </br>
+        /// <br> Radius = Android: 10 / MacOS,Windows,iOS: 2.4f </br>
+        /// <br> Opacity = Android: 0.4f / MacOS,Windows,iOS: 0.38f </br>
+        /// <br> Offset = Android: new Point(-1.5, 4) / MacOS,Windows,iOS: new Point(0, 2.4) </br>
         /// </default>
         public static Shadow Level3 { get; set; } = new Shadow
         {
@@ -49,10 +49,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         };
 
         /// <default>
-        /// Brush = Material.Shadow
-        /// Radius = Android: 12 - MacOS,Windows,iOS: 2.8f
-        /// Opacity = Android: 0.45f - MacOS,Windows,iOS: 0.4f
-        /// Offset = Android: new Point(-2.5, 4.5) - MacOS,Windows,iOS: new Point(0, 2.6)
+        /// <br> Brush = Material.Shadow </br>
+        /// <br> Radius = Android: 12 / MacOS,Windows,iOS: 2.8f </br>
+        /// <br> Opacity = Android: 0.45f / MacOS,Windows,iOS: 0.4f </br>
+        /// <br> Offset = Android: new Point(-2.5, 4.5) / MacOS,Windows,iOS: new Point(0, 2.6) </br>
         /// </default>
         public static Shadow Level4 { get; set; } = new Shadow
         {
@@ -63,10 +63,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         };
 
         /// <default>
-        /// Brush = Material.Shadow
-        /// Radius = Android: 16 - MacOS,Windows,iOS: 3.4f
-        /// Opacity = Android: 0.5f - MacOS,Windows,iOS: 0.45f
-        /// Offset = Android: new Point(-3.5, 5) - MacOS,Windows,iOS: new Point(0, 3)
+        /// <br> Brush = Material.Shadow </br>
+        /// <br> Radius = Android: 16 / MacOS,Windows,iOS: 3.4f </br>
+        /// <br> Opacity = Android: 0.5f / MacOS,Windows,iOS: 0.45f </br>
+        /// <br> Offset = Android: new Point(-3.5, 5) / MacOS,Windows,iOS: new Point(0, 3) </br>
         /// </default>
         public static Shadow Level5 { get; set; } = new Shadow
         {

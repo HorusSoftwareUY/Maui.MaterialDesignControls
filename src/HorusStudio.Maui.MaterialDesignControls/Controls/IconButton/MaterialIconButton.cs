@@ -48,6 +48,8 @@ public enum MaterialIconButtonType
 /// };
 ///</code>
 ///
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/IconButtonPage.xaml)
+///
 /// </example>
 /// <todoList>
 /// <list type="list">

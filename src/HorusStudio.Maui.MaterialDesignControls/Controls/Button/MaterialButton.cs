@@ -50,8 +50,10 @@ public enum MaterialButtonType
 ///     Command = ButtonCommand,
 ///     IsBusy = ButtonCommand.IsRunning
 /// };
-///</code>
-///
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ButtonPage.xaml)
+/// 
 /// </example>
 /// <todoList>
 /// <list type="list">
@@ -408,6 +410,7 @@ public class MaterialButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets the button type according to <see cref="MaterialButtonType"/> enum.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialButtonType.Filled"/>
@@ -433,7 +436,7 @@ public class MaterialButton : ContentView, ITouchable
     /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
     /// </summary>
     /// <default>
-    /// null
+    /// <see langword="null"/>
     /// </default>
     public object CommandParameter
     {
@@ -485,6 +488,9 @@ public class MaterialButton : ContentView, ITouchable
     /// Gets or sets a color that describes the background color of the button.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
+    /// </default>
     public new Color BackgroundColor
     {
         get => (Color)GetValue(BackgroundColorProperty);
@@ -538,7 +544,7 @@ public class MaterialButton : ContentView, ITouchable
     /// Gets or sets the text displayed as the content of the button.
     /// </summary>
     /// <default>
-    /// Null
+    /// <see langword="null"/>
     /// </default>
     /// <remarks>Changing the text of a button will trigger a layout cycle.</remarks>
     public string Text
@@ -551,6 +557,9 @@ public class MaterialButton : ContentView, ITouchable
     /// Gets or sets the <see cref="Color" /> for the text of the button.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.OnPrimary">MaterialLightTheme.OnPrimary</see> - Dark: <see cref="MaterialDarkTheme.OnPrimary">MaterialDarkTheme.OnPrimary</see>
+    /// </default>
     public Color TextColor
     {
         get => (Color)GetValue(TextColorProperty);
@@ -649,7 +658,7 @@ public class MaterialButton : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="AnimationTypes.Fade"/>.
+    /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>.
     /// </default>
     public AnimationTypes Animation
     {
@@ -663,7 +672,7 @@ public class MaterialButton : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// Null
+    /// <see langword="null"/>
     /// </default>
     public double? AnimationParameter
     {
@@ -677,7 +686,7 @@ public class MaterialButton : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// Null
+    /// <see langword="null"/>
     /// </default>
     public ICustomAnimation CustomAnimation
     {
@@ -707,7 +716,7 @@ public class MaterialButton : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// False
+    /// <see langword="False"/>
     /// </default>
     public bool IsBusy
     {

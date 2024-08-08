@@ -38,6 +38,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
     ///     TrackColor = Colors.LightBlue
     /// };
     ///</code>
+    ///
+    /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ProgressIndicatorPage.xaml)
+    /// 
     /// </example>
     public class MaterialProgressIndicator : ContentView
     {
@@ -159,11 +162,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the active indicator of the progress indicator. This is a bindable property.
+        /// Gets or sets the <see cref="Color" /> for the active indicator of the progress indicator.
+        /// This is a bindable property.
+        /// </summary>
         /// <default>
         /// Theme: Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
         /// </default>
-        /// </summary>
         public Color IndicatorColor
         {
             get => (Color)GetValue(IndicatorColorProperty);
@@ -171,7 +175,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the track of the progress indicator. This is a bindable property.
+        /// Gets or sets the <see cref="Color" /> for the track of the progress indicator.
+        /// This is a bindable property.
         /// </summary>
         /// <default>
         /// Theme: Light: <see cref="MaterialLightTheme.SurfaceContainerHighest">MaterialLightTheme.SurfaceContainerHighest</see> - Dark: <see cref="MaterialDarkTheme.SurfaceContainerHighest">MaterialDarkTheme.SurfaceContainerHighest</see>
@@ -197,7 +202,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets height of the progress indicator. This is a bindable property.
+        /// Gets or sets height of the progress indicator.
+        /// This is a bindable property.
         /// </summary>
         public new double HeightRequest
         {
@@ -206,7 +212,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets width of the progress indicator. This is a bindable property.
+        /// Gets or sets width of the progress indicator.
+        /// This is a bindable property.
         /// </summary>
         public new double WidthRequest
         {

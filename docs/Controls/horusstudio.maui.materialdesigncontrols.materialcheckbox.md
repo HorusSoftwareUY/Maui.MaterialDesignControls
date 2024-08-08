@@ -16,6 +16,9 @@ Inherits from: MaterialCheckBox → [ContentView](https://learn.microsoft.com/en
 xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 
 <material:MaterialCheckBox
+        TextSide="Left"
+        CommandCheckedChanged="{Binding CheckedChangedCommand}"
+        CommandCheckedChangedParameter="Selected or Unselected"
         Text="Checkbox 1"/>
 ```
 
@@ -25,6 +28,9 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 var checkBox = new MaterialCheckBox()
 {
     Text = "Checkbox 1"
+    TextSide = TextSide.Left,
+    CommandCheckedChanged = viewModel.CheckChangedCommand,
+    CommandCheckedChangedParameter = "Selected or Unselected"
 };
 ```
 
@@ -231,6 +237,12 @@ Remarks: Only is supported on iOS.
 <br>
 
 ## Events
+
+### <a id="events-checkedchanged"/>**CheckedChanged**
+
+Occurs when the checkbox is checked / unchecked
+
+<br>
 
 ## Known issues and pending features
 

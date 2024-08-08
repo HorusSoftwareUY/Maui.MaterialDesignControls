@@ -1,6 +1,6 @@
 # MaterialAnimation
 
-Motion makes a UI expressive and easy to use [](https://m3.material.io/styles/motion/overview)
+MaterialAnimation allows for configuring animations used in the interactions and visual reactions of controls, enhancing the smoothness and appeal of the user interface.
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 

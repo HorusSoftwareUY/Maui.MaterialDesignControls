@@ -61,6 +61,8 @@
     /// };
     ///</code>
     ///
+    /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/LabelPage.xaml)
+    /// 
     /// </example>
     /// <todoList>
     /// <list type="list">

@@ -21,7 +21,8 @@ public enum MaterialBadgeType
 /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 /// 
 /// &lt;material:MaterialBadge
-///        Text="badge"/&gt;
+///        Type="MaterialBadgeType.Large"
+///        Text="999+"/&gt;
 /// </xaml>
 /// </code>
 /// 
@@ -29,10 +30,13 @@ public enum MaterialBadgeType
 /// <code>
 /// var badgeSmall = new MaterialBadge()
 /// {
-///     Type = MaterialBadgeType.Small, 
-///     Text = "Badge small"
+///     Type = MaterialBadgeType.Large, 
+///     Text = "999+"
 /// };
 /// </code>
+///
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/BadgePage.xaml)
+/// 
 /// </example>
 public class MaterialBadge : ContentView
 {
@@ -119,10 +123,11 @@ public class MaterialBadge : ContentView
     #region Properties
 
     /// <summary>
-    /// Gets or sets the badge type according to <see cref="MaterialBadgeType"/> enum. This is a bindable property.
+    /// Gets or sets the badge type according to <see cref="MaterialBadgeType"/> enum.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialBadgeType.Large"> MaterialBadgeType.Large </see>
+    /// <see cref="MaterialBadgeType.Large">MaterialBadgeType.Large</see>
     /// </default>
     public MaterialBadgeType Type
     {
@@ -131,7 +136,8 @@ public class MaterialBadge : ContentView
     }
     
     /// <summary>
-    /// Gets or sets the text displayed as the content of the badge. This is a bindable property.
+    /// Gets or sets the text displayed as the content of the badge.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see langword="Empty"/>
@@ -143,10 +149,11 @@ public class MaterialBadge : ContentView
     }
     
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the Badge. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the text of the Badge.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// Theme: Light: <see cref="MaterialLightTheme.OnError">MaterialLightTheme.OnError</see> - Dark: <see cref="MaterialDarkTheme.OnError">MaterialDarkTheme.OnError</see>
+    /// Light: <see cref="MaterialLightTheme.OnError">MaterialLightTheme.OnError</see> - Dark: <see cref="MaterialDarkTheme.OnError">MaterialDarkTheme.OnError</see>
     /// </default>
     /// <remarks> The text color may be affected by the following cases:
     /// <para>Badge type is small, the text color is not defined.</para>
@@ -159,7 +166,8 @@ public class MaterialBadge : ContentView
     }
     
     /// <summary>
-    /// Gets or sets the size of the font for the text of this badge. This is a bindable property.
+    /// Gets or sets the size of the font for the text of this badge.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontSize.LabelSmall">MaterialFontSize.LabelSmall</see> / Tablet: 14 - Phone: 11
@@ -176,7 +184,8 @@ public class MaterialBadge : ContentView
     }
     
     /// <summary>
-    /// Gets or sets the font family for the text of this badge. This is a bindable property.
+    /// Gets or sets the font family for the text of this badge.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
@@ -188,11 +197,12 @@ public class MaterialBadge : ContentView
     }
     
     /// <summary>
-    /// Gets or sets a color that describes the background color of the badge. This is a bindable property.
-    /// <default>
-    /// Theme: Light: <see cref="MaterialLightTheme.Error">MaterialLightTheme.Error</see> - Dark: <see cref="MaterialDarkTheme.Error">MaterialDarkTheme.Error</see>
-    /// </default>
+    /// Gets or sets a color that describes the background color of the badge.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Error">MaterialLightTheme.Error</see> - Dark: <see cref="MaterialDarkTheme.Error">MaterialDarkTheme.Error</see>
+    /// </default>
     public new Color BackgroundColor
     {
         get => (Color)GetValue(BackgroundColorProperty);
@@ -200,7 +210,8 @@ public class MaterialBadge : ContentView
     }
     
     /// <summary>
-    /// Gets or sets the corner radius for the Badge, in device-independent units. This is a bindable property.
+    /// Gets or sets the corner radius for the Badge, in device-independent units.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="DefaultCornerRadius">8</see>
@@ -212,7 +223,8 @@ public class MaterialBadge : ContentView
     }
     
     /// <summary>
-    /// Gets or sets the padding for the Badge. This is a bindable property.
+    /// Gets or sets the padding for the Badge.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="DefaultPadding">16,0</see>

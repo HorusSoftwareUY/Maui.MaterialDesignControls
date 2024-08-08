@@ -16,7 +16,10 @@ Inherits from: MaterialRadioButton → [ContentView](https://learn.microsoft.com
 ```csharp
 xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 
-<material:MaterialRadioButton 
+<material:MaterialRadioButton
+        TextSide="Left"
+        CommandCheckedChanged="{Binding CheckedChangedCommand}"
+        CommandCheckedChangedParameter="Selected or Unselected"
         Text="Radio button 1"/>
 ```
 
@@ -25,9 +28,14 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 ```csharp
 var radioButton = new MaterialRadioButton()
 {
-    Text = "Radio button 1"
+    Text = "Radio button 1",
+    TextSide = TextSide.Left,
+    CommandCheckedChanged = viewModel.CheckChangedCommand,
+    CommandCheckedChangedParameter = "Selected or Unselected"
 };
 ```
+
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ProgressIndicatorPage.xaml)
 
 ## Properties
 
@@ -251,6 +259,12 @@ Default value: null
 <br>
 
 ## Events
+
+### <a id="events-checkedchanged"/>**CheckedChanged**
+
+Occurs when the radio button is switched
+
+<br>
 
 ## Known issues and pending features
 

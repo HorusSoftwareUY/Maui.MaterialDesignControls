@@ -2,7 +2,7 @@
 {
     
     /// <summary>
-    /// Motion makes a UI expressive and easy to use <see href="https://m3.material.io/styles/motion/overview"></see>
+    /// MaterialAnimation allows for configuring animations used in the interactions and visual reactions of controls, enhancing the smoothness and appeal of the user interface.
     /// </summary>
     public static class MaterialAnimation
     {

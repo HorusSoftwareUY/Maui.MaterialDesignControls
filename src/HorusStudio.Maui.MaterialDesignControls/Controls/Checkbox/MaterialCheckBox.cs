@@ -18,6 +18,9 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 /// 
 /// &lt;material:MaterialCheckBox
+///         TextSide="Left"
+///         CommandCheckedChanged="{Binding CheckedChangedCommand}"
+///         CommandCheckedChangedParameter="Selected or Unselected"
 ///         Text="Checkbox 1"/&gt;
 /// </xaml>
 /// </code>
@@ -27,10 +30,16 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// var checkBox = new MaterialCheckBox()
 /// {
 ///     Text = "Checkbox 1"
+///     TextSide = TextSide.Left,
+///     CommandCheckedChanged = viewModel.CheckChangedCommand,
+///     CommandCheckedChangedParameter = "Selected or Unselected"
 /// };
 ///</code>
 ///
 /// </example>
+///
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/CheckboxPage.xaml)
+/// 
 /// <todoList>
 /// <list type="list">
 ///         <item>
@@ -528,6 +537,9 @@ public class MaterialCheckBox : ContentView, ITouchable
 
     #region Events
 
+    /// <summary>
+    /// Occurs when the checkbox is checked / unchecked
+    /// </summary>
     public event EventHandler<CheckedChangedEventArgs> CheckedChanged;
 
     #endregion Events

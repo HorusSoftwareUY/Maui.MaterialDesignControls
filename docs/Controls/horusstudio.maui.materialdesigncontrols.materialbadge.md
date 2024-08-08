@@ -16,7 +16,8 @@ Inherits from: MaterialBadge → [ContentView](https://learn.microsoft.com/en-us
 xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 
 <material:MaterialBadge
-       Text="badge"/>
+       Type="MaterialBadgeType.Large"
+       Text="999+"/>
 ```
 
 ### C# sample
@@ -24,26 +25,30 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 ```csharp
 var badgeSmall = new MaterialBadge()
 {
-    Type = MaterialBadgeType.Small, 
-    Text = "Badge small"
+    Type = MaterialBadgeType.Large, 
+    Text = "999+"
 };
 ```
+
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/BadgePage.xaml)
 
 ## Properties
 
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
-Gets or sets a color that describes the background color of the badge. This is a bindable property.
- 
-            Theme: Light: MaterialLightTheme.Error - Dark: MaterialDarkTheme.Error
+Gets or sets a color that describes the background color of the badge.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Light: MaterialLightTheme.Error - Dark: MaterialDarkTheme.Error
 
 <br>
 
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
-Gets or sets the corner radius for the Badge, in device-independent units. This is a bindable property.
+Gets or sets the corner radius for the Badge, in device-independent units.
+ This is a bindable property.
 
 Property type: [CornerRadius](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.cornerradius)<br>
 
@@ -53,7 +58,8 @@ Default value: 8
 
 ### <a id="properties-fontfamily"/>**FontFamily**
 
-Gets or sets the font family for the text of this badge. This is a bindable property.
+Gets or sets the font family for the text of this badge.
+ This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -63,7 +69,8 @@ Default value: MaterialFontFamily.Default
 
 ### <a id="properties-fontsize"/>**FontSize**
 
-Gets or sets the size of the font for the text of this badge. This is a bindable property.
+Gets or sets the size of the font for the text of this badge.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -79,7 +86,8 @@ Remarks: The font size may be affected by the following cases:
 
 ### <a id="properties-padding"/>**Padding**
 
-Gets or sets the padding for the Badge. This is a bindable property.
+Gets or sets the padding for the Badge.
+ This is a bindable property.
 
 Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
 
@@ -89,7 +97,8 @@ Default value: 16,0
 
 ### <a id="properties-text"/>**Text**
 
-Gets or sets the text displayed as the content of the badge. This is a bindable property.
+Gets or sets the text displayed as the content of the badge.
+ This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -99,11 +108,12 @@ Default value: Empty
 
 ### <a id="properties-textcolor"/>**TextColor**
 
-Gets or sets the  for the text of the Badge. This is a bindable property.
+Gets or sets the  for the text of the Badge.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: Theme: Light: MaterialLightTheme.OnError - Dark: MaterialDarkTheme.OnError
+Default value: Light: MaterialLightTheme.OnError - Dark: MaterialDarkTheme.OnError
 
 Remarks: The text color may be affected by the following cases:
 
@@ -115,7 +125,8 @@ Remarks: The text color may be affected by the following cases:
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the badge type according to MaterialBadgeType enum. This is a bindable property.
+Gets or sets the badge type according to MaterialBadgeType enum.
+ This is a bindable property.
 
 Property type: MaterialBadgeType<br>
 
@@ -127,5 +138,3 @@ Property type: MaterialBadgeType<br>
 Default value: MaterialBadgeType.Large
 
 <br>
-
-## Events

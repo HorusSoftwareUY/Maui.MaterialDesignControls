@@ -32,11 +32,14 @@ var progressIndicator = new MaterialProgressIndicator()
 };
 ```
 
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ProgressIndicatorPage.xaml)
+
 ## Properties
 
 ### <a id="properties-heightrequest"/>**HeightRequest**
 
-Gets or sets height of the progress indicator. This is a bindable property.
+Gets or sets height of the progress indicator.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -44,11 +47,12 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 ### <a id="properties-indicatorcolor"/>**IndicatorColor**
 
-Gets or sets the  for the active indicator of the progress indicator. This is a bindable property.
- 
-            Theme: Light: MaterialLightTheme.Primary - Dark: MaterialDarkTheme.Primary
+Gets or sets the  for the active indicator of the progress indicator.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Theme: Light: MaterialLightTheme.Primary - Dark: MaterialDarkTheme.Primary
 
 <br>
 
@@ -65,7 +69,8 @@ Default value: True
 
 ### <a id="properties-trackcolor"/>**TrackColor**
 
-Gets or sets the  for the track of the progress indicator. This is a bindable property.
+Gets or sets the  for the track of the progress indicator.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -93,10 +98,9 @@ Default value: MaterialProgressIndicatorType.Circular
 
 ### <a id="properties-widthrequest"/>**WidthRequest**
 
-Gets or sets width of the progress indicator. This is a bindable property.
+Gets or sets width of the progress indicator.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 <br>
-
-## Events

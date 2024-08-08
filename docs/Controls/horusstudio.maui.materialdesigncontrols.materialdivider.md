@@ -29,6 +29,8 @@ var divider = new MaterialDivider()
 };
 ```
 
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/DividerPage.xaml)
+
 ## Properties
 
 ### <a id="properties-color"/>**Color**
@@ -52,5 +54,3 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 Default value: 1
 
 <br>
-
-## Events

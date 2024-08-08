@@ -25,6 +25,9 @@
     ///     Color = Colors.Black
     /// };
     /// </code>
+    ///
+    /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/DividerPage.xaml)
+    /// 
     /// </example>
     public class MaterialDivider : BoxView
     {
