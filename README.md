@@ -114,7 +114,8 @@ private static IServiceCollection ConfigureMaterial(this IServiceCollection serv
 ```
 
 ## Sample app
-https://github.com/HorusSoftwareUY/Maui.MaterialDesignControls/tree/master/samples/HorusStudio.Maui.MaterialDesignControls.Sample
+
+[Sample app here.](samples/HorusStudio.Maui.MaterialDesignControls.Sample)
 
 ## Developed by
 <a href="http://horus.com.uy"><img src="https://assets-global.website-files.com/64a7016392b0b7da3a8604e3/64a7016392b0b7da3a8604ed_horus.svg" width="128"></a>
