@@ -53,6 +53,14 @@ public enum IconStateType
 ///</code>
 ///
 /// </example>
+/// <todoList>
+/// <list type="list">
+///         <item>
+///             <term></term>
+///             <description>.NET 7 not work LineBreakMode</description>
+///         </item>
+///     </list>
+/// </todoList>
 public class MaterialChips : ContentView, ITouchable
 {
     #region Attributes
