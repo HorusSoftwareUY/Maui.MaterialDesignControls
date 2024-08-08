@@ -88,6 +88,8 @@ Gets or sets a color that describes the background color of the card.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
+Default value: Theme: Light: MaterialLightTheme.SurfaceContainerHighest - Dark: MaterialDarkTheme.SurfaceContainerHighest
+
 <br>
 
 ### <a id="properties-bordercolor"/>**BorderColor**

@@ -16,7 +16,6 @@ Inherits from: MaterialDivider → [BoxView](https://learn.microsoft.com/en-us/d
 xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 
 <material:MaterialDivider
-       HeightRequest="{Binding DividerHeight}"
        Color="{Binding DividerColor}"/>
 ```
 

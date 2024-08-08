@@ -13,7 +13,6 @@
     /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     /// 
     /// &lt;material:MaterialDivider
-    ///        HeightRequest="{Binding DividerHeight}"
     ///        Color="{Binding DividerColor}"/&gt;
     /// </xaml>
     /// </code>

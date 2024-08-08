@@ -328,6 +328,9 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// Gets or sets <see cref="IsChecked" /> for the radio button. 
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="False"/>
+    /// </default>
     public bool IsChecked
     {
         get => (bool)GetValue(IsCheckedProperty);
@@ -338,6 +341,9 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// Gets or sets <see cref="IsEnabled" />  for the radio button.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="False"/>
+    /// </default>
     public new bool IsEnabled
     {
         get =>(bool)GetValue(IsEnabledProperty);

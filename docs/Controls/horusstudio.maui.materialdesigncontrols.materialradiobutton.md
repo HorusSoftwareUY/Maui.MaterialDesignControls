@@ -185,6 +185,8 @@ Gets or sets MaterialRadioButton.IsChecked for the radio button.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
+Default value: False
+
 <br>
 
 ### <a id="properties-isenabled"/>**IsEnabled**
@@ -193,6 +195,8 @@ Gets or sets MaterialRadioButton.IsEnabled for the radio button.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+Default value: False
 
 <br>
 

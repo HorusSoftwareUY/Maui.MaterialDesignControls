@@ -169,7 +169,7 @@ Gets or sets MaterialCheckBox.IsChecked for the checkbox.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: null
+Default value: False
 
 <br>
 

@@ -270,7 +270,7 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="False"/>
     /// </default>
     public bool IsChecked
     {

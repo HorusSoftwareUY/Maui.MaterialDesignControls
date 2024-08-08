@@ -320,6 +320,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Gets or sets a color that describes the background color of the card.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// Theme: Light: <see cref="MaterialLightTheme.SurfaceContainerHighest">MaterialLightTheme.SurfaceContainerHighest</see> - Dark: <see cref="MaterialDarkTheme.SurfaceContainerHighest">MaterialDarkTheme.SurfaceContainerHighest</see>
+        /// </default>
         public new Color BackgroundColor
         {
             get => (Color)GetValue(BackgroundColorProperty);
