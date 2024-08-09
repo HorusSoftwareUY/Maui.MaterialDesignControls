@@ -51,6 +51,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * [MaterialButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialbutton.md)
 * [MaterialCard](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcard.md)
 * [MaterialCheckbox](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcheckbox.md)
+* [MaterialChips](docs/Controls/horusstudio.maui.materialdesigncontrols.materialchips.md)
 * [MaterialDivider](docs/Controls/horusstudio.maui.materialdesigncontrols.materialdivider.md)
 * [MaterialIconButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialiconbutton.md)
 * [MaterialLabel](docs/Controls/horusstudio.maui.materialdesigncontrols.materiallabel.md)
@@ -58,7 +59,6 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * [MaterialRadioButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialradiobutton.md)
 
 ### Coming soon
-* MaterialChips
 * MaterialChipsGroup
 * MaterialDatePicker
 * MaterialEditor
