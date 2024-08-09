@@ -1,6 +1,6 @@
 # MaterialDesignControls Plugin for .Net MAUI
 
-<img src="https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/master/icon.png" width="128">
+<img src="resources/material_design_icon.jpg" width="128">
 
 MaterialDesignControls Plugin for .Net MAUI, provides a collection of .Net MAUI controls that follow the [Material Design Guidelines](https://m3.material.io/)
 
