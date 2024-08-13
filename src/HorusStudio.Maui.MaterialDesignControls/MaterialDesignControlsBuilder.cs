@@ -70,6 +70,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialCheckBox.GetStyles());
             // MaterialTextField
             application.Resources.AddStyles(MaterialTextField.GetStyles());
+            // Chips
+            application.Resources.AddStyles(MaterialChips.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
