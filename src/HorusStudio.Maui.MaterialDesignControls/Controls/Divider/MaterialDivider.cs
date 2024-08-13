@@ -3,6 +3,31 @@
     /// <summary>
     /// A divider <see cref="View" /> that group content in lists or other containers and follows Material Design Guidelines <see href="https://m3.material.io/components/divider/overview" />.
     /// </summary>
+    /// <example>
+    ///
+    /// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialDivider.jpg</img>
+    ///
+    /// <h3>XAML sample</h3>
+    /// <code>
+    /// <xaml>
+    /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    /// 
+    /// &lt;material:MaterialDivider
+    ///        Color="{Binding DividerColor}"/&gt;
+    /// </xaml>
+    /// </code>
+    /// 
+    /// <h3>C# sample</h3>
+    /// <code>
+    /// var divider = new MaterialDivider()
+    /// {
+    ///     Color = Colors.Black
+    /// };
+    /// </code>
+    ///
+    /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/DividerPage.xaml)
+    /// 
+    /// </example>
     public class MaterialDivider : BoxView
     {
         #region Attributes
@@ -29,8 +54,12 @@
         #region Properties
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> of the divider. This is a bindable property.
+        /// Gets or sets the <see cref="Color" /> of the divider.
+        /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// Theme: Light: <see cref="MaterialLightTheme.OutlineVariant">MaterialLightTheme.OutlineVariant</see> - Dark: <see cref="MaterialDarkTheme.OutlineVariant">MaterialDarkTheme.OutlineVariant</see>
+        /// </default>
         public new Color Color
         {
             get { return (Color)GetValue(ColorProperty); }
@@ -39,9 +68,11 @@
 
         /// <summary>
         /// Gets or sets the desired height override of this element.
-        /// The default value is 1.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// 1
+        /// </default>
         public new double HeightRequest
         {
             get { return (double)GetValue(HeightRequestProperty); }
