@@ -10,6 +10,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 public class MaterialRating : ContentView
 {
     #region Attributes
+
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultStrokeColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultStrokeThickness = 2.0;
@@ -91,10 +92,10 @@ public class MaterialRating : ContentView
     /// </summary>
     public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialRating), defaultValue: DefaultAnimationType);
 
+#nullable enable
     /// <summary>
     /// The backing store for the <see cref="AnimationParameter"/> bindable property.
     /// </summary>
-#nullable enable
     public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialRating), defaultValue: DefaultAnimationParameter);
 #nullable disable
 
@@ -236,7 +237,7 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets <see cref="IsEnabled" />  for the rating control. This is a bindable property.
+    /// Gets or sets <see cref="IsEnabled" /> for the rating control. This is a bindable property.
     /// </summary>
     public new bool IsEnabled
     {
@@ -466,9 +467,7 @@ public class MaterialRating : ContentView
         }
     }
 
-    /// <summary>
-    /// Set the content of the container of the ratings
-    /// </summary>
+    // Set the content of the container of the ratings
     private void SetGridContent()
     {
         var useDefaultIcon = GetIfUseDefaultIcon();
@@ -493,18 +492,11 @@ public class MaterialRating : ContentView
 
         AddRowsDefinitions(rows);
         AddColumnsDefinitions(itemsPerRow);
-        PupulateGrid(rows, itemsPerRow, itemsSize, useDefaultIcon);
+        PopulateGrid(rows, itemsPerRow, itemsSize, useDefaultIcon);
     }
 
-    /// <summary>
-    /// Add all rating icons
-    /// </summary>
-    /// <param name="rows"></param>
-    /// <param name="columns"></param>
-    /// <param name="itemsSize"></param>
-    /// <param name="useDefaultIcon"></param>
-
-    private void PupulateGrid(int rows, int columns, int itemsSize, bool useDefaultIcon)
+    // Add all rating icons
+    private void PopulateGrid(int rows, int columns, int itemsSize, bool useDefaultIcon)
     {
         int populatedObjects = 0;
 
@@ -531,13 +523,7 @@ public class MaterialRating : ContentView
         }
     }
 
-    /// <summary>
-    /// Add <see cref="ContentViewButton" /> as rating icon
-    /// </summary>
-    /// <param name="row"></param>
-    /// <param name="column"></param>
-    /// <param name="value"></param>
-    /// <param name="populatedObjects"></param>
+    // Add ContentViewButton as rating icon
     private void AddCustomGridAsRating(int row, int column, int value)
     {
         // Add element at row,column position on grid
@@ -567,13 +553,7 @@ public class MaterialRating : ContentView
         _containerLayout.Children.Add(customGrid);
     }
 
-    /// <summary>
-    /// Add <see cref="MaterialIconButton" /> as rating icon
-    /// </summary>
-    /// <param name="row"></param>
-    /// <param name="column"></param>
-    /// <param name="value"></param>
-    /// <param name="populatedObjects">this is used to know the position of the icon</param>
+    // Add MaterialIconButton as rating icon, populatedObjects is used to know the position of the icon.
     private void AddMaterialIconAsRating(int row, int column, int value, int populatedObjects)
     {
         // Add element at row,column position on grid
@@ -604,10 +584,7 @@ public class MaterialRating : ContentView
         _containerLayout.Children.Add(customImageButton);
     }
 
-    /// <summary>
-    /// create a style for MaterialIconButton used in MaterialRating
-    /// </summary>
-    /// <returns>style</returns>
+    // Create a style for MaterialIconButton used in MaterialRating
     private Style GetStyleForMaterialRating()
     {
         var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
@@ -623,9 +600,7 @@ public class MaterialRating : ContentView
         return style;
     }
 
-    /// <summary>
-    /// Add row definitions for rating container
-    /// </summary>
+    // Add row definitions for rating container
     private void AddRowsDefinitions(int rows)
     {
         // Set row definitions of grid
@@ -633,9 +608,7 @@ public class MaterialRating : ContentView
             _containerLayout.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
     }
 
-    /// <summary>
-    /// Add columns definitions for rating container
-    /// </summary>
+    // Add columns definitions for rating container
     private void AddColumnsDefinitions(int columns)
     {
         // Set columns definitions of grid
@@ -643,10 +616,7 @@ public class MaterialRating : ContentView
             _containerLayout.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ItemsPerRow / 100.0, GridUnitType.Star) });
     }
 
-    /// <summary>
-    /// Get if use the default icon, a star. 
-    /// </summary>
-    /// <returns>true if it should draw star; otherwise, false</returns>
+    // Get if use the default icon, a star. Returns true if it should draw star; otherwise, false.
     private bool GetIfUseDefaultIcon()
     {
         return (UseSameIcon && SelectedIconSource is null) ||
@@ -655,10 +625,7 @@ public class MaterialRating : ContentView
                 (!UseSameIcon && UnselectedIconsSource is null);
     }
 
-    /// <summary>
-    /// Event to set the Value
-    /// </summary>
-    /// <param name="value">new value</param>
+    // Event to set the Value
     private void OnTapped(int value)
     {
         if (IsEnabled)
@@ -670,12 +637,7 @@ public class MaterialRating : ContentView
         }
     }
 
-    /// <summary>
-    /// Set Image of the rating depeding of the value and item
-    /// </summary>
-    /// <param name="item"></param>
-    /// <param name="value">rating value</param>
-    /// <param name="position">position of rating</param>
+    // Set Image of the rating depeding of the value and item
     public void SetIconsRatingControl(object item, int value, int? position = null)
     {
         if (item is MaterialIconButton iconButton)
@@ -688,12 +650,7 @@ public class MaterialRating : ContentView
         }
     }
 
-    /// <summary>
-    /// Set image of the icon container
-    /// </summary>
-    /// <param name="iconButton">icon container</param>
-    /// <param name="value">icon value</param>
-    /// <param name="position">is used to determinate the position of the icon</param>
+    // Set image of the icon container
     private void UpdateIconButtonAppearance(MaterialIconButton iconButton, int value, int position)
     {
         bool isSelected = iconButton.CommandParameter != null && (int)iconButton.CommandParameter <= value;
@@ -730,11 +687,7 @@ public class MaterialRating : ContentView
         }
     }
 
-    /// <summary>
-    /// Add a star to container with a value. If is selected, draws a filled start; otherwise, outline star
-    /// </summary>
-    /// <param name="gridContainer">star container</param>
-    /// <param name="value">star value</param>
+    // Add a star to container with a value. If is selected, draws a filled start; otherwise, outline star
     private void UpdateGridContainerAppearance(ContentViewButton gridContainer, int value)
     {
         double size = Math.Min(gridContainer.Width, gridContainer.Height) - 10;
@@ -755,10 +708,7 @@ public class MaterialRating : ContentView
         gridContainer.Content = starPath;
     }
 
-    /// <summary>
-    /// Used to draw a star
-    /// </summary>
-    /// <returns>Path geometry of the star</returns>
+    // Used to draw a star, returns the path geometry of the star
     private PathGeometry CreateStarPathGeometry(double width, double height)
     {
         // Define the points of the star based on the width and height
@@ -784,7 +734,7 @@ public class MaterialRating : ContentView
         return pathGeometry;
     }
 
-    //We override this method to execute SetGridContent when some property of rating changed that is used to populate the rating icons
+    // We override this method to execute SetGridContent when some property of rating changed that is used to populate the rating icons
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         switch (propertyName)
