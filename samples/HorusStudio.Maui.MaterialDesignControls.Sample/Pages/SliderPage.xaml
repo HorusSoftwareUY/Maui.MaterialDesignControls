@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <local:BaseContentPage 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -9,11 +9,16 @@
     x:TypeArguments="vm:SliderViewModel"
     x:DataType="vm:SliderViewModel">
     <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
-            <material:MaterialLabel Text="{Binding Subtitle}" />
+        <VerticalStackLayout
+            Style="{StaticResource MainLayout}">
+            <material:MaterialLabel
+                Text="{Binding Subtitle}" />
             
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+            <material:MaterialLabel
+                Style="{StaticResource SectionTitle}"
+                Text="Default" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialSlider 
                         Label="Only label"
@@ -24,10 +29,15 @@
                         Text="Check value" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can use MaterialRating with default properties, but you need to set the thumb background color equals to the container slider background color." />
+            <material:MaterialLabel
+                Text="You can use MaterialRating with default properties, but you need to set the thumb background color equals to the container slider background color." />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Defining a event value changed" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+            <material:MaterialLabel
+                Style="{StaticResource SectionTitle}"
+                Text="Defining a event value changed" />
+            <Frame
+                Style="{StaticResource SurfaceContainer}"
+                Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialSlider 
                         Label="Event"
@@ -38,13 +48,20 @@
                         MinimumLabel="-"
                         MaximumLabel="+"
                         ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
-                    <material:MaterialLabel x:Name="displayLabel"  Text="The Slider value will be show it here." />
+                    <material:MaterialLabel
+                        x:Name="displayLabel"
+                        Text="The Slider value will be show it here." />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can set a ValueChanged Event. You can set labels for left and right sides and minimum and maximum values." />
+            <material:MaterialLabel
+                Text="You can set a ValueChanged Event. You can set labels for left and right sides and minimum and maximum values." />
             
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing some properties" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+            <material:MaterialLabel
+                Style="{StaticResource SectionTitle}"
+                Text="Changing some properties" />
+            <Frame
+                Style="{StaticResource SurfaceContainer}"
+                Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialSlider 
                         Label="Changing the colors of track and thumb"
@@ -59,10 +76,15 @@
                         ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can set the thumb color, the track maximum color and the track minimum color. And set icons for left and right sides. Change the value indicator background color or size. Or simply, no show the value indicator." />
+            <material:MaterialLabel
+                Text="You can set the thumb color, the track maximum color and the track minimum color. And set icons for left and right sides. Change the value indicator background color or size. Or simply, no show the value indicator." />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a thumb image" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+            <material:MaterialLabel
+                Style="{StaticResource SectionTitle}"
+                Text="Using a thumb image" />
+            <Frame
+                Style="{StaticResource SurfaceContainer}"
+                Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialSlider 
                         Label="Thumb icon"
@@ -77,10 +99,15 @@
                         ThumbImageSource="icon_opacity.png" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can set the thumb image source. Set the track height, thumb height and thumb width." />
+            <material:MaterialLabel
+                Text="You can set the thumb image source. Set the track height, thumb height and thumb width." />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a track image" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+            <material:MaterialLabel
+                Style="{StaticResource SectionTitle}"
+                Text="Using a track image" />
+            <Frame
+                Style="{StaticResource SurfaceContainer}"
+                Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialSlider 
                         Label="Track image"
@@ -93,7 +120,8 @@
                         TrackImageSource="scale.png" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can set the track as an image source." />
+            <material:MaterialLabel
+                Text="You can set the track as an image source." />
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>

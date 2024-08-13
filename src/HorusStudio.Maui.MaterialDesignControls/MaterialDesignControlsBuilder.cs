@@ -18,7 +18,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
             handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
-            handlers.AddHandler(typeof(CheckBox), typeof(CustomCheckboxHandler));
+            handlers.AddHandler(typeof(CustomCheckBox), typeof(CustomCheckboxHandler));
             handlers.AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
         }
 

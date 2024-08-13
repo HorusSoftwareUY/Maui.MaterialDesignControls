@@ -320,7 +320,6 @@ public class MaterialSlider : ContentView
     {
         if(bindableObject is MaterialSlider self && newValue is bool value)
         {
-
             self.Padding = value ? new Thickness(0, self.ValueIndicatorSize / 1.5, 0, 10) : new Thickness(0);
         }
     });
@@ -883,7 +882,6 @@ public class MaterialSlider : ContentView
 
     #endregion Properties
 
-
     #region Constructors
 
     public MaterialSlider()
@@ -1218,5 +1216,5 @@ public class MaterialSlider : ContentView
         }
     }
 
-#endregion Methods
+    #endregion Methods
 }
