@@ -9,7 +9,7 @@
                        x:DataType="vm:SnackbarViewModel">
 
     <ContentPage.Resources>
-        <Style x:Key="GridChipsContainer" TargetType="Grid">
+        <Style x:Key="GridSnackbarContainer" TargetType="Grid">
             <Setter Property="RowDefinitions" Value="Auto,Auto" />
             <Setter Property="ColumnDefinitions" Value="*,*" />
             <Setter Property="RowSpacing" Value="16" />
@@ -23,16 +23,23 @@
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <Grid Style="{StaticResource GridChipsContainer}">
+                <Grid Style="{StaticResource GridSnackbarContainer}">
                     
                     <material:MaterialSnackbar
                         Grid.ColumnSpan="2"
-                        Grid.RowSpan="2"
+                        Grid.Row="0"
                         Text="Lorem ipsum dolor sit amet"
                         ActionText="Action"
                         LeadingCommand="{Binding SnackbarLeadingCommand}"
                         TrailingCommand="{Binding SnackbarTrailingCommand}"
                         ActionCommand="{Binding SnackbarActionCommand}"/>
+                    
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Type="Elevated"
+                        Text="Show example"
+                        Command="{Binding ShowSnackbarExampleCommand}"/>
                     
                 </Grid>
             </Frame>
@@ -41,11 +48,11 @@
             
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Icon" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <Grid Style="{StaticResource GridChipsContainer}">
+                <Grid Style="{StaticResource GridSnackbarContainer}">
                     
                     <material:MaterialSnackbar
                         Grid.ColumnSpan="2"
-                        Grid.RowSpan="2"
+                        Grid.Row="0"
                         LeadingIcon="horus_logo.png"
                         TrailingIcon="horus_logo.png"
                         Text="Lorem ipsum dolor sit amet"
@@ -54,6 +61,13 @@
                         TrailingCommand="{Binding SnackbarTrailingCommand}"
                         ActionCommand="{Binding SnackbarActionCommand}"/>
                     
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Type="Elevated"
+                        Text="Show example"
+                        Command="{Binding ShowSnackbarIconExampleCommand}"/>
+                    
                 </Grid>
             </Frame>
             <material:MaterialLabel 
@@ -61,11 +75,11 @@
             
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Full API" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <Grid Style="{StaticResource GridChipsContainer}">
+                <Grid Style="{StaticResource GridSnackbarContainer}">
                     
                     <material:MaterialSnackbar
                         Grid.ColumnSpan="2"
-                        Grid.RowSpan="2"
+                        Grid.Row="0"
                         BackgroundColor="Green"
                         TextColor="Aqua"
                         LeadingIconTintColor="Brown"
@@ -81,6 +95,13 @@
                         LeadingCommand="{Binding SnackbarLeadingCommand}"
                         TrailingCommand="{Binding SnackbarTrailingCommand}"
                         ActionCommand="{Binding SnackbarActionCommand}"/>
+                    
+                    <material:MaterialButton
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Type="Elevated"
+                        Text="Show example"
+                        Command="{Binding ShowSnackbarFullAPIExampleCommand}"/>
                     
                 </Grid>
             </Frame>
