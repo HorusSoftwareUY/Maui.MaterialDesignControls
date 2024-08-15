@@ -4,21 +4,65 @@ using static Microsoft.Maui.Controls.Button;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+
 public enum MaterialButtonType
 {
-    Elevated, Filled, Tonal, Outlined, Text, Custom
+    /// <summary>Elevated button</summary>
+    Elevated, 
+    /// <summary>Filled button</summary>
+    Filled, 
+    /// <summary>Filled tonal button</summary>
+    Tonal, 
+    /// <summary>Outlined button</summary>
+    Outlined, 
+    /// <summary>Text button</summary>
+    Text, 
+    /// <summary>Custom button</summary>
+    Custom
 }
 
 /// <summary>
 /// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/buttons/overview" />.
 /// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialButton.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialButton
+///     Type="Elevated"
+///     Text="Confirm"
+///     Command="{Binding ButtonCommand}"
+///     IsBusy="{Binding ButtonCommand.IsRunning}"/&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var button = new MaterialButton
+/// {
+///     Type = MaterialButtonType.Filled,
+///     Text = "Save",
+///     Command = ButtonCommand,
+///     IsBusy = ButtonCommand.IsRunning
+/// };
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ButtonPage.xaml)
+/// 
+/// </example>
+/// <todoList>
+/// * [iOS] IconTintColor doesn't react to VisualStateManager changes.
+/// * Shadow doesn't react to VisualStateManager changes.
+/// * ContentLayout is buggy.
+/// * Add default Material behavior for pressed state on default styles (v2).
+/// </todoList>
 public class MaterialButton : ContentView, ITouchable
 {
-    // TODO: [iOS] IconTintColor doesn't react to VisualStateManager changes
-    // TODO: Shadow doesn't react to VisualStateManager changes
-    // TODO: ContentLayout is buggy
-    // TODO: Add default Material behavior for pressed state on default styles (v2)
-
     #region Attributes
 
     private readonly static MaterialButtonType DefaultButtonType = MaterialButtonType.Filled;
@@ -352,8 +396,11 @@ public class MaterialButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets the button type according to <see cref="MaterialButtonType"/> enum.
-    /// The default value is <see cref="MaterialButtonType.Filled"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialButtonType.Filled"/>
+    /// </default>
     public MaterialButtonType Type
     {
         get => (MaterialButtonType)GetValue(TypeProperty);
@@ -361,7 +408,8 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the command to invoke when the button is activated. This is a bindable property.
+    /// Gets or sets the command to invoke when the button is activated.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
     public ICommand Command
@@ -372,8 +420,10 @@ public class MaterialButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
-    /// The default value is <see langword="null"/>. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public object CommandParameter
     {
         get => GetValue(CommandParameterProperty);
@@ -391,7 +441,8 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the padding for the button. This is a bindable property.
+    /// Gets or sets the padding for the button.
+    /// This is a bindable property.
     /// </summary>
     public new Thickness Padding
     {
@@ -410,7 +461,8 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets a <see cref="Brush"/> that describes the background of the button. This is a bindable property.
+    /// Gets or sets a <see cref="Brush"/> that describes the background of the button.
+    /// This is a bindable property.
     /// </summary>
     public new Brush Background
     {
@@ -419,8 +471,12 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the background color of the button. This is a bindable property.
+    /// Gets or sets a color that describes the background color of the button.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
+    /// </default>
     public new Color BackgroundColor
     {
         get => (Color)GetValue(BackgroundColorProperty);
@@ -428,7 +484,8 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the border stroke color of the button. This is a bindable property.
+    /// Gets or sets a color that describes the border stroke color of the button.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0. On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor" /> is set to a non-default color.</remarks>
     public Color BorderColor
@@ -438,7 +495,8 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the corner radius for the button, in device-independent units. This is a bindable property.
+    /// Gets or sets the corner radius for the button, in device-independent units.
+    /// This is a bindable property.
     /// </summary>
     public int CornerRadius
     {
@@ -447,7 +505,8 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the width of the border, in device-independent units. This is a bindable property.
+    /// Gets or sets the width of the border, in device-independent units.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>Set this value to a non-zero value in order to have a visible border.</remarks>
     public double BorderWidth
@@ -457,7 +516,8 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image on the Button. This is a bindable property.
+    /// Allows you to display a bitmap image on the Button.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
     public ImageSource ImageSource
@@ -468,8 +528,10 @@ public class MaterialButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the button.
-    /// The default value is <see langword="null"/>. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     /// <remarks>Changing the text of a button will trigger a layout cycle.</remarks>
     public string Text
     {
@@ -478,8 +540,12 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.OnPrimary">MaterialLightTheme.OnPrimary</see> - Dark: <see cref="MaterialDarkTheme.OnPrimary">MaterialDarkTheme.OnPrimary</see>
+    /// </default>
     public Color TextColor
     {
         get => (Color)GetValue(TextColorProperty);
@@ -488,7 +554,8 @@ public class MaterialButton : ContentView, ITouchable
 
 #nullable enable
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// This is a bindable property.
     /// </summary>
     public Color? IconTintColor
     {
@@ -497,7 +564,8 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// This is a bindable property.
     /// </summary>
     public Color? TintColor
     {
@@ -527,7 +595,8 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the font family for the text of this entry. This is a bindable property.
+    /// Gets or sets the font family for the text of this entry.
+    /// This is a bindable property.
     /// </summary>
     public string FontFamily
     {
@@ -536,7 +605,8 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the size of the font for the text of this entry. This is a bindable property.
+    /// Gets or sets the size of the font for the text of this entry.
+    /// This is a bindable property.
     /// </summary>
     [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
     public double FontSize
@@ -546,9 +616,12 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Determines whether or not the font of this entry should scale automatically according to the operating system settings. Default value is <see langword="true"/>.
+    /// Determines whether or not the font of this entry should scale automatically according to the operating system settings.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
     /// <remarks>Typically this should always be enabled for accessibility reasons.</remarks>
     public bool FontAutoScalingEnabled
     {
@@ -568,9 +641,11 @@ public class MaterialButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets an animation to be executed when button is clicked.
-    /// The default value is <see cref="AnimationTypes.Fade"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>.
+    /// </default>
     public AnimationTypes Animation
     {
         get => (AnimationTypes)GetValue(AnimationProperty);
@@ -580,9 +655,11 @@ public class MaterialButton : ContentView, ITouchable
 #nullable enable
     /// <summary>
     /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-    /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public double? AnimationParameter
     {
         get => (double?)GetValue(AnimationParameterProperty);
@@ -592,9 +669,11 @@ public class MaterialButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets a custom animation to be executed when button is clicked.
-    /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public ICustomAnimation CustomAnimation
     {
         get => (ICustomAnimation)GetValue(CustomAnimationProperty);
@@ -602,10 +681,14 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the desired height override of this element. This is a bindable property.
+    /// Gets or sets the desired height override of this element.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// -1
+    /// </default>
     /// <remarks>
-    /// <para>The default value is -1, which means the value is unset; the effective minimum height will be zero.</para>
+    /// <para>which means the value is unset; the effective minimum height will be zero.</para>
     /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
     /// </remarks>
     public new double HeightRequest
@@ -616,9 +699,11 @@ public class MaterialButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets if button is on busy state (executing Command).
-    /// The default value is <see langword="false"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="False"/>
+    /// </default>
     public bool IsBusy
     {
         get => (bool)GetValue(IsBusyProperty);
@@ -656,7 +741,7 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the shadow effect cast by the element. This is a bindable property.
+    /// Gets or sets the shadow effect cast by the element.
     /// This is a bindable property.
     /// </summary>
     public new Shadow Shadow

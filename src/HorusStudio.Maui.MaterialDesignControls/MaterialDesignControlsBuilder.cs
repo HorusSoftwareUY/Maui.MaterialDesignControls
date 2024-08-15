@@ -72,6 +72,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialCheckBox.GetStyles());
             // MaterialTextField
             application.Resources.AddStyles(MaterialTextField.GetStyles());
+            // Chips
+            application.Resources.AddStyles(MaterialChips.GetStyles());
             // DatePicker
             application.Resources.AddStyles(MaterialDatePicker.GetStyles());
         }
