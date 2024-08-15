@@ -54,7 +54,7 @@
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel
-                Text="You can set a ValueChanged Event. You can set labels for left and right sides and minimum and maximum values." />
+                Text="You can set a ValueChanged Event or Command. You can set labels for left and right sides and minimum and maximum values." />
             
             <material:MaterialLabel
                 Style="{StaticResource SectionTitle}"
@@ -66,8 +66,8 @@
                     <material:MaterialSlider 
                         Label="Changing the colors of track and thumb"
                         ThumbColor="DarkRed"
-                        MinimumTrackColor="Gray"
-                        MaximumTrackColor="LightGray"
+                        ActiveTrackColor="Gray"
+                        InactiveTrackColor="LightGray"
                         ValueIndicatorBackgroundColor="DarkBlue"
                         ValueIndicatorSize="40"
                         MinimumImageSource="volum_out.png"

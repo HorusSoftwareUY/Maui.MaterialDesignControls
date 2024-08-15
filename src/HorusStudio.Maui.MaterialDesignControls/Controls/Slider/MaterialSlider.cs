@@ -163,9 +163,9 @@ public class MaterialSlider : ContentView
     public static readonly BindableProperty MinimumProperty = BindableProperty.Create(nameof(Minimum), typeof(double), typeof(MaterialSlider), defaultValue: 0.0);
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumTrackColor" /> bindable property.
+    /// The backing store for the <see cref="ActiveTrackColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MinimumTrackColorProperty = BindableProperty.Create(nameof(MinimumTrackColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultMinimumTrackColor);
+    public static readonly BindableProperty ActiveTrackColorProperty = BindableProperty.Create(nameof(ActiveTrackColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultMinimumTrackColor);
 
     #endregion Minimum
 
@@ -234,9 +234,9 @@ public class MaterialSlider : ContentView
     public static readonly BindableProperty MaximumProperty = BindableProperty.Create(nameof(Maximum), typeof(double), typeof(MaterialSlider), defaultValue: 1.0);
 
     /// <summary>
-    /// The backing store for the <see cref="MaximumTrackColor" /> bindable property.
+    /// The backing store for the <see cref="InactiveTrackColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MaximumTrackColorProperty = BindableProperty.Create(nameof(MaximumTrackColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultMaximumTrackColor);
+    public static readonly BindableProperty InactiveTrackColorProperty = BindableProperty.Create(nameof(InactiveTrackColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultMaximumTrackColor);
 
     #endregion Maximum
 
@@ -383,6 +383,11 @@ public class MaterialSlider : ContentView
     /// The backing store for the <see cref="DragCompletedCommand" /> bindable property.
     /// </summary>
     public static readonly BindableProperty DragCompletedCommandProperty = BindableProperty.Create(nameof(DragCompletedCommand), typeof(ICommand), typeof(MaterialSlider));
+
+    /// <summary>
+    /// The backing store for the <see cref="ValueChangedCommand" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ValueChangedCommandProperty = BindableProperty.Create(nameof(ValueChangedCommand), typeof(ICommand), typeof(MaterialSlider));
 
     #endregion Bindable Properties
 
@@ -561,10 +566,10 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the minimum track color. This is a bindable property.
     /// </summary>
-    public Color MinimumTrackColor
+    public Color ActiveTrackColor
     {
-        get { return (Color)GetValue(MinimumTrackColorProperty); }
-        set { SetValue(MinimumTrackColorProperty, value); }
+        get { return (Color)GetValue(ActiveTrackColorProperty); }
+        set { SetValue(ActiveTrackColorProperty, value); }
     }
 
     #endregion Minimum
@@ -666,10 +671,10 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the maximum track color. This is a bindable property.
     /// </summary>
-    public Color MaximumTrackColor
+    public Color InactiveTrackColor
     {
-        get { return (Color)GetValue(MaximumTrackColorProperty); }
-        set { SetValue(MaximumTrackColorProperty, value); }
+        get { return (Color)GetValue(InactiveTrackColorProperty); }
+        set { SetValue(InactiveTrackColorProperty, value); }
     }
 
     #endregion Maximum
@@ -880,6 +885,15 @@ public class MaterialSlider : ContentView
         set => SetValue(DragCompletedCommandProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the command when <see cref="Value"/> changed. This is a bindable property.
+    /// </summary>
+    public ICommand ValueChangedCommand
+    {
+        get => (ICommand)GetValue(ValueChangedCommandProperty);
+        set => SetValue(ValueChangedCommandProperty, value);
+    }
+
     #endregion Properties
 
     #region Constructors
@@ -1034,8 +1048,8 @@ public class MaterialSlider : ContentView
         _slider.SetBinding(Slider.MinimumProperty, new Binding(nameof(Minimum), source: this));
         _slider.SetBinding(Slider.MaximumProperty, new Binding(nameof(Maximum), source: this));
         _slider.SetBinding(Slider.ValueProperty, new Binding(nameof(Value), source: this));
-        _slider.SetBinding(Slider.MinimumTrackColorProperty, new Binding(nameof(MinimumTrackColor), source: this));
-        _slider.SetBinding(Slider.MaximumTrackColorProperty, new Binding(nameof(MaximumTrackColor), source: this));
+        _slider.SetBinding(Slider.MinimumTrackColorProperty, new Binding(nameof(ActiveTrackColor), source: this));
+        _slider.SetBinding(Slider.MaximumTrackColorProperty, new Binding(nameof(InactiveTrackColor), source: this));
         _slider.SetBinding(Slider.ThumbColorProperty, new Binding(nameof(ThumbColor), source: this));
         _slider.SetBinding(Slider.ThumbImageSourceProperty, new Binding(nameof(ThumbImageSource), source: this));
         _slider.SetBinding(Slider.DragCompletedCommandProperty, new Binding(nameof(DragCompletedCommand), source: this));
@@ -1184,12 +1198,16 @@ public class MaterialSlider : ContentView
         UpdateThumbLabelPosition();
 
         ValueChanged?.Invoke(sender, e);
+        if (ValueChangedCommand?.CanExecute(e) ?? false)
+        {
+            ValueChangedCommand.Execute(e);
+        }
     }
 
     private void SetBackgroundImage()
     {
-        this.MinimumTrackColor = Colors.Transparent;
-        this.MaximumTrackColor = Colors.Transparent;
+        this.ActiveTrackColor = Colors.Transparent;
+        this.InactiveTrackColor = Colors.Transparent;
         _backgroundImage.IsVisible = TrackImageSource is not null;
     }
 

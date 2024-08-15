@@ -27,7 +27,7 @@ partial class CustomSliderHandler : ISliderHandler
                 UIGraphics.BeginImageContextWithOptions(new CGSize(thumbWidthWithPadding, thumbHeightWithPadding), false, 0.0f);
                 var thumbContext = UIGraphics.GetCurrentContext();
 
-                UIColor backgroundColor = customSlider.ThumbBackgroundColor.ToPlatform();
+                UIColor backgroundColor = customSlider.ThumbBackgroundColor?.ToPlatform() ?? UIColor.Clear;
                 thumbContext.SetFillColor(backgroundColor.CGColor);
                 thumbContext.FillRect(new CGRect(0, 0, thumbWidthWithPadding, thumbHeightWithPadding));
 

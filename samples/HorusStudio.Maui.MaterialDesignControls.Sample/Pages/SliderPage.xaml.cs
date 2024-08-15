@@ -11,9 +11,6 @@ public partial class SliderPage : BaseContentPage<SliderViewModel>
 
     private void MaterialSlider_ValueChanged(object sender, ValueChangedEventArgs e)
     {
-        if (displayLabel is not null)
-        {
-            displayLabel.Text = String.Format("The Slider value is {0}", e.NewValue);
-        }
+        displayLabel.Text = String.Format("The Slider value is {0}", e.NewValue);
     }
 }
