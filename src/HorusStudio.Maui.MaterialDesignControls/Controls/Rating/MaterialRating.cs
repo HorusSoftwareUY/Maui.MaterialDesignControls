@@ -135,11 +135,6 @@ public class MaterialRating : ContentView
     public static readonly BindableProperty UnselectedIconsSourceProperty = BindableProperty.Create(nameof(UnselectedIconsSource), typeof(IEnumerable<ImageSource>), typeof(MaterialRating), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="UseSameIcon" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty UseSameIconProperty = BindableProperty.Create(nameof(UseSameIcon), typeof(bool), typeof(MaterialRating), defaultBindingMode: BindingMode.OneWay, defaultValue: true);
-
-    /// <summary>
     /// The backing store for the <see cref="ItemsSize" /> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemsSizeProperty = BindableProperty.Create(nameof(ItemsSize), typeof(int), typeof(MaterialRating), defaultValue: DefaultItemsSize);
@@ -152,7 +147,7 @@ public class MaterialRating : ContentView
     /// <summary>
     /// The backing store for the <see cref="Value"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(int), typeof(MaterialRating), defaultBindingMode: BindingMode.TwoWay, defaultValue: -1, propertyChanged: (bindableObject, _, newValue) =>
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(int), typeof(MaterialRating), defaultBindingMode: BindingMode.TwoWay, defaultValue: 0, propertyChanged: (bindableObject, _, newValue) =>
     {
         if (bindableObject is MaterialRating self)
         {
@@ -336,15 +331,6 @@ public class MaterialRating : ContentView
     {
         get => (IEnumerable<ImageSource>)GetValue(UnselectedIconsSourceProperty);
         set => SetValue(UnselectedIconsSourceProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets <see cref="UseSameIcon" />  for the rating control. This is a bindable property.
-    /// </summary>
-    public bool UseSameIcon
-    {
-        get { return (bool)GetValue(UseSameIconProperty); }
-        set { SetValue(UseSameIconProperty, value); }
     }
 
     /// <summary>
@@ -619,10 +605,10 @@ public class MaterialRating : ContentView
     // Get if use the default icon, a star. Returns true if it should draw star; otherwise, false.
     private bool GetIfUseDefaultIcon()
     {
-        return (UseSameIcon && SelectedIconSource is null) ||
-                (UseSameIcon && UnselectedIconSource is null) ||
-                (!UseSameIcon && SelectedIconsSource is null) ||
-                (!UseSameIcon && UnselectedIconsSource is null);
+        return SelectedIconSource is null &&
+               UnselectedIconSource is null &&
+               SelectedIconsSource is null &&
+               UnselectedIconsSource is null;
     }
 
     // Event to set the Value
@@ -631,7 +617,7 @@ public class MaterialRating : ContentView
         if (IsEnabled)
         {
             if (Value == 1 && value == 1)
-                Value = -1;
+                Value = 0;
             else
                 Value = value;
         }
@@ -657,7 +643,7 @@ public class MaterialRating : ContentView
 
         if (isSelected)
         {
-            if (UseSameIcon && SelectedIconSource != null)
+            if (SelectedIconSource != null)
             {
                 iconButton.ImageSource = SelectedIconSource;
             }
@@ -672,7 +658,7 @@ public class MaterialRating : ContentView
         }
         else
         {
-            if (UseSameIcon && UnselectedIconSource != null)
+            if (UnselectedIconSource != null)
             {
                 iconButton.ImageSource = UnselectedIconSource;
             }
@@ -745,7 +731,6 @@ public class MaterialRating : ContentView
             case nameof(SelectedIconSource):
             case nameof(AnimationParameter):
             case nameof(Animation):
-            case nameof(UseSameIcon):
             case nameof(SelectedIconsSource):
             case nameof(UnselectedIconsSource):
                 SetGridContent();
