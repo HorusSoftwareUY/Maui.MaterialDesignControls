@@ -71,6 +71,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialCheckBox.GetStyles());
             // MaterialTextField
             application.Resources.AddStyles(MaterialTextField.GetStyles());
+            // Chips
+            application.Resources.AddStyles(MaterialChips.GetStyles());
             // Multiline Text Field
             application.Resources.AddStyles(MaterialMultilineTextField.GetStyles());
         }

@@ -4,12 +4,44 @@ namespace HorusStudio.Maui.MaterialDesignControls
 {
     public enum MaterialProgressIndicatorType
     {
-        Circular, Linear
+        /// <summary> Circular </summary>
+        Circular, 
+        /// <summary> Linear </summary>
+        Linear
     }
 
     /// <summary>
-    /// A progress indicator <see cref="View" /> that show the status of a process and follows Material Design Guidelines.
+    /// A progress indicator <see cref="View" /> that show the status of a process and follows Material Design Guidelines. <see href="https://m3.material.io/components/progress-indicators/overview">See here. </see>
     /// </summary>
+    /// <example>
+    ///
+    /// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialProgressIndictor.gif</img>
+    ///
+    /// <h3>XAML sample</h3>
+    /// <code>
+    /// <xaml>
+    /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    /// 
+    /// &lt;material:MaterialProgressIndicator
+    ///         Type="Linear"
+    ///         IndicatorColor="DarkBlue"
+    ///         TrackColor="LightBlue"/&gt;
+    /// </xaml>
+    /// </code>
+    /// 
+    /// <h3>C# sample</h3>
+    /// <code>
+    /// var progressIndicator = new MaterialProgressIndicator()
+    /// {
+    ///     Type = MaterialProgressIndicatorType.Linear,
+    ///     IndicatorColor = Colors.Blue,
+    ///     TrackColor = Colors.LightBlue
+    /// };
+    ///</code>
+    ///
+    /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ProgressIndicatorPage.xaml)
+    /// 
+    /// </example>
     public class MaterialProgressIndicator : ContentView
     {
         #region Attributes and Properties
@@ -118,8 +150,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets the progress indicator type according to <see cref="MaterialProgressIndicatorType"/> enum.
-        /// The default value is <see cref="MaterialProgressIndicatorType.Circular"/>. This is a bindable property.
+        /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see cref="MaterialProgressIndicatorType.Circular"/>
+        /// </default>
         public MaterialProgressIndicatorType Type
         {
             get => (MaterialProgressIndicatorType)GetValue(TypeProperty);
@@ -127,8 +162,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the active indicator of the progress indicator. This is a bindable property.
+        /// Gets or sets the <see cref="Color" /> for the active indicator of the progress indicator.
+        /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// Theme: Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
+        /// </default>
         public Color IndicatorColor
         {
             get => (Color)GetValue(IndicatorColorProperty);
@@ -136,9 +175,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the track of the progress indicator. This is a bindable property.
+        /// Gets or sets the <see cref="Color" /> for the track of the progress indicator.
+        /// This is a bindable property.
         /// </summary>
-        /// <remarks>This property will not have an effect unless <see cref="MaterialProgressIndicator.Type" /> is set to <see cref="MaterialProgressIndicatorType.Linear"/>.</remarks>
+        /// <default>
+        /// Theme: Light: <see cref="MaterialLightTheme.SurfaceContainerHighest">MaterialLightTheme.SurfaceContainerHighest</see> - Dark: <see cref="MaterialDarkTheme.SurfaceContainerHighest">MaterialDarkTheme.SurfaceContainerHighest</see>
+        /// </default>
+        /// <remarks>This property will not have an effect unless <see cref="MaterialProgressIndicator.Type">MaterialProgressIndicator.Type</see> is set to <see cref="MaterialProgressIndicatorType.Linear">MaterialProgressIndicatorType.Linear</see>.</remarks>
         public Color TrackColor
         {
             get => (Color)GetValue(TrackColorProperty);
@@ -147,9 +190,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets if progress indicator is visible.
-        /// The default value is <see langword="true"/>.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see cref="True">True</see>
+        /// </default>
         public new bool IsVisible
         {
             get => (bool)GetValue(IsVisibleProperty);
@@ -157,7 +202,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets height of the progress indicator. This is a bindable property.
+        /// Gets or sets height of the progress indicator.
+        /// This is a bindable property.
         /// </summary>
         public new double HeightRequest
         {
@@ -166,7 +212,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets width of the progress indicator. This is a bindable property.
+        /// Gets or sets width of the progress indicator.
+        /// This is a bindable property.
         /// </summary>
         public new double WidthRequest
         {
