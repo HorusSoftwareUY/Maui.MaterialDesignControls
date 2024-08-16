@@ -84,6 +84,10 @@ public class MaterialRating : ContentView
         if (bindable is MaterialRating self && newValue is bool)
         {
             self.ChangeVisualState();
+            if(self._containerLayout is not null)
+            {
+                self.SetGridContent();
+            }
         }
     });
 
@@ -741,5 +745,44 @@ public class MaterialRating : ContentView
         }
     }
 
+    protected override void ChangeVisualState()
+    {
+        if (!IsEnabled)
+        {
+            VisualStateManager.GoToState(this, VisualStateManager.CommonStates.Disabled);
+        }
+        else
+        {
+            VisualStateManager.GoToState(this, VisualStateManager.CommonStates.Normal);
+        }
+    }
+
     #endregion Methods
+
+    #region Styles
+
+    internal static IEnumerable<Style> GetStyles()
+    {
+        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
+
+        var disabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
+
+        disabledState.Setters.Add(
+            MaterialRating.StrokeColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.12f));
+
+        commonStatesGroup.States.Add(disabledState);
+
+        var style = new Style(typeof(MaterialRating));
+        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
+
+        return new List<Style> { style };
+    }
+    #endregion Styles
 }
