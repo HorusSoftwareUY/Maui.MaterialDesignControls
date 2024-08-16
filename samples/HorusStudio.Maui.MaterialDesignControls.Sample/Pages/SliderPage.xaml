@@ -122,6 +122,20 @@
             </Frame>
             <material:MaterialLabel
                 Text="You can set the track as an image source." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Disabled" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialSlider 
+                        Label="Value"
+                        Value="{Binding Value}"
+                        ThumbBackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                        IsEnabled="False" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can set the track as an image source." />
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>
