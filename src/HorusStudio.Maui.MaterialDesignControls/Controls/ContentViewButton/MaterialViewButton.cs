@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-class ContentViewButton : ContentView, ITouchable
+public class MaterialViewButton : ContentView, ITouchable
 {
     #region Attributes
     private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
@@ -18,30 +18,30 @@ class ContentViewButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Command" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ContentViewButton));
+    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialViewButton));
 
     /// <summary>
     /// The backing store for the <see cref="CommandParameter" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ContentViewButton));
+    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialViewButton));
 
 
     /// <summary>
     /// The backing store for the <see cref="Animation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(ContentViewButton), defaultValue: DefaultAnimationType);
+    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialViewButton), defaultValue: DefaultAnimationType);
 
     /// <summary>
     /// The backing store for the <see cref="AnimationParameter"/> bindable property.
     /// </summary>
 #nullable enable
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(ContentViewButton), defaultValue: DefaultAnimationParameter);
+    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialViewButton), defaultValue: DefaultAnimationParameter);
 #nullable disable
 
     /// <summary>
     /// The backing store for the <see cref="CustomAnimation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(ContentViewButton));
+    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialViewButton));
 
     #endregion Bindable properties
 
@@ -105,7 +105,7 @@ class ContentViewButton : ContentView, ITouchable
 
     #region Constructors
 
-    public ContentViewButton()
+    public MaterialViewButton()
     {
         SetTapGestureRecognizer();
         Behaviors.Add(new TouchBehavior());

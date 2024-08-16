@@ -513,7 +513,7 @@ public class MaterialRating : ContentView
     private void AddCustomGridAsRating(int row, int column, int value)
     {
         // Add element at row,column position on grid
-        var customGrid = new ContentViewButton()
+        var customGrid = new MaterialViewButton()
         {
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -630,7 +630,7 @@ public class MaterialRating : ContentView
         {
             UpdateIconButtonAppearance(iconButton, value, position!.Value);
         }
-        else if (item is ContentViewButton gridContainer)
+        else if (item is MaterialViewButton gridContainer)
         {
             UpdateGridContainerAppearance(gridContainer, value);
         }
@@ -674,7 +674,7 @@ public class MaterialRating : ContentView
     }
 
     // Add a star to container with a value. If is selected, draws a filled start; otherwise, outline star
-    private void UpdateGridContainerAppearance(ContentViewButton gridContainer, int value)
+    private void UpdateGridContainerAppearance(MaterialViewButton gridContainer, int value)
     {
         double size = Math.Min(gridContainer.Width, gridContainer.Height) - 10;
         if (size < 1)
