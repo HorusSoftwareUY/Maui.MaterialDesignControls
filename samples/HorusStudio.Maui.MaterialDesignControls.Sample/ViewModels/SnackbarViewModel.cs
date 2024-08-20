@@ -1,5 +1,4 @@
 ﻿using System;
-using HorusStudio.Maui.MaterialDesignControls.Interface;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -9,25 +8,32 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
         
+        private readonly ISnackbarUser _snackbarUser;
+        
         public override string Title => "Snackbar";
 
         #endregion
 
-        public SnackbarViewModel()
+        public SnackbarViewModel(ISnackbarUser snackbarUser)
         {
+            _snackbarUser = snackbarUser;
             Subtitle = "Snackbars show short updates about app processes at the bottom of the screen";
         }
 
         [ICommand]
         private async void ShowSnackbarExample()
         {
-            var snack = new MaterialSnackbar()
+            _snackbarUser.ShowSnackbar(new SnackbarConfig()
             {
-                Text = "Lorem ipsum dolor sit amet",
-                ActionText = "Action"
-            };
-            var snackbarState = Snackbar.Make(snack, test, test, test);
-            await snackbarState.Show();
+                LeadingIcon = "horus_logo.png",
+                TrailingIcon = "horus_logo.png",
+                Message = "This is snackbar",
+                ActionText = "Cancel",
+                Action = type =>
+                {
+                    test();
+                }
+            });
         }
         
         [ICommand]
@@ -40,8 +46,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 ActionText = "Action",
                 TrailingIcon = "horus_logo.png"
             };
-            var snackbarState = Snackbar.Make(snack, test, test, test);
-            await snackbarState.Show();
+            //var snackbarState = Snackbar.Make(snack, test, test, test);
+            //await snackbarState.Show();
         }
         
         [ICommand]
@@ -57,8 +63,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 ActionFontSize = 28,
                 TrailingIcon = "horus_logo.png"
             };
-            var snackbarState = Snackbar.Make(snack, test, test, test);
-            await snackbarState.Show();
+            //var snackbarState = Snackbar.Make(snack, test, test, test);
+            //await snackbarState.Show();
         }
 
         private async void test()

@@ -21,7 +21,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                     // Workaround for Android error
                     fonts.AddFont("Roboto-Medium.ttf", "sans-serif-medium");
                 })
-                .ConfigureMaterialDesignControls();
+                .ConfigureMaterialDesignControls()
+                .UseSnackbar(true);
 
 #if DEBUG
             builder.Logging.AddDebug();

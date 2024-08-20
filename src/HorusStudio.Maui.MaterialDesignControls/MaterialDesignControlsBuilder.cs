@@ -5,6 +5,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
 {
     public static class MaterialDesignControlsBuilder
     {
+        static ISnackbarUser _currentInstance;
+        
         public static MauiAppBuilder ConfigureMaterialDesignControls(this MauiAppBuilder builder)
         {
             builder
@@ -12,6 +14,32 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 .ConfigureLifecycleEvents(ConfigureLifeCycleEvents);
             
             return builder;
+        }
+        
+        public static MauiAppBuilder UseSnackbar(this MauiAppBuilder builder, bool registerInterface, Action configure = null)
+        {
+            Instance = new SnackbarImplemetation();
+
+            configure?.Invoke();
+
+            if (registerInterface)
+            {
+                builder.Services.AddTransient((s) => Instance);
+            }
+
+            return builder;
+        }
+        
+        public static ISnackbarUser Instance
+        {
+            get
+            {
+                if (_currentInstance is null)
+                    throw new ArgumentException("[HorusStudio.Maui.MaterialDesignControls] You must call UseSnackbar() in your MauiProgram for initialization");
+
+                return _currentInstance;
+            }
+            set => _currentInstance = value;
         }
 
         private static void ConfigureHandlers(IMauiHandlersCollection handlers)
