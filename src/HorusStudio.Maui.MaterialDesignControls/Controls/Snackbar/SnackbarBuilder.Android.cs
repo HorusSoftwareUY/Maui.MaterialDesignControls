@@ -6,10 +6,13 @@ using Android.Text.Style;
 using Android.Views;
 using Android.Widget;
 using Microsoft.Maui.Platform;
+using Color = Microsoft.Maui.Graphics.Color;
+using ImageButton = Android.Widget.ImageButton;
+using Google.Android.Material.Snackbar;
+using LayoutDirection = Android.Views.LayoutDirection;
+using View = Android.Views.View;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
-
-using Google.Android.Material.Snackbar;
 
 public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callback
 {
@@ -71,18 +74,6 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
         base.OnDismissed(snackbar, e);
 
         _dismissed?.Invoke();
-
-        if (Config.Action is not null)
-        {
-            if (e == Google.Android.Material.Snackbar.Snackbar.Callback.DismissEventTimeout)
-            {
-                Config.Action(SnackbarActionType.Timeout);
-            }
-            else if (e == Google.Android.Material.Snackbar.Snackbar.Callback.DismissEventConsecutive)
-            {
-                Config.Action(SnackbarActionType.Cancelled);
-            }
-        }
     }
 
     public virtual Google.Android.Material.Snackbar.Snackbar Build()
@@ -96,9 +87,9 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
 
         SetupSnackbarText(snackbar);
 
-        if (Config.MessageColor is not null)
+        if (Config.TextColor is not null)
         {
-            snackbar.SetTextColor(Config.MessageColor.ToInt());
+            snackbar.SetTextColor(Config.TextColor.ToInt());
         }
 
         if (Config.Action is not null)
@@ -123,6 +114,42 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
 
             snackbar.View.LayoutParameters = layoutParams;
         }
+        
+        var view = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
+        var text = view.GetChildAt(0) as TextView;
+        var buttonSnackbar = view.GetChildAt(1) as Android.Widget.Button;
+
+        if (Config.LeadingIcon is not null)
+        {
+            var button = new ImageButton(Activity);
+            var icon = GetIcon(Config.LeadingIcon, Config.IconTintColor);
+            icon.ScaleTo(Config.IconSize);
+            button.SetImageDrawable(icon);
+            button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
+            button.SetMaxHeight(Config.IconSize);
+            button.SetMaxWidth(Config.IconSize);
+            button.Touch += (sender, args) =>
+            {
+                Config.ActionLeading?.Invoke();
+            };
+            view.AddView(button,0);
+        }
+
+        if (Config.TrailingIcon is not null)
+        {
+            var button = new ImageButton(Activity);
+            var icon = GetIcon(Config.TrailingIcon, Config.IconTintColor);
+            icon.ScaleTo(ActionIconSize);
+            button.SetImageDrawable(icon);
+            button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
+            button.SetMaxHeight(Config.IconSize);
+            button.SetMaxWidth(Config.IconSize);
+            button.Touch += (sender, args) =>
+            {
+                Config.ActionTrailing?.Invoke();
+            };
+            view.AddView(button,3);
+        }
 
         snackbar.AddCallback(this);
 
@@ -140,63 +167,46 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
         return backgroundDrawable;
     }
 
-    protected virtual void SetupSnackbarText(Google.Android.Material.Snackbar.Snackbar snackbar)
+    protected virtual void SetupSnackbarText(Snackbar snackbar)
     {
-        var l = (snackbar.View as Google.Android.Material.Snackbar.Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
+        var l = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
         var text = l.GetChildAt(0) as TextView;
-        text.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.MessageFontSize);
+        var buttonSnackbar = l.GetChildAt(1) as Android.Widget.Button;
+        text.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.TextFontSize);
 
-        if (Config.MessageFontFamily is not null)
-        {
-            var typeface = Typeface.CreateFromAsset(Activity.Assets, Config.MessageFontFamily);
-            text.SetTypeface(typeface, TypefaceStyle.Normal);
-        }
-
-        if (Config.LeadingIcon is null) return;
-
-        var icon = GetIcon(Config.LeadingIcon);
-        icon.ScaleTo(Config.IconSize);
-        text.SetCompoundDrawables(icon, null, null, null);
+        text.SetCompoundDrawables(null, null, null, null);
         text.CompoundDrawablePadding = Extensions.DpToPixels(IconPadding);
     }
 
-    protected virtual void SetupSnackbarAction(Google.Android.Material.Snackbar.Snackbar snackbar)
+    protected virtual void SetupSnackbarAction(Snackbar snackbar)
     {
         var text = new SpannableString(Config.ActionText);
         text.SetSpan(new LetterSpacingSpan(0), 0, Config.ActionText.Length, SpanTypes.ExclusiveExclusive);
 
-        if (Config.NegativeButtonTextColor is not null)
+        if (Config.ActionTextColor is not null)
         {
-            snackbar.SetActionTextColor(Config.NegativeButtonTextColor.ToInt());
+            snackbar.SetActionTextColor(Config.ActionTextColor.ToInt());
         }
         
         snackbar.SetAction(text, v =>
         {
-            Config.Action?.Invoke(SnackbarActionType.UserInteraction);
+            Config.Action?.Invoke();
         });
 
-        var l = (snackbar.View as Google.Android.Material.Snackbar.Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
+        var l = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
         var button = l.GetChildAt(1) as Android.Widget.Button;
-        button.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.NegativeButtonFontSize);
-
-        if (Config.NegativeButtonFontFamily is not null)
-        {
-            var typeface = Typeface.CreateFromAsset(Activity.Assets, Config.NegativeButtonFontFamily);
-            button.SetTypeface(typeface, TypefaceStyle.Normal);
-        }
-
-        if (Config.TrailingIcon is null) return;
-
-        var icon = GetIcon(Config.TrailingIcon);
-        icon.ScaleTo(ActionIconSize);
-        button.SetCompoundDrawables(icon, null, null, null);
+        button.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.ActionFontSize);
+        
+        button.SetCompoundDrawables(null, null, null, null);
         button.CompoundDrawablePadding = Extensions.DpToPixels(ActionIconPadding);
     }
 
-    protected virtual Drawable GetIcon(string icon)
+    protected virtual Drawable GetIcon(string icon, Color color)
     {
         var imgId = MauiApplication.Current.GetDrawableId(icon);
         var img = MauiApplication.Current.GetDrawable(imgId);
+        
+        img.SetColorFilter(color.ToPlatform(), FilterMode.SrcIn);
 
         return img;
     }

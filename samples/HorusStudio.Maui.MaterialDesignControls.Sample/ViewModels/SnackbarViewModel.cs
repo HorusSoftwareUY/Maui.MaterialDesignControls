@@ -25,51 +25,44 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             _snackbarUser.ShowSnackbar(new SnackbarConfig()
             {
-                LeadingIcon = "horus_logo.png",
-                TrailingIcon = "horus_logo.png",
                 Message = "This is snackbar",
-                ActionText = "Cancel",
-                Action = type =>
-                {
-                    test();
-                }
+                Action = SnackbarAction,
             });
         }
         
         [ICommand]
         private async void ShowSnackbarIconExample()
         {
-            var snack = new MaterialSnackbar()
+            _snackbarUser.ShowSnackbar(new SnackbarConfig()
             {
                 LeadingIcon = "horus_logo.png",
-                Text = "Lorem ipsum dolor sit amet",
-                ActionText = "Action",
-                TrailingIcon = "horus_logo.png"
-            };
-            //var snackbarState = Snackbar.Make(snack, test, test, test);
-            //await snackbarState.Show();
+                TrailingIcon = "horus_logo.png",
+                Message = "Lorem ipsum dolor sit amet",
+                Action = SnackbarAction,
+                ActionLeading = SnackbarLeading,
+                ActionTrailing = SnackbarTrailing,
+            });
         }
         
         [ICommand]
         private async void ShowSnackbarFullAPIExample()
         {
-            var snack = new MaterialSnackbar()
+            _snackbarUser.ShowSnackbar(new SnackbarConfig()
             {
                 LeadingIcon = "horus_logo.png",
-                Text = "Lorem ipsum dolor sit amet",
-                TextColor = Colors.Aqua,
+                TrailingIcon = "horus_logo.png",
+                Message = "Lorem ipsum dolor sit amet",
                 ActionText = "Action API",
+                TextColor = Colors.Aqua,
                 ActionTextColor = Colors.Fuchsia,
+                BackgroundColor = Colors.Green,
+                IconTintColor = Colors.Coral,
+                Action = SnackbarAction,
                 ActionFontSize = 28,
-                TrailingIcon = "horus_logo.png"
-            };
-            //var snackbarState = Snackbar.Make(snack, test, test, test);
-            //await snackbarState.Show();
-        }
-
-        private async void test()
-        {
-            await DisplayAlert(Title, "Work!!!", "OK"); 
+                IconSize = 35,
+                ActionLeading = SnackbarLeading,
+                ActionTrailing = SnackbarTrailing,
+            });
         }
 
         [ICommand]

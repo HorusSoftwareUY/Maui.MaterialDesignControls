@@ -18,37 +18,14 @@ public partial class SnackbarImplemetation
 
         app.SafeInvokeOnMainThread(() =>
         {
-            bar = new Snackbar()
-            {
-                Message = config.Message,
-                IconLeading = config.LeadingIcon,
-                IconTrailing = config.TrailingIcon,
-                MessageFontSize = (float)config.MessageFontSize,
-                CornerRadius = config.CornerRadius,
-                DismissDuration = config.Duration,
-                FontFamily = config.MessageFontFamily,
-                CancelButtonFontFamily = config.NegativeButtonFontFamily,
-                Position = config.Position.ToNative(),
-                ActionText = config.ActionText,
-                Action = () =>
-                {
-                    config.Action?.Invoke(SnackbarActionType.UserInteraction);
-                }
-            };
-            bar.BackgroundColor = config.BackgroundColor?.ToPlatform() ?? bar.BackgroundColor;
-            bar.MessageColor = config.MessageColor?.ToPlatform() ?? bar.MessageColor;
-            bar.ActionColor = config.NegativeButtonTextColor?.ToPlatform() ?? bar.ActionColor;
+            bar = new Snackbar(config);
             bar.Show();
-            bar.Timeout += (s, a) =>
-            {
-                config.Action?.Invoke(SnackbarActionType.Timeout);
-            };
         });
 
         return new DisposableAction(() => app.SafeInvokeOnMainThread(() =>
         {
             bar.Dismiss();
-            config.Action?.Invoke(SnackbarActionType.Cancelled);
+            config.DimissAction?.Invoke();
         }));
 #endif
 #if ANDROID
@@ -66,11 +43,10 @@ public partial class SnackbarImplemetation
                 activity.SafeRunOnUi(() =>
                 {
                     snackBar.Dismiss();
-                    config.Action?.Invoke(SnackbarActionType.Cancelled);
+                    config.DimissAction?.Invoke();
                 });
         });
 #endif
-
         return null;
     }
 }
@@ -81,7 +57,7 @@ public partial class SnackbarImplemetation : ISnackbarUser
     public virtual partial IDisposable ShowSnackbar(SnackbarConfig config);
 
     public virtual IDisposable ShowSnackbar(string message, string leadingIcon, string trailingIcon,
-        TimeSpan? dismissTimer, string actionText, Action<SnackbarActionType> action)
+        TimeSpan? dismissTimer, string actionText, Action action, Action actionLeading, Action actionTrailing)
         => ShowSnackbar(new SnackbarConfig()
         {
             Message = message,
@@ -89,10 +65,12 @@ public partial class SnackbarImplemetation : ISnackbarUser
             TrailingIcon = trailingIcon,
             Duration = dismissTimer ?? SnackbarConfig.DefaultDuration,
             Action = action,
+            ActionLeading = actionLeading,
+            ActionTrailing = actionTrailing,
             ActionText = actionText
         });
 
-    public virtual Task<SnackbarActionType> ShowSnackbarAsync(string message, string leadingIcon, string trailingIcon,
+    public virtual Task ShowSnackbarAsync(string message, string leadingIcon, string trailingIcon,
         TimeSpan? dismissTimer, string actionText, CancellationToken? cancelToken)
         => ShowSnackbarAsync(new SnackbarConfig()
         {
@@ -103,33 +81,22 @@ public partial class SnackbarImplemetation : ISnackbarUser
             ActionText = actionText
         }, cancelToken);
 
-    public virtual async Task<SnackbarActionType> ShowSnackbarAsync(SnackbarConfig config, CancellationToken? cancelToken)
+    public virtual async Task ShowSnackbarAsync(SnackbarConfig config, CancellationToken? cancelToken)
     {
         if (config.Action is not null)
             throw new ArgumentException(_noAction);
-
-        var tcs = new TaskCompletionSource<SnackbarActionType>();
-        config.SetAction(x => tcs.TrySetResult(x));
-
-        var disp = this.ShowSnackbar(config);
-        using (cancelToken?.Register(() => Cancel(disp, tcs)))
-        {
-            return await tcs.Task;
-        }
-    }
-    
-    static void Cancel<TResult>(IDisposable disp, TaskCompletionSource<TResult> tcs)
-    {
-        disp.Dispose();
-        tcs.TrySetCanceled();
+        if (config.ActionLeading is not null)
+            throw new ArgumentException(_noAction);
+        if (config.ActionTrailing is not null)
+            throw new ArgumentException(_noAction);
     }
 }
 
 public interface ISnackbarUser
 {
-    IDisposable ShowSnackbar(string message, string iconLeading = null, string iconTrailing = null, TimeSpan? dismissTimer = null, string actionText = null, Action<SnackbarActionType> action = null);
+    IDisposable ShowSnackbar(string message, string iconLeading = null, string iconTrailing = null, TimeSpan? dismissTimer = null, string actionText = null, Action action = null, Action actionLeading = null, Action actionTrailing = null);
     IDisposable ShowSnackbar(SnackbarConfig config);
     
-    Task<SnackbarActionType> ShowSnackbarAsync(string message, string iconLeading = null, string iconTrailing = null, TimeSpan? dismissTimer = null, string actionText = null, CancellationToken? cancelToken = null);
-    Task<SnackbarActionType> ShowSnackbarAsync(SnackbarConfig config, CancellationToken? cancelToken = null);
+    Task ShowSnackbarAsync(string message, string iconLeading = null, string iconTrailing = null, TimeSpan? dismissTimer = null, string actionText = null, CancellationToken? cancelToken = null);
+    Task ShowSnackbarAsync(SnackbarConfig config, CancellationToken? cancelToken = null);
 }
