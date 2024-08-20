@@ -116,8 +116,6 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
         }
         
         var view = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
-        var text = view.GetChildAt(0) as TextView;
-        var buttonSnackbar = view.GetChildAt(1) as Android.Widget.Button;
 
         if (Config.LeadingIcon is not null)
         {
@@ -150,9 +148,8 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
             };
             view.AddView(button,3);
         }
-
+        
         snackbar.AddCallback(this);
-
         snackbar.View.Alpha = 0f;
 
         return snackbar;
@@ -171,8 +168,8 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
     {
         var l = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
         var text = l.GetChildAt(0) as TextView;
-        var buttonSnackbar = l.GetChildAt(1) as Android.Widget.Button;
         text.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.TextFontSize);
+        text.Ellipsize = TextUtils.TruncateAt.Middle;
 
         text.SetCompoundDrawables(null, null, null, null);
         text.CompoundDrawablePadding = Extensions.DpToPixels(IconPadding);
@@ -195,7 +192,8 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
 
         var l = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
         var button = l.GetChildAt(1) as Android.Widget.Button;
-        button.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.ActionFontSize);
+        button.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.ActionFontSize-6);
+        button.Ellipsize = TextUtils.TruncateAt.Middle;
         
         button.SetCompoundDrawables(null, null, null, null);
         button.CompoundDrawablePadding = Extensions.DpToPixels(ActionIconPadding);
