@@ -117,7 +117,7 @@ public class SnackbarBuilder : Snackbar.Callback
         if (Config.LeadingIcon is not null)
         {
             var button = new Button(Activity);
-            var icon = GetIcon(Config.LeadingIcon, Config.IconTintColor);
+            var icon = GetIcon(Config.LeadingIcon, Config.LeadingIconTintColor);
             icon.ScaleTo(Config.IconSize);
             button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
             button.SetCompoundDrawables(null, null, icon, null);
@@ -133,7 +133,7 @@ public class SnackbarBuilder : Snackbar.Callback
         if (Config.TrailingIcon is not null)
         {
             var button = new Button(Activity);
-            var icon = GetIcon(Config.TrailingIcon, Config.IconTintColor);
+            var icon = GetIcon(Config.TrailingIcon, Config.TrailingIconTintColor);
             icon.ScaleTo(Config.IconSize);
             button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
             button.SetCompoundDrawables(icon, null, null, null);

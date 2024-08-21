@@ -1,5 +1,6 @@
 using CoreGraphics;
 using Foundation;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Platform;
 using UIKit;
 
@@ -167,7 +168,7 @@ public class Snackbar : UIView
         
         if (Config.LeadingIcon is not null)
         {
-            container.AddArrangedSubview(GetButtonImage(Config.LeadingIcon, Config.IconTintColor, Config.ActionLeading));
+            container.AddArrangedSubview(GetButtonImage(Config.LeadingIcon, Config.LeadingIconTintColor, Config.ActionLeading));
         }
 
         container.AddArrangedSubview(GetLabel());
@@ -183,7 +184,7 @@ public class Snackbar : UIView
         
         if (Config.TrailingIcon is not null)
         {
-            container.AddArrangedSubview(GetButtonImage(Config.TrailingIcon, Config.IconTintColor, Config.ActionTrailing));
+            container.AddArrangedSubview(GetButtonImage(Config.TrailingIcon, Config.TrailingIconTintColor, Config.ActionTrailing));
         }
 
         return container;
@@ -221,7 +222,8 @@ public class Snackbar : UIView
         button.BackgroundColor = Colors.Transparent.ToPlatform();
         if (imageView.Image != null)
         {
-            imageView.TintColor = color.ToPlatform();
+            button.TintColor = color.ToPlatform();
+            button.ImageView.TintColor = color.ToPlatform();
             button.SetImage(imageView.Image, UIControlState.Normal);
         }
 

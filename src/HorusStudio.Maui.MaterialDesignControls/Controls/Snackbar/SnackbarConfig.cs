@@ -37,7 +37,8 @@ public class SnackbarConfig
     public double ActionFontSize { get; set; } = DefaultActionFontSize;
     public SnackbarPosition Position { get; set; } = DefaultPosition;
     public int IconSize = DefaultIconSize;
-    public Color IconTintColor = DefaultIconTintColor;
+    public Color LeadingIconTintColor = DefaultIconTintColor;
+    public Color TrailingIconTintColor = DefaultIconTintColor;
     public string Message { get; set; }
     public string LeadingIcon { get; set; }
     public string TrailingIcon { get; set; }
