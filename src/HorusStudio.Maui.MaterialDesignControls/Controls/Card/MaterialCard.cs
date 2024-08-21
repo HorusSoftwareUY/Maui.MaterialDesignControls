@@ -472,7 +472,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             if (_backgroundColors.TryGetValue(type, out object background) && background != null)
             {
-                if ((BackgroundColor == null && DefaultBackgroundColor == null) || BackgroundColor.Equals(DefaultBackgroundColor))
+                if ((BackgroundColor == null && DefaultBackgroundColor == null))
                 {
                     // Default Material value according to Type
                     if (background is Color backgroundColor)

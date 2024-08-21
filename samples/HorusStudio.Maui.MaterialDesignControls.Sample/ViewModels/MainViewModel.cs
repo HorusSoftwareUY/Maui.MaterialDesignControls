@@ -18,16 +18,17 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             MenuItems = new List<MenuItemViewModel>
             {
-                new MenuItemViewModel { Title = "Buttons", ViewModel = typeof(ButtonViewModel) },
-                new MenuItemViewModel { Title = "Dividers", ViewModel = typeof(DividerViewModel) },
-                new MenuItemViewModel { Title = "Labels", ViewModel = typeof(LabelViewModel) },
-                new MenuItemViewModel { Title = "Progress indicators", ViewModel = typeof(ProgressIndicatorViewModel) },
-                new MenuItemViewModel { Title = "Icon buttons", ViewModel = typeof(IconButtonViewModel) },
-                new MenuItemViewModel { Title = "Cards", ViewModel = typeof(CardViewModel) },
+                new MenuItemViewModel { Title = "Buttons", Icon = "ic_button.png", ViewModel = typeof(ButtonViewModel) },
+                new MenuItemViewModel { Title = "Dividers", Icon = "ic_divider.png", ViewModel = typeof(DividerViewModel) },
+                new MenuItemViewModel { Title = "Labels", Icon = "ic_label.png", ViewModel = typeof(LabelViewModel) },
+                new MenuItemViewModel { Title = "Progress indicators", Icon = "ic_progress_indicator.png", ViewModel = typeof(ProgressIndicatorViewModel) },
+                new MenuItemViewModel { Title = "Icon buttons", Icon = "ic_icon_button.png", ViewModel = typeof(IconButtonViewModel) },
+                new MenuItemViewModel { Title = "Cards", Icon = "ic_card.png", ViewModel = typeof(CardViewModel) },
                 new MenuItemViewModel { Title = "Radio button", Icon = "ic_radio.png", ViewModel = typeof(RadioButtonViewModel) },
                 new MenuItemViewModel { Title = "Checkbox", Icon = "ic_checkbox.png", ViewModel = typeof(CheckboxViewModel) },
                 new MenuItemViewModel { Title = "Badge", Icon = "ic_badge.png", ViewModel = typeof(BadgeViewModel) },
-                new MenuItemViewModel { Title = "Chips", Icon = "ic_chip.png", ViewModel = typeof(ChipsViewModel) }
+                new MenuItemViewModel { Title = "Chips", Icon = "ic_chip.png", ViewModel = typeof(ChipsViewModel) },
+                new MenuItemViewModel { Title = "Navigation Drawer", Icon = "ic_navigation_drawer.png", ViewModel = typeof(NavigationDrawerViewModel) }
             };
         }
 

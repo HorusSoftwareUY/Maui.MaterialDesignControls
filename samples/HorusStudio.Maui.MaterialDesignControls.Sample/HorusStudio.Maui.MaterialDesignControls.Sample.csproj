@@ -51,8 +51,14 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Resources\Images\arrow_drop_down.svg" />
+	  <None Remove="Resources\Images\card.svg" />
+	  <None Remove="Resources\Images\email.svg" />
 	  <None Remove="Resources\Images\radio_button_checked.svg" />
 	  <None Remove="Resources\Images\radio_button_unchecked.svg" />
+	  <None Remove="Resources\Images\star_selected.svg" />
+	  <None Remove="Resources\Images\star_unselected.svg" />
+	  <None Remove="Resources\Images\trash.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -68,6 +74,9 @@
 	  <Compile Update="Pages\CheckboxPage.xaml.cs">
 	    <DependentUpon>CheckboxPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\NavigationDrawerPage.xaml.cs">
+	    <DependentUpon>NavigationDrawerPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\RadioButtonPage.xaml.cs">
 	    <DependentUpon>RadioButtonPage.xaml</DependentUpon>
 	  </Compile>
@@ -75,6 +84,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Pages\CheckboxPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\NavigationDrawerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\RadioButtonPage.xaml">

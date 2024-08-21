@@ -152,7 +152,7 @@
         /// #1D1B20 <img>https://placehold.co/15x15/1D1B20/1D1B20.png</img>
         /// </default>
         public static Color Text { get; set; } = Color.FromArgb("#1D1B20");
-        //public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
+        public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
         //public static Color DisableContainer { get; set; } = Color.FromArgb("#E5E3E8");
     }
 
@@ -308,7 +308,7 @@
         /// #E6E0E9 <img>https://placehold.co/15x15/E6E0E9/E6E0E9.png</img>
         /// </default>
         public static Color Text { get; set; } = Color.FromArgb("#E6E0E9");
-        //public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
+        public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
         //public static Color DisableContainer { get; set; } = Color.FromArgb("#E5E3E8");
     }
 }

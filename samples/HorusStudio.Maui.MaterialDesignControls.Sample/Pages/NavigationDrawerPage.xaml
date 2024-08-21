@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+                       xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+                       xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+                       x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.NavigationDrawerPage"
+                       x:TypeArguments="vm:NavigationDrawerViewModel"
+                       x:DataType="vm:NavigationDrawerViewModel">
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource MainLayout}">
+            <material:MaterialLabel Text="{Binding Subtitle}" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Normal" />
+            <material:MaterialButton Text="Change ItemsSource"
+                                     Margin="0, 10"
+                                     Command="{Binding ChangeItemsSourceCommand}" />
+
+            <material:MaterialNavigationDrawer Headline="Mail"
+                                               Command="{Binding TestCommand}"
+                                               ItemsSource="{Binding Items}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</local:BaseContentPage>
