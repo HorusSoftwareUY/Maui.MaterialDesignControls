@@ -5,7 +5,7 @@ using Path = Microsoft.Maui.Controls.Shapes.Path;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A rating <see cref="View" /> allows users to view and set ratings that reflect degrees of satisfaction./>.
+/// A rating <see cref="View" /> allows users to view and set ratings that reflect degrees of satisfaction.
 /// </summary>
 public class MaterialRating : ContentView
 {

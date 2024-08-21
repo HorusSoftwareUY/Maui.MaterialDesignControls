@@ -4,9 +4,13 @@ using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// A <see cref="ContentView" /> that reacts to touch events.
+/// </summary>
 public class MaterialViewButton : ContentView, ITouchable
 {
     #region Attributes
+
     private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
 #nullable enable
     private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
@@ -15,6 +19,7 @@ public class MaterialViewButton : ContentView, ITouchable
     #endregion Attributes
 
     #region Bindable properties
+
     /// <summary>
     /// The backing store for the <see cref="Command" /> bindable property.
     /// </summary>
@@ -46,6 +51,7 @@ public class MaterialViewButton : ContentView, ITouchable
     #endregion Bindable properties
 
     #region Properties
+
     /// <summary>
     /// Gets or sets the command to invoke when the button is activated. This is a bindable property.
     /// </summary>
