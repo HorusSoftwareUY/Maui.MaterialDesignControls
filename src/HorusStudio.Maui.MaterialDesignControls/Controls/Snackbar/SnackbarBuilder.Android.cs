@@ -1,5 +1,4 @@
 using Android.App;
-using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Text;
 using Android.Text.Style;
@@ -7,24 +6,20 @@ using Android.Views;
 using Android.Widget;
 using Microsoft.Maui.Platform;
 using Color = Microsoft.Maui.Graphics.Color;
-using ImageButton = Android.Widget.ImageButton;
 using Google.Android.Material.Snackbar;
-using LayoutDirection = Android.Views.LayoutDirection;
-using View = Android.Views.View;
+using Button = Android.Widget.Button;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callback
+public class SnackbarBuilder : Snackbar.Callback
 {
     public static Thickness DefaultScreenMargin { get; set; } = new Thickness(20, 50);
     public static double DefaultIconPadding { get; set; } = 10;
     public static double DefaultActionIconPadding { get; set; } = 10;
-    public static double DefaultActionIconSize { get; set; } = 22;
     public static long DefaultFadeInFadeOutAnimationDuration { get; set; } = 300;
 
     public Thickness ScreenMargin { get; set; } = DefaultScreenMargin;
     public double IconPadding { get; set; } = DefaultIconPadding;
-    public double ActionIconSize { get; set; } = DefaultActionIconSize;
     public double ActionIconPadding { get; set; } = DefaultActionIconPadding;
     public long FadeInFadeOutAnimationDuration { get; set; } = DefaultFadeInFadeOutAnimationDuration;
     
@@ -105,6 +100,7 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
         if (snackbar.View.LayoutParameters is FrameLayout.LayoutParams layoutParams)
         {
             layoutParams.SetMargins(Extensions.DpToPixels(ScreenMargin.Left), Extensions.DpToPixels(ScreenMargin.Top), Extensions.DpToPixels(ScreenMargin.Right), Extensions.DpToPixels(ScreenMargin.Bottom));
+
             layoutParams.Gravity = GravityFlags.CenterHorizontal | GravityFlags.Bottom;
 
             if (Config.Position == SnackbarPosition.Top)
@@ -112,6 +108,7 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
                 layoutParams.Gravity = GravityFlags.CenterHorizontal | GravityFlags.Top;
             }
 
+            snackbar.View.SetPadding(Extensions.DpToPixels(16), Extensions.DpToPixels(10), Extensions.DpToPixels(6), Extensions.DpToPixels(5));
             snackbar.View.LayoutParameters = layoutParams;
         }
         
@@ -119,36 +116,38 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
 
         if (Config.LeadingIcon is not null)
         {
-            var button = new ImageButton(Activity);
+            var button = new Button(Activity);
             var icon = GetIcon(Config.LeadingIcon, Config.IconTintColor);
             icon.ScaleTo(Config.IconSize);
-            button.SetImageDrawable(icon);
             button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
-            button.SetMaxHeight(Config.IconSize);
-            button.SetMaxWidth(Config.IconSize);
+            button.SetCompoundDrawables(null, null, icon, null);
+            button.CompoundDrawablePadding = Extensions.DpToPixels(IconPadding);
             button.Touch += (sender, args) =>
             {
                 Config.ActionLeading?.Invoke();
             };
             view.AddView(button,0);
+            view.GetChildAt(0).LayoutParameters.Width = Extensions.DpToPixels(Config.IconSize);
         }
 
         if (Config.TrailingIcon is not null)
         {
-            var button = new ImageButton(Activity);
+            var button = new Button(Activity);
             var icon = GetIcon(Config.TrailingIcon, Config.IconTintColor);
-            icon.ScaleTo(ActionIconSize);
-            button.SetImageDrawable(icon);
+            icon.ScaleTo(Config.IconSize);
             button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
-            button.SetMaxHeight(Config.IconSize);
-            button.SetMaxWidth(Config.IconSize);
+            button.SetCompoundDrawables(icon, null, null, null);
+            button.CompoundDrawablePadding = Extensions.DpToPixels(IconPadding);
             button.Touch += (sender, args) =>
             {
                 Config.ActionTrailing?.Invoke();
             };
             view.AddView(button,3);
+            view.GetChildAt(3).LayoutParameters.Width = Extensions.DpToPixels(Config.IconSize);
         }
-        
+
+        view.GetChildAt(1).SetPadding(view.GetChildAt(1).PaddingLeft, 0, view.GetChildAt(1).Right, view.GetChildAt(1).Bottom);
+
         snackbar.AddCallback(this);
         snackbar.View.Alpha = 0f;
 
@@ -169,8 +168,7 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
         var l = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
         var text = l.GetChildAt(0) as TextView;
         text.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.TextFontSize);
-        text.Ellipsize = TextUtils.TruncateAt.Middle;
-
+        text.Ellipsize = TextUtils.TruncateAt.End;
         text.SetCompoundDrawables(null, null, null, null);
         text.CompoundDrawablePadding = Extensions.DpToPixels(IconPadding);
     }
@@ -192,9 +190,9 @@ public class SnackbarBuilder : Google.Android.Material.Snackbar.Snackbar.Callbac
 
         var l = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
         var button = l.GetChildAt(1) as Android.Widget.Button;
-        button.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.ActionFontSize-6);
+        button.SetTextSize(Android.Util.ComplexUnitType.Sp,
+            (float)Config.ActionFontSize - ((Config.ActionFontSize > MaterialFontSize.LabelLarge) ? 6 : 0));
         button.Ellipsize = TextUtils.TruncateAt.Middle;
-        
         button.SetCompoundDrawables(null, null, null, null);
         button.CompoundDrawablePadding = Extensions.DpToPixels(ActionIconPadding);
     }
