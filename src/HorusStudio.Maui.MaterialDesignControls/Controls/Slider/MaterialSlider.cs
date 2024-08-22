@@ -250,7 +250,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="TrackCornerRadius" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TrackCornerRadiusProperty = BindableProperty.Create(nameof(TrackCornerRadius), typeof(int), typeof(MaterialSlider), defaultValue: 6);
+    public static readonly BindableProperty TrackCornerRadiusProperty = BindableProperty.Create(nameof(TrackCornerRadius), typeof(int), typeof(MaterialSlider), defaultValue: 10);
 
     /// <summary>
     /// The backing store for the <see cref="TrackImageSource" /> bindable property.
@@ -278,9 +278,9 @@ public class MaterialSlider : ContentView
     public static readonly BindableProperty ThumbImageSourceeProperty = BindableProperty.Create(nameof(ThumbImageSource), typeof(ImageSource), typeof(MaterialSlider), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="ThumbBackgroundColor" /> bindable property.
+    /// The backing store for the <see cref="BackgroundColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ThumbBackgroundColorProperty = BindableProperty.Create(nameof(ThumbBackgroundColor), typeof(Color), typeof(MaterialSlider), defaultValue: null);
+    public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialSlider), defaultValue: null);
 
     /// <summary>
     /// The backing store for the <see cref="ThumbWidth" /> bindable property.
@@ -737,10 +737,10 @@ public class MaterialSlider : ContentView
     /// Allows you to set the color of the thumb shadow.
     /// You should set it equal to the background color of the slider's container.
     /// </summary>
-    public Color ThumbBackgroundColor
+    public new Color BackgroundColor
     {
-        get => (Color)GetValue(ThumbBackgroundColorProperty);
-        set => SetValue(ThumbBackgroundColorProperty, value);
+        get => (Color)GetValue(BackgroundColorProperty);
+        set => SetValue(BackgroundColorProperty, value);
     }
 
     /// <summary>
@@ -1057,7 +1057,7 @@ public class MaterialSlider : ContentView
         _slider.SetBinding(CustomSlider.TrackHeightProperty, new Binding(nameof(TrackHeight), source: this));
         _slider.SetBinding(CustomSlider.TrackCornerRadiusProperty, new Binding(nameof(TrackCornerRadius), source: this));
         _slider.SetBinding(CustomSlider.UserInteractionEnabledProperty, new Binding(nameof(UserInteractionEnabled), source: this));
-        _slider.SetBinding(CustomSlider.ThumbBackgroundColorProperty, new Binding(nameof(ThumbBackgroundColor), source: this));
+        _slider.SetBinding(CustomSlider.ThumbBackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
         _slider.SetBinding(CustomSlider.ThumbWidthProperty, new Binding(nameof(ThumbWidth), source: this));
         _slider.SetBinding(CustomSlider.ThumbHeightProperty, new Binding(nameof(ThumbHeight), source: this));
 

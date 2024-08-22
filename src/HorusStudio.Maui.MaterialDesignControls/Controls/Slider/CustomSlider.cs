@@ -10,12 +10,12 @@ internal class CustomSlider : Slider
     /// <summary>
     /// The backing store for the <see cref="TrackHeight" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TrackHeightProperty = BindableProperty.Create(nameof(TrackHeight), typeof(int), typeof(CustomSlider), defaultValue: 6);
+    public static readonly BindableProperty TrackHeightProperty = BindableProperty.Create(nameof(TrackHeight), typeof(int), typeof(CustomSlider), defaultValue: 16);
 
     /// <summary>
     /// The backing store for the <see cref="TrackCornerRadius" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TrackCornerRadiusProperty = BindableProperty.Create(nameof(TrackCornerRadius), typeof(int), typeof(CustomSlider), defaultValue: 3);
+    public static readonly BindableProperty TrackCornerRadiusProperty = BindableProperty.Create(nameof(TrackCornerRadius), typeof(int), typeof(CustomSlider), defaultValue: 10);
 
     /// <summary>
     /// The backing store for the <see cref="UserInteractionEnabled" /> bindable property.

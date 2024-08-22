@@ -22,7 +22,7 @@ partial class CustomSliderHandler : ISliderHandler
             {
                 nfloat padding = 5;
                 nfloat thumbWidthWithPadding = customSlider.ThumbWidth + 2 * padding;
-                nfloat thumbHeightWithPadding = customSlider.ThumbHeight + 2 * padding;
+                nfloat thumbHeightWithPadding = (customSlider.ThumbHeight * 0.9f) + 2 * padding;
 
                 UIGraphics.BeginImageContextWithOptions(new CGSize(thumbWidthWithPadding, thumbHeightWithPadding), false, 0.0f);
                 var thumbContext = UIGraphics.GetCurrentContext();
@@ -32,7 +32,7 @@ partial class CustomSliderHandler : ISliderHandler
                 thumbContext.FillRect(new CGRect(0, 0, thumbWidthWithPadding, thumbHeightWithPadding));
 
                 thumbContext.SetFillColor(customSlider.ThumbColor.ToPlatform().CGColor);
-                UIBezierPath thumbPath = UIBezierPath.FromRoundedRect(new CGRect(padding, padding, customSlider.ThumbWidth, customSlider.ThumbHeight), customSlider.TrackCornerRadius);
+                UIBezierPath thumbPath = UIBezierPath.FromRoundedRect(new CGRect(padding, padding, customSlider.ThumbWidth, customSlider.ThumbHeight * 0.9), customSlider.TrackCornerRadius);
                 thumbContext.AddPath(thumbPath.CGPath);
                 thumbContext.FillPath();
 
@@ -74,20 +74,23 @@ public static class UISliderExtensions
 {
     public static void SetTrackDesign(this UISlider slider, double height, UIColor minimumTrackColor, UIColor maximumTrackColor, int cornerRadius)
     {
+        // Minimum track image
         UIGraphics.BeginImageContextWithOptions(new CGSize(slider.Bounds.Width, height), false, 0);
-        var minPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width, height), cornerRadius / 3);
+        var minPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width -2, height), UIRectCorner.AllCorners, new CGSize(cornerRadius, cornerRadius));
         minimumTrackColor.SetFill();
         minPath.Fill();
         UIImage minTrackImage = UIGraphics.GetImageFromCurrentImageContext();
         UIGraphics.EndImageContext();
 
+        // Maximum track image
         UIGraphics.BeginImageContextWithOptions(new CGSize(slider.Bounds.Width, height), false, 0);
-        var maxPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width, height), cornerRadius / 3);
+        var maxPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width, height), UIRectCorner.AllCorners, new CGSize(cornerRadius, cornerRadius));
         maximumTrackColor.SetFill();
         maxPath.Fill();
         UIImage maxTrackImage = UIGraphics.GetImageFromCurrentImageContext();
         UIGraphics.EndImageContext();
 
+        // Apply the images to the slider
         slider.SetMinTrackImage(minTrackImage, UIControlState.Normal);
         slider.SetMaxTrackImage(maxTrackImage, UIControlState.Normal);
     }
