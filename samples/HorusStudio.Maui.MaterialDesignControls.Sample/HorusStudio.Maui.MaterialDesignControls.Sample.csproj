@@ -51,6 +51,20 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Resources\Images\bad.png" />
+	  <None Remove="Resources\Images\bad_unselected.png" />
+	  <None Remove="Resources\Images\good.png" />
+	  <None Remove="Resources\Images\good_unselected.png" />
+	  <None Remove="Resources\Images\middle.png" />
+	  <None Remove="Resources\Images\middle_unselected.png" />
+	  <None Remove="Resources\Images\star_selected.png" />
+	  <None Remove="Resources\Images\star_unselected.png" />
+	  <None Remove="Resources\Images\verybad.png" />
+	  <None Remove="Resources\Images\verybad_unselected.png" />
+	  <None Remove="Resources\Images\verygood.png" />
+	  <None Remove="Resources\Images\verygood_unselected.png" />
+	</ItemGroup>
+	<ItemGroup>
 	  <None Remove="Resources\Images\on_error.svg" />
 	  <None Remove="Resources\Images\radio_button_checked.svg" />
 	  <None Remove="Resources\Images\radio_button_unchecked.svg" />
@@ -85,6 +99,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\MultilineTextFieldPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\RatingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
