@@ -29,7 +29,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             return builder;
         }
-        
+
+        public static MauiAppBuilder UseSnackbar(this MauiAppBuilder builder, Action configure = null)
+        {
+            return UseSnackbar(builder, false, configure);
+        }
+
         public static ISnackbarUser Instance
         {
             get
