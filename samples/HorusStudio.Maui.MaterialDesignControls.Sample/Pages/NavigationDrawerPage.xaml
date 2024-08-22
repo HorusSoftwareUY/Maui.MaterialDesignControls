@@ -8,18 +8,23 @@
                        x:TypeArguments="vm:NavigationDrawerViewModel"
                        x:DataType="vm:NavigationDrawerViewModel">
     <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
-            <material:MaterialLabel Text="{Binding Subtitle}" />
+        <VerticalStackLayout 
+            Style="{StaticResource MainLayout}">
+            <material:MaterialLabel 
+                Text="{Binding Subtitle}" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Normal" />
-            <material:MaterialButton Text="Change ItemsSource"
-                                     Margin="0, 10"
-                                     Command="{Binding ChangeItemsSourceCommand}" />
+            <material:MaterialLabel 
+                Style="{StaticResource SectionTitle}" 
+                Text="Normal" />
+            <material:MaterialButton 
+                Text="Change ItemsSource"
+                Margin="0, 10"
+                Command="{Binding ChangeItemsSourceCommand}" />
 
-            <material:MaterialNavigationDrawer Headline="Mail"
-                                               Command="{Binding TestCommand}"
-                                               ItemsSource="{Binding Items}" />
-
+            <material:MaterialNavigationDrawer 
+                Headline="Mail"
+                Command="{Binding TestCommand}"
+                ItemsSource="{Binding Items}" />
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>
