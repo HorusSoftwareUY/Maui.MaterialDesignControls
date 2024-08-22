@@ -73,6 +73,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialTextField.GetStyles());
             // Chips
             application.Resources.AddStyles(MaterialChips.GetStyles());
+            // Rating
+            application.Resources.AddStyles(MaterialRating.GetStyles());
             // Time Picker
             application.Resources.AddStyles(MaterialTimePicker.GetStyles());
         }
