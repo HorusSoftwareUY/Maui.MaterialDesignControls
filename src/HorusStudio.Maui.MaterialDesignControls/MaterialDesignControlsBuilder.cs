@@ -102,6 +102,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialCheckBox.GetStyles());
             // Chips
             application.Resources.AddStyles(MaterialChips.GetStyles());
+            // Rating
+            application.Resources.AddStyles(MaterialRating.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
