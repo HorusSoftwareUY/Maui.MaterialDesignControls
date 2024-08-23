@@ -83,6 +83,9 @@
 	  <Compile Update="Pages\CheckboxPage.xaml.cs">
 	    <DependentUpon>CheckboxPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\SelectionPage.xaml.cs">
+	    <DependentUpon>SelectionPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\RadioButtonPage.xaml.cs">
 	    <DependentUpon>RadioButtonPage.xaml</DependentUpon>
 	  </Compile>
@@ -90,6 +93,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Pages\CheckboxPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\SelectionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\RadioButtonPage.xaml">
