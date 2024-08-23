@@ -58,6 +58,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * [MaterialProgressIndicator](docs/Controls/horusstudio.maui.materialdesigncontrols.materialprogressindicator.md)
 * [MaterialRadioButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialradiobutton.md)
 * [MaterialRating](docs/Controls/horusstudio.maui.materialdesigncontrols.materialrating.md)
+* [MaterialViewButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewbutton.md)
 
 ### Coming soon
 * MaterialChipsGroup
