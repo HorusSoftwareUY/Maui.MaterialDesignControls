@@ -130,6 +130,8 @@ public class MaterialSelection : MaterialInputBase
         UpdateLayoutAfterTypeChanged(Type);
     }
 
+    protected override void SetControlTemplate(MaterialInputType type){ }
+
     #endregion Methods
 
     #region Styles
