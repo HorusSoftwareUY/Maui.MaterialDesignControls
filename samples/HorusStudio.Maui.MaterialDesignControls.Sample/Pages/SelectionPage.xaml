@@ -8,18 +8,77 @@
                        x:TypeArguments="vm:SelectionViewModel"
                        x:DataType="vm:SelectionViewModel">
     <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
-            <material:MaterialLabel Text="{Binding Subtitle}" />
+        <VerticalStackLayout 
+            Style="{StaticResource MainLayout}">
+            <material:MaterialLabel 
+                Text="{Binding Subtitle}" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Normal" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <VerticalStackLayout Spacing="0">
-                    <material:MaterialRadioButton 
-                        Text="Radio button 1" />
+            <material:MaterialLabel 
+                Style="{StaticResource SectionTitle}" 
+                Text="Normal" />
+            <Frame 
+                Style="{StaticResource SurfaceContainer}" 
+                Padding="16,32">
+                <VerticalStackLayout 
+                    Spacing="0">
+                    <material:MaterialSelection 
+                        Command="{Binding TapCommand}"
+                        CommandParameter="User selection"
+                        IsEnabled="False"
+                        Label="User"
+                        LeadingIconSource="ic_floating.png"
+                        Placeholder="Select user"
+                        Text="{Binding SelectedText}" />
                    
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="Normal Material Radio Buttons with default properties" />
+            <material:MaterialLabel 
+                Text="Normal Material Selection with default properties" />
+            
+            <material:MaterialLabel 
+                Style="{StaticResource SectionTitle}"
+                Text="Using supporting text and checking errors" />
+            <Frame 
+                Style="{StaticResource SurfaceContainer}"
+                Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialSelection 
+                        Text="{Binding SelectedText}"
+                        SupportingText="{Binding SupportingTextValue}"
+                        Type="Filled"
+                        Command="{Binding TapCommand}"
+                        CommandParameter="User selection"
+                        TrailingIconSource="on_error.png"
+                        ShowTrailingIconOnlyOnError="True"
+                        HasError="{Binding HasAnError}"
+                        Placeholder="Select user" />
+                    <material:MaterialButton 
+                        Command="{Binding CheckTextFieldCommand}"
+                        Text="Check Value" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel 
+                Text="You can bind the selection, set a supporting text and use an animation when an errors occured." />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}"
+                                    Text="Changing some properties" />
+            <Frame Style="{StaticResource SurfaceContainer}"
+                   Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialSelection 
+                        Command="{Binding TapCommand}"
+                        CommandParameter="Product selection"
+                        TextColor="DarkGoldenrod"
+                        LabelColor="DarkGreen"
+                        BorderColor="DarkGray"
+                        PlaceholderColor="DarkBlue"
+                        HorizontalTextAlignment="Center"
+                        Label="Product (Center)"
+                        Placeholder="Select product"
+                        Text="{Binding SelectedText}" />
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel Text="You can change the horizontal text aligment, place holder, label, text and border colors and more properties." />
 
         </VerticalStackLayout>
     </ScrollView>

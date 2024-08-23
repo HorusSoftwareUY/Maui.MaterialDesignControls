@@ -1,6 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
@@ -8,55 +7,43 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        public override string Title => "Radio Buttons";
+        public override string Title => "Selection";
 
         [ObservableProperty]
-        public ObservableCollection<CustomColor> _itemsSourceColors;
+        private string _supportingTextValue = "Enter the value.";
 
         [ObservableProperty]
-        public CustomColor _checkedColor;
+        public string _selectedText;
 
         [ObservableProperty]
-        public bool _isRadioButtonEnabled;
+        private bool _hasAnError = false;
 
         #endregion
 
         public SelectionViewModel()
         {
-            Subtitle = "Radio buttons let people select one option from a set of options";
+            Subtitle = "Selection controls allow the user to select options.";
+        }
 
-            ItemsSourceColors = new ObservableCollection<CustomColor>
+        [ICommand]
+        private async Task Tap(object parameter)
+        {
+            string text = parameter.ToString();
+            await DisplayAlert(Title, text, "OK");
+            SelectedText = text;
+        }
+
+        [ICommand]
+        private void CheckTextField()
+        {
+            SupportingTextValue = "Select user.";
+            HasAnError = false;
+
+            if (string.IsNullOrWhiteSpace(SelectedText))
             {
-                new CustomColor()
-                {
-                    Color = "Red",
-                    Id = 1
-                },
-                new CustomColor()
-                {
-                    Color = "Blue",
-                    Id = 2
-                },
-                new CustomColor()
-                {
-                    Color = "Green",
-                    Id = 3
-                }
-            };
-
-            CheckedColor = ItemsSourceColors.FirstOrDefault();
-        }
-
-        [ICommand]
-        private async Task CheckChanged()
-        {
-            await DisplayAlert(Title, CheckedColor.Color ?? "none", "OK");
-        }
-
-        [ICommand]
-        private async Task CheckedChanged(object message)
-        {
-            await DisplayAlert(Title + " from Command", message.ToString(), "OK");
+                SupportingTextValue = "You should select a valid value.";
+                HasAnError = true;
+            }
         }
     }
 }
