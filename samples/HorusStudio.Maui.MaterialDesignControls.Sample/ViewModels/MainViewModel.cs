@@ -29,7 +29,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new MenuItemViewModel { Title = "Checkbox", Icon = "ic_checkbox.png", ViewModel = typeof(CheckboxViewModel) },
                 new MenuItemViewModel { Title = "Badge", Icon = "ic_badge.png", ViewModel = typeof(BadgeViewModel) },
                 new MenuItemViewModel { Title = "Rating", Icon = "ic_rating.png", ViewModel = typeof(RatingViewModel) },
-                new MenuItemViewModel { Title = "Chips", Icon = "ic_chip.png", ViewModel = typeof(ChipsViewModel) }
+                new MenuItemViewModel { Title = "Chips", Icon = "ic_chip.png", ViewModel = typeof(ChipsViewModel) },
+                new MenuItemViewModel { Title = "Selection", Icon = "ic_selection.png", ViewModel = typeof(SelectionViewModel) }
             };
         }
 
