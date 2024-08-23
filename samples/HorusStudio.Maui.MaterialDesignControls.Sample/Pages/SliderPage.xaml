@@ -93,7 +93,6 @@
                         Minimum="0"
                         ThumbHeight="35"
                         ThumbWidth="35"
-                        TrackHeight="10"
                         Maximum="10"
                         BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
                         ThumbImageSource="icon_opacity.png" />
@@ -115,6 +114,7 @@
                         ThumbColor="Black"
                         ValueIndicatorFormat="{Binding ValueFormat}"
                         ValueIndicatorFontSize="12"
+                        TrackHeight="14"
                         Maximum="32"
                         BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
                         TrackImageSource="scale.png" />

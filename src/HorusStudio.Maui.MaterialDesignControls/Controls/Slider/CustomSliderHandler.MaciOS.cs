@@ -16,13 +16,13 @@ partial class CustomSliderHandler : ISliderHandler
 
             control.UserInteractionEnabled = customSlider.UserInteractionEnabled;
 
-            control.SetTrackDesign(customSlider.TrackHeight, customSlider.MinimumTrackColor.ToPlatform(), customSlider.MaximumTrackColor.ToPlatform(), customSlider.TrackCornerRadius);
+            control.SetTrackDesign(customSlider.TrackHeight * 1.1f, customSlider.MinimumTrackColor.ToPlatform(), customSlider.MaximumTrackColor.ToPlatform(), customSlider.TrackCornerRadius);
 
             if (customSlider.ThumbImageSource is null)
             {
                 nfloat padding = 5;
                 nfloat thumbWidthWithPadding = customSlider.ThumbWidth + 2 * padding;
-                nfloat thumbHeightWithPadding = (customSlider.ThumbHeight * 0.9f) + 2 * padding;
+                nfloat thumbHeightWithPadding = (customSlider.ThumbHeight * 0.8f) + 2 * padding;
 
                 UIGraphics.BeginImageContextWithOptions(new CGSize(thumbWidthWithPadding, thumbHeightWithPadding), false, 0.0f);
                 var thumbContext = UIGraphics.GetCurrentContext();
@@ -32,7 +32,7 @@ partial class CustomSliderHandler : ISliderHandler
                 thumbContext.FillRect(new CGRect(0, 0, thumbWidthWithPadding, thumbHeightWithPadding));
 
                 thumbContext.SetFillColor(customSlider.ThumbColor.ToPlatform().CGColor);
-                UIBezierPath thumbPath = UIBezierPath.FromRoundedRect(new CGRect(padding, padding, customSlider.ThumbWidth, customSlider.ThumbHeight * 0.9), customSlider.TrackCornerRadius);
+                UIBezierPath thumbPath = UIBezierPath.FromRoundedRect(new CGRect(padding, 3, customSlider.ThumbWidth, customSlider.ThumbHeight * 0.8f), customSlider.TrackCornerRadius);
                 thumbContext.AddPath(thumbPath.CGPath);
                 thumbContext.FillPath();
 
@@ -58,7 +58,7 @@ partial class CustomSliderHandler : ISliderHandler
                     context.SetFillColor(backgroundColor.CGColor);
                     context.FillRect(new CGRect(0, 0, thumbSize.Width, thumbSize.Height));
 
-                    image.Draw(new CGRect(0, 0, thumbSize.Width, thumbSize.Height));
+                    image.Draw(new CGRect(0, 1, thumbSize.Width, thumbSize.Height));
                     UIImage resizedImage = UIGraphics.GetImageFromCurrentImageContext();
                     UIGraphics.EndImageContext();
 
@@ -75,16 +75,16 @@ public static class UISliderExtensions
     public static void SetTrackDesign(this UISlider slider, double height, UIColor minimumTrackColor, UIColor maximumTrackColor, int cornerRadius)
     {
         // Minimum track image
-        UIGraphics.BeginImageContextWithOptions(new CGSize(slider.Bounds.Width, height), false, 0);
-        var minPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width -2, height), UIRectCorner.AllCorners, new CGSize(cornerRadius, cornerRadius));
+        UIGraphics.BeginImageContextWithOptions(new CGSize(slider.Bounds.Width, height * 0.9f), false, 0);
+        var minPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width, height * 0.7f), UIRectCorner.AllCorners, new CGSize(cornerRadius * 0.335f, cornerRadius * 0.335f));
         minimumTrackColor.SetFill();
         minPath.Fill();
         UIImage minTrackImage = UIGraphics.GetImageFromCurrentImageContext();
         UIGraphics.EndImageContext();
 
         // Maximum track image
-        UIGraphics.BeginImageContextWithOptions(new CGSize(slider.Bounds.Width, height), false, 0);
-        var maxPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width, height), UIRectCorner.AllCorners, new CGSize(cornerRadius, cornerRadius));
+        UIGraphics.BeginImageContextWithOptions(new CGSize(slider.Bounds.Width, height * 0.9f), false, 0);
+        var maxPath = UIBezierPath.FromRoundedRect(new CGRect(0, 0, slider.Bounds.Width, height * 0.7f), UIRectCorner.AllCorners, new CGSize(cornerRadius * 0.335f, cornerRadius * 0.335f));
         maximumTrackColor.SetFill();
         maxPath.Fill();
         UIImage maxTrackImage = UIGraphics.GetImageFromCurrentImageContext();
