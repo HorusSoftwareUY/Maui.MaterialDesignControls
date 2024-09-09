@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -58,9 +57,9 @@ public abstract partial class MaterialInputBase : ContentView
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
-        { MaterialInputTypeStates.FilledDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer.WithAlpha(0.04f), Dark = MaterialLightTheme.SurfaceContainer.WithAlpha(0.04f) } },
-        { MaterialInputTypeStates.FilledFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer } },
-        { MaterialInputTypeStates.FilledNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer } },
+        { MaterialInputTypeStates.FilledDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest.WithAlpha(0.04f), Dark = MaterialLightTheme.SurfaceContainerHighest.WithAlpha(0.04f) } },
+        { MaterialInputTypeStates.FilledFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialLightTheme.SurfaceContainerHighest } },
+        { MaterialInputTypeStates.FilledNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialLightTheme.SurfaceContainerHighest } },
         { MaterialInputTypeStates.OutlinedDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
         { MaterialInputTypeStates.OutlinedFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
         { MaterialInputTypeStates.OutlinedNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
@@ -745,8 +744,6 @@ public abstract partial class MaterialInputBase : ContentView
     {
         base.OnPropertyChanged(propertyName);
 
-        System.Diagnostics.Debug.WriteLine($"============> OnPropertyChanged: {propertyName}");
-
         if (propertyName == nameof(Window) && Window != null)
         {
             // Window property is setted with a value when the view is appearing
@@ -857,8 +854,6 @@ public abstract partial class MaterialInputBase : ContentView
 
     private void SetBackground(MaterialInputType type)
     {
-        System.Diagnostics.Debug.WriteLine($"============> SetBackground");
-
         var inputBorder = (Border)GetTemplateChild("InputBorder");
         if (inputBorder != null)
         {
@@ -885,8 +880,6 @@ public abstract partial class MaterialInputBase : ContentView
 
     private void SetBackgroundColor(MaterialInputType type)
     {
-        System.Diagnostics.Debug.WriteLine($"============> SetBackgroundColor");
-
         var inputBorder = (Border)GetTemplateChild("InputBorder");
         if (inputBorder != null)
         {
