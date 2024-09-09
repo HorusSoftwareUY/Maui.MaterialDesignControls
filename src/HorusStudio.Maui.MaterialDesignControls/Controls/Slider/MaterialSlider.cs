@@ -7,8 +7,35 @@ using Slider = Microsoft.Maui.Controls.Slider;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A slider <see cref="View" /> that lets users make selections from a range of values.
+/// A slider <see cref="View" /> that lets users make selections from a range of values and follows Material Design Guidelines <see href="https://m3.material.io/components/sliders/overview" />.
 /// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialSlider.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+///  &lt;material:MaterialSlider 
+///                      Label="Only label"
+///                        Value="{Binding Value}"
+///                     BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}" /&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var slider = new MaterialSlider
+/// {
+///    Label = "slider"
+/// };
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SliderPage.xaml)
+/// 
+/// </example>
 public class MaterialSlider : ContentView
 {
     #region Attributes
@@ -407,6 +434,9 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Gets or sets the <see cref="LabelColor" /> for the text of the label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Text</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Text</see>
+    /// </default>
     public Color LabelColor
     {
         get { return (Color)GetValue(LabelColorProperty); }
@@ -425,6 +455,9 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Gets or sets the spacing between characters of the label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontTracking.BodyMedium">MaterialFontTracking.BodyMedium</see>
+    /// </default>
     public double CharacterSpacing
     {
         get { return (double)GetValue(CharacterSpacingProperty); }
@@ -432,7 +465,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text style of the label. This is a bindable property.
+    /// Gets or sets a value that indicates whether the font for the text of this button is bold, italic, or neither.
+    /// This is a bindable property.
     /// </summary>
     public FontAttributes FontAttributes
     {
@@ -443,6 +477,10 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true.
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
+    /// <remarks>Typically this should always be enabled for accessibility reasons.</remarks>
     public bool FontAutoScalingEnabled
     {
         get { return (bool)GetValue(FontAutoScalingEnabledProperty); }
@@ -452,6 +490,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Defines the font size of the label. This is a bindable property.
     /// </summary>
+    [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
     public double FontSize
     {
         get { return (double)GetValue(FontSizeProperty); }
@@ -459,7 +498,7 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines the casing of the label. This is a bindable property.
+    /// Defines the casing of the <see cref="Label" />. This is a bindable property.
     /// </summary>
     public TextTransform LabelTransform
     {
@@ -483,6 +522,9 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Gets or sets the <see cref="MinimumLabelColor" /> for the text of the minimum label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Text</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Text</see>
+    /// </default>
     public Color MinimumLabelColor
     {
         get { return (Color)GetValue(MinimumLabelColorProperty); }
@@ -501,6 +543,9 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Gets or sets the spacing between characters of the minimum label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontTracking.BodyMedium">MaterialFontTracking.BodyMedium</see>
+    /// </default>
     public double MinimumCharacterSpacing
     {
         get { return (double)GetValue(MinimumCharacterSpacingProperty); }
@@ -519,6 +564,10 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true.
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
+    /// <remarks>Typically this should always be enabled for accessibility reasons.</remarks>
     public bool MinimumFontAutoScalingEnabled
     {
         get { return (bool)GetValue(MinimumFontAutoScalingEnabledProperty); }
@@ -554,9 +603,11 @@ public class MaterialSlider : ContentView
 
     /// <summary>
     /// Defines the minimum value of the slider.
-    /// The default value is <value>0</value>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// 0
+    /// </default>
     public double Minimum
     {
         get { return (double)GetValue(MinimumProperty); }
@@ -566,6 +617,9 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the minimum track color. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
+    /// </default>
     public Color ActiveTrackColor
     {
         get { return (Color)GetValue(ActiveTrackColorProperty); }
@@ -715,6 +769,9 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the thumb. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
+    /// </default>
     public Color ThumbColor
     {
         get { return (Color)GetValue(ThumbColorProperty); }
@@ -745,8 +802,10 @@ public class MaterialSlider : ContentView
 
     /// <summary>
     /// Allows you to set the thumb width.
-    /// The default value is <value>4</value>.
     /// </summary>
+    /// <default>
+    /// 4
+    /// </default>
     public int ThumbWidth
     {
         get => (int)GetValue(ThumbWidthProperty);
@@ -757,6 +816,9 @@ public class MaterialSlider : ContentView
     /// Allows you to set the thumb height.
     /// The default value is <value>44</value>.
     /// </summary>
+    /// <default>
+    /// 44
+    /// </default>
     public int ThumbHeight
     {
         get => (int)GetValue(ThumbHeightProperty);
@@ -832,6 +894,9 @@ public class MaterialSlider : ContentView
     /// If the value is true, icons are shown. Otherwise, icons are not shown even when they are set.
     /// The default value is <value>false</value>.
     /// </summary>
+    /// <default>
+    /// false
+    /// </default>
     public bool ShowIcons
     {
         get { return (bool)GetValue(ShowIconsProperty); }
@@ -841,6 +906,9 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Gets or sets the <see cref="UserInteractionEnabled" /> property for the slider control. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// true
+    /// </default>
     public bool UserInteractionEnabled
     {
         get { return (bool)GetValue(UserInteractionEnabledProperty); }
@@ -850,6 +918,9 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// Gets or sets the <see cref="IsEnabled" /> property for the slider control. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// true
+    /// </default>
     public new bool IsEnabled
     {
         get { return (bool)GetValue(IsEnabledProperty); }
@@ -858,9 +929,11 @@ public class MaterialSlider : ContentView
 
     /// <summary>
     /// Defines the value of the slider.
-    /// The default value is 0.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// 0
+    /// </default>
     public double Value
     {
         get { return (double)GetValue(ValueProperty); }
