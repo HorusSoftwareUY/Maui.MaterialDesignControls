@@ -2,10 +2,39 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// A text field <see cref="View" /> let users enter text into a UI and follows Material Design Guidelines <see href="https://m3.material.io/components/text-fields/overview" />.
+/// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialMultilineTextField.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialMultilineTextField
+///     Placeholder="Enter text here" /&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var textField = new MaterialMultilineTextField
+/// {
+///     Placeholder = "Enter text here"
+/// };
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/MultilineTextFieldPage.xaml)
+/// 
+/// </example>
+/// <todoList>
+/// * [iOS] FontAttributes doesn´t work
+/// </todoList>
 public class MaterialMultilineTextField : MaterialInputBase
 {
-    //TODO [iOS] FontAttributes doesn´t work
-
     #region Attributes
 
     private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
