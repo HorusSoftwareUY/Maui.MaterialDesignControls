@@ -4,8 +4,37 @@ using System.Windows.Input;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A navigation drawer <see cref="View" /> let people switch between UI views on larger devices/>.
+/// A navigation drawer <see cref="View" /> let people switch between UI views on larger devices <see href="https://m3.material.io/components/navigation-drawer/overview" />.
 /// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialNavigationDrawer.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialNavigationDrawer
+///         Headline="Mail"
+///         Command="{Binding TestCommand}"
+///         ItemsSource="{Binding Items}" /&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var button = new MaterialNavigationDrawer
+/// {
+///     Headline="Mail"
+///     Command = TestCommand,
+///     ItemsSource = Items
+/// };
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/NavigationDrawerPage.xaml)
+/// 
+/// </example>
 public class MaterialNavigationDrawer : ContentView
 {
     #region Attributes
@@ -296,6 +325,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the <see cref="HeadlineTextColor" /> for the text of the headline. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
+    /// </default>
     public Color HeadlineTextColor
     {
         get { return (Color)GetValue(HeadlineTextColorProperty); }
@@ -368,6 +400,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Defines the active background color. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.PrimaryContainer">MaterialLightTheme.PrimaryContainer</see> - Dark: <see cref="MaterialDarkTheme.PrimaryContainer">MaterialDarkTheme.PrimaryContainer</see>
+    /// </default>
     public Color ActiveIndicatorBackgroundColor
     {
         get { return (Color)GetValue(ActiveIndicatorBackgroundColorProperty); }
@@ -377,6 +412,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Defines the active indicator label color. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.OnPrimaryContainer">MaterialLightTheme.OnPrimaryContainer</see> - Dark: <see cref="MaterialDarkTheme.OnPrimaryContainer">MaterialDarkTheme.OnPrimaryContainer</see>
+    /// </default>
     public Color ActiveIndicatorLabelColor
     {
         get { return (Color)GetValue(ActiveIndicatorLabelColorProperty); }
@@ -398,6 +436,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the <see cref="LabelColor" /> for the text of each item. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Text">MaterialLightTheme.Text</see> - Dark: <see cref="MaterialDarkTheme.Text">MaterialDarkTheme.Text</see>
+    /// </default>
     public Color LabelColor
     {
         get { return (Color)GetValue(LabelColorProperty); }
@@ -461,6 +502,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the section label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
+    /// </default>
     public Color SectionLabelColor
     {
         get { return (Color)GetValue(SectionLabelColorProperty); }
@@ -551,6 +595,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the divider. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.OutlineVariant">MaterialLightTheme.OutlineVariant</see> - Dark: <see cref="MaterialDarkTheme.OutlineVariant">MaterialDarkTheme.OutlineVariant</see>
+    /// </default>
     public Color DividerColor
     {
         get { return (Color)GetValue(DividerColorProperty); }
@@ -569,6 +616,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the text <see cref="Color" /> for the badge. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+    /// </default>
     public Color BadgeTextColor
     {
         get { return (Color)GetValue(BadgeTextColorProperty); }
@@ -596,6 +646,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the text <see cref="Color" /> for the badge background. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="Colors.Transparent">Colors.Transparent</see> - Dark: <see cref="Colors.Transparent">Colors.Transparent</see>
+    /// </default>
     public Color BadgeBackgroundColor
     {
         get { return (Color)GetValue(BadgeBackgroundColorProperty); }
@@ -670,6 +723,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the text <see cref="Color" /> for the label when is disabled. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Disable">MaterialLightTheme.Disable</see> - Dark: <see cref="MaterialDarkTheme.Disable">MaterialDarkTheme.Disable</see>
+    /// </default>
     public Color DisabledLabelColor
     {
         get { return (Color)GetValue(DisabledLabelColorProperty); }
