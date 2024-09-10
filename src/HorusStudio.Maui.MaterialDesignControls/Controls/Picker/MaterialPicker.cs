@@ -24,7 +24,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// <h3>C# sample</h3>
 /// <code>
-/// var button = new MaterialPicker
+/// var picker = new MaterialPicker
 /// {
 ///     ItemsSource= ItemsSource,
 ///     TrailingIconSource="picker_arrow.png"
