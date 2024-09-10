@@ -24,7 +24,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// <h3>C# sample</h3>
 /// <code>
-/// var button = new MaterialNavigationDrawer
+/// var navigationDrawer = new MaterialNavigationDrawer
 /// {
 ///     Headline="Mail"
 ///     Command = TestCommand,
