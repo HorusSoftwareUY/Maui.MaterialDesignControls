@@ -1,8 +1,45 @@
-﻿
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// A selection <see cref="View" /> Selection controls allow the user to select options.
+/// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialSelection.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialSelection
+///         Command="{Binding TapCommand}"
+///         CommandParameter="User selection"
+///         Label="User"
+///         LeadingIconSource="ic_floating.png"
+///         Placeholder="Select user"
+///         Text="{Binding SelectedText}" /&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var selection = new MaterialSelection
+/// {
+///         Command = TapCommand,
+///         CommandParameter = "User selection",
+///         Label = "User",
+///         LeadingIconSource = "ic_floating.png",
+///         Placeholder = "Select user",
+///         Text = SelectedText
+/// };
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SelectionPage.xaml)
+/// 
+/// </example>
 public class MaterialSelection : MaterialInputBase
 {
     #region Attributes
