@@ -5,7 +5,7 @@ using System.Windows.Input;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A <see cref="ContentView" /> that reacts to touch events.
+/// It is a button to which you can add a custom view.
 /// </summary>
 public class MaterialViewButton : ContentView, ITouchable
 {
@@ -53,9 +53,13 @@ public class MaterialViewButton : ContentView, ITouchable
     #region Properties
 
     /// <summary>
-    /// Gets or sets the command to invoke when the button is activated. This is a bindable property.
+    /// Gets or sets the command to invoke when the button is activated.
+    /// This is a bindable property.
     /// </summary>
-    /// <remarks>This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
+    /// <remarks>
+    /// This property is used to associate a command with an instance of a button.
+    /// <para>This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</para>
+    /// </remarks>
     public ICommand Command
     {
         get => (ICommand)GetValue(CommandProperty);
@@ -64,8 +68,11 @@ public class MaterialViewButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
-    /// The default value is <see langword="null"/>. This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>.
+    /// </default>
     public object CommandParameter
     {
         get => GetValue(CommandParameterProperty);
@@ -74,9 +81,11 @@ public class MaterialViewButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets an animation to be executed when an icon is clicked
-    /// The default value is <see cref="AnimationTypes.Fade"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>
+    /// </default>
     public AnimationTypes Animation
     {
         get => (AnimationTypes)GetValue(AnimationProperty);
@@ -86,9 +95,11 @@ public class MaterialViewButton : ContentView, ITouchable
 #nullable enable
     /// <summary>
     /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-    /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>.
+    /// </default>
     public double? AnimationParameter
     {
         get => (double?)GetValue(AnimationParameterProperty);
@@ -98,9 +109,11 @@ public class MaterialViewButton : ContentView, ITouchable
 
     /// <summary>
     /// Gets or sets a custom animation to be executed when a icon is clicked.
-    /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>.
+    /// </default>
     public ICustomAnimation CustomAnimation
     {
         get => (ICustomAnimation)GetValue(CustomAnimationProperty);
