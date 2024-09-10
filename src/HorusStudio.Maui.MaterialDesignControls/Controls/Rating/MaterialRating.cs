@@ -5,8 +5,37 @@ using Path = Microsoft.Maui.Controls.Shapes.Path;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A rating <see cref="View" /> allows users to view and set ratings that reflect degrees of satisfaction.
+/// Ratings provide insight regarding others' opinions and experiences, and can allow the user to submit a rating of their own.
 /// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialRating.jpg</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialRating
+///         Label="How do you rate....?"
+///         Value="1"
+///         Animation="Scale"/&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var MaterialRating = new MaterialRating()
+/// {
+///     Label = "How do you rate....?",
+///     Value = 1,
+///     Animation = AnimationTypes.Scale
+/// };
+/// </code>
+///
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/RatingPage.xaml)
+/// 
+/// </example>
 public class MaterialRating : ContentView
 {
     #region Attributes
@@ -164,8 +193,12 @@ public class MaterialRating : ContentView
     #region Properties
 
     /// <summary>
-    /// Gets or sets the <see cref="Label" /> for the label. This is a bindable property.
+    /// Gets or sets the <see cref="Label" /> for the label.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="Null"/>
+    /// </default>
     public string Label
     {
         get { return (string)GetValue(LabelProperty); }
@@ -173,8 +206,12 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="LabelColor" /> for the text of the label. This is a bindable property.
+    /// Gets or sets the <see cref="LabelColor" /> for the text of the label.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Text">MaterialLightTheme.Text</see> - Dark: <see cref="MaterialDarkTheme.Text">MaterialDarkTheme.Text</see>
+    /// </default>
     public Color LabelColor
     {
         get { return (Color)GetValue(LabelColorProperty); }
@@ -182,8 +219,12 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font family for the label. This is a bindable property.
+    /// Gets or sets the font family for the label.
+    /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
+    /// </default>
     public string FontFamily
     {
         get { return (string)GetValue(FontFamilyProperty); }
@@ -191,7 +232,8 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the spacing between characters of the label. This is a bindable property.
+    /// Gets or sets the spacing between characters of the label.
+    /// This is a bindable property.
     /// </summary>
     public double CharacterSpacing
     {
@@ -200,7 +242,8 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text style of the label. This is a bindable property.
+    /// Gets or sets the text style of the label.
+    /// This is a bindable property.
     /// </summary>
     public FontAttributes FontAttributes
     {
@@ -209,8 +252,12 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
+    /// Defines whether an app's UI reflects text scaling preferences set in the operating system.
+    /// The default value of this property is true
     /// </summary>
+    /// <default>
+    /// <see langword="True"/>
+    /// </default>
     public bool FontAutoScalingEnabled
     {
         get { return (bool)GetValue(FontAutoScalingEnabledProperty); }
@@ -220,6 +267,9 @@ public class MaterialRating : ContentView
     /// <summary>
     /// Defines the font size of the label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.BodyLarge">MaterialFontSize.BodyLarge</see> - Tablet = 19 / Phone = 16
+    /// </default>
     public double FontSize
     {
         get { return (double)GetValue(FontSizeProperty); }
@@ -227,7 +277,8 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Defines the casing of the label. This is a bindable property.
+    /// Defines the casing of the label.
+    /// This is a bindable property.
     /// </summary>
     public TextTransform LabelTransform
     {
@@ -236,7 +287,8 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets <see cref="IsEnabled" /> for the rating control. This is a bindable property.
+    /// Gets or sets <see cref="IsEnabled" /> for the rating control.
+    /// This is a bindable property.
     /// </summary>
     public new bool IsEnabled
     {
@@ -246,9 +298,11 @@ public class MaterialRating : ContentView
 
     /// <summary>
     /// Gets or sets an animation to be executed when an icon is clicked
-    /// The default value is <see cref="AnimationTypes.Fade"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>
+    /// </default>
     public AnimationTypes Animation
     {
         get => (AnimationTypes)GetValue(AnimationProperty);
@@ -258,9 +312,11 @@ public class MaterialRating : ContentView
 #nullable enable
     /// <summary>
     /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-    /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public double? AnimationParameter
     {
         get => (double?)GetValue(AnimationParameterProperty);
@@ -270,9 +326,11 @@ public class MaterialRating : ContentView
 
     /// <summary>
     /// Gets or sets a custom animation to be executed when a icon is clicked.
-    /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public ICustomAnimation CustomAnimation
     {
         get => (ICustomAnimation)GetValue(CustomAnimationProperty);
@@ -280,7 +338,8 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the stroke of default start. This is a bindable property.
+    /// Gets or sets the <see cref="Color" /> for the stroke of default start.
+    /// This is a bindable property.
     /// </summary>
     public Color StrokeColor
     {
@@ -289,7 +348,8 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="StrokeThickness" /> for the default start. This is a bindable property.
+    /// Gets or sets the <see cref="StrokeThickness" /> for the default start.
+    /// This is a bindable property.
     /// </summary>
     public double StrokeThickness
     {
@@ -298,9 +358,12 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image on the rating when is selected. This is a bindable property.
+    /// Allows you to display a bitmap image on the rating when is selected.
+    /// This is a bindable property.
     /// </summary>
-    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    /// <remarks>
+    /// For more options have a look at <see cref="ImageButton">ImageButton</see>.
+    /// </remarks>
     public ImageSource SelectedIconSource
     {
         get => (ImageSource)GetValue(SelectedIconSourceProperty);
@@ -308,9 +371,12 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image on the rating when is unselected. This is a bindable property.
+    /// Allows you to display a bitmap image on the rating when is unselected.
+    /// This is a bindable property.
     /// </summary>
-    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    /// <remarks>
+    /// For more options have a look at <see cref="ImageButton">ImageButton</see>.
+    /// </remarks>
     public ImageSource UnselectedIconSource
     {
         get => (ImageSource)GetValue(UnselectedIconSourceProperty);
@@ -318,9 +384,12 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image diferent on each rating when is selected. This is a bindable property.
+    /// Allows you to display a bitmap image diferent on each rating when is selected.
+    /// This is a bindable property.
     /// </summary>
-    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    /// <remarks>
+    /// For more options have a look at <see cref="ImageButton">ImageButton</see>.
+    /// </remarks>
     public IEnumerable<ImageSource> SelectedIconsSource
     {
         get => (IEnumerable<ImageSource>)GetValue(SelectedIconsSourceProperty);
@@ -328,9 +397,12 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image diferent on each rating when is unselected. This is a bindable property.
+    /// Allows you to display a bitmap image diferent on each rating when is unselected.
+    /// This is a bindable property.
     /// </summary>
-    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    /// <remarks>
+    /// For more options have a look at <see cref="ImageButton">ImageButton</see>.
+    /// </remarks>
     public IEnumerable<ImageSource> UnselectedIconsSource
     {
         get => (IEnumerable<ImageSource>)GetValue(UnselectedIconsSourceProperty);
@@ -338,10 +410,12 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Defines the quantity of items on the rating
-    /// The default value is <value>5</value>.
+    /// Defines the quantity of items on the rating.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// 5
+    /// </default>
     public int ItemsSize
     {
         get { return (int)GetValue(ItemsSizeProperty); }
@@ -349,10 +423,12 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Defines the quantity of items per row on the rating
-    /// The default value is <value>5</value>.
+    /// Defines the quantity of items per row on the rating.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// 5
+    /// </default>
     public int ItemsPerRow
     {
         get { return (int)GetValue(ItemsPerRowProperty); }
@@ -360,10 +436,12 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Defines the value of the Rating
-    /// The default value is <value>-1</value>.
+    /// Defines the value of the Rating.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// -1
+    /// </default>
     public int Value
     {
         get { return (int)GetValue(ValueProperty); }
