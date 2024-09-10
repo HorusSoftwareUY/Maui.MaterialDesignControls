@@ -2,11 +2,40 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// A time picker <see cref="View" /> Time pickers let users select a time. They typically appear in forms and dialogs.
+/// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialTimePicker.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialTimePicker
+///    Placeholder="Creation time" /&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var button = new MaterialTimePicker
+/// {
+///     Placeholder="Creation time"
+/// };
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/TimePickerPage.xaml)
+/// 
+/// </example>
+/// <todoList>
+/// * [iOS] Font attributes doesn´t work
+/// * [iOS] Horizontal Text Aligment doesn´t work when there is a date selected
+/// </todoList>
 public class MaterialTimePicker : MaterialInputBase
 {
-    //TODO: [iOS] Font attributes doesn´t work
-    //TODO: [iOS] Horizontal Text Aligment doesn´t work when there is a date selected
-
     #region Attributes
 
     private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
