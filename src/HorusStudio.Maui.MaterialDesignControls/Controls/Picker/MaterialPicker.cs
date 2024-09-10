@@ -3,6 +3,38 @@ using System.Collections.Specialized;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// A picker <see cref="View" /> let users select an option. 
+/// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialPicker.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialPicker
+///     ItemsSource="{Binding ItemsSource}"
+///     TrailingIconSource="picker_arrow.png"
+///     Placeholder="Select an option" /&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var button = new MaterialPicker
+/// {
+///     ItemsSource= ItemsSource,
+///     TrailingIconSource="picker_arrow.png"
+///     Placeholder="Select an option"
+/// };
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/PickerPage.xaml)
+/// 
+/// </example>
 public class MaterialPicker : MaterialInputBase
 {
     #region Attributes
