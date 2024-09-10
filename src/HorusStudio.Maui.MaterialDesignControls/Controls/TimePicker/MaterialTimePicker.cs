@@ -21,7 +21,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// <h3>C# sample</h3>
 /// <code>
-/// var button = new MaterialTimePicker
+/// var timePicker = new MaterialTimePicker
 /// {
 ///     Placeholder="Creation time"
 /// };
