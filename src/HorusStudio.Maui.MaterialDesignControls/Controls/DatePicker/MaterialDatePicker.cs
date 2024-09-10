@@ -21,7 +21,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// <h3>C# sample</h3>
 /// <code>
-/// var button = new MaterialDatePicker
+/// var datePicker = new MaterialDatePicker
 /// {
 ///     Placeholder="Creation date"
 /// };
