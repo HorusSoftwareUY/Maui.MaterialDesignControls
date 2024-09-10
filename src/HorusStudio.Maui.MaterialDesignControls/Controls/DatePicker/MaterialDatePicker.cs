@@ -1,13 +1,41 @@
 ﻿using Microsoft.Maui.Handlers;
-using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// A date picker <see cref="View" /> Date picker let users to select a date. They typically appear in forms and dialogs.
+/// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialDatePicker.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialButton
+///     Placeholder="Creation date" /&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var button = new MaterialDatePicker
+/// {
+///     Placeholder="Creation date"
+/// };
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/DatePickerPage.xaml)
+/// 
+/// </example>
+/// <todoList>
+/// * [iOS] Font attributes doesn´t work
+/// * [iOS] Horizontal Text Aligment doesn´t work when there is a date selected
+/// </todoList>
 public class MaterialDatePicker : MaterialInputBase
 {
-    //TODO: [iOS] Font attributes doesn´t work
-    //TODO: [iOS] Horizontal Text Aligment doesn´t work when there is a date selected
-
     #region Attributes
 
     private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
