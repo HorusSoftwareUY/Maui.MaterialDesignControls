@@ -1,4 +1,4 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
+using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 {

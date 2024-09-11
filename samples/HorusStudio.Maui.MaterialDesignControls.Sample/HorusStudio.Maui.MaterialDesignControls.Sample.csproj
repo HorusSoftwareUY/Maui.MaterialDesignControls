@@ -51,9 +51,6 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 	<ItemGroup>
-	  <MauiXaml Remove="Pages\BottomSheetPage.xaml" />
-	</ItemGroup>
-	<ItemGroup>
 	  <None Remove="Resources\Images\bad.png" />
 	  <None Remove="Resources\Images\bad_unselected.png" />
 	  <None Remove="Resources\Images\good.png" />
@@ -70,11 +67,6 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\radio_button_checked.svg" />
 	  <None Remove="Resources\Images\radio_button_unchecked.svg" />
-	</ItemGroup>
-	<ItemGroup>
-	  <EmbeddedResource Include="Pages\BottomSheetPage.xaml">
-	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -96,6 +88,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\BottomSheetPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\CheckboxPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
