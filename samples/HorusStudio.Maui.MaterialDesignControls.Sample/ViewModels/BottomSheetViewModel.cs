@@ -9,8 +9,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public override string Title => "Bottom Sheets";
 
-        [ObservableProperty]
-        private TextDecorations _decorations = TextDecorations.None;
+        public Action<string> OpenBottomSheetControl { get; set; }
+
+        public Action<string> CloseBottomSheetControl { get; set; }
 
         #endregion
 
@@ -20,13 +21,15 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async Task MaterialButton1(string message)
+        private async Task OpenBottomSheet(string controlName)
         {
-            await Task.Delay(TimeSpan.FromSeconds(2));
-            await DisplayAlert(Title, message ?? "Clicked!", "OK");
+            OpenBottomSheetControl?.Invoke(controlName);
         }
 
         [ICommand]
-        private Task MaterialButton2(string message) => MaterialButton1(message);
+        private async Task CloseBottomSheet(string controlName)
+        {
+            CloseBottomSheetControl?.Invoke(controlName);
+        }
     }
 }
