@@ -50,7 +50,7 @@
                                  SecondIconSource="xamarin.png"
                                  TypeButton="Tonal"
                                  Command="{Binding LaunchBrowserCommand}"
-                                 CommandParameter="https://github.com/HorusSoftwareUY"
+                                 CommandParameter="https://github.com/HorusSoftwareUY/MaterialDesignControlsPlugin"
                                  TextButton="GitHub" />
 
             <VerticalStackLayout Spacing="0">

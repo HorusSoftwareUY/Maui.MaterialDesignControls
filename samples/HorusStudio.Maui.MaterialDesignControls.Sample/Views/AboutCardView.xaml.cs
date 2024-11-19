@@ -4,6 +4,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Views;
 
 public partial class AboutCardView : ContentView
 {
+    #region Attributes & Properties
+
     public static readonly BindableProperty FirstIconSourceProperty =
            BindableProperty.Create(nameof(FirstIconSource), typeof(string), typeof(ConnectionItemView), default(string));
 
@@ -75,6 +77,8 @@ public partial class AboutCardView : ContentView
         get => (string)GetValue(CommandParameterProperty);
         set => SetValue(CommandParameterProperty, value);
     }
+
+    #endregion
 
     public AboutCardView()
 	{
