@@ -48,4 +48,7 @@
     <Color x:Key="ForegroundColorLight">#1D1B20</Color>
     <Color x:Key="ForegroundColorDark">White</Color>
 
+    <Color x:Key="OutstandingFontColor">#65558F</Color>
+    <Color x:Key="RegularFontColor">#49454F</Color>
+
 </ResourceDictionary>

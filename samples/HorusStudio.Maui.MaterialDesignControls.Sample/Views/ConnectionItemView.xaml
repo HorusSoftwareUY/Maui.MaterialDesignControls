@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.ConnectionItemView">
+
+    <ContentView.Resources>
+
+        <Style x:Key="ConnectionItem" TargetType="Grid">
+            <Setter Property="ColumnDefinitions" Value="Auto,*, Auto" />
+            <Setter Property="ColumnSpacing" Value="12" />
+            <Setter Property="Padding" Value="16" />
+        </Style>
+
+        <Style x:Key="ConnectionIcon" TargetType="Image">
+            <Setter Property="HeightRequest" Value="24" />
+            <Setter Property="WidthRequest" Value="24" />
+            <Setter Property="Aspect" Value="AspectFit" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="Grid.Column" Value="0" />
+        </Style>
+
+        <Style x:Key="ConnectionArrow" TargetType="Image">
+            <Setter Property="HeightRequest" Value="24" />
+            <Setter Property="WidthRequest" Value="24" />
+            <Setter Property="Aspect" Value="AspectFit" />
+            <Setter Property="HorizontalOptions" Value="End" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="Grid.Column" Value="2" />
+        </Style>
+
+        <Style x:Key="ConnectionName" TargetType="Label">
+            <Setter Property="FontFamily" Value="FontMedium" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{StaticResource RegularFontColor}" />
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="LineBreakMode" Value="TailTruncation" />
+        </Style>
+
+    </ContentView.Resources>
+
+    <Grid Style="{StaticResource ConnectionItem}"  >
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Command}" CommandParameter="{Binding CommandParameter}" />
+        </Grid.GestureRecognizers>
+        
+        <Image Style="{StaticResource ConnectionIcon}"  Source="{Binding IconSource}" />
+        <Label Style="{StaticResource ConnectionName}"  Text="{Binding LabelText}" />
+        <Image Style="{StaticResource ConnectionArrow}" Source="arrow_right" />
+        
+    </Grid>
+
+</ContentView>
