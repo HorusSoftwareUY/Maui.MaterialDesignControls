@@ -9,7 +9,7 @@
         <Style x:Key="AboutCard" TargetType="Border">
             <Setter Property="Stroke" Value="Transparent" />
             <Setter Property="Padding" Value="24" />
-            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="Background" Value="{StaticResource Tone1}" />
             <Setter Property="StrokeShape" Value="RoundRectangle 24" />
         </Style>
 

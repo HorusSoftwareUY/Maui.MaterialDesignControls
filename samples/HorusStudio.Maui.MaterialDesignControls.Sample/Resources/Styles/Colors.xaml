@@ -48,8 +48,9 @@
     <Color x:Key="ForegroundColorLight">#1D1B20</Color>
     <Color x:Key="ForegroundColorDark">White</Color>
 
-    <Color x:Key="OutstandingFontColor">#65558F</Color>
-    <Color x:Key="RegularFontColor">#49454F</Color>
-    <Color x:Key="CardBackground">#F8F7FF</Color>
+    <Color x:Key="Tone9">#49454F</Color>
+    <Color x:Key="Tone6">#65558F</Color>
+    <Color x:Key="Tone4">#CAC4D0</Color>
+    <Color x:Key="Tone1">#F8F7FF</Color>
 
 </ResourceDictionary>
