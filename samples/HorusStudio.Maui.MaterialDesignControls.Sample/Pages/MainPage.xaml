@@ -50,8 +50,8 @@
                                    Aspect="AspectFill"/>
                         </Border>
 
-                        <VerticalStackLayout Spacing="7" Padding="24, 0">
-                            <material:MaterialLabel HorizontalTextAlignment="Center" Type="DisplaySmall" Text="Material Design Controls"  />
+                        <VerticalStackLayout Spacing="7" Padding="20, 0">
+                            <material:MaterialLabel HorizontalTextAlignment="Center" Type="DisplaySmall" FontAttributes="Bold" Text="Material Design Controls"  />
                             <material:MaterialLabel HorizontalTextAlignment="Center" Type="BodyMedium" Text="The latest version of Google’s open-source design system for .NET MAUI and Xamarin Forms." />
                             <material:MaterialLabel HorizontalTextAlignment="Center" Type="BodyMedium" Text="Powered by Horus Studio." />
                         </VerticalStackLayout>
