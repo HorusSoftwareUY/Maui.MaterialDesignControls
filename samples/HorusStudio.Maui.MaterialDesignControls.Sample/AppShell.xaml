@@ -60,7 +60,7 @@
                 </CollectionView.ItemTemplate>
                 <CollectionView.GroupFooterTemplate>
                     <DataTemplate>
-                        <material:MaterialDivider HeightRequest="1" />
+                        <material:MaterialDivider />
                     </DataTemplate>
                 </CollectionView.GroupFooterTemplate>
             </CollectionView>
