@@ -13,20 +13,20 @@
     <Shell.Resources>
 
         <Style x:Key="GroupName" TargetType="material:MaterialLabel">
-            <Setter Property="Padding" Value="0, 20" />
+            <Setter Property="Padding" Value="0, 18" />
             <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="Type" Value="BodyLarge" />
+            <Setter Property="Type" Value="BodyMedium" />
             <Setter Property="TextColor" Value="{StaticResource Tone6}" />
         </Style>
 
         <Style x:Key="ItemName" TargetType="material:MaterialLabel">
             <Setter Property="TextColor" Value="{StaticResource Tone9}" />
-            <Setter Property="Padding" Value="8, 20" />
+            <Setter Property="Padding" Value="8, 18" />
             <Setter Property="VerticalOptions" Value="Center" />
             <Setter Property="HorizontalOptions" Value="Start" />
             <Setter Property="LineBreakMode" Value="TailTruncation" />
             <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="Type" Value="BodyLarge" />
+            <Setter Property="Type" Value="BodyMedium" />
         </Style>
 
     </Shell.Resources>

@@ -1,4 +1,3 @@
-using AndroidX.Lifecycle;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;

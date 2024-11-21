@@ -38,10 +38,10 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" ForegroundScale="0.5" Color="#F7F2FA" BaseSize="24,24" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#F7F2FA" BaseSize="82,82" />
+		<MauiSplashScreen Include="C:\Repos\HorusControls\samples\HorusStudio.Maui.MaterialDesignControls.Sample\Resources\Splash\splash.svg" Color="White" BaseSize="80,80" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
