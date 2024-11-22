@@ -15,7 +15,6 @@
             <Setter Property="ColumnDefinitions" Value="*,*" />
             <Setter Property="RowSpacing" Value="16" />
             <Setter Property="ColumnSpacing" Value="16" />
-            <Setter Property="Padding" Value="0, 24" />
         </Style>
 
         <Style TargetType="material:MaterialButton">
@@ -64,7 +63,7 @@
 
             <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Elevated" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <material:MaterialCard Style="{StaticResource CardControlContainer}"  Padding="16, 36">
                     <Grid Style="{StaticResource ButtonsContainer}">
                         
                         <material:MaterialButton
@@ -110,7 +109,7 @@
                 <material:MaterialLabel Text="Elevated buttons provide separation from a patterned background." Type="BodySmall" />
 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
                     <Grid Style="{StaticResource ButtonsContainer}">
 
                         <material:MaterialButton
@@ -155,7 +154,7 @@
                 <material:MaterialLabel Text="Filled buttons have high visual impact when used for important actions."  Type="BodySmall"/>
 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled tonal" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <material:MaterialCard Style="{StaticResource CardControlContainer}"  Padding="16, 36">
                     <Grid Style="{StaticResource ButtonsContainer}">
                         <material:MaterialButton
                          Grid.Row="0"
@@ -199,7 +198,7 @@
                 <material:MaterialLabel Text="Filled tonal buttons have less emphasis than other filled buttons." Type="BodySmall"/>
 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <material:MaterialCard Style="{StaticResource CardControlContainer}"  Padding="16, 36">
                     <Grid Style="{StaticResource ButtonsContainer}">
                         <material:MaterialButton
                          Grid.Row="0"
@@ -244,7 +243,7 @@
                 <material:MaterialLabel Text="Outline buttons contain less important supporting actions." Type="BodySmall"/>
 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Text" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
                     <Grid Style="{StaticResource ButtonsContainer}">
                         <material:MaterialButton
                          Grid.Row="0"
@@ -288,7 +287,7 @@
                 <material:MaterialLabel Text="Use text buttons for the lowest priority actions." Type="BodySmall"/>
 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <material:MaterialCard Style="{StaticResource CardControlContainer}"  Padding="16, 36">
                     <Grid Style="{StaticResource ButtonsContainer}">
                         <material:MaterialButton
                          Grid.Row="0"

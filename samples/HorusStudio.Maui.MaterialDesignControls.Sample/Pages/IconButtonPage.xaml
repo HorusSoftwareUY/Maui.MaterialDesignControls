@@ -16,7 +16,6 @@
             <Setter Property="ColumnDefinitions" Value="*,*" />
             <Setter Property="RowSpacing" Value="16" />
             <Setter Property="ColumnSpacing" Value="16" />
-            <Setter Property="Padding" Value="0, 24" />
         </Style>
 
         <Style TargetType="material:MaterialIconButton">
@@ -59,7 +58,7 @@
             <views:ControlsTabsView IsCustomize="{Binding IsCustomize, Mode=TwoWay}"  />
             <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
                     <Grid Style="{StaticResource ButtonsContainer}">
                         <material:MaterialIconButton
                             Grid.Row="0"
@@ -83,7 +82,7 @@
                 <material:MaterialLabel Text="Filled icon buttons have higher visual impact and are best for high emphasis actions." Type="BodySmall" />
 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled tonal" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" >
+                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36" >
                     <Grid Style="{StaticResource ButtonsContainer}">
                         <material:MaterialIconButton
                             Grid.Row="0"
@@ -107,7 +106,7 @@
                 <material:MaterialLabel Text="Filled tonal icon buttons are a middle ground between filled and outlined icon buttons. They’re useful in contexts where the button requires slightly more emphasis than an outline would give, such as a secondary action paired with a high emphasis action." Type="BodySmall" />
 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
                     <Grid Style="{StaticResource ButtonsContainer}">
                         <material:MaterialIconButton
                             Grid.Row="0"
@@ -131,7 +130,7 @@
                 <material:MaterialLabel Text="Outlined icon buttons are medium-emphasis buttons. They’re useful when an icon button needs more emphasis than a standard icon button but less than a filled or filled tonal icon button. " Type="BodySmall" />
 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Standard" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
                     <Grid Style="{StaticResource ButtonsContainer}">
                         <material:MaterialIconButton
                             Grid.Row="0"
@@ -155,7 +154,7 @@
                 <material:MaterialLabel Text="Use standard icon buttons for the lowest priority actions." Type="BodySmall" />
 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
                     <Grid Style="{StaticResource ButtonsContainer}" RowDefinitions="Auto,Auto">
                         <material:MaterialIconButton
                             Grid.Row="0"
