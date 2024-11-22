@@ -7,7 +7,7 @@
     <ContentView.Resources>
         <Style x:Key="Tab" TargetType="Border">
             <Setter Property="HeightRequest" Value="40" />
-            <Setter Property="Stroke" Value="#86818D" />
+            <Setter Property="Stroke" Value="{StaticResource Tone5}" />
             <Setter Property="Background" Value="White" />
         </Style>
 
@@ -29,7 +29,7 @@
 
             <Border.Triggers>
                 <DataTrigger Binding="{Binding IsCustomize}" Value="False" TargetType="Border">
-                    <Setter Property="Background" Value="#E8DEF8" />
+                    <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.SecondaryContainer}" />
                 </DataTrigger>
             </Border.Triggers>
             
@@ -43,7 +43,7 @@
             
             <Border.Triggers>
                 <DataTrigger Binding="{Binding IsCustomize}" Value="True" TargetType="Border">
-                    <Setter Property="Background" Value="#E8DEF8" />
+                    <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.SecondaryContainer}" />
                 </DataTrigger>
             </Border.Triggers>
 

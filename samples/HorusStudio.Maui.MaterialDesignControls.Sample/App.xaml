@@ -1,6 +1,7 @@
 ﻿<?xml version = "1.0" encoding = "UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.App">
     <Application.Resources>
@@ -9,6 +10,8 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
 
             <Style x:Key="MainLayout" TargetType="VerticalStackLayout">
                 <Setter Property="Spacing" Value="8" />
@@ -29,10 +32,16 @@
                 <Setter Property="Padding" Value="24, 16" />
             </Style>
 
+            <Style x:Key="CardControlContainer" TargetType="material:MaterialCard">
+                <Setter Property="BackgroundColor" Value="{StaticResource Tone1}" />
+                <Setter Property="CornerRadius" Value="24" />
+            </Style>
+
             <Style x:Key="SectionTitle" TargetType="material:MaterialLabel">
                 <Setter Property="Type" Value="TitleLarge" />
-                <Setter Property="Margin" Value="0,42,0,0" />
+                <Setter Property="Margin" Value="0,36,0,0" />
             </Style>
+
             
         </ResourceDictionary>
     </Application.Resources>
