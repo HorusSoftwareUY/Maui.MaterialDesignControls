@@ -9,6 +9,9 @@ public partial class CheckboxViewModel : BaseViewModel
     public override string Title => "Checkboxes";
 
     [ObservableProperty]
+    private bool _isCustomize;
+
+    [ObservableProperty]
     public bool _isCheckboxEnabled;
 
     [ObservableProperty]

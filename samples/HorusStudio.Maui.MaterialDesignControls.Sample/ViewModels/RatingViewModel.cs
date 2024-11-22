@@ -9,6 +9,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         [ObservableProperty]
+        private bool _isCustomize;
+
+        [ObservableProperty]
         private IEnumerable<ImageSource> _selectedIcons;
 
         [ObservableProperty]

@@ -62,7 +62,7 @@
 
             <views:ControlsTabsView IsCustomize="{Binding IsCustomize, Mode=TwoWay}"  />
 
-            <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource InvertedBoolConverter}}">
+            <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Elevated" />
                 <material:MaterialCard Style="{StaticResource CardControlContainer}">
                     <Grid Style="{StaticResource ButtonsContainer}">

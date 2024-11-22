@@ -15,6 +15,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private List<Color> _shadowColors = new List<Color> { Colors.DarkRed, Colors.Black, Colors.DarkGoldenrod };
 
         [ObservableProperty]
+        private bool _isCustomize;
+
+        [ObservableProperty]
         private Color _backgroundColor;
 
         [ObservableProperty]

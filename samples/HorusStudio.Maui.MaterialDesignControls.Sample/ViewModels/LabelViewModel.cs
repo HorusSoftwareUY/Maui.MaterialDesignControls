@@ -10,6 +10,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public override string Title => "Labels";
 
         [ObservableProperty]
+        private bool _isCustomize;
+
+        [ObservableProperty]
         private LabelTypes _labelType = LabelTypes.HeadlineSmall;
 
         [ObservableProperty]

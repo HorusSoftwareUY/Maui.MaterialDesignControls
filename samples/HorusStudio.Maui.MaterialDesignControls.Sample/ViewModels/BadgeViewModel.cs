@@ -10,6 +10,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public override string Title => "MaterialBadge";
 
         [ObservableProperty]
+        private bool _isCustomize;
+
+        [ObservableProperty]
         private string _counter = string.Empty;
 
         #endregion

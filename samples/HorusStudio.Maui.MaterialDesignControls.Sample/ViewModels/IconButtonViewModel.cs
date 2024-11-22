@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
@@ -8,6 +9,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => "Icon buttons";
+
+        [ObservableProperty]
+        private bool _isCustomize;
 
         #endregion
 

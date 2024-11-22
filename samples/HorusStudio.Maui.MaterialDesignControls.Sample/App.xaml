@@ -1,7 +1,7 @@
 ﻿<?xml version = "1.0" encoding = "UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Converters"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.App">
     <Application.Resources>
@@ -11,7 +11,7 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
 
             <Style x:Key="MainLayout" TargetType="VerticalStackLayout">
                 <Setter Property="Spacing" Value="8" />

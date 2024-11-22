@@ -9,6 +9,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public override string Title => "Progress Indicators";
 
+        [ObservableProperty]
+        private bool _isCustomize;
+
         #endregion
 
         public ProgressIndicatorViewModel()

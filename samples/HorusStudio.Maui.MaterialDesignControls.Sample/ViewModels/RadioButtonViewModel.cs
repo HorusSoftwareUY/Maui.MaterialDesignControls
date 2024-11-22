@@ -11,6 +11,9 @@ public partial class RadioButtonViewModel : BaseViewModel
     public override string Title => "Radio Buttons";
 
     [ObservableProperty]
+    private bool _isCustomize;
+
+    [ObservableProperty]
     public ObservableCollection<CustomColor> _itemsSourceColors;
 
     [ObservableProperty]

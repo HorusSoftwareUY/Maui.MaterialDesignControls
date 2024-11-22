@@ -11,6 +11,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public override string Title => "Chips";
 
         [ObservableProperty]
+        private bool _isCustomize;
+
+        [ObservableProperty]
         private bool _isEnabledState;
         
         [ObservableProperty]

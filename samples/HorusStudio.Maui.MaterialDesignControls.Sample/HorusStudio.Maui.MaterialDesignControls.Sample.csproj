@@ -71,7 +71,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
 	</ItemGroup>
