@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.TopAppBar">
+    
+    <Grid ColumnDefinitions="*, Auto"
+          RowDefinitions="*,*">
+
+        <Image Source="arrow_right"
+               Rotation="180"
+               VerticalOptions="Center"
+               HorizontalOptions="Start"
+               Grid.Column="0"
+               Grid.Row="0">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding BackCommand}" />
+            </Image.GestureRecognizers>
+        </Image>
+
+        <HorizontalStackLayout  
+            Spacing="10"
+            VerticalOptions="Center"
+            HorizontalOptions="End"
+            Grid.Column="1"
+            Grid.Row="0">
+            <Image Source="connection_website" VerticalOptions="Center"/>
+            <Image Source="connection_website" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <material:MaterialLabel 
+            Margin="0,12,0,0"
+            Type="HeadlineLarge"
+            Text="{Binding Title}"
+            Grid.ColumnSpan="2"
+            Grid.Column="0"
+            Grid.Row="1"/>
+    </Grid>
+</ContentView>
