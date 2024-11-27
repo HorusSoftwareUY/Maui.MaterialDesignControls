@@ -49,6 +49,7 @@
     <Color x:Key="ForegroundColorDark">White</Color>
 
     <Color x:Key="Tone9">#49454F</Color>
+    <Color x:Key="Tone7">#6750A4</Color>
     <Color x:Key="Tone6">#65558F</Color>
     <Color x:Key="Tone5">#86818D</Color>
     <Color x:Key="Tone4">#CAC4D0</Color>
