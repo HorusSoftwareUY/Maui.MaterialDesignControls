@@ -50,5 +50,6 @@
 
     <Color x:Key="OutstandingFontColor">#65558F</Color>
     <Color x:Key="RegularFontColor">#49454F</Color>
+    <Color x:Key="CardBackground">#F8F7FF</Color>
 
 </ResourceDictionary>
