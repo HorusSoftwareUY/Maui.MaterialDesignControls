@@ -12,22 +12,24 @@
             <Setter Property="StrokeShape" Value="RoundRectangle 24" />
         </Style>
 
-        <Style x:Key="ImageContainer" TargetType="Border">
+        <Style x:Key="ImageContainer" TargetType="Frame">
             <Setter Property="HeightRequest" Value="180" />
-            <Setter Property="Stroke" Value="Transparent" />
+            <Setter Property="BorderColor" Value="Transparent" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.PrimaryContainer}" />
-            <Setter Property="StrokeShape" Value="RoundRectangle 24" />
+            <Setter Property="CornerRadius" Value="24" />
+            <Setter Property="IsClippedToBounds" Value="True" />
+            <Setter Property="HasShadow" Value="False" />
         </Style>
 
     </ContentView.Resources>
 
     <Border Style="{StaticResource HomeCard}">
         <VerticalStackLayout Padding="0,0,0,24">
-            <Border Style="{StaticResource ImageContainer}">
+            <Frame Style="{StaticResource ImageContainer}">
                 <Image Source="{Binding ImageSource}" 
                        Aspect="{Binding ImageAspect}"/>
-            </Border>
+            </Frame>
 
             <VerticalStackLayout Spacing="7" Padding="24, 0">
                 <material:MaterialLabel Type="TitleLarge" Text="{Binding Title}" />

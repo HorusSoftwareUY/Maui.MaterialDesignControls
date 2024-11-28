@@ -47,11 +47,11 @@
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding Command}" CommandParameter="{Binding CommandParameter}" />
         </Grid.GestureRecognizers>
-
+        
         <Image Style="{StaticResource ConnectionIcon}"  Source="{Binding IconSource}" />
         <material:MaterialLabel Style="{StaticResource ConnectionName}" Text="{Binding LabelText}" />
         <Image Style="{StaticResource ConnectionArrow}" Source="arrow_right" />
-
+        
     </Grid>
 
 </ContentView>
