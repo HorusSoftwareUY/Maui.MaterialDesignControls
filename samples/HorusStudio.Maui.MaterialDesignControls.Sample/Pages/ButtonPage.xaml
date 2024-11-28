@@ -69,6 +69,7 @@
             <material:MaterialCard
                 IsVisible="{Binding IsCustomize}"
                 Padding="16, 36"
+                Margin="0,20,0,0"
                 Style="{StaticResource CardControlContainer}">
 
                 <Grid>
@@ -105,48 +106,48 @@
             <VerticalStackLayout Style="{StaticResource MainLayout}">
 
                 <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
-                    <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Elevated" />
+                    <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Elevated" Margin="0,14,0,0" />
                     <material:MaterialCard Style="{StaticResource CardControlContainer}"  Padding="16, 36">
                         <Grid Style="{StaticResource ButtonsContainer}">
 
                             <material:MaterialButton
-                             Grid.Row="0"
-                             Grid.Column="0"
-                             Type="Elevated"
-                             Text="Enabled"
-                             ImageSource="plus.png"
-                             Animation="Scale"
-                             HorizontalOptions="End"
-                             Command="{Binding MaterialButton2Command}"
-                             CommandParameter="Elevated button with icon clicked!"
-                             IsBusy="{Binding MaterialButton2Command.IsRunning}" />
+                                 Grid.Row="0"
+                                 Grid.Column="0"
+                                 Type="Elevated"
+                                 Text="Enabled"
+                                 ImageSource="plus.png"
+                                 Animation="Scale"
+                                 HorizontalOptions="End"
+                                 Command="{Binding MaterialButton2Command}"
+                                 CommandParameter="Elevated button with icon clicked!"
+                                 IsBusy="{Binding MaterialButton2Command.IsRunning}" />
 
                             <material:MaterialButton
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Type="Elevated"
-                            Text="Enabled"
-                            HorizontalOptions="Start"
-                            Command="{Binding MaterialButton1Command}"
-                            CommandParameter="Elevated button clicked!"
-                            IsBusy="{Binding MaterialButton1Command.IsRunning}" />
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Type="Elevated"
+                                Text="Enabled"
+                                HorizontalOptions="Start"
+                                Command="{Binding MaterialButton1Command}"
+                                CommandParameter="Elevated button clicked!"
+                                IsBusy="{Binding MaterialButton1Command.IsRunning}" />
 
                             <material:MaterialButton
-                             Grid.Row="1"
-                             Grid.Column="0"
-                             Type="Elevated"
-                             Text="Disabled"
-                             HorizontalOptions="End"
-                             ImageSource="plus.png"
-                             IsEnabled="False" />
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 Type="Elevated"
+                                 Text="Disabled"
+                                 HorizontalOptions="End"
+                                 ImageSource="plus.png"
+                                 IsEnabled="False" />
 
                             <material:MaterialButton
-                             Grid.Row="1"
-                             Grid.Column="1"
-                             Type="Elevated"
-                             Text="Disabled"
-                             HorizontalOptions="Start"
-                             IsEnabled="False" />
+                                 Grid.Row="1"
+                                 Grid.Column="1"
+                                 Type="Elevated"
+                                 Text="Disabled"
+                                 HorizontalOptions="Start"
+                                 IsEnabled="False" />
                         </Grid>
                     </material:MaterialCard>
                     <material:MaterialLabel Text="Elevated buttons provide separation from a patterned background." Type="BodySmall" />
@@ -156,42 +157,42 @@
                         <Grid Style="{StaticResource ButtonsContainer}">
 
                             <material:MaterialButton
-                         Grid.Row="0"
-                         Grid.Column="0"
-                         Type="Filled"
-                         Text="Enabled"
-                         ImageSource="plus.png"
-                         HorizontalOptions="End"
-                         Command="{Binding MaterialButton4Command}"
-                         CommandParameter="Filled button with icon clicked!"
-                         IsBusy="{Binding MaterialButton4Command.IsRunning}" />
+                                 Grid.Row="0"
+                                 Grid.Column="0"
+                                 Type="Filled"
+                                 Text="Enabled"
+                                 ImageSource="plus.png"
+                                 HorizontalOptions="End"
+                                 Command="{Binding MaterialButton4Command}"
+                                 CommandParameter="Filled button with icon clicked!"
+                                 IsBusy="{Binding MaterialButton4Command.IsRunning}" />
 
                             <material:MaterialButton
-                         Grid.Row="0"
-                         Grid.Column="1"
-                         Type="Filled"
-                         Text="Enabled"
-                         HorizontalOptions="Start"
-                         Command="{Binding MaterialButton3Command}"
-                         CommandParameter="Filled button clicked!"
-                         IsBusy="{Binding MaterialButton3Command.IsRunning}" />
+                                 Grid.Row="0"
+                                 Grid.Column="1"
+                                 Type="Filled"
+                                 Text="Enabled"
+                                 HorizontalOptions="Start"
+                                 Command="{Binding MaterialButton3Command}"
+                                 CommandParameter="Filled button clicked!"
+                                 IsBusy="{Binding MaterialButton3Command.IsRunning}" />
 
                             <material:MaterialButton
-                         Grid.Row="1"
-                         Grid.Column="0"
-                         Type="Filled"
-                         Text="Disabled"
-                         HorizontalOptions="End"
-                         ImageSource="plus.png"
-                         IsEnabled="False" />
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 Type="Filled"
+                                 Text="Disabled"
+                                 HorizontalOptions="End"
+                                 ImageSource="plus.png"
+                                 IsEnabled="False" />
 
                             <material:MaterialButton 
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Type="Filled"
-                            Text="Disabled"
-                            HorizontalOptions="Start"
-                            IsEnabled="False" />
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Type="Filled"
+                                Text="Disabled"
+                                HorizontalOptions="Start"
+                                IsEnabled="False" />
                         </Grid>
                     </material:MaterialCard>
                     <material:MaterialLabel Text="Filled buttons have high visual impact when used for important actions."  Type="BodySmall"/>
@@ -200,42 +201,42 @@
                     <material:MaterialCard Style="{StaticResource CardControlContainer}"  Padding="16, 36">
                         <Grid Style="{StaticResource ButtonsContainer}">
                             <material:MaterialButton
-                         Grid.Row="0"
-                         Grid.Column="0"
-                         Type="Tonal"
-                         Text="Enabled"
-                         HorizontalOptions="End"
-                         ImageSource="plus.png"
-                         Command="{Binding MaterialButton6Command}"
-                         CommandParameter="Filled tonal button with icon clicked!"
-                         IsBusy="{Binding MaterialButton6Command.IsRunning}" />
+                                 Grid.Row="0"
+                                 Grid.Column="0"
+                                 Type="Tonal"
+                                 Text="Enabled"
+                                 HorizontalOptions="End"
+                                 ImageSource="plus.png"
+                                 Command="{Binding MaterialButton6Command}"
+                                 CommandParameter="Filled tonal button with icon clicked!"
+                                 IsBusy="{Binding MaterialButton6Command.IsRunning}" />
 
                             <material:MaterialButton
-                          Grid.Row="0"
-                          Grid.Column="1"
-                          Type="Tonal"
-                          Text="Enabled"
-                          HorizontalOptions="Start"
-                          Command="{Binding MaterialButton5Command}"
-                          CommandParameter="Filled tonal button clicked!"
-                          IsBusy="{Binding MaterialButton5Command.IsRunning}" />
+                                  Grid.Row="0"
+                                  Grid.Column="1"
+                                  Type="Tonal"
+                                  Text="Enabled"
+                                  HorizontalOptions="Start"
+                                  Command="{Binding MaterialButton5Command}"
+                                  CommandParameter="Filled tonal button clicked!"
+                                  IsBusy="{Binding MaterialButton5Command.IsRunning}" />
 
                             <material:MaterialButton
-                         Grid.Row="1"
-                         Grid.Column="0"
-                         Type="Tonal"
-                         Text="Disabled"
-                         HorizontalOptions="End"
-                         ImageSource="plus.png"
-                         IsEnabled="False" />
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 Type="Tonal"
+                                 Text="Disabled"
+                                 HorizontalOptions="End"
+                                 ImageSource="plus.png"
+                                 IsEnabled="False" />
 
                             <material:MaterialButton
-                          Grid.Row="1"
-                          Grid.Column="1"
-                          Type="Tonal"
-                          HorizontalOptions="Start"
-                          Text="Disabled"
-                          IsEnabled="False" />
+                                  Grid.Row="1"
+                                  Grid.Column="1"
+                                  Type="Tonal"
+                                  HorizontalOptions="Start"
+                                  Text="Disabled"
+                                  IsEnabled="False" />
                         </Grid>
                     </material:MaterialCard>
                     <material:MaterialLabel Text="Filled tonal buttons have less emphasis than other filled buttons." Type="BodySmall"/>
@@ -255,31 +256,31 @@
                                  IsBusy="{Binding MaterialButton8Command.IsRunning}" />
 
                             <material:MaterialButton
-                          Grid.Row="0"
-                          Grid.Column="1"
-                          Type="Outlined"
-                          Text="Enabled"
-                          HorizontalOptions="Start"
-                          Command="{Binding MaterialButton7Command}"
-                          CommandParameter="Outlined button clicked!"
-                          IsBusy="{Binding MaterialButton7Command.IsRunning}" />
+                                  Grid.Row="0"
+                                  Grid.Column="1"
+                                  Type="Outlined"
+                                  Text="Enabled"
+                                  HorizontalOptions="Start"
+                                  Command="{Binding MaterialButton7Command}"
+                                  CommandParameter="Outlined button clicked!"
+                                  IsBusy="{Binding MaterialButton7Command.IsRunning}" />
 
                             <material:MaterialButton
-                         Grid.Row="1"
-                         Grid.Column="0"
-                         Type="Outlined"
-                         Text="Disabled"
-                         HorizontalOptions="End"
-                         ImageSource="plus.png"
-                         IsEnabled="False" />
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 Type="Outlined"
+                                 Text="Disabled"
+                                 HorizontalOptions="End"
+                                 ImageSource="plus.png"
+                                 IsEnabled="False" />
 
                             <material:MaterialButton
-                           Grid.Row="1"
-                           Grid.Column="1"
-                           Type="Outlined"
-                           Text="Disabled"
-                           HorizontalOptions="Start"
-                           IsEnabled="False" />
+                               Grid.Row="1"
+                               Grid.Column="1"
+                               Type="Outlined"
+                               Text="Disabled"
+                               HorizontalOptions="Start"
+                               IsEnabled="False" />
 
                         </Grid>
                     </material:MaterialCard>
@@ -289,42 +290,42 @@
                     <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
                         <Grid Style="{StaticResource ButtonsContainer}">
                             <material:MaterialButton
-                         Grid.Row="0"
-                         Grid.Column="0"
-                         Type="Text"
-                         Text="Enabled"
-                         ImageSource="plus.png"
-                         HorizontalOptions="End"
-                         Command="{Binding MaterialButton10Command}"
-                         CommandParameter="Text button with icon clicked!"
-                         IsBusy="{Binding MaterialButton10Command.IsRunning}" />
+                                 Grid.Row="0"
+                                 Grid.Column="0"
+                                 Type="Text"
+                                 Text="Enabled"
+                                 ImageSource="plus.png"
+                                 HorizontalOptions="End"
+                                 Command="{Binding MaterialButton10Command}"
+                                 CommandParameter="Text button with icon clicked!"
+                                 IsBusy="{Binding MaterialButton10Command.IsRunning}" />
 
                             <material:MaterialButton
-                         Grid.Row="0"
-                         Grid.Column="1"
-                         Type="Text"
-                         Text="Enabled"
-                         HorizontalOptions="Start"
-                         Command="{Binding MaterialButton9Command}"
-                         CommandParameter="Text button clicked!"
-                         IsBusy="{Binding MaterialButton9Command.IsRunning}" />
+                                 Grid.Row="0"
+                                 Grid.Column="1"
+                                 Type="Text"
+                                 Text="Enabled"
+                                 HorizontalOptions="Start"
+                                 Command="{Binding MaterialButton9Command}"
+                                 CommandParameter="Text button clicked!"
+                                 IsBusy="{Binding MaterialButton9Command.IsRunning}" />
 
                             <material:MaterialButton
-                         Grid.Row="1"
-                         Grid.Column="0"
-                         Type="Text"
-                         Text="Disabled"
-                         HorizontalOptions="End"
-                         ImageSource="plus.png"
-                         IsEnabled="False" />
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 Type="Text"
+                                 Text="Disabled"
+                                 HorizontalOptions="End"
+                                 ImageSource="plus.png"
+                                 IsEnabled="False" />
 
                             <material:MaterialButton
-                         Grid.Row="1"
-                         Grid.Column="1"
-                         Type="Text"
-                         Text="Disabled"
-                         HorizontalOptions="Start"
-                         IsEnabled="False" />
+                                 Grid.Row="1"
+                                 Grid.Column="1"
+                                 Type="Text"
+                                 Text="Disabled"
+                                 HorizontalOptions="Start"
+                                 IsEnabled="False" />
                         </Grid>
                     </material:MaterialCard>
                     <material:MaterialLabel Text="Use text buttons for the lowest priority actions." Type="BodySmall"/>
@@ -396,39 +397,39 @@
 
                     <VerticalStackLayout Spacing="16">
 
+                        <views:ColorSelectionView
+                          BindingProperty="{Binding SelectedBackgroundColor, Mode=TwoWay}"
+                          DataSource="{Binding BackgroundColors}"
+                          LabelText="BackgroundColor and BusyIndicatorColor"/>
+
+                        <views:ColorSelectionView
+                             BindingProperty="{Binding SelectedTextColor, Mode=TwoWay}"
+                             DataSource="{Binding TextColors}"
+                             LabelText="TextColor, BorderColor and IconTintColor"/>
+
                         <views:ChipsGroupView
                             BindingProperty="{Binding SelectedButtonType, Mode=TwoWay}"
-                            DataSource="{Binding ChipsButtonsTypes}"
+                            DataSource="{Binding ButtonsTypes}"
                             LabelText="Type"/>
 
                         <views:ChipsGroupView
                             BindingProperty="{Binding SelectedCornerRadius, Mode=TwoWay}"
-                            DataSource="{Binding ChipsCornerRadius}"
+                            DataSource="{Binding CornersRadius}"
                             LabelText="CornerRadius"/>
 
                         <views:ChipsGroupView
-                            BindingProperty="{Binding SelectedBackgroundColor, Mode=TwoWay}"
-                            DataSource="{Binding ChipsBackgroundColors}"
-                            LabelText="BackgroundColor and BusyIndicatorColor"/>
-
-                        <views:ChipsGroupView
-                             BindingProperty="{Binding SelectedTextColor, Mode=TwoWay}"
-                             DataSource="{Binding ChipsTextColors}"
-                             LabelText="TextColor, BorderColor and IconTintColor"/>
-
-                        <views:ChipsGroupView
                             BindingProperty="{Binding SelectedFontFamily, Mode=TwoWay}"
-                            DataSource="{Binding ChipsFontFamilies}"
+                            DataSource="{Binding FontFamilies}"
                             LabelText="FontFamily"/>
 
                         <views:ChipsGroupView
                             BindingProperty="{Binding SelectedFontSize, Mode=TwoWay}"
-                            DataSource="{Binding ChipsFontSizes}"
+                            DataSource="{Binding FontSizes}"
                             LabelText="FontSize"/>
 
                         <views:ChipsGroupView
                             BindingProperty="{Binding SelectedAnimation, Mode=TwoWay}"
-                            DataSource="{Binding ChipsAnimations}"
+                            DataSource="{Binding Animations}"
                             LabelText="Animation"/>
 
                         <material:MaterialCheckBox 

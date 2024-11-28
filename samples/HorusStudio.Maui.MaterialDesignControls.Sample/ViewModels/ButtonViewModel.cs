@@ -18,43 +18,43 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private bool _isCustomize;
 
         [ObservableProperty]
-        private List<CustomizationItem> _chipsButtonsTypes;
+        private List<CustomizationItem> _buttonsTypes;
 
         [ObservableProperty]
         private MaterialButtonType _selectedButtonType = MaterialButtonType.Filled;
 
         [ObservableProperty]
-        private List<CustomizationItem> _chipsCornerRadius;
+        private List<CustomizationItem> _cornersRadius;
 
         [ObservableProperty]
         private int _selectedCornerRadius = 20;
 
         [ObservableProperty]
-        private List<CustomizationItem> _chipsBackgroundColors;
+        private List<CustomizationColor> _backgroundColors;
 
         [ObservableProperty]
         private Color _selectedBackgroundColor = Color.FromArgb("#6750A4");
 
         [ObservableProperty]
-        private List<CustomizationItem> _chipsTextColors;
+        private List<CustomizationColor> _textColors;
 
         [ObservableProperty]
-        private Color _selectedTextColor = Color.FromArgb("#FFFFFF");
+        private Color _selectedTextColor = Color.FromArgb("#D7D2E5");
 
         [ObservableProperty]
-        private List<CustomizationItem> _chipsFontFamilies;
+        private List<CustomizationItem> _fontFamilies;
 
         [ObservableProperty]
         private string _selectedFontFamily = "FontMedium";
 
         [ObservableProperty]
-        private List<CustomizationItem> _chipsFontSizes;
+        private List<CustomizationItem> _fontSizes;
 
         [ObservableProperty]
         private int _selectedFontSize = 14;
 
         [ObservableProperty]
-        private List<CustomizationItem> _chipsAnimations;
+        private List<CustomizationItem> _animations;
 
         [ObservableProperty]
         private AnimationTypes _selectedAnimation = AnimationTypes.None;
@@ -72,27 +72,27 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public ButtonViewModel()
         {
-            ChipsAnimations = new List<CustomizationItem>
+            Animations = new List<CustomizationItem>
             {
                 new CustomizationItem { Name = "None", Value = AnimationTypes.None, IsSelected = true },
                 new CustomizationItem { Name = "Fade", Value = AnimationTypes.Fade },
                 new CustomizationItem { Name = "Scale", Value = AnimationTypes.Scale },
             };
 
-            ChipsFontSizes = new List<CustomizationItem>
+            FontSizes = new List<CustomizationItem>
             {
                 new CustomizationItem { Name = "12", Value = 12 },
                 new CustomizationItem { Name = "14", Value = 14, IsSelected = true },
                 new CustomizationItem { Name = "16", Value = 16 },
             };
 
-            ChipsFontFamilies = new List<CustomizationItem>
+            FontFamilies = new List<CustomizationItem>
             {
                 new CustomizationItem { Name = "Roboto", Value = "FontMedium",  IsSelected = true },
                 new CustomizationItem { Name = "Roboto Slab", Value = "FontMediumSlab" }
             };
 
-            ChipsButtonsTypes = new List<CustomizationItem>
+            ButtonsTypes = new List<CustomizationItem>
             {
                 new CustomizationItem { Name = "Filled", Value = MaterialButtonType.Filled, IsSelected = true },
                 new CustomizationItem { Name = "Elevated", Value = MaterialButtonType.Elevated },
@@ -101,26 +101,27 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new CustomizationItem { Name = "Text", Value = MaterialButtonType.Text },
             };
 
-            ChipsCornerRadius = new List<CustomizationItem>
+            CornersRadius = new List<CustomizationItem>
             {
                 new CustomizationItem { Name = "20", Value = 20, IsSelected = true },
                 new CustomizationItem { Name = "10", Value = 10 },
                 new CustomizationItem { Name = "0", Value = 0 }
             };
 
-            ChipsBackgroundColors = new List<CustomizationItem>
+            BackgroundColors = new List<CustomizationColor>
             {
-                new CustomizationItem { Name = "Purple", Value = Color.FromArgb("#6750A4"), IsSelected = true },
-                new CustomizationItem { Name = "Green", Value = Color.FromArgb("#50A465") },
-                new CustomizationItem { Name = "Blue", Value = Color.FromArgb("#1D4BEC") },
-                new CustomizationItem { Name = "Red", Value = Color.FromArgb("#DD2953") },
+                new CustomizationColor { Color = Color.FromArgb("#6750A4"), IsSelected = true },
+                new CustomizationColor { Color = Color.FromArgb("#50A465") },
+                new CustomizationColor { Color = Color.FromArgb("#1D4BEC") },
+                new CustomizationColor { Color = Color.FromArgb("#DD2953") },
             };
 
-            ChipsTextColors = new List<CustomizationItem>
+            TextColors = new List<CustomizationColor>
             {
-                new CustomizationItem { Name = "Primary", Value = Color.FromArgb("#FFFFFF"), IsSelected = true },
-                new CustomizationItem { Name = "Secondary", Value = Color.FromArgb("#EAFF76") },
-                new CustomizationItem { Name = "Tertiary", Value = Color.FromArgb("#76FFC4") }
+                new CustomizationColor { Color = Color.FromArgb("#D7D2E5"), IsSelected = true, IsLight = true },
+                new CustomizationColor { Color = Color.FromArgb("#D2E5D6"), IsLight = true },
+                new CustomizationColor { Color = Color.FromArgb("#C6D0F6"), IsLight = true },
+                new CustomizationColor { Color = Color.FromArgb("#F2C8D2"), IsLight = true },
             };
 
             Subtitle = "Buttons help people take action, such as sending an email, sharing a document, or liking a comment.";

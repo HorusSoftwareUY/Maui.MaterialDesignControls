@@ -1,9 +1,13 @@
-﻿namespace HorusStudio.Maui.MaterialDesignControls.Sample.Models
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+
+namespace HorusStudio.Maui.MaterialDesignControls.Sample.Models
 {
-    public class CustomizationItem
+    public partial class CustomizationItem : ObservableObject
     {
         public string Name { get; set; }
         public object Value { get; set; }
-        public bool IsSelected { get; set; }
+
+        [ObservableProperty]
+        private bool _isSelected;
     }
 }

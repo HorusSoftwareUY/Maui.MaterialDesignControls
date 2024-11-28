@@ -48,11 +48,7 @@ public partial class ChipsGroupView : ContentView
 
     private void OnItemTapped(CustomizationItem item)
     {
-        if (item == null)
-            return;
-
         BindingProperty = item.Value;
-        DataSource.ForEach(x => x.IsSelected = false);
-        item.IsSelected = !item.IsSelected;
+        DataSource.ForEach(x => x.IsSelected = item.Name == x.Name);
     }
 }

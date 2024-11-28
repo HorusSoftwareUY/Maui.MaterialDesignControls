@@ -5,14 +5,6 @@
              xmlns:models="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Models"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.ChipsGroupView">
-
-    <ContentView.Resources>
-        <Style x:Key="ItemChipGroup" TargetType="material:MaterialChips">
-            <Setter Property="Type" Value="Filter" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Margin" Value="2" />
-        </Style>
-    </ContentView.Resources>
     
     <VerticalStackLayout Spacing="6">
         <material:MaterialLabel 
@@ -25,11 +17,14 @@
                 <DataTemplate
                   x:DataType="models:CustomizationItem">
                     <material:MaterialChips
-                      Style="{StaticResource ItemChipGroup}"
-                      Text="{Binding Name}"
-                      IsSelected="{Binding IsSelected, Mode=TwoWay}"
-                      Command="{Binding Source={x:Reference ThisContentView}, Path=ItemTappedCommand}"
-                      CommandParameter="{Binding}" />
+                        Type="Filter"
+                        FontSize="14"
+                        Margin="2"
+                        Style="{StaticResource ItemChipGroup}"
+                        Text="{Binding Name}"
+                        IsSelected="{Binding IsSelected, Mode=TwoWay}"
+                        Command="{Binding Source={x:Reference ThisContentView}, Path=ItemTappedCommand}"
+                        CommandParameter="{Binding}" />
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </FlexLayout>
