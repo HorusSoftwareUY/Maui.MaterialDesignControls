@@ -19,7 +19,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             var groups = new List<MenuGroup>();
 
-            var actionGroup = new MenuGroup() { GroupName = "Actions", IsBorderVisible = false };
+            var actionGroup = new MenuGroup() { GroupName = "Actions" };
             actionGroup.Add(new MenuItemViewModel { Title = "Buttons", Icon = "ic_button.png", ViewModel = typeof(ButtonViewModel) });
             actionGroup.Add(new MenuItemViewModel { Title = "Icon buttons", Icon = "ic_icon_button.png", ViewModel = typeof(IconButtonViewModel) });
            
