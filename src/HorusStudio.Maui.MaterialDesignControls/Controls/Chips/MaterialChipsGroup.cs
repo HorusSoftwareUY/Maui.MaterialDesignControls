@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.Maui.Layouts;
+
 namespace HorusStudio.Maui.MaterialDesignControls.Controls.Chips;
 
 /// <summary>
@@ -375,9 +377,53 @@ public class MaterialChipsGroup : ContentView
     #endregion
 
     #region Layout
+
+    private StackLayout _container;
+    private MaterialLabel _lblLabel;
+    private FlexLayout _flexContainer;
+    private MaterialLabel _lblSupporting;
+
     #endregion
 
     #region Constructor
+
+    public MaterialChipsGroup()
+    {
+        _container = new StackLayout()
+        {
+            Spacing = 2,
+        };
+
+        _lblLabel = new MaterialLabel()
+        {
+            IsVisible = false,
+            LineBreakMode = LineBreakMode.NoWrap,
+            Margin = new Thickness(14, 0, 14, 2),
+            HorizontalTextAlignment = TextAlignment.Start,
+            TextColor = LabelTextColor,
+            FontFamily = FontFamily,
+            FontSize = LabelSize
+        };
+
+        _flexContainer = new FlexLayout()
+        {
+            Wrap = FlexWrap.Wrap,
+            Direction = FlexDirection.Row,
+            JustifyContent = FlexJustify.Start
+        };
+
+        _lblSupporting = new MaterialLabel()
+        {
+            IsVisible = false,
+            LineBreakMode = LineBreakMode.NoWrap,
+            Margin = new Thickness(14, 2, 14, 0),
+            HorizontalTextAlignment = TextAlignment.Start,
+            TextColor = SupportingTextColor,
+            FontFamily = FontFamily,
+            FontSize = SupportingSize
+        };
+    }
+
     #endregion
 
     #region Setters
