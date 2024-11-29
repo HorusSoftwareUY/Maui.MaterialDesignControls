@@ -1,4 +1,3 @@
-using AndroidX.Lifecycle;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -20,7 +19,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             var groups = new List<MenuGroup>();
 
-            var actionGroup = new MenuGroup() { GroupName = "Actions" };
+            var actionGroup = new MenuGroup() { GroupName = "Actions", IsBorderVisible = false };
             actionGroup.Add(new MenuItemViewModel { Title = "Buttons", Icon = "ic_button.png", ViewModel = typeof(ButtonViewModel) });
             actionGroup.Add(new MenuItemViewModel { Title = "Icon buttons", Icon = "ic_icon_button.png", ViewModel = typeof(IconButtonViewModel) });
            

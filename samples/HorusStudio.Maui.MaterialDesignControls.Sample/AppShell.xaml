@@ -10,61 +10,55 @@
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     Shell.FlyoutBehavior="Flyout">
 
-    <Shell.Resources>
-
-        <Style x:Key="GroupName" TargetType="material:MaterialLabel">
-            <Setter Property="Padding" Value="0, 20" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="Type" Value="BodyLarge" />
-            <Setter Property="TextColor" Value="{StaticResource Tone6}" />
-        </Style>
-
-        <Style x:Key="ItemName" TargetType="material:MaterialLabel">
-            <Setter Property="TextColor" Value="{StaticResource Tone9}" />
-            <Setter Property="Padding" Value="8, 20" />
-            <Setter Property="VerticalOptions" Value="Center" />
-            <Setter Property="HorizontalOptions" Value="Start" />
-            <Setter Property="LineBreakMode" Value="TailTruncation" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="Type" Value="BodyLarge" />
-        </Style>
-
-    </Shell.Resources>
-
     <ShellContent
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainViewModel" />
 
     <Shell.FlyoutContent>
-
         <Grid Padding="28" Background="{StaticResource Tone1}">
             <CollectionView ItemsSource="{Binding MenuGroups}"
                  IsGrouped="True">
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate>
-                        <material:MaterialLabel Style="{StaticResource GroupName}" Text="{Binding GroupName}" />
+                        <VerticalStackLayout
+                            HeightRequest="56"
+                            Spacing="16">
+                            <material:MaterialDivider
+                                IsVisible="{Binding IsBorderVisible}"
+                                VerticalOptions="Start"/>
+                            <material:MaterialLabel 
+                                VerticalOptions="Center"
+                                FontAttributes="Bold" 
+                                Type="BodyMedium"
+                                TextColor="{StaticResource Tone6}"
+                                Text="{Binding GroupName}" />
+                        </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.GroupHeaderTemplate>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <material:MaterialLabel Style="{StaticResource ItemName}" Text="{Binding Title}" >
-                            <material:MaterialLabel.GestureRecognizers>
-                               
-                                <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, Path=NavigateCommand}"
-                                    CommandParameter="{Binding}" />
-                                
-                            </material:MaterialLabel.GestureRecognizers>
-                        </material:MaterialLabel>
+                        <Border 
+                            HeightRequest="56"
+                            BackgroundColor="Transparent"
+                            Stroke="Transparent"
+                            Padding="8,0">
+                            <material:MaterialLabel 
+                                Text="{Binding Title}"
+                                FontAttributes="Bold"
+                                Type="BodyMedium"
+                                VerticalOptions="Center"
+                                LineBreakMode="TailTruncation"
+                                TextColor="{StaticResource Tone9}"/>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, 
+                                        Path=NavigateCommand}"
+                                    CommandParameter="{Binding}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-                <CollectionView.GroupFooterTemplate>
-                    <DataTemplate>
-                        <material:MaterialDivider HeightRequest="1" />
-                    </DataTemplate>
-                </CollectionView.GroupFooterTemplate>
             </CollectionView>
         </Grid>
-       
     </Shell.FlyoutContent>
 </Shell>
