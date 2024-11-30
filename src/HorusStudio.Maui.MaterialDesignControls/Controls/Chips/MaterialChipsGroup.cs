@@ -1,19 +1,21 @@
 ﻿
+using HorusStudio.Maui.MaterialDesignControls;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
 using Microsoft.Maui.Layouts;
 
-namespace HorusStudio.Maui.MaterialDesignControls.Controls.Chips;
+namespace HorusStudio.Maui.MaterialDesign..Chips;
 
 /// <summary>
 /// A Chips help people enter information, make selections, filter content, or trigger actions <see href="https://m3.material.io/components/chips/overview">see here.</see>
 /// </summary>
 /// <example>
 ///
-/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialChips.gif</img>
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignPlugin/develop/screenshots/MaterialChips.gif</img>
 ///
 /// <h3>XAML sample</h3>
 /// <code>
 /// <xaml>
-/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesign;assembly=HorusStudio.Maui.MaterialDesign"
 /// 
 /// &lt;material:MaterialChips
 ///        Type="Normal"
@@ -36,7 +38,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Controls.Chips;
 /// };
 ///</code>
 ///
-/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ChipsPage.xaml)
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesign.Sample/Pages/ChipsPage.xaml)
 /// 
 /// </example>
 /// <todoList>
@@ -45,8 +47,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Controls.Chips;
 public class MaterialChipsGroup : ContentView
 {
     #region Attributes
-
-    private readonly static bool DefaultToUpper = false;
+  
     private readonly static Thickness DefaultPadding = new Thickness(12, 0);
     private readonly static Thickness DefaultChipsPadding = new Thickness(16, 0);
     private readonly static Thickness DefaultChipsMargin = new Thickness(6);
@@ -62,17 +63,8 @@ public class MaterialChipsGroup : ContentView
     private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialLightTheme.Error }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultLabelSize = MaterialFontSize.BodySmall;
     private readonly static double DefaultSupportingSize = MaterialFontSize.BodySmall;
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultSelectedTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimary, Dark = MaterialLightTheme.OnPrimary }.GetValueForCurrentTheme<Color>();
-    //TODO: Validar si la propiedad continua y cual es el equivalente del color
-    //private readonly static Color DefaultDisabledTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialLightTheme.Disable }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultDisabledSelectedTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialLightTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultSelectedBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
-    //TODO: Validar si la propiedad continua y cual es el equivalente del color
-    //private readonly static Color DefaultDisabledBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.DisableContainer, Dark = MaterialLightTheme.DisableContainer }.GetValueForCurrentTheme<Color>();
-    //TODO: Validar si la propiedad continua y cual es el equivalente del color
-    //private readonly static Color DefaultDisabledSelectedBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialLightTheme.Disable }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();        
+    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();   
     private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultFontSize = MaterialFontSize.LabelLarge;
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
@@ -86,8 +78,6 @@ public class MaterialChipsGroup : ContentView
 
     #region Bindable Properties
 
-    public static readonly BindableProperty ToUpperProperty = BindableProperty.Create(nameof(ToUpper), typeof(bool), typeof(MaterialChipsGroup), defaultValue: DefaultToUpper);
-
     public static readonly new BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialChipsGroup), defaultValue: DefaultPadding);
 
     public static readonly BindableProperty ChipsPaddingProperty = BindableProperty.Create(nameof(ChipsPadding), typeof(Thickness), typeof(MaterialChipsGroup), defaultValue: DefaultChipsPadding);
@@ -98,7 +88,13 @@ public class MaterialChipsGroup : ContentView
 
     public static readonly BindableProperty ChipsFlexLayoutBasisPercentageProperty = BindableProperty.Create(nameof(ChipsFlexLayoutPercentageBasis), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultChipsFlexLayoutBasisPercentage);
 
-    public static readonly new BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialChipsGroup), defaultValue: DefaultIsEnabled);
+    public static readonly new BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialChipsGroup), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialChipsGroup self)
+        {
+            self.SetIsEnabled(newValue);
+        }
+    });    
 
     public static readonly BindableProperty LabelTextProperty = BindableProperty.Create(nameof(LabelText), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultLabelText);
 
@@ -106,15 +102,15 @@ public class MaterialChipsGroup : ContentView
     {
         if (bindable is MaterialChipsGroup self)
         {
-           // self.SetState(self.Type);
+           self.SetItemsSource(newValue);
         }
-    });
+    });   
 
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedItem, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialChipsGroup self)
         {
-            // self.SetState(self.Type);
+            self.SetSelectedItem();
         }
     });
 
@@ -122,12 +118,18 @@ public class MaterialChipsGroup : ContentView
     {
         if (bindable is MaterialChipsGroup self)
         {
-            // self.SetState(self.Type);
+            self.SetSelectedItems();
         }
     });
 
-    //TODO: Validar como manejar el último parámetro que venía en esta propiedad: , validateValue: OnSupportingTextValidate
-    public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultSupportingText);
+    public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultSupportingText, propertyChanged: async (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialChipsGroup self)
+        {
+            await self.ValidateText(newValue);
+        }
+
+    });   
 
     public static readonly BindableProperty LabelTextColorProperty = BindableProperty.Create(nameof(LabelTextColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultLabelTextColor);
 
@@ -137,24 +139,9 @@ public class MaterialChipsGroup : ContentView
 
     public static readonly BindableProperty SupportingSizeProperty = BindableProperty.Create(nameof(SupportingSize), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultSupportingSize);
 
-    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultTextColor);
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultTextColor);        
 
-    public static readonly BindableProperty SelectedTextColorProperty = BindableProperty.Create(nameof(SelectedTextColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedTextColor);
-
-    //TODO: Validar si la propiedad continua y cual es el equivalente del color
-    //public static readonly BindableProperty DisabledTextColorProperty = BindableProperty.Create(nameof(DisabledTextColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultDisabledTextColor);
-
-    public static readonly BindableProperty DisabledSelectedTextColorProperty = BindableProperty.Create(nameof(DisabledSelectedTextColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultDisabledSelectedTextColor);
-
-    public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultBackgroundColor);
-
-    public static readonly BindableProperty SelectedBackgroundColorProperty = BindableProperty.Create(nameof(SelectedBackgroundColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedBackgroundColor);
-
-    //TODO: Validar si la propiedad continua y cual es el equivalente del color
-    //public static readonly BindableProperty DisabledBackgroundColorProperty = BindableProperty.Create(nameof(DisabledBackgroundColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultDisabledBackgroundColor);
-
-    //TODO: Validar si la propiedad continua y cual es el equivalente del color
-    //public static readonly BindableProperty DisabledSelectedBackgroundColorProperty = BindableProperty.Create(nameof(DisabledSelectedBackgroundColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultDisabledSelectedBackgroundColor);
+    public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultBackgroundColor);        
 
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultBorderColor);
 
@@ -175,12 +162,6 @@ public class MaterialChipsGroup : ContentView
     #endregion
 
     #region Properties
-
-    public bool ToUpper
-    {
-        get { return (bool)GetValue(ToUpperProperty); }
-        set { SetValue(ToUpperProperty, value); }
-    }
 
     public new Thickness Padding
     {
@@ -278,50 +259,11 @@ public class MaterialChipsGroup : ContentView
         set { SetValue(TextColorProperty, value); }
     }
 
-    public Color SelectedTextColor
-    {
-        get { return (Color)GetValue(SelectedTextColorProperty); }
-        set { SetValue(SelectedTextColorProperty, value); }
-    }
-
-    //TODO: Validar si la propiedad continua y cual es el equivalente del color
-    //public Color DisabledTextColor
-    //{
-    //    get { return (Color)GetValue(DisabledTextColorProperty); }
-    //    set { SetValue(DisabledTextColorProperty, value); }
-    //}
-
-    public Color DisabledSelectedTextColor
-    {
-        get { return (Color)GetValue(DisabledSelectedTextColorProperty); }
-        set { SetValue(DisabledSelectedTextColorProperty, value); }
-    }
-
     public new Color BackgroundColor
     {
         get { return (Color)GetValue(BackgroundColorProperty); }
         set { SetValue(BackgroundColorProperty, value); }
     }
-
-    public Color SelectedBackgroundColor
-    {
-        get { return (Color)GetValue(SelectedBackgroundColorProperty); }
-        set { SetValue(SelectedBackgroundColorProperty, value); }
-    }
-
-    //TODO: Validar si la propiedad continua y cual es el equivalente del color
-    //public Color DisabledBackgroundColor
-    //{
-    //    get { return (Color)GetValue(DisabledBackgroundColorProperty); }
-    //    set { SetValue(DisabledBackgroundColorProperty, value); }
-    //}
-
-    //TODO: Validar si la propiedad continua y cual es el equivalente del color
-    //public Color DisabledSelectedBackgroundColor
-    //{
-    //    get { return (Color)GetValue(DisabledSelectedBackgroundColorProperty); }
-    //    set { SetValue(DisabledSelectedBackgroundColorProperty, value); }
-    //}
 
     public Color BorderColor
     {
@@ -378,8 +320,7 @@ public class MaterialChipsGroup : ContentView
 
     #region Layout
 
-    private StackLayout _container;
-    private MaterialLabel _lblLabel;
+    private MaterialLabel _textLabel;
     private FlexLayout _flexContainer;
     private MaterialLabel _lblSupporting;
 
@@ -389,12 +330,7 @@ public class MaterialChipsGroup : ContentView
 
     public MaterialChipsGroup()
     {
-        _container = new StackLayout()
-        {
-            Spacing = 2,
-        };
-
-        _lblLabel = new MaterialLabel()
+        _textLabel = new MaterialLabel()
         {
             IsVisible = false,
             LineBreakMode = LineBreakMode.NoWrap,
@@ -422,13 +358,167 @@ public class MaterialChipsGroup : ContentView
             FontFamily = FontFamily,
             FontSize = SupportingSize
         };
+
+        var container = new StackLayout()
+        {
+            _textLabel,
+            _flexContainer,
+            _lblSupporting
+        };
+
+        _textLabel.SetBinding(Label.TextProperty, new Binding(nameof(LabelText), source: this));
+        _textLabel.SetBinding(Label.IsVisibleProperty, new Binding(nameof(LabelText), source: this, converter: new TextToBooleanConverter()));
+        _textLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(TextColor), source: this));
+        _textLabel.SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        _textLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+
+        _flexContainer.SetBinding(FlexLayout.PaddingProperty, new Binding(nameof(Padding), source: this));
+        
+        _lblSupporting.SetBinding(MaterialLabel.PaddingProperty, new Binding(nameof(Padding), source: this));
+        _lblSupporting.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SupportingText), source: this));
+        _lblSupporting.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingSize), source: this));
+        _lblSupporting.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(SupportingSize), source: this, converter: new TextToBooleanConverter()));
+
+        container.Spacing = 2;
+
+        Content = container;
     }
 
     #endregion
 
     #region Setters
+
+    private async Task<bool> ValidateText(object value)
+    {
+        if (AnimateError && !string.IsNullOrEmpty(SupportingText) && SupportingText == (string)value)
+            await ShakeAnimation.AnimateAsync(Content);
+
+        return true;
+    }
+
+    private void SetSelectedItem()
+    {
+        if (_flexContainer.Children != null && SelectedItem != null)
+        {
+            foreach (var item in _flexContainer.Children)
+            {
+                if (item is MaterialChips itemMC)
+                    itemMC.IsSelected = itemMC.Text.Equals(SelectedItem);
+            }
+        }
+    }
+
+    private void SetSelectedItems()
+    {
+        if (_flexContainer.Children != null && SelectedItems != null && SelectedItems.Any())
+        {
+            foreach (var item in _flexContainer.Children)
+            {
+                if (item is MaterialChips itemMC)
+                    itemMC.IsSelected = SelectedItems.Contains((itemMC).Text);
+            }
+        }
+    }
+
+    private void SetItemsSource(object newValue)
+    {
+        _flexContainer.Children.Clear();
+
+        if (newValue != null && newValue is IEnumerable<string>)
+        {
+            foreach (var item in (IEnumerable<string>)newValue)
+            {
+                var materialChips = new MaterialChips
+                {
+                    Text = item.ToString(),
+                    FontSize = FontSize,
+                    FontFamily = FontFamily,
+                    CornerRadius = CornerRadius,
+                    Padding = ChipsPadding,
+                    Margin = ChipsMargin,
+                    BackgroundColor = BackgroundColor,
+                    TextColor = TextColor,                                                                               
+                    BorderColor = BorderColor,
+                    IsEnabled = IsEnabled,
+                    Animation = Animation,
+                    AnimationParameter = AnimationParameter
+                };
+
+                materialChips.HeightRequest = ChipsHeightRequest;
+
+                if (IsMultipleSelection)
+                {
+                    if (SelectedItems != null && SelectedItems.Any())
+                        materialChips.IsSelected = SelectedItems.Contains(materialChips.Text);
+                }
+                else
+                {
+                    if (SelectedItem != null)
+                        materialChips.IsSelected = materialChips.Text.Equals(SelectedItem);
+                }
+
+                materialChips.Command = new Command(() => SelectionCommand(materialChips));
+
+                _flexContainer.Children.Add(materialChips);
+
+                if (ChipsFlexLayoutPercentageBasis > 0 && ChipsFlexLayoutPercentageBasis <= 1)
+                    FlexLayout.SetBasis(materialChips, new FlexBasis((float)ChipsFlexLayoutPercentageBasis, true));
+            }
+        }
+    }
+
+    private void SetIsEnabled(object newValue)
+    {
+        foreach (var view in _flexContainer.Children)
+        {
+            if (view is MaterialChips materialChips)
+                materialChips.IsEnabled = IsEnabled;
+        }
+    }
+
+    private void SelectionCommand(MaterialChips materialChips)
+    {
+        if (!IsEnabled)
+            return;
+
+        if (materialChips is MaterialChips)
+        {
+            if (IsMultipleSelection)
+            {
+                var selectedItems = SelectedItems == null ? new List<string>() : SelectedItems.Select(x => x).ToList();
+
+                materialChips.IsSelected = !materialChips.IsSelected;
+
+                if (materialChips.IsSelected && !selectedItems.Contains(materialChips.Text))
+                    selectedItems.Add(materialChips.Text);
+                else if (selectedItems.Contains(materialChips.Text))
+                    selectedItems.Remove(materialChips.Text);
+
+                SelectedItems = selectedItems;
+            }
+            else
+            {
+                foreach (var item in _flexContainer.Children)
+                {
+                    ((MaterialChips)item).IsSelected = false;
+                }
+
+                materialChips.IsSelected = !materialChips.IsSelected;
+
+                SelectedItem = materialChips.Text;
+            }
+        }
+    }
+
+
     #endregion
 
     #region Styles
+
+    internal static IEnumerable<Style> GetStyles()
+    {
+        return null;
+    }
+
     #endregion
 }
