@@ -8,7 +8,7 @@
         <Style x:Key="HomeCard" TargetType="Border">
             <Setter Property="Stroke" Value="Transparent" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="Background" Value="{StaticResource Tone1}" />
             <Setter Property="StrokeShape" Value="RoundRectangle 24" />
         </Style>
 

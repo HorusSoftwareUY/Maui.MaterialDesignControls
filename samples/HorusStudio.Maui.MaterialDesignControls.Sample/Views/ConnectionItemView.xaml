@@ -31,7 +31,7 @@
         </Style>
 
         <Style x:Key="ConnectionName" TargetType="material:MaterialLabel">
-            <Setter Property="TextColor" Value="{StaticResource RegularFontColor}" />
+            <Setter Property="TextColor" Value="{StaticResource Tone9}" />
             <Setter Property="Grid.Column" Value="1" />
             <Setter Property="VerticalOptions" Value="Center" />
             <Setter Property="HorizontalOptions" Value="Start" />

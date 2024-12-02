@@ -14,7 +14,7 @@
         <Style x:Key="MainCard" TargetType="Border">
             <Setter Property="Stroke" Value="Transparent" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="Background" Value="{StaticResource Tone1}" />
             <Setter Property="StrokeShape" Value="RoundRectangle 24" />
         </Style>
 
@@ -37,9 +37,9 @@
 
     <Grid RowDefinitions="48,*">
         <Grid Grid.Row="0" ColumnDefinitions="24,*,24,*,24" Padding="16,0">
-            <ImageButton Grid.Column="0" Source="menu.png" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding ToggleMenuCommand}" />
+            <ImageButton Grid.Column="0" Source="menu" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding ToggleMenuCommand}" />
             <Image Grid.Column="2" Source="horus_studio_logo" HeightRequest="24" Aspect="Center" />
-            <ImageButton Grid.Column="4" Source="info.png" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding AboutUsCommand}" />
+            <ImageButton Grid.Column="4" Source="info" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding AboutUsCommand}" />
         </Grid>
 
         <ScrollView Grid.Row="1">

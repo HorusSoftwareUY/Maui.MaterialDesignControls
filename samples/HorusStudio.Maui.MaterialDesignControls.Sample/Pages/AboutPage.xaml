@@ -21,7 +21,7 @@
             <Setter Property="Padding" Value="0,18,0,18" />
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="Type" Value="BodyMedium" />
-            <Setter Property="TextColor" Value="{StaticResource OutstandingFontColor}" />
+            <Setter Property="TextColor" Value="{StaticResource Tone6}" />
         </Style>
 
     </ContentPage.Resources>
