@@ -5,66 +5,58 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Name="shell"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     xmlns:viewModels="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     Shell.FlyoutBehavior="Flyout">
-
-    <Shell.Resources>
-
-        <Style x:Key="GroupName" TargetType="material:MaterialLabel">
-            <Setter Property="Padding" Value="0, 18" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="Type" Value="BodyMedium" />
-            <Setter Property="TextColor" Value="{StaticResource Tone6}" />
-        </Style>
-
-        <Style x:Key="ItemName" TargetType="material:MaterialLabel">
-            <Setter Property="TextColor" Value="{StaticResource Tone9}" />
-            <Setter Property="Padding" Value="8, 18" />
-            <Setter Property="VerticalOptions" Value="Center" />
-            <Setter Property="HorizontalOptions" Value="Start" />
-            <Setter Property="LineBreakMode" Value="TailTruncation" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="Type" Value="BodyMedium" />
-        </Style>
-
-    </Shell.Resources>
 
     <ShellContent
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainViewModel" />
 
     <Shell.FlyoutContent>
-
-        <Grid Padding="28" Background="{StaticResource Tone1}">
+        <ContentView 
+            Padding="28" 
+            Background="{StaticResource Tone1}">
             <CollectionView ItemsSource="{Binding MenuGroups}"
                  IsGrouped="True">
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate>
-                        <material:MaterialLabel Style="{StaticResource GroupName}" Text="{Binding GroupName}" />
+                        <VerticalStackLayout
+                            HeightRequest="56"
+                            Spacing="16">
+                            <material:MaterialDivider
+                                VerticalOptions="Start"/>
+                            <material:MaterialLabel 
+                                VerticalOptions="Center"
+                                FontAttributes="Bold" 
+                                Type="BodyMedium"
+                                TextColor="{StaticResource Tone6}"
+                                Text="{Binding GroupName}" />
+                        </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.GroupHeaderTemplate>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <material:MaterialLabel Style="{StaticResource ItemName}" Text="{Binding Title}" >
-                            <material:MaterialLabel.GestureRecognizers>
-                               
-                                <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, Path=NavigateCommand}"
-                                    CommandParameter="{Binding}" />
-                                
-                            </material:MaterialLabel.GestureRecognizers>
-                        </material:MaterialLabel>
+                        <ContentView 
+                            HeightRequest="56"
+                            Padding="8,0">
+                            <material:MaterialLabel 
+                                Text="{Binding Title}"
+                                FontAttributes="Bold"
+                                Type="BodyMedium"
+                                VerticalOptions="Center"
+                                LineBreakMode="TailTruncation"
+                                TextColor="{StaticResource Tone9}"/>
+                            <ContentView.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, 
+                                        Path=NavigateCommand}"
+                                    CommandParameter="{Binding}"/>
+                            </ContentView.GestureRecognizers>
+                        </ContentView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-                <CollectionView.GroupFooterTemplate>
-                    <DataTemplate>
-                        <material:MaterialDivider />
-                    </DataTemplate>
-                </CollectionView.GroupFooterTemplate>
             </CollectionView>
-        </Grid>
-       
+        </ContentView>
     </Shell.FlyoutContent>
 </Shell>
