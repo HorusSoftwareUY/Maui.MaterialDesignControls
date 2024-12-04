@@ -6,7 +6,7 @@
     <ContentView.Resources>
 
         <Style x:Key="HomeCard" TargetType="material:MaterialCard">
-            <Setter Property="Background" Value="{StaticResource Tone1}" />
+            <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.SurfaceContainerLow}" />
             <Setter Property="CornerRadius" Value="24" />
         </Style>
 

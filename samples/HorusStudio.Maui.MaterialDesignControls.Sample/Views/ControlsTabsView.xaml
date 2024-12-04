@@ -7,7 +7,7 @@
     <ContentView.Resources>
         <Style x:Key="Tab" TargetType="Border">
             <Setter Property="HeightRequest" Value="40" />
-            <Setter Property="Stroke" Value="{StaticResource Tone5}" />
+            <Setter Property="Stroke" Value="{x:Static material:MaterialLightTheme.Outline}" />
             <Setter Property="Background" Value="White" />
         </Style>
 

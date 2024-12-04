@@ -8,7 +8,7 @@
 
         <Style x:Key="AboutCard" TargetType="material:MaterialCard">
             <Setter Property="Padding" Value="24" />
-            <Setter Property="Background" Value="{StaticResource Tone1}" />
+            <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.SurfaceContainerLow}" />
             <Setter Property="CornerRadius" Value="24" />
         </Style>
 
