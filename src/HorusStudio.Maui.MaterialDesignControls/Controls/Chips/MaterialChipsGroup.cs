@@ -1,12 +1,11 @@
 ﻿
-using HorusStudio.Maui.MaterialDesignControls;
 using HorusStudio.Maui.MaterialDesignControls.Converters;
 using Microsoft.Maui.Layouts;
 
-namespace HorusStudio.Maui.MaterialDesign..Chips;
+namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A Chips help people enter information, make selections, filter content, or trigger actions <see href="https://m3.material.io/components/chips/overview">see here.</see>
+/// Chips group facilitate the selection of one or more options within a group, optimizing space usage effectively <see href="https://m3.material.io/components/chips/overview">see here.</see>
 /// </summary>
 /// <example>
 ///
@@ -17,42 +16,39 @@ namespace HorusStudio.Maui.MaterialDesign..Chips;
 /// <xaml>
 /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesign;assembly=HorusStudio.Maui.MaterialDesign"
 /// 
-/// &lt;material:MaterialChips
-///        Type="Normal"
-///        IconStateOnSelection="BothVisible"
-///        LeadingIcon="plus.png"
-///        Text="Suggestion both"
-///        TrailingIcon="horus_logo.png"/&gt;
+/// &lt;material:MaterialChipsGroup
+///        IsMultipleSelection="True"
+///        ItemsSource="{Binding Colors}"
+///        LabelText="Colors *"
+///        SelectedItems="{Binding SelectedColors}"
+///        SupportingText="Please select at least 4 colors"/&gt;
 /// </xaml>
 /// </code>
 /// 
 /// <h3>C# sample</h3>
 /// <code>
-/// var chips = new MaterialChips
+/// var chips = new MaterialChipsGroup
 /// {
-///     Type = MaterialChipsType.Normal,
-///     IconStateOnSelection = IconStateType.BothVisible,
-///     LeadingIcon = "plus.png",
-///     Text = "Suggestion both",
-///     TrailingIcon="horus_logo.png"
+///     IsMultipleSelection = true,
+///     ItemsSource = Colors,
+///     LabelText = "Colors *",
+///     SelectedItems = "SelectedColors",
+///     SupportingText="Please select at least 4 colors"
 /// };
 ///</code>
 ///
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesign.Sample/Pages/ChipsPage.xaml)
 /// 
 /// </example>
-/// <todoList>
-/// * Modify all comments before this line
-/// </todoList>
 public class MaterialChipsGroup : ContentView
 {
     #region Attributes
-  
+
     private readonly static Thickness DefaultPadding = new Thickness(12, 0);
     private readonly static Thickness DefaultChipsPadding = new Thickness(16, 0);
-    private readonly static Thickness DefaultChipsMargin = new Thickness(6);
+    private readonly static Thickness DefaultChipsMargin = new Thickness(2);
     private readonly static double DefaultChipsHeightRequest = 32.0;
-    private readonly static double DefaultChipsFlexLayoutBasisPercentage = 0.0;
+    private readonly static double DefaultChipsFlexLayoutPercentageBasis = 0.0;
     private readonly static bool DefaultIsEnabled = true;
     private readonly static string DefaultLabelText = null;
     private readonly static IEnumerable<string> DefaultItemsSource = null;
@@ -63,274 +59,553 @@ public class MaterialChipsGroup : ContentView
     private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialLightTheme.Error }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultLabelSize = MaterialFontSize.BodySmall;
     private readonly static double DefaultSupportingSize = MaterialFontSize.BodySmall;
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();        
-    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();   
-    private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerLow, Dark = MaterialDarkTheme.SurfaceContainerLow }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultFontSize = MaterialFontSize.LabelLarge;
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCornerRadius = 16.0;
+    private readonly static double DefaultCornerRadius = 8.0;
     private readonly static bool DefaultAnimateError = MaterialAnimation.AnimateOnError;
     private readonly static bool DefaultIsMultipleSelection = false;
     private readonly static AnimationTypes DefaultAnimation = MaterialAnimation.Type;
     private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
 
-    #endregion
+    #endregion Attributes
 
     #region Bindable Properties
 
+    /// <summary>
+    /// The backing store for the <see cref="Padding" />
+    /// bindable property.
+    /// </summary>
     public static readonly new BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialChipsGroup), defaultValue: DefaultPadding);
 
+    /// <summary>
+    /// The backing store for the <see cref="ChipsPadding" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty ChipsPaddingProperty = BindableProperty.Create(nameof(ChipsPadding), typeof(Thickness), typeof(MaterialChipsGroup), defaultValue: DefaultChipsPadding);
 
+    /// <summary>
+    /// The backing store for the <see cref="ChipsMargin" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty ChipsMarginProperty = BindableProperty.Create(nameof(ChipsMargin), typeof(Thickness), typeof(MaterialChipsGroup), defaultValue: DefaultChipsMargin);
 
+    /// <summary>
+    /// The backing store for the <see cref="ChipsHeightRequest" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty ChipsHeightRequestProperty = BindableProperty.Create(nameof(ChipsHeightRequest), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultChipsHeightRequest);
 
-    public static readonly BindableProperty ChipsFlexLayoutBasisPercentageProperty = BindableProperty.Create(nameof(ChipsFlexLayoutPercentageBasis), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultChipsFlexLayoutBasisPercentage);
+    /// <summary>
+    /// The backing store for the <see cref="ChipsFlexLayoutPercentageBasis" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty ChipsFlexLayoutBasisPercentageProperty = BindableProperty.Create(nameof(ChipsFlexLayoutPercentageBasis), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultChipsFlexLayoutPercentageBasis);
 
+    /// <summary>
+    /// The backing store for the <see cref="IsEnabled" />
+    /// bindable property.
+    /// </summary>
     public static readonly new BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialChipsGroup), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialChipsGroup self)
         {
             self.SetIsEnabled(newValue);
         }
-    });    
+    });
 
+    /// <summary>
+    /// The backing store for the <see cref="LabelText" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty LabelTextProperty = BindableProperty.Create(nameof(LabelText), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultLabelText);
 
+    /// <summary>
+    /// The backing store for the <see cref="ItemsSource" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<string>), typeof(MaterialChipsGroup), defaultValue: DefaultItemsSource, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialChipsGroup self)
         {
-           self.SetItemsSource(newValue);
+            self.SetItemsSource(newValue);
         }
-    });   
+    });
 
+    /// <summary>
+    /// The backing store for the <see cref="SelectedItem" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedItem, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialChipsGroup self)
         {
             self.SetSelectedItem();
         }
-    });
+    }, defaultBindingMode: BindingMode.TwoWay);
 
+    /// <summary>
+    /// The backing store for the <see cref="SelectedItems" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(List<string>), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedItems, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialChipsGroup self)
         {
             self.SetSelectedItems();
         }
-    });
+    }, defaultBindingMode: BindingMode.TwoWay);
 
+    /// <summary>
+    /// The backing store for the <see cref="SupportingText" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultSupportingText, propertyChanged: async (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialChipsGroup self)
         {
             await self.ValidateText(newValue);
         }
+    });
 
-    });   
-
+    /// <summary>
+    /// The backing store for the <see cref="LabelTextColor" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty LabelTextColorProperty = BindableProperty.Create(nameof(LabelTextColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultLabelTextColor);
 
+    /// <summary>
+    /// The backing store for the <see cref="SupportingTextColor" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty SupportingTextColorProperty = BindableProperty.Create(nameof(SupportingTextColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultSupportingTextColor);
 
+    /// <summary>
+    /// The backing store for the <see cref="LabelSize" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty LabelSizeProperty = BindableProperty.Create(nameof(LabelSize), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultLabelSize);
 
+    /// <summary>
+    /// The backing store for the <see cref="SupportingSize" />
+    /// bindable property.
+    /// </summary>   
     public static readonly BindableProperty SupportingSizeProperty = BindableProperty.Create(nameof(SupportingSize), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultSupportingSize);
 
-    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultTextColor);        
+    /// <summary>
+    /// The backing store for the <see cref="TextColor" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultTextColor);
 
-    public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultBackgroundColor);        
+    /// <summary>
+    /// The backing store for the <see cref="BackgroundColor" />
+    /// bindable property.
+    /// </summary>
+    public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultBackgroundColor);
 
+    /// <summary>
+    /// The backing store for the <see cref="BorderColor" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultBorderColor);
 
+    /// <summary>
+    /// The backing store for the <see cref="FontSize" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultFontSize);
 
+    /// <summary>
+    /// The backing store for the <see cref="FontFamily" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultFontFamily);
 
+    /// <summary>
+    /// The backing store for the <see cref="CornerRadius" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultCornerRadius);
 
+    /// <summary>
+    /// The backing store for the <see cref="AnimateError" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty AnimateErrorProperty = BindableProperty.Create(nameof(AnimateError), typeof(bool), typeof(MaterialChipsGroup), defaultValue: DefaultAnimateError);
 
+    /// <summary>
+    /// The backing store for the <see cref="IsMultipleSelection" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty IsMultipleSelectionProperty = BindableProperty.Create(nameof(IsMultipleSelection), typeof(bool), typeof(MaterialChipsGroup), defaultValue: DefaultIsMultipleSelection);
 
+    /// <summary>
+    /// The backing store for the <see cref="Animation" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialChips), defaultValue: DefaultAnimation);
 
+    /// <summary>
+    /// The backing store for the <see cref="AnimationParameter" />
+    /// bindable property.
+    /// </summary>
     public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialChips), defaultValue: DefaultAnimationParameter);
 
-    #endregion
+    #endregion Bindable Properties
 
     #region Properties
 
+    /// <summary>
+    /// Gets or sets the padding for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// Thickness(12,0)
+    /// </default>
     public new Thickness Padding
     {
         get { return (Thickness)GetValue(PaddingProperty); }
         set { SetValue(PaddingProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the padding for the Chips.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// Thickness(16,0)
+    /// </default>
     public Thickness ChipsPadding
     {
         get { return (Thickness)GetValue(ChipsPaddingProperty); }
         set { SetValue(ChipsPaddingProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the margin for the Chips.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// Thickness(16,0)
+    /// </default>
     public Thickness ChipsMargin
     {
         get { return (Thickness)GetValue(ChipsMarginProperty); }
         set { SetValue(ChipsMarginProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the height for the Chips.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// 32.0
+    /// </default>
     public double ChipsHeightRequest
     {
         get { return (double)GetValue(ChipsHeightRequestProperty); }
         set { SetValue(ChipsHeightRequestProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the basis for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// 0.0
+    /// </default>
     public double ChipsFlexLayoutPercentageBasis
     {
         get { return (double)GetValue(ChipsFlexLayoutBasisPercentageProperty); }
         set { SetValue(ChipsFlexLayoutBasisPercentageProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the state when the Chips is enabled.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="True"/>
+    /// </default>
     public new bool IsEnabled
     {
         get { return (bool)GetValue(IsEnabledProperty); }
         set { SetValue(IsEnabledProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the text for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public string LabelText
     {
         get { return (string)GetValue(LabelTextProperty); }
         set { SetValue(LabelTextProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the source of the items for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public IEnumerable<string> ItemsSource
     {
         get { return (IEnumerable<string>)GetValue(ItemsSourceProperty); }
         set { SetValue(ItemsSourceProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the selected item for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public string SelectedItem
     {
         get { return (string)GetValue(SelectedItemProperty); }
         set { SetValue(SelectedItemProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the selected items for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public List<string> SelectedItems
     {
         get { return (List<string>)GetValue(SelectedItemsProperty); }
         set { SetValue(SelectedItemsProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the supporting text for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public string SupportingText
     {
         get { return (string)GetValue(SupportingTextProperty); }
         set { SetValue(SupportingTextProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the font color of text for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// Theme: Light = <see cref="MaterialLightTheme.Text">MaterialLightTheme.Text</see> - Dark = <see cref="MaterialDarkTheme.Text">MaterialDarkTheme.Text</see>
+    /// </default>
     public Color LabelTextColor
     {
         get { return (Color)GetValue(LabelTextColorProperty); }
         set { SetValue(LabelTextColorProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the font color of supporting text for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// Theme: Light = <see cref="MaterialLightTheme.Error">MaterialLightTheme.Error</see> - Dark = <see cref="MaterialDarkTheme.Error">MaterialDarkTheme.Error</see>
+    /// </default>
     public Color SupportingTextColor
     {
         get { return (Color)GetValue(SupportingTextColorProperty); }
         set { SetValue(SupportingTextColorProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the font size of text for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.BodySmall">MaterialFontSize.BodySmall</see> / Tablet = 15 / Phone = 12
+    /// </default>
     public double LabelSize
     {
         get { return (double)GetValue(LabelSizeProperty); }
         set { SetValue(LabelSizeProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the font size of supporting text for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.BodySmall">MaterialFontSize.BodySmall</see> / Tablet = 15 / Phone = 12
+    /// </default>
     public double SupportingSize
     {
         get { return (double)GetValue(SupportingSizeProperty); }
         set { SetValue(SupportingSizeProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the font color of text for the Chips.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// Theme: Light = <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark = <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+    /// </default>
     public Color TextColor
     {
         get { return (Color)GetValue(TextColorProperty); }
         set { SetValue(TextColorProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the background color for the Chips.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// Theme: Light = <see cref="MaterialLightTheme.SurfaceContainerLow">MaterialLightTheme.SurfaceContainerLow</see> - Dark = <see cref="MaterialDarkTheme.SurfaceContainerLow">MaterialDarkTheme.SurfaceContainerLow</see>
+    /// </default>
     public new Color BackgroundColor
     {
         get { return (Color)GetValue(BackgroundColorProperty); }
         set { SetValue(BackgroundColorProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the border color for the Chips.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// Theme: Light = <see cref="MaterialLightTheme.Outline">MaterialLightTheme.Outline</see> - Dark = <see cref="MaterialDarkTheme.Outline">MaterialDarkTheme.Outline</see>
+    /// </default>
     public Color BorderColor
     {
         get { return (Color)GetValue(BorderColorProperty); }
         set { SetValue(BorderColorProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the font size of text for the Chips.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.LabelLarge">MaterialFontSize.LabelLarge</see> / Tablet = 17 / Phone = 14
+    /// </default>
     public double FontSize
     {
         get { return (double)GetValue(FontSizeProperty); }
         set { SetValue(FontSizeProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the font family of text for the Chips.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
+    /// </default>
     public string FontFamily
     {
         get { return (string)GetValue(FontFamilyProperty); }
         set { SetValue(FontFamilyProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the corner radius for the Chips.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// 8.0
+    /// </default>
     public double CornerRadius
     {
         get { return (double)GetValue(CornerRadiusProperty); }
         set { SetValue(CornerRadiusProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets if the error animation is enabled for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="True"/>
+    /// </default>
     public bool AnimateError
     {
         get { return (bool)GetValue(AnimateErrorProperty); }
         set { SetValue(AnimateErrorProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets if the multi selection is enabled for the ChipsGroup.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="False"/>
+    /// </default>
     public bool IsMultipleSelection
     {
         get { return (bool)GetValue(IsMultipleSelectionProperty); }
         set { SetValue(IsMultipleSelectionProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets an animation to be executed when is clicked.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="AnimationTypes.Fade"> AnimationTypes.Fade </see>
+    /// </default>
     public AnimationTypes Animation
     {
         get { return (AnimationTypes)GetValue(AnimationProperty); }
         set { SetValue(AnimationProperty, value); }
     }
 
+    /// <summary>
+    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public double? AnimationParameter
     {
         get { return (double?)GetValue(AnimationParameterProperty); }
         set { SetValue(AnimationParameterProperty, value); }
     }
 
-    #endregion
-
-    #region Events
-    #endregion
+    #endregion Properties
 
     #region Layout
 
-    private MaterialLabel _textLabel;
     private FlexLayout _flexContainer;
+    private MaterialLabel _textLabel;
     private MaterialLabel _lblSupporting;
+    private ContentView _contentView;
 
-    #endregion
+    #endregion Layout
 
     #region Constructor
 
     public MaterialChipsGroup()
     {
-        _textLabel = new MaterialLabel()
+        _flexContainer = new FlexLayout
+        {
+            Wrap = FlexWrap.Wrap,
+            Direction = FlexDirection.Row,
+            JustifyContent = FlexJustify.Start,
+        };
+
+        _textLabel = new MaterialLabel
         {
             IsVisible = false,
             LineBreakMode = LineBreakMode.NoWrap,
@@ -341,14 +616,7 @@ public class MaterialChipsGroup : ContentView
             FontSize = LabelSize
         };
 
-        _flexContainer = new FlexLayout()
-        {
-            Wrap = FlexWrap.Wrap,
-            Direction = FlexDirection.Row,
-            JustifyContent = FlexJustify.Start
-        };
-
-        _lblSupporting = new MaterialLabel()
+        _lblSupporting = new MaterialLabel
         {
             IsVisible = false,
             LineBreakMode = LineBreakMode.NoWrap,
@@ -356,42 +624,49 @@ public class MaterialChipsGroup : ContentView
             HorizontalTextAlignment = TextAlignment.Start,
             TextColor = SupportingTextColor,
             FontFamily = FontFamily,
-            FontSize = SupportingSize
+            FontSize = SupportingSize,
         };
 
-        var container = new StackLayout()
+        _contentView = new ContentView
         {
-            _textLabel,
-            _flexContainer,
-            _lblSupporting
+            Content = _flexContainer,
         };
 
         _textLabel.SetBinding(Label.TextProperty, new Binding(nameof(LabelText), source: this));
         _textLabel.SetBinding(Label.IsVisibleProperty, new Binding(nameof(LabelText), source: this, converter: new TextToBooleanConverter()));
-        _textLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(TextColor), source: this));
-        _textLabel.SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        _textLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(LabelTextColor), source: this));
         _textLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        _textLabel.SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
 
-        _flexContainer.SetBinding(FlexLayout.PaddingProperty, new Binding(nameof(Padding), source: this));
-        
-        _lblSupporting.SetBinding(MaterialLabel.PaddingProperty, new Binding(nameof(Padding), source: this));
-        _lblSupporting.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SupportingText), source: this));
+        _lblSupporting.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(SupportingText), source: this));
+        _lblSupporting.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(SupportingText), source: this, converter: new TextToBooleanConverter()));
+        _lblSupporting.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SupportingTextColor), source: this));
         _lblSupporting.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingSize), source: this));
-        _lblSupporting.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(SupportingSize), source: this, converter: new TextToBooleanConverter()));
+
+        _contentView.SetBinding(ContentView.PaddingProperty, new Binding(nameof(Padding), source: this));
+
+        var container = new VerticalStackLayout
+        {
+            _textLabel,
+            _contentView,
+            _lblSupporting
+        };
 
         container.Spacing = 2;
 
         Content = container;
     }
 
-    #endregion
+    #endregion Constructor
 
     #region Setters
 
     private async Task<bool> ValidateText(object value)
     {
         if (AnimateError && !string.IsNullOrEmpty(SupportingText) && SupportingText == (string)value)
+        {
             await ShakeAnimation.AnimateAsync(Content);
+        }
 
         return true;
     }
@@ -403,7 +678,9 @@ public class MaterialChipsGroup : ContentView
             foreach (var item in _flexContainer.Children)
             {
                 if (item is MaterialChips itemMC)
+                {
                     itemMC.IsSelected = itemMC.Text.Equals(SelectedItem);
+                }
             }
         }
     }
@@ -415,7 +692,9 @@ public class MaterialChipsGroup : ContentView
             foreach (var item in _flexContainer.Children)
             {
                 if (item is MaterialChips itemMC)
+                {
                     itemMC.IsSelected = SelectedItems.Contains((itemMC).Text);
+                }
             }
         }
     }
@@ -430,39 +709,51 @@ public class MaterialChipsGroup : ContentView
             {
                 var materialChips = new MaterialChips
                 {
-                    Text = item.ToString(),
+                    Text = item,
                     FontSize = FontSize,
                     FontFamily = FontFamily,
                     CornerRadius = CornerRadius,
                     Padding = ChipsPadding,
                     Margin = ChipsMargin,
-                    BackgroundColor = BackgroundColor,
-                    TextColor = TextColor,                                                                               
-                    BorderColor = BorderColor,
+                    Type = MaterialChipsType.Filter,
                     IsEnabled = IsEnabled,
                     Animation = Animation,
-                    AnimationParameter = AnimationParameter
+                    AnimationParameter = AnimationParameter,
+                    HeightRequest = ChipsHeightRequest,
                 };
 
-                materialChips.HeightRequest = ChipsHeightRequest;
-
-                if (IsMultipleSelection)
+                if (DefaultBackgroundColor != BackgroundColor)
                 {
-                    if (SelectedItems != null && SelectedItems.Any())
-                        materialChips.IsSelected = SelectedItems.Contains(materialChips.Text);
+                    materialChips.BackgroundColor = BackgroundColor;
                 }
-                else
+
+                if (DefaultTextColor != TextColor)
                 {
-                    if (SelectedItem != null)
-                        materialChips.IsSelected = materialChips.Text.Equals(SelectedItem);
+                    materialChips.TextColor = TextColor;
+                }
+
+                if (DefaultBorderColor != BorderColor)
+                {
+                    materialChips.BorderColor = BorderColor;
+                }
+
+                if (IsMultipleSelection && SelectedItems != null && SelectedItems.Any())
+                {
+                    materialChips.IsSelected = SelectedItems.Contains(materialChips.Text);
+                }
+                else if (!IsMultipleSelection && SelectedItem != null)
+                {
+                    materialChips.IsSelected = materialChips.Text.Equals(SelectedItem);
                 }
 
                 materialChips.Command = new Command(() => SelectionCommand(materialChips));
 
-                _flexContainer.Children.Add(materialChips);
-
                 if (ChipsFlexLayoutPercentageBasis > 0 && ChipsFlexLayoutPercentageBasis <= 1)
+                {
                     FlexLayout.SetBasis(materialChips, new FlexBasis((float)ChipsFlexLayoutPercentageBasis, true));
+                }
+
+                _flexContainer.Children.Add(materialChips);
             }
         }
     }
@@ -472,14 +763,19 @@ public class MaterialChipsGroup : ContentView
         foreach (var view in _flexContainer.Children)
         {
             if (view is MaterialChips materialChips)
+            {
                 materialChips.IsEnabled = IsEnabled;
+            }
         }
     }
 
+    #endregion Setters
+
+    #region Commands
+
     private void SelectionCommand(MaterialChips materialChips)
     {
-        if (!IsEnabled)
-            return;
+        if (!IsEnabled) return;
 
         if (materialChips is MaterialChips)
         {
@@ -487,38 +783,23 @@ public class MaterialChipsGroup : ContentView
             {
                 var selectedItems = SelectedItems == null ? new List<string>() : SelectedItems.Select(x => x).ToList();
 
-                materialChips.IsSelected = !materialChips.IsSelected;
-
                 if (materialChips.IsSelected && !selectedItems.Contains(materialChips.Text))
+                {
                     selectedItems.Add(materialChips.Text);
+                }
                 else if (selectedItems.Contains(materialChips.Text))
+                {
                     selectedItems.Remove(materialChips.Text);
+                }
 
                 SelectedItems = selectedItems;
             }
             else
             {
-                foreach (var item in _flexContainer.Children)
-                {
-                    ((MaterialChips)item).IsSelected = false;
-                }
-
-                materialChips.IsSelected = !materialChips.IsSelected;
-
                 SelectedItem = materialChips.Text;
             }
         }
     }
 
-
-    #endregion
-
-    #region Styles
-
-    internal static IEnumerable<Style> GetStyles()
-    {
-        return null;
-    }
-
-    #endregion
+    #endregion Commands
 }
