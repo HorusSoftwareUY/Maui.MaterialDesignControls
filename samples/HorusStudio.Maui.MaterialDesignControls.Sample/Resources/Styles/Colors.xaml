@@ -41,18 +41,9 @@
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
-    
     <!-- Custom -->
     <Color x:Key="BackgroundColorLight">White</Color>
     <Color x:Key="BackgroundColorDark">#1D1B20</Color>
     <Color x:Key="ForegroundColorLight">#1D1B20</Color>
     <Color x:Key="ForegroundColorDark">White</Color>
-
-    <Color x:Key="Tone9">#49454F</Color>
-    <Color x:Key="Tone7">#6750A4</Color>
-    <Color x:Key="Tone6">#65558F</Color>
-    <Color x:Key="Tone5">#86818D</Color>
-    <Color x:Key="Tone4">#CAC4D0</Color>
-    <Color x:Key="Tone1">#F8F7FF</Color>
-
 </ResourceDictionary>

@@ -16,11 +16,11 @@
             <Setter Property="Padding" Value="0, 18" />
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="Type" Value="BodyMedium" />
-            <Setter Property="TextColor" Value="{StaticResource Tone6}" />
+            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.Primary}" />
         </Style>
 
         <Style x:Key="ItemName" TargetType="material:MaterialLabel">
-            <Setter Property="TextColor" Value="{StaticResource Tone9}" />
+            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.OnSurface}" />
             <Setter Property="Padding" Value="8, 18" />
             <Setter Property="VerticalOptions" Value="Center" />
             <Setter Property="HorizontalOptions" Value="Start" />
@@ -37,7 +37,7 @@
 
     <Shell.FlyoutContent>
 
-        <Grid Padding="28" Background="{StaticResource Tone1}">
+        <Grid Padding="28" Background="{x:Static material:MaterialLightTheme.SurfaceContainerLow}">
             <CollectionView ItemsSource="{Binding MenuGroups}"
                  IsGrouped="True">
                 <CollectionView.GroupHeaderTemplate>
