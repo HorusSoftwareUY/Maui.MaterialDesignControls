@@ -46,4 +46,38 @@
     <Color x:Key="BackgroundColorDark">#1D1B20</Color>
     <Color x:Key="ForegroundColorLight">#1D1B20</Color>
     <Color x:Key="ForegroundColorDark">White</Color>
+
+    <!-- To customize controls in runtime -->
+
+    <!-- Purple -->
+    <Color x:Key="PurplePrimary">#6750A4</Color>
+    <Color x:Key="PurpleSecondary">#E8DEF8</Color>
+    <Color x:Key="PurpleOutline">#767680</Color>
+    <Color x:Key="PurpleText">#1D1B20</Color>
+    <Color x:Key="PurpleTextSecondary">#49454F</Color>
+    <Color x:Key="PurpleBackground">#FFF8F7</Color>
+
+    <!-- Green -->
+    <Color x:Key="GreenPrimary">#50A465</Color>
+    <Color x:Key="GreenSecondary">#D3E8D2</Color>
+    <Color x:Key="GreenOutline">#717970</Color>
+    <Color x:Key="GreenText">#181D18</Color>
+    <Color x:Key="GreenTextSecondary">#414941</Color>
+    <Color x:Key="GreenBackground">#F6FBF2</Color>
+
+    <!-- Blue -->
+    <Color x:Key="BluePrimary">#1D4BEC</Color>
+    <Color x:Key="BlueSecondary">#DFE1F9</Color>
+    <Color x:Key="BlueOutline">#767680</Color>
+    <Color x:Key="BlueText">#1B1B21</Color>
+    <Color x:Key="BlueTextSecondary">#45464F</Color>
+    <Color x:Key="BlueBackground">#FBF8FF</Color>
+
+    <!-- Red -->
+    <Color x:Key="RedPrimary">#DD2953</Color>
+    <Color x:Key="RedSecondary">#FFDADB</Color>
+    <Color x:Key="RedOutline">#857374</Color>
+    <Color x:Key="RedText">#22191A</Color>
+    <Color x:Key="RedTextSecondary">#22191A</Color>
+    <Color x:Key="RedBackground">#FFFFFF</Color>
 </ResourceDictionary>
