@@ -1,6 +1,8 @@
 ﻿
 using HorusStudio.Maui.MaterialDesignControls.Converters;
+using HorusStudio.Maui.MaterialDesignControls.Enums;
 using Microsoft.Maui.Layouts;
+using System.Collections;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -46,7 +48,6 @@ public class MaterialChipsGroup : ContentView
 
     private readonly static Thickness DefaultPadding = new Thickness(12, 0);
     private readonly static Thickness DefaultChipsPadding = new Thickness(16, 0);
-    private readonly static Thickness DefaultChipsMargin = new Thickness(2);
     private readonly static double DefaultChipsHeightRequest = 32.0;
     private readonly static double DefaultChipsFlexLayoutPercentageBasis = 0.0;
     private readonly static bool DefaultIsEnabled = true;
@@ -69,6 +70,11 @@ public class MaterialChipsGroup : ContentView
     private readonly static bool DefaultIsMultipleSelection = false;
     private readonly static AnimationTypes DefaultAnimation = MaterialAnimation.Type;
     private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private readonly static Align DefaultAlign = Align.Start;
+    private readonly static int DefaultVerticalSpacing = 2;
+    private readonly static int DefaultHorizontalSpacing = 2;
+    private readonly static MaterialChipsType DefaultChipsType = MaterialChipsType.Filter;
+    private readonly static string DefaultPropertyPath = null;
 
     #endregion Attributes
 
@@ -85,12 +91,6 @@ public class MaterialChipsGroup : ContentView
     /// bindable property.
     /// </summary>
     public static readonly BindableProperty ChipsPaddingProperty = BindableProperty.Create(nameof(ChipsPadding), typeof(Thickness), typeof(MaterialChipsGroup), defaultValue: DefaultChipsPadding);
-
-    /// <summary>
-    /// The backing store for the <see cref="ChipsMargin" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty ChipsMarginProperty = BindableProperty.Create(nameof(ChipsMargin), typeof(Thickness), typeof(MaterialChipsGroup), defaultValue: DefaultChipsMargin);
 
     /// <summary>
     /// The backing store for the <see cref="ChipsHeightRequest" />
@@ -126,7 +126,7 @@ public class MaterialChipsGroup : ContentView
     /// The backing store for the <see cref="ItemsSource" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<string>), typeof(MaterialChipsGroup), defaultValue: DefaultItemsSource, propertyChanged: (bindable, oldValue, newValue) =>
+    public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(MaterialChipsGroup), defaultValue: DefaultItemsSource, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialChipsGroup self)
         {
@@ -246,13 +246,48 @@ public class MaterialChipsGroup : ContentView
     /// The backing store for the <see cref="Animation" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialChips), defaultValue: DefaultAnimation);
+    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialChipsGroup), defaultValue: DefaultAnimation);
 
     /// <summary>
     /// The backing store for the <see cref="AnimationParameter" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialChips), defaultValue: DefaultAnimationParameter);
+    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialChipsGroup), defaultValue: DefaultAnimationParameter);
+
+    public static readonly BindableProperty AlignProperty = BindableProperty.Create(nameof(Align), typeof(Align), typeof(MaterialChipsGroup), defaultValue: DefaultAlign);
+
+    public static readonly BindableProperty VerticalSpacingProperty = BindableProperty.Create(nameof(VerticalSpacing), typeof(int), typeof(MaterialChipsGroup), defaultValue: DefaultVerticalSpacing, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialChipsGroup self)
+        {
+            self.SetMargins();
+        }
+    });
+
+    public static readonly BindableProperty HorizontalSpacingProperty = BindableProperty.Create(nameof(HorizontalSpacing), typeof(int), typeof(MaterialChipsGroup), defaultValue: DefaultHorizontalSpacing, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialChipsGroup self)
+        {
+            self.SetMargins();
+        }
+    });
+
+    /// <summary>
+    /// The backing store for the <see cref="MaterialChipsType" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialChipsType), typeof(MaterialChipsGroup), defaultValue: DefaultChipsType, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialChipsGroup self)
+        {
+            self.SetType(self.Type);
+        }
+    });
+
+    /// <summary>
+    /// The backing store for the <see cref="PropertyPath" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty PropertyPathProperty = BindableProperty.Create(nameof(PropertyPath), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultPropertyPath);
 
     #endregion Bindable Properties
 
@@ -282,19 +317,6 @@ public class MaterialChipsGroup : ContentView
     {
         get { return (Thickness)GetValue(ChipsPaddingProperty); }
         set { SetValue(ChipsPaddingProperty, value); }
-    }
-
-    /// <summary>
-    /// Gets or sets the margin for the Chips.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// Thickness(16,0)
-    /// </default>
-    public Thickness ChipsMargin
-    {
-        get { return (Thickness)GetValue(ChipsMarginProperty); }
-        set { SetValue(ChipsMarginProperty, value); }
     }
 
     /// <summary>
@@ -356,9 +378,9 @@ public class MaterialChipsGroup : ContentView
     /// <default>
     /// <see langword="null"/>
     /// </default>
-    public IEnumerable<string> ItemsSource
+    public IEnumerable ItemsSource
     {
-        get { return (IEnumerable<string>)GetValue(ItemsSourceProperty); }
+        get { return (IEnumerable)GetValue(ItemsSourceProperty); }
         set { SetValue(ItemsSourceProperty, value); }
     }
 
@@ -582,6 +604,53 @@ public class MaterialChipsGroup : ContentView
         get { return (double?)GetValue(AnimationParameterProperty); }
         set { SetValue(AnimationParameterProperty, value); }
     }
+    public Align Align
+    {
+        get { return (Align)GetValue(AlignProperty); }
+        set { SetValue(AlignProperty, value); }
+    }
+
+    public int VerticalSpacing
+    {
+        get { return (int)GetValue(VerticalSpacingProperty); }
+        set { SetValue(VerticalSpacingProperty, value); }
+    }
+
+    public int HorizontalSpacing
+    {
+        get { return (int)GetValue(HorizontalSpacingProperty); }
+        set { SetValue(HorizontalSpacingProperty, value); }
+    }
+
+    /// <summary>
+    /// Gets or sets type Chips.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="MaterialChipsType.Filter">MaterialChipsType.Normal</see>
+    /// </default>
+    /// <remarks>
+    /// <para>Normal: They are for the types assist, input amd suggestion, chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters.</para>
+    /// <para>Filter: chips use tags or descriptive words to filter content. They can be a good alternative to segmented buttons or checkboxes when viewing a list or search results.</para>
+    /// </remarks>
+    public MaterialChipsType Type
+    {
+        get => (MaterialChipsType)GetValue(TypeProperty);
+        set => SetValue(TypeProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the property path.
+    /// This property is used to map an object and display a property of it.
+    /// </summary>
+    /// <remarks>
+    /// If it´s no defined, the control will use toString() method.
+    /// </remarks>
+    public string PropertyPath
+    {
+        get => (string)GetValue(PropertyPathProperty);
+        set => SetValue(PropertyPathProperty, value);
+    }
 
     #endregion Properties
 
@@ -602,29 +671,20 @@ public class MaterialChipsGroup : ContentView
         {
             Wrap = FlexWrap.Wrap,
             Direction = FlexDirection.Row,
-            JustifyContent = FlexJustify.Start,
         };
 
         _textLabel = new MaterialLabel
         {
-            IsVisible = false,
             LineBreakMode = LineBreakMode.NoWrap,
             Margin = new Thickness(14, 0, 14, 2),
             HorizontalTextAlignment = TextAlignment.Start,
-            TextColor = LabelTextColor,
-            FontFamily = FontFamily,
-            FontSize = LabelSize
         };
 
         _lblSupporting = new MaterialLabel
         {
-            IsVisible = false,
             LineBreakMode = LineBreakMode.NoWrap,
             Margin = new Thickness(14, 2, 14, 0),
             HorizontalTextAlignment = TextAlignment.Start,
-            TextColor = SupportingTextColor,
-            FontFamily = FontFamily,
-            FontSize = SupportingSize,
         };
 
         _contentView = new ContentView
@@ -632,16 +692,19 @@ public class MaterialChipsGroup : ContentView
             Content = _flexContainer,
         };
 
-        _textLabel.SetBinding(Label.TextProperty, new Binding(nameof(LabelText), source: this));
-        _textLabel.SetBinding(Label.IsVisibleProperty, new Binding(nameof(LabelText), source: this, converter: new TextToBooleanConverter()));
-        _textLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(LabelTextColor), source: this));
-        _textLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-        _textLabel.SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        _flexContainer.SetBinding(FlexLayout.JustifyContentProperty, new Binding(nameof(Align), source: this, converter: new AlignToFlexJustifyConverter()));
+
+        _textLabel.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(LabelText), source: this));
+        _textLabel.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(LabelText), source: this, converter: new TextToBooleanConverter()));
+        _textLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(LabelTextColor), source: this));
+        _textLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(LabelSize), source: this));
+        _textLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
 
         _lblSupporting.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(SupportingText), source: this));
         _lblSupporting.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(SupportingText), source: this, converter: new TextToBooleanConverter()));
         _lblSupporting.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SupportingTextColor), source: this));
         _lblSupporting.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingSize), source: this));
+        _lblSupporting.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
 
         _contentView.SetBinding(ContentView.PaddingProperty, new Binding(nameof(Padding), source: this));
 
@@ -661,65 +724,29 @@ public class MaterialChipsGroup : ContentView
 
     #region Setters
 
-    private async Task<bool> ValidateText(object value)
-    {
-        if (AnimateError && !string.IsNullOrEmpty(SupportingText) && SupportingText == (string)value)
-        {
-            await ShakeAnimation.AnimateAsync(Content);
-        }
-
-        return true;
-    }
-
-    private void SetSelectedItem()
-    {
-        if (_flexContainer.Children != null && SelectedItem != null)
-        {
-            foreach (var item in _flexContainer.Children)
-            {
-                if (item is MaterialChips itemMC)
-                {
-                    itemMC.IsSelected = itemMC.Text.Equals(SelectedItem);
-                }
-            }
-        }
-    }
-
-    private void SetSelectedItems()
-    {
-        if (_flexContainer.Children != null && SelectedItems != null && SelectedItems.Any())
-        {
-            foreach (var item in _flexContainer.Children)
-            {
-                if (item is MaterialChips itemMC)
-                {
-                    itemMC.IsSelected = SelectedItems.Contains((itemMC).Text);
-                }
-            }
-        }
-    }
-
     private void SetItemsSource(object newValue)
     {
         _flexContainer.Children.Clear();
 
-        if (newValue != null && newValue is IEnumerable<string>)
+        if (newValue != null && newValue is IEnumerable)
         {
-            foreach (var item in (IEnumerable<string>)newValue)
+            foreach (var item in (IEnumerable)newValue)
             {
-                var materialChips = new MaterialChips
+                var newItem = string.IsNullOrWhiteSpace(PropertyPath) ? item.ToString() : GetPropertyValue(item, PropertyPath);
+
+                var materialChips = new MaterialChips(true)
                 {
-                    Text = item,
+                    Text = newItem,
                     FontSize = FontSize,
                     FontFamily = FontFamily,
                     CornerRadius = CornerRadius,
                     Padding = ChipsPadding,
-                    Margin = ChipsMargin,
-                    Type = MaterialChipsType.Filter,
+                    Type = Type,
                     IsEnabled = IsEnabled,
                     Animation = Animation,
                     AnimationParameter = AnimationParameter,
                     HeightRequest = ChipsHeightRequest,
+                    Margin = GetMargins(),
                 };
 
                 if (DefaultBackgroundColor != BackgroundColor)
@@ -758,6 +785,45 @@ public class MaterialChipsGroup : ContentView
         }
     }
 
+    private void SetSelectedItem()
+    {
+        if (_flexContainer.Children != null && SelectedItem != null)
+        {
+            foreach (var item in _flexContainer.Children)
+            {
+                if (item is MaterialChips itemMC)
+                {
+                    itemMC.IsSelected = itemMC.Text.Equals(SelectedItem);
+                }
+            }
+        }
+    }
+
+    private void SetSelectedItems()
+    {
+        if (_flexContainer.Children != null && SelectedItems != null && SelectedItems.Any())
+        {
+            foreach (var item in _flexContainer.Children)
+            {
+                if (item is MaterialChips itemMC)
+                {
+                    itemMC.IsSelected = SelectedItems.Contains((itemMC).Text);
+                }
+            }
+        }
+    }
+
+    private void SetType(MaterialChipsType type)
+    {
+        foreach (var view in _flexContainer.Children)
+        {
+            if (view is MaterialChips materialChips)
+            {
+                materialChips.Type = type;
+            }
+        }
+    }
+
     private void SetIsEnabled(object newValue)
     {
         foreach (var view in _flexContainer.Children)
@@ -769,9 +835,44 @@ public class MaterialChipsGroup : ContentView
         }
     }
 
+    private void SetMargins()
+    {
+        foreach (var view in _flexContainer.Children)
+        {
+            if (view is MaterialChips materialChips)
+            {
+                switch (Align)
+                {
+                    case Align.Start:
+                        materialChips.Margin = GetMargins();
+                        break;
+                    case Align.Center:
+                        materialChips.Margin = GetMargins();
+                        break;
+                    case Align.End:
+                        materialChips.Margin = GetMargins();
+                        break;
+                }
+            }
+        }
+    }
+
     #endregion Setters
 
-    #region Commands
+    #region Validations
+    private async Task<bool> ValidateText(object value)
+    {
+        if (AnimateError && !string.IsNullOrEmpty(SupportingText) && SupportingText == (string)value)
+        {
+            await ShakeAnimation.AnimateAsync(Content);
+        }
+
+        return true;
+    }
+
+    #endregion Validations
+
+    #region Methods
 
     private void SelectionCommand(MaterialChips materialChips)
     {
@@ -801,5 +902,32 @@ public class MaterialChipsGroup : ContentView
         }
     }
 
-    #endregion Commands
+    private Thickness GetMargins()
+    {
+        switch (Align)
+        {
+            default:
+            case Align.Start:
+                return new Thickness(0, VerticalSpacing / 2, HorizontalSpacing, VerticalSpacing / 2);
+            case Align.Center:
+                return new Thickness(HorizontalSpacing / 2, VerticalSpacing / 2, HorizontalSpacing / 2, VerticalSpacing / 2);
+            case Align.End:
+                return new Thickness(HorizontalSpacing, VerticalSpacing / 2, 0, VerticalSpacing / 2);
+        }
+    }
+
+    private string GetPropertyValue(object item, string propertyToSearch)
+    {
+        var properties = item.GetType().GetProperties();
+        foreach (var property in properties)
+        {
+            if (property.Name.Equals(propertyToSearch, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return property.GetValue(item, null).ToString();
+            }
+        }
+        return item.ToString();
+    }
+
+    #endregion Methods
 }
