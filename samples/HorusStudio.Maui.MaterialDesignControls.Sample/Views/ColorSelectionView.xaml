@@ -17,7 +17,7 @@
                 <DataTemplate
                  x:DataType="models:CustomizationColor">
                     <material:MaterialIconButton 
-                        Type="Filled"
+                        Type="Custom"
                         Margin="2"
                         Opacity="0.5"
                         IconTintColor="{Binding IconTinColor}"

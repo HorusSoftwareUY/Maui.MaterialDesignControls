@@ -1,4 +1,4 @@
-﻿using System;
+﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Helpers;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -108,21 +108,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new CustomizationItem { Name = "0", Value = 0 }
             };
 
-            BackgroundColors = new List<CustomizationColor>
-            {
-                new CustomizationColor { Color = Color.FromArgb("#6750A4"), IsSelected = true },
-                new CustomizationColor { Color = Color.FromArgb("#50A465") },
-                new CustomizationColor { Color = Color.FromArgb("#1D4BEC") },
-                new CustomizationColor { Color = Color.FromArgb("#DD2953") },
-            };
-
-            TextColors = new List<CustomizationColor>
-            {
-                new CustomizationColor { Color = Color.FromArgb("#D7D2E5"), IsSelected = true, IsLight = true },
-                new CustomizationColor { Color = Color.FromArgb("#D2E5D6"), IsLight = true },
-                new CustomizationColor { Color = Color.FromArgb("#C6D0F6"), IsLight = true },
-                new CustomizationColor { Color = Color.FromArgb("#F2C8D2"), IsLight = true },
-            };
+            BackgroundColors = ColorHelper.GetCustomizationColorsBySuffix("Primary", false);
+          
+            TextColors = ColorHelper.GetCustomizationColorsBySuffix("Background", true);
 
             Subtitle = "Buttons help people take action, such as sending an email, sharing a document, or liking a comment.";
         }
