@@ -73,7 +73,6 @@ public class MaterialChipsGroup : ContentView
     private readonly static Align DefaultAlign = Align.Start;
     private readonly static int DefaultVerticalSpacing = 4;
     private readonly static int DefaultHorizontalSpacing = 4;
-    private readonly static MaterialChipsType DefaultChipsType = MaterialChipsType.Filter;
     private readonly static string DefaultPropertyPath = null;
 
     #endregion Attributes
@@ -269,18 +268,6 @@ public class MaterialChipsGroup : ContentView
         if (bindable is MaterialChipsGroup self)
         {
             self.SetMargins();
-        }
-    });
-
-    /// <summary>
-    /// The backing store for the <see cref="MaterialChipsType" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialChipsType), typeof(MaterialChipsGroup), defaultValue: DefaultChipsType, propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        if (bindable is MaterialChipsGroup self)
-        {
-            self.SetType(self.Type);
         }
     });
 
@@ -646,23 +633,6 @@ public class MaterialChipsGroup : ContentView
     }
 
     /// <summary>
-    /// Gets or sets type Chips.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see cref="MaterialChipsType.Filter">MaterialChipsType.Filter</see>
-    /// </default>
-    /// <remarks>
-    /// <para>Normal: They are for the types assist, input amd suggestion, chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters.</para>
-    /// <para>Filter: chips use tags or descriptive words to filter content. They can be a good alternative to segmented buttons or checkboxes when viewing a list or search results.</para>
-    /// </remarks>
-    public MaterialChipsType Type
-    {
-        get => (MaterialChipsType)GetValue(TypeProperty);
-        set => SetValue(TypeProperty, value);
-    }
-
-    /// <summary>
     /// Gets or sets the property path.
     /// This property is used to map an object and display a property of it.
     /// </summary>
@@ -770,7 +740,7 @@ public class MaterialChipsGroup : ContentView
                     FontFamily = FontFamily,
                     CornerRadius = CornerRadius,
                     Padding = ChipsPadding,
-                    Type = Type,
+                    Type = MaterialChipsType.Filter,
                     IsEnabled = IsEnabled,
                     Animation = Animation,
                     AnimationParameter = AnimationParameter,

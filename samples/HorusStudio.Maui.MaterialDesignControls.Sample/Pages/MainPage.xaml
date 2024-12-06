@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
              xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.MainPage"
              x:TypeArguments="vm:MainViewModel"
              x:DataType="vm:MainViewModel"
@@ -22,9 +23,48 @@
 
                 <Label FontSize="Title" Text="Welcome to Material Design Controls for .NET MAUI" HorizontalTextAlignment="Center" />
 
+                <material:MaterialChipsGroup 
+                    LabelText="Sizes"
+                    LabelSize="20"
+                    Animation="Scale"
+                    LabelTextColor="Red"
+                    Background="AliceBlue"
+                    Align="Center"
+                    ChipsFlexLayoutPercentageBasis="0.3"
+                    VerticalSpacing="20"
+                    HorizontalSpacing="6"
+                    SelectedItem="{Binding SelectedSize}"
+                    ItemsSource="{Binding Sizes}" />
+
+                <material:MaterialChipsGroup 
+                    PropertyPath="Name"
+                    LabelText="Colors *"
+                    Background="AliceBlue"
+                    VerticalSpacing="4"
+                    HorizontalSpacing="4"
+                    Animation="Scale"
+                    
+                    SelectedItem="{Binding SelectedUser}"
+                    ItemsSource="{Binding Users}" />
+
+                <material:MaterialChipsGroup 
+                    IsMultipleSelection="True"
+                    PropertyPath="Name"
+                    LabelText="Colors *"
+                    Background="AliceBlue"
+                    VerticalSpacing="4"
+                    HorizontalSpacing="4"
+                    Animation="Scale"
+                    SelectedItems="{Binding SelectedUsers}"
+                    ItemsSource="{Binding Users}" />
+
+                <material:MaterialChips 
+                    Type="Filter" 
+                    Text="Sin backgroung - No seleccionado"/>
+
+                <material:MaterialButton Text="Validate" Command="{Binding ValidateSelectionsCommand}" />
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
-
     
 </local:BaseContentPage>
