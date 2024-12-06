@@ -54,7 +54,7 @@ public class MaterialChipsGroup : ContentView
     private readonly static string DefaultLabelText = null;
     private readonly static IEnumerable DefaultItemsSource = null;
     private readonly static object DefaultSelectedItem = null;
-    private readonly static List<object> DefaultSelectedItems = null;
+    private readonly static IList DefaultSelectedItems = null;
     private readonly static string DefaultSupportingText = null;
     private readonly static Color DefaultLabelTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialLightTheme.Text }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialLightTheme.Error }.GetValueForCurrentTheme<Color>();
@@ -143,7 +143,7 @@ public class MaterialChipsGroup : ContentView
     /// The backing store for the <see cref="SelectedItems" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(List<object>), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedItems, defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedItems, defaultBindingMode: BindingMode.TwoWay);
 
     /// <summary>
     /// The backing store for the <see cref="SupportingText" />
@@ -392,9 +392,9 @@ public class MaterialChipsGroup : ContentView
     /// <default>
     /// <see langword="null"/>
     /// </default>
-    public List<object> SelectedItems
+    public IList SelectedItems
     {
-        get { return (List<object>)GetValue(SelectedItemsProperty); }
+        get { return (IList)GetValue(SelectedItemsProperty); }
         set { SetValue(SelectedItemsProperty, value); }
     }
 
