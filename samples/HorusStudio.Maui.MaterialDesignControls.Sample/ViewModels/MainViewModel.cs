@@ -1,43 +1,14 @@
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
-	public partial class MainViewModel : BaseViewModel
+    public partial class MainViewModel : BaseViewModel
     {
         #region Attributes & Properties
 
-
-        [ObservableProperty]
-        private ObservableCollection<string> _sizes;
-
-        [ObservableProperty]
-        private ObservableCollection<string> _selectedSizes;
-
-        [ObservableProperty]
-        private string _selectedSize;
-
-        [ObservableProperty]
-        private ObservableCollection<Person> _users;
-
-        [ObservableProperty]
-        private List<object> _selectedUsers;
-
-        [ObservableProperty]
-        private Person _selectedUser;
-
-        [ObservableProperty]
-        private ObservableCollection<string> _colors;
-
-        [ObservableProperty]
-        private List<string> _selectedColors;
-
         [ObservableProperty]
         IEnumerable<MenuItemViewModel> _menuItems;
-
-        [ObservableProperty]
-        private string _error;
 
         public override string Title => string.Empty;
 
@@ -45,12 +16,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public MainViewModel()
         {
-            Users = new ObservableCollection<Person> { new Person { Age = 60, Name = "Alfonso"}, new Person { Age = 24, Name = "Sofía" }, new Person { Age = 32, Name = "Pedro" }, new Person { Age = 18, Name = "Ana" }, };
-
-            Sizes = new ObservableCollection<string> { "6", "6.5", "7", "7.5", "8" };
-
-            Colors = new ObservableCollection<string> { "Red", "White", "Green", "Sky blue", "Black", "Gray", "Light Gray" };
-
             MenuItems = new List<MenuItemViewModel>
             {
                 new MenuItemViewModel { Title = "Buttons", Icon = "ic_button.png", ViewModel = typeof(ButtonViewModel) },
@@ -72,17 +37,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             await GoToAsync<AboutViewModel>();
         }
-
-        [ICommand]
-        private void ValidateSelections()
-        {
-            var size = SelectedSize;
-            var colors = SelectedColors;
-            var user = SelectedUser;
-            var users = SelectedUsers;
-            var sizes = SelectedSizes;
-            Error = "esosss";
-        }
     }
 
     public partial class MenuItemViewModel : ObservableObject
@@ -95,14 +49,5 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         [ObservableProperty]
         Type _viewModel;
-    }
-
-    public partial class Person : ObservableObject
-    {
-        [ObservableProperty]
-        private int _age;
-
-        [ObservableProperty]
-        private string _name;
     }
 }
