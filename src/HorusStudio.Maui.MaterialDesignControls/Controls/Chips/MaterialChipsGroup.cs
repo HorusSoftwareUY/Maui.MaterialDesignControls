@@ -42,6 +42,9 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesign.Sample/Pages/ChipsPage.xaml)
 /// 
 /// </example>
+/// <todoList>
+/// * For the SelectedItems to be updated correctly they must be initialized. Finding a way to make it work even when the list starts out null
+/// </todoList>
 public class MaterialChipsGroup : ContentView
 {
     #region Attributes
@@ -387,6 +390,7 @@ public class MaterialChipsGroup : ContentView
 
     /// <summary>
     /// Gets or sets the selected items for the ChipsGroup.
+    /// This needs to be initialized from the implementation. It cannot be null.
     /// This is a bindable property.
     /// </summary>
     /// <default>
