@@ -390,9 +390,11 @@ public class MaterialChipsGroup : ContentView
 
     /// <summary>
     /// Gets or sets the selected items for the ChipsGroup.
-    /// This needs to be initialized from the implementation. It cannot be null.
     /// This is a bindable property.
     /// </summary>
+    /// <remarks>
+    /// This property needs to be initialized from the implementation. It cannot be null.
+    /// </remarks>
     /// <default>
     /// <see langword="null"/>
     /// </default>
