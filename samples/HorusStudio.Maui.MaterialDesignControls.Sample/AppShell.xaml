@@ -16,7 +16,7 @@
     <Shell.FlyoutContent>
         <ContentView 
             Padding="28" 
-            Background="{StaticResource Tone1}">
+            Background="{x:Static material:MaterialLightTheme.SurfaceContainerLow}">
             <CollectionView ItemsSource="{Binding MenuGroups}"
                  IsGrouped="True">
                 <CollectionView.GroupHeaderTemplate>
@@ -30,7 +30,7 @@
                                 VerticalOptions="Center"
                                 FontAttributes="Bold" 
                                 Type="BodyMedium"
-                                TextColor="{StaticResource Tone6}"
+                                TextColor="{x:Static material:MaterialLightTheme.Primary}"
                                 Text="{Binding GroupName}" />
                         </VerticalStackLayout>
                     </DataTemplate>
@@ -46,7 +46,7 @@
                                 Type="BodyMedium"
                                 VerticalOptions="Center"
                                 LineBreakMode="TailTruncation"
-                                TextColor="{StaticResource Tone9}"/>
+                                TextColor="{x:Static material:MaterialLightTheme.OnSurface}"/>
                             <ContentView.GestureRecognizers>
                                 <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, 

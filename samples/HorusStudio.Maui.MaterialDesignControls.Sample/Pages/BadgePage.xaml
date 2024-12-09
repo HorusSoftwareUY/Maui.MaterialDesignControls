@@ -7,7 +7,8 @@
              xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.BadgePage"
              x:TypeArguments="vm:BadgeViewModel"
-             x:DataType="vm:BadgeViewModel">
+             x:DataType="vm:BadgeViewModel"
+             Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
         <Style x:Key="GridBadgeContainer" TargetType="Grid">
@@ -18,131 +19,144 @@
         </Style>
     </ContentPage.Resources>
 
-    <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
+    <Grid
+        RowDefinitions="Auto,*">
+       
+        <material:MaterialTopAppBar
+            Headline="{Binding Title}"
+            Description="{Binding Subtitle}"
+            DescriptionFontSize="14"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIcon="ic_back_b.png"
+            ScrollViewName="scrollView"
+            Type="Large" />
 
-            <material:MaterialLabel Text="{Binding Subtitle}" Margin="0,0,0,20"/>
+        <ScrollView
+             Grid.Row="1"
+             x:Name="scrollView">
+            <VerticalStackLayout Style="{StaticResource MainLayout}">
 
-            <views:ControlsTabsView IsCustomize="{Binding IsCustomize, Mode=TwoWay}"  />
+                <views:ControlsTabsView IsCustomize="{Binding IsCustomize, Mode=TwoWay}"  />
 
-            <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
-                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Small Type" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
-                    <Grid Style="{StaticResource GridBadgeContainer}">
+                <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
+                    <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Small Type" />
+                    <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
+                        <Grid Style="{StaticResource GridBadgeContainer}">
 
-                        <Grid
-                            Grid.Column="0"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center">
+                            <Grid
+                                Grid.Column="0"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center">
 
-                            <Image Source="horus_logo.png"/>
+                                <Image Source="horus_logo.png"/>
 
-                            <material:MaterialBadge
-                                Type="Small"
-                                VerticalOptions="Start"
-                                HorizontalOptions="End"/>
+                                <material:MaterialBadge
+                                    Type="Small"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="End"/>
+                            </Grid>
+
+                            <Grid
+                                Grid.Column="1"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center">
+
+                                <Image Source="horus_logo.png"/>
+
+                                <material:MaterialBadge
+                                    Type="Small"
+                                    BackgroundColor="Green"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="End"/>
+                            </Grid>
+
                         </Grid>
+                    </material:MaterialCard>
+                    <material:MaterialLabel Text="A small badge is a simple circle, used to indicate an unread notification." Type="BodySmall"/>
 
-                        <Grid
-                            Grid.Column="1"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Center">
+                    <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Large Type" />
+                    <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
+                        <Grid Style="{StaticResource GridBadgeContainer}" Grid.RowDefinitions="*,Auto">
 
-                            <Image Source="horus_logo.png"/>
+                            <Grid
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center">
+
+                                <Image Source="horus_logo.png"/>
+
+                                <material:MaterialBadge
+                                    Text="{Binding Counter}"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="End"/>
+                            </Grid>
+
+                            <Grid
+                                Grid.Column="1"
+                                Grid.Row="0"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center">
+
+                                <Image Source="horus_logo.png"/>
+
+                                <material:MaterialBadge
+                                    Text="{Binding Counter}"
+                                    BackgroundColor="Green"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="End"/>
+                            </Grid>
+
+                            <material:MaterialButton
+                                Type="Text"
+                                Text="Change counter"
+                                Grid.ColumnSpan="2"
+                                Grid.Row="1"
+                                HorizontalOptions="Center"
+                                Command="{Binding ChangeCounterCommand}"/>
+                        </Grid>
+                    </material:MaterialCard>
+                    <material:MaterialLabel Text="A large badge contains label text communicating item count information." Type="BodySmall"/>
+
+                    <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API" />
+                    <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
+                        <Grid Style="{StaticResource GridBadgeContainer}">
 
                             <material:MaterialBadge
-                                Type="Small"
+                                Text="999+"
+                                Type="Large"
+                                TextColor="White"
+                                FontSize="25"
+                                HorizontalOptions="End"
+                                BackgroundColor="{StaticResource Primary}"
+                                HeightRequest="75"
+                                CornerRadius="8"
+                                Padding="6,0"
+                                Grid.Column="0"/>
+
+                            <material:MaterialBadge
+                                Text="999+"
+                                Type="Large"
+                                TextColor="Black"
+                                FontSize="16"
+                                HorizontalOptions="Start"
                                 BackgroundColor="Green"
-                                VerticalOptions="Start"
-                                HorizontalOptions="End"/>
+                                HeightRequest="50"
+                                CornerRadius="50"
+                                Padding="6,0"
+                                Grid.Column="1"/>
                         </Grid>
+                    </material:MaterialCard>
+                    <material:MaterialLabel Text="A custom badge contains label text communicating item count information and complete personalization, visit our documentation on github" Type="BodySmall"/>
+                </VerticalStackLayout>
 
-                    </Grid>
-                </material:MaterialCard>
-                <material:MaterialLabel Text="A small badge is a simple circle, used to indicate an unread notification." Type="BodySmall"/>
+                <VerticalStackLayout IsVisible="{Binding IsCustomize}">
+                    <material:MaterialCard Style="{StaticResource CardControlContainer}" HeightRequest="80">
+                        <Label Text="Custom view pending" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </material:MaterialCard>
+                </VerticalStackLayout>
 
-                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Large Type" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
-                    <Grid Style="{StaticResource GridBadgeContainer}" Grid.RowDefinitions="*,Auto">
-
-                        <Grid
-                            Grid.Column="0"
-                            Grid.Row="0"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center">
-
-                            <Image Source="horus_logo.png"/>
-
-                            <material:MaterialBadge
-                                Text="{Binding Counter}"
-                                VerticalOptions="Start"
-                                HorizontalOptions="End"/>
-                        </Grid>
-
-                        <Grid
-                            Grid.Column="1"
-                            Grid.Row="0"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Center">
-
-                            <Image Source="horus_logo.png"/>
-
-                            <material:MaterialBadge
-                                Text="{Binding Counter}"
-                                BackgroundColor="Green"
-                                VerticalOptions="Start"
-                                HorizontalOptions="End"/>
-                        </Grid>
-
-                        <material:MaterialButton
-                            Type="Text"
-                            Text="Change counter"
-                            Grid.ColumnSpan="2"
-                            Grid.Row="1"
-                            HorizontalOptions="Center"
-                            Command="{Binding ChangeCounterCommand}"/>
-                    </Grid>
-                </material:MaterialCard>
-                <material:MaterialLabel Text="A large badge contains label text communicating item count information." Type="BodySmall"/>
-
-                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
-                    <Grid Style="{StaticResource GridBadgeContainer}">
-
-                        <material:MaterialBadge
-                            Text="999+"
-                            Type="Large"
-                            TextColor="White"
-                            FontSize="25"
-                            HorizontalOptions="End"
-                            BackgroundColor="{StaticResource Primary}"
-                            HeightRequest="75"
-                            CornerRadius="8"
-                            Padding="6,0"
-                            Grid.Column="0"/>
-
-                        <material:MaterialBadge
-                            Text="999+"
-                            Type="Large"
-                            TextColor="Black"
-                            FontSize="16"
-                            HorizontalOptions="Start"
-                            BackgroundColor="Green"
-                            HeightRequest="50"
-                            CornerRadius="50"
-                            Padding="6,0"
-                            Grid.Column="1"/>
-                    </Grid>
-                </material:MaterialCard>
-                <material:MaterialLabel Text="A custom badge contains label text communicating item count information and complete personalization, visit our documentation on github" Type="BodySmall"/>
             </VerticalStackLayout>
-
-            <VerticalStackLayout IsVisible="{Binding IsCustomize}">
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" HeightRequest="80">
-                    <Label Text="Custom view pending" HorizontalOptions="Center" VerticalOptions="Center" />
-                </material:MaterialCard>
-            </VerticalStackLayout>
-
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </local:BaseContentPage>

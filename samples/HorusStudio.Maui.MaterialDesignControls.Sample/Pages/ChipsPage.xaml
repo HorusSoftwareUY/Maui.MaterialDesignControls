@@ -7,7 +7,8 @@
                        xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
                        x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.ChipsPage"
                        x:TypeArguments="vm:ChipsViewModel"
-                       x:DataType="vm:ChipsViewModel">
+                       x:DataType="vm:ChipsViewModel"
+                       Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
         <Style x:Key="GridChipsContainer" TargetType="Grid">
@@ -59,18 +60,29 @@
         </Style>
     </ContentPage.Resources>
 
-    <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
-            <material:MaterialLabel Text="{Binding Subtitle}" Margin="0,0,0,20" />
+    <Grid
+        RowDefinitions="Auto,*">
 
-            <views:ControlsTabsView IsCustomize="{Binding IsCustomize, Mode=TwoWay}"  />
+        <material:MaterialTopAppBar
+            Headline="{Binding Title}"
+            Description="{Binding Subtitle}"
+            DescriptionFontSize="14"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIcon="ic_back_b.png"
+            ScrollViewName="scrollView"
+            Type="Large" />
+        <ScrollView
+            Grid.Row="1"
+            x:Name="scrollView">
+            <VerticalStackLayout Style="{StaticResource MainLayout}">
+                <views:ControlsTabsView IsCustomize="{Binding IsCustomize, Mode=TwoWay}"  />
 
-            <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
-                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Suggestion Chips" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16,36">
-                    <Grid Style="{StaticResource GridChipsContainer}">
+                <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
+                    <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Suggestion Chips" />
+                    <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16,36">
+                        <Grid Style="{StaticResource GridChipsContainer}">
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="0"
                             Grid.Row="0"
                             IsEnabled="{Binding IsEnabledState}"
@@ -78,7 +90,7 @@
                             HorizontalOptions="End"
                             Command="{Binding TappedChipsCommand}"/>
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="1"
                             Grid.Row="0"
                             TrailingIcon="horus_logo.png"
@@ -86,7 +98,7 @@
                             HorizontalOptions="Start"
                             Command="{Binding TappedChipsCommand}"/>
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="0"
                             Grid.Row="1"
                             LeadingIcon="plus.png"
@@ -94,7 +106,7 @@
                             HorizontalOptions="End"
                             Command="{Binding TappedChipsCommand}"/>
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="1"
                             Grid.Row="1"
                             Type="Normal"
@@ -104,16 +116,16 @@
                             TrailingIcon="horus_logo.png"
                             Command="{Binding TappedChipsCommand}"/>
 
-                    </Grid>
-                </material:MaterialCard>
-                <material:MaterialLabel 
+                        </Grid>
+                    </material:MaterialCard>
+                    <material:MaterialLabel 
                     Text="Suggestion chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters." Type="BodySmall" />
 
-                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filter Chips" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16,36">
-                    <Grid Style="{StaticResource GridChipsContainer}">
+                    <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filter Chips" />
+                    <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16,36">
+                        <Grid Style="{StaticResource GridChipsContainer}">
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="0"
                             Grid.Row="0"
                             IsEnabled="{Binding IsEnabledState}"
@@ -122,7 +134,7 @@
                             HorizontalOptions="End"
                             IsSelected="{Binding ChipsFilterA}"/>
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="1"
                             Grid.Row="0"
                             Type="Filter"
@@ -131,7 +143,7 @@
                             HorizontalOptions="Start"
                             IsSelected="{Binding ChipsFilterB}"/>
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="0"
                             Grid.Row="1"
                             Type="Filter"
@@ -140,7 +152,7 @@
                             HorizontalOptions="End"
                             IsSelected="{Binding ChipsFilterC}"/>
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="1"
                             Grid.Row="1"
                             Type="Filter"
@@ -150,16 +162,16 @@
                             TrailingIcon="horus_logo.png"
                             IsSelected="{Binding ChipsFilterD}"/>
 
-                    </Grid>
-                </material:MaterialCard>
-                <material:MaterialLabel 
+                        </Grid>
+                    </material:MaterialCard>
+                    <material:MaterialLabel 
                     Text="Tapping on a filter chip activates it and appends a leading checkmark icon to the starting edge of the chip label."  Type="BodySmall" />
 
-                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API Chips" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16,36">
-                    <Grid Style="{StaticResource GridChipsContainer}" RowDefinitions="Auto,Auto,Auto">
+                    <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API Chips" />
+                    <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16,36">
+                        <Grid Style="{StaticResource GridChipsContainer}" RowDefinitions="Auto,Auto,Auto">
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="0"
                             Grid.Row="0"
                             Type="Filter"
@@ -169,7 +181,7 @@
                             HorizontalOptions="End"
                             Style="{StaticResource VisualStateManagerStyle}"/>
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="1"
                             Grid.Row="0"
                             BorderWidth="4"
@@ -180,7 +192,7 @@
                             HorizontalOptions="Start"
                             Style="{StaticResource VisualStateManagerStyle}"/>
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="0"
                             Grid.Row="1"
                             Type="Filter"
@@ -191,7 +203,7 @@
                             HorizontalOptions="End"
                             Style="{StaticResource VisualStateManagerStyle}"/>
 
-                        <material:MaterialChips
+                            <material:MaterialChips
                             Grid.Column="1"
                             Grid.Row="1"
                             HeightRequest="42"
@@ -205,30 +217,31 @@
                             TrailingIcon="horus_logo.png"
                             Style="{StaticResource VisualStateManagerStyle}"/>
 
-                        <material:MaterialLabel
+                            <material:MaterialLabel
                             Grid.Row="2"
                             Grid.Column="0"
                             Text="Is enabled"
                             HorizontalTextAlignment="End"
                             VerticalTextAlignment="Center" />
 
-                        <Switch
+                            <Switch
                             Grid.Row="2"
                             Grid.Column="1"
                             HorizontalOptions="Start"
                             IsToggled="{Binding IsEnabledState}"/>
 
-                    </Grid>
-                </material:MaterialCard>
-                <material:MaterialLabel 
+                        </Grid>
+                    </material:MaterialCard>
+                    <material:MaterialLabel 
                     Text="You can modify the chip as you require, this is useful when you need to add it to specific spaces or follow the required layout throughout your app." Type="BodySmall" />
-            </VerticalStackLayout>
+                </VerticalStackLayout>
 
-            <VerticalStackLayout IsVisible="{Binding IsCustomize}">
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" HeightRequest="80">
-                    <Label Text="Custom view pending" HorizontalOptions="Center" VerticalOptions="Center" />
-                </material:MaterialCard>
+                <VerticalStackLayout IsVisible="{Binding IsCustomize}">
+                    <material:MaterialCard Style="{StaticResource CardControlContainer}" HeightRequest="80">
+                        <Label Text="Custom view pending" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </material:MaterialCard>
+                </VerticalStackLayout>
             </VerticalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </local:BaseContentPage>

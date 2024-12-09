@@ -8,7 +8,8 @@
                        xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
                        x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.ButtonPage"
                        x:TypeArguments="vm:ButtonViewModel"
-                       x:DataType="vm:ButtonViewModel">
+                       x:DataType="vm:ButtonViewModel"
+                       Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
         <Style x:Key="ButtonsContainer" TargetType="Grid">
@@ -55,13 +56,20 @@
 
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto, *" >
+    <Grid RowDefinitions="Auto, Auto, *" >
 
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
+        <material:MaterialTopAppBar
+            Headline="{Binding Title}"
+            Description="{Binding Subtitle}"
+            DescriptionFontSize="14"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIcon="ic_back_b.png"
+            ScrollViewName="scrollView"
+            Type="Large" />
 
-            <material:MaterialLabel 
-                Text="{Binding Subtitle}" 
-                Margin="0,0,0,20" />
+        <VerticalStackLayout 
+            Grid.Row="1"
+            Style="{StaticResource MainLayout}">
 
             <views:ControlsTabsView 
                 IsCustomize="{Binding IsCustomize, Mode=TwoWay}"  />
@@ -101,7 +109,7 @@
             </material:MaterialCard>
         </VerticalStackLayout>
 
-        <ScrollView Orientation="Vertical" Grid.Row="1">
+        <ScrollView Orientation="Vertical" Grid.Row="2">
 
             <VerticalStackLayout Style="{StaticResource MainLayout}">
 

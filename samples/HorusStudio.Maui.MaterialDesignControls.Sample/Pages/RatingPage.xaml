@@ -8,83 +8,96 @@
     xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
     x:TypeArguments="vm:RatingViewModel"
-    x:DataType="vm:RatingViewModel">
-    <ScrollView>
-        <VerticalStackLayout
-            Style="{StaticResource MainLayout}">
-            <material:MaterialLabel
-                Text="{Binding Subtitle}" Margin="0,0,0,20" />
+    x:DataType="vm:RatingViewModel"
+    Shell.NavBarIsVisible="False">
 
-            <views:ControlsTabsView IsCustomize="{Binding IsCustomize, Mode=TwoWay}"  />
+    <Grid
+        RowDefinitions="Auto,*">
 
-            <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
-                <material:MaterialLabel
+        <material:MaterialTopAppBar
+             Headline="{Binding Title}"
+             Description="{Binding Subtitle}"
+             DescriptionFontSize="14"
+             LeadingIconCommand="{Binding GoBackCommand}"
+             LeadingIcon="ic_back_b.png"
+             ScrollViewName="scrollView"
+             Type="Large" />
+
+        <ScrollView
+             Grid.Row="1"
+             x:Name="scrollView">
+            <VerticalStackLayout
+                Style="{StaticResource MainLayout}">
+                <views:ControlsTabsView IsCustomize="{Binding IsCustomize, Mode=TwoWay}"  />
+
+                <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
+                    <material:MaterialLabel
                     Style="{StaticResource SectionTitle}"
                     Text="Default" />
-                <material:MaterialCard
+                    <material:MaterialCard
                     Style="{StaticResource CardControlContainer}"
                     Padding="16,36">
-                    <VerticalStackLayout>
-                        <material:MaterialRating
+                        <VerticalStackLayout>
+                            <material:MaterialRating
                             Label="How do you rate....?" />
-                        <material:MaterialRating
+                            <material:MaterialRating
                             Label="How do you rate.... (Disabled)?"
                             Value="3"
                             IsEnabled="False" />
-                    </VerticalStackLayout>
-                </material:MaterialCard>
-                <material:MaterialLabel
+                        </VerticalStackLayout>
+                    </material:MaterialCard>
+                    <material:MaterialLabel
                     Text="You can use MaterialRating with default properties." Type="BodySmall" />
 
-                <material:MaterialLabel
+                    <material:MaterialLabel
                     Style="{StaticResource SectionTitle}"
                     Text="Changing color of stroke and using a value" />
-                <material:MaterialCard
+                    <material:MaterialCard
                     Style="{StaticResource CardControlContainer}"
                     Padding="16,36">
-                    <VerticalStackLayout>
-                        <material:MaterialRating
+                        <VerticalStackLayout>
+                            <material:MaterialRating
                             Label="How do you rate....?"
                             Value="{Binding Value}"
                             StrokeColor="Gold" 
                             Animation="Scale"
                             StrokeThickness="4"/>
 
-                        <material:MaterialButton
+                            <material:MaterialButton
                             Command="{Binding CheckValueCommand}"
                             Text="Check Value" />
-                    </VerticalStackLayout>
-                </material:MaterialCard>
-                <material:MaterialLabel
+                        </VerticalStackLayout>
+                    </material:MaterialCard>
+                    <material:MaterialLabel
                     Text="You can set stroke color, stroke thickness, use a bindable value and change the animation" Type="BodySmall" />
 
-                <material:MaterialLabel
+                    <material:MaterialLabel
                     Style="{StaticResource SectionTitle}"
                     Text="Changing items size and icon" />
-                <material:MaterialCard
+                    <material:MaterialCard
                     Style="{StaticResource CardControlContainer}"
                     Padding="16,36">
-                    <VerticalStackLayout>
-                        <material:MaterialRating
+                        <VerticalStackLayout>
+                            <material:MaterialRating
                             Label="How do you rate....?"
                             SelectedIconSource="star_selected.png"
                             UnselectedIconSource="star_unselected.png"
                             ItemsPerRow="6"
                             ItemsSize="12" />
-                    </VerticalStackLayout>
-                </material:MaterialCard>
-                <material:MaterialLabel
+                        </VerticalStackLayout>
+                    </material:MaterialCard>
+                    <material:MaterialLabel
                     Text="You can set the icon, items size and items per row" Type="BodySmall" />
 
-                <material:MaterialLabel
+                    <material:MaterialLabel
                     Style="{StaticResource SectionTitle}"
                     Text="Changing icons for all ratings" />
-                <material:MaterialCard
+                    <material:MaterialCard
                     Style="{StaticResource CardControlContainer}"
                     BackgroundColor="White"
                     Padding="16,36">
-                    <VerticalStackLayout>
-                        <material:MaterialRating
+                        <VerticalStackLayout>
+                            <material:MaterialRating
                             Label="How do you rate....?"
                             SelectedIconsSource="{Binding SelectedIcons}"
                             UnselectedIconsSource="{Binding UnselectedIcons}"
@@ -92,7 +105,7 @@
                             LabelTransform="Uppercase"
                             FontSize="16"
                             FontAttributes="Bold" />
-                        <material:MaterialRating
+                            <material:MaterialRating
                             Label="How do you rate.... (disabled)?"
                             SelectedIconsSource="{Binding SelectedIcons}"
                             UnselectedIconsSource="{Binding UnselectedIcons}"
@@ -103,17 +116,18 @@
                             Value="2"
                             IsEnabled="False"
                             FontAttributes="Bold" />
-                    </VerticalStackLayout>
-                </material:MaterialCard>
-                <material:MaterialLabel
+                        </VerticalStackLayout>
+                    </material:MaterialCard>
+                    <material:MaterialLabel
                      Text="You can customize the icons for each rating. You can set label properties too." Type="BodySmall" />
-            </VerticalStackLayout>
+                </VerticalStackLayout>
 
-            <VerticalStackLayout IsVisible="{Binding IsCustomize}">
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" HeightRequest="80">
-                    <Label Text="Custom view pending" HorizontalOptions="Center" VerticalOptions="Center" />
-                </material:MaterialCard>
+                <VerticalStackLayout IsVisible="{Binding IsCustomize}">
+                    <material:MaterialCard Style="{StaticResource CardControlContainer}" HeightRequest="80">
+                        <Label Text="Custom view pending" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </material:MaterialCard>
+                </VerticalStackLayout>
             </VerticalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </local:BaseContentPage>

@@ -13,6 +13,7 @@
         <material:MaterialTopAppBar
             Headline="{Binding Title}"
             Description="{Binding Subtitle}"
+            DescriptionFontSize="14"
             LeadingIconCommand="{Binding GoBackCommand}"
             LeadingIcon="ic_back_b.png"
             ScrollViewName="scrollView"
