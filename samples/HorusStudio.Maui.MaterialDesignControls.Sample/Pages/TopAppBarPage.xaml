@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+                       xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+                       xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+                       x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TopAppBarPage"
+                       x:TypeArguments="vm:TopAppBarViewModel"
+                       x:DataType="vm:TopAppBarViewModel"
+                       Shell.NavBarIsVisible="False">
+    <Grid
+        RowDefinitions="Auto,*">
+        <material:MaterialTopAppBar
+            Headline="{Binding Title}"
+            Description="{Binding Subtitle}"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIcon="ic_back_b.png"
+            ScrollViewName="scrollView"
+            Type="Large" />
+
+        <ScrollView
+            x:Name="scrollView"
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout
+                Style="{StaticResource MainLayout}"
+                Spacing="24">
+
+                <material:MaterialLabel
+                    Text="The MaterialTopAppBar above uses the ScrollViewName to bind the control to a ScrollView and run an animation when scrolling down."/>
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="CenterAligned type"
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    Type="CenterAligned">
+                    <material:MaterialTopAppBar.TrailingIcons>
+                        <material:TrailingIcon
+                            Icon="plus.png"
+                            Command="{Binding TrailingIconTapCommand}"
+                            IsBusy="{Binding TrailingIconTapCommand.IsRunning}" />
+                    </material:MaterialTopAppBar.TrailingIcons>
+                </material:MaterialTopAppBar>
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Small type"
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    Type="Small">
+                    <material:MaterialTopAppBar.TrailingIcons>
+                        <material:TrailingIcon
+                            Icon="plus.png"
+                            Command="{Binding TrailingIconTapCommand}"
+                            IsBusy="{Binding TrailingIconTapCommand.IsRunning}" />
+                        <material:TrailingIcon
+                            Icon="info.png"
+                            Command="{Binding TrailingIconTap2Command}"
+                            IsBusy="{Binding TrailingIconTap2Command.IsRunning}" />
+                        <material:TrailingIcon
+                            Icon="settings.png"
+                            Command="{Binding TrailingIconTap3Command}"
+                            IsBusy="{Binding TrailingIconTap3Command.IsRunning}" />
+                    </material:MaterialTopAppBar.TrailingIcons>
+                </material:MaterialTopAppBar>
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Medium type"
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    Type="Medium">
+                    <material:MaterialTopAppBar.TrailingIcons>
+                        <material:TrailingIcon
+                            Icon="plus.png"
+                            Command="{Binding TrailingIconTapCommand}"
+                            IsBusy="{Binding TrailingIconTapCommand.IsRunning}" />
+                        <material:TrailingIcon
+                            Icon="info.png"
+                            Command="{Binding TrailingIconTap2Command}"
+                            IsBusy="{Binding TrailingIconTap2Command.IsRunning}" />
+                        <material:TrailingIcon
+                            Icon="settings.png"
+                            Command="{Binding TrailingIconTap3Command}"
+                            IsBusy="{Binding TrailingIconTap3Command.IsRunning}" />
+                    </material:MaterialTopAppBar.TrailingIcons>
+                </material:MaterialTopAppBar>
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Large type"
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    Type="Large">
+                    <material:MaterialTopAppBar.TrailingIcons>
+                        <material:TrailingIcon
+                            Icon="plus.png"
+                            Command="{Binding TrailingIconTapCommand}"
+                            IsBusy="{Binding TrailingIconTapCommand.IsRunning}" />
+                        <material:TrailingIcon
+                            Icon="info.png"
+                            Command="{Binding TrailingIconTap2Command}"
+                            IsBusy="{Binding TrailingIconTap2Command.IsRunning}" />
+                        <material:TrailingIcon
+                            Icon="settings.png"
+                            Command="{Binding TrailingIconTap3Command}"
+                            IsBusy="{Binding TrailingIconTap3Command.IsRunning}" />
+                    </material:MaterialTopAppBar.TrailingIcons>
+                </material:MaterialTopAppBar>
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="CenterAligned type"
+                    Description="Sample with a description text."
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    Type="CenterAligned">
+                    <material:MaterialTopAppBar.TrailingIcons>
+                        <material:TrailingIcon
+                            Icon="plus.png"
+                            Command="{Binding TrailingIconTapCommand}"
+                            IsBusy="{Binding TrailingIconTapCommand.IsRunning}" />
+                    </material:MaterialTopAppBar.TrailingIcons>
+                </material:MaterialTopAppBar>
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Small type"
+                    Description="Sample with a description text."
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    Type="Small">
+                    <material:MaterialTopAppBar.TrailingIcons>
+                        <material:TrailingIcon
+                            Icon="plus.png"
+                            Command="{Binding TrailingIconTapCommand}"
+                            IsBusy="{Binding TrailingIconTapCommand.IsRunning}" />
+                        <material:TrailingIcon
+                            Icon="info.png"
+                            Command="{Binding TrailingIconTap2Command}"
+                            IsBusy="{Binding TrailingIconTap2Command.IsRunning}" />
+                        <material:TrailingIcon
+                            Icon="settings.png"
+                            Command="{Binding TrailingIconTap3Command}"
+                            IsBusy="{Binding TrailingIconTap3Command.IsRunning}" />
+                    </material:MaterialTopAppBar.TrailingIcons>
+                </material:MaterialTopAppBar>
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Medium type"
+                    Description="Sample with a description text and trailing icons with states."
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    Type="Medium">
+                    <material:MaterialTopAppBar.TrailingIcons>
+                        <material:TrailingIcon
+                            Icon="plus.png"
+                            Command="{Binding ChangeTrailingIconsStateCommand}"
+                            IsVisible="{Binding IconButtonsVisible}" />
+                        <material:TrailingIcon
+                            Icon="info.png"
+                            Command="{Binding ChangeTrailingIconsStateCommand}"
+                            IsEnabled="{Binding IconButtonsEnabled}" />
+                        <material:TrailingIcon
+                            Icon="settings.png"
+                            Command="{Binding ChangeTrailingIconsStateCommand}" />
+                    </material:MaterialTopAppBar.TrailingIcons>
+                </material:MaterialTopAppBar>
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    Headline="Large type"
+                    Description="Sample with a description text and trailing icons through binding."
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    LeadingIcon="ic_back_b.png"
+                    Type="Large"
+                    TrailingIcons="{Binding TrailingIcons}" />
+
+                <material:MaterialDivider />
+
+                <material:MaterialTopAppBar
+                    BackgroundColor="LightCyan"
+                    HeadlineColor="DarkCyan"
+                    HeadlineFontSize="45"
+                    HeadlineFontFamily="FontMedium"
+                    HeadlineFontAttributes="Italic"
+                    DescriptionColor="DarkCyan"
+                    DescriptionFontSize="23"
+                    DescriptionFontFamily="FontMedium"
+                    DescriptionFontAttributes="Italic"
+                    Headline="Full API"
+                    Description="Example with all the properties provided by the top app bar."
+                    BusyIndicatorColor="DarkCyan"
+                    LeadingIconCommand="{Binding LeadingIconTapCommand}"
+                    LeadingIcon="ic_back_b.png"
+                    LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
+                    DescriptionMarginAdjustment="0,20,0,0"
+                    HeadlineMarginAdjustment="0,10,0,0"
+                    Type="Small">
+                    <material:MaterialTopAppBar.TrailingIcons>
+                        <material:TrailingIcon
+                            Icon="plus.png"
+                            Command="{Binding TrailingIconTapCommand}"
+                            IsBusy="{Binding TrailingIconTapCommand.IsRunning}" />
+                        <material:TrailingIcon
+                            Icon="info.png"
+                            Command="{Binding TrailingIconTap2Command}"
+                            IsBusy="{Binding TrailingIconTap2Command.IsRunning}" />
+                        <material:TrailingIcon
+                            Icon="settings.png"
+                            Command="{Binding TrailingIconTap3Command}"
+                            IsBusy="{Binding TrailingIconTap3Command.IsRunning}" />
+                    </material:MaterialTopAppBar.TrailingIcons>
+                </material:MaterialTopAppBar>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</local:BaseContentPage>
