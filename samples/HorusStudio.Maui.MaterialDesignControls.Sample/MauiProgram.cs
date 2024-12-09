@@ -9,6 +9,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
         private const string FontMediumSlab = "FontMediumSlab";
         private const string FontRegular = "FontRegular";
         private const string FontMedium = "FontMedium";
+        private const string FontBold = "FontBold";
 
         public static MauiApp CreateMauiApp()
         {
@@ -20,6 +21,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                     fonts.AddFont("RobotoSlab-Medium.ttf", FontMediumSlab);
                     fonts.AddFont("Roboto-Regular.ttf", FontRegular);
                     fonts.AddFont("Roboto-Medium.ttf", FontMedium);
+                    fonts.AddFont("Roboto-Bold.ttf", FontBold);
                     // Workaround for Android error
                     fonts.AddFont("Roboto-Medium.ttf", "sans-serif-medium");
                 })

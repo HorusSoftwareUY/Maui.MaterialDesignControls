@@ -32,6 +32,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             containmentGroup.Add(new MenuItemViewModel { Title = "Cards", Icon = "ic_card.png", ViewModel = typeof(CardViewModel) });
             containmentGroup.Add(new MenuItemViewModel { Title = "Dividers", Icon = "ic_divider.png", ViewModel = typeof(DividerViewModel) });
 
+            var navigationGroup = new MenuGroup() { GroupName = "Navigation" };
+            navigationGroup.Add(new MenuItemViewModel { Title = "Top app bars", ViewModel = typeof(TopAppBarViewModel) });
+
             var selectionGroup = new MenuGroup() { GroupName = "Selection" };
             selectionGroup.Add(new MenuItemViewModel { Title = "Chips", Icon = "ic_chip.png", ViewModel = typeof(ChipsViewModel) });
             selectionGroup.Add(new MenuItemViewModel { Title = "Checkbox", Icon = "ic_checkbox.png", ViewModel = typeof(CheckboxViewModel) });
@@ -44,6 +47,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             groups.Add(actionGroup);
             groups.Add(communicationGroup);
             groups.Add(containmentGroup);
+            groups.Add(navigationGroup);
             groups.Add(selectionGroup);
             groups.Add(textGroup);
 
