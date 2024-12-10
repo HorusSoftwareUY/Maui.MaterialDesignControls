@@ -1,6 +1,5 @@
 ﻿
 using HorusStudio.Maui.MaterialDesignControls.Converters;
-using HorusStudio.Maui.MaterialDesignControls.Enums;
 using Microsoft.Maui.Layouts;
 using System.Collections;
 
@@ -34,7 +33,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 ///     IsMultipleSelection = true,
 ///     ItemsSource = Colors,
 ///     LabelText = "Colors *",
-///     SelectedItems = "SelectedColors",
+///     SelectedItems = SelectedColors,
 ///     SupportingText="Please select at least 4 colors"
 /// };
 ///</code>
@@ -826,6 +825,7 @@ public class MaterialChipsGroup : ContentView
     #endregion Setters
 
     #region Validations
+
     private async Task<bool> ValidateText(object value)
     {
         if (AnimateError && !string.IsNullOrEmpty(SupportingText) && SupportingText == (string)value)

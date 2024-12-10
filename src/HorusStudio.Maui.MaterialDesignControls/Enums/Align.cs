@@ -1,9 +1,9 @@
-﻿namespace HorusStudio.Maui.MaterialDesignControls.Enums
+﻿namespace HorusStudio.Maui.MaterialDesignControls;
+
+public enum Align
 {
-    public enum Align
-    {
-        Start,
-        Center,
-        End
-    }
+    Start,
+    Center,
+    End
 }
+

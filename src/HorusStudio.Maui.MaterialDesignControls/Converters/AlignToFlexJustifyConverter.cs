@@ -1,5 +1,4 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Enums;
-using Microsoft.Maui.Layouts;
+﻿using Microsoft.Maui.Layouts;
 using System.Globalization;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Converters
