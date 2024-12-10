@@ -6,6 +6,13 @@
 
     <ContentView.Resources>
 
+        <Style x:Key="AboutCard" TargetType="Border">
+            <Setter Property="Stroke" Value="Transparent" />
+            <Setter Property="Padding" Value="24" />
+            <Setter Property="Background" Value="{StaticResource Tone1}" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 24" />
+        </Style>
+
         <Style x:Key="Logo" TargetType="Image">
             <Setter Property="HeightRequest" Value="40" />
             <Setter Property="WidthRequest" Value="40" />
@@ -15,14 +22,14 @@
 
     </ContentView.Resources>
 
-    <Frame Style="{StaticResource SurfaceContainerLow}">
+    <Border Style="{StaticResource AboutCard}">
         <VerticalStackLayout>
             <HorizontalStackLayout Spacing="12">
                 <Image Style="{StaticResource Logo}" Source="{Binding FirstIconSource}" />
                 <Image Style="{StaticResource Logo}" Source="{Binding SecondIconSource}" />
             </HorizontalStackLayout>
 
-            <VerticalStackLayout Spacing="8">
+            <VerticalStackLayout Spacing="7">
                 <material:MaterialLabel Type="TitleLarge" Text="{Binding Title}" />
                 <material:MaterialLabel Type="BodyMedium" Text="{Binding Description}" />
             </VerticalStackLayout>
@@ -33,5 +40,5 @@
                                      Command="{Binding Command}"
                                      CommandParameter="{Binding CommandParameter}"/>
         </VerticalStackLayout>
-    </Frame>
+    </Border>
 </ContentView>

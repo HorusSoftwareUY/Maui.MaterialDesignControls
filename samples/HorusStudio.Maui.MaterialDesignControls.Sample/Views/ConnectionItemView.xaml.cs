@@ -4,6 +4,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Views;
 
 public partial class ConnectionItemView : ContentView
 {
+    #region Attributes & Properties
+
     public static readonly BindableProperty IconSourceProperty =
            BindableProperty.Create(nameof(IconSource), typeof(string), typeof(ConnectionItemView), default(string));
 
@@ -39,6 +41,8 @@ public partial class ConnectionItemView : ContentView
         get => (string)GetValue(CommandParameterProperty);
         set => SetValue(CommandParameterProperty, value);
     }
+
+    #endregion
 
     public ConnectionItemView()
     {
