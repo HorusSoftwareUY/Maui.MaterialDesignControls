@@ -45,7 +45,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// {
     ///     Headline = "Large type",
     ///     Description = "Description text",
-    ///     LeadingIconCommand = LeadingIconTap(),
+    ///     LeadingIconCommand = LeadingIconTap,
     ///     LeadingIcon = "ic_back_b.png",
     ///     ScrollViewName = "scrollView",
     ///     Type = MaterialTopAppBarType.Large,
