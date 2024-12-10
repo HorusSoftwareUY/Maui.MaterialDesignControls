@@ -17,10 +17,11 @@
             <Setter Property="HorizontalOptions" Value="Start" />
         </Style>
 
-        <Style x:Key="ConnectionsTitle" TargetType="Label">
+        <Style x:Key="ConnectionsTitle" TargetType="material:MaterialLabel">
             <Setter Property="Padding" Value="0,18,0,18" />
-            <Setter Property="FontFamily" Value="FontMedium" />
-            <Setter Property="TextColor" Value="{StaticResource OutstandingFontColor}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Type" Value="BodyMedium" />
+            <Setter Property="TextColor" Value="{StaticResource Tone6}" />
         </Style>
 
     </ContentPage.Resources>
@@ -54,8 +55,8 @@
                                  TextButton="GitHub" />
 
             <VerticalStackLayout Spacing="0">
-                
-                <Label Style="{StaticResource ConnectionsTitle}" Text="Connect With Us"  />
+
+                <material:MaterialLabel Style="{StaticResource ConnectionsTitle}" Text="Connect With Us"  />
 
                 <views:ConnectionItemView IconSource="connection_website" 
                                           LabelText="Website"
