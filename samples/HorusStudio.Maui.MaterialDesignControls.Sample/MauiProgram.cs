@@ -58,7 +58,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             var pageTypes = GetPagesToRegister(vmTypes);
             foreach (var page in pageTypes)
             {
-                services.AddSingleton(page);
+                services.AddTransient(page);
             }
 
             return services;

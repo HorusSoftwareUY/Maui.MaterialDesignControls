@@ -5,6 +5,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Models
     public partial class CustomizationColor : ObservableObject
     {
         public Color Color { get; set; }
+        public string TextColor { get; set; }
 
         [ObservableProperty]
         private bool _isSelected;

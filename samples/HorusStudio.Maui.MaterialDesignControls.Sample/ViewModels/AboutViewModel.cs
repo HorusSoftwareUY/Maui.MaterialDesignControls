@@ -1,11 +1,9 @@
-﻿using Microsoft.Maui.Devices;
-using Microsoft.Toolkit.Mvvm.Input;
-using System;
+﻿using Microsoft.Toolkit.Mvvm.Input;
 using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
-	public partial class AboutViewModel : BaseViewModel
+    public partial class AboutViewModel : BaseViewModel
 	{
         #region Attributes & Properties
 
@@ -23,7 +21,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
             }
         }
-
+        
         #endregion
     }
 }

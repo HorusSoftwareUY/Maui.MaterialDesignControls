@@ -4,7 +4,7 @@ using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
-	public partial class MainViewModel : BaseViewModel
+    public partial class MainViewModel : BaseViewModel
     {
         #region Attributes & Properties
 
@@ -19,31 +19,35 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             var groups = new List<MenuGroup>();
 
+            var initialGroup = new MenuGroup() { GroupName = "" };
+            initialGroup.Add(new MenuItemViewModel { Title = "Components overview", ViewModel = typeof(MainViewModel) });
+            initialGroup.Add(new MenuItemViewModel { Title = "Change appearance", ViewModel = typeof(AppearanceViewModel) });
+
             var actionGroup = new MenuGroup() { GroupName = "Actions" };
-            actionGroup.Add(new MenuItemViewModel { Title = "Buttons", Icon = "ic_button.png", ViewModel = typeof(ButtonViewModel) });
-            actionGroup.Add(new MenuItemViewModel { Title = "Icon buttons", Icon = "ic_icon_button.png", ViewModel = typeof(IconButtonViewModel) });
-           
+            actionGroup.Add(new MenuItemViewModel { Title = "Buttons", ViewModel = typeof(ButtonViewModel) });
+            actionGroup.Add(new MenuItemViewModel { Title = "Icon buttons", ViewModel = typeof(IconButtonViewModel) });
 
             var communicationGroup = new MenuGroup() { GroupName = "Communication" };
-            communicationGroup.Add(new MenuItemViewModel { Title = "Badge", Icon = "ic_badge.png", ViewModel = typeof(BadgeViewModel) });
-            communicationGroup.Add(new MenuItemViewModel { Title = "Progress indicators", Icon = "ic_progress_indicator.png", ViewModel = typeof(ProgressIndicatorViewModel) });
+            communicationGroup.Add(new MenuItemViewModel { Title = "Badge", ViewModel = typeof(BadgeViewModel) });
+            communicationGroup.Add(new MenuItemViewModel { Title = "Progress indicators", ViewModel = typeof(ProgressIndicatorViewModel) });
 
             var containmentGroup = new MenuGroup() { GroupName = "Containment" };
-            containmentGroup.Add(new MenuItemViewModel { Title = "Cards", Icon = "ic_card.png", ViewModel = typeof(CardViewModel) });
-            containmentGroup.Add(new MenuItemViewModel { Title = "Dividers", Icon = "ic_divider.png", ViewModel = typeof(DividerViewModel) });
+            containmentGroup.Add(new MenuItemViewModel { Title = "Cards", ViewModel = typeof(CardViewModel) });
+            containmentGroup.Add(new MenuItemViewModel { Title = "Dividers", ViewModel = typeof(DividerViewModel) });
 
             var navigationGroup = new MenuGroup() { GroupName = "Navigation" };
             navigationGroup.Add(new MenuItemViewModel { Title = "Top app bars", ViewModel = typeof(TopAppBarViewModel) });
 
             var selectionGroup = new MenuGroup() { GroupName = "Selection" };
-            selectionGroup.Add(new MenuItemViewModel { Title = "Chips", Icon = "ic_chip.png", ViewModel = typeof(ChipsViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Checkbox", Icon = "ic_checkbox.png", ViewModel = typeof(CheckboxViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Radio button", Icon = "ic_radio.png", ViewModel = typeof(RadioButtonViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Rating", Icon = "ic_rating.png", ViewModel = typeof(RatingViewModel) });
+            selectionGroup.Add(new MenuItemViewModel { Title = "Chips", ViewModel = typeof(ChipsViewModel) });
+            selectionGroup.Add(new MenuItemViewModel { Title = "Checkbox", ViewModel = typeof(CheckboxViewModel) });
+            selectionGroup.Add(new MenuItemViewModel { Title = "Radio button", ViewModel = typeof(RadioButtonViewModel) });
+            selectionGroup.Add(new MenuItemViewModel { Title = "Rating", ViewModel = typeof(RatingViewModel) });
 
             var textGroup = new MenuGroup() { GroupName = "Text inputs" };
-            textGroup.Add(new MenuItemViewModel { Title = "Labels", Icon = "ic_label.png", ViewModel = typeof(LabelViewModel) });
+            textGroup.Add(new MenuItemViewModel { Title = "Labels", ViewModel = typeof(LabelViewModel) });
 
+            groups.Add(initialGroup);
             groups.Add(actionGroup);
             groups.Add(communicationGroup);
             groups.Add(containmentGroup);
@@ -54,26 +58,27 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             MenuGroups = groups;
         }
 
+        #region Commands
+
         [ICommand]
         private async Task AboutUsAsync()
         {
             await GoToAsync<AboutViewModel>();
         }
-        
+
         [ICommand]
         private async Task NavigateAsync(MenuItemViewModel item)
         {
             await GoToAsync(item.ViewModel.Name);
         }
+
+        #endregion
     }
 
     public partial class MenuItemViewModel : ObservableObject
     {
         [ObservableProperty]
         string _title;
-
-        [ObservableProperty]
-        ImageSource _icon;
 
         [ObservableProperty]
         Type _viewModel;
