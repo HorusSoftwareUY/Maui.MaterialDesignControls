@@ -18,7 +18,7 @@
                          x:DataType="models:CustomizationColor">
                         <material:MaterialIconButton 
                                 Type="Custom"
-                                Margin="0,0,2,0"
+                                Margin="0,0,4,0"
                                 Opacity="0.5"
                                 IconTintColor="{Binding IconTinColor}"
                                 BackgroundColor="{Binding Color}"

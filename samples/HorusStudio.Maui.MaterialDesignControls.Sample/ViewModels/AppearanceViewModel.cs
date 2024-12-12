@@ -1,6 +1,7 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Enums;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Helpers;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Models;
+using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -14,7 +15,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private List<CustomizationColor> _themeColors;
 
         [ObservableProperty]
-        private Color _selectedThemeColor = Color.FromArgb("#68548E");
+        private Color _selectedThemeColor = ColorHelper.GetColorByKey("PurplePrimary");
 
         public override string Title => "Appearance";
 
@@ -22,13 +23,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public AppearanceViewModel()
         {
-            ThemeColors = new List<CustomizationColor>() 
-            {
-                new CustomizationColor{ Color = Color.FromArgb("#336940"), TextColor="Green" },
-                new CustomizationColor{ Color = Color.FromArgb("#505B92"), TextColor="Blue" },
-                new CustomizationColor{ Color = Color.FromArgb("#68548E"), TextColor="Purple", IsSelected = true },
-                new CustomizationColor{ Color = Color.FromArgb("#8F4951"), TextColor="Red" },
-            };
+            ThemeColors = ColorHelper.GetCustomizationColorsBySuffix("Primary", false);
         }
 
         #region Commands
@@ -38,9 +33,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             var theme = Enum.Parse<Themes>(color);
             await ColorHelper.ApplyThemeAsync(theme);
-
-            var parameters = new Dictionary<string, object>() { { "color", color } };
-            await GoToAsync<ChangeThemeViewModel>(parameters: parameters, animate: false);
+            await Shell.Current.Navigation.PushAsync(new MainPage(new MainViewModel(true)), false);
         }
 
         #endregion

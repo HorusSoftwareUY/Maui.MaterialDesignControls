@@ -35,7 +35,18 @@
 
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="48,*">
+    <Grid>
+        <ContentView
+            Background="White"
+            IsVisible="{Binding FromAppearance}">
+            <material:MaterialProgressIndicator 
+                IndicatorColor="{x:Static material:MaterialLightTheme.Primary}"/>
+        </ContentView>
+        
+        <Grid 
+            IsVisible="{Binding FromAppearance, Converter={StaticResource ReverseBoolConverter}}"
+            RowDefinitions="48,*">
+            
         <Grid Grid.Row="0" ColumnDefinitions="24,*,24,*,24" Padding="16,0">
             <ImageButton Grid.Column="0" Source="menu" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding ToggleMenuCommand}" />
             <Image Grid.Column="2" Source="horus_studio_logo" HeightRequest="24" Aspect="Center" />
@@ -101,6 +112,6 @@
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
+</Grid>
 
-    
 </local:BaseContentPage>

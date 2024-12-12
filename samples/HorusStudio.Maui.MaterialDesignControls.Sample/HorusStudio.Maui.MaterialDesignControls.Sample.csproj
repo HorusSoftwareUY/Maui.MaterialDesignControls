@@ -108,9 +108,6 @@
 		<MauiXaml Update="Pages\AppearancePage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Pages\ChangeThemePage.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
 		<MauiXaml Update="Pages\CheckboxPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

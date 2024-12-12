@@ -22,7 +22,7 @@
                                 <material:MaterialIconButton 
                                     WidthRequest="40"
                                      Type="Filled"
-                                     Margin="0,0,6,0"
+                                     Margin="0,0,8,0"
                                      IconTintColor="{Binding IconTinColor}"
                                      BackgroundColor="{Binding Color}"
                                      Command="{Binding Source={x:Reference ThisContentView}, Path=ItemTappedCommand}"

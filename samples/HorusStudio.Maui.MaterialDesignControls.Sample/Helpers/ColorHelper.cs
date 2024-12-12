@@ -20,10 +20,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Helpers
         {
             return new List<CustomizationColor>
             {
-                new CustomizationColor { Color = ColorHelper.GetColorByKey($"Purple{suffix}"), IsSelected = true, IsLight = isLight },
-                new CustomizationColor { Color = ColorHelper.GetColorByKey($"Green{suffix}"), IsLight = isLight },
-                new CustomizationColor { Color = ColorHelper.GetColorByKey($"Blue{suffix}"), IsLight = isLight },
-                new CustomizationColor { Color = ColorHelper.GetColorByKey($"Red{suffix}"), IsLight = isLight },
+                new CustomizationColor { Color = ColorHelper.GetColorByKey($"Purple{suffix}"), TextColor = "Purple", IsSelected = true, IsLight = isLight },
+                new CustomizationColor { Color = ColorHelper.GetColorByKey($"Green{suffix}"),TextColor = "Green", IsLight = isLight },
+                new CustomizationColor { Color = ColorHelper.GetColorByKey($"Blue{suffix}"),TextColor = "Blue", IsLight = isLight },
+                new CustomizationColor { Color = ColorHelper.GetColorByKey($"Red{suffix}"),TextColor = "Red", IsLight = isLight },
             };
         }
 

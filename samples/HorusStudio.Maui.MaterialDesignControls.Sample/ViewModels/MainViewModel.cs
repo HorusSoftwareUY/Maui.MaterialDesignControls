@@ -11,12 +11,19 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         List<MenuGroup> _menuGroups;
 
+        [ObservableProperty]
+        bool _fromAppearance;
+
+        public bool FromAppearanceControl { get; set; }
+
         public override string Title => string.Empty;
 
         #endregion
 
-        public MainViewModel()
+        public MainViewModel(bool fromAppearance = false)
         {
+            FromAppearanceControl = fromAppearance;
+
             var groups = new List<MenuGroup>();
 
             var initialGroup = new MenuGroup() { GroupName = "" };
@@ -70,6 +77,17 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private async Task NavigateAsync(MenuItemViewModel item)
         {
             await GoToAsync(item.ViewModel.Name);
+        }
+
+        #endregion
+
+        #region Methods
+
+        public async void AppearanceAsync()
+        {
+            await Task.Delay(500);
+            await GoToAsync<AppearanceViewModel>(animate: false);
+            FromAppearanceControl = false;
         }
 
         #endregion

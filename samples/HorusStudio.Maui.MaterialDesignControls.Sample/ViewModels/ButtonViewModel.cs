@@ -33,13 +33,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private List<CustomizationColor> _backgroundColors;
 
         [ObservableProperty]
-        private Color _selectedBackgroundColor = Color.FromArgb("#6750A4");
+        private Color _selectedBackgroundColor = ColorHelper.GetColorByKey("PurplePrimary");
 
         [ObservableProperty]
         private List<CustomizationColor> _textColors;
 
         [ObservableProperty]
-        private Color _selectedTextColor = Color.FromArgb("#D7D2E5");
+        private Color _selectedTextColor = ColorHelper.GetColorByKey("PurpleBackground");
 
         [ObservableProperty]
         private List<CustomizationItem> _fontFamilies;
