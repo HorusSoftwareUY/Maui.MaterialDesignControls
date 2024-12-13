@@ -1,9 +1,7 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
-using HorusStudio.Maui.MaterialDesignControls.Sample.Enums;
+﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Enums;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Helpers;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Models;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
-using Microsoft.Maui.ApplicationModel.DataTransfer;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -17,10 +15,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private List<CustomizationColor> _themeColors;
 
         [ObservableProperty]
-        private Color _selectedThemeColor = ColorHelper.GetColorByKey("PurplePrimary");
+        private Color _selectedThemeColor = AppearanceHelper.SelectedThemeColor;
 
         [ObservableProperty]
-        private bool _isDark;
+        private bool _isDark = AppearanceHelper.IsDark;
         
         [ObservableProperty]
         private bool _showCover;
@@ -41,9 +39,16 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         #endregion
 
-        public AppearanceViewModel()
+        public AppearanceViewModel()   
         {
+            SetModeColors(IsDark);
+
             ThemeColors = ColorHelper.GetCustomizationColorsBySuffix("Primary", false);
+
+            foreach (var themeColor in ThemeColors) 
+            {
+                themeColor.IsSelected = themeColor.Color == SelectedThemeColor;
+            }
         }
 
         #region Commands
@@ -53,6 +58,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             var theme = Enum.Parse<Themes>(color);
             await ColorHelper.ApplyThemeAsync(theme);
+            AppearanceHelper.SelectedThemeColor = SelectedThemeColor;
             await Shell.Current.Navigation.PushAsync(new MainPage(new MainViewModel(true)), false);
         }
 
@@ -66,11 +72,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             ShowCover = true;
             IsDark = isDark;
 
-            DarkBorderColor = isDark ? MaterialLightTheme.Primary : MaterialLightTheme.OnPrimary;
-            LightBorderColor = isDark ? MaterialLightTheme.OnPrimary : MaterialLightTheme.Primary;
+            SetModeColors(isDark);
 
-            DarkFillColor = isDark ? MaterialLightTheme.Primary : MaterialLightTheme.OnSurfaceVariant;
-            LightFillColor = isDark ? MaterialLightTheme.OnSurfaceVariant : MaterialLightTheme.Primary;
+            AppearanceHelper.IsDark = isDark;      
 
             Application.Current.UserAppTheme = IsDark ? AppTheme.Dark : AppTheme.Light;
             await Shell.Current.Navigation.PushAsync(new MainPage(new MainViewModel(true)), false);
@@ -80,5 +84,14 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         #endregion
+
+        private void SetModeColors(bool isDark)
+        {
+            DarkBorderColor = isDark ? MaterialLightTheme.Primary : MaterialLightTheme.OnPrimary;
+            LightBorderColor = isDark ? MaterialLightTheme.OnPrimary : MaterialLightTheme.Primary;
+
+            DarkFillColor = isDark ? MaterialLightTheme.Primary : MaterialLightTheme.OnSurfaceVariant;
+            LightFillColor = isDark ? MaterialLightTheme.OnSurfaceVariant : MaterialLightTheme.Primary;
+        }
     }
 }

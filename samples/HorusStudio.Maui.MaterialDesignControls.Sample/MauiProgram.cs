@@ -52,7 +52,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             var vmTypes = GetViewModelsToRegister();
             foreach (var vm in vmTypes)
             {
-                services.AddSingleton(vm);
+                services.AddTransient(vm);
             }
 
             var pageTypes = GetPagesToRegister(vmTypes);
