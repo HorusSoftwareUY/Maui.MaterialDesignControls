@@ -49,7 +49,7 @@
             
         <Grid Grid.Row="0" ColumnDefinitions="24,*,24,*,24" Padding="16,0">
             <ImageButton Grid.Column="0" Source="menu" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding ToggleMenuCommand}" />
-            <Image Grid.Column="2" Source="horus_studio_logo" HeightRequest="24" Aspect="Center" />
+                <Image Grid.Column="2" Source="{AppThemeBinding Light='horus_studio_logo', Dark='horus_studio_logo_dark'}" HeightRequest="24" Aspect="Center" />
             <ImageButton Grid.Column="4" Source="info" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding AboutUsCommand}" />
         </Grid>
 

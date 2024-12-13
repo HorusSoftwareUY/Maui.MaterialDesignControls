@@ -5,21 +5,24 @@
              xmlns:models="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Models"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.ThemeSelectionView">
-    
+
     <VerticalStackLayout Spacing="6">
         <material:MaterialLabel 
-           Text="{Binding LabelText}" 
+           TextColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Text}, Dark={x:Static material:MaterialDarkTheme.Text}}"
+           Text="Theme" 
            Type="HeadlineSmall" />
-        <material:MaterialCard 
-             CornerRadius="24"
-             Padding="24" >
-                <FlexLayout
+        <Frame
+            BorderColor="Transparent"
+            Background="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
+            CornerRadius="24"
+            Padding="24" >
+            <FlexLayout
                      BindableLayout.ItemsSource="{Binding DataSource}"
                      Wrap="Wrap">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate
                               x:DataType="models:CustomizationColor">
-                                <material:MaterialIconButton 
+                        <material:MaterialIconButton 
                                     WidthRequest="40"
                                      Type="Filled"
                                      Margin="0,0,8,0"
@@ -27,15 +30,15 @@
                                      BackgroundColor="{Binding Color}"
                                      Command="{Binding Source={x:Reference ThisContentView}, Path=ItemTappedCommand}"
                                      CommandParameter="{Binding}" >
-                                    <material:MaterialIconButton.Triggers>
-                                        <DataTrigger TargetType="material:MaterialIconButton" Binding="{Binding IsSelected}" Value="True">
-                                            <Setter Property="ImageSource" Value="check" />
-                                        </DataTrigger>
-                                    </material:MaterialIconButton.Triggers>
-                                </material:MaterialIconButton>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                </FlexLayout>
-        </material:MaterialCard>
+                            <material:MaterialIconButton.Triggers>
+                                <DataTrigger TargetType="material:MaterialIconButton" Binding="{Binding IsSelected}" Value="True">
+                                    <Setter Property="ImageSource" Value="check" />
+                                </DataTrigger>
+                            </material:MaterialIconButton.Triggers>
+                        </material:MaterialIconButton>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </Frame>
     </VerticalStackLayout>
 </ContentView>

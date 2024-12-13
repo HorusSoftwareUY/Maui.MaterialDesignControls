@@ -28,33 +28,68 @@
               Grid.Row="1"
               x:Name="scrollView">
                 <VerticalStackLayout Style="{StaticResource MainLayout}" Spacing="16">
-
                     <views:ThemeSelectionView
                         Command="{Binding ChangeThemeCommand}"
                         BindingProperty="{Binding SelectedThemeColor, Mode=TwoWay}"
-                        DataSource="{Binding ThemeColors}"
-                        LabelText="Theme"/>
-
-                    <VerticalStackLayout>
-                        <material:MaterialLabel Text="Mode" Type="HeadlineSmall" />
-                        <material:MaterialCard 
-                          CornerRadius="24"
-                          Padding="24" >
-                            <HorizontalStackLayout Spacing="8">
-                                <material:MaterialChips 
-                                     Text="Light"
-                                     Type="Filter"
-                                     IsSelected="{Binding IsDark, Converter={StaticResource ReverseBoolConverter}}"
-                                     Command="{Binding SetThemeModeCommand}"
-                                     CommandParameter="Light"/>
-                                <material:MaterialChips 
-                                     Text="Dark"
-                                     Type="Filter"
-                                     IsSelected="{Binding IsDark}"
-                                     Command="{Binding SetThemeModeCommand}"
-                                     CommandParameter="Dark"/>
+                        DataSource="{Binding ThemeColors}"/>
+                    
+                    <VerticalStackLayout Spacing="6">
+                        <material:MaterialLabel 
+                            TextColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Text}, Dark={x:Static material:MaterialDarkTheme.Text}}"
+                            Text="Mode" 
+                            Type="HeadlineSmall" />
+                        <Frame
+                             BorderColor="Transparent"
+                             Background="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
+                             CornerRadius="24"
+                             Padding="24">
+                            <HorizontalStackLayout>
+                                <Border
+                                     Stroke="{Binding LightBorderColor}"
+                                     StrokeThickness="2"
+                                     WidthRequest="90"
+                                     Background="{x:Static material:MaterialLightTheme.OnPrimary}"
+                                     StrokeShape="RoundRectangle 16"
+                                     Padding="16">
+                                    <VerticalStackLayout Spacing="10">
+                                        <Image 
+                                         x:Name="LightImage"
+                                         Source="light_mode" 
+                                         HorizontalOptions="Start" />
+                                        <material:MaterialLabel  
+                                             TextColor="{Binding LightFillColor}"
+                                             FontAttributes="Bold" 
+                                             Text="Light" 
+                                             HorizontalOptions="Start" />
+                                    </VerticalStackLayout>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ChangeModeCommand}" CommandParameter="Light" />
+                                    </Border.GestureRecognizers>
+                                </Border>
+                                <Border
+                                     Stroke="{Binding DarkBorderColor}"
+                                     StrokeThickness="2"
+                                     WidthRequest="90"
+                                     Background="{x:Static material:MaterialLightTheme.OnPrimary}"
+                                     StrokeShape="RoundRectangle 16"
+                                     Padding="16">
+                                    <VerticalStackLayout Spacing="10">
+                                        <Image
+                                             x:Name="DarkImage"
+                                             Source="dark_mode" 
+                                             HorizontalOptions="Start" />
+                                        <material:MaterialLabel 
+                                             TextColor="{Binding DarkFillColor}"
+                                             FontAttributes="Bold" 
+                                             Text="Dark" 
+                                             HorizontalOptions="Start" />
+                                    </VerticalStackLayout>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ChangeModeCommand}" CommandParameter="Dark" />
+                                    </Border.GestureRecognizers>
+                                </Border>
                             </HorizontalStackLayout>
-                        </material:MaterialCard>
+                        </Frame>
                     </VerticalStackLayout>
                 </VerticalStackLayout>
             </ScrollView>

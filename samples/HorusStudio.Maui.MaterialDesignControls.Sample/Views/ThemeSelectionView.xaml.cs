@@ -10,11 +10,8 @@ public partial class ThemeSelectionView : ContentView
     public static readonly BindableProperty DataSourceProperty =
            BindableProperty.Create(nameof(DataSource), typeof(List<CustomizationColor>), typeof(ThemeSelectionView), default(List<CustomizationItem>));
 
-    public static readonly BindableProperty LabelTextProperty =
-        BindableProperty.Create(nameof(LabelText), typeof(string), typeof(ThemeSelectionView), default(string));
-
     public static readonly BindableProperty BindingPropertyProperty =
-        BindableProperty.Create(nameof(LabelText), typeof(Color), typeof(ThemeSelectionView), default(Color));
+        BindableProperty.Create(nameof(BindingProperty), typeof(Color), typeof(ThemeSelectionView), default(Color));
 
     public static readonly BindableProperty CommandProperty =
         BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ThemeSelectionView), default(ICommand));
@@ -23,12 +20,6 @@ public partial class ThemeSelectionView : ContentView
     {
         get => (List<CustomizationColor>)GetValue(DataSourceProperty);
         set => SetValue(DataSourceProperty, value);
-    }
-
-    public string LabelText
-    {
-        get => (string)GetValue(LabelTextProperty);
-        set => SetValue(LabelTextProperty, value);
     }
 
     public object BindingProperty

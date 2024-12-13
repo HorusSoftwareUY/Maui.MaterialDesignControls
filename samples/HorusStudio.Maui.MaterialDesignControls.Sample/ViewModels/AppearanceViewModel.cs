@@ -1,7 +1,9 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Enums;
+﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Sample.Enums;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Helpers;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Models;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -22,6 +24,18 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         
         [ObservableProperty]
         private bool _showCover;
+        
+        [ObservableProperty]
+        private Color _lightBorderColor = MaterialLightTheme.Primary;
+        
+        [ObservableProperty]
+        private Color _darkBorderColor = MaterialLightTheme.OnPrimary;
+        
+        [ObservableProperty]
+        private Color _lightFillColor = MaterialLightTheme.Primary;
+        
+        [ObservableProperty]
+        private Color _darkFillColor = MaterialLightTheme.OnSurfaceVariant;
 
         public override string Title => "Appearance";
 
@@ -43,7 +57,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async Task SetThemeMode(string mode)
+        private async Task ChangeMode(string mode)
         {
             var isDark = mode == "Dark";
 
@@ -51,6 +65,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
             ShowCover = true;
             IsDark = isDark;
+
+            DarkBorderColor = isDark ? MaterialLightTheme.Primary : MaterialLightTheme.OnPrimary;
+            LightBorderColor = isDark ? MaterialLightTheme.OnPrimary : MaterialLightTheme.Primary;
+
+            DarkFillColor = isDark ? MaterialLightTheme.Primary : MaterialLightTheme.OnSurfaceVariant;
+            LightFillColor = isDark ? MaterialLightTheme.OnSurfaceVariant : MaterialLightTheme.Primary;
 
             Application.Current.UserAppTheme = IsDark ? AppTheme.Dark : AppTheme.Light;
             await Shell.Current.Navigation.PushAsync(new MainPage(new MainViewModel(true)), false);

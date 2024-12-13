@@ -6,12 +6,6 @@
 
     <ContentView.Resources>
 
-        <Style x:Key="AboutCard" TargetType="material:MaterialCard">
-            <Setter Property="Padding" Value="24" />
-            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
-            <Setter Property="CornerRadius" Value="24" />
-        </Style>
-
         <Style x:Key="Logo" TargetType="Image">
             <Setter Property="HeightRequest" Value="40" />
             <Setter Property="WidthRequest" Value="40" />
@@ -21,7 +15,11 @@
 
     </ContentView.Resources>
 
-    <material:MaterialCard Style="{StaticResource AboutCard}">
+    <Frame 
+        Background="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
+        CornerRadius="24"
+        Padding="24"
+        BorderColor="Transparent">
         <VerticalStackLayout>
             <HorizontalStackLayout Spacing="12">
                 <Image Style="{StaticResource Logo}" Source="{Binding FirstIconSource}" />
@@ -39,5 +37,5 @@
                                      Command="{Binding Command}"
                                      CommandParameter="{Binding CommandParameter}"/>
         </VerticalStackLayout>
-    </material:MaterialCard>
+    </Frame>
 </ContentView>
