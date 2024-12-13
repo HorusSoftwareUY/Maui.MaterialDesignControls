@@ -21,13 +21,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private List<CustomizationItem> _buttonsTypes;
 
         [ObservableProperty]
-        private MaterialButtonType _selectedButtonType = MaterialButtonType.Filled;
+        private CustomizationItem _selectedButtonType = new CustomizationItem { Name = "Filled", Value = MaterialButtonType.Filled };
 
         [ObservableProperty]
         private List<CustomizationItem> _cornersRadius;
 
         [ObservableProperty]
-        private int _selectedCornerRadius = 20;
+        private CustomizationItem _selectedCornerRadius = new CustomizationItem { Name = "20", Value = 20 };
 
         [ObservableProperty]
         private List<CustomizationColor> _backgroundColors;
@@ -45,23 +45,23 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private List<CustomizationItem> _fontFamilies;
 
         [ObservableProperty]
-        private string _selectedFontFamily = "FontMedium";
+        private CustomizationItem _selectedFontFamily = new CustomizationItem { Name = "FontMedium", Value = "FontMedium" };
 
         [ObservableProperty]
         private List<CustomizationItem> _fontSizes;
 
         [ObservableProperty]
-        private int _selectedFontSize = 14;
+        private CustomizationItem _selectedFontSize = new CustomizationItem { Name = "14", Value = 14 };
 
         [ObservableProperty]
         private List<CustomizationItem> _animations;
 
         [ObservableProperty]
-        private AnimationTypes _selectedAnimation = AnimationTypes.None;
+        private CustomizationItem _selectedAnimation = new CustomizationItem { Name = "None", Value = AnimationTypes.None };
 
         [ObservableProperty]
         private bool _hasIcon;
-        
+
         [ObservableProperty]
         private bool _isEnabled = true;
 
@@ -74,7 +74,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             Animations = new List<CustomizationItem>
             {
-                new CustomizationItem { Name = "None", Value = AnimationTypes.None, IsSelected = true },
+                new CustomizationItem { Name = "None", Value = AnimationTypes.None },
                 new CustomizationItem { Name = "Fade", Value = AnimationTypes.Fade },
                 new CustomizationItem { Name = "Scale", Value = AnimationTypes.Scale },
             };
@@ -82,19 +82,19 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             FontSizes = new List<CustomizationItem>
             {
                 new CustomizationItem { Name = "12", Value = 12 },
-                new CustomizationItem { Name = "14", Value = 14, IsSelected = true },
+                new CustomizationItem { Name = "14", Value = 14 },
                 new CustomizationItem { Name = "16", Value = 16 },
             };
 
             FontFamilies = new List<CustomizationItem>
             {
-                new CustomizationItem { Name = "Roboto", Value = "FontMedium",  IsSelected = true },
+                new CustomizationItem { Name = "Roboto", Value = "FontMedium" },
                 new CustomizationItem { Name = "Roboto Slab", Value = "FontMediumSlab" }
             };
 
             ButtonsTypes = new List<CustomizationItem>
             {
-                new CustomizationItem { Name = "Filled", Value = MaterialButtonType.Filled, IsSelected = true },
+                new CustomizationItem { Name = "Filled", Value = MaterialButtonType.Filled },
                 new CustomizationItem { Name = "Elevated", Value = MaterialButtonType.Elevated },
                 new CustomizationItem { Name = "Outlined", Value = MaterialButtonType.Outlined },
                 new CustomizationItem { Name = "Tonal", Value = MaterialButtonType.Tonal },
@@ -103,17 +103,19 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
             CornersRadius = new List<CustomizationItem>
             {
-                new CustomizationItem { Name = "20", Value = 20, IsSelected = true },
+                new CustomizationItem { Name = "20", Value = 20 },
                 new CustomizationItem { Name = "10", Value = 10 },
                 new CustomizationItem { Name = "0", Value = 0 }
             };
 
             BackgroundColors = ColorHelper.GetCustomizationColorsBySuffix("Primary", false);
-          
+
             TextColors = ColorHelper.GetCustomizationColorsBySuffix("Background", true);
 
             Subtitle = "Buttons help people take action, such as sending an email, sharing a document, or liking a comment.";
         }
+
+        #region Commands
 
         [ICommand]
         private async Task MaterialButton1(string message)
@@ -150,10 +152,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private Task MaterialButton12(string message) => MaterialButton1(message);
 
-        #region Customize commands
 
         [ICommand]
-        private async Task TapButton() 
+        private async Task TapButton()
         {
             await Task.Delay(TimeSpan.FromSeconds(2));
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -46,6 +45,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             Subtitle = "Chips help people enter information, make selections, filter content, or trigger actions";
         }
 
+        #region Commands
+
         [ICommand]
         private async void TappedChips()
         {
@@ -76,6 +77,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             }
 
         }
+
+        #endregion
     }
 }
 

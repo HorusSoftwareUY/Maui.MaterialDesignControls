@@ -123,9 +123,6 @@
 		<MauiXaml Update="Views\AboutCardView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\ChipsGroupView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
 		<MauiXaml Update="Views\ColorSelectionView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

@@ -86,17 +86,17 @@
                          BorderColor="{Binding SelectedTextColor}"
                          TextColor="{Binding SelectedTextColor}"
                          IconTintColor="{Binding SelectedTextColor}"
-                         Animation="{Binding SelectedAnimation}"
-                         FontFamily="{Binding SelectedFontFamily}"
                          BackgroundColor="{Binding SelectedBackgroundColor}"
-                         FontSize="{Binding SelectedFontSize}"
+                         BusyIndicatorColor="{Binding SelectedBackgroundColor}"
+                         Animation="{Binding SelectedAnimation.Value}"
+                         FontFamily="{Binding SelectedFontFamily.Value}"
+                         FontSize="{Binding SelectedFontSize.Value}"
+                         CornerRadius="{Binding SelectedCornerRadius.Value}"
+                         Type="{Binding SelectedButtonType.Value}" 
                          IsEnabled="{Binding IsEnabled}"
                          IsVisible="{Binding IsVisible}"   
                          Command="{Binding TapButtonCommand}"
-                         BusyIndicatorColor="{Binding SelectedBackgroundColor}"
-                         IsBusy="{Binding TapButtonCommand.IsRunning}"
-                         CornerRadius="{Binding SelectedCornerRadius}"
-                         Type="{Binding SelectedButtonType}" >
+                         IsBusy="{Binding TapButtonCommand.IsRunning}">
 
                         <material:MaterialButton.Triggers>
                             <DataTrigger TargetType="material:MaterialButton" Binding="{Binding HasIcon}" Value="True" >
@@ -415,31 +415,36 @@
                              DataSource="{Binding TextColors}"
                              LabelText="TextColor, BorderColor and IconTintColor"/>
 
-                        <views:ChipsGroupView
-                            BindingProperty="{Binding SelectedButtonType, Mode=TwoWay}"
-                            DataSource="{Binding ButtonsTypes}"
-                            LabelText="Type"/>
-
-                        <views:ChipsGroupView
-                            BindingProperty="{Binding SelectedCornerRadius, Mode=TwoWay}"
-                            DataSource="{Binding CornersRadius}"
-                            LabelText="CornerRadius"/>
-
-                        <views:ChipsGroupView
-                            BindingProperty="{Binding SelectedFontFamily, Mode=TwoWay}"
-                            DataSource="{Binding FontFamilies}"
-                            LabelText="FontFamily"/>
-
-                        <views:ChipsGroupView
-                            BindingProperty="{Binding SelectedFontSize, Mode=TwoWay}"
-                            DataSource="{Binding FontSizes}"
-                            LabelText="FontSize"/>
-
-                        <views:ChipsGroupView
-                            BindingProperty="{Binding SelectedAnimation, Mode=TwoWay}"
-                            DataSource="{Binding Animations}"
-                            LabelText="Animation"/>
-
+                        <material:MaterialChipsGroup
+                            PropertyPath="Name"
+                            SelectedItem="{Binding SelectedButtonType}"
+                            LabelText="Type"
+                            ItemsSource="{Binding ButtonsTypes}" />
+                        
+                        <material:MaterialChipsGroup
+                            PropertyPath="Name"
+                            SelectedItem="{Binding SelectedCornerRadius}"
+                            LabelText="CornerRadius"
+                            ItemsSource="{Binding CornersRadius}" />
+                        
+                        <material:MaterialChipsGroup
+                            PropertyPath="Name"
+                            SelectedItem="{Binding SelectedFontFamily}"
+                            LabelText="FontFamily"
+                            ItemsSource="{Binding FontFamilies}" />
+                        
+                        <material:MaterialChipsGroup
+                            PropertyPath="Name"
+                            SelectedItem="{Binding SelectedFontSize}"
+                            LabelText="FontSize"
+                            ItemsSource="{Binding FontSizes}" />
+                        
+                        <material:MaterialChipsGroup
+                            PropertyPath="Name"
+                            SelectedItem="{Binding SelectedAnimation}"
+                            LabelText="Animation"
+                            ItemsSource="{Binding Animations}" />
+                       
                         <material:MaterialCheckBox 
                             IsChecked="{Binding IsEnabled}"
                             Text="IsEnabled" />
