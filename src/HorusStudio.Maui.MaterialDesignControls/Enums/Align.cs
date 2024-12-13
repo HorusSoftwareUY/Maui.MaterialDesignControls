@@ -1,6 +1,9 @@
 ﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
-public enum TextSide
+public enum Align
 {
-    Right, Left
+    Start,
+    Center,
+    End
 }
+

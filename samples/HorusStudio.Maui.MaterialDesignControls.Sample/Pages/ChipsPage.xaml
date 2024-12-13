@@ -62,7 +62,6 @@
 
     <Grid
         RowDefinitions="Auto,*">
-
         <material:MaterialTopAppBar
             Headline="{Binding Title}"
             Description="{Binding Subtitle}"
@@ -236,11 +235,30 @@
                     Text="You can modify the chip as you require, this is useful when you need to add it to specific spaces or follow the required layout throughout your app." Type="BodySmall" />
                 </VerticalStackLayout>
 
-                <VerticalStackLayout IsVisible="{Binding IsCustomize}">
-                    <material:MaterialCard Style="{StaticResource CardControlContainer}" HeightRequest="80">
-                        <Label Text="Custom view pending" HorizontalOptions="Center" VerticalOptions="Center" />
-                    </material:MaterialCard>
-                </VerticalStackLayout>
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Chips Group (single-selection)" />
+                <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                    <material:MaterialChipsGroup 
+                    LabelText="Chips"
+                    SupportingText="You must select one"
+                    IsMultipleSelection="False"
+                    HorizontalSpacing="4"
+                    SelectedItem="{Binding SelectedChip}"
+                    ItemsSource="{Binding Chips}"/>
+                </Frame>
+                <material:MaterialLabel Text="You can easily group chips together to give the user a list of single-select options, even offering a way to display animated validation text." />
+
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Chips Group (multi-selection)" />
+                <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                    <material:MaterialChipsGroup 
+                    LabelText="Chips"
+                    IsMultipleSelection="True"
+                    ChipsFlexLayoutPercentageBasis="0.5"
+                    Align="Center"
+                    SelectedItems="{Binding SelectedChips}"
+                    ItemsSource="{Binding Chips}"/>
+                </Frame>
+                <material:MaterialLabel Text="You can also provide a group to select multiple options. The chips group allows for chips alignment, spacing, percentage size, and more." />
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

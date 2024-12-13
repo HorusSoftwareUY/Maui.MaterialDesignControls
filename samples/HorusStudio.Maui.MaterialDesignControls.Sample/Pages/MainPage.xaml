@@ -36,7 +36,6 @@
     </ContentPage.Resources>
 
     <Grid>
-        
         <ContentView
             Background="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLowest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLowest}}"
             IsVisible="{Binding FromAppearance}">
@@ -113,6 +112,6 @@
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
-</Grid>
+    </Grid>
 
 </local:BaseContentPage>
