@@ -11,25 +11,53 @@
     x:DataType="vm:AppearanceViewModel" 
     Shell.NavBarIsVisible="False">
 
-    <Grid  RowDefinitions="Auto,*">
-        <material:MaterialTopAppBar
-             Headline="{Binding Title}"
-             LeadingIconCommand="{Binding GoBackCommand}"
-             LeadingIcon="ic_back_b.png"
-             ScrollViewName="scrollView"
-             Type="Large" />
-        <ScrollView 
-             Grid.Row="1"
-             x:Name="scrollView">
-            <VerticalStackLayout Style="{StaticResource MainLayout}" Spacing="16">
+    <Grid>
+        <ContentView
+            IsVisible="{Binding ShowCover}"
+            Background="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLowest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLowest}}" />
+        <Grid 
+            IsVisible="{Binding ShowCover, Converter={StaticResource ReverseBoolConverter}}"
+            RowDefinitions="Auto,*">
+            <material:MaterialTopAppBar
+              Headline="{Binding Title}"
+              LeadingIconCommand="{Binding GoBackCommand}"
+              LeadingIcon="ic_back_b.png"
+              ScrollViewName="scrollView"
+              Type="Large" />
+            <ScrollView 
+              Grid.Row="1"
+              x:Name="scrollView">
+                <VerticalStackLayout Style="{StaticResource MainLayout}" Spacing="16">
 
-                <views:ThemeSelectionView
-                   Command="{Binding ChangeThemeCommand}"
-                   BindingProperty="{Binding SelectedThemeColor, Mode=TwoWay}"
-                   DataSource="{Binding ThemeColors}"
-                   LabelText="Theme"/>
-              
-            </VerticalStackLayout>
-        </ScrollView>
+                    <views:ThemeSelectionView
+                        Command="{Binding ChangeThemeCommand}"
+                        BindingProperty="{Binding SelectedThemeColor, Mode=TwoWay}"
+                        DataSource="{Binding ThemeColors}"
+                        LabelText="Theme"/>
+
+                    <VerticalStackLayout>
+                        <material:MaterialLabel Text="Mode" Type="HeadlineSmall" />
+                        <material:MaterialCard 
+                          CornerRadius="24"
+                          Padding="24" >
+                            <HorizontalStackLayout Spacing="8">
+                                <material:MaterialChips 
+                                     Text="Light"
+                                     Type="Filter"
+                                     IsSelected="{Binding IsDark, Converter={StaticResource ReverseBoolConverter}}"
+                                     Command="{Binding SetThemeModeCommand}"
+                                     CommandParameter="Light"/>
+                                <material:MaterialChips 
+                                     Text="Dark"
+                                     Type="Filter"
+                                     IsSelected="{Binding IsDark}"
+                                     Command="{Binding SetThemeModeCommand}"
+                                     CommandParameter="Dark"/>
+                            </HorizontalStackLayout>
+                        </material:MaterialCard>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
     </Grid>
 </local:BaseContentPage>

@@ -33,7 +33,7 @@
                 <material:MaterialDivider />
 
                 <material:MaterialTopAppBar
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainer}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainer}}"
                     Headline="CenterAligned type"
                     LeadingIconCommand="{Binding LeadingIconTapCommand}"
                     LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
@@ -50,7 +50,7 @@
                 <material:MaterialDivider />
 
                 <material:MaterialTopAppBar
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainer}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainer}}"
                     Headline="Small type"
                     LeadingIconCommand="{Binding LeadingIconTapCommand}"
                     LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
@@ -75,7 +75,7 @@
                 <material:MaterialDivider />
 
                 <material:MaterialTopAppBar
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainer}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainer}}"
                     Headline="Medium type"
                     LeadingIconCommand="{Binding LeadingIconTapCommand}"
                     LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
@@ -100,7 +100,7 @@
                 <material:MaterialDivider />
 
                 <material:MaterialTopAppBar
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainer}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainer}}"
                     Headline="Large type"
                     LeadingIconCommand="{Binding LeadingIconTapCommand}"
                     LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
@@ -125,7 +125,7 @@
                 <material:MaterialDivider />
 
                 <material:MaterialTopAppBar
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainer}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainer}}"
                     Headline="CenterAligned type"
                     Description="Sample with a description text."
                     LeadingIconCommand="{Binding LeadingIconTapCommand}"
@@ -143,7 +143,7 @@
                 <material:MaterialDivider />
 
                 <material:MaterialTopAppBar
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainer}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainer}}"
                     Headline="Small type"
                     Description="Sample with a description text."
                     LeadingIconCommand="{Binding LeadingIconTapCommand}"
@@ -169,7 +169,7 @@
                 <material:MaterialDivider />
 
                 <material:MaterialTopAppBar
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainer}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainer}}"
                     Headline="Medium type"
                     Description="Sample with a description text and trailing icons with states."
                     LeadingIconCommand="{Binding LeadingIconTapCommand}"
@@ -194,7 +194,7 @@
                 <material:MaterialDivider />
 
                 <material:MaterialTopAppBar
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainer}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainer}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainer}}"
                     Headline="Large type"
                     Description="Sample with a description text and trailing icons through binding."
                     LeadingIconCommand="{Binding LeadingIconTapCommand}"

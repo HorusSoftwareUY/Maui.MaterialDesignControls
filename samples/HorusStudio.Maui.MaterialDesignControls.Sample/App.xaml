@@ -19,21 +19,24 @@
             </Style>
 
             <Style x:Key="SurfaceContainer" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
-                <Setter Property="BorderColor" Value="{x:Static material:MaterialLightTheme.OutlineVariant}" />
+                <Setter Property="BackgroundColor" 
+                        Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainer}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainer}}" />
+                <Setter Property="BorderColor" 
+                        Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OutlineVariant}, Dark={x:Static material:MaterialDarkTheme.OutlineVariant}}" />
                 <Setter Property="Padding" Value="32" />
                 <Setter Property="CornerRadius" Value="24" />
                 <Setter Property="HasShadow" Value="False" />
             </Style>
 
             <Style x:Key="SurfaceContainerLow" TargetType="Frame" BaseResourceKey="SurfaceContainer">
-                <Setter Property="BackgroundColor" Value="{x:Static material:MaterialLightTheme.SurfaceContainerLow}" />
+                <Setter Property="BackgroundColor" 
+                        Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
                 <Setter Property="BorderColor" Value="Transparent" />
                 <Setter Property="Padding" Value="24, 16" />
             </Style>
 
             <Style x:Key="CardControlContainer" TargetType="material:MaterialCard">
-                <Setter Property="BackgroundColor" Value="{x:Static material:MaterialLightTheme.SurfaceContainerLow}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
                 <Setter Property="CornerRadius" Value="24" />
             </Style>
 

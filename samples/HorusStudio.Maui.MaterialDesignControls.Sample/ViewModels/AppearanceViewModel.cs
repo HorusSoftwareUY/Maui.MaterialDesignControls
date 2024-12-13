@@ -17,6 +17,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private Color _selectedThemeColor = ColorHelper.GetColorByKey("PurplePrimary");
 
+        [ObservableProperty]
+        private bool _isDark;
+        
+        [ObservableProperty]
+        private bool _showCover;
+
         public override string Title => "Appearance";
 
         #endregion
@@ -34,6 +40,23 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             var theme = Enum.Parse<Themes>(color);
             await ColorHelper.ApplyThemeAsync(theme);
             await Shell.Current.Navigation.PushAsync(new MainPage(new MainViewModel(true)), false);
+        }
+
+        [ICommand]
+        private async Task SetThemeMode(string mode)
+        {
+            var isDark = mode == "Dark";
+
+            if (IsDark == isDark) return;
+
+            ShowCover = true;
+            IsDark = isDark;
+
+            Application.Current.UserAppTheme = IsDark ? AppTheme.Dark : AppTheme.Light;
+            await Shell.Current.Navigation.PushAsync(new MainPage(new MainViewModel(true)), false);
+
+            await Task.Delay(500);
+            ShowCover = false;
         }
 
         #endregion

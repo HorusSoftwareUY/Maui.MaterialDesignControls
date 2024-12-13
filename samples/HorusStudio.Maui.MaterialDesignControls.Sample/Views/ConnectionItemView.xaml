@@ -31,7 +31,7 @@
         </Style>
 
         <Style x:Key="ConnectionName" TargetType="material:MaterialLabel">
-            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.OnSurface}" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurface}, Dark={x:Static material:MaterialDarkTheme.OnSurface}}" />
             <Setter Property="Grid.Column" Value="1" />
             <Setter Property="VerticalOptions" Value="Center" />
             <Setter Property="HorizontalOptions" Value="Start" />

@@ -22,7 +22,7 @@
             <Setter Property="HeightRequest" Value="160" />
             <Setter Property="BorderColor" Value="Transparent" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.PrimaryContainer}" />
+            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.PrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.PrimaryContainer}}" />
             <Setter Property="CornerRadius" Value="24" />
             <Setter Property="HasShadow" Value="False" />
             <Setter Property="IsClippedToBounds" Value="True" />
@@ -36,11 +36,12 @@
     </ContentPage.Resources>
 
     <Grid>
+        
         <ContentView
-            Background="White"
+            Background="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLowest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLowest}}"
             IsVisible="{Binding FromAppearance}">
             <material:MaterialProgressIndicator 
-                IndicatorColor="{x:Static material:MaterialLightTheme.Primary}"/>
+                IndicatorColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}"/>
         </ContentView>
         
         <Grid 

@@ -1,6 +1,13 @@
-﻿namespace HorusStudio.Maui.MaterialDesignControls.Sample.Models
+﻿
+namespace HorusStudio.Maui.MaterialDesignControls.Sample.Models
 {
-    public class ThemeColors
+    public class Schemas
+    {
+        public ThemeColor Light { get; set; }
+        public ThemeColor Dark { get; set; }
+    }
+
+    public class ThemeColor
     {
         public string Primary { get; set; }
         public string OnPrimary { get; set; }
