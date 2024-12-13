@@ -4,7 +4,7 @@ using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
-	public partial class MainViewModel : BaseViewModel
+    public partial class MainViewModel : BaseViewModel
     {
         #region Attributes & Properties
 

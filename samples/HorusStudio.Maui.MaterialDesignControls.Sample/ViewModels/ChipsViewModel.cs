@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -12,23 +13,33 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         [ObservableProperty]
         private bool _isEnabledState;
-        
+
         [ObservableProperty]
         private bool _chipsFilterA;
-        
+
         [ObservableProperty]
         private bool _chipsFilterB;
-        
+
         [ObservableProperty]
         private bool _chipsFilterC;
-        
+
         [ObservableProperty]
         private bool _chipsFilterD;
+
+        [ObservableProperty]
+        private ObservableCollection<string> _chips;
+
+        [ObservableProperty]
+        private List<string> _selectedChips = new();
+
+        [ObservableProperty]
+        private string _selectedChip;
 
         #endregion
 
         public ChipsViewModel()
         {
+            Chips = new ObservableCollection<string> { "Chip A", "Chip B", "Chip C", "Chip D", "Chip E" };
             Subtitle = "Chips help people enter information, make selections, filter content, or trigger actions";
         }
 
@@ -37,7 +48,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             await DisplayAlert(Title, "Chips tapped!", "OK");
         }
-        
+
         [ICommand]
         private async void TappedChipsFilter(string chip)
         {
@@ -60,7 +71,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     await DisplayAlert(Title, $"Chips D {((ChipsFilterD) ? "selected" : "not selected")}", "OK");
                     break;
             }
-            
+
         }
     }
 }
