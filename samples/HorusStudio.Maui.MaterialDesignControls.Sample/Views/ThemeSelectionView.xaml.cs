@@ -47,6 +47,13 @@ public partial class ThemeSelectionView : ContentView
 
     private void OnItemTapped(CustomizationColor item)
     {
+        var selected = DataSource.FirstOrDefault(x => x.IsSelected);
+
+        if (selected.TextColor == item.TextColor)
+        {
+            return;
+        }
+
         BindingProperty = item.Color;
         DataSource.ForEach(x => x.IsSelected = item.Color == x.Color);
 
