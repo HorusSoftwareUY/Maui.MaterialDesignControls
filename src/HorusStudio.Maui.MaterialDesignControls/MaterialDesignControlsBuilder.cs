@@ -71,6 +71,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialChips.GetStyles());
             // Rating
             application.Resources.AddStyles(MaterialRating.GetStyles());
+            // Segmented
+            application.Resources.AddStyles(MaterialSegmented.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
