@@ -24,19 +24,11 @@ public class MaterialSegmented : ContentView, ITouchable
     private readonly static Thickness DefaultPadding = new(12, 0);
     private readonly static CornerRadius DefaultCornerRadius = new(16);
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static string DefaultSelectedFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private readonly static double DefaultSelectedFontSize = MaterialFontSize.BodyLarge;
+    private readonly static double DefaultFontSize = MaterialFontSize.LabelLarge;
     private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerLow, Dark = MaterialDarkTheme.SurfaceContainerLow }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultDisableBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultSelectedColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SecondaryContainer, Dark = MaterialDarkTheme.SecondaryContainer }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultUnselectedColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerLow, Dark = MaterialDarkTheme.SurfaceContainerLow }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultDisabledUnselectedColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultSelectedTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSecondaryContainer, Dark = MaterialDarkTheme.OnSecondaryContainer }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultDisabledSelectedTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultUnselectedTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultDisabledUnselectedTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSecondary, Dark = MaterialDarkTheme.OnSecondary }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultItemColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSecondary, Dark = MaterialDarkTheme.OnSecondary }.GetValueForCurrentTheme<Color>();
+    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
     private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
     private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
     
@@ -102,7 +94,7 @@ public class MaterialSegmented : ContentView, ITouchable
     {
         if (bindable is MaterialSegmented self)
         {
-            self.UpdateAndInitControl();
+            self.SetStateStyle();
         }
     });
     
@@ -125,22 +117,10 @@ public class MaterialSegmented : ContentView, ITouchable
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSegmented), defaultValue: DefaultFontFamily);
     
     /// <summary>
-    /// The backing store for the <see cref="SelectedFontFamily" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty SelectedFontFamilyProperty = BindableProperty.Create(nameof(SelectedFontFamily), typeof(string), typeof(MaterialSegmented), defaultValue: DefaultSelectedFontFamily);
-    
-    /// <summary>
     /// The backing store for the <see cref="FontSize" />
     /// bindable property.
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialSegmented), defaultValue: DefaultFontSize);
-    
-    /// <summary>
-    /// The backing store for the <see cref="SelectedFontSize" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty SelectedFontSizeProperty = BindableProperty.Create(nameof(SelectedFontSize), typeof(double), typeof(MaterialSegmented), defaultValue: DefaultSelectedFontSize);
     
     /// <summary>
     /// The backing store for the <see cref="BorderColor" />
@@ -159,54 +139,18 @@ public class MaterialSegmented : ContentView, ITouchable
             self.SetBackgroundColor();
         }
     });
+
+    /// <summary>
+    /// The backing store for the <see cref="ItemColor" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty ItemColorProperty = BindableProperty.Create(nameof(ItemColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultItemColor);
     
     /// <summary>
-    /// The backing store for the <see cref="DisableBackgroundColor" />
+    /// The backing store for the <see cref="TextColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty DisableBackgroundColorProperty = BindableProperty.Create(nameof(DisableBackgroundColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultDisableBackgroundColor);
-
-    /// <summary>
-    /// The backing store for the <see cref="SelectedColor" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty SelectedColorProperty = BindableProperty.Create(nameof(SelectedColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultSelectedColor);
-
-    /// <summary>
-    /// The backing store for the <see cref="UnselectedColor" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty UnselectedColorProperty = BindableProperty.Create(nameof(UnselectedColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultUnselectedColor);
-
-    /// <summary>
-    /// The backing store for the <see cref="DisabledUnselectedColor" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty DisabledUnselectedColorProperty = BindableProperty.Create(nameof(DisabledUnselectedColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultDisabledUnselectedColor);
-
-    /// <summary>
-    /// The backing store for the <see cref="SelectedTextColor" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty SelectedTextColorProperty = BindableProperty.Create(nameof(SelectedTextColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultSelectedTextColor);
-
-    /// <summary>
-    /// The backing store for the <see cref="DisabledSelectedTextColor" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty DisabledSelectedTextColorProperty = BindableProperty.Create(nameof(DisabledSelectedTextColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultDisabledSelectedTextColor);
-
-    /// <summary>
-    /// The backing store for the <see cref="UnselectedTextColor" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty UnselectedTextColorProperty = BindableProperty.Create(nameof(UnselectedTextColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultUnselectedTextColor);
-
-    /// <summary>
-    /// The backing store for the <see cref="DisabledUnselectedTextColor" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty DisabledUnselectedTextColorProperty = BindableProperty.Create(nameof(DisabledUnselectedTextColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultDisabledUnselectedTextColor);
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultTextColor);
     
     /// <summary>
     /// The backing store for the <see cref="Command" />
@@ -363,44 +307,17 @@ public class MaterialSegmented : ContentView, ITouchable
     }
     
     /// <summary>
-    /// Gets or sets the font family for the text selected of this Segmented.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
-    /// </default>
-    public string SelectedFontFamily
-    {
-        get => (string)GetValue(SelectedFontFamilyProperty);
-        set => SetValue(SelectedFontFamilyProperty, value);
-    }
-    
-    /// <summary>
     /// Gets or sets the size of the font for the text of this segmented.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontSize.BodyLarge">MaterialFontSize.BodyLarge</see> / Tablet: 19 - Phone: 16
+    /// <see cref="MaterialFontSize.LabelLarge">MaterialFontSize.LabelLarge</see> / Tablet: 17 - Phone: 14
     /// </default>
     [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
     public double FontSize
     {
         get => (double)GetValue(FontSizeProperty);
         set => SetValue(FontSizeProperty, value);
-    }
-    
-    /// <summary>
-    /// Gets or sets the size of the font for the text selected of this segmented.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see cref="MaterialFontSize.BodyLarge">MaterialFontSize.BodyLarge</see> / Tablet: 19 - Phone: 16
-    /// </default>
-    [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
-    public double SelectedFontSize
-    {
-        get => (double)GetValue(SelectedFontSizeProperty);
-        set => SetValue(SelectedFontSizeProperty, value);
     }
     
     /// <summary>
@@ -434,107 +351,29 @@ public class MaterialSegmented : ContentView, ITouchable
     }
     
     /// <summary>
-    /// Gets or sets the Disabled Background color for the segmented.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// Theme: Light = <see cref="MaterialLightTheme.OnSurface">MaterialLightTheme.OnSurface</see> - Dark = <see cref="MaterialDarkTheme.OnSurface">MaterialDarkTheme.OnSurface</see>
-    /// </default>
-    public Color DisableBackgroundColor
-    {
-        get => (Color)GetValue(DisableBackgroundColorProperty);
-        set => SetValue(DisableBackgroundColorProperty, value);
-    }
-    
-    /// <summary>
-    /// Gets or sets the items Selected color for the segmented.
+    /// Gets or sets the items color for the segmented.
     /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Theme: Light = <see cref="MaterialLightTheme.SecondaryContainer">MaterialLightTheme.SecondaryContainer</see> - Dark = <see cref="MaterialDarkTheme.SecondaryContainer">MaterialDarkTheme.SecondaryContainer</see>
     /// </default>
-    public Color SelectedColor
+    public Color ItemColor
     {
-        get => (Color)GetValue(SelectedColorProperty);
-        set => SetValue(SelectedColorProperty, value);
+        get => (Color)GetValue(ItemColorProperty);
+        set => SetValue(ItemColorProperty, value);
     }
     
     /// <summary>
-    /// Gets or sets the items Unselected color for the segmented.
+    /// Gets or sets the items text color for the segmented.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// Theme: Light = <see cref="MaterialLightTheme.SurfaceContainerLow">MaterialLightTheme.SurfaceContainerLow</see> - Dark = <see cref="MaterialDarkTheme.SurfaceContainerLow">MaterialDarkTheme.SurfaceContainerLow</see>
+    /// Theme: Light = <see cref="MaterialLightTheme.SecondaryContainer">MaterialLightTheme.SecondaryContainer</see> - Dark = <see cref="MaterialDarkTheme.SecondaryContainer">MaterialDarkTheme.SecondaryContainer</see>
     /// </default>
-    public Color UnselectedColor
+    public Color TextColor
     {
-        get => (Color)GetValue(UnselectedColorProperty);
-        set => SetValue(UnselectedColorProperty, value);
-    }
-    
-    /// <summary>
-    /// Gets or sets the items Disable Unselected color for the segmented.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// Theme: Light = <see cref="MaterialLightTheme.OnSurface">MaterialLightTheme.OnSurface</see> - Dark = <see cref="MaterialDarkTheme.OnSurface">MaterialDarkTheme.OnSurface</see>
-    /// </default>
-    public Color DisabledUnselectedColor
-    {
-        get => (Color)GetValue(DisabledUnselectedColorProperty);
-        set => SetValue(DisabledUnselectedColorProperty, value);
-    }
-    
-    /// <summary>
-    /// Gets or sets the items text selected color for the segmented.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// Theme: Light = <see cref="MaterialLightTheme.OnSecondaryContainer">MaterialLightTheme.OnSecondaryContainer</see> - Dark = <see cref="MaterialDarkTheme.OnSecondaryContainer">MaterialDarkTheme.OnSecondaryContainer</see>
-    /// </default>
-    public Color SelectedTextColor
-    {
-        get => (Color)GetValue(SelectedTextColorProperty);
-        set => SetValue(SelectedTextColorProperty, value);
-    }
-    
-    /// <summary>
-    /// Gets or sets the items disabled text selected color for the segmented.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// Theme: Light = <see cref="MaterialLightTheme.OnSurface">MaterialLightTheme.OnSurface</see> - Dark = <see cref="MaterialDarkTheme.OnSurface">MaterialDarkTheme.OnSurface</see>
-    /// </default>
-    public Color DisabledSelectedTextColor
-    {
-        get => (Color)GetValue(DisabledSelectedTextColorProperty);
-        set => SetValue(DisabledSelectedTextColorProperty, value);
-    }
-    
-    /// <summary>
-    /// Gets or sets the items Unselected text color for the segmented.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// Theme: Light = <see cref="MaterialLightTheme.OnSurface">MaterialLightTheme.OnSurface</see> - Dark = <see cref="MaterialDarkTheme.OnSurface">MaterialDarkTheme.OnSurface</see>
-    /// </default>
-    public Color UnselectedTextColor
-    {
-        get => (Color)GetValue(UnselectedTextColorProperty);
-        set => SetValue(UnselectedTextColorProperty, value);
-    }
-    
-    /// <summary>
-    /// Gets or sets the items disabled unselected text color for the segmented.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// Theme: Light = <see cref="MaterialLightTheme.OnSurface">MaterialLightTheme.OnSurface</see> - Dark = <see cref="MaterialDarkTheme.Outline">MaterialDarkTheme.OnSurface</see>
-    /// </default>
-    public Color DisabledUnselectedTextColor
-    {
-        get => (Color)GetValue(DisabledUnselectedTextColorProperty);
-        set => SetValue(DisabledUnselectedTextColorProperty, value);
+        get => (Color)GetValue(TextColorProperty);
+        set => SetValue(TextColorProperty, value);
     }
     
     /// <summary>
@@ -615,7 +454,7 @@ public class MaterialSegmented : ContentView, ITouchable
     /// <summary>
     /// Occurs when clicked/tapped in any items of segmented.
     /// </summary>
-    public event EventHandler Clicked
+    public event EventHandler IsSelectedChanged
     {
         add
         {
@@ -651,15 +490,17 @@ public class MaterialSegmented : ContentView, ITouchable
     {
         if (!AllowMultiSelect)
         {
-            foreach (var items in ItemsSource)
+            foreach (var itemCollection in ItemsSource)
             {
-                items.IsSelected = false;
+                itemCollection.IsSelected = false;
             }
         }
 
-        item.IsSelected = !item.IsSelected;
+        var Items = ItemsSource.ToList();
+        Items[Items.IndexOf(item)].IsSelected = !item.IsSelected;
+        ItemsSource = Items;
         SelectedItem = item;
-        UpdateItemsSource();
+        _clicked?.Invoke(this, EventArgs.Empty);
         OnTouch(TouchType.Released);
     }
 
@@ -680,22 +521,21 @@ public class MaterialSegmented : ContentView, ITouchable
         _itemsContainer = new Grid
         {
             ColumnSpacing = 0,
-            Padding = 3,
-            BackgroundColor = Colors.Transparent
+            Padding = 0,
         };
         
         _container = new MaterialCard
         {
             Type = MaterialCardType.Filled,
-            BackgroundColor = BackgroundColor,
+            BorderWidth = 0,
+            BorderColor = Colors.Transparent,
+            BackgroundColor = Colors.Transparent,
             HeightRequest = 40,
             MinimumHeightRequest = 40,
             Padding = 0,
             Content = _itemsContainer,
-            Shadow = MaterialElevation.Level1
+            CornerRadius = CornerRadius
         };
-        
-        _container.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
         
         UpdateAndInitControl();
         
@@ -708,7 +548,7 @@ public class MaterialSegmented : ContentView, ITouchable
 
     private void UpdateAndInitControl()
     {
-        SetSegmentedType();
+        SetBackgroundColor();
         UpdateItemsSource();
     }
 
@@ -716,24 +556,28 @@ public class MaterialSegmented : ContentView, ITouchable
     {
         _itemsContainer.Children.Clear();
         _itemsContainer.ColumnDefinitions = new ColumnDefinitionCollection();
-        _itemsContainer.ColumnSpacing = -2;
+        _itemsContainer.ColumnSpacing = Type == MaterialSegmentedType.Outlined ? -2 : 0;
         if(ItemsSource == null) return;
         int indexColum = 0;
         foreach (var item in ItemsSource)
         {
             var card = new MaterialCard
             {
-                Type = MaterialCardType.Custom,
-                Padding = new Thickness(12, 0),
+                Type = MaterialCardType.Filled,
+                ShadowColor = Colors.Transparent,
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
-                BackgroundColor = IsEnabled ? UnselectedColor : DisabledUnselectedColor,
+                BackgroundColor = ItemColor,
                 Margin = new Thickness(0),
-                BorderWidth = 1
+                Padding = new Thickness(12, 0),
+                BorderWidth = 1,
+                BorderColor = Colors.Transparent,
+                CornerRadius = CornerRadius
             };
 			
             if (Type == MaterialSegmentedType.Outlined)
             {
+                card.Type = MaterialCardType.Custom;
                 card.BorderColor = BorderColor;
                 if (ItemsSource.Count() > 1)
                 {
@@ -756,12 +600,6 @@ public class MaterialSegmented : ContentView, ITouchable
                     card.CornerRadius = CornerRadius;
                 }
             }
-            else
-            {
-                card.BorderColor = Colors.Transparent;
-                card.CornerRadius = CornerRadius;
-                card.BorderWidth = 0;
-            }
 
             var label = new MaterialLabel
             {
@@ -770,7 +608,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 VerticalOptions = LayoutOptions.Center,
                 FontSize = FontSize,
                 FontFamily = FontFamily,
-                TextColor = IsEnabled ? UnselectedTextColor : DisabledUnselectedTextColor
+                TextColor = TextColor
             };
             
             SetItemContentAndColors(card, label, item);
@@ -782,42 +620,36 @@ public class MaterialSegmented : ContentView, ITouchable
             _itemsContainer.Add(card, indexColum);
             indexColum++;
         }
-        
-    }
-    
-    private void SetSegmentedType()
-    { 
-        _itemsContainer.BackgroundColor = IsEnabled ? UnselectedColor : DisabledUnselectedColor;
-        if (Type == MaterialSegmentedType.Outlined)
-        { 
-            _container.BackgroundColor = Colors.Transparent;
-            _container.BorderColor = BorderColor;
-            _container.BorderWidth = 1;
-
-        }
-        else
-        { 
-            _container.BackgroundColor = BackgroundColor;
-            _container.BorderColor = Colors.Transparent;
-            _container.BorderWidth = 0;
-        }
-
-        VisualStateManager.GoToState(this, IsEnabled ? SegmentedCommonStates.Normal : SegmentedCommonStates.Disabled);
     }
 
     private void SetBackgroundColor()
     {
+        if (_itemsContainer == null)return;
         if (Type == MaterialSegmentedType.Outlined)
         {
+            _container.BackgroundColor = Colors.Transparent;
             _itemsContainer.BackgroundColor = Colors.Transparent;
         }
         else
         {
+            _container.BackgroundColor = BackgroundColor;
             _itemsContainer.BackgroundColor = BackgroundColor;
         }
         
     }
-    
+
+    private void SetStateStyle()
+    {
+        if (!IsEnabled)
+        {
+            VisualStateManager.GoToState(this, VisualStateManager.CommonStates.Disabled);
+        }
+        else
+        {
+            UpdateItemsSource();
+        }
+            
+    }
     
     #endregion
 
@@ -825,6 +657,7 @@ public class MaterialSegmented : ContentView, ITouchable
 
     private void SetItemContentAndColors(MaterialCard card, MaterialLabel label, MaterialSegmentedItem item)
     {
+        
         Grid container = null;
         Image selectedIcon = null;
 
@@ -855,11 +688,11 @@ public class MaterialSegmented : ContentView, ITouchable
 
         if (item.IsSelected)
         {
-            card.BackgroundColor = IsEnabled ? SelectedColor : UnselectedColor;
-            label.TextColor = IsEnabled ? SelectedTextColor : UnselectedTextColor;
-            label.FontSize = SelectedFontSize;
-            label.FontFamily = SelectedFontFamily;
-
+            VisualStateManager.GoToState(this, IsEnabled? VisualStateManager.CommonStates.Selected : VisualStateManager.CommonStates.Disabled);
+            card.BorderColor = BorderColor;
+            card.BackgroundColor = ItemColor;
+            label.TextColor = TextColor;
+            
             if (item.SelectedIconIsVisible)
             {
                 selectedIcon.Source = item.SelectedIcon;
@@ -878,15 +711,15 @@ public class MaterialSegmented : ContentView, ITouchable
             {
                 card.Content = label;
             }
+            
         }
         else
         {
-            card.BackgroundColor = IsEnabled ? UnselectedColor : DisabledUnselectedColor;
-            label.TextColor = IsEnabled ? UnselectedTextColor : DisabledUnselectedTextColor;
-            label.FontSize = FontSize;
-            label.FontFamily = FontFamily;
+            VisualStateManager.GoToState(this, IsEnabled? VisualStateManager.CommonStates.Normal : VisualStateManager.CommonStates.Disabled);
+            card.BorderColor = BorderColor;
+            card.BackgroundColor = ItemColor;
+            label.TextColor = TextColor;
             
-
             if (item.UnselectedIconIsVisible)
             {
                 selectedIcon.Source = item.UnselectedIcon;
@@ -916,21 +749,11 @@ public class MaterialSegmented : ContentView, ITouchable
     {
         var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
         
-        var disabled = new VisualState { Name = SegmentedCommonStates.Disabled };
+        var disabled = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
         
         disabled.Setters.Add(
             MaterialSegmented.BorderColorProperty,
             new AppThemeBindingExtension 
-            { 
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
-        
-        disabled.Setters.Add(
-            MaterialSegmented.BackgroundColorProperty,
-            new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.OnSurface,
                     Dark = MaterialDarkTheme.OnSurface
@@ -939,47 +762,17 @@ public class MaterialSegmented : ContentView, ITouchable
                 .WithAlpha(0.12f));
         
         disabled.Setters.Add(
-            MaterialSegmented.DisableBackgroundColorProperty,
+            MaterialSegmented.ItemColorProperty,
             new AppThemeBindingExtension 
                 { 
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
+                    Light = MaterialLightTheme.OnSecondary,
+                    Dark = MaterialDarkTheme.OnSecondary
                 }
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.12f));
         
         disabled.Setters.Add(
-            MaterialSegmented.SelectedColorProperty,
-            new AppThemeBindingExtension 
-                { 
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.12f));
-        
-        disabled.Setters.Add(
-            MaterialSegmented.UnselectedColorProperty,
-            new AppThemeBindingExtension 
-                { 
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.12f));
-        
-        disabled.Setters.Add(
-            MaterialSegmented.DisabledUnselectedColorProperty,
-            new AppThemeBindingExtension 
-                { 
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.12f));
-        
-        disabled.Setters.Add(
-            MaterialSegmented.SelectedTextColorProperty,
+            MaterialSegmented.TextColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.OnSurface,
@@ -988,48 +781,74 @@ public class MaterialSegmented : ContentView, ITouchable
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.38f));
         
-        disabled.Setters.Add(
-            MaterialSegmented.DisabledSelectedTextColorProperty,
-            new AppThemeBindingExtension 
-                { 
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.38f));
+        var selected = new VisualState { Name = VisualStateManager.CommonStates.Selected };
         
-        disabled.Setters.Add(
-            MaterialSegmented.UnselectedTextColorProperty,
+        selected.Setters.Add(
+            MaterialSegmented.BorderColorProperty,
             new AppThemeBindingExtension 
                 { 
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
+                    Light = MaterialLightTheme.Outline,
+                    Dark = MaterialDarkTheme.Outline
                 }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.38f));
+                .GetValueForCurrentTheme<Color>());
         
-        disabled.Setters.Add(
-            MaterialSegmented.DisabledUnselectedTextColorProperty,
+        selected.Setters.Add(
+            MaterialSegmented.ItemColorProperty,
             new AppThemeBindingExtension 
                 { 
+                    Light = MaterialLightTheme.SecondaryContainer,
+                    Dark = MaterialDarkTheme.SecondaryContainer
+                }
+                .GetValueForCurrentTheme<Color>());
+
+        selected.Setters.Add(
+            MaterialSegmented.TextColorProperty,
+            new AppThemeBindingExtension
+                {
+                    Light = MaterialLightTheme.OnSecondaryContainer,
+                    Dark = MaterialDarkTheme.OnSecondaryContainer
+                }
+                .GetValueForCurrentTheme<Color>());
+        
+        var normal = new VisualState { Name = VisualStateManager.CommonStates.Normal };
+
+        normal.Setters.Add(
+            MaterialSegmented.BorderColorProperty,
+            new AppThemeBindingExtension 
+                { 
+                    Light = MaterialLightTheme.Outline,
+                    Dark = MaterialDarkTheme.Outline
+                }
+                .GetValueForCurrentTheme<Color>());
+        
+        normal.Setters.Add(
+            MaterialSegmented.ItemColorProperty,
+            new AppThemeBindingExtension 
+                { 
+                    Light = MaterialLightTheme.OnSecondary,
+                    Dark = MaterialDarkTheme.OnSecondary
+                }
+                .GetValueForCurrentTheme<Color>());
+
+        normal.Setters.Add(
+            MaterialSegmented.TextColorProperty,
+            new AppThemeBindingExtension
+                {
                     Light = MaterialLightTheme.OnSurface,
                     Dark = MaterialDarkTheme.OnSurface
                 }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.38f));
+                .GetValueForCurrentTheme<Color>());
         
         commonStatesGroup.States.Add(disabled);
+        commonStatesGroup.States.Add(selected);
+        commonStatesGroup.States.Add(normal);
+        
         var style = new Style(typeof(MaterialSegmented));
         style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
         return new List<Style> { style };
     }
 
     #endregion
-}
-
-public class SegmentedCommonStates : VisualStateManager.CommonStates
-{
-    public const string Unselected = "Unselected";
 }
 
 public class MaterialSegmentedItem

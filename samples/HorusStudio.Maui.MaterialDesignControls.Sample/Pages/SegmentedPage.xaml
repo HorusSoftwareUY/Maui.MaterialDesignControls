@@ -13,9 +13,18 @@
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Disabled">
+                        <VisualState x:Name="Selected">
                             <VisualState.Setters>
-                                <Setter Property="DisableBackgroundColor" Value="Gold"/>
+                                <Setter Property="BorderColor" Value="Aquamarine"/>
+                                <Setter Property="ItemColor" Value="Black"/>
+                                <Setter Property="TextColor" Value="White"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BorderColor" Value="Chocolate"/>
+                                <Setter Property="ItemColor" Value="White"/>
+                                <Setter Property="TextColor" Value="Black"/>
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -29,19 +38,16 @@
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Segmented" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="9,32">
                 
                 <material:MaterialSegmented ItemsSource="{Binding Items}"
                                             SelectedItem="{Binding SelectedItem}"
                                             SelectedItems="{Binding SelectedItems}"
                                             Command="{Binding OnItemSelectedAsyncCommand}"
-                                            IsEnabled="False"
-                                            AllowMultiSelect="False"
                                             Type="Filled"
-                                            HorizontalOptions="Fill"
-                                            HeightRequest="40"
-                                            DisableBackgroundColor="Aqua"
-                                            Style="{StaticResource VisualStateManagerStyle}"/>
+                                            FontSize="12"
+                                            IsEnabled="True"
+                                            AllowMultiSelect="False"/>
                 
             </Frame>
             

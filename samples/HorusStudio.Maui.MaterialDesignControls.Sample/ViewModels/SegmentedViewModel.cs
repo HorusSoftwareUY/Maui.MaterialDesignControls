@@ -33,9 +33,26 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             base.Appearing();
             Items = new ObservableCollection<MaterialSegmentedItem>
             {
-                new MaterialSegmentedItem { Text = "test", SelectedIcon = "ic_segmented.png", SelectedIconColor = Colors.Blue},
-                new MaterialSegmentedItem { Text = "test2", UnselectedIcon = "ic_button.png", UnselectedIconColor = Colors.Red},
-                new MaterialSegmentedItem { Text = "test3"},
+                /*new MaterialSegmentedItem { Text = "test", SelectedIconColor = Colors.Blue},
+                new MaterialSegmentedItem { Text = "test2", UnselectedIconColor = Colors.Red},
+                new MaterialSegmentedItem { Text = "test3"},*/
+                
+                new MaterialSegmentedItem
+                {
+                    Text = "Daily",
+                },
+                new MaterialSegmentedItem
+                {
+                    Text = "Weekly",
+                },
+                new MaterialSegmentedItem
+                {
+                    Text = "Monthly",
+                },
+                new MaterialSegmentedItem
+                {
+                    Text = "Yearly"
+                }
             };
         }
 
