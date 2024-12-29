@@ -13,17 +13,31 @@
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="BorderColor" Value="Transparent"/>
+                                <Setter Property="ItemColor" Value="White"/>
+                                <Setter Property="TextColor" Value="Black"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="SelectedDisabled">
+                            <VisualState.Setters>
+                                <Setter Property="BorderColor" Value="Transparent"/>
+                                <Setter Property="ItemColor" Value="Black"/>
+                                <Setter Property="TextColor" Value="White"/>
+                            </VisualState.Setters>
+                        </VisualState>
                         <VisualState x:Name="Selected">
                             <VisualState.Setters>
-                                <Setter Property="BorderColor" Value="Aquamarine"/>
-                                <Setter Property="ItemColor" Value="Black"/>
+                                <Setter Property="BorderColor" Value="Transparent"/>
+                                <Setter Property="ItemColor" Value="Red"/>
                                 <Setter Property="TextColor" Value="White"/>
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
-                                <Setter Property="BorderColor" Value="Chocolate"/>
-                                <Setter Property="ItemColor" Value="White"/>
+                                <Setter Property="BorderColor" Value="Transparent"/>
+                                <Setter Property="ItemColor" Value="Green"/>
                                 <Setter Property="TextColor" Value="Black"/>
                             </VisualState.Setters>
                         </VisualState>
@@ -47,7 +61,8 @@
                                             Type="Filled"
                                             FontSize="12"
                                             IsEnabled="True"
-                                            AllowMultiSelect="False"/>
+                                            AllowMultiSelect="True"
+                                            Style="{StaticResource VisualStateManagerStyle}"/>
                 
             </Frame>
             

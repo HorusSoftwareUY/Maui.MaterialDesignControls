@@ -642,7 +642,7 @@ public class MaterialSegmented : ContentView, ITouchable
     {
         if (!IsEnabled)
         {
-            VisualStateManager.GoToState(this, VisualStateManager.CommonStates.Disabled);
+            VisualStateManager.GoToState(this, SegmentedCommonStates.Disabled);
         }
         else
         {
@@ -688,7 +688,7 @@ public class MaterialSegmented : ContentView, ITouchable
 
         if (item.IsSelected)
         {
-            VisualStateManager.GoToState(this, IsEnabled? VisualStateManager.CommonStates.Selected : VisualStateManager.CommonStates.Disabled);
+            VisualStateManager.GoToState(this, IsEnabled? SegmentedCommonStates.Selected : SegmentedCommonStates.SelectedDisabled);
             card.BorderColor = BorderColor;
             card.BackgroundColor = ItemColor;
             label.TextColor = TextColor;
@@ -715,7 +715,7 @@ public class MaterialSegmented : ContentView, ITouchable
         }
         else
         {
-            VisualStateManager.GoToState(this, IsEnabled? VisualStateManager.CommonStates.Normal : VisualStateManager.CommonStates.Disabled);
+            VisualStateManager.GoToState(this, IsEnabled? SegmentedCommonStates.Normal : SegmentedCommonStates.Disabled);
             card.BorderColor = BorderColor;
             card.BackgroundColor = ItemColor;
             label.TextColor = TextColor;
@@ -747,9 +747,9 @@ public class MaterialSegmented : ContentView, ITouchable
     
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
+        var commonStatesGroup = new VisualStateGroup { Name = nameof(SegmentedCommonStates) };
         
-        var disabled = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
+        var disabled = new VisualState { Name = SegmentedCommonStates.Disabled };
         
         disabled.Setters.Add(
             MaterialSegmented.BorderColorProperty,
@@ -781,7 +781,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.38f));
         
-        var selected = new VisualState { Name = VisualStateManager.CommonStates.Selected };
+        var selected = new VisualState { Name = SegmentedCommonStates.Selected };
         
         selected.Setters.Add(
             MaterialSegmented.BorderColorProperty,
@@ -810,7 +810,39 @@ public class MaterialSegmented : ContentView, ITouchable
                 }
                 .GetValueForCurrentTheme<Color>());
         
-        var normal = new VisualState { Name = VisualStateManager.CommonStates.Normal };
+        var selectedDisabled = new VisualState { Name = SegmentedCommonStates.SelectedDisabled };
+                
+        selectedDisabled.Setters.Add(
+            MaterialSegmented.BorderColorProperty,
+            new AppThemeBindingExtension 
+                { 
+                    Light = MaterialLightTheme.OnSurface,
+                    Dark = MaterialDarkTheme.OnSurface
+                }
+                .GetValueForCurrentTheme<Color>()
+                .WithAlpha(0.12f));
+        
+        selectedDisabled.Setters.Add(
+            MaterialSegmented.ItemColorProperty,
+            new AppThemeBindingExtension 
+                { 
+                    Light = MaterialLightTheme.SecondaryContainer,
+                    Dark = MaterialDarkTheme.SecondaryContainer
+                }
+                .GetValueForCurrentTheme<Color>()
+                .WithAlpha(0.12f));
+        
+        selectedDisabled.Setters.Add(
+            MaterialSegmented.TextColorProperty,
+            new AppThemeBindingExtension 
+                { 
+                    Light = MaterialLightTheme.OnSurface,
+                    Dark = MaterialDarkTheme.OnSurface
+                }
+                .GetValueForCurrentTheme<Color>()
+                .WithAlpha(0.38f));
+        
+        var normal = new VisualState { Name = SegmentedCommonStates.Normal };
 
         normal.Setters.Add(
             MaterialSegmented.BorderColorProperty,
@@ -841,6 +873,7 @@ public class MaterialSegmented : ContentView, ITouchable
         
         commonStatesGroup.States.Add(disabled);
         commonStatesGroup.States.Add(selected);
+        commonStatesGroup.States.Add(selectedDisabled);
         commonStatesGroup.States.Add(normal);
         
         var style = new Style(typeof(MaterialSegmented));
@@ -849,6 +882,11 @@ public class MaterialSegmented : ContentView, ITouchable
     }
 
     #endregion
+}
+
+public class SegmentedCommonStates : VisualStateManager.CommonStates
+{
+    public const string SelectedDisabled = "SelectedDisabled";
 }
 
 public class MaterialSegmentedItem

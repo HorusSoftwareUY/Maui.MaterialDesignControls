@@ -39,6 +39,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 
                 new MaterialSegmentedItem
                 {
+                    IsSelected = true,
                     Text = "Daily",
                 },
                 new MaterialSegmentedItem
