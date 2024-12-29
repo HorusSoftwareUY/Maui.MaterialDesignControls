@@ -644,11 +644,7 @@ public class MaterialSegmented : ContentView, ITouchable
         {
             VisualStateManager.GoToState(this, SegmentedCommonStates.Disabled);
         }
-        else
-        {
-            UpdateItemsSource();
-        }
-            
+        UpdateItemsSource();
     }
     
     #endregion
@@ -695,12 +691,22 @@ public class MaterialSegmented : ContentView, ITouchable
             
             if (item.SelectedIconIsVisible)
             {
-                selectedIcon.Source = item.SelectedIcon;
-                var IconTintColor = new IconTintColorBehavior
+                selectedIcon!.Source = item.SelectedIcon;
+                Color colorIcon = null;
+                if (IsEnabled)
                 {
-                    TintColor = item.SelectedIconColor
+                    colorIcon = item.SelectedIconColor ?? new AppThemeBindingExtension { Light = MaterialLightTheme.OnSecondary, Dark = MaterialDarkTheme.OnSecondary }.GetValueForCurrentTheme<Color>();
+                }
+                else
+                {
+                    colorIcon = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+                }
+                
+                var iconTintColor = new IconTintColorBehavior
+                {
+                    TintColor = colorIcon
                 };
-                selectedIcon.Behaviors.Add(IconTintColor);
+                selectedIcon.Behaviors.Add(iconTintColor);
                 label.SetValue(Grid.ColumnProperty, 1);
                 container.Children.Add(selectedIcon);
                 container.Children.Add(label);
@@ -722,12 +728,22 @@ public class MaterialSegmented : ContentView, ITouchable
             
             if (item.UnselectedIconIsVisible)
             {
-                selectedIcon.Source = item.UnselectedIcon;
-                var IconTintColor = new IconTintColorBehavior
+                selectedIcon!.Source = item.UnselectedIcon;
+                Color colorIcon = null;
+                if (IsEnabled)
                 {
-                    TintColor = item.UnselectedIconColor
+                    colorIcon = item.UnselectedIconColor ?? new AppThemeBindingExtension { Light = MaterialLightTheme.OnSecondary, Dark = MaterialDarkTheme.OnSecondary }.GetValueForCurrentTheme<Color>();
+                }
+                else
+                {
+                    colorIcon = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+                }
+                
+                var iconTintColor = new IconTintColorBehavior
+                {
+                    TintColor = colorIcon
                 };
-                selectedIcon.Behaviors.Add(IconTintColor);
+                selectedIcon.Behaviors.Add(iconTintColor);
                 label.SetValue(Grid.ColumnProperty, 1);
                 container.Children.Add(selectedIcon);
                 container.Children.Add(label);
@@ -894,10 +910,10 @@ public class MaterialSegmentedItem
     public string Text { get; set; }
 
     public string SelectedIcon { get; set; }
-    public Color SelectedIconColor { get; set; }
+    public Color SelectedIconColor { get; set; } = null;
     
     public string UnselectedIcon { get; set; }
-    public Color UnselectedIconColor { get; set; }
+    public Color UnselectedIconColor { get; set; } = null;
 
     public bool IsSelected { get; set; }
 

@@ -10,10 +10,20 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        public override string Title => "Segmented";
+        public override string Title => "Segmented button";
+
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(TextButtonTypeSelected))]
+        private MaterialSegmentedType _segmentedType;
 
         [ObservableProperty]
         private ObservableCollection<MaterialSegmentedItem> _items;
+        
+        [ObservableProperty]
+        private ObservableCollection<MaterialSegmentedItem> _items2;
+        
+        [ObservableProperty]
+        private ObservableCollection<MaterialSegmentedItem> _items3;
         
         [ObservableProperty]
         private MaterialSegmentedItem _selectedItem;
@@ -21,47 +31,106 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private IEnumerable<MaterialSegmentedItem> _selectedItems;
 
+        [ObservableProperty]
+        private string _textItemsSelectedFilled;
+        
+        public string TextButtonTypeSelected => SegmentedType == MaterialSegmentedType.Filled ? "Outlined" : "Filled";
+
+        [ObservableProperty] 
+        private bool _fullApiIsEnabled = false;
+
         #endregion
 
         public SegmentedViewModel()
         {
-            
+            Subtitle = "Segmented buttons help people select options, switch views, or sort elements.";
         }
         
         public override void Appearing()
         {
             base.Appearing();
-            Items = new ObservableCollection<MaterialSegmentedItem>
+            
+            SegmentedType = MaterialSegmentedType.Filled;
+            
+            Items = new ObservableCollection<MaterialSegmentedItem> 
             {
-                /*new MaterialSegmentedItem { Text = "test", SelectedIconColor = Colors.Blue},
-                new MaterialSegmentedItem { Text = "test2", UnselectedIconColor = Colors.Red},
-                new MaterialSegmentedItem { Text = "test3"},*/
-                
+                new MaterialSegmentedItem
+                {
+                    Text = "Opt1",
+                    IsSelected = true,
+                },
+                new MaterialSegmentedItem
+                {
+                    Text = "Opt2",
+                },
+                new MaterialSegmentedItem
+                {
+                    Text = "Opt3",
+                }
+            };
+            
+            Items2 = new ObservableCollection<MaterialSegmentedItem>
+            {
                 new MaterialSegmentedItem
                 {
                     IsSelected = true,
-                    Text = "Daily",
+                    Text = "Opt1",
                 },
                 new MaterialSegmentedItem
                 {
-                    Text = "Weekly",
+                    Text = "Opt2",
                 },
                 new MaterialSegmentedItem
                 {
-                    Text = "Monthly",
-                },
-                new MaterialSegmentedItem
-                {
-                    Text = "Yearly"
+                    Text = "Opt3",
                 }
             };
+            
+            Items3 = new ObservableCollection<MaterialSegmentedItem>
+            {
+                new MaterialSegmentedItem
+                {
+                    Text = "Opt1",
+                    SelectedIcon = "horus_logo.png",
+                    UnselectedIcon = "horus_studio_logo.png"
+                },
+                new MaterialSegmentedItem
+                {
+                    Text = "Opt2",
+                    SelectedIcon = "ic_checkbox.png",
+                },
+                new MaterialSegmentedItem
+                {
+                    Text = "Opt3",
+                    SelectedIcon = "logo.png"
+                }
+            };
+            
+            OnItemMultipleSelectedCommand.Execute(null);
         }
 
         [ICommand]
-        private void OnItemSelectedAsync()
+        private async Task OnItemSelectedOutlinedAsync()    
         {
-            Console.WriteLine($"OnItemSelectedAsync item: {SelectedItem}");
-            Console.WriteLine($"OnItemSelectedAsync list item: {SelectedItems}");
+            await DisplayAlert(Title, $"Button selected: {SelectedItem.Text}", "OK");
+        }
+
+        [ICommand]
+        private void OnItemMultipleSelected()
+        {
+            TextItemsSelectedFilled = $"Selected: " + string.Join(", ", Items2.Where(w => w.IsSelected).Select(s => s.Text));
+        }
+
+        [ICommand]
+        private void OnDisabledSegmented()
+        {
+            FullApiIsEnabled = !FullApiIsEnabled;
+        }
+
+        [ICommand]
+        private void OnChangeTypeSegmented()
+        {
+            SegmentedType = SegmentedType == MaterialSegmentedType.Filled ? MaterialSegmentedType.Outlined : MaterialSegmentedType.Filled;
         }
     }
 }

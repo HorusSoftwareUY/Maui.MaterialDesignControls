@@ -29,14 +29,14 @@
                         </VisualState>
                         <VisualState x:Name="Selected">
                             <VisualState.Setters>
-                                <Setter Property="BorderColor" Value="Transparent"/>
+                                <Setter Property="BorderColor" Value="Chocolate"/>
                                 <Setter Property="ItemColor" Value="Red"/>
                                 <Setter Property="TextColor" Value="White"/>
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
-                                <Setter Property="BorderColor" Value="Transparent"/>
+                                <Setter Property="BorderColor" Value="Aquamarine"/>
                                 <Setter Property="ItemColor" Value="Green"/>
                                 <Setter Property="TextColor" Value="Black"/>
                             </VisualState.Setters>
@@ -51,20 +51,64 @@
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Segmented" />
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined single-selection button" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="9,32">
-                
-                <material:MaterialSegmented ItemsSource="{Binding Items}"
-                                            SelectedItem="{Binding SelectedItem}"
-                                            SelectedItems="{Binding SelectedItems}"
-                                            Command="{Binding OnItemSelectedAsyncCommand}"
-                                            Type="Filled"
-                                            FontSize="12"
-                                            IsEnabled="True"
-                                            AllowMultiSelect="True"
-                                            Style="{StaticResource VisualStateManagerStyle}"/>
-                
+                <VerticalStackLayout>
+                    <material:MaterialSegmented ItemsSource="{Binding Items}"
+                                                SelectedItem="{Binding SelectedItem}"
+                                                Command="{Binding OnItemSelectedOutlinedCommand}"
+                                                IsEnabled="{Binding FullApiIsEnabled}"
+                                                Type="Outlined"/>
+                </VerticalStackLayout>
             </Frame>
+            <material:MaterialLabel 
+                Text="A segmented outlined button is a button divided into multiple segments, each acting as a distinct option. The outline style gives it a bordered, non-filled appearance, often used for clear and minimal visual distinction between choices." />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled multiple-selection button" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="9,32">
+                <VerticalStackLayout>
+                    <material:MaterialSegmented ItemsSource="{Binding Items2}"
+                                                SelectedItem="{Binding SelectedItem}"
+                                                SelectedItems="{Binding SelectedItems}"
+                                                Command="{Binding OnItemMultipleSelectedCommand}"
+                                                IsEnabled="{Binding FullApiIsEnabled}"
+                                                Type="Filled"
+                                                AllowMultiSelect="True"/>
+                    <material:MaterialLabel Text="{Binding TextItemsSelectedFilled}"
+                                            Type="BodyMedium"
+                                            HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel 
+                Text="A segmented filled button is a button divided into multiple segments, each filled with a solid background to emphasize selection. It’s used for choosing between related options, offering a more visually prominent style compared to outlined buttons." />
+
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full Segmented API" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="9,32">
+                <VerticalStackLayout>
+                    <material:MaterialSegmented ItemsSource="{Binding Items3}"
+                                                SelectedItem="{Binding SelectedItem}"
+                                                SelectedItems="{Binding SelectedItems}"
+                                                Command="{Binding OnItemMultipleSelectedCommand}"
+                                                IsEnabled="{Binding FullApiIsEnabled}"
+                                                Type="{Binding SegmentedType}"
+                                                FontSize="12"
+                                                AllowMultiSelect="True"
+                                                BackgroundColor="Firebrick"
+                                                Style="{StaticResource VisualStateManagerStyle}"/>
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <material:MaterialButton 
+                            Text="Disabled"
+                            Command="{Binding OnDisabledSegmentedCommand}"/>
+                        <material:MaterialButton
+                            Text="{Binding TextButtonTypeSelected}"
+                            Command="{Binding OnChangeTypeSegmentedCommand}"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+            <material:MaterialLabel 
+                Text="A fully customizable segmented API based on .NET MAUI Visual State system, offering complete control over the appearance and behavior of each segment in different states, ensuring a responsive and tailored user experience." />
+
             
         </VerticalStackLayout>
     </ScrollView>
