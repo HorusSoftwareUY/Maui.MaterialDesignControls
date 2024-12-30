@@ -1,14 +1,17 @@
+using HorusStudio.Maui.MaterialDesignControls.Extensions;
+
 #if IOS
 using UIKit;
 using Microsoft.Maui.Platform;
 #endif
+
 #if ANDROID
 using Platform = Microsoft.Maui.ApplicationModel.Platform;
 #endif
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class SnackbarImplemetation
+public partial class SnackbarImplementation
 {
     public virtual partial IDisposable ShowSnackbar(SnackbarConfig config)
     {
@@ -51,7 +54,7 @@ public partial class SnackbarImplemetation
     }
 }
 
-public partial class SnackbarImplemetation : ISnackbarUser
+public partial class SnackbarImplementation : ISnackbarUser
 {
     const string _noAction = "Action should not be set as async will not use it";
     public virtual partial IDisposable ShowSnackbar(SnackbarConfig config);

@@ -18,7 +18,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         
         public static MauiAppBuilder UseSnackbar(this MauiAppBuilder builder, bool registerInterface, Action configure = null)
         {
-            Instance = new SnackbarImplemetation();
+            Instance = new SnackbarImplementation();
 
             configure?.Invoke();
 

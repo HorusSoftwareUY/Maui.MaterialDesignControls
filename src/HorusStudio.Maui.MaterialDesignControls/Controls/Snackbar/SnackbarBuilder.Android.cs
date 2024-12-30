@@ -7,6 +7,7 @@ using Android.Widget;
 using Microsoft.Maui.Platform;
 using Color = Microsoft.Maui.Graphics.Color;
 using Google.Android.Material.Snackbar;
+using HorusStudio.Maui.MaterialDesignControls.Extensions;
 using Button = Android.Widget.Button;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -99,7 +100,7 @@ public class SnackbarBuilder : Snackbar.Callback
 
         if (snackbar.View.LayoutParameters is FrameLayout.LayoutParams layoutParams)
         {
-            layoutParams.SetMargins(Extensions.DpToPixels(ScreenMargin.Left), Extensions.DpToPixels(ScreenMargin.Top), Extensions.DpToPixels(ScreenMargin.Right), Extensions.DpToPixels(ScreenMargin.Bottom));
+            layoutParams.SetMargins(ExtensionsConverters.DpToPixels(ScreenMargin.Left), ExtensionsConverters.DpToPixels(ScreenMargin.Top), ExtensionsConverters.DpToPixels(ScreenMargin.Right), ExtensionsConverters.DpToPixels(ScreenMargin.Bottom));
 
             layoutParams.Gravity = GravityFlags.CenterHorizontal | GravityFlags.Bottom;
 
@@ -108,7 +109,7 @@ public class SnackbarBuilder : Snackbar.Callback
                 layoutParams.Gravity = GravityFlags.CenterHorizontal | GravityFlags.Top;
             }
 
-            snackbar.View.SetPadding(Extensions.DpToPixels(16), Extensions.DpToPixels(10), Extensions.DpToPixels(6), Extensions.DpToPixels(5));
+            snackbar.View.SetPadding(ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(10), ExtensionsConverters.DpToPixels(6), ExtensionsConverters.DpToPixels(5));
             snackbar.View.LayoutParameters = layoutParams;
         }
         
@@ -121,13 +122,13 @@ public class SnackbarBuilder : Snackbar.Callback
             icon.ScaleTo(Config.IconSize);
             button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
             button.SetCompoundDrawables(null, null, icon, null);
-            button.CompoundDrawablePadding = Extensions.DpToPixels(IconPadding);
+            button.CompoundDrawablePadding = ExtensionsConverters.DpToPixels(IconPadding);
             button.Touch += (sender, args) =>
             {
                 Config.ActionLeading?.Invoke();
             };
             view.AddView(button,0);
-            view.GetChildAt(0).LayoutParameters.Width = Extensions.DpToPixels(Config.IconSize);
+            view.GetChildAt(0).LayoutParameters.Width = ExtensionsConverters.DpToPixels(Config.IconSize);
         }
 
         if (Config.TrailingIcon is not null)
@@ -137,13 +138,13 @@ public class SnackbarBuilder : Snackbar.Callback
             icon.ScaleTo(Config.IconSize);
             button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
             button.SetCompoundDrawables(icon, null, null, null);
-            button.CompoundDrawablePadding = Extensions.DpToPixels(IconPadding);
+            button.CompoundDrawablePadding = ExtensionsConverters.DpToPixels(IconPadding);
             button.Touch += (sender, args) =>
             {
                 Config.ActionTrailing?.Invoke();
             };
             view.AddView(button,3);
-            view.GetChildAt(3).LayoutParameters.Width = Extensions.DpToPixels(Config.IconSize);
+            view.GetChildAt(3).LayoutParameters.Width = ExtensionsConverters.DpToPixels(Config.IconSize);
         }
 
         view.GetChildAt(1).SetPadding(view.GetChildAt(1).PaddingLeft, 0, view.GetChildAt(1).Right, view.GetChildAt(1).Bottom);
@@ -158,7 +159,7 @@ public class SnackbarBuilder : Snackbar.Callback
     {
         var backgroundDrawable = new GradientDrawable();
         backgroundDrawable.SetColor(Config.BackgroundColor.ToInt());
-        backgroundDrawable.SetCornerRadius(Extensions.DpToPixels(Config.CornerRadius));
+        backgroundDrawable.SetCornerRadius(ExtensionsConverters.DpToPixels(Config.CornerRadius));
 
         return backgroundDrawable;
     }
@@ -170,7 +171,7 @@ public class SnackbarBuilder : Snackbar.Callback
         text.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.TextFontSize);
         text.Ellipsize = TextUtils.TruncateAt.End;
         text.SetCompoundDrawables(null, null, null, null);
-        text.CompoundDrawablePadding = Extensions.DpToPixels(IconPadding);
+        text.CompoundDrawablePadding = ExtensionsConverters.DpToPixels(IconPadding);
     }
 
     protected virtual void SetupSnackbarAction(Snackbar snackbar)
@@ -194,7 +195,7 @@ public class SnackbarBuilder : Snackbar.Callback
             (float)Config.ActionFontSize - ((Config.ActionFontSize > MaterialFontSize.LabelLarge) ? 6 : 0));
         button.Ellipsize = TextUtils.TruncateAt.Middle;
         button.SetCompoundDrawables(null, null, null, null);
-        button.CompoundDrawablePadding = Extensions.DpToPixels(ActionIconPadding);
+        button.CompoundDrawablePadding = ExtensionsConverters.DpToPixels(ActionIconPadding);
     }
 
     protected virtual Drawable GetIcon(string icon, Color color)
@@ -236,39 +237,4 @@ public class LetterSpacingSpan : MetricAffectingSpan
     {
         paint.LetterSpacing = _letterSpacing;
     }
-}
-
-public static class Extensions
-{
-    public static void ScaleTo(this Drawable drawable, double newSize)
-    {
-        double width = drawable.IntrinsicWidth;
-        double height = drawable.IntrinsicHeight;
-
-        var ratio = width / height;
-        if (width < height)
-        {
-            drawable.SetBounds(0, 0, DpToPixels(newSize * ratio), DpToPixels(newSize));
-        }
-        else drawable.SetBounds(0, 0, DpToPixels(newSize), DpToPixels(newSize / ratio));
-    }
-
-    public static int DpToPixels(double number)
-    {
-        var density = Platform.CurrentActivity.Resources.DisplayMetrics.Density;
-
-        return (int)(density * number);
-    }
-    
-    public static void SafeRunOnUi(this Activity activity, Action action) => activity.RunOnUiThread(() =>
-    {
-        try
-        {
-            action();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
-    });
 }
