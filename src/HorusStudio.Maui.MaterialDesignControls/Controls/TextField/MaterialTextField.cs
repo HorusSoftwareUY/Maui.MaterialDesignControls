@@ -226,6 +226,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets if the input is password. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// False
+    /// </default>
     public bool IsPassword
     {
         get => (bool)GetValue(IsPasswordProperty);
@@ -235,6 +238,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets input's keyboard. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="Keyboard.Text"/>
+    /// </default>
     public Keyboard Keyboard
     {
         get => (Keyboard)GetValue(KeyboardProperty);
@@ -244,6 +250,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets input's texttransform. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="TextTransform.Default"/>
+    /// </default>
     public TextTransform TextTransform
     {
         get => (TextTransform)GetValue(TextTransformProperty);
@@ -253,6 +262,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     ///  Determines what the return key on the on-screen keyboard should look like. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="ReturnType.Default"/>
+    /// </default>
     public ReturnType ReturnType
     {
         get => (ReturnType)GetValue(ReturnTypeProperty);
@@ -263,6 +275,9 @@ public class MaterialTextField : MaterialInputBase
     /// Gets or sets the command to run when the user presses the return key, either
     /// physically or on the on-screen keyboard. This is a bindable property.
     /// </summary>
+    /// <default>
+    ///  null
+    /// </default>
     public ICommand ReturnCommand
     {
         get => (ICommand)GetValue(ReturnCommandProperty);
@@ -273,6 +288,9 @@ public class MaterialTextField : MaterialInputBase
     /// Gets or sets the parameter object for the Microsoft.Maui.Controls.Entry.ReturnCommand
     /// that can be used to provide extra information. This is a bindable property.
     /// </summary>
+    /// <default>
+    ///  null
+    /// </default>
     public object ReturnCommandParameter
     {
         get => (object)GetValue(ReturnCommandParameterProperty);
@@ -282,6 +300,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets input's max length. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="Int32.MaxValue"/>
+    /// </default>
     public int MaxLength
     {
         get => (int)GetValue(MaxLengthProperty);
@@ -291,6 +312,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets input's cursor position. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// 0
+    /// </default>
     public int CursorPosition
     {
         get => (int)GetValue(CursorPositionProperty);
@@ -300,6 +324,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets input's text changed command. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public ICommand TextChangedCommand
     {
         get => (ICommand)GetValue(TextChangedCommandProperty);
@@ -309,6 +336,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets the vertical text alignment. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public TextAlignment VerticalTextAlignment
     {
         get => (TextAlignment)GetValue(VerticalTextAlignmentProperty);
@@ -319,6 +349,9 @@ public class MaterialTextField : MaterialInputBase
     /// Gets or sets a value that indicates whether the font for the text of this entry
     /// is bold, italic, or neither. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public FontAttributes FontAttributes
     {
         get => (FontAttributes)GetValue(FontAttributesProperty);
@@ -329,6 +362,9 @@ public class MaterialTextField : MaterialInputBase
     /// Determines the behavior of the clear text button on this entry. This is a bindable
     /// property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public ClearButtonVisibility ClearButtonVisibility
     {
         get => (ClearButtonVisibility)GetValue(ClearButtonVisibilityProperty);
@@ -367,6 +403,9 @@ public class MaterialTextField : MaterialInputBase
     /// Gets or sets a value that controls whether spell checking is enabled.
     /// <value>true if spell checking is enabled. Otherwise false.</value>
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     /// <remarks>
     /// To be added.
     /// </remarks>
@@ -382,6 +421,9 @@ public class MaterialTextField : MaterialInputBase
     /// Text and Placeholder.
     /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontTracking.BodyLarge"/> 0.5
+    /// </default>
     /// <remarks>
     /// To be added.
     /// </remarks>
@@ -410,6 +452,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets a color of the caret indicator.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
+    /// </default>
     /// <remarks>
     /// This Property only works on iOS and 'ndroid' 29 or later
     /// </remarks>
