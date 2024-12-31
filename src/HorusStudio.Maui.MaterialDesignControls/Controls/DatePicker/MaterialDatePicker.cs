@@ -157,6 +157,9 @@ public class MaterialDatePicker : MaterialInputBase
     /// <summary>
     /// Gets or sets the Date. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="DateTime.Now"/>
+    /// </default>
     public DateTime? Date
     {
         get => (DateTime?)GetValue(DateProperty);
@@ -210,6 +213,9 @@ public class MaterialDatePicker : MaterialInputBase
     /// Gets or sets a value that indicates whether the font for the text of this entry
     /// is bold, italic, or neither. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Null
+    /// </default>
     public FontAttributes FontAttributes
     {
         get => (FontAttributes)GetValue(FontAttributesProperty);
@@ -238,6 +244,9 @@ public class MaterialDatePicker : MaterialInputBase
     /// Text and Placeholder.
     /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontTracking.BodyLarge"/> 0.5
+    /// </default>
     /// <remarks>
     /// To be added.
     /// </remarks>
