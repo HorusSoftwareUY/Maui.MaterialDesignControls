@@ -148,6 +148,9 @@ public class MaterialPicker : MaterialInputBase
     /// <summary>
     /// Gets or sets the vertical text alignment. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public TextAlignment VerticalTextAlignment
     {
         get => (TextAlignment)GetValue(VerticalTextAlignmentProperty);
@@ -176,6 +179,9 @@ public class MaterialPicker : MaterialInputBase
     /// Text and Placeholder.
     /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
+    /// <default>
+    ///  <see cref="MaterialFontTracking.BodyLarge"/> 0.5
+    /// </default>
     /// <remarks>
     /// To be added.
     /// </remarks>
@@ -189,6 +195,9 @@ public class MaterialPicker : MaterialInputBase
     /// Gets or sets the source list of items to template and display.
     /// <value>To be added.</value>
     /// </summary>
+    /// <default>
+    /// Null
+    /// </default>
     /// <remarks>
     /// To be added.
     /// </remarks>
@@ -202,6 +211,9 @@ public class MaterialPicker : MaterialInputBase
     /// Gets or sets the selected item.
     /// <value>To be added.</value>
     /// </summary>
+    /// <default>
+    /// Null
+    /// </default>
     /// <remarks>
     /// To be added.
     /// </remarks>
@@ -214,6 +226,9 @@ public class MaterialPicker : MaterialInputBase
     /// <summary>
     /// Gets or sets the picker row height
     /// </summary>
+    /// <default>
+    /// 50
+    /// </default>
     public int PickerRowHeight
     {
         get => (int)GetValue(PickerRowHeightProperty);
@@ -253,6 +268,9 @@ public class MaterialPicker : MaterialInputBase
     /// Gets or sets the property path.
     /// This property is used to map an object and display a property of it.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     /// <remarks>
     /// If it´s no defined, the control will use toString() method.
     /// </remarks>
