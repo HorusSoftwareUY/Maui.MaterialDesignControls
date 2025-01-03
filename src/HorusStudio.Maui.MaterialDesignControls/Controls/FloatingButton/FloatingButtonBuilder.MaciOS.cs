@@ -12,7 +12,6 @@ public class FloatingButtonBuilder_MaciOS : UIView
     public static bool DefaultUseBlur { get; set; } = true;
     public static bool DefaultUseAnimation { get; set; } = true;
     public static TimeSpan DefaultAnimationDuration { get; set; } = TimeSpan.FromMilliseconds(250);
-    public static float DefaultIconSpacing { get; set; } = 16f;
     public static UIBlurEffectStyle DefaultBlurEffectStyle { get; set; } = UIBlurEffectStyle.Dark;
 
     protected FloatingButtonConfig Config { get; }
