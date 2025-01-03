@@ -11,7 +11,7 @@ using LayoutDirection = Android.Views.LayoutDirection;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class FloatingButtonBuilder : Snackbar.Callback
+public class FloatingButtonBuilder_Android : Snackbar.Callback
 {
 
     #region Properties
@@ -24,7 +24,7 @@ public class FloatingButtonBuilder : Snackbar.Callback
     
     #region Constructors
 
-    public FloatingButtonBuilder(Activity activity, FloatingButtonConfig config)
+    public FloatingButtonBuilder_Android(Activity activity, FloatingButtonConfig config)
     {
         Activity = activity ?? throw new ArgumentNullException(nameof(activity));
         Config = config ?? throw new ArgumentNullException(nameof(config));
@@ -45,7 +45,6 @@ public class FloatingButtonBuilder : Snackbar.Callback
         base.OnDismissed(transientBottomBar, e);
         transientBottomBar?.SetDuration(0);
         transientBottomBar.View.Animate().Alpha(1f).SetDuration(300).Start();
-        _dismissed?.Invoke();
     }
 
     #endregion

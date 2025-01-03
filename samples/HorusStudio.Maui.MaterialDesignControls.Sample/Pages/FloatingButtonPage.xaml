@@ -15,14 +15,18 @@
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Floating Button" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialFloatingButton Icon="logo.png"
-                                                     IconSize="10"
-                                                     Type="Large"
+                    <material:MaterialFloatingButton Icon="horus_logo"
+                                                     Type="{Binding ButtonType}"
                                                      Position="{Binding PositionButton}"
-                                                     ActionCommand="{Binding MoveButtonCommand}"/>
+                                                     ActionCommand="{Binding FloatingButtonActionCommand}"
+                                                     x:Name="MaterialFloatingButton"/>
                     <material:MaterialButton
                          Text="{Binding ButtonTextMove}"
                          Command="{Binding MoveButtonCommand}"/>
+                    
+                    <material:MaterialButton
+                        Text="{Binding ButtonTextType}"
+                        Command="{Binding ChangeTypeFloatingButtonCommand}"/>
                 </VerticalStackLayout >
             </Frame>
         </VerticalStackLayout>

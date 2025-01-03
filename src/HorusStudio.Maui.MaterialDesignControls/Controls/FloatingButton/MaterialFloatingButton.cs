@@ -55,7 +55,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.updateFloatingButton();
+            self.UpdateFloatingButton();
         }
     });
     
@@ -67,7 +67,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.updateFloatingButton();
+            self.UpdateFloatingButton();
         }
     });
     
@@ -79,7 +79,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.updateFloatingButton();
+            self.UpdateFloatingButton();
         }
     });
     
@@ -91,7 +91,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.updateFloatingButton();
+            self.UpdateFloatingButton();
         }
     });
     
@@ -103,7 +103,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.updateFloatingButton();
+            self.UpdateFloatingButton();
         }
     });
     
@@ -115,7 +115,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.updateFloatingButton();
+            self.UpdateFloatingButton();
         }
     });
 
@@ -127,7 +127,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.updateFloatingButton();
+            self.UpdateFloatingButton();
         }
     });
     
@@ -273,9 +273,8 @@ public class MaterialFloatingButton : ContentView
     #region Events
 
     protected virtual void InternalPressedHandler(object sender, EventArgs e)
-    {
+    { 
         ActionCommand?.Execute(ActionCommandParameter);
-        UpdateAndInitializationControl();
     }
 
     #endregion
@@ -283,8 +282,7 @@ public class MaterialFloatingButton : ContentView
     #region Constructor
 
     private readonly FloatingButtonImplementation _floatingButtonImplementation = new FloatingButtonImplementation();
-    private IDisposable _disposableFloatingButton;
-    private int counterPass = 0;
+    private FloatingButtonConfig _config = new();
     
     public MaterialFloatingButton()
     {
@@ -295,50 +293,40 @@ public class MaterialFloatingButton : ContentView
 
     #region Setters
 
-    private void updateFloatingButton()
+    private void UpdateFloatingButton()
     {
-        //CleanupFloatingButton();
         UpdateAndInitializationControl();
     }
 
     private void UpdateAndInitializationControl()
     {
-        if (counterPass == 3)
+        string image = GetImageSourceString(Icon);
+
+        void Action() => InternalPressedHandler(this, null);
+
+        _config = new FloatingButtonConfig()
         {
-            string image = GetImageSourceString(Icon);
-
-            void Action() => InternalPressedHandler(this, null);
-
-            FloatingButtonConfig config = new FloatingButtonConfig()
-            {
-                Type = Type,
-                Position = Position,
-                BackgroundColor = BackgroundColor,
-                IconColor = IconColor,
-                Icon = image,
-                CornerRadius = CornerRadius,
-                IconSize = IconSize,
-                Action = Action
-            };
-            
-            _disposableFloatingButton = _floatingButtonImplementation.ShowFloatingButton(config);
-        }
-        else
-        {
-            counterPass = counterPass + 1;
-        }
-        Console.WriteLine($"counterPass: {counterPass}");
-
+            Type = Type,
+            Position = Position,
+            BackgroundColor = BackgroundColor,
+            IconColor = IconColor,
+            Icon = image,
+            CornerRadius = CornerRadius,
+            IconSize = IconSize,
+            Action = Action
+        };
+        
+        
+        _floatingButtonImplementation.ShowFloatingButton(_config);
     }
 
-    private void HideFloatingButton()
+    public void ShowFloatingButton()
     {
-        _floatingButtonImplementation.DismissFloatingButton();
+        UpdateAndInitializationControl();
     }
 
-    private void CleanupFloatingButton()
+    public void HideFloatingButton()
     {
-        _disposableFloatingButton?.Dispose();
         _floatingButtonImplementation.DismissFloatingButton();
     }
 

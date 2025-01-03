@@ -13,43 +13,40 @@ public partial class FloatingButtonImplementation
 {
     #if ANDROID
     private Google.Android.Material.Snackbar.Snackbar layout;
-    private FloatingButtonConfig lastConfig;
+    #endif
+
+    #if IOS
+    private FloatingButtonBuilder_MaciOS layout;
     #endif
     
     public virtual IDisposable ShowFloatingButton(FloatingButtonConfig config)
     {
 #if IOS
-        /*Snackbar bar = null;
         var app = UIApplication.SharedApplication;
-
         app.SafeInvokeOnMainThread(() =>
         {
-            bar = new Snackbar(config);
-            bar.Show();
+            layout?.Dismiss();
+            layout = new FloatingButtonBuilder_MaciOS(config);
+            layout.Show();
         });
-
         return new DisposableAction(() => app.SafeInvokeOnMainThread(() =>
         {
-            bar.Dismiss();
-        }));*/
+            layout.Dismiss();
+        }));
 #endif
 #if ANDROID
         
         var activity = Platform.CurrentActivity;
         activity.SafeRunOnUi(() =>
         {
-            if (layout == null || lastConfig != config)
-            {
-                layout?.Dispose();
-                layout = new FloatingButtonBuilder(activity, config).Build();
-                lastConfig = config;
-            }
-                
-            if (!layout.IsShown) layout.Show();
+            layout?.Dismiss();
+            layout?.Dispose();
+            layout = new FloatingButtonBuilder_Android(activity, config).Build();
+            layout.Show();
         });
         return new DisposableAction(() =>
         {
-            if (layout.IsShown)
+            if (layout != null && layout.IsShown)
                 activity.SafeRunOnUi(() =>
                 {
                     layout.Dismiss();
@@ -63,6 +60,11 @@ public partial class FloatingButtonImplementation
     public virtual void DismissFloatingButton()
     {
         #if ANDROID
+        layout?.Dismiss();
+        layout?.Dispose();
+        #endif
+        
+        #if IOS
         layout?.Dismiss();
         layout?.Dispose();
         #endif
