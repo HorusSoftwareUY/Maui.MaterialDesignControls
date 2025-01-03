@@ -40,7 +40,7 @@ public class MaterialNavigationDrawer : ContentView
     #region Attributes
 
     private readonly static Color DefaultHeadlineColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();    
+    private readonly static Color DefaultLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultSectionLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultActiveIndicatorBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialDarkTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultActiveIndicatorLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer }.GetValueForCurrentTheme<Color>();
@@ -48,7 +48,12 @@ public class MaterialNavigationDrawer : ContentView
     private readonly static Color DefaultBadgeTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultDisabledLabelTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialDarkTheme.Disable }.GetValueForCurrentTheme<Color>();
     private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
+    private readonly static Thickness DefaultHeadlineMargin = new Thickness(-1);
     private readonly static double DefaultHeadlineCharacterSpacing = MaterialFontTracking.TitleSmall;
+    private readonly static TextTransform DefaultTextTransform = TextTransform.Default;
+    private readonly static TextTransform DefaultLabelTextTransform = TextTransform.Default;
+    private readonly static TextTransform DefaultSectionLabelTextTransform = TextTransform.Default;
+    private readonly static Thickness DefaultSectionlabelMargin = new Thickness(-1);
     private readonly static double DefaultLabelCharacterSpacing = MaterialFontTracking.LabelLarge;
     private readonly static double DefaultHeadlineFontSize = MaterialFontSize.TitleSmall;
     private readonly static double DefaultLabelFontSize = MaterialFontSize.LabelLarge;
@@ -105,11 +110,11 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="HeadlineMargin" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineMarginProperty = BindableProperty.Create(nameof(HeadlineMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValue: new Thickness(-1), propertyChanged: (bindableObject, _, newValue) => 
-    { 
+    public static readonly BindableProperty HeadlineMarginProperty = BindableProperty.Create(nameof(HeadlineMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineMargin, propertyChanged: (bindableObject, _, newValue) =>
+    {
         if (bindableObject is MaterialNavigationDrawer self)
         {
-            if (newValue is Thickness margin && margin != new Thickness(-1))
+            if (newValue is Thickness margin && margin != DefaultHeadlineMargin)
                 self._lblHeadline.Margin = margin;
             else
                 self._lblHeadline.Margin = new Thickness(0, 16);
@@ -134,7 +139,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="HeadlineTextTransform" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineTextTransformProperty = BindableProperty.Create(nameof(HeadlineTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: TextTransform.Default);
+    public static readonly BindableProperty HeadlineTextTransformProperty = BindableProperty.Create(nameof(HeadlineTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: DefaultTextTransform);
 
     /// <summary>
     /// The backing store for the <see cref="ActiveIndicatorBackgroundColor" /> bindable property.
@@ -184,7 +189,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="LabelTextTransform" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelTextTransformProperty = BindableProperty.Create(nameof(LabelTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: TextTransform.Default);
+    public static readonly BindableProperty LabelTextTransformProperty = BindableProperty.Create(nameof(LabelTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: DefaultLabelTextTransform);
 
     /// <summary>
     /// The backing store for the <see cref="SectionLabelColor" /> bindable property.
@@ -219,12 +224,12 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="SectionLabelTextTransform" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty SectionLabelTextTransformProperty = BindableProperty.Create(nameof(SectionLabelTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: TextTransform.Default);
+    public static readonly BindableProperty SectionLabelTextTransformProperty = BindableProperty.Create(nameof(SectionLabelTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: DefaultSectionLabelTextTransform);
 
     /// <summary>
     /// The backing store for the <see cref="SectionLabelMargin" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty SectionLabelMarginProperty = BindableProperty.Create(nameof(SectionLabelMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValue: new Thickness(-1));
+    public static readonly BindableProperty SectionLabelMarginProperty = BindableProperty.Create(nameof(SectionLabelMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValue: DefaultSectionlabelMargin);
 
     /// <summary>
     /// The backing store for the <see cref="SectionDividerIsVisible" /> bindable property.
@@ -269,8 +274,8 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="ItemsSource" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<MaterialNavigationDrawerItem>), typeof(MaterialNavigationDrawer), defaultValue: null, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindableObject, _, _) => 
-    { 
+    public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<MaterialNavigationDrawerItem>), typeof(MaterialNavigationDrawer), defaultValue: null, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindableObject, _, _) =>
+    {
         if (bindableObject is MaterialNavigationDrawer self)
         {
             self.SetItemSource();
@@ -316,6 +321,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the <see cref="Headline" /> for the headline. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public string Headline
     {
         get { return (string)GetValue(HeadlineProperty); }
@@ -337,6 +345,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the font family for the headline. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
+    /// </default>
     public string HeadlineFontFamily
     {
         get { return (string)GetValue(HeadlineFontFamilyProperty); }
@@ -346,6 +357,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the margin of the headline label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Thickness(-1)
+    /// </default>
     public Thickness HeadlineMargin
     {
         get { return (Thickness)GetValue(HeadlineMarginProperty); }
@@ -355,6 +369,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the text style of the label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public FontAttributes HeadlineFontAttributes
     {
         get { return (FontAttributes)GetValue(HeadlineFontAttributesProperty); }
@@ -364,6 +381,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
     /// </summary>
+    /// <default>
+    /// <see langword="True"/>
+    /// </default>
     public bool HeadlineFontAutoScalingEnabled
     {
         get { return (bool)GetValue(HeadlineFontAutoScalingEnabledProperty); }
@@ -373,6 +393,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Defines the casing of the label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="TextTransform.Default">TextTransform.Defaultl</see>
+    /// </default>
     public TextTransform HeadlineTextTransform
     {
         get { return (TextTransform)GetValue(HeadlineTextTransformProperty); }
@@ -382,6 +405,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the spacing between characters of the headline. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontTracking.TitleSmall">MaterialFontTracking.TitleSmall</see>
+    /// </default>
     public double HeadlineCharactersSpacing
     {
         get { return (double)GetValue(HeadlineCharactersSpacingProperty); }
@@ -391,6 +417,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Defines the font size of the label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.TitleSmall">MaterialFontSize.TitleSmall</see>
+    /// </default>
     public double HeadlineFontSize
     {
         get { return (double)GetValue(HeadlineFontSizeProperty); }
@@ -448,6 +477,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the <see cref="LabelFontSize" /> for the text of each item. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.LabelLarge">MaterialFontSize.LabelLarge</see> / Tablet: 14 - Phone: 11
+    /// </default>
     public double LabelFontSize
     {
         get { return (double)GetValue(LabelFontSizeProperty); }
@@ -457,6 +489,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the font family for each item label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
+    /// </default>
     public string LabelFontFamily
     {
         get { return (string)GetValue(LabelFontFamilyProperty); }
@@ -466,6 +501,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the text style of each item label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
     public FontAttributes LabelFontAttributes
     {
         get { return (FontAttributes)GetValue(LabelFontAttributesProperty); }
@@ -475,6 +513,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
     /// </summary>
+    /// <default>
+    /// <see langword="True" />
+    /// </default>
     public bool LabelFontAutoScalingEnabled
     {
         get { return (bool)GetValue(LabelFontAutoScalingEnabledProperty); }
@@ -484,6 +525,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Defines the casing of the label of each item. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="TextTransform.Default">TextTransform.Default</see>
+    /// </default>
     public TextTransform LabelTextTransform
     {
         get { return (TextTransform)GetValue(LabelTextTransformProperty); }
@@ -493,6 +537,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the spacing between characters of each item label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontTracking.LabelLarge">MaterialFontTracking.LabelLarge</see>
+    /// </default>
     public double LabelCharactersSpacing
     {
         get { return (double)GetValue(LabelCharactersSpacingProperty); }
@@ -514,6 +561,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the <see cref="FontSize" /> for the section label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.TitleSmall">MaterialFontSize.TitleSmall</see>
+    /// </default>
     public double SectionLabelFontSize
     {
         get { return (double)GetValue(SectionLabelFontSizeProperty); }
@@ -523,6 +573,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the font family for the section label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
+    /// </default>
     public string SectionLabelFontFamily
     {
         get { return (string)GetValue(SectionLabelFontFamilyProperty); }
@@ -532,6 +585,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the text style of the section label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null" />
+    /// </default>
     public FontAttributes SectionLabelFontAttributes
     {
         get { return (FontAttributes)GetValue(SectionLabelFontAttributesProperty); }
@@ -541,6 +597,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
     /// </summary>
+    /// <default>
+    /// <see langword="True" />
+    /// </default>
     public bool SectionLabelFontAutoScalingEnabled
     {
         get { return (bool)GetValue(SectionLabelFontAutoScalingEnabledProperty); }
@@ -550,6 +609,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Defines the casing of the section label of each item. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="TextTransform.Default">TextTransform.Default</see>
+    /// </default>
     public TextTransform SectionLabelTextTransform
     {
         get { return (TextTransform)GetValue(SectionLabelTextTransformProperty); }
@@ -559,6 +621,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Defines the margin of the section label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Thickness(-1)
+    /// </default>
     public Thickness SectionLabelMargin
     {
         get { return (Thickness)GetValue(SectionLabelMarginProperty); }
@@ -568,6 +633,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the spacing between characters of each item label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontTracking.TitleSmall">MaterialFontTracking.TitleSmall</see>
+    /// </default>
     public double SectionLabelCharactersSpacing
     {
         get { return (double)GetValue(SectionLabelCharactersSpacingProperty); }
@@ -577,15 +645,21 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets if show a divider between sections. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="True" />
+    /// </default>
     public bool SectionDividerIsVisible
     {
         get { return (bool)GetValue(SectionDividerIsVisibleProperty); }
         set { SetValue(SectionDividerIsVisibleProperty, value); }
     }
-    
+
     /// <summary>
     /// Gets or sets if show a divider between items. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="True" />
+    /// </default>
     public bool ItemDividerIsVisible
     {
         get { return (bool)GetValue(ItemDividerIsVisibleProperty); }
@@ -603,7 +677,7 @@ public class MaterialNavigationDrawer : ContentView
         get { return (Color)GetValue(DividerColorProperty); }
         set { SetValue(DividerColorProperty, value); }
     }
-    
+
     /// <summary>
     /// Gets or sets the <see cref="MaterialBadgeType" />. This is a bindable property.
     /// </summary>
@@ -628,6 +702,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the <see cref="FontSize" /> for the badge label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.LabelLarge">MaterialFontSize.LabelLarge</see>
+    /// </default>
     public double BadgeFontSize
     {
         get { return (double)GetValue(BadgeFontSizeProperty); }
@@ -637,6 +714,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the font family for the badge label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
+    /// </default>
     public string BadgeFontFamily
     {
         get { return (string)GetValue(BadgeFontFamilyProperty); }
@@ -658,6 +738,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the items source. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="True" />
+    /// </default>
     public IEnumerable<MaterialNavigationDrawerItem> ItemsSource
     {
         get { return (IEnumerable<MaterialNavigationDrawerItem>)GetValue(ItemsSourceProperty); }
@@ -679,6 +762,9 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// Gets or sets the command for each item. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see langword="null" />
+    /// </default>
     public ICommand Command
     {
         get { return (ICommand)GetValue(CommandProperty); }
@@ -690,6 +776,9 @@ public class MaterialNavigationDrawer : ContentView
     /// The default value is <see cref="AnimationTypes.Fade"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialAnimation.Type">MaterialAnimation.Type</see>
+    /// </default>
     public AnimationTypes Animation
     {
         get => (AnimationTypes)GetValue(AnimationProperty);
@@ -702,6 +791,9 @@ public class MaterialNavigationDrawer : ContentView
     /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialAnimation.Parameter">MaterialAnimation.Parameter</see>
+    /// </default>
     public double? AnimationParameter
     {
         get => (double?)GetValue(AnimationParameterProperty);
@@ -745,19 +837,19 @@ public class MaterialNavigationDrawer : ContentView
             VerticalOptions = LayoutOptions.StartAndExpand,
         };
 
-        this._itemsContainer = new StackLayout()
+        _itemsContainer = new StackLayout()
         {
             Spacing = 0,
             HorizontalOptions = LayoutOptions.FillAndExpand,
             VerticalOptions = LayoutOptions.FillAndExpand,
         };
 
-        this._lblHeadline = new MaterialLabel()
+        _lblHeadline = new MaterialLabel()
         {
             LineBreakMode = LineBreakMode.NoWrap,
             Margin = HeadlineMargin != new Thickness(-1) ? HeadlineMargin : new Thickness(0, 16),
             VerticalOptions = LayoutOptions.Center,
-            TextColor = this.HeadlineTextColor,
+            TextColor = HeadlineTextColor,
             IsVisible = !string.IsNullOrWhiteSpace(Headline),
             Text = Headline,
             FontSize = HeadlineFontSize,
@@ -774,10 +866,10 @@ public class MaterialNavigationDrawer : ContentView
         _lblHeadline.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(HeadlineFontAutoScalingEnabled), source: this));
         _lblHeadline.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(HeadlineCharactersSpacing), source: this));
 
-        container.Children.Add(this._lblHeadline);
-        container.Children.Add(this._itemsContainer);
+        container.Children.Add(_lblHeadline);
+        container.Children.Add(_itemsContainer);
 
-        this.Content = container;
+        Content = container;
     }
 
     #endregion Constructors

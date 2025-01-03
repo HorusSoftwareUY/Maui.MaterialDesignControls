@@ -1,13 +1,26 @@
-﻿namespace HorusStudio.Maui.MaterialDesignControls;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
 /// This class is a defined classs that is used to show the material navigation drawer items.
 /// </summary>
-public class MaterialNavigationDrawerItem
+public class MaterialNavigationDrawerItem : INotifyPropertyChanged
 {
-    public string Text { get; set; }
+    private string _text;
+    public string Text
+    {
+        get => _text;
+        set => SetProperty(ref _text, value);
+    }
 
-    public string BadgeText { get; set; }
+    private string _badgeText;
+    public string BadgeText
+    {
+        get => _badgeText;
+        set => SetProperty(ref _badgeText, value);
+    }
 
     public string Section { get; set; }
 
@@ -45,6 +58,7 @@ public class MaterialNavigationDrawerItem
         get { return !string.IsNullOrEmpty(SelectedTrailingIcon); }
     }
 
+
     public override bool Equals(object obj)
     {
         if (obj is not MaterialNavigationDrawerItem toCompare)
@@ -59,4 +73,21 @@ public class MaterialNavigationDrawerItem
 
     public override string ToString() =>
         string.IsNullOrWhiteSpace(Text) ? "No defined text" : Text;
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
+    {
+        if (EqualityComparer<T>.Default.Equals(backingStore, value))
+            return false;
+
+        backingStore = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
+
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }
