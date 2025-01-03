@@ -4,16 +4,23 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 public enum MaterialFloatingButtonType
 {
+    /// <summary>Use a FAB to represent the screen’s primary action</summary>
     FAB,
+    /// <summary>A small FAB is used for a secondary, supporting action, or in place of a default FAB in compact window sizes</summary>
     Small,
+    /// <summary>A large FAB is useful when the layout calls for a clear and prominent primary action, and where a larger footprint would help the user engage</summary>
     Large
 }
 
 public enum MaterialFloatingButtonPosition
 {
+    /// <summary>Top left</summary>
     TopLeft,
+    /// <summary>Top right</summary>
     TopRight,
+    /// <summary>Bottom right</summary>
     BottomRight,
+    /// <summary>Bottom left</summary>
     BottomLeft
 }
 
@@ -30,6 +37,37 @@ public class FloatingButtonConfig
     public object ActionParameter { get; set; }
 }
 
+/// <summary>
+/// Floating action buttons (FABs) help people take primary actions <see href="https://m3.material.io/components/floating-action-button/overview">see here.</see>
+/// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialFloatingButton.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialFloatingButton
+///       Icon="IconButton"
+///       ActionCommand="{Binding FloatingButtonActionCommand}"
+///       x:Name="MaterialFloatingButton"/&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var MaterialFloatingButton = new MaterialFloatingButton()
+/// {
+///     Icon = "IconButton",
+///     ActionCommand = ActionCommand
+/// };
+///</code>
+///
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/FloatingButtonPage.xaml)
+/// 
+/// </example>
 public class MaterialFloatingButton : ContentView
 {
 
@@ -152,7 +190,7 @@ public class MaterialFloatingButton : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    ///  <see cref="MaterialFloatingButtonType.FAB"/> MaterialFloatingButtonType.FAB
+    /// <see cref="MaterialFloatingButtonType.FAB">MaterialFloatingButtonType.FAB</see>
     /// </default>
     public MaterialFloatingButtonType Type
     {
@@ -161,11 +199,11 @@ public class MaterialFloatingButton : ContentView
     }
     
     /// <summary>
-    /// Gets or sets Type button
+    /// Gets or sets Position button
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    ///  //Falta por Setear
+    /// <see cref="MaterialFloatingButtonPosition.BottomRight">MaterialFloatingButtonPosition.BottomRight</see>
     /// </default>
     public MaterialFloatingButtonPosition Position
     {
@@ -178,7 +216,7 @@ public class MaterialFloatingButton : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// Falta por setear
+    /// Theme: Light = <see cref="MaterialLightTheme.PrimaryContainer">MaterialLightTheme.PrimaryContainer</see> - Dark = <see cref="MaterialDarkTheme.PrimaryContainer">MaterialDarkTheme.PrimaryContainer</see>
     /// </default>
     public new Color BackgroundColor
     {
@@ -191,7 +229,7 @@ public class MaterialFloatingButton : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// Falta por setear
+    /// Theme: Light = <see cref="MaterialLightTheme.OnPrimaryContainer">MaterialLightTheme.OnPrimaryContainer</see> - Dark = <see cref="MaterialDarkTheme.OnPrimaryContainer">MaterialDarkTheme.OnPrimaryContainer</see>
     /// </default>
     public Color IconColor
     {
@@ -217,7 +255,7 @@ public class MaterialFloatingButton : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// Falta por setear
+    /// CornerRadius(16)
     /// </default>
     public CornerRadius CornerRadius
     {
@@ -243,7 +281,7 @@ public class MaterialFloatingButton : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="Null"/>
     /// </default>
     /// <remarks>This property is used to associate a command with an instance of FAB. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
     /// <para><see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.</para>
@@ -260,7 +298,7 @@ public class MaterialFloatingButton : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="Null"/>
     /// </default>
     public object ActionCommandParameter
     {
