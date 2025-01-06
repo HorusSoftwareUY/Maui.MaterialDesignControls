@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -371,6 +372,19 @@ public class MaterialFloatingButton : ContentView
     #endregion
     
     #region Methods
+    
+    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        if (propertyName == nameof(Window)
+            && Window == null)
+        {
+           HideFloatingButton();
+        }
+        else
+        {
+            ShowFloatingButton();
+        }
+    }
     
     public string? GetImageSourceString(ImageSource imageSource)
     {

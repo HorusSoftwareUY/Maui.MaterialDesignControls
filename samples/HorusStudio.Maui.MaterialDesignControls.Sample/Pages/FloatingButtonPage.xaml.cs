@@ -9,17 +9,5 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         {
             InitializeComponent();
         }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            MaterialFloatingButton.ShowFloatingButton();
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            MaterialFloatingButton.HideFloatingButton();
-        }
     }
 }
