@@ -22,21 +22,61 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         set => SetProperty(ref _badgeText, value);
     }
 
-    public string Section { get; set; }
+    private string _section;
+    public string Section
+    {
+        get => _section;
+        set => SetProperty(ref _section, value);
+    }
 
-    public string SelectedLeadingIcon { get; set; }
+    private string _selectedLeadingIcon;
+    public string SelectedLeadingIcon
+    {
+        get => _selectedLeadingIcon;
+        set => SetProperty(ref _selectedLeadingIcon, value);
+    }
 
-    public string UnselectedLeadingIcon { get; set; }
+    private string _unselectedLeadingIcon;
+    public string UnselectedLeadingIcon
+    {
+        get => _unselectedLeadingIcon;
+        set => SetProperty(ref _unselectedLeadingIcon, value);
+    }
 
-    public string SelectedTrailingIcon { get; set; }
+    private string _selectedTrailingIcon;
+    public string SelectedTrailingIcon
+    {
+        get => _selectedTrailingIcon;
+        set => SetProperty(ref _selectedTrailingIcon, value);
+    }
 
-    public string UnselectedTrailingIcon { get; set; }
+    private string _unselectedTrailingIcon;
+    public string UnselectedTrailingIcon
+    {
+        get => _unselectedTrailingIcon;
+        set => SetProperty(ref _unselectedTrailingIcon, value);
+    }
 
-    public bool IsSelected { get; set; }
+    private bool _isSelected;
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => SetProperty(ref _isSelected, value);
+    }
 
-    public bool ShowActiveIndicator { get; set; } = true;
+    private bool _showActiveIndicator = true;
+    public bool ShowActiveIndicator
+    {
+        get => _showActiveIndicator;
+        set => SetProperty(ref _showActiveIndicator, value);
+    }
 
-    public bool IsEnabled { get; set; } = true;
+    private bool _isEnabled = true;
+    public bool IsEnabled
+    {
+        get => _isEnabled;
+        set => SetProperty(ref _isEnabled, value);
+    }
 
     internal bool UnselectedLeadingIconIsVisible
     {
@@ -58,7 +98,6 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         get { return !string.IsNullOrEmpty(SelectedTrailingIcon); }
     }
 
-
     public override bool Equals(object obj)
     {
         if (obj is not MaterialNavigationDrawerItem toCompare)
@@ -76,17 +115,16 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
+    protected void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
     {
         if (EqualityComparer<T>.Default.Equals(backingStore, value))
-            return false;
+            return;
 
         backingStore = value;
         OnPropertyChanged(propertyName);
-        return true;
     }
 
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+    protected virtual void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

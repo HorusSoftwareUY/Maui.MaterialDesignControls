@@ -9,6 +9,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         private bool _includeAllItems = true;
+        private int _counter;
+
+        private MaterialNavigationDrawerItem _variantItem;
 
         public override string Title => "Navigation Drawer";
 
@@ -26,23 +29,25 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         private void LoadItems(bool includeAllItems)
         {
+            _variantItem = new MaterialNavigationDrawerItem()
+            {
+                SelectedLeadingIcon = "email.png",
+                UnselectedLeadingIcon = "email.png",
+                Text = "Outbox",
+                BadgeText = "100+",
+            };
+
             var list = new List<MaterialNavigationDrawerItem>
             {
+                _variantItem,
+
                 new MaterialNavigationDrawerItem
                 {
                     SelectedLeadingIcon = "email.png",
                     UnselectedLeadingIcon = "email.png",
                     SelectedTrailingIcon = "arrow_drop_down.png",
                     UnselectedTrailingIcon = "arrow_drop_down.png",
-                    Text = "Inbox",
-                    BadgeText = "24"
-                },
-                new MaterialNavigationDrawerItem
-                {
-                    SelectedLeadingIcon = "email.png",
-                    UnselectedLeadingIcon = "email.png",
-                    Text = "Outbox",
-                    BadgeText = "100+"
+                    Text = "Inbox"
                 },
                 new MaterialNavigationDrawerItem
                 {
@@ -109,7 +114,14 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async Task Test(MaterialNavigationDrawerItem selectedItem)
         {
-            await this.DisplayAlert.Invoke("Navigation Item", $"{selectedItem}", "Ok");
+            if (_variantItem.Equals(selectedItem))
+            {
+                IncrementBadgetText();
+            }
+            else
+            {
+                await DisplayAlert.Invoke("Navigation Item", $"{selectedItem}", "Ok");
+            }
         }
 
         [ICommand]
@@ -117,6 +129,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             _includeAllItems = !_includeAllItems;
             LoadItems(_includeAllItems);
+        }
+
+        private void IncrementBadgetText()
+        {
+            _counter++;
+            _variantItem.BadgeText = $" {100 + _counter}+";
         }
     }
 }

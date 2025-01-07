@@ -1,4 +1,5 @@
-﻿
+﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -270,6 +271,11 @@ public class MaterialNavigationDrawer : ContentView
     /// The backing store for the <see cref="BadgeBackgroundColor" /> bindable property.
     /// </summary>
     public static readonly BindableProperty BadgeBackgroundColorProperty = BindableProperty.Create(nameof(BadgeBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: Colors.Transparent);
+
+    /// <summary>
+    /// The backing store for the <see cref="ItemTemplate" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), typeof(MaterialNavigationDrawer), defaultValue: null);
 
     /// <summary>
     /// The backing store for the <see cref="ItemsSource" /> bindable property.
@@ -736,6 +742,18 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
+    /// Gets or sets the item template for each item from ItemsSource. This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null" />
+    /// </default>
+    public DataTemplate ItemTemplate
+    {
+        get => (DataTemplate)GetValue(ItemTemplateProperty);
+        set => SetValue(ItemTemplateProperty, value);
+    }
+
+    /// <summary>
     /// Gets or sets the items source. This is a bindable property.
     /// </summary>
     /// <default>
@@ -892,39 +910,11 @@ public class MaterialNavigationDrawer : ContentView
 
             foreach (var item in group)
             {
-                string key = $"{item.Section}-{item.Text}";
-                if (_containersWithItems.ContainsKey(key)) continue;
+                var template = ItemTemplate != null ? ItemTemplate : CreateDataTemplate(item);
 
-                var frame = CreateFrame(item);
-                var contentContainer = CreateContentContainer(item, out var label, out var iconLeading, out var iconTrailing);
+                var card = (MaterialCard)template.CreateContent();
 
-                frame.Content = contentContainer;
-
-                frame.Command = new Command(() =>
-                {
-                    if ((item.IsSelected && item.ShowActiveIndicator) || !item.IsEnabled) return;
-
-                    DeselectOtherItems(item);
-
-                    item.IsSelected = !item.IsSelected;
-                    SetContentAndColors(frame, iconLeading, iconTrailing, label, item);
-
-                    if (item.IsEnabled && Command?.CanExecute(item) == true)
-                        Command.Execute(item);
-                });
-
-                _containersWithItems[key] = new NavigationDrawerContainerForObjects
-                {
-                    Container = frame,
-                    LeadingIcon = iconLeading,
-                    TrailingIcon = iconTrailing,
-                    Label = label
-                };
-
-                SetContentAndColors(frame, iconLeading, iconTrailing, label, item);
-                _itemsContainer.Children.Add(frame);
-
-                AddItemDivider();
+                _itemsContainer.Children.Add(card);
             }
 
             AddSectionDivider(itemIdx++, groupedItems.Count());
@@ -964,7 +954,7 @@ public class MaterialNavigationDrawer : ContentView
 
     private MaterialCard CreateFrame(MaterialNavigationDrawerItem item)
     {
-        return new MaterialCard
+        var materialCard = new MaterialCard
         {
             Shadow = null,
             BorderColor = Colors.Transparent,
@@ -980,9 +970,14 @@ public class MaterialNavigationDrawer : ContentView
             CustomAnimation = CustomAnimation,
             IsEnabled = item.IsEnabled
         };
+
+        materialCard.SetBinding(MaterialCard.IsEnabledProperty, new Binding(nameof(item.IsEnabled), source: item));
+        materialCard.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(item.IsSelected), source: item, converter: new IsSelectedToFrameBackgroundConverter(this)));
+
+        return materialCard;
     }
 
-    private Grid CreateContentContainer(MaterialNavigationDrawerItem item, out MaterialLabel label, out Image iconLeading, out Image iconTrailing)
+    private Grid CreateContentContainer(MaterialNavigationDrawerItem item, out MaterialLabel label, out Image leadingIcon, out Image trailingIcon)
     {
         var contentContainer = new Grid
         {
@@ -998,16 +993,20 @@ public class MaterialNavigationDrawer : ContentView
             },
         };
 
-        iconLeading = new Image
+        leadingIcon = new Image
         {
             HeightRequest = 24,
             MinimumHeightRequest = 24,
             WidthRequest = 24,
             MinimumWidthRequest = 24,
             VerticalOptions = LayoutOptions.Center,
-            IsVisible = false
+            IsVisible = (item.IsSelected && !string.IsNullOrEmpty(item.SelectedLeadingIcon)) || (!item.IsSelected && !string.IsNullOrEmpty(item.UnselectedLeadingIcon)),
+            Source = item.IsSelected ? item.SelectedLeadingIcon : item.UnselectedLeadingIcon,
         };
-        iconLeading.SetValue(Grid.ColumnProperty, 0);
+
+        leadingIcon.SetValue(Grid.ColumnProperty, 0);
+        SetLeadingIconVisibilityPropertyBindings(leadingIcon, item);
+        SetLeadingIconSourcePropertyBindings(leadingIcon, item);
 
         label = new MaterialLabel
         {
@@ -1017,9 +1016,12 @@ public class MaterialNavigationDrawer : ContentView
             FontFamily = LabelFontFamily,
             TextColor = item.IsEnabled ? item.IsSelected ? ActiveIndicatorLabelColor : LabelColor : DisabledLabelColor
         };
+
         label.SetValue(Grid.ColumnProperty, 1);
 
-        label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(LabelColor), source: this));
+        SetLabelTextColorPropertyBindings(label, item);
+
+        label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(item.Text), source: item));
         label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(LabelFontFamily), source: this));
         label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(LabelFontSize), source: this));
         label.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(LabelFontAttributes), source: this));
@@ -1039,27 +1041,34 @@ public class MaterialNavigationDrawer : ContentView
         };
         badge.SetValue(Grid.ColumnProperty, 2);
 
+        badge.SetBinding(MaterialBadge.IsVisibleProperty, new Binding(nameof(item.BadgeText), source: item, converter: new NullOrWhitespaceToBoolConverter()));
         badge.SetBinding(MaterialBadge.TypeProperty, new Binding(nameof(BadgeType), source: this));
         badge.SetBinding(MaterialBadge.TextColorProperty, new Binding(nameof(BadgeTextColor), source: this));
         badge.SetBinding(MaterialBadge.FontSizeProperty, new Binding(nameof(BadgeFontSize), source: this));
         badge.SetBinding(MaterialBadge.FontFamilyProperty, new Binding(nameof(BadgeFontFamily), source: this));
         badge.SetBinding(MaterialBadge.BackgroundColorProperty, new Binding(nameof(BadgeBackgroundColor), source: this));
 
-        iconTrailing = new Image
+        badge.SetBinding(MaterialBadge.TextProperty, new Binding(nameof(item.BadgeText), source: item));
+
+        trailingIcon = new Image
         {
             HeightRequest = 24,
             MinimumHeightRequest = 24,
             WidthRequest = 24,
             MinimumWidthRequest = 24,
             VerticalOptions = LayoutOptions.Center,
-            IsVisible = false
+            IsVisible = (item.IsSelected && !string.IsNullOrEmpty(item.SelectedTrailingIcon)) || (!item.IsSelected && !string.IsNullOrEmpty(item.UnselectedTrailingIcon)),
+            Source = item.IsSelected ? item.SelectedTrailingIcon : item.UnselectedTrailingIcon,
         };
-        iconTrailing.SetValue(Grid.ColumnProperty, 3);
 
-        contentContainer.Children.Add(iconLeading);
+        trailingIcon.SetValue(Grid.ColumnProperty, 3);
+        SetTrailingIconVisibilityPropertyBindings(trailingIcon, item);
+        SetTrailingIconSourcePropertyBindings(trailingIcon, item);
+
+        contentContainer.Children.Add(leadingIcon);
         contentContainer.Children.Add(label);
         contentContainer.Children.Add(badge);
-        contentContainer.Children.Add(iconTrailing);
+        contentContainer.Children.Add(trailingIcon);
 
         return contentContainer;
     }
@@ -1074,11 +1083,6 @@ public class MaterialNavigationDrawer : ContentView
             if (item.Equals(selectedItem)) continue;
 
             item.IsSelected = false;
-            string key = $"{item.Section}-{item.Text}";
-            if (_containersWithItems.TryGetValue(key, out var container))
-            {
-                SetContentAndColors(container.Container, container.LeadingIcon, container.TrailingIcon, container.Label, item);
-            }
         }
     }
 
@@ -1106,54 +1110,156 @@ public class MaterialNavigationDrawer : ContentView
         _itemsContainer.Children.Add(divider);
     }
 
-    private void SetContentAndColors(MaterialCard frame, Image leadingIcon, Image trailingIcon, MaterialLabel label, MaterialNavigationDrawerItem item)
+    public DataTemplate CreateDataTemplate(MaterialNavigationDrawerItem item)
     {
-        SetIcons(leadingIcon, trailingIcon, item);
+        string key = $"{item.Section}-{item.Text}";
+        if (_containersWithItems.ContainsKey(key)) return null;
 
-        if (!item.ShowActiveIndicator)
+        return new DataTemplate(() =>
         {
-            return;
-        }
+            var card = CreateFrame(item);
 
-        frame.BackgroundColor = item.IsSelected ? ActiveIndicatorBackgroundColor : Colors.Transparent;
-        label.TextColor = item.IsEnabled ? item.IsSelected ? ActiveIndicatorLabelColor : LabelColor : DisabledLabelColor;
-    }
+            var contentContainer = CreateContentContainer(item, out var label, out var iconLeading, out var iconTrailing);
 
-    private void UpdateIconVisibility(bool isSelected, bool selectedIconVisible, bool unselectedIconVisible, Image icon, ImageSource selectedIconSource, ImageSource unselectedIconSource)
-    {
-        if (isSelected)
-        {
-            if (selectedIconVisible)
-            {
-                icon.IsVisible = true;
-                icon.Source = selectedIconSource;
-            }
-            else
-            {
-                icon.IsVisible = false;
-            }
-        }
-        else
-        {
-            if (unselectedIconVisible)
-            {
-                icon.IsVisible = true;
-                icon.Source = unselectedIconSource;
-            }
-            else
-            {
-                icon.IsVisible = false;
-            }
-        }
-    }
+            card.Content = contentContainer;
 
-    public void SetIcons(Image leadingIcon, Image trailingIcon, MaterialNavigationDrawerItem item)
-    {
-        UpdateIconVisibility(item.IsSelected, item.SelectedLeadingIconIsVisible, item.UnselectedLeadingIconIsVisible, leadingIcon, item.SelectedLeadingIcon, item.UnselectedLeadingIcon);
-        UpdateIconVisibility(item.IsSelected, item.SelectedTrailingIconIsVisible, item.UnselectedTrailingIconIsVisible, trailingIcon, item.SelectedTrailingIcon, item.UnselectedTrailingIcon);
+            card.Command = new Command(() =>
+            {
+                if ((item.IsSelected && item.ShowActiveIndicator) || !item.IsEnabled)
+                {
+                    if (item.IsEnabled && Command?.CanExecute(item) == true) Command.Execute(item);
+
+                    return;
+                }
+
+                DeselectOtherItems(item);
+
+                item.IsSelected = !item.IsSelected;
+
+                if (item.IsEnabled && Command?.CanExecute(item) == true) Command.Execute(item);
+            });
+
+            _containersWithItems[key] = new NavigationDrawerContainerForObjects
+            {
+                Container = card,
+                LeadingIcon = iconLeading,
+                TrailingIcon = iconTrailing,
+                Label = label
+            };
+
+            AddItemDivider();
+
+            return card;
+        });
     }
 
     #endregion Methods
+
+    #region Setters
+
+    private void SetLabelTextColorPropertyBindings(MaterialLabel label, MaterialNavigationDrawerItem item)
+    {
+        label.SetBinding(MaterialLabel.TextColorProperty, new MultiBinding
+        {
+            Bindings = new Collection<BindingBase>
+            {
+                new Binding(nameof(item.IsEnabled), source: item),
+                new Binding(nameof(item.IsSelected), source: item)
+            },
+            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
+            {
+                var isEnabled = (bool)values[0];
+                var isSelected = (bool)values[1];
+                return isEnabled ? isSelected ? ActiveIndicatorLabelColor : LabelColor : DisabledLabelColor;
+            })
+        });
+    }
+
+    private void SetLeadingIconVisibilityPropertyBindings(Image image, MaterialNavigationDrawerItem item)
+    {
+        image.SetBinding(Image.VisualProperty, new MultiBinding
+        {
+            Bindings = new Collection<BindingBase>
+            {
+                new Binding(nameof(item.IsSelected), source: item),
+                new Binding(nameof(item.SelectedLeadingIcon), source: item),
+                new Binding(nameof(item.UnselectedLeadingIcon), source: item),
+            },
+            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
+            {
+                var isSelected = (bool)values[0];
+                var selectedLeadingIcon = (string)values[1];
+                var unselectedLeadingIcon = (string)values[2];
+
+                return (isSelected && !string.IsNullOrEmpty(selectedLeadingIcon) || (!isSelected && !string.IsNullOrEmpty(unselectedLeadingIcon)));
+            })
+        });
+    }
+
+    private void SetLeadingIconSourcePropertyBindings(Image image, MaterialNavigationDrawerItem item)
+    {
+        image.SetBinding(Image.SourceProperty, new MultiBinding
+        {
+            Bindings = new Collection<BindingBase>
+            {
+                new Binding(nameof(item.IsSelected), source: item),
+                new Binding(nameof(item.SelectedLeadingIcon), source: item),
+                new Binding(nameof(item.UnselectedLeadingIcon), source: item),
+            },
+            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
+            {
+                var isSelected = (bool)values[0];
+                var selectedLeadingIcon = (string)values[1];
+                var unselectedLeadingIcon = (string)values[2];
+
+                return isSelected ? selectedLeadingIcon : unselectedLeadingIcon;
+            })
+        });
+    }
+
+    private void SetTrailingIconVisibilityPropertyBindings(Image image, MaterialNavigationDrawerItem item)
+    {
+        image.SetBinding(Image.VisualProperty, new MultiBinding
+        {
+            Bindings = new Collection<BindingBase>
+            {
+                new Binding(nameof(item.IsSelected), source: item),
+                new Binding(nameof(item.SelectedTrailingIcon), source: item),
+                new Binding(nameof(item.UnselectedTrailingIcon), source: item),
+            },
+            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
+            {
+                var isSelected = (bool)values[0];
+                var selectedTrailingIcon = (string)values[1];
+                var unselectedTrailingIcon = (string)values[2];
+
+                return (isSelected && !string.IsNullOrEmpty(selectedTrailingIcon) || (!isSelected && !string.IsNullOrEmpty(unselectedTrailingIcon)));
+            })
+        });
+    }
+
+    private void SetTrailingIconSourcePropertyBindings(Image image, MaterialNavigationDrawerItem item)
+    {
+        image.SetBinding(Image.SourceProperty, new MultiBinding
+        {
+            Bindings = new Collection<BindingBase>
+            {
+                new Binding(nameof(item.IsSelected), source: item),
+                new Binding(nameof(item.SelectedTrailingIcon), source: item),
+                new Binding(nameof(item.UnselectedTrailingIcon), source: item),
+            },
+            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
+            {
+                var isSelected = (bool)values[0];
+                var selectedTrailingIcon = (string)values[1];
+                var unselectedTrailingIcon = (string)values[2];
+
+                return isSelected ? selectedTrailingIcon : unselectedTrailingIcon;
+            })
+        });
+    }
+
+    #endregion Setters
 
     /// <summary>
     /// this class is a custom class to keep the container and data mapped.
@@ -1168,6 +1274,61 @@ public class MaterialNavigationDrawer : ContentView
 
         public MaterialLabel Label { get; set; }
     }
+
+    #region Converters
+
+    private class NullOrWhitespaceToBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value is string str && !string.IsNullOrWhiteSpace(str);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    private class IsSelectedToFrameBackgroundConverter : IValueConverter
+    {
+        private readonly MaterialNavigationDrawer _drawer;
+
+        public IsSelectedToFrameBackgroundConverter(MaterialNavigationDrawer drawer)
+        {
+            _drawer = drawer;
+        }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (bool)value ? _drawer.ActiveIndicatorBackgroundColor : Colors.Transparent;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class MultiValueConverter : IMultiValueConverter
+    {
+        private readonly Func<object[], Type, object, CultureInfo, object> _convert;
+
+        public MultiValueConverter(Func<object[], Type, object, CultureInfo, object> convert)
+        {
+            _convert = convert;
+        }
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            return _convert(values, targetType, parameter, culture);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    #endregion Converters
 }
-
-
