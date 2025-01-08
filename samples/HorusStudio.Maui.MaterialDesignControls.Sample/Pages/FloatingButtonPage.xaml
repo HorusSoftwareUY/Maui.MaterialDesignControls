@@ -41,6 +41,16 @@
                         Command="{Binding ChangeTypeFloatingButtonCommand}"/>
                 </VerticalStackLayout >
             </Frame>
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Pablo" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout>
+                    <material:MaterialButton
+                        Text="Navigate"
+                        Command="{Binding NavigateCommand}"/>
+                </VerticalStackLayout >
+            </Frame>
         </VerticalStackLayout>
+
     </ScrollView>
 </local:BaseContentPage>

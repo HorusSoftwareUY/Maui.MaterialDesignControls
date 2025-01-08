@@ -84,6 +84,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     break;
             }
         }
+
+        [ICommand]
+        private async Task NavigateAsync()
+        {
+            await GoToAsync<IconButtonViewModel>();
+        }
     }
 }
 
