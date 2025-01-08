@@ -69,6 +69,8 @@
     /// </todoList>
     public class MaterialLabel : Label
     {
+        // TODO: [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
+
         #region Attributes
 
         private readonly static LabelTypes DefaultType = LabelTypes.BodyMedium;

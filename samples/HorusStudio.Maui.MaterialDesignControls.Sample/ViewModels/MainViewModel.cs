@@ -22,7 +22,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             var actionGroup = new MenuGroup() { GroupName = "Actions" };
             actionGroup.Add(new MenuItemViewModel { Title = "Buttons", Icon = "ic_button.png", ViewModel = typeof(ButtonViewModel) });
             actionGroup.Add(new MenuItemViewModel { Title = "Icon buttons", Icon = "ic_icon_button.png", ViewModel = typeof(IconButtonViewModel) });
-           
+            actionGroup.Add(new MenuItemViewModel { Title = "Switches", Icon = "ic_switch.png", ViewModel = typeof(SwitchViewModel) });
 
             var communicationGroup = new MenuGroup() { GroupName = "Communication" };
             communicationGroup.Add(new MenuItemViewModel { Title = "Badge", Icon = "ic_badge.png", ViewModel = typeof(BadgeViewModel) });
