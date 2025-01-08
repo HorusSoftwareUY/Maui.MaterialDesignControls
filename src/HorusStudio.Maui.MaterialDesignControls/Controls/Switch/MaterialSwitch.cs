@@ -4,11 +4,6 @@ using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls
 {
-    public enum SwitchTextSide
-    {
-        Right, Left
-    }
-
     /// <summary>
     /// A switch <see cref="View" /> that allows the selection of an item on or off, and follows Material Design Guidelines <see href="https://m3.material.io/components/switch/overview" />.
     /// </summary>
@@ -26,17 +21,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
 #if IOS
         private readonly static double DefaultTrackWidthRequest = 52;
         private readonly static double DefaultTrackHeightRequest = 32;
-
-        // A border width 4 on iOS looks the same as the border width 2 recommended by Material Design
-        private readonly static double DefaultBorderWidth = 4;
 #else
         // Sizes recommended by Material Design are increased by 4 points due to how the border is rendered in Android
         private readonly static double DefaultTrackWidthRequest = 56;
         private readonly static double DefaultTrackHeightRequest = 36;
-
-        private readonly static double DefaultBorderWidth = 2;
 #endif
-
+        
+        private readonly static double DefaultBorderWidth = 2;
         private readonly static Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
         private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
         private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
@@ -44,7 +35,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
         private readonly static FontAttributes DefaultFontAttributes = FontAttributes.None;
         private readonly static TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
-        private readonly static SwitchTextSide DefaultTextSide = SwitchTextSide.Left;
+        private readonly static TextSide DefaultTextSide = TextSide.Left;
         private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
         private readonly static double DefaultSupportingFontSize = MaterialFontSize.BodySmall;
         private readonly static string DefaultSupportingFontFamily = MaterialFontFamily.Default;
@@ -195,11 +186,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="TextSide"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty TextSideProperty = BindableProperty.Create(nameof(TextSide), typeof(SwitchTextSide), typeof(MaterialSwitch), defaultValue: DefaultTextSide, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty TextSideProperty = BindableProperty.Create(nameof(TextSide), typeof(TextSide), typeof(MaterialSwitch), defaultValue: DefaultTextSide, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialSwitch self)
             {
-                self.UpdateLayoutAfterTextSideChanged((SwitchTextSide)n);
+                self.UpdateLayoutAfterTextSideChanged((TextSide)n);
             }
         });
 
@@ -418,9 +409,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Determines if the Text and SupportingText are displayed to the right or left of the switch.
         /// The default value is Left. This is a bindable property.
         /// </summary>
-        public SwitchTextSide TextSide
+        public TextSide TextSide
         {
-            get { return (SwitchTextSide)GetValue(TextSideProperty); }
+            get { return (TextSide)GetValue(TextSideProperty); }
             set { SetValue(TextSideProperty, value); }
         }
 
@@ -554,6 +545,22 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }
         }
 
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+
+            if (Content is not null)
+            {
+                SetInheritedBindingContext(Content, BindingContext);
+
+                if (ReferenceEquals(Content.Parent, this) is false)
+                {
+                    Content.Parent = null;
+                    Content.Parent = this;
+                }
+            }
+        }
+        
         private void CreateLayout()
         {
             HorizontalOptions = LayoutOptions.Center;
@@ -663,6 +670,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _supportingTextLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(SupportingFontAttributes), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
 
+            Content = null;
             _mainContainer.Children.Add(_switch);
             _mainContainer.Children.Add(_textLabel);
             _mainContainer.Children.Add(_supportingTextLabel);
@@ -672,11 +680,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
             Content = _mainContainer;
         }
 
-        private void UpdateLayoutAfterTextSideChanged(SwitchTextSide textSide)
+        private void UpdateLayoutAfterTextSideChanged(TextSide textSide)
         {
             var trackWidth = TrackWidthRequest >= DefaultTrackWidthRequest ? TrackWidthRequest : DefaultTrackWidthRequest;
 
-            if (textSide == SwitchTextSide.Left)
+            if (textSide == TextSide.Left)
             {
                 _leftColumnMainContainer.Width = GridLength.Star;
                 _rightColumnMainContainer.Width = trackWidth;
@@ -745,7 +753,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             if (_rightColumnMainContainer != null)
             {
-                if (TextSide == SwitchTextSide.Left)
+                if (TextSide == TextSide.Left)
                 {
                     _leftColumnMainContainer.Width = GridLength.Star;
                     _rightColumnMainContainer.Width = trackWidth;

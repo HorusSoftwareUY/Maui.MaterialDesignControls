@@ -58,7 +58,7 @@
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Switch's states" />
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Visual states" />
             <Frame Style="{StaticResource SurfaceContainer}">
                 <Grid
                     Style="{StaticResource SwitchContainer}">
@@ -172,7 +172,7 @@
             </Frame>
             <material:MaterialLabel Text="With the TextSide property you can tell whether you want the text on the left or right." />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Styles with VisualStateManager" />
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Styled with VisualStateManager" />
             <Frame Style="{StaticResource SurfaceContainer}">
                 <Grid
                     Style="{StaticResource SwitchContainer}">
@@ -202,7 +202,7 @@
                         Style="{StaticResource VisualStateManagerStyle}" />
                 </Grid>
             </Frame>
-            <material:MaterialLabel Text="VisualStateManager allows you to configure TrackColor, BorderColor and ThumbColor." />
+            <material:MaterialLabel Text="VisualStateManager allows you to configure properties for each state including TrackColor, BorderColor and ThumbColor." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API sample" />
             <Frame Style="{StaticResource SurfaceContainer}">
