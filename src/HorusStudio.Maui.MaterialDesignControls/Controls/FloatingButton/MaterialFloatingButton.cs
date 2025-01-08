@@ -52,7 +52,7 @@ public class FloatingButtonConfig
 /// 
 /// &lt;material:MaterialFloatingButton
 ///       Icon="IconButton"
-///       ActionCommand="{Binding FloatingButtonActionCommand}"
+///       Command="{Binding FloatingButtonActionCommand}"
 ///       x:Name="MaterialFloatingButton"/&gt;
 /// </xaml>
 /// </code>
@@ -62,7 +62,7 @@ public class FloatingButtonConfig
 /// var MaterialFloatingButton = new MaterialFloatingButton()
 /// {
 ///     Icon = "IconButton",
-///     ActionCommand = ActionCommand
+///     Command = ActionCommand
 /// };
 ///</code>
 ///
@@ -79,13 +79,17 @@ public class MaterialFloatingButton : ContentView
     private readonly static Color DefaultBackgroundColor =  new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
     private readonly static Color DefaultIconColor = new AppThemeBindingExtension{ Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer}.GetValueForCurrentTheme<Color>();
     private readonly static ImageSource DefaultIcon = string.Empty;
-    private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(16);
+    private readonly static CornerRadius DefaultCornerRadius = new(16);
     private readonly static int DefaultIconSize = 24;
-    
+
+    private readonly FloatingButtonImplementation _floatingButtonImplementation = new();
+    private FloatingButtonConfig _config = new();
+    private Page _parentPage;
+
     #endregion
 
     #region Bindable Properties
-    
+
     /// <summary>
     /// The backing store for the <see cref="Type" />
     /// bindable property.
@@ -94,7 +98,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.UpdateFloatingButton();
+            self.UpdateLayout();
         }
     });
     
@@ -106,7 +110,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.UpdateFloatingButton();
+            self.UpdateLayout();
         }
     });
     
@@ -118,7 +122,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.UpdateFloatingButton();
+            self.UpdateLayout();
         }
     });
     
@@ -130,7 +134,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.UpdateFloatingButton();
+            self.UpdateLayout();
         }
     });
     
@@ -142,7 +146,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.UpdateFloatingButton();
+            self.UpdateLayout();
         }
     });
     
@@ -154,7 +158,7 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.UpdateFloatingButton();
+            self.UpdateLayout();
         }
     });
 
@@ -166,21 +170,21 @@ public class MaterialFloatingButton : ContentView
     {
         if (bindable is MaterialFloatingButton self)
         {
-            self.UpdateFloatingButton();
+            self.UpdateLayout();
         }
     });
     
     /// <summary>
-    /// The backing store for the <see cref="ActionCommand" />
+    /// The backing store for the <see cref="Command" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty ActionCommandProperty = BindableProperty.Create(nameof(ActionCommand), typeof(ICommand), typeof(MaterialFloatingButton));
+    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialFloatingButton));
     
     /// <summary>
-    /// The backing store for the <see cref="ActionCommandParameter" />
+    /// The backing store for the <see cref="CommandParameter" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty ActionCommandParameterProperty = BindableProperty.Create(nameof(ActionCommandParameter), typeof(object), typeof(MaterialFloatingButton));
+    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialFloatingButton));
     
     #endregion
 
@@ -287,61 +291,76 @@ public class MaterialFloatingButton : ContentView
     /// <remarks>This property is used to associate a command with an instance of FAB. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
     /// <para><see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.</para>
     /// </remarks>
-    public ICommand ActionCommand
+    public ICommand Command
     {
-        get => (ICommand)GetValue(ActionCommandProperty);
-        set => SetValue(ActionCommandProperty, value);
+        get => (ICommand)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
     }
     
     
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="ActionCommand"/> property.
+    /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
     /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see langword="Null"/>
     /// </default>
-    public object ActionCommandParameter
+    public object CommandParameter
     {
-        get => GetValue(ActionCommandParameterProperty);
-        set => SetValue(ActionCommandParameterProperty, value);
+        get => GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
     }
 
     #endregion
 
-    #region Events
-
-    protected virtual void InternalPressedHandler(object sender, EventArgs e)
-    { 
-        ActionCommand?.Execute(ActionCommandParameter);
-    }
-
-    #endregion
-
-    #region Constructor
-
-    private readonly FloatingButtonImplementation _floatingButtonImplementation = new FloatingButtonImplementation();
-    private FloatingButtonConfig _config = new();
-    
     public MaterialFloatingButton()
     {
-        IsVisible = false;
+        //System.Diagnostics.Debug.WriteLine($"GC TotalMemory: {GC.GetTotalMemory(true)}");
+    }
+    
+    ~MaterialFloatingButton()
+    {
+        if (_parentPage is not null)
+        {
+            _parentPage.Appearing -= Appearing;
+            _parentPage.Disappearing -= Disappearing;
+        }
+        //GC.SuppressFinalize(this);
     }
 
-    #endregion
+    #region Methods
 
-    #region Setters
-
-    private void UpdateFloatingButton()
+    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
-        UpdateAndInitializationControl();
+        if (propertyName == IsVisibleProperty.PropertyName)
+        {
+            if (IsVisible)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
+        }
+        else if (propertyName == WindowProperty.PropertyName)
+        {
+            if (Window is not null && _parentPage is null)
+            {
+                _parentPage = this.GetParent<Page>();
+                if (_parentPage is not null)
+                {
+                    this.DebugTreeView();
+                    _parentPage.Appearing += Appearing;
+                    _parentPage.Disappearing += Disappearing;
+                }
+            }
+        }
     }
 
-    private void UpdateAndInitializationControl()
+    private void UpdateLayout()
     {
-        string image = GetImageSourceString(Icon);
-
-        void Action() => InternalPressedHandler(this, null);
+        string image = Icon.Source();
 
         _config = new FloatingButtonConfig()
         {
@@ -352,67 +371,31 @@ public class MaterialFloatingButton : ContentView
             Icon = image,
             CornerRadius = CornerRadius,
             IconSize = IconSize,
-            Action = Action
+            Action = () =>
+            {
+                if (Command?.CanExecute(CommandParameter) ?? false)
+                {
+                    Command?.Execute(CommandParameter);
+                }
+            } 
         };
-        
-        
-        _floatingButtonImplementation.ShowFloatingButton(_config);
+
+        Show();
     }
 
-    public void ShowFloatingButton()
+    private void Show()
     {
-        UpdateAndInitializationControl();
+        if (IsVisible)
+            _floatingButtonImplementation.Show(_config);
     }
 
-    public void HideFloatingButton()
+    private void Hide()
     {
-        _floatingButtonImplementation.DismissFloatingButton();
+        _floatingButtonImplementation.Dismiss();
     }
 
-    #endregion
-    
-    #region Methods
-    
-    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        if (propertyName == nameof(Window)
-            && Window == null)
-        {
-           HideFloatingButton();
-        }
-        else
-        {
-            ShowFloatingButton();
-        }
-    }
-    
-    public string? GetImageSourceString(ImageSource imageSource)
-    {
-        if (imageSource is FileImageSource fileImageSource)
-        {
-            // For file-based images
-            return fileImageSource.File;
-        }
-        else if (imageSource is UriImageSource uriImageSource)
-        {
-            // For URI-based images
-            return uriImageSource.Uri.ToString();
-        }
-        else if (imageSource is StreamImageSource)
-        {
-            // StreamImageSource does not have a string representation
-            return "Stream-based image source (no name)";
-        }
-        else
-        {
-            return null; // Unknown ImageSource type
-        }
-    }
+    private void Appearing(object sender, EventArgs e) => Show();
+    private void Disappearing(object sender, EventArgs e) => Hide();
     
     #endregion
-    
-    
 }
-
-
-

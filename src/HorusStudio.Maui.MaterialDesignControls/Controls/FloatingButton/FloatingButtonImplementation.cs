@@ -1,73 +1,82 @@
 using HorusStudio.Maui.MaterialDesignControls.Extensions;
 #if IOS
 using UIKit;
-using Microsoft.Maui.Platform;
-#endif
-#if ANDROID
-using Platform = Microsoft.Maui.ApplicationModel.Platform;
 #endif
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class FloatingButtonImplementation
+class FloatingButtonImplementation : IDisposable
 {
-    #if ANDROID
-    private Google.Android.Material.Snackbar.Snackbar layout;
-    #endif
+    private bool isDisposed;
 
-    #if IOS
+#if ANDROID
+    private Google.Android.Material.Snackbar.Snackbar layout;
+#endif
+
+#if IOS
     private FloatingButtonBuilder_MaciOS layout;
-    #endif
-    
-    public virtual IDisposable ShowFloatingButton(FloatingButtonConfig config)
+#endif
+
+    public FloatingButtonImplementation()
     {
+    }
+
+    ~FloatingButtonImplementation() => Dispose(false);
+
+    public IDisposable Show(FloatingButtonConfig config)
+    {
+#if ANDROID
+        var activity = Platform.CurrentActivity;
+        activity.SafeRunOnUi(() =>
+        {
+            Dismiss();
+            layout = new FloatingButtonBuilder_Android(activity, config).Build();
+            layout.Show();
+        });
+#endif
 #if IOS
         var app = UIApplication.SharedApplication;
         app.SafeInvokeOnMainThread(() =>
         {
-            layout?.Dismiss();
+            Dismiss();
             layout = new FloatingButtonBuilder_MaciOS(config);
             layout.Show();
         });
-        return new DisposableAction(() => app.SafeInvokeOnMainThread(() =>
-        {
-            layout.Dismiss();
-        }));
 #endif
-#if ANDROID
-        
-        var activity = Platform.CurrentActivity;
-        activity.SafeRunOnUi(() =>
-        {
-            layout?.Dismiss();
-            layout?.Dispose();
-            layout = new FloatingButtonBuilder_Android(activity, config).Build();
-            layout.Show();
-        });
-        return new DisposableAction(() =>
-        {
-            if (layout != null && layout.IsShown)
-                activity.SafeRunOnUi(() =>
-                {
-                    layout.Dismiss();
-                });
-        });
-#endif
-        return null;
+        return this;
     }
 
-
-    public virtual void DismissFloatingButton()
+    public void Dismiss()
     {
-        #if ANDROID
+#if ANDROID
         layout?.Dismiss();
-        layout?.Dispose();
-        #endif
-        
-        #if IOS
+#endif
+#if IOS
         layout?.Dismiss();
-        layout?.Dispose();
-        #endif
+#endif
+    } 
+    
+	public void Dispose()
+    {
+        Dismiss();
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!isDisposed)
+        {
+            if (disposing)
+            {
+#if ANDROID
+                layout?.Dispose();
+#endif
+#if IOS
+                layout?.Dispose();
+#endif
+            }
+            isDisposed = true;
+        }
+    }
 }

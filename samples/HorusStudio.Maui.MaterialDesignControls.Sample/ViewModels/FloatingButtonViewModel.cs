@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
@@ -21,7 +20,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         
         [ObservableProperty]
         private MaterialFloatingButtonType _buttonType;
-        
+
+        [ObservableProperty]
+        private bool _isVisible = true;
+
 
         #endregion
 

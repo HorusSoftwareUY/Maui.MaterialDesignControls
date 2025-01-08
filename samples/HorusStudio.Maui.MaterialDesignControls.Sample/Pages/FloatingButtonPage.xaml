@@ -12,14 +12,26 @@
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Floating Button" />
+            <material:MaterialFloatingButton
+                Icon="horus_logo"
+                Type="{Binding ButtonType}"
+                Position="{Binding PositionButton}"
+                Command="{Binding FloatingButtonActionCommand}"
+                IsVisible="{Binding IsVisible}" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Visibility" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <material:MaterialLabel
+                            Text="Is Visible"
+                            VerticalTextAlignment="Center" />
+                    <Switch IsToggled="{Binding IsVisible}" />
+                </HorizontalStackLayout >
+            </Frame>
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Type &amp; Position" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialFloatingButton Icon="horus_logo"
-                                                     Type="{Binding ButtonType}"
-                                                     Position="{Binding PositionButton}"
-                                                     ActionCommand="{Binding FloatingButtonActionCommand}"
-                                                     x:Name="MaterialFloatingButton"/>
                     <material:MaterialButton
                          Text="{Binding ButtonTextMove}"
                          Command="{Binding MoveButtonCommand}"/>
