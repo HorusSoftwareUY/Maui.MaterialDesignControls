@@ -27,6 +27,32 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             LoadItems(_includeAllItems);
         }
 
+        #region Commands
+
+        [ICommand]
+        private async Task Test(MaterialNavigationDrawerItem selectedItem)
+        {
+            if (_variantItem.Equals(selectedItem))
+            {
+                IncrementBadgetText();
+            }
+            else
+            {
+                await DisplayAlert.Invoke("Navigation Item", $"{selectedItem}", "Ok");
+            }
+        }
+
+        [ICommand]
+        private void ChangeItemsSource()
+        {
+            _includeAllItems = !_includeAllItems;
+            LoadItems(_includeAllItems);
+        }
+
+        #endregion Commands
+
+        #region Methods
+
         private void LoadItems(bool includeAllItems)
         {
             _variantItem = new MaterialNavigationDrawerItem()
@@ -111,30 +137,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             Items = new ObservableCollection<MaterialNavigationDrawerItem>(list);
         }
 
-        [ICommand]
-        private async Task Test(MaterialNavigationDrawerItem selectedItem)
-        {
-            if (_variantItem.Equals(selectedItem))
-            {
-                IncrementBadgetText();
-            }
-            else
-            {
-                await DisplayAlert.Invoke("Navigation Item", $"{selectedItem}", "Ok");
-            }
-        }
-
-        [ICommand]
-        private void ChangeItemsSource()
-        {
-            _includeAllItems = !_includeAllItems;
-            LoadItems(_includeAllItems);
-        }
-
         private void IncrementBadgetText()
         {
             _counter++;
             _variantItem.BadgeText = $" {100 + _counter}+";
         }
+
+        #endregion Methods
     }
 }

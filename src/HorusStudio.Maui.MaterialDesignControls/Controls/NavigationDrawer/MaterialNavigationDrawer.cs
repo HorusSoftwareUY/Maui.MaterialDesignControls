@@ -72,8 +72,6 @@ public class MaterialNavigationDrawer : ContentView
 
     #region Layout
 
-    private MaterialLabel _lblHeadline;
-
     private StackLayout _itemsContainer;
 
     private Dictionary<string, NavigationDrawerContainerForObjects> _containersWithItems = new Dictionary<string, NavigationDrawerContainerForObjects>();
@@ -85,13 +83,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="Headline" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineProperty = BindableProperty.Create(nameof(Headline), typeof(string), typeof(MaterialNavigationDrawer), defaultValue: null, propertyChanged: (bindableObject, _, newValue) =>
-    {
-        if (bindableObject is MaterialNavigationDrawer self && newValue is string headline)
-        {
-            self._lblHeadline.IsVisible = !string.IsNullOrWhiteSpace(headline);
-        }
-    });
+    public static readonly BindableProperty HeadlineProperty = BindableProperty.Create(nameof(Headline), typeof(string), typeof(MaterialNavigationDrawer), defaultValue: null);
 
     /// <summary>
     /// The backing store for the <see cref="HeadlineTextColor" /> bindable property.
@@ -111,16 +103,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="HeadlineMargin" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineMarginProperty = BindableProperty.Create(nameof(HeadlineMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineMargin, propertyChanged: (bindableObject, _, newValue) =>
-    {
-        if (bindableObject is MaterialNavigationDrawer self)
-        {
-            if (newValue is Thickness margin && margin != DefaultHeadlineMargin)
-                self._lblHeadline.Margin = margin;
-            else
-                self._lblHeadline.Margin = new Thickness(0, 16);
-        }
-    });
+    public static readonly BindableProperty HeadlineMarginProperty = BindableProperty.Create(nameof(HeadlineMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineMargin);
 
     /// <summary>
     /// The backing store for the <see cref="HeadlineFontAttributes" /> bindable property.
@@ -271,6 +254,11 @@ public class MaterialNavigationDrawer : ContentView
     /// The backing store for the <see cref="BadgeBackgroundColor" /> bindable property.
     /// </summary>
     public static readonly BindableProperty BadgeBackgroundColorProperty = BindableProperty.Create(nameof(BadgeBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: Colors.Transparent);
+
+    /// <summary>
+    /// The backing store for the <see cref="SectionTemplate" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SectionTemplateProperty = BindableProperty.Create(nameof(SectionTemplate), typeof(DataTemplate), typeof(MaterialNavigationDrawer), defaultValue: null, defaultBindingMode: BindingMode.TwoWay);
 
     /// <summary>
     /// The backing store for the <see cref="ItemTemplate" /> bindable property.
@@ -742,6 +730,18 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
+    /// Gets or sets the section template.
+    /// </summary>
+    /// <default>
+    /// <see langword="null" />
+    /// </default>
+    public DataTemplate SectionTemplate
+    {
+        get => (DataTemplate)GetValue(SectionTemplateProperty);
+        set => SetValue(SectionTemplateProperty, value);
+    }
+
+    /// <summary>
     /// Gets or sets the item template for each item from ItemsSource. This is a bindable property.
     /// </summary>
     /// <default>
@@ -848,7 +848,7 @@ public class MaterialNavigationDrawer : ContentView
 
     public MaterialNavigationDrawer()
     {
-        StackLayout container = new StackLayout()
+        var container = new StackLayout()
         {
             Spacing = 0,
             HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -862,7 +862,7 @@ public class MaterialNavigationDrawer : ContentView
             VerticalOptions = LayoutOptions.FillAndExpand,
         };
 
-        _lblHeadline = new MaterialLabel()
+        var lblHeadline = new MaterialLabel()
         {
             LineBreakMode = LineBreakMode.NoWrap,
             Margin = HeadlineMargin != new Thickness(-1) ? HeadlineMargin : new Thickness(0, 16),
@@ -875,16 +875,18 @@ public class MaterialNavigationDrawer : ContentView
             Padding = new Thickness(12, 0)
         };
 
-        _lblHeadline.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Headline), source: this));
-        _lblHeadline.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(HeadlineTextColor), source: this));
-        _lblHeadline.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(HeadlineFontFamily), source: this));
-        _lblHeadline.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(HeadlineFontSize), source: this));
-        _lblHeadline.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(HeadlineTextTransform), source: this));
-        _lblHeadline.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(HeadlineFontAttributes), source: this));
-        _lblHeadline.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(HeadlineFontAutoScalingEnabled), source: this));
-        _lblHeadline.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(HeadlineCharactersSpacing), source: this));
+        lblHeadline.SetBinding(MaterialLabel.MarginProperty, new Binding(nameof(HeadlineMargin), source: this, converter: new HeadlineMarginConverter()));
+        lblHeadline.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(Headline), source: this, converter: new NullOrWhitespaceToBoolConverter()));
+        lblHeadline.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Headline), source: this));
+        lblHeadline.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(HeadlineTextColor), source: this));
+        lblHeadline.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(HeadlineFontFamily), source: this));
+        lblHeadline.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(HeadlineFontSize), source: this));
+        lblHeadline.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(HeadlineTextTransform), source: this));
+        lblHeadline.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(HeadlineFontAttributes), source: this));
+        lblHeadline.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(HeadlineFontAutoScalingEnabled), source: this));
+        lblHeadline.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(HeadlineCharactersSpacing), source: this));
 
-        container.Children.Add(_lblHeadline);
+        container.Children.Add(lblHeadline);
         container.Children.Add(_itemsContainer);
 
         Content = container;
@@ -906,50 +908,34 @@ public class MaterialNavigationDrawer : ContentView
 
         foreach (var group in groupedItems)
         {
-            AddSectionLabel(group.Key);
+            var counter = 0;
 
             foreach (var item in group)
             {
-                var template = ItemTemplate != null ? ItemTemplate : CreateDataTemplate(item);
+                if (counter == 0 && !string.IsNullOrEmpty(item.Section))
+                {
+                    var sectionTemplate = SectionTemplate != null ? SectionTemplate : GetDefaultSectionDataTemplate(item.Section);
 
-                var card = (MaterialCard)template.CreateContent();
+                    var sectionView = (View)sectionTemplate.CreateContent();
 
-                _itemsContainer.Children.Add(card);
+                    sectionView.BindingContext = item;
+
+                    _itemsContainer.Children.Add(sectionView);
+                }
+
+                var itemTemplate = ItemTemplate != null ? ItemTemplate : GetDefaultItemDataTemplate(item);
+
+                var itemView = (View)itemTemplate.CreateContent();
+
+                itemView.BindingContext = item;
+
+                _itemsContainer.Children.Add(itemView);
+
+                counter++;
             }
 
             AddSectionDivider(itemIdx++, groupedItems.Count());
         }
-    }
-
-    private void AddSectionLabel(string section)
-    {
-        if (string.IsNullOrWhiteSpace(section)) return;
-
-        var label = new MaterialLabel
-        {
-            Text = section.Trim(),
-            VerticalTextAlignment = TextAlignment.Center,
-            FontSize = SectionLabelFontSize,
-            FontFamily = SectionLabelFontFamily,
-            TextColor = SectionLabelColor,
-            Padding = new Thickness(12, 0),
-            Margin = SectionLabelMargin != new Thickness(-1)
-                        ? SectionLabelMargin
-                        : new Thickness(0, SectionDividerIsVisible ? 0 : 16, 0, 16),
-            CharacterSpacing = SectionLabelCharactersSpacing,
-            FontAttributes = SectionLabelFontAttributes,
-            FontAutoScalingEnabled = SectionLabelFontAutoScalingEnabled
-        };
-
-        label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SectionLabelColor), source: this));
-        label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(SectionLabelFontFamily), source: this));
-        label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SectionLabelFontSize), source: this));
-        label.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(SectionLabelFontAttributes), source: this));
-        label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(SectionLabelFontAutoScalingEnabled), source: this));
-        label.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(SectionLabelCharactersSpacing), source: this));
-        label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(SectionLabelTextTransform), source: this));
-
-        _itemsContainer.Children.Add(label);
     }
 
     private MaterialCard CreateFrame(MaterialNavigationDrawerItem item)
@@ -1110,7 +1096,7 @@ public class MaterialNavigationDrawer : ContentView
         _itemsContainer.Children.Add(divider);
     }
 
-    public DataTemplate CreateDataTemplate(MaterialNavigationDrawerItem item)
+    private DataTemplate GetDefaultItemDataTemplate(MaterialNavigationDrawerItem item)
     {
         string key = $"{item.Section}-{item.Text}";
         if (_containersWithItems.ContainsKey(key)) return null;
@@ -1150,6 +1136,38 @@ public class MaterialNavigationDrawer : ContentView
             AddItemDivider();
 
             return card;
+        });
+    }
+
+    private DataTemplate GetDefaultSectionDataTemplate(string section)
+    {
+        return new DataTemplate(() =>
+        {
+            var label = new MaterialLabel
+            {
+                Text = section.Trim(),
+                VerticalTextAlignment = TextAlignment.Center,
+                FontSize = SectionLabelFontSize,
+                FontFamily = SectionLabelFontFamily,
+                TextColor = SectionLabelColor,
+                Padding = new Thickness(12, 0),
+                Margin = SectionLabelMargin != new Thickness(-1)
+                   ? SectionLabelMargin
+                   : new Thickness(0, SectionDividerIsVisible ? 0 : 16, 0, 16),
+                CharacterSpacing = SectionLabelCharactersSpacing,
+                FontAttributes = SectionLabelFontAttributes,
+                FontAutoScalingEnabled = SectionLabelFontAutoScalingEnabled
+            };
+
+            label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SectionLabelColor), source: this));
+            label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(SectionLabelFontFamily), source: this));
+            label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SectionLabelFontSize), source: this));
+            label.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(SectionLabelFontAttributes), source: this));
+            label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(SectionLabelFontAutoScalingEnabled), source: this));
+            label.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(SectionLabelCharactersSpacing), source: this));
+            label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(SectionLabelTextTransform), source: this));
+
+            return label;
         });
     }
 
@@ -1282,6 +1300,24 @@ public class MaterialNavigationDrawer : ContentView
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value is string str && !string.IsNullOrWhiteSpace(str);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    private class HeadlineMarginConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is Thickness margin && margin != DefaultHeadlineMargin)
+            {
+                return margin;
+            }
+
+            return new Thickness(0, 16);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
