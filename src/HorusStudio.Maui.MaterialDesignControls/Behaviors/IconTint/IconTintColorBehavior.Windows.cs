@@ -1,14 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Platform;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using static Android.Widget.TimePicker;
 using WButton = Microsoft.UI.Xaml.Controls.Button;
 using WImage = Microsoft.UI.Xaml.Controls.Image;
 

@@ -2,26 +2,71 @@
 {
     public enum LabelTypes
     {
+        /// <summary>Tablet: 80, Phone: 57</summary>
         DisplayLarge,
+        /// <summary>Tablet: 62, Phone: 45</summary>
         DisplayMedium,
+        /// <summary>Tablet: 50, Phone: 36</summary>
         DisplaySmall,
+        /// <summary>Tablet: 44, Phone: 32</summary>
         HeadlineLarge,
+        /// <summary>Tablet: 38, Phone: 28</summary>
         HeadlineMedium,
+        /// <summary>Tablet: 32, Phone: 24</summary>
         HeadlineSmall,
+        /// <summary>Tablet: 26, Phone: 22</summary>
         TitleLarge,
+        /// <summary>Tablet: 19, Phone: 16</summary>
         TitleMedium,
+        /// <summary>Tablet: 17, Phone: 14</summary>
         TitleSmall,
+        /// <summary>Tablet: 19, Phone: 16</summary>
         BodyLarge,
+        /// <summary>Tablet: 17, Phone: 14</summary>
         BodyMedium,
+        /// <summary>Tablet: 15, Phone: 12</summary>
         BodySmall,
+        /// <summary>Tablet: 17, Phone: 14</summary>
         LabelLarge,
+        /// <summary>Tablet: 15, Phone: 12</summary>
         LabelMedium,
+        /// <summary>Tablet: 14, Phone: 11</summary>
         LabelSmall
     }
 
     /// <summary>
-    /// A label <see cref="View" /> that helps make writing legible and beautiful, and follows Material Design Guidelines <see href="https://m3.material.io/styles/typography/overview" />.
+    /// A label <see cref="View" /> that helps make writing legible and beautiful, and follows Material Design Guidelines <see href="https://m3.material.io/styles/typography/overview">See here. </see>
     /// </summary>
+    /// <example>
+    ///
+    /// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialLabel.jpg</img>
+    ///
+    /// <h3>XAML sample</h3>
+    /// <code>
+    /// <xaml>
+    /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    /// 
+    /// &lt;material:MaterialLabel 
+    ///        Type="HeadlineLarge"
+    ///        Text="Headline large"/&gt;
+    /// </xaml>
+    /// </code>
+    /// 
+    /// <h3>C# sample</h3>
+    /// <code>
+    /// var label = new MaterialLabel()
+    /// {
+    ///     Type = LabelTypes.HeadlineLarge,
+    ///     Text = "This Material Label"
+    /// };
+    ///</code>
+    ///
+    /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/LabelPage.xaml)
+    /// 
+    /// </example>
+    /// <todoList>
+    /// * [iOS] FontAttributes doesn't work.
+    /// </todoList>
     public class MaterialLabel : Label
     {
         // TODO: [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
@@ -39,7 +84,8 @@
         #region Bindable Properties
 
         /// <summary>
-        /// The backing store for the <see cref="Type" /> bindable property.
+        /// The backing store for the <see cref="Type" />
+        /// bindable property.
         /// </summary>
         public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(LabelTypes), typeof(MaterialLabel), defaultValue: DefaultType, propertyChanged: (bindable, oldValue, newValue) =>
         {
@@ -55,22 +101,32 @@
         });
 
         /// <summary>
-        /// The backing store for the <see cref="FontFamily" /> bindable property.
+        /// The backing store for the <see cref="FontFamily" />
+        /// bindable property.
         /// </summary>
-        public static new readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily);
+        public static new readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialLabel self)
+            {
+                self.SetFontFamily();
+            }
+        });
 
         /// <summary>
-        /// The backing store for the <see cref="FontFamilyRegular" /> bindable property.
+        /// The backing store for the <see cref="FontFamilyRegular" />
+        /// bindable property.
         /// </summary>
         public static readonly BindableProperty FontFamilyRegularProperty = BindableProperty.Create(nameof(FontFamilyRegular), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamilyRegular);
 
         /// <summary>
-        /// The backing store for the <see cref="FontFamilyMedium" /> bindable property.
+        /// The backing store for the <see cref="FontFamilyMedium" />
+        /// bindable property.
         /// </summary>
         public static readonly BindableProperty FontFamilyMediumProperty = BindableProperty.Create(nameof(FontFamilyMedium), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamilyMedium);
 
         /// <summary>
-        /// The backing store for the <see cref="TextColor" /> bindable property.
+        /// The backing store for the <see cref="TextColor" />
+        /// bindable property.
         /// </summary>
         public static new readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialLabel), defaultValue: DefaultTextColor);
 
@@ -81,48 +137,54 @@
         /// <summary>
         /// Gets or sets the label type according to <see cref="LabelTypes"/> enum.
         /// This property handle internally the FontFamily, CharacterSpacing and FontSize properties.
-        /// The default value is <see cref="LabelTypes.BodyMedium"/>. This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see cref="LabelTypes.BodyMedium"/>
+        /// </default>
         public LabelTypes Type
         {
-            get { return (LabelTypes)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
+            get => (LabelTypes)GetValue(TypeProperty);
+            set => SetValue(TypeProperty, value);
         }
 
         /// <summary>
-        /// Gets or sets the font family for the label. This is a bindable property.
+        /// Gets or sets the font family for the label.
+        /// This is a bindable property.
         /// </summary>
         public new string FontFamily
         {
-            get { return (string)GetValue(FontFamilyProperty); }
-            set { SetValue(FontFamilyProperty, value); }
+            get => (string)GetValue(FontFamilyProperty);
+            set => SetValue(FontFamilyProperty, value);
         }
 
         /// <summary>
-        /// Gets or sets the regular font family for the label. This is a bindable property.
+        /// Gets or sets the regular font family for the label.
+        /// This is a bindable property.
         /// </summary>
         public string FontFamilyRegular
         {
-            get { return (string)GetValue(FontFamilyRegularProperty); }
-            set { SetValue(FontFamilyRegularProperty, value); }
+            get => (string)GetValue(FontFamilyRegularProperty);
+            set => SetValue(FontFamilyRegularProperty, value);
         }
 
         /// <summary>
-        /// Gets or sets the medium font family for the label. This is a bindable property.
+        /// Gets or sets the medium font family for the label.
+        /// This is a bindable property.
         /// </summary>
         public string FontFamilyMedium
         {
-            get { return (string)GetValue(FontFamilyMediumProperty); }
-            set { SetValue(FontFamilyMediumProperty, value); }
+            get => (string)GetValue(FontFamilyMediumProperty);
+            set => SetValue(FontFamilyMediumProperty, value);
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the text of the label. This is a bindable property.
+        /// Gets or sets the <see cref="Color" /> for the text of the label.
+        /// This is a bindable property.
         /// </summary>
         public new Color TextColor
         {
-            get { return (Color)GetValue(TextColorProperty); }
-            set { SetValue(TextColorProperty, value); }
+            get => (Color)GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value);
         }
 
         #endregion Properties
@@ -132,10 +194,8 @@
         public MaterialLabel()
         {
             base.TextColor = this.TextColor;
+            base.FontFamily = this.FontFamily;
 
-            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamilyRegular), source: this));
-            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamilyMedium), source: this));
             SetBinding(Label.TextColorProperty, new Binding(nameof(TextColor), source: this));
 
             if (Type == DefaultType)
@@ -147,6 +207,11 @@
         #endregion Constructors
 
         #region Methods
+
+        private void SetFontFamily()
+        {
+            base.FontFamily = this.FontFamily;
+        }
 
         private void TypeChanged(LabelTypes type)
         {
