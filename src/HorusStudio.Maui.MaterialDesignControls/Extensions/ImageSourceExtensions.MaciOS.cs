@@ -1,15 +1,13 @@
 ﻿using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using UIKit;
 
-namespace HorusStudio.Maui.MaterialDesignControls;
+namespace Microsoft.Maui.Controls;
 static class ImageSourceExtensions
 {
     public static async Task<UIImage> ToUIImageAsync(this ImageSource source)
     {
-        if (source == null) return null;
-
-        var handler = source.GetHandler();
-        if (handler == null) return null;
+        var handler = source?.GetHandler();
+        if (handler is null) return null;
 
         return await handler.LoadImageAsync(source);
     }
