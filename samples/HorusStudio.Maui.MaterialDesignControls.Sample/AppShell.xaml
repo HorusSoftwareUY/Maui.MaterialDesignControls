@@ -3,7 +3,66 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages">
+    x:Name="shell"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:viewModels="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    Shell.FlyoutBehavior="Flyout">
 
-    <ShellContent Title="" ContentTemplate="{DataTemplate local:MainPage}" />        
+    <ShellContent
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainViewModel" />
+
+    <Shell.FlyoutContent>
+        <ContentView 
+            Padding="28" 
+            Background="{StaticResource Tone1}">
+            <CollectionView 
+                ItemsSource="{Binding MenuGroups}"
+                IsGrouped="True">
+                <CollectionView.GroupHeaderTemplate>
+                    <OnPlatform
+                        x:TypeArguments="DataTemplate">
+                        <On Platform="Android">
+                            <DataTemplate>
+                                <VerticalStackLayout
+                                    HeightRequest="56"
+                                    Spacing="16">
+                                    <material:MaterialDivider
+                                        VerticalOptions="Start"/>
+                                    <material:MaterialLabel 
+                                        VerticalOptions="Center"
+                                        FontAttributes="Bold" 
+                                        Type="BodyMedium"
+                                        TextColor="{StaticResource Tone6}"
+                                        Text="{Binding GroupName}" />
+                                </VerticalStackLayout>
+                            </DataTemplate>    
+                        </On>
+                    </OnPlatform>
+                </CollectionView.GroupHeaderTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView 
+                            HeightRequest="56"
+                            Padding="8,0">
+                            <material:MaterialLabel 
+                                Text="{Binding Title}"
+                                FontAttributes="Bold"
+                                Type="BodyMedium"
+                                VerticalOptions="Center"
+                                LineBreakMode="TailTruncation"
+                                TextColor="{StaticResource Tone9}"/>
+                            <ContentView.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, 
+                                        Path=NavigateCommand}"
+                                    CommandParameter="{Binding}"/>
+                            </ContentView.GestureRecognizers>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ContentView>
+    </Shell.FlyoutContent>
 </Shell>
