@@ -17,23 +17,29 @@
         <ContentView 
             Padding="28" 
             Background="{StaticResource Tone1}">
-            <CollectionView ItemsSource="{Binding MenuGroups}"
-                 IsGrouped="True">
+            <CollectionView 
+                ItemsSource="{Binding MenuGroups}"
+                IsGrouped="True">
                 <CollectionView.GroupHeaderTemplate>
-                    <DataTemplate>
-                        <VerticalStackLayout
-                            HeightRequest="56"
-                            Spacing="16">
-                            <material:MaterialDivider
-                                VerticalOptions="Start"/>
-                            <material:MaterialLabel 
-                                VerticalOptions="Center"
-                                FontAttributes="Bold" 
-                                Type="BodyMedium"
-                                TextColor="{StaticResource Tone6}"
-                                Text="{Binding GroupName}" />
-                        </VerticalStackLayout>
-                    </DataTemplate>
+                    <OnPlatform
+                        x:TypeArguments="DataTemplate">
+                        <On Platform="Android">
+                            <DataTemplate>
+                                <VerticalStackLayout
+                                    HeightRequest="56"
+                                    Spacing="16">
+                                    <material:MaterialDivider
+                                        VerticalOptions="Start"/>
+                                    <material:MaterialLabel 
+                                        VerticalOptions="Center"
+                                        FontAttributes="Bold" 
+                                        Type="BodyMedium"
+                                        TextColor="{StaticResource Tone6}"
+                                        Text="{Binding GroupName}" />
+                                </VerticalStackLayout>
+                            </DataTemplate>    
+                        </On>
+                    </OnPlatform>
                 </CollectionView.GroupHeaderTemplate>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
