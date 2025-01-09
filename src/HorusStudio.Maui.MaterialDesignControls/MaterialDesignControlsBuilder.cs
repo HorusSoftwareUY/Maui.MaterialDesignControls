@@ -1,4 +1,4 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Utils;
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.LifecycleEvents;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -18,7 +18,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
             handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
-            handlers.AddHandler(typeof(CheckBox), typeof(CustomCheckboxHandler));
+            handlers.AddHandler(typeof(CustomCheckBox), typeof(CustomCheckboxHandler));
+            handlers.AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
         }
 
         private static void ConfigureLifeCycleEvents(ILifecycleBuilder appLifeCycle)
@@ -73,6 +74,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialChips.GetStyles());
             // Rating
             application.Resources.AddStyles(MaterialRating.GetStyles());
+            // Slider
+            application.Resources.AddStyles(MaterialSlider.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
