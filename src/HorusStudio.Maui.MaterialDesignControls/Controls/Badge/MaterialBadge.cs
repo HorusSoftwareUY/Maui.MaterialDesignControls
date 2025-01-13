@@ -42,14 +42,14 @@ public class MaterialBadge : ContentView
 {
     #region Attributes
 
-    private readonly static MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
-    private readonly static string DefaultText = string.Empty;
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultFontSize = MaterialFontSize.LabelSmall;
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(8);
-    private readonly static Thickness DefaultPadding = new Thickness(16, 0);
+    private static readonly MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
+    private static readonly string DefaultText = string.Empty;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultFontSize = MaterialFontSize.LabelSmall;
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(8);
+    private static readonly Thickness DefaultPadding = new Thickness(16, 0);
     
     #endregion
 

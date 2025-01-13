@@ -57,7 +57,7 @@ public abstract partial class MaterialInputBase
     private static readonly double DefaultLabelSize = MaterialFontSize.BodySmall;
     #if ANDROID
     private static readonly Thickness DefaultLabelMargin = new (0,-4,0,0);
-    #else
+    #elif IOS || MACCATALYST
     private static readonly Thickness DefaultLabelMargin = new (0,-2,0,0);
     #endif
     private static readonly Thickness DefaultLabelPadding = new (0);

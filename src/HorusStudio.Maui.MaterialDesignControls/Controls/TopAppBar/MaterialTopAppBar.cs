@@ -62,33 +62,33 @@ namespace HorusStudio.Maui.MaterialDesignControls
     {
         #region Attributes
 
-        private readonly static MaterialTopAppBarType DefaultType = MaterialTopAppBarType.CenterAligned;
-        private readonly static string DefaultHeadline = null;
-        private readonly static Color DefaultHeadlineColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultHeadlineFontSize = MaterialFontSize.TitleLarge;
-        private readonly static string DefaultHeadlineFontFamily = MaterialFontFamily.Default;
-        private readonly static FontAttributes DefaultHeadlineFontAttributes = FontAttributes.None;
-        private readonly static Thickness DefaultHeadlineMarginAdjustment = default(Thickness);
-        private readonly static string DefaultDescription = null;
-        private readonly static Color DefaultDescriptionColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultDescriptionFontSize = MaterialFontSize.TitleMedium;
-        private readonly static string DefaultDescriptionFontFamily = MaterialFontFamily.Default;
-        private readonly static FontAttributes DefaultDescriptionFontAttributes = FontAttributes.None;
-        private readonly static Thickness DefaultDescriptionMarginAdjustment = new Thickness(DescriptionLateralMargin, 0, DescriptionLateralMargin, 0);
-        private readonly static ImageSource DefaultLeadingIcon = null;
-        private readonly static ICommand DefaultLeadingIconCommand = null;
-        private readonly static bool DefaultLeadingIconIsBusy = false;
-        private readonly static IList DefaultTrailingIcons = null;
-        private readonly static double DefaultIconSize = 48.0;
-        private readonly static AnimationTypes DefaultIconButtonAnimationType = MaterialAnimation.Type;
+        private static readonly MaterialTopAppBarType DefaultType = MaterialTopAppBarType.CenterAligned;
+        private static readonly string DefaultHeadline = null;
+        private static readonly Color DefaultHeadlineColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+        private static readonly double DefaultHeadlineFontSize = MaterialFontSize.TitleLarge;
+        private static readonly string DefaultHeadlineFontFamily = MaterialFontFamily.Default;
+        private static readonly FontAttributes DefaultHeadlineFontAttributes = FontAttributes.None;
+        private static readonly Thickness DefaultHeadlineMarginAdjustment = default(Thickness);
+        private static readonly string DefaultDescription = null;
+        private static readonly Color DefaultDescriptionColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+        private static readonly double DefaultDescriptionFontSize = MaterialFontSize.TitleMedium;
+        private static readonly string DefaultDescriptionFontFamily = MaterialFontFamily.Default;
+        private static readonly FontAttributes DefaultDescriptionFontAttributes = FontAttributes.None;
+        private static readonly Thickness DefaultDescriptionMarginAdjustment = new Thickness(DescriptionLateralMargin, 0, DescriptionLateralMargin, 0);
+        private static readonly ImageSource DefaultLeadingIcon = null;
+        private static readonly ICommand DefaultLeadingIconCommand = null;
+        private static readonly bool DefaultLeadingIconIsBusy = false;
+        private static readonly IList DefaultTrailingIcons = null;
+        private static readonly double DefaultIconSize = 48.0;
+        private static readonly AnimationTypes DefaultIconButtonAnimationType = MaterialAnimation.Type;
 #nullable enable
-        private readonly static double? DefaultIconButtonAnimationParameter = MaterialAnimation.Parameter;
+        private static readonly double? DefaultIconButtonAnimationParameter = MaterialAnimation.Parameter;
 #nullable disable
-        private readonly static ICustomAnimation DefaultIconButtonCustomAnimation = null;
-        private readonly static Color DefaultBusyIndicatorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultBusyIndicatorSize = 24.0;
-        private readonly static string DefaultScrollViewName = null;
-        private readonly static int DefaultScrollViewAnimationLength = 250;
+        private static readonly ICustomAnimation DefaultIconButtonCustomAnimation = null;
+        private static readonly Color DefaultBusyIndicatorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+        private static readonly double DefaultBusyIndicatorSize = 24.0;
+        private static readonly string DefaultScrollViewName = null;
+        private static readonly int DefaultScrollViewAnimationLength = 250;
 
         private const double DescriptionLateralMargin = 10;
         private const int SmallRowHeight = 48;

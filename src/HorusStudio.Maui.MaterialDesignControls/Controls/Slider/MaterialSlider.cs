@@ -40,24 +40,24 @@ public class MaterialSlider : ContentView
 {
     #region Attributes
 
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultActiveTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultInactiveTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SecondaryContainer, Dark = MaterialDarkTheme.SecondaryContainer }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultValueIndicatorBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultValueIndicatorTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
-    private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private readonly static double DefaultValueIndicatorFontSize = MaterialFontSize.BodyMedium;
-    private readonly static string DefaultValueIndicatorFormat = "{0:0.00}";
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultActiveTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultInactiveTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SecondaryContainer, Dark = MaterialDarkTheme.SecondaryContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultValueIndicatorBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultValueIndicatorTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
+    private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
+    private static readonly double DefaultValueIndicatorFontSize = MaterialFontSize.BodyMedium;
+    private static readonly string DefaultValueIndicatorFormat = "{0:0.00}";
     private bool MinimumImageIsVisible = false;
     private bool MinimumLabelIsVisible = false;
     private bool MaximumImageIsVisible = false;
     private bool MaximumLabelIsVisible = false;
-    private readonly static int DefaultThumbWidth = 4;
-    private readonly static int DefaultValueIndicatorSize = 44;
-    private readonly static int DefaultThumbHeight = 44;
+    private static readonly int DefaultThumbWidth = 4;
+    private static readonly int DefaultValueIndicatorSize = 44;
+    private static readonly int DefaultThumbHeight = 44;
 
     private bool _isDragging = false;
 
