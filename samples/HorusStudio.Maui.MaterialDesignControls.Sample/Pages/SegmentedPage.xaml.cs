@@ -8,10 +8,5 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         {
             InitializeComponent();
         }
-
-        private void MaterialSegmented_OnIsSelectedChanged(object sender, EventArgs e)
-        {
-            Console.WriteLine("test");
-        }
     }
 }
