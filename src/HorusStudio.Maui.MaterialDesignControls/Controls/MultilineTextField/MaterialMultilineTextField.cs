@@ -3,7 +3,7 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A text field <see cref="View" /> let users enter text into a UI and follows Material Design Guidelines <see href="https://m3.material.io/components/text-fields/overview" />.
+/// A text field <see cref="View" /> let users enter multiline text into a UI and follows Material Design Guidelines <see href="https://m3.material.io/components/text-fields/overview" />.
 /// </summary>
 /// <example>
 ///
@@ -37,15 +37,15 @@ public class MaterialMultilineTextField : MaterialInputBase
 {
     #region Attributes
 
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private readonly static Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 
     #region Layout
 
-    private CustomEditor _editor;
+    private readonly CustomEditor _editor;
 
     #endregion Layout
 
@@ -101,13 +101,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="Keyboard" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(MaterialMultilineTextField), defaultValue: Keyboard.Text, propertyChanged: (bindableObject, _, newValue) =>
-    {
-        if (bindableObject is MaterialMultilineTextField self && newValue is Keyboard value)
-        {
-            self._editor.Keyboard = value;
-        }
-    });
+    public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(MaterialMultilineTextField), defaultValue: Keyboard.Text);
 
     /// <summary>
     /// The backing store for the <see cref="TextTransform" /> bindable property.

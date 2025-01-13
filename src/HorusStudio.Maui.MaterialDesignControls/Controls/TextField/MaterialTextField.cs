@@ -118,13 +118,7 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="Keyboard" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(MaterialTextField), defaultValue: Keyboard.Text, propertyChanged: (bindableObject, _, newValue) => 
-    { 
-        if (bindableObject is MaterialTextField self && newValue is Keyboard value)
-        {
-            self._entry.Keyboard = value;
-        }
-    });
+    public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(MaterialTextField), defaultValue: Keyboard.Text);
 
     /// <summary>
     /// The backing store for the <see cref="TextTransform" /> bindable property.
