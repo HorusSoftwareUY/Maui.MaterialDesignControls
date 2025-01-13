@@ -98,7 +98,7 @@
                                                 Style="{StaticResource VisualStateManagerStyle}"/>
                     <HorizontalStackLayout HorizontalOptions="Center">
                         <material:MaterialButton 
-                            Text="Disabled"
+                            Text="{Binding ButtonDisableText}"
                             Command="{Binding OnDisabledSegmentedCommand}"/>
                         <material:MaterialButton
                             Text="{Binding TextButtonTypeSelected}"

@@ -37,7 +37,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public string TextButtonTypeSelected => SegmentedType == MaterialSegmentedType.Filled ? "Outlined" : "Filled";
 
         [ObservableProperty] 
-        private bool _fullApiIsEnabled = false;
+        [AlsoNotifyChangeFor(nameof(ButtonDisableText))]
+        private bool _fullApiIsEnabled = true;
+        
+        public string ButtonDisableText => (FullApiIsEnabled ? "Disable" : "Enable");
 
         #endregion
 
