@@ -37,15 +37,15 @@ public class MaterialTextField : MaterialInputBase
 {
     #region Attributes
 
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private readonly static Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 
     #region Layout
 
-    private BorderlessEntry _entry;
+    private readonly BorderlessEntry _entry;
 
     #endregion Layout
 
