@@ -44,6 +44,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
             var textGroup = new MenuGroup() { GroupName = "Text inputs" };
             textGroup.Add(new MenuItemViewModel { Title = "Labels", Icon = "ic_label.png", ViewModel = typeof(LabelViewModel) });
+            textGroup.Add(new MenuItemViewModel { Title = "Text fields", Icon = "ic_entry.png", ViewModel = typeof(TextFieldViewModel) });
 
             groups.Add(actionGroup);
             groups.Add(communicationGroup);

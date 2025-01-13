@@ -62,8 +62,8 @@
         /// </default>
         public new Color Color
         {
-            get { return (Color)GetValue(ColorProperty); }
-            set { SetValue(ColorProperty, value); }
+            get => (Color)GetValue(ColorProperty);
+            set =>  SetValue(ColorProperty, value);
         }
 
         /// <summary>
@@ -75,8 +75,8 @@
         /// </default>
         public new double HeightRequest
         {
-            get { return (double)GetValue(HeightRequestProperty); }
-            set { SetValue(HeightRequestProperty, value); }
+            get => (double)GetValue(HeightRequestProperty);
+            set => SetValue(HeightRequestProperty, value);
         }
 
         #endregion Properties

@@ -696,13 +696,13 @@ public class MaterialChipsGroup : ContentView
         _flexContainer.SetBinding(FlexLayout.JustifyContentProperty, new Binding(nameof(Align), source: this, converter: new AlignToFlexJustifyConverter()));
 
         _textLabel.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(LabelText), source: this));
-        _textLabel.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(LabelText), source: this, converter: new TextToBooleanConverter()));
+        _textLabel.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(LabelText), source: this, converter: new IsNotNullOrEmptyConverter()));
         _textLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(LabelTextColor), source: this));
         _textLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(LabelSize), source: this));
         _textLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
 
         _lblSupporting.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(SupportingText), source: this));
-        _lblSupporting.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(SupportingText), source: this, converter: new TextToBooleanConverter()));
+        _lblSupporting.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(SupportingText), source: this, converter: new IsNotNullOrEmptyConverter()));
         _lblSupporting.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SupportingTextColor), source: this));
         _lblSupporting.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingSize), source: this));
         _lblSupporting.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
