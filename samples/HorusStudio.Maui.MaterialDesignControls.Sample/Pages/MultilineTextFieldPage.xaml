@@ -25,7 +25,6 @@
                 <VerticalStackLayout>
                     <material:MaterialMultilineTextField 
                         Type="Outlined"
-                        AutoSize="Disabled"
                         Placeholder="Enter text here" />
                 </VerticalStackLayout>
             </Frame>
@@ -59,7 +58,6 @@
                         HorizontalTextAlignment="Start"
                         TextColor="DarkGoldenrod"
                         HeightRequest="100"
-                        AutoSize="Disabled"
                         LabelColor="DarkGreen"
                         BorderColor="DarkGray"
                         PlaceholderColor="DarkBlue"

@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System.Diagnostics;
+using System.Windows.Input;
+using Microsoft.Extensions.Logging;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -37,7 +39,6 @@ public class MaterialMultilineTextField : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
     private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
     private static readonly Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
 
@@ -55,7 +56,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     {
         _editor = new CustomEditor
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand,
+            HorizontalOptions = LayoutOptions.Fill,
             HeightRequest = -1.0
         };
 
@@ -64,21 +65,19 @@ public class MaterialMultilineTextField : MaterialInputBase
         _editor.SetBinding(Editor.TextProperty, new Binding(nameof(Text), source: this));
         _editor.SetBinding(Editor.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
         _editor.SetBinding(Editor.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-        _editor.SetBinding(Editor.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
-        _editor.SetBinding(Editor.KeyboardProperty, new Binding(nameof(Keyboard), source: this));
-        _editor.SetBinding(Editor.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
-        _editor.SetBinding(Editor.MaxLengthProperty, new Binding(nameof(MaxLength), source: this));
+        _editor.SetBinding(InputView.KeyboardProperty, new Binding(nameof(Keyboard), source: this));
+        _editor.SetBinding(InputView.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
+        _editor.SetBinding(InputView.MaxLengthProperty, new Binding(nameof(MaxLength), source: this));
         _editor.SetBinding(Editor.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
         _editor.SetBinding(Editor.VerticalTextAlignmentProperty, new Binding(nameof(VerticalTextAlignment), source: this));
         _editor.SetBinding(Editor.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
         _editor.SetBinding(Editor.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _editor.SetBinding(Editor.IsTextPredictionEnabledProperty, new Binding(nameof(IsTextPredictionEnabled), source: this));
-        _editor.SetBinding(Editor.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
+        _editor.SetBinding(InputView.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
         _editor.SetBinding(Editor.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
-        _editor.SetBinding(Editor.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
+        _editor.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
         _editor.SetBinding(CustomEditor.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
         _editor.SetBinding(Editor.AutoSizeProperty, new Binding(nameof(AutoSize), source: this));
-        _editor.SetBinding(Editor.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
 
         InputTapCommand = new Command(() => {
             if (!IsReadOnly) _editor.Focus();
@@ -385,25 +384,31 @@ public class MaterialMultilineTextField : MaterialInputBase
     {
         if (_editor == null) return;
 
-
+#if ANDROID
+        var horizontalOffset = -3;
+        var verticalOffset = -7.5;
+#elif IOS || MACCATALYST
+        var horizontalOffset = -5;
+        var verticalOffset = -5;
+#endif
         switch (type)
         {
             case MaterialInputType.Filled:
                 _editor.VerticalOptions = LayoutOptions.End;
 #if ANDROID
-                _editor.Margin = new Thickness(0, 0, 0, -15);
+                _editor.Margin = new Thickness(0, 0, 0, verticalOffset);
 #elif IOS || MACCATALYST
-                if (HeightRequest <= 48)
-                    _editor.Margin = new Thickness(-5, 0, 0, -15);
+                if (HeightRequest <= DefaultHeightRequest)
+                    _editor.Margin = new Thickness(horizontalOffset, (-1)*verticalOffset, 0, verticalOffset);
 #endif
                 break;
             case MaterialInputType.Outlined:
                 _editor.VerticalOptions = LayoutOptions.Center;
 #if ANDROID
-                _editor.Margin = new Thickness(-3, -7.5, 0, -7.5);
+                _editor.Margin = new Thickness(0, verticalOffset, 0, verticalOffset);
 #elif IOS || MACCATALYST
-                if (HeightRequest <= 48)
-                    _editor.Margin = new Thickness(-5, -7.5);
+                if (HeightRequest <= DefaultHeightRequest)
+                    _editor.Margin = new Thickness(horizontalOffset, verticalOffset, 0, verticalOffset);
 #endif
                 break;
         }

@@ -6,13 +6,11 @@
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls"
              x:Name="InputBase">
     <ContentView.Resources>
-        <x:Double x:Key="DefaultHeight">48</x:Double>
         <Thickness x:Key="DefaultHorizontalPadding">16,0</Thickness>
         <Thickness x:Key="DefaultVerticalPadding">0,8</Thickness>
         <Thickness x:Key="DefaultLeftPaddingWithIcon">12,0,0,0</Thickness>
         <Thickness x:Key="DefaultRightPaddingWithIcon">0,0,12,0</Thickness>
         <x:Double x:Key="DefaultIconSize">24</x:Double>
-        <Thickness x:Key="DefaultLabelPadding">4,1</Thickness>
         <Thickness x:Key="DefaultSupportingTextMargin">16,4</Thickness>
 
         <converters:IsNotNullConverter x:Key="IsNotNull" />
