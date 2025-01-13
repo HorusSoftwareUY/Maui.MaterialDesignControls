@@ -24,6 +24,19 @@
             <Setter Property="Spacing" Value="0" />
             <Setter Property="Margin" Value="{StaticResource DefaultVerticalPadding}" />
         </Style>
+        
+        <Style x:Key="FilledMainContent" TargetType="StackLayout" BaseResourceKey="MainContent">
+            <Setter Property="Margin" Value="{OnPlatform Android='0,8,0,4', Default='0,8,0,6'}" />
+            <Style.Triggers>
+                <MultiTrigger TargetType="StackLayout">
+                    <MultiTrigger.Conditions>
+                        <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
+                        <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Margin" Value="{StaticResource DefaultVerticalPadding}" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
 
         <Style x:Key="FieldContainer" TargetType="Grid">
             <Setter Property="Margin" Value="{StaticResource DefaultHorizontalPadding}" />
@@ -117,7 +130,7 @@
                     StrokeThickness="0">
 
                     <Grid>
-                        <StackLayout Style="{StaticResource MainContent}">
+                        <StackLayout Style="{StaticResource FilledMainContent}">
                             <material:MaterialIconButton
                                 Style="{StaticResource LeadingIcon}"
                                 IconTintColor="{Binding LeadingIconTintColor, Source={x:Reference InputBase}}"
