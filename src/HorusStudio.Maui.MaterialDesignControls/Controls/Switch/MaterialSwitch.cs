@@ -14,34 +14,34 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Attributes
 
-        private readonly static bool DefaultIsToggled = false;
-        private readonly static bool DefaultIsEnabled = true;
-        private readonly static Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
+        private static readonly bool DefaultIsToggled = false;
+        private static readonly bool DefaultIsEnabled = true;
+        private static readonly Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
 
-#if IOS
-        private readonly static double DefaultTrackWidthRequest = 52;
-        private readonly static double DefaultTrackHeightRequest = 32;
-#else
+#if IOS || MACCATALYST
+        private static readonly double DefaultTrackWidthRequest = 52;
+        private static readonly double DefaultTrackHeightRequest = 32;
+#elif ANDROID
         // Sizes recommended by Material Design are increased by 4 points due to how the border is rendered in Android
-        private readonly static double DefaultTrackWidthRequest = 56;
-        private readonly static double DefaultTrackHeightRequest = 36;
+        private static readonly double DefaultTrackWidthRequest = 56;
+        private static readonly double DefaultTrackHeightRequest = 36;
 #endif
         
-        private readonly static double DefaultBorderWidth = 2;
-        private readonly static Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
-        private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-        private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-        private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-        private readonly static FontAttributes DefaultFontAttributes = FontAttributes.None;
-        private readonly static TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
-        private readonly static TextSide DefaultTextSide = TextSide.Left;
-        private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultSupportingFontSize = MaterialFontSize.BodySmall;
-        private readonly static string DefaultSupportingFontFamily = MaterialFontFamily.Default;
-        private readonly static FontAttributes DefaultSupportingFontAttributes = FontAttributes.None;
-        private readonly static double DefaultSpacing = 16.0;
-        private readonly static double DefaultTextSpacing = 4.0;
+        private static readonly double DefaultBorderWidth = 2;
+        private static readonly Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
+        private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+        private static readonly Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
+        private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
+        private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+        private static readonly FontAttributes DefaultFontAttributes = FontAttributes.None;
+        private static readonly TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
+        private static readonly TextSide DefaultTextSide = TextSide.Left;
+        private static readonly Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+        private static readonly double DefaultSupportingFontSize = MaterialFontSize.BodySmall;
+        private static readonly string DefaultSupportingFontFamily = MaterialFontFamily.Default;
+        private static readonly FontAttributes DefaultSupportingFontAttributes = FontAttributes.None;
+        private static readonly double DefaultSpacing = 16.0;
+        private static readonly double DefaultTextSpacing = 4.0;
 
         private bool _isOnToggledState;
         private double _xReference;

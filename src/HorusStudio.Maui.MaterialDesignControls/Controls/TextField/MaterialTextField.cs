@@ -55,31 +55,30 @@ public class MaterialTextField : MaterialInputBase
     {
         _entry = new BorderlessEntry
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand
+            HorizontalOptions = LayoutOptions.Fill
         };
 
-        _entry.SetBinding(BorderlessEntry.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
-        _entry.SetBinding(BorderlessEntry.TextColorProperty, new Binding(nameof(TextColor), source: this));
-        _entry.SetBinding(BorderlessEntry.TextProperty, new Binding(nameof(Text), source: this));
-        _entry.SetBinding(BorderlessEntry.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-        _entry.SetBinding(BorderlessEntry.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-        _entry.SetBinding(BorderlessEntry.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
-        _entry.SetBinding(BorderlessEntry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this));
-        _entry.SetBinding(BorderlessEntry.KeyboardProperty, new Binding(nameof(Keyboard), source: this));
-        _entry.SetBinding(BorderlessEntry.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
-        _entry.SetBinding(BorderlessEntry.ReturnTypeProperty, new Binding(nameof(ReturnType), source: this));
-        _entry.SetBinding(BorderlessEntry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), source: this));
-        _entry.SetBinding(BorderlessEntry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), source: this));
-        _entry.SetBinding(BorderlessEntry.MaxLengthProperty, new Binding(nameof(MaxLength), source: this));
-        _entry.SetBinding(BorderlessEntry.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
-        _entry.SetBinding(BorderlessEntry.VerticalTextAlignmentProperty, new Binding(nameof(VerticalTextAlignment), source: this));
-        _entry.SetBinding(BorderlessEntry.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
-        _entry.SetBinding(BorderlessEntry.ClearButtonVisibilityProperty, new Binding(nameof(ClearButtonVisibility), source: this));
-        _entry.SetBinding(BorderlessEntry.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
-        _entry.SetBinding(BorderlessEntry.IsTextPredictionEnabledProperty, new Binding(nameof(IsTextPredictionEnabled), source: this));
-        _entry.SetBinding(BorderlessEntry.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
-        _entry.SetBinding(BorderlessEntry.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
-        _entry.SetBinding(BorderlessEntry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
+        _entry.SetBinding(Entry.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+        _entry.SetBinding(Entry.TextColorProperty, new Binding(nameof(TextColor), source: this));
+        _entry.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
+        _entry.SetBinding(Entry.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        _entry.SetBinding(Entry.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        _entry.SetBinding(Entry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this));
+        _entry.SetBinding(Entry.KeyboardProperty, new Binding(nameof(Keyboard), source: this));
+        _entry.SetBinding(InputView.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
+        _entry.SetBinding(Entry.ReturnTypeProperty, new Binding(nameof(ReturnType), source: this));
+        _entry.SetBinding(Entry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), source: this));
+        _entry.SetBinding(Entry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), source: this));
+        _entry.SetBinding(InputView.MaxLengthProperty, new Binding(nameof(MaxLength), source: this));
+        _entry.SetBinding(Entry.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
+        _entry.SetBinding(Entry.VerticalTextAlignmentProperty, new Binding(nameof(VerticalTextAlignment), source: this));
+        _entry.SetBinding(Entry.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
+        _entry.SetBinding(Entry.ClearButtonVisibilityProperty, new Binding(nameof(ClearButtonVisibility), source: this));
+        _entry.SetBinding(Entry.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
+        _entry.SetBinding(Entry.IsTextPredictionEnabledProperty, new Binding(nameof(IsTextPredictionEnabled), source: this));
+        _entry.SetBinding(InputView.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
+        _entry.SetBinding(Entry.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
+        _entry.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
         _entry.SetBinding(BorderlessEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
 
         InputTapCommand = new Command(() =>  _entry.Focus());
@@ -118,13 +117,7 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="Keyboard" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(MaterialTextField), defaultValue: Keyboard.Text, propertyChanged: (bindableObject, _, newValue) => 
-    { 
-        if (bindableObject is MaterialTextField self && newValue is Keyboard value)
-        {
-            self._entry.Keyboard = value;
-        }
-    });
+    public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(MaterialTextField), defaultValue: Keyboard.Text);
 
     /// <summary>
     /// The backing store for the <see cref="TextTransform" /> bindable property.

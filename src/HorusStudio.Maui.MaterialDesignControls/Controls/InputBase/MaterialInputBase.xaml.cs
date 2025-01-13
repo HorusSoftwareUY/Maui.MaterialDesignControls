@@ -40,30 +40,31 @@ public abstract partial class MaterialInputBase
 {
     #region Attributes
 
-    private static readonly MaterialInputType DefaultInputType = MaterialInputType.Filled;
-    private static readonly bool DefaultIsEnabled = true;
-    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    private static readonly Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private static readonly Brush DefaultBackground = Entry.BackgroundProperty.DefaultValue as Brush;
-    private static readonly Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer }.GetValueForCurrentTheme<Color>();
-    private static readonly double DefaultBorderWidth = 1;
-    private static readonly Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private static readonly CornerRadius DefaultCornerRadius = new(0);
-    private static readonly TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
-    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
-    private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private static readonly Color DefaultPlaceholderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private static readonly Color DefaultLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private static readonly double DefaultLabelSize = MaterialFontSize.BodySmall;
+    protected static readonly MaterialInputType DefaultInputType = MaterialInputType.Filled;
+    protected static readonly bool DefaultIsEnabled = true;
+    protected static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+    protected static readonly Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly Brush DefaultBackground = Entry.BackgroundProperty.DefaultValue as Brush;
+    protected static readonly Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer }.GetValueForCurrentTheme<Color>();
+    protected static readonly double DefaultBorderWidth = 1;
+    protected static readonly Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly CornerRadius DefaultCornerRadius = new(0);
+    protected static readonly TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
+    protected static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    protected static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
+    protected static readonly Color DefaultPlaceholderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly Color DefaultLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly double DefaultLabelSize = MaterialFontSize.BodySmall;
     #if ANDROID
-    private static readonly Thickness DefaultLabelMargin = new (0,-4,0,0);
-    #else
-    private static readonly Thickness DefaultLabelMargin = new (0,-2,0,0);
+    protected static readonly Thickness DefaultLabelMargin = new (0,-4,0,0);
+    #elif IOS || MACCATALYST
+    protected static readonly Thickness DefaultLabelMargin = new (0,-2,0,0);
     #endif
-    private static readonly Thickness DefaultLabelPadding = new (0);
-    private static readonly Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private static readonly double DefaultSupportingSize = MaterialFontSize.BodySmall;
-    private static readonly Thickness DefaultSupportingMargin = new (16, 4);
+    protected static readonly Thickness DefaultLabelPadding = new (0);
+    protected static readonly Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly double DefaultSupportingSize = MaterialFontSize.BodySmall;
+    protected static readonly Thickness DefaultSupportingMargin = new (16, 4);
+    protected static readonly double DefaultHeightRequest = 48.0;
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
@@ -355,6 +356,11 @@ public abstract partial class MaterialInputBase
     /// The backing store for the <see cref="ShowTrailingIconOnlyOnError"/> bindable property.
     /// </summary>
     public static readonly BindableProperty ShowTrailingIconOnlyOnErrorProperty = BindableProperty.Create(nameof(ShowTrailingIconOnlyOnError), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
+
+    /// <summary>
+    /// The backing store for the <see cref="HeightRequest" /> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultHeightRequest);
 
     #endregion Bindable Properties
 
@@ -871,6 +877,15 @@ public abstract partial class MaterialInputBase
     {
         get => (bool)GetValue(ShowTrailingIconOnlyOnErrorProperty);
         set => SetValue(ShowTrailingIconOnlyOnErrorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the height request
+    /// </summary>
+    public new double HeightRequest
+    {
+        get => (double)GetValue(HeightRequestProperty);
+        set => SetValue(HeightRequestProperty, value);
     }
 
     #endregion Properties

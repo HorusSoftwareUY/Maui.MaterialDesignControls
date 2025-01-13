@@ -48,34 +48,34 @@ public class MaterialChipsGroup : ContentView
 {
     #region Attributes
 
-    private readonly static Thickness DefaultPadding = new Thickness(12, 0);
-    private readonly static Thickness DefaultChipsPadding = new Thickness(16, 0);
-    private readonly static double DefaultChipsHeightRequest = 32.0;
-    private readonly static double DefaultChipsFlexLayoutPercentageBasis = 0.0;
-    private readonly static bool DefaultIsEnabled = true;
-    private readonly static string DefaultLabelText = null;
-    private readonly static IEnumerable DefaultItemsSource = null;
-    private readonly static object DefaultSelectedItem = null;
-    private readonly static IList DefaultSelectedItems = null;
-    private readonly static string DefaultSupportingText = null;
-    private readonly static Color DefaultLabelTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialLightTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialLightTheme.Error }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultLabelSize = MaterialFontSize.BodySmall;
-    private readonly static double DefaultSupportingSize = MaterialFontSize.BodySmall;
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerLow, Dark = MaterialDarkTheme.SurfaceContainerLow }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultFontSize = MaterialFontSize.LabelLarge;
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCornerRadius = 8.0;
-    private readonly static bool DefaultAnimateError = MaterialAnimation.AnimateOnError;
-    private readonly static bool DefaultIsMultipleSelection = false;
-    private readonly static AnimationTypes DefaultAnimation = MaterialAnimation.Type;
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
-    private readonly static Align DefaultAlign = Align.Start;
-    private readonly static int DefaultVerticalSpacing = 4;
-    private readonly static int DefaultHorizontalSpacing = 4;
-    private readonly static string DefaultPropertyPath = null;
+    private static readonly Thickness DefaultPadding = new Thickness(12, 0);
+    private static readonly Thickness DefaultChipsPadding = new Thickness(16, 0);
+    private static readonly double DefaultChipsHeightRequest = 32.0;
+    private static readonly double DefaultChipsFlexLayoutPercentageBasis = 0.0;
+    private static readonly bool DefaultIsEnabled = true;
+    private static readonly string DefaultLabelText = null;
+    private static readonly IEnumerable DefaultItemsSource = null;
+    private static readonly object DefaultSelectedItem = null;
+    private static readonly IList DefaultSelectedItems = null;
+    private static readonly string DefaultSupportingText = null;
+    private static readonly Color DefaultLabelTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialLightTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialLightTheme.Error }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultLabelSize = MaterialFontSize.BodySmall;
+    private static readonly double DefaultSupportingSize = MaterialFontSize.BodySmall;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerLow, Dark = MaterialDarkTheme.SurfaceContainerLow }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultFontSize = MaterialFontSize.LabelLarge;
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly double DefaultCornerRadius = 8.0;
+    private static readonly bool DefaultAnimateError = MaterialAnimation.AnimateOnError;
+    private static readonly bool DefaultIsMultipleSelection = false;
+    private static readonly AnimationTypes DefaultAnimation = MaterialAnimation.Type;
+    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly Align DefaultAlign = Align.Start;
+    private static readonly int DefaultVerticalSpacing = 4;
+    private static readonly int DefaultHorizontalSpacing = 4;
+    private static readonly string DefaultPropertyPath = null;
 
     #endregion Attributes
 

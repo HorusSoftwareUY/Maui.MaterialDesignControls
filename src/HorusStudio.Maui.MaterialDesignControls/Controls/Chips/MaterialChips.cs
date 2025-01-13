@@ -64,26 +64,26 @@ public class MaterialChips : ContentView, ITouchable
 {
     #region Attributes
 
-    private readonly static MaterialChipsType DefaultChipsType = MaterialChipsType.Normal;
-    private readonly static IconStateType DefaultIconStateOnSelection = IconStateType.BothVisible;
-    private readonly static bool DefaultIsSelected = false;
-    private readonly static bool DefaultIsEnabled = true;
-    private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(8);
-    private readonly static Thickness DefaultPadding = new Thickness(16, 0);
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
-    private readonly static ImageSource DefaultLeadingIcon = null;
-    private readonly static ImageSource DefaultTrailingIcon = null;
-    private readonly static Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static string DefaultText = string.Empty;
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultFontSize = MaterialFontSize.LabelLarge;
-    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerLow, Dark = MaterialDarkTheme.SurfaceContainerLow }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultBorderWidth = 1;
-    private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
-    private readonly static Shadow DefaultShadow = MaterialElevation.Level1;
-    private readonly static Color DefaultShadowColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Shadow, Dark = MaterialDarkTheme.Shadow }.GetValueForCurrentTheme<Color>();
+    private static readonly MaterialChipsType DefaultChipsType = MaterialChipsType.Normal;
+    private static readonly IconStateType DefaultIconStateOnSelection = IconStateType.BothVisible;
+    private static readonly bool DefaultIsSelected = false;
+    private static readonly bool DefaultIsEnabled = true;
+    private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(8);
+    private static readonly Thickness DefaultPadding = new Thickness(16, 0);
+    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly ImageSource DefaultLeadingIcon = null;
+    private static readonly ImageSource DefaultTrailingIcon = null;
+    private static readonly Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly string DefaultText = string.Empty;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly double DefaultFontSize = MaterialFontSize.LabelLarge;
+    private static readonly Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerLow, Dark = MaterialDarkTheme.SurfaceContainerLow }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultBorderWidth = 1;
+    private static readonly Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
+    private static readonly Shadow DefaultShadow = MaterialElevation.Level1;
+    private static readonly Color DefaultShadowColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Shadow, Dark = MaterialDarkTheme.Shadow }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 

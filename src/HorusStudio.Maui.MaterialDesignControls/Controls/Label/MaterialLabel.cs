@@ -73,11 +73,11 @@
 
         #region Attributes
 
-        private readonly static LabelTypes DefaultType = LabelTypes.BodyMedium;
-        private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-        private readonly static string DefaultFontFamilyRegular = MaterialFontFamily.Regular;
-        private readonly static string DefaultFontFamilyMedium = MaterialFontFamily.Medium;
-        private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+        private static readonly LabelTypes DefaultType = LabelTypes.BodyMedium;
+        private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+        private static readonly string DefaultFontFamilyRegular = MaterialFontFamily.Regular;
+        private static readonly string DefaultFontFamilyMedium = MaterialFontFamily.Medium;
+        private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
 
         #endregion Attributes
 
