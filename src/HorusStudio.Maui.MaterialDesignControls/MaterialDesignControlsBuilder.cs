@@ -18,9 +18,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
             handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
-            handlers.AddHandler(typeof(CheckBox), typeof(CustomCheckboxHandler));
             handlers.AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler));
             handlers.AddHandler(typeof(CustomPicker), typeof(CustomPickerHandler));
+            handlers.AddHandler(typeof(CustomEditor), typeof(CustomEditorHandler));
+            handlers.AddHandler(typeof(CustomCheckBox), typeof(CustomCheckboxHandler));
+            handlers.AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
         }
 
         private static void ConfigureLifeCycleEvents(ILifecycleBuilder appLifeCycle)
@@ -63,6 +65,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialButton.GetStyles());
             // Icon Button
             application.Resources.AddStyles(MaterialIconButton.GetStyles());
+            // Switch
+            application.Resources.AddStyles(MaterialSwitch.GetStyles());
             // Card
             application.Resources.AddStyles(MaterialCard.GetStyles());
             // Radio Button
@@ -77,6 +81,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialRating.GetStyles());
             // Picker
             application.Resources.AddStyles(MaterialPicker.GetStyles());
+            // Multiline Text Field
+            application.Resources.AddStyles(MaterialMultilineTextField.GetStyles());
+            // Slider
+            application.Resources.AddStyles(MaterialSlider.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)

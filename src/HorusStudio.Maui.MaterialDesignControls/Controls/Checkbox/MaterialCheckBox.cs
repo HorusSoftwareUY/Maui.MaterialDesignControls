@@ -1,5 +1,4 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
-using HorusStudio.Maui.MaterialDesignControls.Enums;
 using System.Windows.Input;
 
 
@@ -48,15 +47,15 @@ public class MaterialCheckBox : ContentView, ITouchable
 
     #region Attributes
 
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultCheckColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimary, Dark = MaterialDarkTheme.OnPrimary }.GetValueForCurrentTheme<Color>();
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultCheckColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimary, Dark = MaterialDarkTheme.OnPrimary }.GetValueForCurrentTheme<Color>();
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
+    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
 #nullable enable
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
 #nullable disable
 
     #endregion Attributes

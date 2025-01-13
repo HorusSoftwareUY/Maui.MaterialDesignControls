@@ -41,9 +41,9 @@
 	  <None Include="**\*.Windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Remove="Controls\Card\" />
+	  <None Remove="Controls\Switch\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Controls\Card\" />
+	  <Folder Include="Controls\Switch\" />
 	</ItemGroup>
 </Project>

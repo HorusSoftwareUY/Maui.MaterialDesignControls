@@ -11,9 +11,9 @@ public class MaterialViewButton : ContentView, ITouchable
 {
     #region Attributes
 
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
 #nullable enable
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
 #nullable disable
 
     #endregion Attributes
