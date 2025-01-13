@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
+using static Microsoft.Maui.Controls.VisualStateManager;
 
 namespace Microsoft.Maui.Controls
 {
@@ -36,5 +37,5 @@ namespace Microsoft.Maui.Controls
 
             Logger.Debug(builder.ToString(), callerFilePath, callerName);
         }
-	}
+    }
 }

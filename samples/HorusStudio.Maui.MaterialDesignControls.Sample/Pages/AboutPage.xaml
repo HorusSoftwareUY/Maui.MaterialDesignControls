@@ -4,6 +4,7 @@
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
              xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
              xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+             xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.AboutPage"
              x:TypeArguments="vm:AboutViewModel"
              x:DataType="vm:AboutViewModel">
@@ -16,43 +17,83 @@
             <Setter Property="HorizontalOptions" Value="Start" />
         </Style>
 
+        <Style x:Key="ConnectionsTitle" TargetType="material:MaterialLabel">
+            <Setter Property="Padding" Value="0,18,0,18" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Type" Value="BodyMedium" />
+            <Setter Property="TextColor" Value="{StaticResource Tone6}" />
+        </Style>
+
     </ContentPage.Resources>
 
     <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}" Spacing="20">
-            <Frame Style="{StaticResource SurfaceContainerLow}">
-                <VerticalStackLayout>
-                    <Image Style="{StaticResource Logo}" Source="horus_logo.png" />
-                    <material:MaterialLabel Type="TitleLarge" Text="Powered by Horus Studio" />
-                    <material:MaterialLabel Type="BodyMedium" Text="We are a mobile studio development studio that provides world-class design and development solutions." />
+        <VerticalStackLayout Style="{StaticResource MainLayout}" Spacing="16">
 
-                    <material:MaterialButton Text="Contact us" HorizontalOptions="End" />
-                </VerticalStackLayout>
-            </Frame>
+            <views:AboutCardView Title="Powered by Horus Studio" 
+                                 Description="We are a mobile studio development studio that provides world-class design and development solutions." 
+                                 FirstIconSource="horus_logo.png" 
+                                 TypeButton="Filled"
+                                 Command="{Binding LaunchBrowserCommand}"
+                                 CommandParameter="https://www.horus.com.uy/contact"
+                                 TextButton="Let’s talk!" />
 
-            <Frame Style="{StaticResource SurfaceContainerLow}">
-                <VerticalStackLayout>
-                    <Image Style="{StaticResource Logo}" Source="logo.png" />
-                    <material:MaterialLabel Type="TitleLarge" Text="Based on Material Design" />
-                    <material:MaterialLabel Type="BodyMedium" Text="Material 3 is the latest version of Google’s open-source design system. Design and build beautiful, usable products with Material 3." />
+            <views:AboutCardView Title="Based on Material Design" 
+                                 Description="Material 3 is the latest version of Google’s open-source design system. Design and build beautiful, usable products with Material 3." 
+                                 FirstIconSource="logo.png" 
+                                 TypeButton="Tonal"
+                                 Command="{Binding LaunchBrowserCommand}"
+                                 CommandParameter="https://m3.material.io/"
+                                 TextButton="See more" />
 
-                    <material:MaterialButton Type="Tonal" Text="See more" HorizontalOptions="End" />
-                </VerticalStackLayout>
-            </Frame>
+            <views:AboutCardView Title="Supported platforms" 
+                                 Description="Material Design Controls fully support .NET MAUI and Xamarin Forms, ensuring seamless integration with these platforms." 
+                                 FirstIconSource="maui.png" 
+                                 SecondIconSource="xamarin.png"
+                                 TypeButton="Tonal"
+                                 Command="{Binding LaunchBrowserCommand}"
+                                 CommandParameter="https://github.com/HorusSoftwareUY"
+                                 TextButton="GitHub" />
 
-            <Frame Style="{StaticResource SurfaceContainerLow}">
-                <VerticalStackLayout>
-                    <HorizontalStackLayout Spacing="12">
-                        <Image Style="{StaticResource Logo}" Source="maui.png" />
-                        <Image Style="{StaticResource Logo}" Source="xamarin.png" WidthRequest="46" />
-                    </HorizontalStackLayout>
-                    
-                    <material:MaterialLabel Type="TitleLarge" Text="Supported platforms" />
-                    <material:MaterialLabel Type="BodyMedium" Text="Material 3 is the latest version of Google’s open-source design system. Design and build beautiful, usable products with Material 3." />
+            <VerticalStackLayout Spacing="0">
 
-                    <material:MaterialButton Type="Tonal" Text="GitHub" HorizontalOptions="End" />
-                </VerticalStackLayout>
-            </Frame>
+                <material:MaterialLabel Style="{StaticResource ConnectionsTitle}" Text="Connect With Us"  />
+
+                <views:ConnectionItemView IconSource="connection_website" 
+                                          LabelText="Website"
+                                          Command="{Binding LaunchBrowserCommand}"
+                                          CommandParameter="https://www.horus.com.uy/"/>
+                
+                <views:ConnectionItemView IconSource="connection_clutch"
+                                          LabelText="Clutch"
+                                          Command="{Binding LaunchBrowserCommand}"
+                                          CommandParameter="https://clutch.co/profile/horus-studio#highlights"/>
+                
+                <views:ConnectionItemView IconSource="connection_github" 
+                                          LabelText="Github Material Design Controls" 
+                                          Command="{Binding LaunchBrowserCommand}"
+                                          CommandParameter="https://github.com/HorusSoftwareUY/Maui.MaterialDesignControls"/>
+                
+                <views:ConnectionItemView IconSource="connection_github"
+                                          LabelText="Github Skeleton"
+                                          Command="{Binding LaunchBrowserCommand}" 
+                                          CommandParameter="https://github.com/HorusSoftwareUY/Xamarin.Forms.Skeleton"/>
+                
+                <views:ConnectionItemView IconSource="connection_linkedin" 
+                                          LabelText="Linkedin"
+                                          Command="{Binding LaunchBrowserCommand}"
+                                          CommandParameter="https://www.linkedin.com/company/horus-uy/"/>
+                
+                <views:ConnectionItemView IconSource="connection_x" 
+                                          LabelText="X" 
+                                          Command="{Binding LaunchBrowserCommand}"
+                                          CommandParameter="https://x.com/HorusStudioUy"/>
+                
+                <views:ConnectionItemView IconSource="connection_instagran"
+                                          LabelText="Instagram"
+                                          Command="{Binding LaunchBrowserCommand}"
+                                          CommandParameter="https://www.instagram.com/horus_studio_uy/"/>
+
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </local:BaseContentPage>

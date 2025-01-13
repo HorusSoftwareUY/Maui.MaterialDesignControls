@@ -60,6 +60,7 @@ public enum MaterialButtonType
 /// * Shadow doesn't react to VisualStateManager changes.
 /// * ContentLayout is buggy.
 /// * Add default Material behavior for pressed state on default styles (v2).
+/// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
 /// </todoList>
 public class MaterialButton : ContentView, ITouchable
 {

@@ -20,51 +20,63 @@ public enum MaterialInputTypeStates
     FilledFocused,
     /// <summary>Filled normal state</summary>
     FilledNormal,
+    /// <summary>Filled with error state</summary>
+    FilledError,
+    /// <summary>Filled focused with error state</summary>
+    FilledErrorFocused,
     /// <summary>Outlined disabled state</summary>
     OutlinedDisabled,
     /// <summary>Outlined focused state</summary>
     OutlinedFocused,
     /// <summary>Outlined normal state</summary>
     OutlinedNormal,
-    /// <summary>Error state</summary>
-    Error,
-    /// <summary>Error focused state</summary>
-    ErrorFocused
+    /// <summary>Outlined with error state</summary>
+    OutlinedError,
+    /// <summary>Outlined focused with error state</summary>
+    OutlinedErrorFocused
 }
 
-public abstract partial class MaterialInputBase : ContentView
+public abstract partial class MaterialInputBase
 {
     #region Attributes
 
-    private readonly static MaterialInputType DefaultInputType = MaterialInputType.Filled;
-    private readonly static bool DefaultIsEnabled = true;
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private readonly static Brush DefaultBackground = Entry.BackgroundProperty.DefaultValue as Brush;
-    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultBorderWidth = 1;
-    private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private readonly static CornerRadius DefaultCornerRadius = new(0);
-    private readonly static TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private readonly static Color DefaultPlaceHolderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultLabelSize = MaterialFontSize.BodyLarge;
-    private readonly static Thickness DefaultLabelMargin = new Thickness(0);
-    private readonly static Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultSupportingSize = MaterialFontSize.BodySmall;
+    private static readonly MaterialInputType DefaultInputType = MaterialInputType.Filled;
+    private static readonly bool DefaultIsEnabled = true;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly Brush DefaultBackground = Entry.BackgroundProperty.DefaultValue as Brush;
+    private static readonly Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultBorderWidth = 1;
+    private static readonly Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly CornerRadius DefaultCornerRadius = new(0);
+    private static readonly TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
+    private static readonly Color DefaultPlaceholderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultLabelSize = MaterialFontSize.BodySmall;
+    #if ANDROID
+    private static readonly Thickness DefaultLabelMargin = new (0,-4,0,0);
+    #else
+    private static readonly Thickness DefaultLabelMargin = new (0,-2,0,0);
+    #endif
+    private static readonly Thickness DefaultLabelPadding = new (0);
+    private static readonly Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultSupportingSize = MaterialFontSize.BodySmall;
+    private static readonly Thickness DefaultSupportingMargin = new (16, 4);
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
         { MaterialInputTypeStates.FilledDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest.WithAlpha(0.04f), Dark = MaterialLightTheme.SurfaceContainerHighest.WithAlpha(0.04f) } },
         { MaterialInputTypeStates.FilledFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialLightTheme.SurfaceContainerHighest } },
         { MaterialInputTypeStates.FilledNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialLightTheme.SurfaceContainerHighest } },
+        { MaterialInputTypeStates.FilledError, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialLightTheme.SurfaceContainerHighest } },
+        { MaterialInputTypeStates.FilledErrorFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialLightTheme.SurfaceContainerHighest } },
         { MaterialInputTypeStates.OutlinedDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
         { MaterialInputTypeStates.OutlinedFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
         { MaterialInputTypeStates.OutlinedNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
-        { MaterialInputTypeStates.Error, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
-        { MaterialInputTypeStates.ErrorFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
+        { MaterialInputTypeStates.OutlinedError, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
+        { MaterialInputTypeStates.OutlinedErrorFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
     };
 
     private readonly Dictionary<MaterialInputType, CornerRadius> _cornerRadius = new()
@@ -78,13 +90,21 @@ public abstract partial class MaterialInputBase : ContentView
         { MaterialInputTypeStates.FilledDisabled, 1 },
         { MaterialInputTypeStates.FilledFocused, 2 },
         { MaterialInputTypeStates.FilledNormal, 1},
+        { MaterialInputTypeStates.FilledError, 1 },
+        { MaterialInputTypeStates.FilledErrorFocused, 2 },
         { MaterialInputTypeStates.OutlinedDisabled, 1 },
         { MaterialInputTypeStates.OutlinedFocused, 2 },
         { MaterialInputTypeStates.OutlinedNormal, 1 },
-        { MaterialInputTypeStates.Error, 1 },
-        { MaterialInputTypeStates.ErrorFocused, 2 }
+        { MaterialInputTypeStates.OutlinedError, 1 },
+        { MaterialInputTypeStates.OutlinedErrorFocused, 2 }
     };
 
+    private readonly Dictionary<MaterialInputType, Thickness> _defaultLabelPadding = new()
+    {
+        { MaterialInputType.Filled, new Thickness(0) },
+        { MaterialInputType.Outlined, new Thickness(4,1) }
+    };
+    
     #endregion Attributes
 
     #region Bindable Properties
@@ -92,7 +112,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="Type" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialInputType), typeof(MaterialInputBase), defaultValue: DefaultInputType, defaultBindingMode: BindingMode.OneTime, propertyChanged: (bindable, oldValue, newValue) =>
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialInputType), typeof(MaterialInputBase), defaultValue: DefaultInputType, defaultBindingMode: BindingMode.OneTime, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialInputBase self)
         {
@@ -103,7 +123,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="IsEnabled" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialInputBase), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialInputBase), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialInputBase self)
         {
@@ -150,7 +170,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="Background" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialInputBase), defaultValue: DefaultBackground, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialInputBase), defaultValue: DefaultBackground, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialInputBase self)
         {
@@ -161,7 +181,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialInputBase self)
         {
@@ -182,7 +202,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="CornerRadius"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialInputBase), defaultValue: DefaultCornerRadius, propertyChanged: (bindable, oldValue, newValue) =>
+    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialInputBase), defaultValue: DefaultCornerRadius, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialInputBase self)
         {
@@ -203,7 +223,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="IsFocused"/> bindable property.
     /// </summary>
-    public static new readonly BindableProperty IsFocusedProperty = BindableProperty.Create(nameof(IsFocused), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
+    public new static readonly BindableProperty IsFocusedProperty = BindableProperty.Create(nameof(IsFocused), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
 
     /// <summary>
     /// The backing store for the <see cref="HorizontalTextAlignment"/> bindable property.
@@ -221,9 +241,19 @@ public abstract partial class MaterialInputBase : ContentView
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultFontSize);
 
     /// <summary>
+    /// The backing store for the <see cref="PlaceholderFontFamily"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty PlaceholderFontFamilyProperty = BindableProperty.Create(nameof(PlaceholderFontFamily), typeof(string), typeof(MaterialInputBase), defaultValue: DefaultFontFamily);
+
+    /// <summary>
+    /// The backing store for the <see cref="PlaceholderSize"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty PlaceholderSizeProperty = BindableProperty.Create(nameof(PlaceholderSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultFontSize);
+    
+    /// <summary>
     /// The backing store for the <see cref="PlaceholderColor"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultPlaceHolderColor);
+    public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultPlaceholderColor);
 
     /// <summary>
     /// The backing store for the <see cref="LabelColor"/> bindable property.
@@ -244,6 +274,11 @@ public abstract partial class MaterialInputBase : ContentView
     /// The backing store for the <see cref="LabelMargin"/> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelMarginProperty = BindableProperty.Create(nameof(LabelMargin), typeof(Thickness), typeof(MaterialInputBase), defaultValue: DefaultLabelMargin);
+    
+    /// <summary>
+    /// The backing store for the <see cref="LabelPadding"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty LabelPaddingProperty = BindableProperty.Create(nameof(LabelPadding), typeof(Thickness), typeof(MaterialInputBase), defaultValue: DefaultLabelPadding);
 
     /// <summary>
     /// The backing store for the <see cref="LabelLineBreakMode"/> bindable property.
@@ -251,14 +286,14 @@ public abstract partial class MaterialInputBase : ContentView
     public static readonly BindableProperty LabelLineBreakModeProperty = BindableProperty.Create(nameof(LabelLineBreakMode), typeof(LineBreakMode), typeof(MaterialInputBase), defaultValue: LineBreakMode.NoWrap);
 
     /// <summary>
-    /// The backing store for the <see cref="SupportingTextColor"/> bindable property.
+    /// The backing store for the <see cref="SupportingColor"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty SupportingTextColorProperty = BindableProperty.Create(nameof(SupportingTextColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultSupportingTextColor);
+    public static readonly BindableProperty SupportingColorProperty = BindableProperty.Create(nameof(SupportingColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultSupportingTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="SupportingFontSize"/> bindable property.
+    /// The backing store for the <see cref="SupportingSize"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty SupportingFontSizeProperty = BindableProperty.Create(nameof(SupportingFontSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultSupportingSize);
+    public static readonly BindableProperty SupportingSizeProperty = BindableProperty.Create(nameof(SupportingSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultSupportingSize);
 
     /// <summary>
     /// The backing store for the <see cref="SupportingFontFamily"/> bindable property.
@@ -268,7 +303,7 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// The backing store for the <see cref="SupportingMargin"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty SupportingMarginProperty = BindableProperty.Create(nameof(SupportingMargin), typeof(Thickness), typeof(MaterialInputBase), defaultValue: new Thickness(16, 4, 16, 0));
+    public static readonly BindableProperty SupportingMarginProperty = BindableProperty.Create(nameof(SupportingMargin), typeof(Thickness), typeof(MaterialInputBase), defaultValue: DefaultSupportingMargin);
 
     /// <summary>
     /// The backing store for the <see cref="SupportingLineBreakMode"/> bindable property.
@@ -301,14 +336,14 @@ public abstract partial class MaterialInputBase : ContentView
     public static readonly BindableProperty FocusedCommandProperty = BindableProperty.Create(nameof(FocusedCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="FocusedCommand"/> bindable property.
+    /// The backing store for the <see cref="UnfocusedCommand"/> bindable property.
     /// </summary>
     public static readonly BindableProperty UnfocusedCommandProperty = BindableProperty.Create(nameof(UnfocusedCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
 
     /// <summary>
     /// The backing store for the <see cref="HasError"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty HasErrorProperty = BindableProperty.Create(nameof(HasError), typeof(bool), typeof(MaterialInputBase), defaultValue: false, propertyChanged: (bindableObject, _, newValue) =>
+    public static readonly BindableProperty HasErrorProperty = BindableProperty.Create(nameof(HasError), typeof(bool), typeof(MaterialInputBase), defaultValue: false, propertyChanged: (bindableObject, _, _) =>
     {
         if (bindableObject is MaterialInputBase self)
         {
@@ -344,8 +379,11 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets if the input is enabled or diabled. This is a bindable property.
+    /// Gets or sets if the input is enabled or disabled. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// True
+    /// </default>
     public new bool IsEnabled
     {
         get => (bool)GetValue(IsEnabledProperty);
@@ -355,6 +393,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets a <see cref="Brush"/> that describes the background of the input. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// Brush
+    /// </default>
     public new Brush Background
     {
         get => (Brush)GetValue(BackgroundProperty);
@@ -364,6 +405,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets a color that describes the background color of the input. This is a bindable property.
     /// </summary>
+    /// <default>
+    ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+    /// </default>
     public new Color BackgroundColor
     {
         get => (Color)GetValue(BackgroundColorProperty);
@@ -373,6 +417,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets a color that describes the border stroke color of the input. This is a bindable property.
     /// </summary>
+    /// <default>
+    ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+    /// </default>
     /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0. On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor" /> is set to a non-default color.</remarks>
     public Color BorderColor
     {
@@ -383,6 +430,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets the corner radius for the input, in device-independent units. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// CornerRadius(0)
+    /// </default>
     public CornerRadius CornerRadius
     {
         get => (CornerRadius)GetValue(CornerRadiusProperty);
@@ -392,6 +442,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets the width of the border, in device-independent units. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// 1
+    /// </default>
     /// <remarks>Set this value to a non-zero value in order to have a visible border.</remarks>
     public double BorderWidth
     {
@@ -402,6 +455,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Allows you to display a leading icon (bitmap image) on the input. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
     public ImageSource LeadingIconSource
     {
@@ -412,6 +468,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Allows you to display a trailing icon (bitmap image) on the input. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
     public ImageSource TrailingIconSource
     {
@@ -461,6 +520,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the text of the input. This is a bindable property.
     /// </summary>
+    /// <default>
+    ///  Light: <see cref="MaterialLightTheme.OnSurface">MaterialLightTheme.OnSurface</see> - Dark: <see cref="MaterialDarkTheme.OnSurface">MaterialDarkTheme.OnSurface</see>
+    /// </default>
     public Color TextColor
     {
         get => (Color)GetValue(TextColorProperty);
@@ -471,17 +533,21 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the leading button icon of the input. This is a bindable property.
     /// </summary>
+    /// <default>
+    ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+    /// </default>
     public Color? LeadingIconTintColor
     {
         get => (Color?)GetValue(LeadingIconTintColorProperty);
         set => SetValue(LeadingIconTintColorProperty, value);
     }
-#nullable disable
 
-#nullable enable
     /// <summary>
     /// Gets or sets the <see cref="Color" /> for the trailing button icon of the input. This is a bindable property.
     /// </summary>
+    /// <default>
+    ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+    /// </default>
     public Color? TrailingIconTintColor
     {
         get => (Color?)GetValue(TrailingIconTintColorProperty);
@@ -489,7 +555,12 @@ public abstract partial class MaterialInputBase : ContentView
     }
 #nullable disable
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets state focused entry
+    /// </summary>
+    /// <default>
+    /// False
+    /// </default>
     public new bool IsFocused
     {
         get => (bool)GetValue(IsFocusedProperty);
@@ -499,6 +570,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets the horizontal text alignment for the input. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="TextAlignment.Start"/>
+    /// </default>
     public TextAlignment HorizontalTextAlignment
     {
         get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty);
@@ -508,12 +582,18 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets the command to invoke when the input is tapped.
     /// </summary>
-    /// <remarks>This property is used internally and it's recommended to avoid setting it directly.</remarks>
+    /// <default>
+    /// null
+    /// </default>
+    /// <remarks>This property is used internally, and it's recommended to avoid setting it directly.</remarks>
     public ICommand InputTapCommand { get; set; }
 
     /// <summary>
-    /// Gets or sets the font family for the input. This is a bindable property.
+    /// Gets or sets font family for input. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default"/>
+    /// </default>
     public string FontFamily
     {
         get => (string)GetValue(FontFamilyProperty);
@@ -521,17 +601,47 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font size for the input. This is a bindable property.
+    /// Gets or sets font size for input. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.BodyLarge"/> Tablet = 19 / Phone = 16
+    /// </default>
     public double FontSize
     {
         get => (double)GetValue(FontSizeProperty);
         set => SetValue(FontSizeProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets font family for placeholder. This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default"/>
+    /// </default>
+    public string PlaceholderFontFamily
+    {
+        get => (string)GetValue(PlaceholderFontFamilyProperty);
+        set => SetValue(PlaceholderFontFamilyProperty, value);
+    }
 
     /// <summary>
-    /// Gets or sets the place holder color for the input. This is a bindable property.
+    /// Gets or sets font size for placeholder. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.BodyLarge"/> Tablet = 19 / Phone = 16
+    /// </default>
+    public double PlaceholderSize
+    {
+        get => (double)GetValue(PlaceholderSizeProperty);
+        set => SetValue(PlaceholderSizeProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets text color for placeholder. This is a bindable property.
+    /// </summary>
+    /// <default>
+    ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+    /// </default>
     public Color PlaceholderColor
     {
         get => (Color)GetValue(PlaceholderColorProperty);
@@ -539,8 +649,11 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the label color. This is a bindable property.
+    /// Gets or sets text color for label. This is a bindable property.
     /// </summary>
+    /// <default>
+    ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+    /// </default>
     public Color LabelColor
     {
         get => (Color)GetValue(LabelColorProperty);
@@ -548,17 +661,23 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the label size. This is a bindable property.
+    /// Gets or sets font size for label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.BodySmall"/> Tablet = 15 / Phone = 12
+    /// </default>
     public double LabelSize
     {
         get => (double)GetValue(LabelSizeProperty);
-        set { SetValue(LabelSizeProperty, value); }
+        set => SetValue(LabelSizeProperty, value);
     }
 
     /// <summary>
-    /// Gets or sets the label font family. This is a bindable property.
+    /// Gets or sets font family for label. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default"/>
+    /// </default>
     public string LabelFontFamily
     {
         get => (string)GetValue(LabelFontFamilyProperty);
@@ -566,17 +685,33 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the label margin. This is a bindable property.
+    /// Gets or sets margin for label. This is a bindable property.
     /// The default value is <value>0</value>
     /// </summary>
+    /// <default>
+    /// Thickness(0)
+    /// </default>
     public Thickness LabelMargin
     {
         get => (Thickness)GetValue(LabelMarginProperty);
         set => SetValue(LabelMarginProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets padding for label. This is a bindable property.
+    /// The default value is <value>0</value>
+    /// </summary>
+    /// <default>
+    /// Filled: Thickness(0). Outlined: Thickness(4,1)
+    /// </default>
+    public Thickness LabelPadding
+    {
+        get => (Thickness)GetValue(LabelPaddingProperty);
+        set => SetValue(LabelPaddingProperty, value);
+    }
 
     /// <summary>
-    /// Gets or sets the label line break mode. This is a bindable property.
+    /// Gets or sets line break mode for label. This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="LineBreakMode.NoWrap"/>
@@ -588,17 +723,23 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the supporting text color. This is a bindable property.
+    /// Gets or sets text color for supporting text. This is a bindable property.
     /// </summary>
-    public Color SupportingTextColor
+    /// <default>
+    ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+    /// </default>
+    public Color SupportingColor
     {
-        get => (Color)GetValue(SupportingTextColorProperty);
-        set => SetValue(SupportingTextColorProperty, value);
+        get => (Color)GetValue(SupportingColorProperty);
+        set => SetValue(SupportingColorProperty, value);
     }
 
     /// <summary>
-    /// Gets or sets the font family for the input. This is a bindable property.
+    /// Gets or sets font family for supporting text. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontFamily.Default"/>
+    /// </default>
     public string SupportingFontFamily
     {
         get => (string)GetValue(SupportingFontFamilyProperty);
@@ -606,16 +747,19 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font size for the input. This is a bindable property.
+    /// Gets or sets font size for supporting text. This is a bindable property.
     /// </summary>
-    public double SupportingFontSize
+    /// <default>
+    /// <see cref="MaterialFontSize.BodySmall"/> Tablet = 15 / Phone = 12
+    /// </default>
+    public double SupportingSize
     {
-        get => (double)GetValue(SupportingFontSizeProperty);
-        set => SetValue(SupportingFontSizeProperty, value);
+        get => (double)GetValue(SupportingSizeProperty);
+        set => SetValue(SupportingSizeProperty, value);
     }
 
     /// <summary>
-    /// Gets or sets the label margin. This is a bindable property.
+    /// Gets or sets margin for supporting text. This is a bindable property.
     /// </summary>
     /// <default>
     /// Thickness(16, 4)
@@ -627,7 +771,7 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the supporting line break mode. This is a bindable property.
+    /// Gets or sets line break mode for supporting text. This is a bindable property.
     /// </summary>    
     /// <default>
     /// <see cref="LineBreakMode.NoWrap"/>
@@ -641,6 +785,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets a Leading icon command. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public ICommand LeadingIconCommand
     {
         get => (ICommand)GetValue(LeadingIconCommandProperty);
@@ -650,6 +797,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets a Leading icon command parameter. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public object LeadingIconCommandParameter
     {
         get => GetValue(LeadingIconCommandParameterProperty);
@@ -659,6 +809,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets a Trailing Icon command. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public ICommand TrailingIconCommand
     {
         get => (ICommand)GetValue(TrailingIconCommandProperty);
@@ -668,6 +821,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets a Trailing Icon command parameter. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public object TrailingIconCommandParameter
     {
         get => GetValue(TrailingIconCommandParameterProperty);
@@ -675,8 +831,11 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a focused command. This is a bindable property.
+    /// Gets or sets a Command to be invoked when input is Focused. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public ICommand FocusedCommand
     {
         get => (ICommand)GetValue(FocusedCommandProperty);
@@ -684,8 +843,11 @@ public abstract partial class MaterialInputBase : ContentView
     }
 
     /// <summary>
-    /// Gets or sets a unfocused command. This is a bindable property.
+    /// Gets or sets a Command to be invoked when input is Unfocused. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public ICommand UnfocusedCommand
     {
         get => (ICommand)GetValue(UnfocusedCommandProperty);
@@ -695,6 +857,9 @@ public abstract partial class MaterialInputBase : ContentView
     /// <summary>
     /// Gets or sets if the input has an error. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// False
+    /// </default>
     public bool HasError
     {
         get => (bool)GetValue(HasErrorProperty);
@@ -726,7 +891,7 @@ public abstract partial class MaterialInputBase : ContentView
 
     #region Constructor
 
-    public MaterialInputBase()
+    protected MaterialInputBase()
     {
         InitializeComponent();
 
@@ -745,13 +910,22 @@ public abstract partial class MaterialInputBase : ContentView
         LabelMargin = GetDefaultLabelMargin(type);
     }
 
-    private static Thickness GetDefaultLabelMargin(MaterialInputType type)
+    private Thickness GetDefaultLabelMargin(MaterialInputType type)
     {
+        _defaultLabelPadding.TryGetValue(type, out Thickness labelPadding);
         return type switch
         {
-            MaterialInputType.Outlined => new Thickness(12, 0, 0, 0),
-            _ => new Thickness(0, -10, 0, 0)
+            MaterialInputType.Outlined => new Thickness(DefaultSupportingMargin.Left - DefaultLabelMargin.Left - labelPadding.Left, 0, 0, 0),
+            _ => DefaultLabelMargin
         };
+    }
+    
+    private void SetLabelPadding(MaterialInputType type)
+    {
+        if (_defaultLabelPadding.TryGetValue(type, out Thickness padding))
+        {
+            LabelPadding = padding;
+        }
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -760,12 +934,12 @@ public abstract partial class MaterialInputBase : ContentView
 
         if (propertyName == nameof(Window) && Window != null)
         {
-            // Window property is setted with a value when the view is appearing
+            // Window property is set with a value when the view is appearing
             OnAppearing();
         }
         else if (propertyName == nameof(Window) && Window == null)
         {
-            // Window property is setted on null when the view is disappearing
+            // Window property is set on null when the view is disappearing
             OnDisappearing();
         }
     }
@@ -776,8 +950,10 @@ public abstract partial class MaterialInputBase : ContentView
         var border = (Border)GetTemplateChild("InputBorder");
         if (border != null)
         {
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Command = InputTapCommand;
+            var tapGestureRecognizer = new TapGestureRecognizer
+            {
+                Command = InputTapCommand
+            };
             border.GestureRecognizers.Add(tapGestureRecognizer);
         }
 
@@ -800,6 +976,7 @@ public abstract partial class MaterialInputBase : ContentView
         SetIsEnabled(type);
         SetCornerRadius(type);
         SetLabelMargin(type);
+        SetLabelPadding(type);
         SetBorderWidth(type);
 
         UpdateLayoutAfterStatusChanged(type);
@@ -833,16 +1010,18 @@ public abstract partial class MaterialInputBase : ContentView
 
     protected abstract void SetControlTemplate(MaterialInputType type);
 
-    protected MaterialInputTypeStates GetCurrentTypeState(MaterialInputType type)
+    private MaterialInputTypeStates GetCurrentTypeState(MaterialInputType type)
     {
+        if (IsFocused && HasError) 
+            return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledErrorFocused : MaterialInputTypeStates.OutlinedErrorFocused;
         if (IsFocused)
-            return HasError ? MaterialInputTypeStates.ErrorFocused : type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledFocused : MaterialInputTypeStates.OutlinedFocused;
-        else if (HasError)
-            return MaterialInputTypeStates.Error;
-        else if (!IsEnabled)
+            return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledFocused : MaterialInputTypeStates.OutlinedFocused;
+        if (HasError)
+            return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledError : MaterialInputTypeStates.OutlinedError;
+        if (!IsEnabled)
             return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledDisabled : MaterialInputTypeStates.OutlinedDisabled;
-        else
-            return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledNormal : MaterialInputTypeStates.OutlinedNormal;
+        
+        return type == MaterialInputType.Filled ? MaterialInputTypeStates.FilledNormal : MaterialInputTypeStates.OutlinedNormal;
     }
 
     protected string GetCurrentVisualState()
@@ -939,7 +1118,7 @@ public abstract partial class MaterialInputBase : ContentView
         }
     }
 
-    protected void SetCornerRadius(MaterialInputType type)
+    private void SetCornerRadius(MaterialInputType type)
     {
         var inputBorder = (Border)GetTemplateChild("InputBorder");
         if (inputBorder != null)
@@ -1002,7 +1181,7 @@ public abstract partial class MaterialInputBase : ContentView
             .WithAlpha(0.38f));
 
         disabled.Setters.Add(
-            MaterialInputBase.SupportingTextColorProperty,
+            MaterialInputBase.SupportingColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSurface,
@@ -1064,7 +1243,7 @@ public abstract partial class MaterialInputBase : ContentView
             .GetValueForCurrentTheme<Color>());
 
         focused.Setters.Add(
-            MaterialInputBase.SupportingTextColorProperty,
+            MaterialInputBase.SupportingColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSurfaceVariant,
@@ -1122,7 +1301,7 @@ public abstract partial class MaterialInputBase : ContentView
             .GetValueForCurrentTheme<Color>());
 
         normal.Setters.Add(
-            MaterialInputBase.SupportingTextColorProperty,
+            MaterialInputBase.SupportingColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSurfaceVariant,
@@ -1171,6 +1350,15 @@ public abstract partial class MaterialInputBase : ContentView
             .GetValueForCurrentTheme<Color>());
 
         error.Setters.Add(
+            MaterialInputBase.PlaceholderColorProperty,
+            new AppThemeBindingExtension
+                {
+                    Light = MaterialLightTheme.Error,
+                    Dark = MaterialDarkTheme.Error
+                }
+                .GetValueForCurrentTheme<Color>());
+        
+        error.Setters.Add(
             MaterialInputBase.LabelColorProperty,
             new AppThemeBindingExtension
             {
@@ -1180,7 +1368,7 @@ public abstract partial class MaterialInputBase : ContentView
             .GetValueForCurrentTheme<Color>());
 
         error.Setters.Add(
-            MaterialInputBase.SupportingTextColorProperty,
+            MaterialInputBase.SupportingColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.Error,
@@ -1214,7 +1402,7 @@ public abstract partial class MaterialInputBase : ContentView
                 Dark = MaterialDarkTheme.Error
             }
             .GetValueForCurrentTheme<Color>());
-
+        
         var errorFocused = new VisualState { Name = MaterialInputCommonStates.ErrorFocused };
         error.Setters.ToList().ForEach(s => errorFocused.Setters.Add(s));
 
@@ -1223,14 +1411,14 @@ public abstract partial class MaterialInputBase : ContentView
         commonStatesGroup.States.Add(focused);
         commonStatesGroup.States.Add(error);
         commonStatesGroup.States.Add(errorFocused);
-
-        return new VisualStateGroupList() { commonStatesGroup };
+        
+        return [commonStatesGroup];
     }
 
     #endregion Styles
 }
 
-public class MaterialInputCommonStates : VisualStateManager.CommonStates
+public abstract class MaterialInputCommonStates : VisualStateManager.CommonStates
 {
     public const string Error = "Error";
     public const string ErrorFocused = "ErrorFocused";
