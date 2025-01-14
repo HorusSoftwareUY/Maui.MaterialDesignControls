@@ -1,5 +1,4 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Utils;
-using Microsoft.Maui.Handlers;
+﻿using Microsoft.Maui.Handlers;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -16,7 +15,7 @@ partial class CustomPickerHandler
     {
         if (picker is CustomPicker customPicker)
         {
-            handler.PlatformView.TextAlignment = TextAlignmentHelper.Convert(customPicker.HorizontalTextAlignment);
+            handler.PlatformView.TextAlignment = customPicker.HorizontalTextAlignment.ToUIKit();
         }
     }
 }

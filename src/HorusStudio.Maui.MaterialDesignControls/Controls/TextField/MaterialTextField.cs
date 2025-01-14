@@ -37,7 +37,6 @@ public class MaterialTextField : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
     private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
     private static readonly Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
 
@@ -102,7 +101,7 @@ public class MaterialTextField : MaterialInputBase
 
     #endregion Constructor
 
-    #region BindableProperties
+    #region Bindable Properties
 
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.

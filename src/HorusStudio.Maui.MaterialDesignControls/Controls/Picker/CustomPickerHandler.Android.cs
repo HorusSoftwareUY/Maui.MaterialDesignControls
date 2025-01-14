@@ -1,5 +1,4 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Utils;
-using Microsoft.Maui.Handlers;
+﻿using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -19,7 +18,7 @@ partial class CustomPickerHandler
     {
         if (picker is CustomPicker customPicker)
         {
-            handler.PlatformView.Gravity = TextAlignmentHelper.ConvertToGravityFlags(customPicker.HorizontalTextAlignment);
+            handler.PlatformView.Gravity = customPicker.HorizontalTextAlignment.ToGravityFlags();
         }
     }
 }
