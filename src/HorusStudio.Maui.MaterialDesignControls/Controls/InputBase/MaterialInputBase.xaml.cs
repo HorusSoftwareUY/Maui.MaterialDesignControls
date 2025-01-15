@@ -242,6 +242,11 @@ public abstract partial class MaterialInputBase
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultFontSize);
 
     /// <summary>
+    /// The backing store for the <see cref="FontAttributes" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialInputBase), defaultValue: null);
+    
+    /// <summary>
     /// The backing store for the <see cref="PlaceholderFontFamily"/> bindable property.
     /// </summary>
     public static readonly BindableProperty PlaceholderFontFamilyProperty = BindableProperty.Create(nameof(PlaceholderFontFamily), typeof(string), typeof(MaterialInputBase), defaultValue: DefaultFontFamily);
@@ -619,6 +624,16 @@ public abstract partial class MaterialInputBase
     }
     
     /// <summary>
+    /// Gets or sets a value that indicates whether the font for the text of this input
+    /// is bold, italic, or neither. This is a bindable property.
+    /// </summary>
+    public FontAttributes FontAttributes
+    {
+        get => (FontAttributes)GetValue(FontAttributesProperty);
+        set => SetValue(FontAttributesProperty, value);
+    }
+    
+    /// <summary>
     /// Gets or sets font family for placeholder. This is a bindable property.
     /// </summary>
     /// <default>
@@ -905,6 +920,13 @@ public abstract partial class MaterialInputBase
 
     #endregion Properties
 
+    #region Events
+    
+    public new event EventHandler<FocusEventArgs> Focused;
+    public new event EventHandler<FocusEventArgs> Unfocused;
+    
+    #endregion Events
+    
     #region Constructor
 
     protected MaterialInputBase()
@@ -1060,6 +1082,40 @@ public abstract partial class MaterialInputBase
     }
 
     protected abstract void SetControlIsEnabled();
+    
+    protected virtual void ContentFocusChanged(object sender, FocusEventArgs e)
+    {
+        IsFocused = e.IsFocused;
+        VisualStateManager.GoToState(this, GetCurrentVisualState());
+        UpdateLayoutAfterTypeChanged(Type);
+
+        if (IsFocused)
+        {
+            if (CanExecuteFocusedCommand())
+            {
+                FocusedCommand?.Execute(null);
+            }
+            Focused?.Invoke(this, e);
+        }
+        else if (!IsFocused)
+        {
+            if (CanExecuteUnfocusedCommand())
+            {
+                UnfocusedCommand?.Execute(null);    
+            }
+            Unfocused?.Invoke(this, e);
+        }
+    }
+    
+    protected virtual bool CanExecuteFocusedCommand()
+    {
+        return FocusedCommand?.CanExecute(null) ?? false;
+    }
+
+    protected virtual bool CanExecuteUnfocusedCommand()
+    {
+        return UnfocusedCommand?.CanExecute(null) ?? false;
+    }
 
     private void SetBackground(MaterialInputType type)
     {

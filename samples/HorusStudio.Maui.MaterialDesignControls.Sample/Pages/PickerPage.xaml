@@ -17,7 +17,8 @@
                     <material:MaterialPicker 
                         ItemsSource="{Binding ItemsSource}"
                         TrailingIconSource="picker_arrow.png"
-                        Placeholder="Select an option" />
+                        Placeholder="Select an option"
+                        Label="Number" />
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="A select control with a filled background, featuring a movable label, placeholder text, and optional icons." />
@@ -49,7 +50,7 @@
                     <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
                 </VerticalStackLayout>
             </Frame>
-            <material:MaterialLabel Text="You can  define events like focused, unfocused or selected index changed, trailing icon or leading icon and a property path when you use a custom object for the ItemsSource (by default it uses the ToString() method of the objects)." />
+            <material:MaterialLabel Text="You can define events like focused, unfocused or selected index changed, trailing icon or leading icon and a property path when you use a custom object for the ItemsSource (by default it uses the ToString() method of the objects)." />
 
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing the style and using selected index changed event" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">

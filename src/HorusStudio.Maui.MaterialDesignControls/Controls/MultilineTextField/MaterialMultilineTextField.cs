@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows.Input;
-using Microsoft.Extensions.Logging;
+﻿using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -83,14 +81,12 @@ public class MaterialMultilineTextField : MaterialInputBase
             if (!IsReadOnly) _editor.Focus();
         });
 
-        _editor.TextChanged += TxtEditor_TextChanged;
-
         Content = _editor;
     }
 
     #endregion Constructor
 
-    #region BindableProperties
+    #region Bindable Properties
 
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
@@ -126,11 +122,6 @@ public class MaterialMultilineTextField : MaterialInputBase
     /// The backing store for the <see cref="VerticalTextAlignment" /> bindable property.
     /// </summary>
     public static readonly BindableProperty VerticalTextAlignmentProperty = BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(MaterialMultilineTextField), defaultValue: null);
-
-    /// <summary>
-    /// The backing store for the <see cref="FontAttributes" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialMultilineTextField), defaultValue: null);
 
     /// <summary>
     /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
@@ -173,7 +164,7 @@ public class MaterialMultilineTextField : MaterialInputBase
         }
     });
 
-    #endregion BindableProperties
+    #endregion Bindable Properties
 
     #region Properties
 
@@ -242,16 +233,6 @@ public class MaterialMultilineTextField : MaterialInputBase
     {
         get => (TextAlignment)GetValue(VerticalTextAlignmentProperty);
         set => SetValue(VerticalTextAlignmentProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets a value that indicates whether the font for the text of this entry
-    /// is bold, italic, or neither. This is a bindable property.
-    /// </summary>
-    public FontAttributes FontAttributes
-    {
-        get => (FontAttributes)GetValue(FontAttributesProperty);
-        set => SetValue(FontAttributesProperty, value);
     }
 
     /// <summary>
@@ -357,11 +338,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     #region Events
 
     public event EventHandler TextChanged;
-
-    public new event EventHandler<FocusEventArgs> Focused;
-
-    public new event EventHandler<FocusEventArgs> Unfocused;
-
+    
     #endregion Events
 
     #region Methods
@@ -425,6 +402,7 @@ public class MaterialMultilineTextField : MaterialInputBase
         // Setup events/animations
         _editor.Focused += ContentFocusChanged;
         _editor.Unfocused += ContentFocusChanged;
+        _editor.TextChanged += TxtEditor_TextChanged;
     }
 
     protected override void OnControlDisappearing()
@@ -432,36 +410,9 @@ public class MaterialMultilineTextField : MaterialInputBase
         // Cleanup events/animations
         _editor.Focused -= ContentFocusChanged;
         _editor.Unfocused -= ContentFocusChanged;
+        _editor.TextChanged -= TxtEditor_TextChanged;
     }
-
-    private void ContentFocusChanged(object sender, FocusEventArgs e)
-    {
-        IsFocused = e.IsFocused;
-        VisualStateManager.GoToState(this, GetCurrentVisualState());
-        UpdateLayoutAfterTypeChanged(Type);
-
-        if (IsFocused || CanExecuteFocusedCommand())
-        {
-            FocusedCommand?.Execute(null);
-            Focused?.Invoke(this, e);
-        }
-        else if (!IsFocused || CanExecuteUnfocusedCommand())
-        {
-            UnfocusedCommand?.Execute(null);
-            Unfocused?.Invoke(this, e);
-        }
-    }
-
-    private bool CanExecuteFocusedCommand()
-    {
-        return FocusedCommand?.CanExecute(null) ?? false;
-    }
-
-    private bool CanExecuteUnfocusedCommand()
-    {
-        return UnfocusedCommand?.CanExecute(null) ?? false;
-    }
-
+    
     private void UpdateEditorHeight(EditorAutoSizeOption autoSizeOption)
     {
         if (autoSizeOption == EditorAutoSizeOption.TextChanges)
