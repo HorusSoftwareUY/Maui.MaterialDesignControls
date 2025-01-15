@@ -16,8 +16,8 @@
                 <VerticalStackLayout>
                     <material:MaterialPicker 
                         ItemsSource="{Binding ItemsSource}"
-                        TrailingIconSource="picker_arrow.png"
                         Placeholder="Select an option"
+                        TrailingIconSource="on_error.png"
                         Label="Number" />
                 </VerticalStackLayout>
             </Frame>
@@ -29,7 +29,6 @@
                     <material:MaterialPicker 
                         Type="Outlined"
                         ItemsSource="{Binding ItemsSource}"
-                        TrailingIconSource="picker_arrow.png"
                         Placeholder="Select an option" />
                 </VerticalStackLayout>
             </Frame>
@@ -42,7 +41,6 @@
                         ItemsSource="{Binding ColorsSource}"
                         PropertyPath="Color"
                         LeadingIconSource="select_color.png"
-                        TrailingIconSource="picker_arrow.png"
                         LeadingIconCommand="{Binding LeadingActionCommand}"
                         Focused="MaterialPicker_Focused"
                         Unfocused="MaterialPicker_Focused"
@@ -60,7 +58,6 @@
                         Type="Outlined"
                         ItemsSource="{Binding ItemsSource}"
                         SelectedIndexChanged="MaterialPicker_SelectedIndexChanged"
-                        TrailingIconSource="picker_arrow.png"
                         TextColor="DarkGoldenrod"
                         LabelColor="DarkGreen"
                         BorderColor="DarkGray"
@@ -80,7 +77,6 @@
                         SupportingText="{Binding SupportingTextValue}"
                         ItemsSource="{Binding ColorsSource}"
                         TrailingIconSource="on_error.png"
-                        ShowTrailingIconOnlyOnError="True"
                         HasError="{Binding HasAnError}"
                         Placeholder="Select a color" />
                     <Grid ColumnSpacing="16">
@@ -104,7 +100,6 @@
                         Type="Outlined"
                         Placeholder="Select a new color"
                         IsEnabled="False"
-                        TrailingIconSource="picker_arrow.png"
                         SelectedItem="{Binding SelectedDisabledColor}"
                         ItemsSource="{Binding ColorsSource}" />
                 </VerticalStackLayout>

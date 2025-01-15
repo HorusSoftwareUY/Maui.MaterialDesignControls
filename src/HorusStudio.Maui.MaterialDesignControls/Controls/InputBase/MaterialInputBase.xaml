@@ -41,6 +41,14 @@
             <Setter Property="HorizontalOptions" Value="FillAndExpand" />
             <Setter Property="RowSpacing" Value="0" />
         </Style>
+        
+        <Style x:Key="FilledFieldContainer" TargetType="Grid" BaseResourceKey="FieldContainer">
+            <Setter Property="Margin" Value="{OnPlatform Android='-5,2,0,0', Default='0,2,0,0'}" />
+        </Style>
+        
+        <Style x:Key="OutlinedFieldContainer" TargetType="Grid" BaseResourceKey="FieldContainer">
+            <Setter Property="Margin" Value="{OnPlatform Android='10,0,16,0', Default='14,0,16,0'}" />
+        </Style>
 
         <Style x:Key="Placeholder" TargetType="Label">
             <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -139,7 +147,7 @@
                                 IsVisible="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
 
                             <Grid Style="{StaticResource FieldContainer}">
-                                <Grid Padding="0" Margin="{OnPlatform Android='-5,2,0,0', Default='0,2,0,0'}">
+                                <Grid Style="{StaticResource FilledFieldContainer}">
                                     <ContentPresenter VerticalOptions="End" />
                                     <Label
                                         Style="{StaticResource Placeholder}"
@@ -215,8 +223,8 @@
                                 Command="{Binding LeadingIconCommand, Source={x:Reference InputBase}}"
                                 CommandParameter="{Binding LeadingIconCommandParameter, Source={x:Reference InputBase}}"
                                 IsVisible="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
-
-                            <Grid Padding="0" Margin="{OnPlatform Android='10,0,0,0', Default='16,0,0,0'}">
+                            
+                            <Grid Style="{StaticResource OutlinedFieldContainer}">
                                 <ContentPresenter VerticalOptions="Center" />
                                 <Label
                                     Style="{StaticResource Placeholder}"

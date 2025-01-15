@@ -57,7 +57,6 @@ public class MaterialPicker : MaterialInputBase
         {
             HorizontalOptions = LayoutOptions.Fill
         };
-
         _picker.SetBinding(Picker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         _picker.SetBinding(Picker.TextColorProperty, new Binding(nameof(TextColor), source: this));
         _picker.SetBinding(Picker.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
@@ -70,6 +69,7 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
 
+        TrailingIconSource = MaterialIcon.Picker;
         InputTapCommand = new Command(() => _picker.Focus());
         Content = _picker;
     }

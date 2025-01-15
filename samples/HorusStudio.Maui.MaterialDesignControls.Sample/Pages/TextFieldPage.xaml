@@ -14,8 +14,23 @@
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialTextField 
+                    <material:MaterialTextField
                         Placeholder="Enter text here" />
+                    
+                    <material:MaterialTextField
+                        LeadingIconSource="settings.png"
+                        Placeholder="Enter text here" />
+                    
+                    <material:MaterialTextField
+                        TrailingIconSource="star_unselected.png"
+                        Placeholder="Enter text here"
+                        Label="Custom label" />
+                    
+                    <material:MaterialTextField
+                        LeadingIconSource="settings.png"
+                        TrailingIconSource="star_unselected.png"
+                        Placeholder="Enter text here"
+                        Label="Custom label" />
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="An input control with a filled background, featuring a movable label, placeholder text, and optional icons." />
@@ -23,9 +38,27 @@
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <VerticalStackLayout>
-                    <material:MaterialTextField 
+                    <material:MaterialTextField
                         Type="Outlined"
                         Placeholder="Enter text here" />
+                    
+                    <material:MaterialTextField
+                        Type="Outlined"
+                        LeadingIconSource="settings.png"
+                        Placeholder="Enter text here" />
+                    
+                    <material:MaterialTextField
+                        Type="Outlined"
+                        TrailingIconSource="star_unselected.png"
+                        Placeholder="Enter text here"
+                        Label="Custom label" />
+                    
+                    <material:MaterialTextField
+                        Type="Outlined"
+                        LeadingIconSource="settings.png"
+                        TrailingIconSource="star_unselected.png"
+                        Placeholder="Enter text here"
+                        Label="Custom label" />
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." />
@@ -37,12 +70,24 @@
                         Type="Filled"
                         Keyboard="Numeric"
                         ReturnType="Search"
-                        LeadingIconSource="info.png"
+                        LeadingIconSource="star_selected.png"
                         LeadingIconCommand="{Binding LeadingActionCommand}"
                         Focused="MaterialTextField_Focused"
                         Unfocused="MaterialTextField_Focused"
                         ClearButtonVisibility="WhileEditing"
                         Placeholder="Enter text here" />
+                    
+                    <material:MaterialTextField 
+                        Type="Outlined"
+                        Keyboard="Telephone"
+                        ReturnType="Send"
+                        TrailingIconSource="star_selected.png"
+                        TrailingIconCommand="{Binding TrailingActionCommand}"
+                        Focused="MaterialTextField_Focused"
+                        Unfocused="MaterialTextField_Focused"
+                        ClearButtonVisibility="WhileEditing"
+                        Placeholder="Enter text here" />
+                    
                     <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
                 </VerticalStackLayout>
             </Frame>
