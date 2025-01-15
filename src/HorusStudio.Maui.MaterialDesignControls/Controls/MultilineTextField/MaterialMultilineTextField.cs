@@ -362,7 +362,6 @@ public class MaterialMultilineTextField : MaterialInputBase
         if (_editor == null) return;
 
 #if ANDROID
-        var horizontalOffset = -3;
         var verticalOffset = -7.5;
 #elif IOS || MACCATALYST
         var horizontalOffset = -5;

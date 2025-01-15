@@ -279,13 +279,16 @@ public class MaterialPicker : MaterialInputBase
         if (_picker == null) return;
 
 #if ANDROID
+        var offset = 3;
         switch (type)
         {
             case MaterialInputType.Filled:
                 _picker.VerticalOptions = LayoutOptions.Center;
+                _picker.Margin = new Thickness(offset, 0, 0, offset);
                 break;
             case MaterialInputType.Outlined:
                 _picker.VerticalOptions = LayoutOptions.Center;
+                _picker.Margin = new Thickness(offset, 0, 0, 0);
                 break;
         }
 #endif
