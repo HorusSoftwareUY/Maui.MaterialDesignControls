@@ -15,7 +15,6 @@
 
         <converters:IsNotNullConverter x:Key="IsNotNull" />
         <converters:IsNotNullOrEmptyConverter x:Key="IsNotNullOrEmpty" />
-        <converters:IsTrailingIconVisibleConverter x:Key="IsTrailingIconVisible" />
 
         <Style x:Key="MainContent" TargetType="StackLayout">
             <Setter Property="Orientation" Value="Horizontal" />
@@ -103,7 +102,7 @@
             <Setter Property="Margin" Value="{StaticResource DefaultLeftPaddingWithIcon}" />
             <Style.Triggers>
                 <DataTrigger TargetType="material:MaterialIconButton"
-                             Binding="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}"
+                             Binding="{Binding LeadingIcon, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}"
                              Value="true">
                     <Setter Property="IsVisible"
                             Value="true" />
@@ -114,15 +113,11 @@
         <Style x:Key="TrailingIcon" TargetType="material:MaterialIconButton" BaseResourceKey="BaseIcon">
             <Setter Property="Margin" Value="{StaticResource DefaultRightPaddingWithIcon}" />
             <Style.Triggers>
-                <DataTrigger TargetType="material:MaterialIconButton" Value="true">
-                    <DataTrigger.Binding>
-                        <MultiBinding Converter="{StaticResource IsTrailingIconVisible}">
-                            <Binding Path="TrailingIconSource" Source="{x:Reference InputBase}" />
-                            <Binding Path="HasError" Source="{x:Reference InputBase}" />
-                            <Binding Path="ShowTrailingIconOnlyOnError" Source="{x:Reference InputBase}" />
-                        </MultiBinding>
-                    </DataTrigger.Binding>
-                    <Setter Property="IsVisible" Value="true" />
+                <DataTrigger TargetType="material:MaterialIconButton"
+                             Binding="{Binding TrailingIcon, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}"
+                             Value="true">
+                    <Setter Property="IsVisible"
+                            Value="true" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -140,10 +135,10 @@
                             <material:MaterialIconButton
                                 Style="{StaticResource LeadingIcon}"
                                 IconTintColor="{Binding LeadingIconTintColor, Source={x:Reference InputBase}}"
-                                ImageSource="{Binding LeadingIconSource, Source={x:Reference InputBase}}"
+                                ImageSource="{Binding LeadingIcon, Source={x:Reference InputBase}}"
                                 Command="{Binding LeadingIconCommand, Source={x:Reference InputBase}}"
                                 CommandParameter="{Binding LeadingIconCommandParameter, Source={x:Reference InputBase}}"
-                                IsVisible="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
+                                IsVisible="{Binding LeadingIcon, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
 
                             <Grid Style="{StaticResource FieldContainer}">
                                 <Grid Style="{StaticResource FilledFieldContainer}">
@@ -171,20 +166,10 @@
                             <material:MaterialIconButton
                                 Style="{StaticResource TrailingIcon}"
                                 IconTintColor="{Binding TrailingIconTintColor, Source={x:Reference InputBase}}"
-                                ImageSource="{Binding TrailingIconSource, Source={x:Reference InputBase}}"
+                                ImageSource="{Binding TrailingIcon, Source={x:Reference InputBase}}"
                                 Command="{Binding TrailingIconCommand, Source={x:Reference InputBase}}"
-                                CommandParameter="{Binding TrailingIconCommandParameter, Source={x:Reference InputBase}}">
-                                <material:MaterialIconButton.IsVisible>
-                                    <MultiBinding Converter="{StaticResource IsTrailingIconVisible}">
-                                        <Binding Path="TrailingIconSource"
-                                                 Source="{x:Reference InputBase}" />
-                                        <Binding Path="HasError"
-                                                 Source="{x:Reference InputBase}" />
-                                        <Binding Path="ShowTrailingIconOnlyOnError"
-                                                 Source="{x:Reference InputBase}" />
-                                    </MultiBinding>
-                                </material:MaterialIconButton.IsVisible>
-                            </material:MaterialIconButton>
+                                CommandParameter="{Binding TrailingIconCommandParameter, Source={x:Reference InputBase}}"
+                                IsVisible="{Binding TrailingIcon, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
                         </StackLayout>
 
                         <BoxView HeightRequest="{Binding BorderWidth, Source={x:Reference InputBase}}" Color="{Binding BorderColor, Source={x:Reference InputBase}}" VerticalOptions="EndAndExpand" />
@@ -218,10 +203,10 @@
                             <material:MaterialIconButton
                                 Style="{StaticResource LeadingIcon}"
                                 IconTintColor="{Binding LeadingIconTintColor, Source={x:Reference InputBase}}"
-                                ImageSource="{Binding LeadingIconSource, Source={x:Reference InputBase}}"
+                                ImageSource="{Binding LeadingIcon, Source={x:Reference InputBase}}"
                                 Command="{Binding LeadingIconCommand, Source={x:Reference InputBase}}"
                                 CommandParameter="{Binding LeadingIconCommandParameter, Source={x:Reference InputBase}}"
-                                IsVisible="{Binding LeadingIconSource, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
+                                IsVisible="{Binding LeadingIcon, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
                             
                             <Grid Style="{StaticResource OutlinedFieldContainer}">
                                 <ContentPresenter VerticalOptions="Center" />
@@ -237,20 +222,10 @@
                             <material:MaterialIconButton
                                 Style="{StaticResource TrailingIcon}"
                                 IconTintColor="{Binding TrailingIconTintColor, Source={x:Reference InputBase}}"
-                                ImageSource="{Binding TrailingIconSource, Source={x:Reference InputBase}}"
+                                ImageSource="{Binding TrailingIcon, Source={x:Reference InputBase}}"
                                 Command="{Binding TrailingIconCommand, Source={x:Reference InputBase}}"
-                                CommandParameter="{Binding TrailingIconCommandParameter, Source={x:Reference InputBase}}">
-                                <material:MaterialIconButton.IsVisible>
-                                    <MultiBinding Converter="{StaticResource IsTrailingIconVisible}">
-                                        <Binding Path="TrailingIconSource"
-                                                 Source="{x:Reference InputBase}" />
-                                        <Binding Path="HasError"
-                                                 Source="{x:Reference InputBase}" />
-                                        <Binding Path="ShowTrailingIconOnlyOnError"
-                                                 Source="{x:Reference InputBase}" />
-                                    </MultiBinding>
-                                </material:MaterialIconButton.IsVisible>
-                            </material:MaterialIconButton>
+                                CommandParameter="{Binding TrailingIconCommandParameter, Source={x:Reference InputBase}}"
+                                IsVisible="{Binding TrailingIcon, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
                         </StackLayout>
                     </Border>
                     <Label

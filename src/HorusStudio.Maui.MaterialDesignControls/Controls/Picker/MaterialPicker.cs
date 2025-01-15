@@ -17,7 +17,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// &lt;material:MaterialPicker
 ///     ItemsSource="{Binding ItemsSource}"
-///     TrailingIconSource="picker_arrow.png"
+///     TrailingIcon="picker_arrow.png"
 ///     Placeholder="Select an option" /&gt;
 /// </xaml>
 /// </code>
@@ -27,7 +27,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// var picker = new MaterialPicker
 /// {
 ///     ItemsSource= ItemsSource,
-///     TrailingIconSource="picker_arrow.png"
+///     TrailingIcon="picker_arrow.png"
 ///     Placeholder="Select an option"
 /// };
 /// </code>
@@ -69,7 +69,7 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
 
-        TrailingIconSource = MaterialIcon.Picker;
+        TrailingIcon = MaterialIcon.Picker;
         InputTapCommand = new Command(() => _picker.Focus());
         Content = _picker;
     }

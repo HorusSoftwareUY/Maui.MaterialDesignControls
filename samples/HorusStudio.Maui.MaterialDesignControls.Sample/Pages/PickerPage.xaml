@@ -17,7 +17,7 @@
                     <material:MaterialPicker 
                         ItemsSource="{Binding ItemsSource}"
                         Placeholder="Select an option"
-                        TrailingIconSource="on_error.png"
+                        TrailingIcon="on_error.png"
                         Label="Number" />
                 </VerticalStackLayout>
             </Frame>
@@ -40,7 +40,7 @@
                     <material:MaterialPicker 
                         ItemsSource="{Binding ColorsSource}"
                         PropertyPath="Color"
-                        LeadingIconSource="select_color.png"
+                        LeadingIcon="select_color.png"
                         LeadingIconCommand="{Binding LeadingActionCommand}"
                         Focused="MaterialPicker_Focused"
                         Unfocused="MaterialPicker_Focused"
@@ -76,7 +76,7 @@
                         SelectedItem="{Binding SelectedColor}"
                         SupportingText="{Binding SupportingTextValue}"
                         ItemsSource="{Binding ColorsSource}"
-                        TrailingIconSource="on_error.png"
+                        TrailingIcon="on_error.png"
                         HasError="{Binding HasAnError}"
                         Placeholder="Select a color" />
                     <Grid ColumnSpacing="16">

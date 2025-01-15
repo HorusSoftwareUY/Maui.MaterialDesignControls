@@ -212,14 +212,14 @@ public abstract partial class MaterialInputBase
     });
 
     /// <summary>
-    /// The backing store for the <see cref="LeadingIconSource" /> bindable property.
+    /// The backing store for the <see cref="LeadingIcon" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LeadingIconSourceProperty = BindableProperty.Create(nameof(LeadingIconSource), typeof(ImageSource), typeof(MaterialInputBase));
+    public static readonly BindableProperty LeadingIconProperty = BindableProperty.Create(nameof(LeadingIcon), typeof(ImageSource), typeof(MaterialInputBase));
 
     /// <summary>
-    /// The backing store for the <see cref="TrailingIconSource" /> bindable property.
+    /// The backing store for the <see cref="TrailingIcon" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TrailingIconSourceProperty = BindableProperty.Create(nameof(TrailingIconSource), typeof(ImageSource), typeof(MaterialInputBase));
+    public static readonly BindableProperty TrailingIconProperty = BindableProperty.Create(nameof(TrailingIcon), typeof(ImageSource), typeof(MaterialInputBase));
 
     /// <summary>
     /// The backing store for the <see cref="IsFocused"/> bindable property.
@@ -356,12 +356,7 @@ public abstract partial class MaterialInputBase
             self.UpdateLayoutAfterTypeChanged(self.Type);
         }
     });
-
-    /// <summary>
-    /// The backing store for the <see cref="ShowTrailingIconOnlyOnError"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty ShowTrailingIconOnlyOnErrorProperty = BindableProperty.Create(nameof(ShowTrailingIconOnlyOnError), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
-
+    
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
     /// </summary>
@@ -465,10 +460,10 @@ public abstract partial class MaterialInputBase
     /// null
     /// </default>
     /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
-    public ImageSource LeadingIconSource
+    public ImageSource LeadingIcon
     {
-        get => (ImageSource)GetValue(LeadingIconSourceProperty);
-        set => SetValue(LeadingIconSourceProperty, value);
+        get => (ImageSource)GetValue(LeadingIconProperty);
+        set => SetValue(LeadingIconProperty, value);
     }
 
     /// <summary>
@@ -478,10 +473,10 @@ public abstract partial class MaterialInputBase
     /// null
     /// </default>
     /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
-    public ImageSource TrailingIconSource
+    public ImageSource TrailingIcon
     {
-        get => (ImageSource)GetValue(TrailingIconSourceProperty);
-        set => SetValue(TrailingIconSourceProperty, value);
+        get => (ImageSource)GetValue(TrailingIconProperty);
+        set => SetValue(TrailingIconProperty, value);
     }
 
     /// <summary>
@@ -880,18 +875,6 @@ public abstract partial class MaterialInputBase
     {
         get => (bool)GetValue(HasErrorProperty);
         set => SetValue(HasErrorProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets if show the trailing icon only on error. This is a bindable property.
-    /// </summary>    
-    /// <default>
-    /// false
-    /// </default>
-    public bool ShowTrailingIconOnlyOnError
-    {
-        get => (bool)GetValue(ShowTrailingIconOnlyOnErrorProperty);
-        set => SetValue(ShowTrailingIconOnlyOnErrorProperty, value);
     }
 
     /// <summary>

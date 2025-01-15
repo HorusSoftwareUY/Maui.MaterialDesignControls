@@ -18,17 +18,17 @@
                         Placeholder="Enter text here" />
                     
                     <material:MaterialTextField
-                        LeadingIconSource="settings.png"
+                        LeadingIcon="settings.png"
                         Placeholder="Enter text here" />
                     
                     <material:MaterialTextField
-                        TrailingIconSource="star_unselected.png"
+                        TrailingIcon="star_unselected.png"
                         Placeholder="Enter text here"
                         Label="Custom label" />
                     
                     <material:MaterialTextField
-                        LeadingIconSource="settings.png"
-                        TrailingIconSource="star_unselected.png"
+                        LeadingIcon="settings.png"
+                        TrailingIcon="star_unselected.png"
                         Placeholder="Enter text here"
                         Label="Custom label" />
                 </VerticalStackLayout>
@@ -44,19 +44,19 @@
                     
                     <material:MaterialTextField
                         Type="Outlined"
-                        LeadingIconSource="settings.png"
+                        LeadingIcon="settings.png"
                         Placeholder="Enter text here" />
                     
                     <material:MaterialTextField
                         Type="Outlined"
-                        TrailingIconSource="star_unselected.png"
+                        TrailingIcon="star_unselected.png"
                         Placeholder="Enter text here"
                         Label="Custom label" />
                     
                     <material:MaterialTextField
                         Type="Outlined"
-                        LeadingIconSource="settings.png"
-                        TrailingIconSource="star_unselected.png"
+                        LeadingIcon="settings.png"
+                        TrailingIcon="star_unselected.png"
                         Placeholder="Enter text here"
                         Label="Custom label" />
                 </VerticalStackLayout>
@@ -70,7 +70,7 @@
                         Type="Filled"
                         Keyboard="Numeric"
                         ReturnType="Search"
-                        LeadingIconSource="star_selected.png"
+                        LeadingIcon="star_selected.png"
                         LeadingIconCommand="{Binding LeadingActionCommand}"
                         Focused="MaterialTextField_Focused"
                         Unfocused="MaterialTextField_Focused"
@@ -81,7 +81,7 @@
                         Type="Outlined"
                         Keyboard="Telephone"
                         ReturnType="Send"
-                        TrailingIconSource="star_selected.png"
+                        TrailingIcon="star_selected.png"
                         TrailingIconCommand="{Binding TrailingActionCommand}"
                         Focused="MaterialTextField_Focused"
                         Unfocused="MaterialTextField_Focused"
@@ -119,8 +119,7 @@
                         SupportingText="{Binding SupportingTextValue}"
                         Type="Filled"
                         Label="With supporting text"
-                        TrailingIconSource="on_error.png"
-                        ShowTrailingIconOnlyOnError="True"
+                        TrailingIcon="on_error.png"
                         HasError="{Binding HasAnError}"
                         Placeholder="Enter text here" />
                     <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />
