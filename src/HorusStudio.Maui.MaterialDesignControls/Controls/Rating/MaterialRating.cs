@@ -40,17 +40,17 @@ public class MaterialRating : ContentView
 {
     #region Attributes
 
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultStrokeColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultStrokeThickness = 2.0;
-    private readonly static int DefaultItemsSize = 5;
-    private readonly static int DefaultItemsPerRow = 5;
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultStrokeColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultStrokeThickness = 2.0;
+    private static readonly int DefaultItemsSize = 5;
+    private static readonly int DefaultItemsPerRow = 5;
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
+    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
 #nullable enable
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
 #nullable disable
 
     #endregion Attributes

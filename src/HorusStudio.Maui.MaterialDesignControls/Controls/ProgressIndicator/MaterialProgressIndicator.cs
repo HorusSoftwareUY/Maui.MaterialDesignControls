@@ -46,12 +46,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
     {
         #region Attributes and Properties
 
-        private readonly static MaterialProgressIndicatorType DefaultProgressIndicatorType = MaterialProgressIndicatorType.Circular;
-        private readonly static Color DefaultIndicatorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-        private readonly static Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultHeightRequest = -1;
-        private readonly static double DefaultWidthRequest = -1;
-        private readonly static int CircularThickness = 4;
+        private static readonly MaterialProgressIndicatorType DefaultProgressIndicatorType = MaterialProgressIndicatorType.Circular;
+        private static readonly Color DefaultIndicatorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+        private static readonly Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
+        private static readonly double DefaultHeightRequest = -1;
+        private static readonly double DefaultWidthRequest = -1;
+        private static readonly int CircularThickness = 4;
 
         private readonly Dictionary<MaterialProgressIndicatorType, double> _controlDefaultWidths = new()
         {

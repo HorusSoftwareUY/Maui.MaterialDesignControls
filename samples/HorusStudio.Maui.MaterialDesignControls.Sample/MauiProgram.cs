@@ -8,6 +8,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
     {
         private const string FontRegular = "FontRegular";
         private const string FontMedium = "FontMedium";
+        private const string FontBold = "FontBold";
 
         public static MauiApp CreateMauiApp()
         {
@@ -18,6 +19,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 {
                     fonts.AddFont("Roboto-Regular.ttf", FontRegular);
                     fonts.AddFont("Roboto-Medium.ttf", FontMedium);
+                    fonts.AddFont("Roboto-Bold.ttf", FontBold);
                     // Workaround for Android error
                     fonts.AddFont("Roboto-Medium.ttf", "sans-serif-medium");
                 })
@@ -39,6 +41,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             MaterialFontFamily.Medium = FontMedium;
             MaterialFontFamily.Regular = FontRegular;
             MaterialFontFamily.Default = MaterialFontFamily.Regular;
+            //MaterialIcon.Picker = "arrow_right.png";
+            //MaterialIcon.Error = "info.png";
 
             return services;
         }

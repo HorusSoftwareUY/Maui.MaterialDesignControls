@@ -35,7 +35,7 @@
                 <VerticalStackLayout>
                     <material:MaterialDatePicker 
                         Type="Filled"
-                        LeadingIconSource="ic_search.png"
+                        LeadingIcon="ic_search.png"
                         LeadingIconCommand="{Binding LeadingActionCommand}"
                         Focused="DatePicker_Focused"
                         Unfocused="DatePicker_Focused"
@@ -70,8 +70,6 @@
                         Date="{Binding Date}"
                         SupportingText="{Binding SupportingTextValue}"
                         Type="Filled"
-                        TrailingIconSource="on_error.png"
-                        ShowTrailingIconOnlyOnError="True"
                         HasError="{Binding HasAnError}"
                         Placeholder="Select the moving date" />
                     <HorizontalStackLayout>

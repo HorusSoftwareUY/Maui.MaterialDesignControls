@@ -32,8 +32,8 @@
     {
         #region Attributes
 
-        private readonly static Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultHeightRequest = 1.0;
+        private static readonly Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
+        private static readonly double DefaultHeightRequest = 1.0;
 
         #endregion Attributes
 

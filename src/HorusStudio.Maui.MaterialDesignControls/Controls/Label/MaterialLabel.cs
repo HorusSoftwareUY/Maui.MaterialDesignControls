@@ -69,13 +69,15 @@
     /// </todoList>
     public class MaterialLabel : Label
     {
+        // TODO: [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
+
         #region Attributes
 
-        private readonly static LabelTypes DefaultType = LabelTypes.BodyMedium;
-        private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-        private readonly static string DefaultFontFamilyRegular = MaterialFontFamily.Regular;
-        private readonly static string DefaultFontFamilyMedium = MaterialFontFamily.Medium;
-        private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+        private static readonly LabelTypes DefaultType = LabelTypes.BodyMedium;
+        private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+        private static readonly string DefaultFontFamilyRegular = MaterialFontFamily.Regular;
+        private static readonly string DefaultFontFamilyMedium = MaterialFontFamily.Medium;
+        private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
 
         #endregion Attributes
 
@@ -102,7 +104,13 @@
         /// The backing store for the <see cref="FontFamily" />
         /// bindable property.
         /// </summary>
-        public static new readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily);
+        public static new readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily, propertyChanged: (bindable, o, n) =>
+        {
+            if (bindable is MaterialLabel self)
+            {
+                self.SetFontFamily();
+            }
+        });
 
         /// <summary>
         /// The backing store for the <see cref="FontFamilyRegular" />
@@ -186,10 +194,8 @@
         public MaterialLabel()
         {
             base.TextColor = this.TextColor;
+            base.FontFamily = this.FontFamily;
 
-            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamilyRegular), source: this));
-            SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamilyMedium), source: this));
             SetBinding(Label.TextColorProperty, new Binding(nameof(TextColor), source: this));
 
             if (Type == DefaultType)
@@ -201,6 +207,11 @@
         #endregion Constructors
 
         #region Methods
+
+        private void SetFontFamily()
+        {
+            base.FontFamily = this.FontFamily;
+        }
 
         private void TypeChanged(LabelTypes type)
         {
