@@ -212,14 +212,19 @@ public abstract partial class MaterialInputBase
     });
 
     /// <summary>
-    /// The backing store for the <see cref="LeadingIconSource" /> bindable property.
+    /// The backing store for the <see cref="LeadingIcon" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LeadingIconSourceProperty = BindableProperty.Create(nameof(LeadingIconSource), typeof(ImageSource), typeof(MaterialInputBase));
+    public static readonly BindableProperty LeadingIconProperty = BindableProperty.Create(nameof(LeadingIcon), typeof(ImageSource), typeof(MaterialInputBase));
 
     /// <summary>
-    /// The backing store for the <see cref="TrailingIconSource" /> bindable property.
+    /// The backing store for the <see cref="TrailingIcon" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TrailingIconSourceProperty = BindableProperty.Create(nameof(TrailingIconSource), typeof(ImageSource), typeof(MaterialInputBase));
+    public static readonly BindableProperty TrailingIconProperty = BindableProperty.Create(nameof(TrailingIcon), typeof(ImageSource), typeof(MaterialInputBase));
+    
+    /// <summary>
+    /// The backing store for the <see cref="ErrorIcon" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ErrorIconProperty = BindableProperty.Create(nameof(ErrorIcon), typeof(ImageSource), typeof(MaterialInputBase), defaultValue: MaterialIcon.Error);
 
     /// <summary>
     /// The backing store for the <see cref="IsFocused"/> bindable property.
@@ -241,6 +246,11 @@ public abstract partial class MaterialInputBase
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultFontSize);
 
+    /// <summary>
+    /// The backing store for the <see cref="FontAttributes" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialInputBase), defaultValue: null);
+    
     /// <summary>
     /// The backing store for the <see cref="PlaceholderFontFamily"/> bindable property.
     /// </summary>
@@ -351,12 +361,7 @@ public abstract partial class MaterialInputBase
             self.UpdateLayoutAfterTypeChanged(self.Type);
         }
     });
-
-    /// <summary>
-    /// The backing store for the <see cref="ShowTrailingIconOnlyOnError"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty ShowTrailingIconOnlyOnErrorProperty = BindableProperty.Create(nameof(ShowTrailingIconOnlyOnError), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
-
+    
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
     /// </summary>
@@ -460,10 +465,10 @@ public abstract partial class MaterialInputBase
     /// null
     /// </default>
     /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
-    public ImageSource LeadingIconSource
+    public ImageSource LeadingIcon
     {
-        get => (ImageSource)GetValue(LeadingIconSourceProperty);
-        set => SetValue(LeadingIconSourceProperty, value);
+        get => (ImageSource)GetValue(LeadingIconProperty);
+        set => SetValue(LeadingIconProperty, value);
     }
 
     /// <summary>
@@ -473,10 +478,23 @@ public abstract partial class MaterialInputBase
     /// null
     /// </default>
     /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
-    public ImageSource TrailingIconSource
+    public ImageSource TrailingIcon
     {
-        get => (ImageSource)GetValue(TrailingIconSourceProperty);
-        set => SetValue(TrailingIconSourceProperty, value);
+        get => (ImageSource)GetValue(TrailingIconProperty);
+        set => SetValue(TrailingIconProperty, value);
+    }
+    
+    /// <summary>
+    /// Allows you to display a trailing icon when input has error. This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// null
+    /// </default>
+    /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
+    public ImageSource ErrorIcon
+    {
+        get => (ImageSource)GetValue(ErrorIconProperty);
+        set => SetValue(ErrorIconProperty, value);
     }
 
     /// <summary>
@@ -611,6 +629,16 @@ public abstract partial class MaterialInputBase
     {
         get => (double)GetValue(FontSizeProperty);
         set => SetValue(FontSizeProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets a value that indicates whether the font for the text of this input
+    /// is bold, italic, or neither. This is a bindable property.
+    /// </summary>
+    public FontAttributes FontAttributes
+    {
+        get => (FontAttributes)GetValue(FontAttributesProperty);
+        set => SetValue(FontAttributesProperty, value);
     }
     
     /// <summary>
@@ -868,18 +896,6 @@ public abstract partial class MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets if show the trailing icon only on error. This is a bindable property.
-    /// </summary>    
-    /// <default>
-    /// false
-    /// </default>
-    public bool ShowTrailingIconOnlyOnError
-    {
-        get => (bool)GetValue(ShowTrailingIconOnlyOnErrorProperty);
-        set => SetValue(ShowTrailingIconOnlyOnErrorProperty, value);
-    }
-
-    /// <summary>
     /// Gets or sets the height request
     /// </summary>
     public new double HeightRequest
@@ -887,9 +903,16 @@ public abstract partial class MaterialInputBase
         get => (double)GetValue(HeightRequestProperty);
         set => SetValue(HeightRequestProperty, value);
     }
-
+    
     #endregion Properties
 
+    #region Events
+    
+    public new event EventHandler<FocusEventArgs> Focused;
+    public new event EventHandler<FocusEventArgs> Unfocused;
+    
+    #endregion Events
+    
     #region Constructor
 
     protected MaterialInputBase()
@@ -1045,6 +1068,40 @@ public abstract partial class MaterialInputBase
     }
 
     protected abstract void SetControlIsEnabled();
+    
+    protected virtual void ContentFocusChanged(object sender, FocusEventArgs e)
+    {
+        IsFocused = e.IsFocused;
+        VisualStateManager.GoToState(this, GetCurrentVisualState());
+        UpdateLayoutAfterTypeChanged(Type);
+
+        if (IsFocused)
+        {
+            if (CanExecuteFocusedCommand())
+            {
+                FocusedCommand?.Execute(null);
+            }
+            Focused?.Invoke(this, e);
+        }
+        else if (!IsFocused)
+        {
+            if (CanExecuteUnfocusedCommand())
+            {
+                UnfocusedCommand?.Execute(null);    
+            }
+            Unfocused?.Invoke(this, e);
+        }
+    }
+    
+    protected virtual bool CanExecuteFocusedCommand()
+    {
+        return FocusedCommand?.CanExecute(null) ?? false;
+    }
+
+    protected virtual bool CanExecuteUnfocusedCommand()
+    {
+        return UnfocusedCommand?.CanExecute(null) ?? false;
+    }
 
     private void SetBackground(MaterialInputType type)
     {

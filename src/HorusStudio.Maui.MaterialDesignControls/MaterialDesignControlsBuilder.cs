@@ -19,6 +19,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
             handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
             handlers.AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler));
+            handlers.AddHandler(typeof(CustomPicker), typeof(CustomPickerHandler));
             handlers.AddHandler(typeof(CustomEditor), typeof(CustomEditorHandler));
             handlers.AddHandler(typeof(CustomCheckBox), typeof(CustomCheckboxHandler));
             handlers.AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
@@ -78,6 +79,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialChips.GetStyles());
             // Rating
             application.Resources.AddStyles(MaterialRating.GetStyles());
+            // Picker
+            application.Resources.AddStyles(MaterialPicker.GetStyles());
             // Multiline Text Field
             application.Resources.AddStyles(MaterialMultilineTextField.GetStyles());
             // Slider

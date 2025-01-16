@@ -41,6 +41,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             MaterialFontFamily.Medium = FontMedium;
             MaterialFontFamily.Regular = FontRegular;
             MaterialFontFamily.Default = MaterialFontFamily.Regular;
+            //MaterialIcon.Picker = "arrow_right.png";
+            //MaterialIcon.Error = "info.png";
 
             return services;
         }

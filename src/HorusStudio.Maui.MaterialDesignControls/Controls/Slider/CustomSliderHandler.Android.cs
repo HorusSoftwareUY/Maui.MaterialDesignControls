@@ -8,7 +8,6 @@ using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using Android.Widget;
 using ShapeDrawable = Android.Graphics.Drawables.ShapeDrawable;
-using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Paint = Android.Graphics.Paint;
 using Color = Android.Graphics.Color;
 using Android.Content;

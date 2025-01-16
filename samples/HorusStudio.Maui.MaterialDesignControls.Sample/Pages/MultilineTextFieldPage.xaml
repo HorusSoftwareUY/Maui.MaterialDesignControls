@@ -36,7 +36,7 @@
                     <material:MaterialMultilineTextField 
                         Type="Filled"
                         Keyboard="Email"
-                        LeadingIconSource="info.png"
+                        LeadingIcon="info.png"
                         LeadingIconCommand="{Binding LeadingActionCommand}"
                         Focused="MaterialTextField_Focused"
                         Unfocused="MaterialTextField_Focused"
@@ -72,8 +72,7 @@
                         Text="{Binding Text}"
                         SupportingText="{Binding SupportingTextValue}"
                         Type="Filled"
-                        TrailingIconSource="on_error.png"
-                        ShowTrailingIconOnlyOnError="True"
+                        TrailingIcon="on_error.png"
                         HasError="{Binding HasAnError}"
                         Placeholder="Enter text here" />
                     <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />

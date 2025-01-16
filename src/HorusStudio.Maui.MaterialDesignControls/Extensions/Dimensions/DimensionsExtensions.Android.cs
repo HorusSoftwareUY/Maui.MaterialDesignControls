@@ -1,9 +1,9 @@
 ﻿using Android.Content;
 using Android.Util;
 
-namespace HorusStudio.Maui.MaterialDesignControls.Utils;
+namespace System;
 
-static class DimensionsHelper
+static class DimensionsExtensions
 {
     public static float DpToPixels(this float valueInDp, Context context)
     {

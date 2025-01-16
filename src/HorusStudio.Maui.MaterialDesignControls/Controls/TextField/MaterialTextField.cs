@@ -37,7 +37,6 @@ public class MaterialTextField : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
     private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
     private static readonly Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
 
@@ -64,7 +63,7 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(Entry.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
         _entry.SetBinding(Entry.FontSizeProperty, new Binding(nameof(FontSize), source: this));
         _entry.SetBinding(Entry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this));
-        _entry.SetBinding(Entry.KeyboardProperty, new Binding(nameof(Keyboard), source: this));
+        _entry.SetBinding(InputView.KeyboardProperty, new Binding(nameof(Keyboard), source: this));
         _entry.SetBinding(InputView.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
         _entry.SetBinding(Entry.ReturnTypeProperty, new Binding(nameof(ReturnType), source: this));
         _entry.SetBinding(Entry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), source: this));
@@ -81,7 +80,10 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
         _entry.SetBinding(BorderlessEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
 
-        InputTapCommand = new Command(() =>  _entry.Focus());
+        InputTapCommand = new Command(() =>
+        {
+            if (!IsReadOnly) _entry.Focus();
+        });
 
 #if ANDROID
         _entry.ReturnCommand = new Command(() =>
@@ -95,14 +97,12 @@ public class MaterialTextField : MaterialInputBase
             }
         });
 #endif
-        _entry.TextChanged += TxtEntry_TextChanged;
-
         Content = _entry;
     }
 
     #endregion Constructor
 
-    #region BindableProperties
+    #region Bindable Properties
 
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
@@ -160,11 +160,6 @@ public class MaterialTextField : MaterialInputBase
     public static readonly BindableProperty VerticalTextAlignmentProperty = BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(MaterialTextField), defaultValue: null); 
     
     /// <summary>
-    /// The backing store for the <see cref="FontAttributes" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialTextField), defaultValue: null);
-
-    /// <summary>
     /// The backing store for the <see cref="ClearButtonVisibility" /> bindable property.
     /// </summary>
     public static readonly BindableProperty ClearButtonVisibilityProperty = BindableProperty.Create(nameof(ClearButtonVisibility), typeof(ClearButtonVisibility), typeof(MaterialTextField), defaultValue: null);
@@ -199,7 +194,7 @@ public class MaterialTextField : MaterialInputBase
     /// </summary>
     public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialTextField), defaultValue: DefaultCursorColor);
 
-    #endregion BindableProperties
+    #endregion Bindable Properties
 
     #region Properties
 
@@ -339,19 +334,6 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets a value that indicates whether the font for the text of this entry
-    /// is bold, italic, or neither. This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// null
-    /// </default>
-    public FontAttributes FontAttributes
-    {
-        get => (FontAttributes)GetValue(FontAttributesProperty);
-        set => SetValue(FontAttributesProperty, value);
-    }
-
-    /// <summary>
     /// Determines the behavior of the clear text button on this entry. This is a bindable
     /// property.
     /// </summary>
@@ -463,10 +445,6 @@ public class MaterialTextField : MaterialInputBase
 
     public event EventHandler TextChanged;
 
-    public new event EventHandler<FocusEventArgs> Focused;
-
-    public new event EventHandler<FocusEventArgs> Unfocused;
-
     #endregion Events
 
     #region Methods
@@ -513,6 +491,7 @@ public class MaterialTextField : MaterialInputBase
         // Setup events/animations
         _entry.Focused += ContentFocusChanged;
         _entry.Unfocused += ContentFocusChanged;
+        _entry.TextChanged += TxtEntry_TextChanged;
     }
 
     protected override void OnControlDisappearing()
@@ -520,34 +499,7 @@ public class MaterialTextField : MaterialInputBase
         // Cleanup events/animations
         _entry.Focused -= ContentFocusChanged;
         _entry.Unfocused -= ContentFocusChanged;
-    }
-
-    private void ContentFocusChanged(object sender, FocusEventArgs e)
-    {
-        IsFocused = e.IsFocused;
-        VisualStateManager.GoToState(this, GetCurrentVisualState());
-        UpdateLayoutAfterTypeChanged(Type);
-
-        if (IsFocused || CanExecuteFocusedCommand())
-        {
-            FocusedCommand?.Execute(null);
-            Focused?.Invoke(this, e);
-        }
-        else if (!IsFocused || CanExecuteUnfocusedCommand())
-        {
-            UnfocusedCommand?.Execute(null);
-            Unfocused?.Invoke(this, e);
-        }
-    }
-
-    private bool CanExecuteFocusedCommand()
-    {
-        return FocusedCommand?.CanExecute(null) ?? false;
-    }
-
-    private bool CanExecuteUnfocusedCommand()
-    {
-        return UnfocusedCommand?.CanExecute(null) ?? false;
+        _entry.TextChanged -= TxtEntry_TextChanged;
     }
 
     #endregion Methods
