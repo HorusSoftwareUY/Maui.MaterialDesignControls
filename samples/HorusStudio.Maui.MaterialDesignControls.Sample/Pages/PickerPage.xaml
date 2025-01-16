@@ -17,7 +17,6 @@
                     <material:MaterialPicker 
                         ItemsSource="{Binding ItemsSource}"
                         Placeholder="Select an option"
-                        TrailingIcon="on_error.png"
                         Label="Number" />
                 </VerticalStackLayout>
             </Frame>

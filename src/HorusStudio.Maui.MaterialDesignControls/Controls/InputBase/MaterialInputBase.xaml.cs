@@ -220,6 +220,11 @@ public abstract partial class MaterialInputBase
     /// The backing store for the <see cref="TrailingIcon" /> bindable property.
     /// </summary>
     public static readonly BindableProperty TrailingIconProperty = BindableProperty.Create(nameof(TrailingIcon), typeof(ImageSource), typeof(MaterialInputBase));
+    
+    /// <summary>
+    /// The backing store for the <see cref="ErrorIcon" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ErrorIconProperty = BindableProperty.Create(nameof(ErrorIcon), typeof(ImageSource), typeof(MaterialInputBase), defaultValue: MaterialIcon.Error);
 
     /// <summary>
     /// The backing store for the <see cref="IsFocused"/> bindable property.
@@ -477,6 +482,19 @@ public abstract partial class MaterialInputBase
     {
         get => (ImageSource)GetValue(TrailingIconProperty);
         set => SetValue(TrailingIconProperty, value);
+    }
+    
+    /// <summary>
+    /// Allows you to display a trailing icon when input has error. This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// null
+    /// </default>
+    /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
+    public ImageSource ErrorIcon
+    {
+        get => (ImageSource)GetValue(ErrorIconProperty);
+        set => SetValue(ErrorIconProperty, value);
     }
 
     /// <summary>

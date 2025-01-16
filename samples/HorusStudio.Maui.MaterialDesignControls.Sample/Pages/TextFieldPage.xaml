@@ -116,13 +116,55 @@
                 <VerticalStackLayout>
                     <material:MaterialTextField 
                         Text="{Binding Text}"
-                        SupportingText="{Binding SupportingTextValue}"
+                        SupportingText="(*) required"
                         Type="Filled"
-                        Label="With supporting text"
-                        TrailingIcon="on_error.png"
                         HasError="{Binding HasAnError}"
                         Placeholder="Enter text here" />
-                    <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />
+                    
+                    <material:MaterialTextField 
+                        Text="{Binding Text}"
+                        SupportingText="{Binding SupportingTextValue}"
+                        Type="Filled"
+                        Label="With trailing icon"
+                        TrailingIcon="settings.png"
+                        HasError="{Binding HasAnError}"
+                        Placeholder="Enter text here" />
+
+                    <material:MaterialTextField 
+                        Text="{Binding Text}"
+                        SupportingText="(*) required"
+                        Type="Outlined"
+                        HasError="{Binding HasAnError}"
+                        Placeholder="Enter text here" />
+                    
+                    <material:MaterialTextField 
+                        Text="{Binding Text}"
+                        SupportingText="{Binding SupportingTextValue}"
+                        Type="Outlined"
+                        Label="With trailing icon"
+                        TrailingIcon="settings.png"
+                        HasError="{Binding HasAnError}"
+                        Placeholder="Enter text here" />
+                    
+                    <material:MaterialTextField 
+                        Text="{Binding Text}"
+                        SupportingText="With custom error icon"
+                        Type="Filled"
+                        Label="Custom error"
+                        ErrorIcon="info.png"
+                        HasError="{Binding HasAnError}"
+                        Placeholder="Enter text here" />
+                    
+                    <material:MaterialTextField 
+                        Text="{Binding Text}"
+                        SupportingText="With custom error icon"
+                        Type="Outlined"
+                        Label="Custom error"
+                        ErrorIcon="info.png"
+                        HasError="{Binding HasAnError}"
+                        Placeholder="Enter text here" />
+                    
+                    <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Validate required" />
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialLabel Text="You can bind the text, set a supporting text and use an state when an error occured." />
