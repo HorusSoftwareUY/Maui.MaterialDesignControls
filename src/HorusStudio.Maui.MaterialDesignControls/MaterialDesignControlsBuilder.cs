@@ -1,4 +1,5 @@
 using HorusStudio.Maui.MaterialDesignControls.Utils;
+using Microsoft.Maui.Handlers;
 using Microsoft.Maui.LifecycleEvents;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -19,6 +20,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
             handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
             handlers.AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler));
+            handlers.AddHandler(typeof(CustomDatePicker), typeof(CustomDatePickerHandler));
             handlers.AddHandler(typeof(CustomPicker), typeof(CustomPickerHandler));
             handlers.AddHandler(typeof(CustomEditor), typeof(CustomEditorHandler));
             handlers.AddHandler(typeof(CustomCheckBox), typeof(CustomCheckboxHandler));
@@ -79,6 +81,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialChips.GetStyles());
             // Rating
             application.Resources.AddStyles(MaterialRating.GetStyles());
+            // DatePicker
+            application.Resources.AddStyles(MaterialDatePicker.GetStyles());
             // Picker
             application.Resources.AddStyles(MaterialPicker.GetStyles());
             // Multiline Text Field

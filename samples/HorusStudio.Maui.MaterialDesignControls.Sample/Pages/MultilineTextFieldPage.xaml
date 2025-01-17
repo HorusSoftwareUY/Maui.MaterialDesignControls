@@ -72,7 +72,6 @@
                         Text="{Binding Text}"
                         SupportingText="{Binding SupportingTextValue}"
                         Type="Filled"
-                        TrailingIcon="on_error.png"
                         HasError="{Binding HasAnError}"
                         Placeholder="Enter text here" />
                     <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />

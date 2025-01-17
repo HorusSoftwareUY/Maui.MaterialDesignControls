@@ -86,7 +86,6 @@
         </Style>
         
         <Style x:Key="SupportingText" TargetType="Label">
-            <!-- <Setter Property="Margin" Value="{StaticResource DefaultSupportingTextMargin}" /> -->
             <Setter Property="VerticalTextAlignment" Value="Center" />
             <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
             <Setter Property="LineBreakMode" Value="{Binding SupportingLineBreakMode, Source={x:Reference InputBase}}" />
@@ -125,6 +124,7 @@
             <Setter Property="HeightRequest" Value="{StaticResource DefaultIconSize}" />
             <Setter Property="WidthRequest" Value="{StaticResource DefaultIconSize}" />
             <Setter Property="Padding" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
         </Style>
         
         <Style x:Key="LeadingIcon" TargetType="material:MaterialIconButton" BaseResourceKey="BaseIcon">

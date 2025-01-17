@@ -75,7 +75,6 @@
                         SelectedItem="{Binding SelectedColor}"
                         SupportingText="{Binding SupportingTextValue}"
                         ItemsSource="{Binding ColorsSource}"
-                        TrailingIcon="on_error.png"
                         HasError="{Binding HasAnError}"
                         Placeholder="Select a color" />
                     <Grid ColumnSpacing="16">

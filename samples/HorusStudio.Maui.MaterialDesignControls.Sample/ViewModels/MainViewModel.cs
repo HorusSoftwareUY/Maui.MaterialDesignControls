@@ -42,6 +42,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             selectionGroup.Add(new MenuItemViewModel { Title = "Switches", Icon = "ic_switch.png", ViewModel = typeof(SwitchViewModel) });
             selectionGroup.Add(new MenuItemViewModel { Title = "Sliders", Icon = "ic_slider.png", ViewModel = typeof(SliderViewModel) });
             selectionGroup.Add(new MenuItemViewModel { Title = "Picker", Icon = "ic_picker.png", ViewModel = typeof(PickerViewModel) });
+            selectionGroup.Add(new MenuItemViewModel { Title = "Date picker", Icon = "ic_date.png", ViewModel = typeof(DatePickerViewModel) });
 
             var textGroup = new MenuGroup() { GroupName = "Text inputs" };
             textGroup.Add(new MenuItemViewModel { Title = "Labels", Icon = "ic_label.png", ViewModel = typeof(LabelViewModel) });

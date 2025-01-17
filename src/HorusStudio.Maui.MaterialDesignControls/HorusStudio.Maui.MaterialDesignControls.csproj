@@ -41,6 +41,6 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Include="Resources\Images\*.svg" />
 	</ItemGroup>
 </Project>
