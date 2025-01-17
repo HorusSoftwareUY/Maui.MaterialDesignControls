@@ -272,13 +272,17 @@ public class MaterialDatePicker : MaterialInputBase
         if (_datePicker == null) return;
 
 #if ANDROID
+        var hOffset = 4;
+        var vOffset = 2;
         switch (type)
         {
             case MaterialInputType.Filled:
                 _datePicker.VerticalOptions = LayoutOptions.Center;
+                _datePicker.Margin = new Thickness(hOffset, 0, 0, vOffset);
                 break;
             case MaterialInputType.Outlined:
                 _datePicker.VerticalOptions = LayoutOptions.Center;
+                _datePicker.Margin = new Thickness(hOffset, 0, 0, 0);
                 break;
         }
 #endif
