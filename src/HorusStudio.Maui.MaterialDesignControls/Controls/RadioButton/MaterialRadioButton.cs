@@ -1,5 +1,4 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
-using HorusStudio.Maui.MaterialDesignControls.Enums;
 using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -47,16 +46,16 @@ public class MaterialRadioButton : ContentView, ITouchable
 {
     #region Attributes
     internal const string DefaultGroupName = "MaterialRadioButton.GroupName";
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultStrokeColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultStrokeColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
+    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
     internal const string GroupNameChangedMessage = "MaterialRadioButtonGroupNameChanged";
     internal const string ValueChangedMessage = "MaterialRadioButtonValueChanged";
 #nullable enable
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
 #nullable disable
 
     #endregion Attributes

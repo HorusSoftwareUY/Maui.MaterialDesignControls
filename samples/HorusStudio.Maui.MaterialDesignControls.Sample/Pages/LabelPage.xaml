@@ -100,9 +100,14 @@
             <Frame Style="{StaticResource SurfaceContainer}">
                 <VerticalStackLayout>
                     <material:MaterialLabel 
+                        FontFamily="{Binding FontFamily}"
+                        TextColor="{Binding TextColor}"
+                        Text="Change FontFamily and TextColor" />
+
+                    <material:MaterialLabel 
                         Type="{Binding LabelType}"
                         TextColor="{Binding TextColor}"
-                        Text="Sample text" />
+                        Text="Change Type and TextColor" />
                 </VerticalStackLayout>
             </Frame>
             <material:MaterialButton

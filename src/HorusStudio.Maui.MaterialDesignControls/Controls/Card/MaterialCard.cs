@@ -71,17 +71,17 @@ namespace HorusStudio.Maui.MaterialDesignControls
     {
         #region Attributes
 
-        private readonly static MaterialCardType DefaultCardType = MaterialCardType.Filled;
-        private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+        private static readonly MaterialCardType DefaultCardType = MaterialCardType.Filled;
+        private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
 #nullable enable
-        private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+        private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
 #nullable disable
-        private readonly static Color DefaultShadowColor = Colors.Transparent;
-        private readonly static Color DefaultBackgroundColor = Colors.Transparent;
-        private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(12);
-        private readonly static float DefaultBorderWidth = 0f;
-        private readonly static Color DefaultBorderColor = Colors.Transparent;
-        private readonly static Shadow DefaultShadow = null;
+        private static readonly Color DefaultShadowColor = Colors.Transparent;
+        private static readonly Color DefaultBackgroundColor = Colors.Transparent;
+        private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(12);
+        private static readonly float DefaultBorderWidth = 0f;
+        private static readonly Color DefaultBorderColor = Colors.Transparent;
+        private static readonly Shadow DefaultShadow = null;
 
         private readonly Dictionary<MaterialCardType, object> _backgroundColors = new()
         {

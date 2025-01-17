@@ -40,7 +40,7 @@
                    Padding="16,32">
                 <VerticalStackLayout>
                     <material:MaterialTimePicker Type="Filled"
-                                                 LeadingIconSource="ic_search.png"
+                                                 LeadingIcon="ic_search.png"
                                                  LeadingIconCommand="{Binding LeadingActionCommand}"
                                                  Focused="TimePicker_Focused"
                                                  Unfocused="TimePicker_Focused"
@@ -76,8 +76,6 @@
                     <material:MaterialTimePicker Time="{Binding Time}"
                                                  SupportingText="{Binding SupportingTextValue}"
                                                  Type="Filled"
-                                                 TrailingIconSource="on_error.png"
-                                                 ShowTrailingIconOnlyOnError="True"
                                                  HasError="{Binding HasAnError}"
                                                  Placeholder="Select the moving time" />
                     <HorizontalStackLayout>
