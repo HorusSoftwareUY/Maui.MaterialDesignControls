@@ -1,4 +1,7 @@
-﻿using Microsoft.Maui.Handlers;
+﻿using System.Windows.Input;
+#if ANDROID
+using Microsoft.Maui.Handlers;
+#endif
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -38,13 +41,13 @@ public class MaterialDatePicker : MaterialInputBase
 {
     #region Attributes
 
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
 
     #endregion Attributes
 
     #region Layout
 
-    private CustomDatePicker _datePicker;
+    private readonly CustomDatePicker _datePicker;
 
     #endregion Layout
 
@@ -54,7 +57,7 @@ public class MaterialDatePicker : MaterialInputBase
     {
         _datePicker = new CustomDatePicker
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand,
+            HorizontalOptions = LayoutOptions.Fill,
             IsVisible = false
         };
 
@@ -69,9 +72,7 @@ public class MaterialDatePicker : MaterialInputBase
         _datePicker.SetBinding(DatePicker.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _datePicker.SetBinding(DatePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _datePicker.SetBinding(CustomDatePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
-        _datePicker.SetBinding(CustomDatePicker.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
-        _datePicker.SetBinding(CustomDatePicker.PlaceholderProperty, new Binding(nameof(Placeholder), source: this));
-
+        
         InputTapCommand = new Command(() =>
         {
 #if ANDROID
@@ -82,14 +83,13 @@ public class MaterialDatePicker : MaterialInputBase
 #endif
         });
 
+        TrailingIcon = MaterialIcon.DatePicker;
         Content = _datePicker;
-
-        Text = String.Empty;
     }
 
     #endregion Constructor
 
-    #region BindableProperties
+    #region Bindable Properties
 
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
@@ -100,7 +100,12 @@ public class MaterialDatePicker : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="Date" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime?), typeof(MaterialDatePicker), defaultValue: null, propertyChanged: OnDateChanged, defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime?), typeof(MaterialDatePicker), defaultValue: null, defaultBindingMode: BindingMode.TwoWay, propertyChanged:
+        (bindable, oldValue, newValue) =>
+        {
+            var self = (MaterialDatePicker)bindable;
+            self.OnDateChanged(oldValue as DateTime?, newValue as DateTime?);
+        });
 #nullable disable
 
     /// <summary>
@@ -116,12 +121,7 @@ public class MaterialDatePicker : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="Format" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(MaterialDatePicker), defaultValue: "MM/dd/yyyy");
-
-    /// <summary>
-    /// The backing store for the <see cref="FontAttributes" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialDatePicker), defaultValue: null);
+    public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(MaterialDatePicker), defaultValue: MaterialFormat.DateFormat);
 
     /// <summary>
     /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
@@ -132,8 +132,13 @@ public class MaterialDatePicker : MaterialInputBase
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialDatePicker), defaultValue: DefaultCharacterSpacing);
+    
+    /// <summary>
+    /// The backing store for the <see cref="DateSelectedCommand" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty DateSelectedCommandProperty = BindableProperty.Create(nameof(DateSelectedCommand), typeof(ICommand), typeof(MaterialDatePicker));
 
-    #endregion BindableProperties
+    #endregion Bindable Properties
 
     #region Properties
 
@@ -146,16 +151,13 @@ public class MaterialDatePicker : MaterialInputBase
     /// </default>
     public string Text
     {
-        get
-        {
-            return Date.HasValue ? Date.ToString() : null;
-        }
+        get => Date.HasValue ? Date.ToString() : null;
         set => SetValue(TextProperty, Date.HasValue ? Date.ToString() : null);
     }
 
 #nullable enable
     /// <summary>
-    /// Gets or sets the Date. This is a bindable property.
+    /// Gets or sets selected Date. This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="DateTime.Now"/>
@@ -198,7 +200,7 @@ public class MaterialDatePicker : MaterialInputBase
     /// A valid date format.
     /// </value>
     /// <default>
-    /// MM/dd/yyyy
+    /// <see cref="MaterialFormat.DateFormat"/> dd/MM/yyyy
     /// </default>
     /// <remarks>
     /// Format string is the same is passed to DateTime.ToString (string format).
@@ -208,22 +210,9 @@ public class MaterialDatePicker : MaterialInputBase
         get => (string)GetValue(FormatProperty);
         set => SetValue(FormatProperty, value);
     }
-
+    
     /// <summary>
-    /// Gets or sets a value that indicates whether the font for the text of this entry
-    /// is bold, italic, or neither. This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// Null
-    /// </default>
-    public FontAttributes FontAttributes
-    {
-        get => (FontAttributes)GetValue(FontAttributesProperty);
-        set => SetValue(FontAttributesProperty, value);
-    }
-
-    /// <summary>
-    /// Determines whether or not the font of this entry should scale automatically according
+    /// Determines whether font of this entry should scale automatically according
     /// to the operating system settings. Default value is true. This is a bindable property.
     /// </summary>
     /// <default>
@@ -255,38 +244,28 @@ public class MaterialDatePicker : MaterialInputBase
         get => (double)GetValue(CharacterSpacingProperty);
         set => SetValue(CharacterSpacingProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets an ICommand to be executed when selected date changed
+    /// </summary>
+    /// <remarks>
+    /// To be added.
+    /// </remarks>
+    public ICommand DateSelectedCommand
+    {
+        get => (ICommand)GetValue(DateSelectedCommandProperty);
+        set => SetValue(DateSelectedCommandProperty, value);
+    }
 
     #endregion Properties
 
     #region Events
 
-    public event EventHandler DateSelected;
-
-    public new event EventHandler<FocusEventArgs> Focused;
-
-    public new event EventHandler<FocusEventArgs> Unfocused;
-
+    public event EventHandler<DateSelectedEventArgs> DateSelected;
+    
     #endregion Events
 
     #region Methods
-
-    private static void OnDateChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-        var control = (MaterialDatePicker)bindable;
-
-        //If we set maximum date, date picker control set as default date.
-        if (newValue is DateTime date && date == control.MaximumDate)
-            return;
-
-        control._datePicker.CustomDate = (DateTime?)newValue;                                                                                                                                                                                                                                                                                   
-        control.DateSelected?.Invoke(control, new DateChangedEventArgs((DateTime)oldValue, (DateTime)newValue));
-        control._datePicker.IsVisible = true;
-
-        if (newValue is null)
-            control._datePicker.IsVisible = false;
-
-        control.Text = String.Empty;
-    }
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
@@ -325,40 +304,33 @@ public class MaterialDatePicker : MaterialInputBase
         _datePicker.Focused -= ContentFocusChanged;
         _datePicker.Unfocused -= ContentFocusChanged;
     }
-
-    private void ContentFocusChanged(object sender, FocusEventArgs e)
+    
+    protected override void ContentFocusChanged(object sender, FocusEventArgs e)
     {
-        IsFocused = e.IsFocused;
-
-        VisualStateManager.GoToState(this, GetCurrentVisualState());
-        UpdateLayoutAfterTypeChanged(Type);
-
-        if (IsFocused || CanExecuteFocusedCommand())
+        base.ContentFocusChanged(sender, e);
+        
+        if (!IsFocused && !_datePicker.CustomDate.HasValue)
         {
-            FocusedCommand?.Execute(null);
-            Focused?.Invoke(this, e);
-        }
-        else if (!IsFocused || CanExecuteUnfocusedCommand())
-        {
-            UnfocusedCommand?.Execute(null);
-            Unfocused?.Invoke(this, e);
-
             // Set the default date if the user doesn't select anything
-            if (!this._datePicker.CustomDate.HasValue)
-                Date = this._datePicker.InternalDateTime;
+            Date = _datePicker.InternalDateTime;
         }
     }
-
-    private bool CanExecuteFocusedCommand()
+    
+    private void OnDateChanged(DateTime? oldValue, DateTime? newValue)
     {
-        return FocusedCommand?.CanExecute(null) ?? false;
+        _datePicker.CustomDate = newValue;
+        _datePicker.IsVisible = newValue is not null;
+        Text =  newValue?.ToString(Format) ?? string.Empty;
+        
+        //If we set maximum date, date picker control set as default date.
+        if (newValue is not null && newValue.Value == MaximumDate) return;
+        if (DateSelectedCommand?.CanExecute(null) ?? false)
+        {
+            DateSelectedCommand?.Execute(null);
+        }                               
+        DateSelected?.Invoke(this, new DateSelectedEventArgs(oldValue, newValue));
     }
-
-    private bool CanExecuteUnfocusedCommand()
-    {
-        return UnfocusedCommand?.CanExecute(null) ?? false;
-    }
-
+    
     #endregion Methods
 
     #region Styles
@@ -375,5 +347,3 @@ public class MaterialDatePicker : MaterialInputBase
 
     #endregion Styles
 }
-
-

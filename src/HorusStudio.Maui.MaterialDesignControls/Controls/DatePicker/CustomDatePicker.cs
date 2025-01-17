@@ -1,46 +1,34 @@
-﻿namespace HorusStudio.Maui.MaterialDesignControls;
+﻿
+namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// An <see cref="DatePicker" /> without border lines on every platform.
+/// An <see cref="DatePicker" /> without border on every platform.
 /// </summary>
 internal class CustomDatePicker : DatePicker
 {
     #region Attributes
 
-    private DateTime? customDate;
+    private DateTime? _customDate;
 
     public DateTime? CustomDate
     {
-        get { return this.customDate; }
+        get => _customDate;
         set
         {
-            this.customDate = value;
-            if (this.customDate.HasValue)
+            _customDate = value;
+            if (_customDate.HasValue)
             {
-                base.Date = this.customDate.Value;
+                base.Date = _customDate.Value;
             }
         }
     }
 
-    public DateTime InternalDateTime
-    {
-        get { return base.Date; }
-    }
+    public DateTime InternalDateTime => base.Date;
 
     #endregion Attributes
 
     #region Bindable Properties
-
-    /// <summary>
-    /// The backing store for the <see cref="Placeholder" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(CustomDatePicker), defaultValue: null);
-
-    /// <summary>
-    /// The backing store for the <see cref="PlaceholderColor" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(CustomDatePicker), defaultValue: null);
-
+    
     /// <summary>
     /// The backing store for the <see cref="HorizontalTextAlignment" /> bindable property.
     /// </summary>
@@ -49,29 +37,9 @@ internal class CustomDatePicker : DatePicker
     #endregion
 
     #region Properties
-
+    
     /// <summary>
-    /// Gets or sets place holder.
-    /// This is a bindable property.
-    /// </summary>
-    public string Placeholder
-    {
-        get => (string)GetValue(PlaceholderProperty);
-        set => SetValue(PlaceholderProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets <see cref="Color" /> for the placeholder
-    /// This is a bindable property.
-    /// </summary>
-    public Color PlaceholderColor
-    {
-        get => (Color)GetValue(PlaceholderColorProperty);
-        set => SetValue(PlaceholderColorProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the horizontal text aligment.
+    /// Gets or sets the horizontal text alignment.
     /// This is a bindable property.
     /// </summary>
     public TextAlignment HorizontalTextAlignment

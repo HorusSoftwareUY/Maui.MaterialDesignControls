@@ -1,5 +1,4 @@
 ﻿using Android.App;
-using HorusStudio.Maui.MaterialDesignControls.Helpers;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 
@@ -20,7 +19,7 @@ partial class CustomDatePickerHandler
     {
         if (picker is CustomDatePicker customPicker)
         {
-            handler.PlatformView.Gravity = TextAlignmentHelper.ConvertToGravityFlags(customPicker.HorizontalTextAlignment);
+            handler.PlatformView.Gravity = customPicker.HorizontalTextAlignment.ToGravityFlags();
         }
     }
 

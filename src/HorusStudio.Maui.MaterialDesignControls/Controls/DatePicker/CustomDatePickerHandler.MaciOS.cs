@@ -1,5 +1,4 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Helpers;
-using Microsoft.Maui.Handlers;
+﻿using Microsoft.Maui.Handlers;
 #if IOS
 using Microsoft.Maui.Platform;
 #endif
@@ -27,10 +26,10 @@ partial class CustomDatePickerHandler
 
     public static void MapBorder(IDatePickerHandler handler, IDatePicker datePicker)
     {
-        handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+        handler.PlatformView.BackgroundColor = UIColor.Clear;
         handler.PlatformView.Layer.BorderWidth = 0;
 #if IOS
-        handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+        handler.PlatformView.BorderStyle = UITextBorderStyle.None;
 #endif
 
         var checkUseWheelsPickerStyle = CheckUseWheelsPickerStyle(datePicker, handler);
@@ -55,7 +54,7 @@ partial class CustomDatePickerHandler
     {
         if (datePicker is CustomDatePicker customPicker && handler is UITextField control)
         {
-            control.TextAlignment = TextAlignmentHelper.Convert(customPicker.HorizontalTextAlignment);
+            control.TextAlignment = customPicker.HorizontalTextAlignment.ToUIKit();
         }
     }
 
