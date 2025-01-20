@@ -32,8 +32,8 @@
     {
         #region Attributes
 
-        private readonly static Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultHeightRequest = 1.0;
+        private static readonly Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
+        private static readonly double DefaultHeightRequest = 1.0;
 
         #endregion Attributes
 
@@ -62,8 +62,8 @@
         /// </default>
         public new Color Color
         {
-            get { return (Color)GetValue(ColorProperty); }
-            set { SetValue(ColorProperty, value); }
+            get => (Color)GetValue(ColorProperty);
+            set =>  SetValue(ColorProperty, value);
         }
 
         /// <summary>
@@ -75,8 +75,8 @@
         /// </default>
         public new double HeightRequest
         {
-            get { return (double)GetValue(HeightRequestProperty); }
-            set { SetValue(HeightRequestProperty, value); }
+            get => (double)GetValue(HeightRequestProperty);
+            set => SetValue(HeightRequestProperty, value);
         }
 
         #endregion Properties
