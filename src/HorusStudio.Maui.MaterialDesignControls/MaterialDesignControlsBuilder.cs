@@ -20,6 +20,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             handlers.AddHandler(typeof(CustomButton), typeof(CustomButtonHandler));
             handlers.AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler));
             handlers.AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler));
+            handlers.AddHandler(typeof(CustomTimePicker), typeof(CustomTimePickerHandler));
             handlers.AddHandler(typeof(CustomDatePicker), typeof(CustomDatePickerHandler));
             handlers.AddHandler(typeof(CustomPicker), typeof(CustomPickerHandler));
             handlers.AddHandler(typeof(CustomEditor), typeof(CustomEditorHandler));
@@ -81,6 +82,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialChips.GetStyles());
             // Rating
             application.Resources.AddStyles(MaterialRating.GetStyles());
+            // Time Picker
+            application.Resources.AddStyles(MaterialTimePicker.GetStyles());
             // DatePicker
             application.Resources.AddStyles(MaterialDatePicker.GetStyles());
             // Picker

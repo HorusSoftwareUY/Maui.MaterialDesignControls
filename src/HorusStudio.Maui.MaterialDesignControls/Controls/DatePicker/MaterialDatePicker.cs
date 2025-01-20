@@ -151,8 +151,8 @@ public class MaterialDatePicker : MaterialInputBase
     /// </default>
     public string Text
     {
-        get => Date.HasValue ? Date.ToString() : null;
-        set => SetValue(TextProperty, Date.HasValue ? Date.ToString() : null);
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
     }
 
 #nullable enable
