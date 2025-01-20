@@ -42,15 +42,9 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// </example>
 public class MaterialSelection : MaterialInputBase
 {
-    #region Attributes
-
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-
-    #endregion Attributes
-
     #region Layout
 
-    private MaterialLabel _lbl;
+    private readonly MaterialLabel _label;
 
     #endregion Layout
 
@@ -58,17 +52,17 @@ public class MaterialSelection : MaterialInputBase
 
     public MaterialSelection()
     {
-        _lbl = new MaterialLabel
+        _label = new MaterialLabel
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand,
+            HorizontalOptions = LayoutOptions.Fill,
             HeightRequest = -1.0
         };
 
-        _lbl.SetBinding(MaterialLabel.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
-        _lbl.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
-        _lbl.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Text), source: this));
-        _lbl.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-        _lbl.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        _label.SetBinding(MaterialLabel.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+        _label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
+        _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Text), source: this));
+        _label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
 
         InputTapCommand = new Command(() => {
             IsFocused = false;
@@ -78,12 +72,12 @@ public class MaterialSelection : MaterialInputBase
             }
         });
 
-        Content = _lbl;
+        Content = _label;
     }
 
     #endregion Constructor
 
-    #region BindableProperties
+    #region Bindable Properties
 
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
@@ -100,7 +94,7 @@ public class MaterialSelection : MaterialInputBase
     /// </summary>
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialSelection), defaultValue: null);
 
-    #endregion BindableProperties
+    #endregion Bindable Properties
 
     #region Properties
 
@@ -139,39 +133,34 @@ public class MaterialSelection : MaterialInputBase
     #endregion Properties
 
     #region Methods
+    
+    protected override void SetControlIsEnabled() {}
+    
+    protected override void OnControlAppearing() {}
+    
+    protected override void OnControlDisappearing() {}
 
-    protected override void SetControlIsEnabled()
+    protected override void SetControlTemplate(MaterialInputType type)
     {
-        if (_lbl != null)
-            _lbl.IsEnabled = IsEnabled;
+#if ANDROID
+        var hOffset = 4;
+        var vOffset = 2;
+        switch (type)
+        {
+            case MaterialInputType.Filled:
+                _label.Margin = new Thickness(hOffset, 0, 0, vOffset);
+                break;
+            case MaterialInputType.Outlined:
+                _label.Margin = new Thickness(hOffset, 0, 0, 0);
+                break;
+        }
+#endif
     }
-
-    protected override void OnControlAppearing()
-    {
-        // Setup events/animations
-        _lbl.Focused += ContentFocusChanged;
-        _lbl.Unfocused += ContentFocusChanged;
-    }
-
-    protected override void OnControlDisappearing()
-    {
-        // Cleanup events/animations
-        _lbl.Focused -= ContentFocusChanged;
-        _lbl.Unfocused -= ContentFocusChanged;
-    }
-
-    private void ContentFocusChanged(object sender, FocusEventArgs e)
-    {
-        IsFocused = e.IsFocused;
-        VisualStateManager.GoToState(this, GetCurrentVisualState());
-        UpdateLayoutAfterTypeChanged(Type);
-    }
-
-    protected override void SetControlTemplate(MaterialInputType type){ }
 
     #endregion Methods
 
     #region Styles
+
     internal static IEnumerable<Style> GetStyles()
     {
         var style = new Style(typeof(MaterialSelection)) { ApplyToDerivedTypes = true };

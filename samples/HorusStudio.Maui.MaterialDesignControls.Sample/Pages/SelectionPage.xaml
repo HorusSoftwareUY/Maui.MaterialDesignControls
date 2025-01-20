@@ -15,13 +15,23 @@
 
             <material:MaterialLabel 
                 Style="{StaticResource SectionTitle}" 
-                Text="Normal" />
+                Text="Disabled" />
             <Frame 
                 Style="{StaticResource SurfaceContainer}" 
                 Padding="16,32">
                 <VerticalStackLayout 
                     Spacing="0">
                     <material:MaterialSelection 
+                        Command="{Binding TapCommand}"
+                        CommandParameter="User selection"
+                        IsEnabled="False"
+                        Label="User"
+                        LeadingIcon="ic_floating.png"
+                        Placeholder="Select user"
+                        Text="{Binding SelectedText}" />
+                    
+                    <material:MaterialSelection 
+                        Type="Outlined"
                         Command="{Binding TapCommand}"
                         CommandParameter="User selection"
                         IsEnabled="False"
@@ -48,9 +58,19 @@
                         Type="Filled"
                         Command="{Binding TapCommand}"
                         CommandParameter="User selection"
-                        TrailingIcon="on_error.png"
+                        TrailingIcon="ic_floating.png"
                         HasError="{Binding HasAnError}"
                         Placeholder="Select user" />
+                    
+                    <material:MaterialSelection 
+                        Text="{Binding SelectedText}"
+                        SupportingText="{Binding SupportingTextValue}"
+                        Type="Outlined"
+                        Command="{Binding TapCommand}"
+                        CommandParameter="User selection"
+                        HasError="{Binding HasAnError}"
+                        Placeholder="Select user" />
+                    
                     <material:MaterialButton 
                         Command="{Binding CheckTextFieldCommand}"
                         Text="Check Value" />

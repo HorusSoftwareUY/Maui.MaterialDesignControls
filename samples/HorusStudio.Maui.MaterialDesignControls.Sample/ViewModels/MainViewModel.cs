@@ -43,13 +43,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             selectionGroup.Add(new MenuItemViewModel { Title = "Sliders", Icon = "ic_slider.png", ViewModel = typeof(SliderViewModel) });
             selectionGroup.Add(new MenuItemViewModel { Title = "Picker", Icon = "ic_picker.png", ViewModel = typeof(PickerViewModel) });
             selectionGroup.Add(new MenuItemViewModel { Title = "Date picker", Icon = "ic_date.png", ViewModel = typeof(DatePickerViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Time Picker", Icon = "ic_time.png", ViewModel = typeof(TimePickerViewModel) });
+            selectionGroup.Add(new MenuItemViewModel { Title = "Time picker", Icon = "ic_time.png", ViewModel = typeof(TimePickerViewModel) });
             selectionGroup.Add(new MenuItemViewModel { Title = "Selection", Icon = "ic_selection.png", ViewModel = typeof(SelectionViewModel) });
 
             var textGroup = new MenuGroup() { GroupName = "Text inputs" };
             textGroup.Add(new MenuItemViewModel { Title = "Labels", Icon = "ic_label.png", ViewModel = typeof(LabelViewModel) });
             textGroup.Add(new MenuItemViewModel { Title = "Text fields", Icon = "ic_entry.png", ViewModel = typeof(TextFieldViewModel) });
-            textGroup.Add(new MenuItemViewModel { Title = "Multiline Text fields", Icon = "ic_editor.png", ViewModel = typeof(MultilineTextFieldViewModel) });
+            textGroup.Add(new MenuItemViewModel { Title = "Multiline text fields", Icon = "ic_editor.png", ViewModel = typeof(MultilineTextFieldViewModel) });
 
             groups.Add(actionGroup);
             groups.Add(communicationGroup);

@@ -13,7 +13,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private string _supportingTextValue = "Enter the value.";
 
         [ObservableProperty]
-        public string _selectedText;
+        private string _selectedText;
 
         [ObservableProperty]
         private bool _hasAnError = false;
@@ -28,20 +28,24 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async Task Tap(object parameter)
         {
-            string text = parameter.ToString();
-            await DisplayAlert(Title, text, "OK");
-            SelectedText = text;
+            const string cancel = "Cancel";
+            const string destruction = "Clear";
+            var selected = await DisplayActionSheet(Title, cancel, destruction, "User 1", "User 2", "User 3");
+            if (selected != null && selected != cancel)
+            {
+                SelectedText = selected == destruction ? null : selected;
+            }
         }
 
         [ICommand]
         private void CheckTextField()
         {
-            SupportingTextValue = "Select user.";
+            SupportingTextValue = "Select user";
             HasAnError = false;
 
             if (string.IsNullOrWhiteSpace(SelectedText))
             {
-                SupportingTextValue = "You should select a valid value.";
+                SupportingTextValue = "Please select a valid value";
                 HasAnError = true;
             }
         }
