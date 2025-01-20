@@ -47,8 +47,8 @@ internal class CustomSlider : Slider
     /// </summary>
     public bool UserInteractionEnabled
     {
-        get { return (bool)GetValue(UserInteractionEnabledProperty); }
-        set { SetValue(UserInteractionEnabledProperty, value); }
+        get => (bool)GetValue(UserInteractionEnabledProperty);
+        set => SetValue(UserInteractionEnabledProperty, value);
     }
 
     /// <summary>
@@ -57,8 +57,8 @@ internal class CustomSlider : Slider
     /// </summary>
     public int TrackHeight
     {
-        get { return (int)GetValue(TrackHeightProperty); }
-        set { SetValue(TrackHeightProperty, value); }
+        get => (int)GetValue(TrackHeightProperty);
+        set => SetValue(TrackHeightProperty, value);
     }
 
     /// <summary>
@@ -67,8 +67,8 @@ internal class CustomSlider : Slider
     /// </summary>
     public int TrackCornerRadius
     {
-        get { return (int)GetValue(TrackCornerRadiusProperty); }
-        set { SetValue(TrackCornerRadiusProperty, value); }
+        get => (int)GetValue(TrackCornerRadiusProperty);
+        set => SetValue(TrackCornerRadiusProperty, value);
     }
 
     /// <summary>

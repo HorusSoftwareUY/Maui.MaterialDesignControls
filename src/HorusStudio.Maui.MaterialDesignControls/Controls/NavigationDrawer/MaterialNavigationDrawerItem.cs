@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// This class is a defined classs that is used to show the material navigation drawer items.
+/// Wrapper for items defined within a <see cref="MaterialNavigationDrawer"/>.
 /// </summary>
 public class MaterialNavigationDrawerItem : INotifyPropertyChanged
 {
@@ -78,36 +78,24 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         set => SetProperty(ref _isEnabled, value);
     }
 
-    internal bool UnselectedLeadingIconIsVisible
-    {
-        get { return !string.IsNullOrEmpty(UnselectedLeadingIcon); }
-    }
+    /*
+    internal bool UnselectedLeadingIconIsVisible => !string.IsNullOrEmpty(UnselectedLeadingIcon); 
 
-    internal bool SelectedLeadingIconIsVisible
-    {
-        get { return !string.IsNullOrEmpty(SelectedLeadingIcon); }
-    }
+    internal bool SelectedLeadingIconIsVisible => !string.IsNullOrEmpty(SelectedLeadingIcon); 
 
-    internal bool UnselectedTrailingIconIsVisible
-    {
-        get { return !string.IsNullOrEmpty(UnselectedTrailingIcon); }
-    }
+    internal bool UnselectedTrailingIconIsVisible => !string.IsNullOrEmpty(UnselectedTrailingIcon); 
 
-    internal bool SelectedTrailingIconIsVisible
-    {
-        get { return !string.IsNullOrEmpty(SelectedTrailingIcon); }
-    }
+    internal bool SelectedTrailingIconIsVisible => !string.IsNullOrEmpty(SelectedTrailingIcon);
+    */ 
 
     public override bool Equals(object obj)
     {
         if (obj is not MaterialNavigationDrawerItem toCompare)
             return false;
-        else
-        {
-            var key = this.Section + "-" + this.Text;
-            var keyToCompare = toCompare.Section + "-" + toCompare.Text;
-            return key.Equals(keyToCompare, System.StringComparison.InvariantCultureIgnoreCase);
-        }
+        
+        var key = this.Section + "-" + this.Text;
+        var keyToCompare = toCompare.Section + "-" + toCompare.Text;
+        return key.Equals(keyToCompare, System.StringComparison.InvariantCultureIgnoreCase);
     }
 
     public override string ToString() =>
@@ -115,7 +103,7 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    protected void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
+    private void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
     {
         if (EqualityComparer<T>.Default.Equals(backingStore, value))
             return;
@@ -124,7 +112,7 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         OnPropertyChanged(propertyName);
     }
 
-    protected virtual void OnPropertyChanged(string propertyName)
+    private void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

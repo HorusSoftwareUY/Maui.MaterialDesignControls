@@ -307,7 +307,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialSlider), defaultValue: null);
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialSlider), defaultValue: null);
 
     /// <summary>
     /// The backing store for the <see cref="ThumbWidth" /> bindable property.
@@ -371,7 +371,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="IsEnabled" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialSlider), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialSlider), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialSlider self && newValue is bool)
         {
@@ -427,8 +427,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public string Label
     {
-        get { return (string)GetValue(LabelProperty); }
-        set { SetValue(LabelProperty, value); }
+        get => (string)GetValue(LabelProperty);
+        set => SetValue(LabelProperty, value);
     }
 
     /// <summary>
@@ -439,8 +439,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public Color LabelColor
     {
-        get { return (Color)GetValue(LabelColorProperty); }
-        set { SetValue(LabelColorProperty, value); }
+        get => (Color)GetValue(LabelColorProperty);
+        set => SetValue(LabelColorProperty, value);
     }
 
     /// <summary>
@@ -448,8 +448,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public string FontFamily
     {
-        get { return (string)GetValue(FontFamilyProperty); }
-        set { SetValue(FontFamilyProperty, value); }
+        get => (string)GetValue(FontFamilyProperty);
+        set => SetValue(FontFamilyProperty, value);
     }
 
     /// <summary>
@@ -460,8 +460,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public double CharacterSpacing
     {
-        get { return (double)GetValue(CharacterSpacingProperty); }
-        set { SetValue(CharacterSpacingProperty, value); }
+        get => (double)GetValue(CharacterSpacingProperty);
+        set => SetValue(CharacterSpacingProperty, value);
     }
 
     /// <summary>
@@ -470,8 +470,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public FontAttributes FontAttributes
     {
-        get { return (FontAttributes)GetValue(FontAttributesProperty); }
-        set { SetValue(FontAttributesProperty, value); }
+        get => (FontAttributes)GetValue(FontAttributesProperty);
+        set => SetValue(FontAttributesProperty, value);
     }
 
     /// <summary>
@@ -483,8 +483,8 @@ public class MaterialSlider : ContentView
     /// <remarks>Typically this should always be enabled for accessibility reasons.</remarks>
     public bool FontAutoScalingEnabled
     {
-        get { return (bool)GetValue(FontAutoScalingEnabledProperty); }
-        set { SetValue(FontAutoScalingEnabledProperty, value); }
+        get => (bool)GetValue(FontAutoScalingEnabledProperty);
+        set => SetValue(FontAutoScalingEnabledProperty, value);
     }
 
     /// <summary>
@@ -493,8 +493,8 @@ public class MaterialSlider : ContentView
     [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
     public double FontSize
     {
-        get { return (double)GetValue(FontSizeProperty); }
-        set { SetValue(FontSizeProperty, value); }
+        get => (double)GetValue(FontSizeProperty);
+        set => SetValue(FontSizeProperty, value);
     }
 
     /// <summary>
@@ -502,8 +502,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public TextTransform LabelTransform
     {
-        get { return (TextTransform)GetValue(LabelTransformProperty); }
-        set { SetValue(LabelTransformProperty, value); }
+        get => (TextTransform)GetValue(LabelTransformProperty);
+        set => SetValue(LabelTransformProperty, value);
     }
 
     #endregion Label
@@ -515,8 +515,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public string MinimumLabel
     {
-        get { return (string)GetValue(MinimumLabelProperty); }
-        set { SetValue(MinimumLabelProperty, value); }
+        get => (string)GetValue(MinimumLabelProperty);
+        set => SetValue(MinimumLabelProperty, value);
     }
 
     /// <summary>
@@ -527,8 +527,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public Color MinimumLabelColor
     {
-        get { return (Color)GetValue(MinimumLabelColorProperty); }
-        set { SetValue(MinimumLabelColorProperty, value); }
+        get => (Color)GetValue(MinimumLabelColorProperty);
+        set => SetValue(MinimumLabelColorProperty, value);
     }
 
     /// <summary>
@@ -536,8 +536,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public string MinimumFontFamily
     {
-        get { return (string)GetValue(MinimumFontFamilyProperty); }
-        set { SetValue(MinimumFontFamilyProperty, value); }
+        get => (string)GetValue(MinimumFontFamilyProperty);
+        set => SetValue(MinimumFontFamilyProperty, value);
     }
 
     /// <summary>
@@ -548,8 +548,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public double MinimumCharacterSpacing
     {
-        get { return (double)GetValue(MinimumCharacterSpacingProperty); }
-        set { SetValue(MinimumCharacterSpacingProperty, value); }
+        get => (double)GetValue(MinimumCharacterSpacingProperty);
+        set => SetValue(MinimumCharacterSpacingProperty, value);
     }
 
     /// <summary>
@@ -557,8 +557,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public FontAttributes MinimumFontAttributes
     {
-        get { return (FontAttributes)GetValue(MinimumFontAttributesProperty); }
-        set { SetValue(MinimumFontAttributesProperty, value); }
+        get => (FontAttributes)GetValue(MinimumFontAttributesProperty);
+        set => SetValue(MinimumFontAttributesProperty, value);
     }
 
     /// <summary>
@@ -570,8 +570,8 @@ public class MaterialSlider : ContentView
     /// <remarks>Typically this should always be enabled for accessibility reasons.</remarks>
     public bool MinimumFontAutoScalingEnabled
     {
-        get { return (bool)GetValue(MinimumFontAutoScalingEnabledProperty); }
-        set { SetValue(MinimumFontAutoScalingEnabledProperty, value); }
+        get => (bool)GetValue(MinimumFontAutoScalingEnabledProperty);
+        set => SetValue(MinimumFontAutoScalingEnabledProperty, value);
     }
 
     /// <summary>
@@ -579,8 +579,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public double MinimumFontSize
     {
-        get { return (double)GetValue(MinimumFontSizeProperty); }
-        set { SetValue(MinimumFontSizeProperty, value); }
+        get => (double)GetValue(MinimumFontSizeProperty);
+        set => SetValue(MinimumFontSizeProperty, value);
     }
 
     /// <summary>
@@ -588,8 +588,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public TextTransform MinimumLabelTransform
     {
-        get { return (TextTransform)GetValue(MinimumLabelTransformProperty); }
-        set { SetValue(MinimumLabelTransformProperty, value); }
+        get => (TextTransform)GetValue(MinimumLabelTransformProperty);
+        set => SetValue(MinimumLabelTransformProperty, value);
     }
 
     /// <summary>
@@ -610,8 +610,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public double Minimum
     {
-        get { return (double)GetValue(MinimumProperty); }
-        set { SetValue(MinimumProperty, value); }
+        get => (double)GetValue(MinimumProperty);
+        set => SetValue(MinimumProperty, value);
     }
 
     /// <summary>
@@ -622,8 +622,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public Color ActiveTrackColor
     {
-        get { return (Color)GetValue(ActiveTrackColorProperty); }
-        set { SetValue(ActiveTrackColorProperty, value); }
+        get => (Color)GetValue(ActiveTrackColorProperty);
+        set => SetValue(ActiveTrackColorProperty, value);
     }
 
     #endregion Minimum
@@ -635,8 +635,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public string MaximumLabel
     {
-        get { return (string)GetValue(MaximumLabelProperty); }
-        set { SetValue(MaximumLabelProperty, value); }
+        get => (string)GetValue(MaximumLabelProperty);
+        set => SetValue(MaximumLabelProperty, value);
     }
 
     /// <summary>
@@ -644,8 +644,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public Color MaximumLabelColor
     {
-        get { return (Color)GetValue(MaximumLabelColorProperty); }
-        set { SetValue(MaximumLabelColorProperty, value); }
+        get => (Color)GetValue(MaximumLabelColorProperty);
+        set => SetValue(MaximumLabelColorProperty, value);
     }
 
     /// <summary>
@@ -653,8 +653,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public string MaximumFontFamily
     {
-        get { return (string)GetValue(MaximumFontFamilyProperty); }
-        set { SetValue(MaximumFontFamilyProperty, value); }
+        get => (string)GetValue(MaximumFontFamilyProperty);
+        set => SetValue(MaximumFontFamilyProperty, value);
     }
 
     /// <summary>
@@ -662,8 +662,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public double MaximumCharacterSpacing
     {
-        get { return (double)GetValue(MaximumCharacterSpacingProperty); }
-        set { SetValue(MaximumCharacterSpacingProperty, value); }
+        get => (double)GetValue(MaximumCharacterSpacingProperty);
+        set => SetValue(MaximumCharacterSpacingProperty, value);
     }
 
     /// <summary>
@@ -671,8 +671,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public FontAttributes MaximumFontAttributes
     {
-        get { return (FontAttributes)GetValue(MaximumFontAttributesProperty); }
-        set { SetValue(MaximumFontAttributesProperty, value); }
+        get => (FontAttributes)GetValue(MaximumFontAttributesProperty);
+        set => SetValue(MaximumFontAttributesProperty, value);
     }
 
     /// <summary>
@@ -680,8 +680,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public bool MaximumFontAutoScalingEnabled
     {
-        get { return (bool)GetValue(MaximumFontAutoScalingEnabledProperty); }
-        set { SetValue(MaximumFontAutoScalingEnabledProperty, value); }
+        get => (bool)GetValue(MaximumFontAutoScalingEnabledProperty);
+        set => SetValue(MaximumFontAutoScalingEnabledProperty, value);
     }
 
     /// <summary>
@@ -689,8 +689,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public double MaximumFontSize
     {
-        get { return (double)GetValue(MaximumFontSizeProperty); }
-        set { SetValue(MaximumFontSizeProperty, value); }
+        get => (double)GetValue(MaximumFontSizeProperty);
+        set => SetValue(MaximumFontSizeProperty, value);
     }
 
     /// <summary>
@@ -698,8 +698,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public TextTransform MaximumLabelTransform
     {
-        get { return (TextTransform)GetValue(MaximumLabelTransformProperty); }
-        set { SetValue(MaximumLabelTransformProperty, value); }
+        get => (TextTransform)GetValue(MaximumLabelTransformProperty);
+        set => SetValue(MaximumLabelTransformProperty, value);
     }
 
     /// <summary>
@@ -718,8 +718,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public double Maximum
     {
-        get { return (double)GetValue(MaximumProperty); }
-        set { SetValue(MaximumProperty, value); }
+        get => (double)GetValue(MaximumProperty);
+        set => SetValue(MaximumProperty, value);
     }
 
     /// <summary>
@@ -727,8 +727,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public Color InactiveTrackColor
     {
-        get { return (Color)GetValue(InactiveTrackColorProperty); }
-        set { SetValue(InactiveTrackColorProperty, value); }
+        get => (Color)GetValue(InactiveTrackColorProperty);
+        set => SetValue(InactiveTrackColorProperty, value);
     }
 
     #endregion Maximum
@@ -740,8 +740,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public int TrackHeight
     {
-        get { return (int)GetValue(TrackHeightProperty); }
-        set { SetValue(TrackHeightProperty, value); }
+        get => (int)GetValue(TrackHeightProperty);
+        set => SetValue(TrackHeightProperty, value);
     }
 
     /// <summary>
@@ -749,8 +749,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public int TrackCornerRadius
     {
-        get { return (int)GetValue(TrackCornerRadiusProperty); }
-        set { SetValue(TrackCornerRadiusProperty, value); }
+        get => (int)GetValue(TrackCornerRadiusProperty);
+        set => SetValue(TrackCornerRadiusProperty, value);
     }
 
     /// <summary>
@@ -758,8 +758,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public ImageSource TrackImageSource
     {
-        get { return (ImageSource)GetValue(TrackImageSourceProperty); }
-        set { SetValue(TrackImageSourceProperty, value); }
+        get => (ImageSource)GetValue(TrackImageSourceProperty);
+        set => SetValue(TrackImageSourceProperty, value);
     }
 
     #endregion Track
@@ -774,8 +774,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public Color ThumbColor
     {
-        get { return (Color)GetValue(ThumbColorProperty); }
-        set { SetValue(ThumbColorProperty, value); }
+        get => (Color)GetValue(ThumbColorProperty);
+        set => SetValue(ThumbColorProperty, value);
     }
 
     /// <summary>
@@ -853,8 +853,8 @@ public class MaterialSlider : ContentView
     /// </summary>
     public bool ShowValueIndicator
     {
-        get { return (bool)GetValue(ShowValueIndicatorProperty); }
-        set { SetValue(ShowValueIndicatorProperty, value); }
+        get => (bool)GetValue(ShowValueIndicatorProperty);
+        set => SetValue(ShowValueIndicatorProperty, value);
     }
 
     /// <summary>
@@ -899,8 +899,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public bool ShowIcons
     {
-        get { return (bool)GetValue(ShowIconsProperty); }
-        set { SetValue(ShowIconsProperty, value); }
+        get => (bool)GetValue(ShowIconsProperty);
+        set => SetValue(ShowIconsProperty, value);
     }
 
     /// <summary>
@@ -911,8 +911,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public bool UserInteractionEnabled
     {
-        get { return (bool)GetValue(UserInteractionEnabledProperty); }
-        set { SetValue(UserInteractionEnabledProperty, value); }
+        get => (bool)GetValue(UserInteractionEnabledProperty);
+        set => SetValue(UserInteractionEnabledProperty, value);
     }
 
     /// <summary>
@@ -923,8 +923,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public new bool IsEnabled
     {
-        get { return (bool)GetValue(IsEnabledProperty); }
-        set { SetValue(IsEnabledProperty, value); }
+        get => (bool)GetValue(IsEnabledProperty);
+        set => SetValue(IsEnabledProperty, value);
     }
 
     /// <summary>
@@ -936,8 +936,8 @@ public class MaterialSlider : ContentView
     /// </default>
     public double Value
     {
-        get { return (double)GetValue(ValueProperty); }
-        set { SetValue(ValueProperty, value); }
+        get => (double)GetValue(ValueProperty);
+        set => SetValue(ValueProperty, value);
     }
 
     /// <summary>

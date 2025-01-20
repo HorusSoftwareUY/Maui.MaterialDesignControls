@@ -16,7 +16,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 partial class CustomSliderHandler
 {
-    public async static void MapDesignProperties(ISliderHandler handler, ISlider slider)
+    public static async void MapDesignProperties(ISliderHandler handler, ISlider slider)
     {
         if (slider is CustomSlider customSlider && handler.PlatformView is SeekBar control)
         {

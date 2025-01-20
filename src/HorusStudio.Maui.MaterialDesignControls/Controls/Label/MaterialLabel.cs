@@ -104,7 +104,7 @@
         /// The backing store for the <see cref="FontFamily" />
         /// bindable property.
         /// </summary>
-        public static new readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialLabel self)
             {
@@ -128,7 +128,7 @@
         /// The backing store for the <see cref="TextColor" />
         /// bindable property.
         /// </summary>
-        public static new readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialLabel), defaultValue: DefaultTextColor);
+        public new static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialLabel), defaultValue: DefaultTextColor);
 
         #endregion Bindable Properties
 

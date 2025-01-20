@@ -336,8 +336,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double HeadlineFontSize
         {
-            get { return (double)GetValue(HeadlineFontSizeProperty); }
-            set { SetValue(HeadlineFontSizeProperty, value); }
+            get => (double)GetValue(HeadlineFontSizeProperty);
+            set => SetValue(HeadlineFontSizeProperty, value);
         }
 
         /// <summary>
@@ -349,8 +349,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public string HeadlineFontFamily
         {
-            get { return (string)GetValue(HeadlineFontFamilyProperty); }
-            set { SetValue(HeadlineFontFamilyProperty, value); }
+            get => (string)GetValue(HeadlineFontFamilyProperty);
+            set => SetValue(HeadlineFontFamilyProperty, value);
         }
 
         /// <summary>
@@ -416,8 +416,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double DescriptionFontSize
         {
-            get { return (double)GetValue(DescriptionFontSizeProperty); }
-            set { SetValue(DescriptionFontSizeProperty, value); }
+            get => (double)GetValue(DescriptionFontSizeProperty);
+            set => SetValue(DescriptionFontSizeProperty, value);
         }
 
         /// <summary>
@@ -429,8 +429,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public string DescriptionFontFamily
         {
-            get { return (string)GetValue(DescriptionFontFamilyProperty); }
-            set { SetValue(DescriptionFontFamilyProperty, value); }
+            get => (string)GetValue(DescriptionFontFamilyProperty);
+            set => SetValue(DescriptionFontFamilyProperty, value);
         }
 
         /// <summary>
@@ -469,8 +469,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public ImageSource LeadingIcon
         {
-            get { return (ImageSource)GetValue(LeadingIconProperty); }
-            set { SetValue(LeadingIconProperty, value); }
+            get => (ImageSource)GetValue(LeadingIconProperty);
+            set => SetValue(LeadingIconProperty, value);
         }
 
         /// <summary>
@@ -496,8 +496,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public bool LeadingIconIsBusy
         {
-            get { return (bool)GetValue(LeadingIconIsBusyProperty); }
-            set { SetValue(LeadingIconIsBusyProperty, value); }
+            get => (bool)GetValue(LeadingIconIsBusyProperty);
+            set => SetValue(LeadingIconIsBusyProperty, value);
         }
 
         private IList<TrailingIcon> trailingIcons;
@@ -512,8 +512,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public IList TrailingIcons
         {
-            get { return (IList)GetValue(TrailingIconsProperty); }
-            set { SetValue(TrailingIconsProperty, value); }
+            get => (IList)GetValue(TrailingIconsProperty);
+            set => SetValue(TrailingIconsProperty, value);
         }
 
         /// <summary>
@@ -525,8 +525,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public double IconSize
         {
-            get { return (double)GetValue(IconSizeProperty); }
-            set { SetValue(IconSizeProperty, value); }
+            get => (double)GetValue(IconSizeProperty);
+            set => SetValue(IconSizeProperty, value);
         }
 
         /// <summary>
@@ -538,8 +538,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public AnimationTypes IconButtonAnimation
         {
-            get { return (AnimationTypes)GetValue(IconButtonAnimationProperty); }
-            set { SetValue(IconButtonAnimationProperty, value); }
+            get => (AnimationTypes)GetValue(IconButtonAnimationProperty);
+            set => SetValue(IconButtonAnimationProperty, value);
         }
 
 #nullable enable
@@ -552,8 +552,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public double? IconButtonAnimationParameter
         {
-            get { return (double?)GetValue(IconButtonAnimationParameterProperty); }
-            set { SetValue(IconButtonAnimationParameterProperty, value); }
+            get => (double?)GetValue(IconButtonAnimationParameterProperty);
+            set => SetValue(IconButtonAnimationParameterProperty, value);
         }
 #nullable disable
 
@@ -566,8 +566,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public ICustomAnimation IconButtonCustomAnimation
         {
-            get { return (ICustomAnimation)GetValue(IconButtonCustomAnimationProperty); }
-            set { SetValue(IconButtonCustomAnimationProperty, value); }
+            get => (ICustomAnimation)GetValue(IconButtonCustomAnimationProperty);
+            set => SetValue(IconButtonCustomAnimationProperty, value);
         }
 
         /// <summary>
@@ -579,8 +579,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public Color BusyIndicatorColor
         {
-            get { return (Color)GetValue(BusyIndicatorColorProperty); }
-            set { SetValue(BusyIndicatorColorProperty, value); }
+            get => (Color)GetValue(BusyIndicatorColorProperty);
+            set => SetValue(BusyIndicatorColorProperty, value);
         }
 
         /// <summary>
@@ -592,8 +592,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public double BusyIndicatorSize
         {
-            get { return (double)GetValue(BusyIndicatorSizeProperty); }
-            set { SetValue(BusyIndicatorSizeProperty, value); }
+            get => (double)GetValue(BusyIndicatorSizeProperty);
+            set => SetValue(BusyIndicatorSizeProperty, value);
         }
 
         /// <summary>
@@ -618,8 +618,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </default>
         public int ScrollViewAnimationLength
         {
-            get { return (int)GetValue(ScrollViewAnimationLengthProperty); }
-            set { SetValue(ScrollViewAnimationLengthProperty, value); }
+            get => (int)GetValue(ScrollViewAnimationLengthProperty);
+            set => SetValue(ScrollViewAnimationLengthProperty, value);
         }
 
         #endregion Properties

@@ -152,7 +152,7 @@ public class MaterialChips : ContentView, ITouchable
     /// The backing store for the <see cref="Padding" />
     /// bindable property.
     /// </summary>
-    public static new readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialChips), defaultValue: DefaultPadding);
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialChips), defaultValue: DefaultPadding);
 
     /// <summary>
     /// The backing store for the <see cref="CornerRadius" />

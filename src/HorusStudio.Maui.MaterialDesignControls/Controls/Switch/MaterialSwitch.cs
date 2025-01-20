@@ -334,8 +334,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public ImageSource SelectedIcon
         {
-            get { return (ImageSource)GetValue(SelectedIconProperty); }
-            set { SetValue(SelectedIconProperty, value); }
+            get => (ImageSource)GetValue(SelectedIconProperty);
+            set => SetValue(SelectedIconProperty, value);
         }
 
         /// <summary>
@@ -343,8 +343,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public ImageSource UnselectedIcon
         {
-            get { return (ImageSource)GetValue(UnselectedIconProperty); }
-            set { SetValue(UnselectedIconProperty, value); }
+            get => (ImageSource)GetValue(UnselectedIconProperty);
+            set => SetValue(UnselectedIconProperty, value);
         }
 
         /// <summary>
@@ -353,8 +353,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
         }
 
         /// <summary>
@@ -362,8 +362,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public Color TextColor
         {
-            get { return (Color)GetValue(TextColorProperty); }
-            set { SetValue(TextColorProperty, value); }
+            get => (Color)GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value);
         }
 
         /// <summary>
@@ -372,8 +372,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double FontSize
         {
-            get { return (double)GetValue(FontSizeProperty); }
-            set { SetValue(FontSizeProperty, value); }
+            get => (double)GetValue(FontSizeProperty);
+            set => SetValue(FontSizeProperty, value);
         }
 
         /// <summary>
@@ -381,8 +381,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public string FontFamily
         {
-            get { return (string)GetValue(FontFamilyProperty); }
-            set { SetValue(FontFamilyProperty, value); }
+            get => (string)GetValue(FontFamilyProperty);
+            set => SetValue(FontFamilyProperty, value);
         }
 
         /// <summary>
@@ -411,8 +411,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public TextSide TextSide
         {
-            get { return (TextSide)GetValue(TextSideProperty); }
-            set { SetValue(TextSideProperty, value); }
+            get => (TextSide)GetValue(TextSideProperty);
+            set => SetValue(TextSideProperty, value);
         }
 
         /// <summary>
@@ -421,8 +421,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public string SupportingText
         {
-            get { return (string)GetValue(SupportingTextProperty); }
-            set { SetValue(SupportingTextProperty, value); }
+            get => (string)GetValue(SupportingTextProperty);
+            set => SetValue(SupportingTextProperty, value);
         }
 
         /// <summary>
@@ -430,8 +430,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public Color SupportingTextColor
         {
-            get { return (Color)GetValue(SupportingTextColorProperty); }
-            set { SetValue(SupportingTextColorProperty, value); }
+            get => (Color)GetValue(SupportingTextColorProperty);
+            set => SetValue(SupportingTextColorProperty, value);
         }
 
         /// <summary>
@@ -440,8 +440,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double SupportingFontSize
         {
-            get { return (double)GetValue(SupportingFontSizeProperty); }
-            set { SetValue(SupportingFontSizeProperty, value); }
+            get => (double)GetValue(SupportingFontSizeProperty);
+            set => SetValue(SupportingFontSizeProperty, value);
         }
 
         /// <summary>
@@ -449,8 +449,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public string SupportingFontFamily
         {
-            get { return (string)GetValue(SupportingFontFamilyProperty); }
-            set { SetValue(SupportingFontFamilyProperty, value); }
+            get => (string)GetValue(SupportingFontFamilyProperty);
+            set => SetValue(SupportingFontFamilyProperty, value);
         }
 
         /// <summary>
@@ -469,8 +469,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public double Spacing
         {
-            get { return (double)GetValue(SpacingProperty); }
-            set { SetValue(SpacingProperty, value); }
+            get => (double)GetValue(SpacingProperty);
+            set => SetValue(SpacingProperty, value);
         }
 
         /// <summary>
@@ -479,8 +479,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public double TextSpacing
         {
-            get { return (double)GetValue(TextSpacingProperty); }
-            set { SetValue(TextSpacingProperty, value); }
+            get => (double)GetValue(TextSpacingProperty);
+            set => SetValue(TextSpacingProperty, value);
         }
 
         /// <summary>
@@ -490,8 +490,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public new bool IsEnabled
         {
-            get { return (bool)GetValue(IsEnabledProperty); }
-            set { SetValue(IsEnabledProperty, value); }
+            get => (bool)GetValue(IsEnabledProperty);
+            set => SetValue(IsEnabledProperty, value);
         }
 
         #endregion Properties

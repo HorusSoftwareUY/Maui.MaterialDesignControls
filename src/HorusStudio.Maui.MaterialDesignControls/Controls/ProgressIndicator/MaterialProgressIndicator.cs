@@ -112,7 +112,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="IsVisible" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MaterialProgressIndicator), defaultValue: true, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MaterialProgressIndicator), defaultValue: true, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialProgressIndicator self)
             {
@@ -123,7 +123,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="HeightRequest" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultHeightRequest, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultHeightRequest, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialProgressIndicator self
                 && n is double newHeight && (o == null || (o is double oldHeight && !oldHeight.Equals(newHeight))))
@@ -135,7 +135,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="WidthRequest" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultWidthRequest, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultWidthRequest, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialProgressIndicator self
                 && n is double newWidth && (o == null || (o is double oldWidth && !oldWidth.Equals(newWidth))))
