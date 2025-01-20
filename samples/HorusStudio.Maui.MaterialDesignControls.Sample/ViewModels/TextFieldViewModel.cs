@@ -41,7 +41,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private void LeadingAction()
         {
-            DisplayAlert("Leading", "Command for leading icon.", "OK");
+            DisplayAlert("Leading icon", "Command for leading icon.", "OK");
+        }
+        
+        [ICommand]
+        private void TrailingAction()
+        {
+            DisplayAlert("Trailing icon", "Command for trailing icon.", "OK");
         }
 
         [ICommand]

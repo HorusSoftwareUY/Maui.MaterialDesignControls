@@ -26,7 +26,7 @@
                         CommandParameter="User selection"
                         IsEnabled="False"
                         Label="User"
-                        LeadingIconSource="ic_floating.png"
+                        LeadingIcon="ic_floating.png"
                         Placeholder="Select user"
                         Text="{Binding SelectedText}" />
                    
@@ -48,8 +48,7 @@
                         Type="Filled"
                         Command="{Binding TapCommand}"
                         CommandParameter="User selection"
-                        TrailingIconSource="on_error.png"
-                        ShowTrailingIconOnlyOnError="True"
+                        TrailingIcon="on_error.png"
                         HasError="{Binding HasAnError}"
                         Placeholder="Select user" />
                     <material:MaterialButton 

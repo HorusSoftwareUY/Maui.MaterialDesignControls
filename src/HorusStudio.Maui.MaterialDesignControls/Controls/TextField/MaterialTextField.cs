@@ -2,21 +2,49 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// A text field <see cref="View" /> let users enter text into a UI and follows Material Design Guidelines <see href="https://m3.material.io/components/text-fields/overview" />.
+/// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialTextField.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialTextField
+///     Placeholder="Enter text here" /&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var textField = new MaterialTextField
+/// {
+///     Placeholder = "Enter text here"
+/// };
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/TextFieldPage.xaml)
+/// 
+/// </example>
+/// <todoList>
+/// * [iOS] FontAttributes doesn´t work
+/// </todoList>
 public class MaterialTextField : MaterialInputBase
 {
-    //TODO [iOS] FontAttributes doesn´t work
-
     #region Attributes
 
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private readonly static Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 
     #region Layout
 
-    private BorderlessEntry _entry;
+    private readonly BorderlessEntry _entry;
 
     #endregion Layout
 
@@ -26,34 +54,36 @@ public class MaterialTextField : MaterialInputBase
     {
         _entry = new BorderlessEntry
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand
+            HorizontalOptions = LayoutOptions.Fill
         };
 
-        _entry.SetBinding(BorderlessEntry.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
-        _entry.SetBinding(BorderlessEntry.TextColorProperty, new Binding(nameof(TextColor), source: this));
-        _entry.SetBinding(BorderlessEntry.TextProperty, new Binding(nameof(Text), source: this));
-        _entry.SetBinding(BorderlessEntry.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-        _entry.SetBinding(BorderlessEntry.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-        _entry.SetBinding(BorderlessEntry.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
-        _entry.SetBinding(BorderlessEntry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this));
-        _entry.SetBinding(BorderlessEntry.KeyboardProperty, new Binding(nameof(Keyboard), source: this));
-        _entry.SetBinding(BorderlessEntry.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
-        _entry.SetBinding(BorderlessEntry.ReturnTypeProperty, new Binding(nameof(ReturnType), source: this));
-        _entry.SetBinding(BorderlessEntry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), source: this));
-        _entry.SetBinding(BorderlessEntry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), source: this));
-        _entry.SetBinding(BorderlessEntry.MaxLengthProperty, new Binding(nameof(MaxLength), source: this));
-        _entry.SetBinding(BorderlessEntry.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
-        _entry.SetBinding(BorderlessEntry.VerticalTextAlignmentProperty, new Binding(nameof(VerticalTextAlignment), source: this));
-        _entry.SetBinding(BorderlessEntry.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
-        _entry.SetBinding(BorderlessEntry.ClearButtonVisibilityProperty, new Binding(nameof(ClearButtonVisibility), source: this));
-        _entry.SetBinding(BorderlessEntry.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
-        _entry.SetBinding(BorderlessEntry.IsTextPredictionEnabledProperty, new Binding(nameof(IsTextPredictionEnabled), source: this));
-        _entry.SetBinding(BorderlessEntry.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
-        _entry.SetBinding(BorderlessEntry.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
-        _entry.SetBinding(BorderlessEntry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
+        _entry.SetBinding(Entry.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+        _entry.SetBinding(Entry.TextColorProperty, new Binding(nameof(TextColor), source: this));
+        _entry.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
+        _entry.SetBinding(Entry.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        _entry.SetBinding(Entry.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        _entry.SetBinding(Entry.IsPasswordProperty, new Binding(nameof(IsPassword), source: this));
+        _entry.SetBinding(InputView.KeyboardProperty, new Binding(nameof(Keyboard), source: this));
+        _entry.SetBinding(InputView.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
+        _entry.SetBinding(Entry.ReturnTypeProperty, new Binding(nameof(ReturnType), source: this));
+        _entry.SetBinding(Entry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), source: this));
+        _entry.SetBinding(Entry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), source: this));
+        _entry.SetBinding(InputView.MaxLengthProperty, new Binding(nameof(MaxLength), source: this));
+        _entry.SetBinding(Entry.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
+        _entry.SetBinding(Entry.VerticalTextAlignmentProperty, new Binding(nameof(VerticalTextAlignment), source: this));
+        _entry.SetBinding(Entry.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
+        _entry.SetBinding(Entry.ClearButtonVisibilityProperty, new Binding(nameof(ClearButtonVisibility), source: this));
+        _entry.SetBinding(Entry.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
+        _entry.SetBinding(Entry.IsTextPredictionEnabledProperty, new Binding(nameof(IsTextPredictionEnabled), source: this));
+        _entry.SetBinding(InputView.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
+        _entry.SetBinding(Entry.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
+        _entry.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
         _entry.SetBinding(BorderlessEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
 
-        InputTapCommand = new Command(() =>  _entry.Focus());
+        InputTapCommand = new Command(() =>
+        {
+            if (!IsReadOnly) _entry.Focus();
+        });
 
 #if ANDROID
         _entry.ReturnCommand = new Command(() =>
@@ -67,14 +97,12 @@ public class MaterialTextField : MaterialInputBase
             }
         });
 #endif
-        _entry.TextChanged += TxtEntry_TextChanged;
-
         Content = _entry;
     }
 
     #endregion Constructor
 
-    #region BindableProperties
+    #region Bindable Properties
 
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
@@ -89,13 +117,7 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="Keyboard" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(MaterialTextField), defaultValue: Keyboard.Text, propertyChanged: (bindableObject, _, newValue) => 
-    { 
-        if (bindableObject is MaterialTextField self && newValue is Keyboard value)
-        {
-            self._entry.Keyboard = value;
-        }
-    });
+    public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(MaterialTextField), defaultValue: Keyboard.Text);
 
     /// <summary>
     /// The backing store for the <see cref="TextTransform" /> bindable property.
@@ -138,11 +160,6 @@ public class MaterialTextField : MaterialInputBase
     public static readonly BindableProperty VerticalTextAlignmentProperty = BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(MaterialTextField), defaultValue: null); 
     
     /// <summary>
-    /// The backing store for the <see cref="FontAttributes" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialTextField), defaultValue: null);
-
-    /// <summary>
     /// The backing store for the <see cref="ClearButtonVisibility" /> bindable property.
     /// </summary>
     public static readonly BindableProperty ClearButtonVisibilityProperty = BindableProperty.Create(nameof(ClearButtonVisibility), typeof(ClearButtonVisibility), typeof(MaterialTextField), defaultValue: null);
@@ -177,7 +194,7 @@ public class MaterialTextField : MaterialInputBase
     /// </summary>
     public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialTextField), defaultValue: DefaultCursorColor);
 
-    #endregion BindableProperties
+    #endregion Bindable Properties
 
     #region Properties
 
@@ -197,6 +214,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets if the input is password. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// False
+    /// </default>
     public bool IsPassword
     {
         get => (bool)GetValue(IsPasswordProperty);
@@ -206,6 +226,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets input's keyboard. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="Keyboard.Text"/>
+    /// </default>
     public Keyboard Keyboard
     {
         get => (Keyboard)GetValue(KeyboardProperty);
@@ -215,6 +238,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets input's texttransform. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="TextTransform.Default"/>
+    /// </default>
     public TextTransform TextTransform
     {
         get => (TextTransform)GetValue(TextTransformProperty);
@@ -224,6 +250,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     ///  Determines what the return key on the on-screen keyboard should look like. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="ReturnType.Default"/>
+    /// </default>
     public ReturnType ReturnType
     {
         get => (ReturnType)GetValue(ReturnTypeProperty);
@@ -234,6 +263,9 @@ public class MaterialTextField : MaterialInputBase
     /// Gets or sets the command to run when the user presses the return key, either
     /// physically or on the on-screen keyboard. This is a bindable property.
     /// </summary>
+    /// <default>
+    ///  null
+    /// </default>
     public ICommand ReturnCommand
     {
         get => (ICommand)GetValue(ReturnCommandProperty);
@@ -244,6 +276,9 @@ public class MaterialTextField : MaterialInputBase
     /// Gets or sets the parameter object for the Microsoft.Maui.Controls.Entry.ReturnCommand
     /// that can be used to provide extra information. This is a bindable property.
     /// </summary>
+    /// <default>
+    ///  null
+    /// </default>
     public object ReturnCommandParameter
     {
         get => (object)GetValue(ReturnCommandParameterProperty);
@@ -253,6 +288,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets input's max length. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// <see cref="Int32.MaxValue"/>
+    /// </default>
     public int MaxLength
     {
         get => (int)GetValue(MaxLengthProperty);
@@ -262,6 +300,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets input's cursor position. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// 0
+    /// </default>
     public int CursorPosition
     {
         get => (int)GetValue(CursorPositionProperty);
@@ -271,6 +312,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets input's text changed command. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public ICommand TextChangedCommand
     {
         get => (ICommand)GetValue(TextChangedCommandProperty);
@@ -280,6 +324,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets the vertical text alignment. This is a bindable property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public TextAlignment VerticalTextAlignment
     {
         get => (TextAlignment)GetValue(VerticalTextAlignmentProperty);
@@ -287,19 +334,12 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets a value that indicates whether the font for the text of this entry
-    /// is bold, italic, or neither. This is a bindable property.
-    /// </summary>
-    public FontAttributes FontAttributes
-    {
-        get => (FontAttributes)GetValue(FontAttributesProperty);
-        set => SetValue(FontAttributesProperty, value);
-    }
-
-    /// <summary>
     /// Determines the behavior of the clear text button on this entry. This is a bindable
     /// property.
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     public ClearButtonVisibility ClearButtonVisibility
     {
         get => (ClearButtonVisibility)GetValue(ClearButtonVisibilityProperty);
@@ -338,6 +378,9 @@ public class MaterialTextField : MaterialInputBase
     /// Gets or sets a value that controls whether spell checking is enabled.
     /// <value>true if spell checking is enabled. Otherwise false.</value>
     /// </summary>
+    /// <default>
+    /// null
+    /// </default>
     /// <remarks>
     /// To be added.
     /// </remarks>
@@ -353,6 +396,9 @@ public class MaterialTextField : MaterialInputBase
     /// Text and Placeholder.
     /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontTracking.BodyLarge"/> 0.5
+    /// </default>
     /// <remarks>
     /// To be added.
     /// </remarks>
@@ -381,6 +427,9 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets a color of the caret indicator.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
+    /// </default>
     /// <remarks>
     /// This Property only works on iOS and 'ndroid' 29 or later
     /// </remarks>
@@ -395,10 +444,6 @@ public class MaterialTextField : MaterialInputBase
     #region Events
 
     public event EventHandler TextChanged;
-
-    public new event EventHandler<FocusEventArgs> Focused;
-
-    public new event EventHandler<FocusEventArgs> Unfocused;
 
     #endregion Events
 
@@ -446,6 +491,7 @@ public class MaterialTextField : MaterialInputBase
         // Setup events/animations
         _entry.Focused += ContentFocusChanged;
         _entry.Unfocused += ContentFocusChanged;
+        _entry.TextChanged += TxtEntry_TextChanged;
     }
 
     protected override void OnControlDisappearing()
@@ -453,34 +499,7 @@ public class MaterialTextField : MaterialInputBase
         // Cleanup events/animations
         _entry.Focused -= ContentFocusChanged;
         _entry.Unfocused -= ContentFocusChanged;
-    }
-
-    private void ContentFocusChanged(object sender, FocusEventArgs e)
-    {
-        IsFocused = e.IsFocused;
-        VisualStateManager.GoToState(this, GetCurrentVisualState());
-        UpdateLayoutAfterTypeChanged(Type);
-
-        if (IsFocused || CanExecuteFocusedCommand())
-        {
-            FocusedCommand?.Execute(null);
-            Focused?.Invoke(this, e);
-        }
-        else if (!IsFocused || CanExecuteUnfocusedCommand())
-        {
-            UnfocusedCommand?.Execute(null);
-            Unfocused?.Invoke(this, e);
-        }
-    }
-
-    private bool CanExecuteFocusedCommand()
-    {
-        return FocusedCommand?.CanExecute(null) ?? false;
-    }
-
-    private bool CanExecuteUnfocusedCommand()
-    {
-        return UnfocusedCommand?.CanExecute(null) ?? false;
+        _entry.TextChanged -= TxtEntry_TextChanged;
     }
 
     #endregion Methods
