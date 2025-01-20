@@ -1,5 +1,4 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Helpers;
-using Microsoft.Maui.Handlers;
+﻿using Microsoft.Maui.Handlers;
 #if IOS
 using Microsoft.Maui.Platform;
 #endif
@@ -32,6 +31,7 @@ partial class CustomTimePickerHandler
 #if IOS
         handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
+
         var checkUseWheelsPickerStyle = CheckUseWheelsPickerStyle(timePicker, handler);
         if (checkUseWheelsPickerStyle && handler is UITextField control)
         {
@@ -47,7 +47,6 @@ partial class CustomTimePickerHandler
 
     private static bool CheckUseWheelsPickerStyle(ITimePicker timePicker, ITimePickerHandler handler)
     {
-
         return timePicker is CustomTimePicker && handler is UITextField && UIDevice.CurrentDevice.CheckSystemVersion(13, 2);
     }
 
@@ -55,7 +54,7 @@ partial class CustomTimePickerHandler
     {
         if (timePicker is CustomTimePicker customPicker && handler is UITextField control)
         {
-            control.TextAlignment = TextAlignmentHelper.Convert(customPicker.HorizontalTextAlignment);
+            control.TextAlignment = customPicker.HorizontalTextAlignment.ToUIKit();
         }
     }
 

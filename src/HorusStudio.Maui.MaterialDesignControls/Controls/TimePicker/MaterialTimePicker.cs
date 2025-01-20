@@ -1,4 +1,7 @@
-﻿using Microsoft.Maui.Handlers;
+﻿using System.Windows.Input;
+#if ANDROID
+using Microsoft.Maui.Handlers;
+#endif
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -38,13 +41,13 @@ public class MaterialTimePicker : MaterialInputBase
 {
     #region Attributes
 
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
 
     #endregion Attributes
 
     #region Layout
 
-    private CustomTimePicker _timePicker;
+    private readonly CustomTimePicker _timePicker;
 
     #endregion Layout
 
@@ -52,9 +55,9 @@ public class MaterialTimePicker : MaterialInputBase
 
     public MaterialTimePicker()
     {
-        _timePicker = new CustomTimePicker()
+        _timePicker = new CustomTimePicker
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand,
+            HorizontalOptions = LayoutOptions.Fill,
             IsVisible = false
         };
 
@@ -67,9 +70,7 @@ public class MaterialTimePicker : MaterialInputBase
         _timePicker.SetBinding(TimePicker.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _timePicker.SetBinding(TimePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _timePicker.SetBinding(CustomTimePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
-        _timePicker.SetBinding(CustomTimePicker.PlaceholderColorProperty, new Binding(nameof(PlaceholderColor), source: this));
-        _timePicker.SetBinding(CustomTimePicker.PlaceholderProperty, new Binding(nameof(Placeholder), source: this));
-
+        
         InputTapCommand = new Command(() =>
         {
 #if ANDROID
@@ -80,14 +81,13 @@ public class MaterialTimePicker : MaterialInputBase
 #endif
         });
 
+        TrailingIcon = MaterialIcon.TimePicker;
         Content = _timePicker;
-
-        Text = String.Empty;
     }
 
     #endregion Constructor
 
-    #region BindableProperties
+    #region Bindable Properties
 
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
@@ -98,18 +98,18 @@ public class MaterialTimePicker : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="Time" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan?), typeof(MaterialTimePicker), defaultValue: null, propertyChanged: OnTimeChanged, defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan?), typeof(MaterialTimePicker), defaultBindingMode: BindingMode.TwoWay, defaultValue: null, propertyChanged:
+    (bindable, oldValue, newValue) =>
+    {
+        var self = (MaterialTimePicker)bindable;
+        self.OnTimeChanged(oldValue as TimeSpan?, newValue as TimeSpan?);
+    });
 #nullable disable
 
     /// <summary>
     /// The backing store for the <see cref="Format" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(MaterialTimePicker), defaultValue: null);
-
-    /// <summary>
-    /// The backing store for the <see cref="FontAttributes" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialTimePicker), defaultValue: null);
+    public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(MaterialTimePicker), defaultValue: MaterialFormat.TimeFormat);
 
     /// <summary>
     /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
@@ -121,7 +121,12 @@ public class MaterialTimePicker : MaterialInputBase
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTimePicker), defaultValue: DefaultCharacterSpacing);
 
-    #endregion BindableProperties
+    /// <summary>
+    /// The backing store for the <see cref="TimeSelectedCommand" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty TimeSelectedCommandProperty = BindableProperty.Create(nameof(TimeSelectedCommand), typeof(ICommand), typeof(MaterialTimePicker));
+    
+    #endregion Bindable Properties
 
     #region Properties
 
@@ -134,11 +139,8 @@ public class MaterialTimePicker : MaterialInputBase
     /// </default>
     public string Text
     {
-        get
-        {
-            return Time.HasValue ? Time.ToString() : null;
-        }
-        set => SetValue(TextProperty, Time.HasValue ? Time.ToString() : null);
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
     }
 
 #nullable enable
@@ -180,20 +182,7 @@ public class MaterialTimePicker : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets a value that indicates whether the font for the text of this entry
-    /// is bold, italic, or neither. This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// Null
-    /// </default>
-    public FontAttributes FontAttributes
-    {
-        get => (FontAttributes)GetValue(FontAttributesProperty);
-        set => SetValue(FontAttributesProperty, value);
-    }
-
-    /// <summary>
-    /// Determines whether or not the font of this entry should scale automatically according
+    /// Determines whether font of this entry should scale automatically according
     /// to the operating system settings. Default value is true. This is a bindable property.
     /// </summary>
     /// <default>
@@ -226,43 +215,44 @@ public class MaterialTimePicker : MaterialInputBase
         set => SetValue(CharacterSpacingProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets an ICommand to be executed when selected time changed
+    /// </summary>
+    /// <remarks>
+    /// To be added.
+    /// </remarks>
+    public ICommand TimeSelectedCommand
+    {
+        get => (ICommand)GetValue(TimeSelectedCommandProperty);
+        set => SetValue(TimeSelectedCommandProperty, value);
+    }
+    
     #endregion Properties
 
     #region Events
 
-    public new event EventHandler<FocusEventArgs> Focused;
-
-    public new event EventHandler<FocusEventArgs> Unfocused;
-
+    public event EventHandler<TimeSelectedEventArgs> TimeSelected;
+    
     #endregion Events
 
     #region Methods
-
-    private static void OnTimeChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-        var control = (MaterialTimePicker)bindable;
-
-        control._timePicker.CustomTime = (TimeSpan?)newValue;
-        control._timePicker.IsVisible = true;
-
-        if (newValue is null)
-            control._timePicker.IsVisible = false;
-
-        control.Text = String.Empty;
-    }
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
         if (_timePicker == null) return;
 
 #if ANDROID
+        var hOffset = 4;
+        var vOffset = 2;
         switch (type)
         {
             case MaterialInputType.Filled:
                 _timePicker.VerticalOptions = LayoutOptions.Center;
+                _timePicker.Margin = new Thickness(hOffset, 0, 0, vOffset);
                 break;
             case MaterialInputType.Outlined:
                 _timePicker.VerticalOptions = LayoutOptions.Center;
+                _timePicker.Margin = new Thickness(hOffset, 0, 0, 0);
                 break;
         }
 #endif
@@ -279,7 +269,6 @@ public class MaterialTimePicker : MaterialInputBase
         // Setup events/animations
         _timePicker.Focused += ContentFocusChanged;
         _timePicker.Unfocused += ContentFocusChanged;
-
     }
 
     protected override void OnControlDisappearing()
@@ -288,38 +277,29 @@ public class MaterialTimePicker : MaterialInputBase
         _timePicker.Focused -= ContentFocusChanged;
         _timePicker.Unfocused -= ContentFocusChanged;
     }
-
-    private void ContentFocusChanged(object sender, FocusEventArgs e)
+    
+    protected override void ContentFocusChanged(object sender, FocusEventArgs e)
     {
-        IsFocused = e.IsFocused;
-
-        VisualStateManager.GoToState(this, GetCurrentVisualState());
-        UpdateLayoutAfterTypeChanged(Type);
-
-        if (IsFocused || CanExecuteFocusedCommand())
+        base.ContentFocusChanged(sender, e);
+        
+        if (!IsFocused && !_timePicker.CustomTime.HasValue)
         {
-            FocusedCommand?.Execute(null);
-            Focused?.Invoke(this, e);
-        }
-        else if (!IsFocused || CanExecuteUnfocusedCommand())
-        {
-            UnfocusedCommand?.Execute(null);
-            Unfocused?.Invoke(this, e);
-
-            //Set the default date if the user doesn't select anything
-            if (!this._timePicker.CustomTime.HasValue)
-                Time = this._timePicker.InternalTime;
+            // Set the default date if the user doesn't select anything
+            Time = _timePicker.InternalTime;
         }
     }
-
-    private bool CanExecuteFocusedCommand()
+    
+    private void OnTimeChanged(TimeSpan? oldValue, TimeSpan? newValue)
     {
-        return FocusedCommand?.CanExecute(null) ?? false;
-    }
-
-    private bool CanExecuteUnfocusedCommand()
-    {
-        return UnfocusedCommand?.CanExecute(null) ?? false;
+        _timePicker.CustomTime = newValue;
+        _timePicker.IsVisible = newValue is not null;
+        Text =  newValue?.ToString(Format) ?? string.Empty;
+        _timePicker.SetBinding(TimePicker.FormatProperty, new Binding(nameof(Format), source: this));
+        if (TimeSelectedCommand?.CanExecute(null) ?? false)
+        {
+            TimeSelectedCommand?.Execute(null);
+        }                               
+        TimeSelected?.Invoke(this, new TimeSelectedEventArgs(oldValue, newValue));
     }
 
     #endregion Methods

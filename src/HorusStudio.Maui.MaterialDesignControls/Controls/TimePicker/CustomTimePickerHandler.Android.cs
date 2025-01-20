@@ -1,5 +1,4 @@
 ﻿using Android.App;
-using HorusStudio.Maui.MaterialDesignControls.Helpers;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 
@@ -19,7 +18,7 @@ partial class CustomTimePickerHandler
     {
         if (timePicker is CustomTimePicker customPicker)
         {
-            handler.PlatformView.Gravity = TextAlignmentHelper.ConvertToGravityFlags(customPicker.HorizontalTextAlignment);
+            handler.PlatformView.Gravity = customPicker.HorizontalTextAlignment.ToGravityFlags();
         }
     }
 

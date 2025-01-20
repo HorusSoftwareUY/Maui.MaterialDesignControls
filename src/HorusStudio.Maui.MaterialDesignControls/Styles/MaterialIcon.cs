@@ -5,15 +5,20 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// </summary>
 public static class MaterialIcon
 {
-    /// <default><see langword="null"/></default>
-    public static ImageSource Picker { get; set; } = "mdc_ic_picker.png";
+    public const string DefaultErrorIcon = "mdc_ic_error.png";
+    public const string DefaultDatePickerIcon = "mdc_ic_datepicker.png";
+    public const string DefaultPickerIcon = "mdc_ic_picker.png";
+    public const string DefaultTimePickerIcon = "mdc_ic_timepicker.png";
     
     /// <default><see langword="null"/></default>
-    public static ImageSource Error { get; set; } = "mdc_ic_error.png";
+    public static ImageSource Picker { get; set; } = DefaultPickerIcon;
     
     /// <default><see langword="null"/></default>
-    public static ImageSource DatePicker { get; set; } = "mdc_ic_datepicker.svg";
+    public static ImageSource Error { get; set; } = DefaultErrorIcon;
     
     /// <default><see langword="null"/></default>
-    public static ImageSource TimePicker { get; set; } = "mdc_ic_timepicker.png";
+    public static ImageSource DatePicker { get; set; } = DefaultDatePickerIcon;
+    
+    /// <default><see langword="null"/></default>
+    public static ImageSource TimePicker { get; set; } = DefaultTimePickerIcon;
 }
