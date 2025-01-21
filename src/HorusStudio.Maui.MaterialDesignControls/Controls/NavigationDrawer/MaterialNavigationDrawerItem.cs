@@ -36,11 +36,11 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         set => SetProperty(ref _selectedLeadingIcon, value);
     }
 
-    private string _unselectedLeadingIcon;
-    public string UnselectedLeadingIcon
+    private string _leadingIcon;
+    public string LeadingIcon
     {
-        get => _unselectedLeadingIcon;
-        set => SetProperty(ref _unselectedLeadingIcon, value);
+        get => _leadingIcon;
+        set => SetProperty(ref _leadingIcon, value);
     }
 
     private string _selectedTrailingIcon;
@@ -50,11 +50,11 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         set => SetProperty(ref _selectedTrailingIcon, value);
     }
 
-    private string _unselectedTrailingIcon;
-    public string UnselectedTrailingIcon
+    private string _trailingIcon;
+    public string TrailingIcon
     {
-        get => _unselectedTrailingIcon;
-        set => SetProperty(ref _unselectedTrailingIcon, value);
+        get => _trailingIcon;
+        set => SetProperty(ref _trailingIcon, value);
     }
 
     private bool _isSelected;
@@ -77,17 +77,7 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         get => _isEnabled;
         set => SetProperty(ref _isEnabled, value);
     }
-
-    /*
-    internal bool UnselectedLeadingIconIsVisible => !string.IsNullOrEmpty(UnselectedLeadingIcon); 
-
-    internal bool SelectedLeadingIconIsVisible => !string.IsNullOrEmpty(SelectedLeadingIcon); 
-
-    internal bool UnselectedTrailingIconIsVisible => !string.IsNullOrEmpty(UnselectedTrailingIcon); 
-
-    internal bool SelectedTrailingIconIsVisible => !string.IsNullOrEmpty(SelectedTrailingIcon);
-    */ 
-
+    
     public override bool Equals(object obj)
     {
         if (obj is not MaterialNavigationDrawerItem toCompare)

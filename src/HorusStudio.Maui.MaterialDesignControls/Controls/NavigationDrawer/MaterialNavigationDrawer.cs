@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -40,32 +42,32 @@ public class MaterialNavigationDrawer : ContentView
 {
     #region Attributes
 
-    private readonly static Color DefaultHeadlineColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultSectionLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultActiveIndicatorBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialDarkTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultActiveIndicatorLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultDividerColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultBadgeTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultDisabledLabelTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialDarkTheme.Disable }.GetValueForCurrentTheme<Color>();
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static Thickness DefaultHeadlineMargin = new Thickness(-1);
-    private readonly static double DefaultHeadlineCharacterSpacing = MaterialFontTracking.TitleSmall;
-    private readonly static TextTransform DefaultTextTransform = TextTransform.Default;
-    private readonly static TextTransform DefaultLabelTextTransform = TextTransform.Default;
-    private readonly static TextTransform DefaultSectionLabelTextTransform = TextTransform.Default;
-    private readonly static Thickness DefaultSectionlabelMargin = new Thickness(-1);
-    private readonly static double DefaultLabelCharacterSpacing = MaterialFontTracking.LabelLarge;
-    private readonly static double DefaultHeadlineFontSize = MaterialFontSize.TitleSmall;
-    private readonly static double DefaultLabelFontSize = MaterialFontSize.LabelLarge;
-    private readonly static double DefaultBadgeFontSize = MaterialFontSize.LabelLarge;
-    private readonly static double DefaultSectionLabelFontSize = MaterialFontSize.TitleSmall;
-    private readonly static double DefaultSectionLabelCharacterSpacing = MaterialFontTracking.TitleSmall;
-    private readonly static double DefaultItemHeightRequest = 56.0;
-    private readonly static float DefaultActiveIndicatorCornerRadius = 28.0f;
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+    private static readonly Color DefaultHeadlineColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultSectionLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultActiveIndicatorBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialDarkTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultActiveIndicatorLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultDividerColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultBadgeTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultDisabledLabelTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialDarkTheme.Disable }.GetValueForCurrentTheme<Color>();
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly Thickness DefaultHeadlineMargin = new Thickness(-1);
+    private static readonly double DefaultHeadlineCharacterSpacing = MaterialFontTracking.TitleSmall;
+    private static readonly TextTransform DefaultTextTransform = TextTransform.Default;
+    private static readonly TextTransform DefaultLabelTextTransform = TextTransform.Default;
+    private static readonly TextTransform DefaultSectionLabelTextTransform = TextTransform.Default;
+    private static readonly Thickness DefaultSectionlabelMargin = new Thickness(-1);
+    private static readonly double DefaultLabelCharacterSpacing = MaterialFontTracking.LabelLarge;
+    private static readonly double DefaultHeadlineFontSize = MaterialFontSize.TitleSmall;
+    private static readonly double DefaultLabelFontSize = MaterialFontSize.LabelLarge;
+    private static readonly double DefaultBadgeFontSize = MaterialFontSize.LabelLarge;
+    private static readonly double DefaultSectionLabelFontSize = MaterialFontSize.TitleSmall;
+    private static readonly double DefaultSectionLabelCharacterSpacing = MaterialFontTracking.TitleSmall;
+    private static readonly double DefaultItemHeightRequest = 56.0;
+    private static readonly float DefaultActiveIndicatorCornerRadius = 28.0f;
+    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
 #nullable enable
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
 #nullable disable
 
     #endregion Attributes
@@ -73,8 +75,6 @@ public class MaterialNavigationDrawer : ContentView
     #region Layout
 
     private StackLayout _itemsContainer;
-
-    private Dictionary<string, NavigationDrawerContainerForObjects> _containersWithItems = new Dictionary<string, NavigationDrawerContainerForObjects>();
 
     #endregion Layout
 
@@ -320,8 +320,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public string Headline
     {
-        get { return (string)GetValue(HeadlineProperty); }
-        set { SetValue(HeadlineProperty, value); }
+        get => (string)GetValue(HeadlineProperty);
+        set => SetValue(HeadlineProperty, value);
     }
 
     /// <summary>
@@ -332,8 +332,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Color HeadlineTextColor
     {
-        get { return (Color)GetValue(HeadlineTextColorProperty); }
-        set { SetValue(HeadlineTextColorProperty, value); }
+        get => (Color)GetValue(HeadlineTextColorProperty);
+        set => SetValue(HeadlineTextColorProperty, value);
     }
 
     /// <summary>
@@ -344,8 +344,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public string HeadlineFontFamily
     {
-        get { return (string)GetValue(HeadlineFontFamilyProperty); }
-        set { SetValue(HeadlineFontFamilyProperty, value); }
+        get => (string)GetValue(HeadlineFontFamilyProperty);
+        set => SetValue(HeadlineFontFamilyProperty, value);
     }
 
     /// <summary>
@@ -356,8 +356,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Thickness HeadlineMargin
     {
-        get { return (Thickness)GetValue(HeadlineMarginProperty); }
-        set { SetValue(HeadlineMarginProperty, value); }
+        get => (Thickness)GetValue(HeadlineMarginProperty);
+        set => SetValue(HeadlineMarginProperty, value);
     }
 
     /// <summary>
@@ -368,8 +368,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public FontAttributes HeadlineFontAttributes
     {
-        get { return (FontAttributes)GetValue(HeadlineFontAttributesProperty); }
-        set { SetValue(HeadlineFontAttributesProperty, value); }
+        get => (FontAttributes)GetValue(HeadlineFontAttributesProperty);
+        set => SetValue(HeadlineFontAttributesProperty, value);
     }
 
     /// <summary>
@@ -380,8 +380,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public bool HeadlineFontAutoScalingEnabled
     {
-        get { return (bool)GetValue(HeadlineFontAutoScalingEnabledProperty); }
-        set { SetValue(HeadlineFontAutoScalingEnabledProperty, value); }
+        get => (bool)GetValue(HeadlineFontAutoScalingEnabledProperty);
+        set => SetValue(HeadlineFontAutoScalingEnabledProperty, value);
     }
 
     /// <summary>
@@ -392,8 +392,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public TextTransform HeadlineTextTransform
     {
-        get { return (TextTransform)GetValue(HeadlineTextTransformProperty); }
-        set { SetValue(HeadlineTextTransformProperty, value); }
+        get => (TextTransform)GetValue(HeadlineTextTransformProperty);
+        set => SetValue(HeadlineTextTransformProperty, value);
     }
 
     /// <summary>
@@ -404,8 +404,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public double HeadlineCharactersSpacing
     {
-        get { return (double)GetValue(HeadlineCharactersSpacingProperty); }
-        set { SetValue(HeadlineCharactersSpacingProperty, value); }
+        get => (double)GetValue(HeadlineCharactersSpacingProperty);
+        set => SetValue(HeadlineCharactersSpacingProperty, value);
     }
 
     /// <summary>
@@ -416,8 +416,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public double HeadlineFontSize
     {
-        get { return (double)GetValue(HeadlineFontSizeProperty); }
-        set { SetValue(HeadlineFontSizeProperty, value); }
+        get => (double)GetValue(HeadlineFontSizeProperty);
+        set => SetValue(HeadlineFontSizeProperty, value);
     }
 
     /// <summary>
@@ -428,8 +428,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Color ActiveIndicatorBackgroundColor
     {
-        get { return (Color)GetValue(ActiveIndicatorBackgroundColorProperty); }
-        set { SetValue(ActiveIndicatorBackgroundColorProperty, value); }
+        get => (Color)GetValue(ActiveIndicatorBackgroundColorProperty);
+        set => SetValue(ActiveIndicatorBackgroundColorProperty, value);
     }
 
     /// <summary>
@@ -440,8 +440,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Color ActiveIndicatorLabelColor
     {
-        get { return (Color)GetValue(ActiveIndicatorLabelColorProperty); }
-        set { SetValue(ActiveIndicatorLabelColorProperty, value); }
+        get => (Color)GetValue(ActiveIndicatorLabelColorProperty);
+        set => SetValue(ActiveIndicatorLabelColorProperty, value);
     }
 
     /// <summary>
@@ -452,8 +452,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public float ActiveIndicatorCornerRadius
     {
-        get { return (float)GetValue(ActiveIndicatorCornerRadiusProperty); }
-        set { SetValue(ActiveIndicatorCornerRadiusProperty, value); }
+        get => (float)GetValue(ActiveIndicatorCornerRadiusProperty);
+        set => SetValue(ActiveIndicatorCornerRadiusProperty, value);
     }
 
     /// <summary>
@@ -464,8 +464,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Color LabelColor
     {
-        get { return (Color)GetValue(LabelColorProperty); }
-        set { SetValue(LabelColorProperty, value); }
+        get => (Color)GetValue(LabelColorProperty);
+        set => SetValue(LabelColorProperty, value);
     }
 
     /// <summary>
@@ -476,8 +476,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public double LabelFontSize
     {
-        get { return (double)GetValue(LabelFontSizeProperty); }
-        set { SetValue(LabelFontSizeProperty, value); }
+        get => (double)GetValue(LabelFontSizeProperty);
+        set => SetValue(LabelFontSizeProperty, value);
     }
 
     /// <summary>
@@ -488,8 +488,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public string LabelFontFamily
     {
-        get { return (string)GetValue(LabelFontFamilyProperty); }
-        set { SetValue(LabelFontFamilyProperty, value); }
+        get => (string)GetValue(LabelFontFamilyProperty);
+        set => SetValue(LabelFontFamilyProperty, value);
     }
 
     /// <summary>
@@ -500,8 +500,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public FontAttributes LabelFontAttributes
     {
-        get { return (FontAttributes)GetValue(LabelFontAttributesProperty); }
-        set { SetValue(LabelFontAttributesProperty, value); }
+        get => (FontAttributes)GetValue(LabelFontAttributesProperty);
+        set => SetValue(LabelFontAttributesProperty, value);
     }
 
     /// <summary>
@@ -512,8 +512,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public bool LabelFontAutoScalingEnabled
     {
-        get { return (bool)GetValue(LabelFontAutoScalingEnabledProperty); }
-        set { SetValue(LabelFontAutoScalingEnabledProperty, value); }
+        get => (bool)GetValue(LabelFontAutoScalingEnabledProperty);
+        set => SetValue(LabelFontAutoScalingEnabledProperty, value);
     }
 
     /// <summary>
@@ -524,8 +524,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public TextTransform LabelTextTransform
     {
-        get { return (TextTransform)GetValue(LabelTextTransformProperty); }
-        set { SetValue(LabelTextTransformProperty, value); }
+        get => (TextTransform)GetValue(LabelTextTransformProperty);
+        set => SetValue(LabelTextTransformProperty, value);
     }
 
     /// <summary>
@@ -536,8 +536,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public double LabelCharactersSpacing
     {
-        get { return (double)GetValue(LabelCharactersSpacingProperty); }
-        set { SetValue(LabelCharactersSpacingProperty, value); }
+        get => (double)GetValue(LabelCharactersSpacingProperty);
+        set => SetValue(LabelCharactersSpacingProperty, value);
     }
 
     /// <summary>
@@ -548,8 +548,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Color SectionLabelColor
     {
-        get { return (Color)GetValue(SectionLabelColorProperty); }
-        set { SetValue(SectionLabelColorProperty, value); }
+        get => (Color)GetValue(SectionLabelColorProperty);
+        set => SetValue(SectionLabelColorProperty, value);
     }
 
     /// <summary>
@@ -560,8 +560,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public double SectionLabelFontSize
     {
-        get { return (double)GetValue(SectionLabelFontSizeProperty); }
-        set { SetValue(SectionLabelFontSizeProperty, value); }
+        get => (double)GetValue(SectionLabelFontSizeProperty);
+        set => SetValue(SectionLabelFontSizeProperty, value);
     }
 
     /// <summary>
@@ -572,8 +572,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public string SectionLabelFontFamily
     {
-        get { return (string)GetValue(SectionLabelFontFamilyProperty); }
-        set { SetValue(SectionLabelFontFamilyProperty, value); }
+        get => (string)GetValue(SectionLabelFontFamilyProperty);
+        set => SetValue(SectionLabelFontFamilyProperty, value);
     }
 
     /// <summary>
@@ -584,8 +584,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public FontAttributes SectionLabelFontAttributes
     {
-        get { return (FontAttributes)GetValue(SectionLabelFontAttributesProperty); }
-        set { SetValue(SectionLabelFontAttributesProperty, value); }
+        get => (FontAttributes)GetValue(SectionLabelFontAttributesProperty);
+        set => SetValue(SectionLabelFontAttributesProperty, value);
     }
 
     /// <summary>
@@ -596,8 +596,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public bool SectionLabelFontAutoScalingEnabled
     {
-        get { return (bool)GetValue(SectionLabelFontAutoScalingEnabledProperty); }
-        set { SetValue(SectionLabelFontAutoScalingEnabledProperty, value); }
+        get => (bool)GetValue(SectionLabelFontAutoScalingEnabledProperty);
+        set => SetValue(SectionLabelFontAutoScalingEnabledProperty, value);
     }
 
     /// <summary>
@@ -608,8 +608,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public TextTransform SectionLabelTextTransform
     {
-        get { return (TextTransform)GetValue(SectionLabelTextTransformProperty); }
-        set { SetValue(SectionLabelTextTransformProperty, value); }
+        get => (TextTransform)GetValue(SectionLabelTextTransformProperty);
+        set => SetValue(SectionLabelTextTransformProperty, value);
     }
 
     /// <summary>
@@ -620,8 +620,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Thickness SectionLabelMargin
     {
-        get { return (Thickness)GetValue(SectionLabelMarginProperty); }
-        set { SetValue(SectionLabelMarginProperty, value); }
+        get => (Thickness)GetValue(SectionLabelMarginProperty);
+        set => SetValue(SectionLabelMarginProperty, value);
     }
 
     /// <summary>
@@ -632,8 +632,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public double SectionLabelCharactersSpacing
     {
-        get { return (double)GetValue(SectionLabelCharactersSpacingProperty); }
-        set { SetValue(SectionLabelCharactersSpacingProperty, value); }
+        get => (double)GetValue(SectionLabelCharactersSpacingProperty);
+        set => SetValue(SectionLabelCharactersSpacingProperty, value);
     }
 
     /// <summary>
@@ -644,8 +644,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public bool SectionDividerIsVisible
     {
-        get { return (bool)GetValue(SectionDividerIsVisibleProperty); }
-        set { SetValue(SectionDividerIsVisibleProperty, value); }
+        get => (bool)GetValue(SectionDividerIsVisibleProperty);
+        set => SetValue(SectionDividerIsVisibleProperty, value);
     }
 
     /// <summary>
@@ -656,8 +656,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public bool ItemDividerIsVisible
     {
-        get { return (bool)GetValue(ItemDividerIsVisibleProperty); }
-        set { SetValue(ItemDividerIsVisibleProperty, value); }
+        get => (bool)GetValue(ItemDividerIsVisibleProperty);
+        set => SetValue(ItemDividerIsVisibleProperty, value);
     }
 
     /// <summary>
@@ -668,8 +668,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Color DividerColor
     {
-        get { return (Color)GetValue(DividerColorProperty); }
-        set { SetValue(DividerColorProperty, value); }
+        get => (Color)GetValue(DividerColorProperty);
+        set => SetValue(DividerColorProperty, value);
     }
 
     /// <summary>
@@ -677,8 +677,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </summary>
     public MaterialBadgeType BadgeType
     {
-        get { return (MaterialBadgeType)GetValue(BadgeTypeProperty); }
-        set { SetValue(BadgeTypeProperty, value); }
+        get => (MaterialBadgeType)GetValue(BadgeTypeProperty);
+        set => SetValue(BadgeTypeProperty, value);
     }
 
     /// <summary>
@@ -689,8 +689,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Color BadgeTextColor
     {
-        get { return (Color)GetValue(BadgeTextColorProperty); }
-        set { SetValue(BadgeTextColorProperty, value); }
+        get => (Color)GetValue(BadgeTextColorProperty);
+        set => SetValue(BadgeTextColorProperty, value);
     }
 
     /// <summary>
@@ -701,8 +701,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public double BadgeFontSize
     {
-        get { return (double)GetValue(BadgeFontSizeProperty); }
-        set { SetValue(BadgeFontSizeProperty, value); }
+        get => (double)GetValue(BadgeFontSizeProperty);
+        set => SetValue(BadgeFontSizeProperty, value);
     }
 
     /// <summary>
@@ -713,8 +713,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public string BadgeFontFamily
     {
-        get { return (string)GetValue(BadgeFontFamilyProperty); }
-        set { SetValue(BadgeFontFamilyProperty, value); }
+        get => (string)GetValue(BadgeFontFamilyProperty);
+        set => SetValue(BadgeFontFamilyProperty, value);
     }
 
     /// <summary>
@@ -725,8 +725,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Color BadgeBackgroundColor
     {
-        get { return (Color)GetValue(BadgeBackgroundColorProperty); }
-        set { SetValue(BadgeBackgroundColorProperty, value); }
+        get => (Color)GetValue(BadgeBackgroundColorProperty);
+        set => SetValue(BadgeBackgroundColorProperty, value);
     }
 
     /// <summary>
@@ -761,8 +761,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public IEnumerable<MaterialNavigationDrawerItem> ItemsSource
     {
-        get { return (IEnumerable<MaterialNavigationDrawerItem>)GetValue(ItemsSourceProperty); }
-        set { SetValue(ItemsSourceProperty, value); }
+        get => (IEnumerable<MaterialNavigationDrawerItem>)GetValue(ItemsSourceProperty);
+        set => SetValue(ItemsSourceProperty, value);
     }
 
     /// <summary>
@@ -773,8 +773,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public double ItemHeightRequest
     {
-        get { return (double)GetValue(ItemHeightRequestProperty); }
-        set { SetValue(ItemHeightRequestProperty, value); }
+        get => (double)GetValue(ItemHeightRequestProperty);
+        set => SetValue(ItemHeightRequestProperty, value);
     }
 
     /// <summary>
@@ -785,8 +785,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public ICommand Command
     {
-        get { return (ICommand)GetValue(CommandProperty); }
-        set { SetValue(CommandProperty, value); }
+        get => (ICommand)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
     }
 
     /// <summary>
@@ -838,8 +838,8 @@ public class MaterialNavigationDrawer : ContentView
     /// </default>
     public Color DisabledLabelColor
     {
-        get { return (Color)GetValue(DisabledLabelColorProperty); }
-        set { SetValue(DisabledLabelColorProperty, value); }
+        get => (Color)GetValue(DisabledLabelColorProperty);
+        set => SetValue(DisabledLabelColorProperty, value);
     }
 
     #endregion Properties
@@ -848,21 +848,38 @@ public class MaterialNavigationDrawer : ContentView
 
     public MaterialNavigationDrawer()
     {
-        var container = new StackLayout()
+        Content = CreateLayout();
+    }
+
+    #endregion Constructors
+
+    #region Methods
+
+    private View CreateLayout()
+    {
+        var container = new StackLayout
         {
             Spacing = 0,
-            HorizontalOptions = LayoutOptions.FillAndExpand,
-            VerticalOptions = LayoutOptions.StartAndExpand,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Start,
         };
 
-        _itemsContainer = new StackLayout()
+        CreateHeadline(container);
+        
+        _itemsContainer = new StackLayout
         {
             Spacing = 0,
-            HorizontalOptions = LayoutOptions.FillAndExpand,
-            VerticalOptions = LayoutOptions.FillAndExpand,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
         };
-
-        var lblHeadline = new MaterialLabel()
+        container.Children.Add(_itemsContainer);
+        
+        return container;
+    }
+    
+    private void CreateHeadline(Layout container)
+    {
+        var lblHeadline = new MaterialLabel
         {
             LineBreakMode = LineBreakMode.NoWrap,
             Margin = HeadlineMargin != new Thickness(-1) ? HeadlineMargin : new Thickness(0, 16),
@@ -875,203 +892,78 @@ public class MaterialNavigationDrawer : ContentView
             Padding = new Thickness(12, 0)
         };
 
-        lblHeadline.SetBinding(MaterialLabel.MarginProperty, new Binding(nameof(HeadlineMargin), source: this, converter: new HeadlineMarginConverter()));
-        lblHeadline.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(Headline), source: this, converter: new NullOrWhitespaceToBoolConverter()));
-        lblHeadline.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Headline), source: this));
+        lblHeadline.SetBinding(MarginProperty, new Binding(nameof(HeadlineMargin), source: this, converter: new HeadlineMarginConverter()));
+        lblHeadline.SetBinding(IsVisibleProperty, new Binding(nameof(Headline), source: this, converter: new IsNotNullOrEmptyConverter()));
+        lblHeadline.SetBinding(Label.TextProperty, new Binding(nameof(Headline), source: this));
         lblHeadline.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(HeadlineTextColor), source: this));
         lblHeadline.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(HeadlineFontFamily), source: this));
-        lblHeadline.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(HeadlineFontSize), source: this));
-        lblHeadline.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(HeadlineTextTransform), source: this));
-        lblHeadline.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(HeadlineFontAttributes), source: this));
-        lblHeadline.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(HeadlineFontAutoScalingEnabled), source: this));
-        lblHeadline.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(HeadlineCharactersSpacing), source: this));
+        lblHeadline.SetBinding(Label.FontSizeProperty, new Binding(nameof(HeadlineFontSize), source: this));
+        lblHeadline.SetBinding(Label.TextTransformProperty, new Binding(nameof(HeadlineTextTransform), source: this));
+        lblHeadline.SetBinding(Label.FontAttributesProperty, new Binding(nameof(HeadlineFontAttributes), source: this));
+        lblHeadline.SetBinding(Label.FontAutoScalingEnabledProperty, new Binding(nameof(HeadlineFontAutoScalingEnabled), source: this));
+        lblHeadline.SetBinding(Label.CharacterSpacingProperty, new Binding(nameof(HeadlineCharactersSpacing), source: this));
 
         container.Children.Add(lblHeadline);
-        container.Children.Add(_itemsContainer);
-
-        Content = container;
     }
-
-    #endregion Constructors
-
-    #region Methods
-
+    
     private void SetItemSource()
     {
         _itemsContainer.Children.Clear();
-        _containersWithItems.Clear();
+        CreateItems();
+    }
 
+    private void CreateItems()
+    {
         if (ItemsSource == null) return;
 
-        var groupedItems = ItemsSource.GroupBy(x => x.Section);
-        int itemIdx = 1;
+        var groupedItems = ItemsSource.GroupBy(x => x.Section).ToList();
+        int sectionIndex = 0, totalSections = groupedItems.Count;
+        var sectionAdded = false;
 
         foreach (var group in groupedItems)
         {
-            var counter = 0;
-
+            var firstItem = group.FirstOrDefault();
+            if (!string.IsNullOrEmpty(firstItem?.Section)) sectionAdded = AddSection(firstItem);
+            
+            int itemIndex = 0, totalItems = group.Count();
             foreach (var item in group)
             {
-                if (counter == 0 && !string.IsNullOrEmpty(item.Section))
-                {
-                    var sectionTemplate = SectionTemplate != null ? SectionTemplate : GetDefaultSectionDataTemplate(item.Section);
-
-                    var sectionView = (View)sectionTemplate.CreateContent();
-
-                    sectionView.BindingContext = item;
-
-                    _itemsContainer.Children.Add(sectionView);
-                }
-
-                var itemTemplate = ItemTemplate != null ? ItemTemplate : GetDefaultItemDataTemplate(item);
-
-                var itemView = (View)itemTemplate.CreateContent();
-
-                itemView.BindingContext = item;
-
-                _itemsContainer.Children.Add(itemView);
-
-                counter++;
+                var itemAdded = AddItem(item);
+                if (itemAdded && itemIndex++ < totalItems - 1) AddItemDivider();
             }
 
-            AddSectionDivider(itemIdx++, groupedItems.Count());
-        }
-    }
-
-    private MaterialCard CreateFrame(MaterialNavigationDrawerItem item)
-    {
-        var materialCard = new MaterialCard
-        {
-            Shadow = null,
-            BorderColor = Colors.Transparent,
-            Padding = new Thickness(16, 0),
-            HeightRequest = ItemHeightRequest,
-            MinimumHeightRequest = ItemHeightRequest,
-            HorizontalOptions = LayoutOptions.FillAndExpand,
-            VerticalOptions = LayoutOptions.Fill,
-            BackgroundColor = item.IsSelected ? ActiveIndicatorBackgroundColor : Colors.Transparent,
-            CornerRadius = ActiveIndicatorCornerRadius,
-            Animation = Animation,
-            AnimationParameter = AnimationParameter,
-            CustomAnimation = CustomAnimation,
-            IsEnabled = item.IsEnabled
-        };
-
-        materialCard.SetBinding(MaterialCard.IsEnabledProperty, new Binding(nameof(item.IsEnabled), source: item));
-        materialCard.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(item.IsSelected), source: item, converter: new IsSelectedToFrameBackgroundConverter(this)));
-
-        return materialCard;
-    }
-
-    private Grid CreateContentContainer(MaterialNavigationDrawerItem item, out MaterialLabel label, out Image leadingIcon, out Image trailingIcon)
-    {
-        var contentContainer = new Grid
-        {
-            HorizontalOptions = LayoutOptions.FillAndExpand,
-            VerticalOptions = LayoutOptions.FillAndExpand,
-            ColumnSpacing = 12,
-            ColumnDefinitions = new ColumnDefinitionCollection
+            if (sectionAdded && sectionIndex++ < totalSections - 1)
             {
-                new ColumnDefinition { Width = GridLength.Auto },
-                new ColumnDefinition { Width = GridLength.Star },
-                new ColumnDefinition { Width = GridLength.Auto },
-                new ColumnDefinition { Width = GridLength.Auto }
-            },
-        };
-
-        leadingIcon = new Image
-        {
-            HeightRequest = 24,
-            MinimumHeightRequest = 24,
-            WidthRequest = 24,
-            MinimumWidthRequest = 24,
-            VerticalOptions = LayoutOptions.Center,
-            IsVisible = (item.IsSelected && !string.IsNullOrEmpty(item.SelectedLeadingIcon)) || (!item.IsSelected && !string.IsNullOrEmpty(item.UnselectedLeadingIcon)),
-            Source = item.IsSelected ? item.SelectedLeadingIcon : item.UnselectedLeadingIcon,
-        };
-
-        leadingIcon.SetValue(Grid.ColumnProperty, 0);
-        SetLeadingIconVisibilityPropertyBindings(leadingIcon, item);
-        SetLeadingIconSourcePropertyBindings(leadingIcon, item);
-
-        label = new MaterialLabel
-        {
-            Text = item.Text.Trim(),
-            VerticalTextAlignment = TextAlignment.Center,
-            FontSize = LabelFontSize,
-            FontFamily = LabelFontFamily,
-            TextColor = item.IsEnabled ? item.IsSelected ? ActiveIndicatorLabelColor : LabelColor : DisabledLabelColor
-        };
-
-        label.SetValue(Grid.ColumnProperty, 1);
-
-        SetLabelTextColorPropertyBindings(label, item);
-
-        label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(item.Text), source: item));
-        label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(LabelFontFamily), source: this));
-        label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(LabelFontSize), source: this));
-        label.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(LabelFontAttributes), source: this));
-        label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(LabelFontAutoScalingEnabled), source: this));
-        label.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(LabelCharactersSpacing), source: this));
-        label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTextTransform), source: this));
-
-        var badge = new MaterialBadge
-        {
-            Type = BadgeType,
-            TextColor = BadgeTextColor,
-            FontSize = BadgeFontSize,
-            FontFamily = BadgeFontFamily,
-            BackgroundColor = BadgeBackgroundColor,
-            Text = item.BadgeText,
-            IsVisible = !string.IsNullOrWhiteSpace(item.BadgeText)
-        };
-        badge.SetValue(Grid.ColumnProperty, 2);
-
-        badge.SetBinding(MaterialBadge.IsVisibleProperty, new Binding(nameof(item.BadgeText), source: item, converter: new NullOrWhitespaceToBoolConverter()));
-        badge.SetBinding(MaterialBadge.TypeProperty, new Binding(nameof(BadgeType), source: this));
-        badge.SetBinding(MaterialBadge.TextColorProperty, new Binding(nameof(BadgeTextColor), source: this));
-        badge.SetBinding(MaterialBadge.FontSizeProperty, new Binding(nameof(BadgeFontSize), source: this));
-        badge.SetBinding(MaterialBadge.FontFamilyProperty, new Binding(nameof(BadgeFontFamily), source: this));
-        badge.SetBinding(MaterialBadge.BackgroundColorProperty, new Binding(nameof(BadgeBackgroundColor), source: this));
-
-        badge.SetBinding(MaterialBadge.TextProperty, new Binding(nameof(item.BadgeText), source: item));
-
-        trailingIcon = new Image
-        {
-            HeightRequest = 24,
-            MinimumHeightRequest = 24,
-            WidthRequest = 24,
-            MinimumWidthRequest = 24,
-            VerticalOptions = LayoutOptions.Center,
-            IsVisible = (item.IsSelected && !string.IsNullOrEmpty(item.SelectedTrailingIcon)) || (!item.IsSelected && !string.IsNullOrEmpty(item.UnselectedTrailingIcon)),
-            Source = item.IsSelected ? item.SelectedTrailingIcon : item.UnselectedTrailingIcon,
-        };
-
-        trailingIcon.SetValue(Grid.ColumnProperty, 3);
-        SetTrailingIconVisibilityPropertyBindings(trailingIcon, item);
-        SetTrailingIconSourcePropertyBindings(trailingIcon, item);
-
-        contentContainer.Children.Add(leadingIcon);
-        contentContainer.Children.Add(label);
-        contentContainer.Children.Add(badge);
-        contentContainer.Children.Add(trailingIcon);
-
-        return contentContainer;
-    }
-
-    private void DeselectOtherItems(MaterialNavigationDrawerItem selectedItem)
-    {
-        var selectedItems = ItemsSource.Where(x => x.IsSelected);
-        if (!selectedItems.Any()) return;
-
-        foreach (var item in selectedItems)
-        {
-            if (item.Equals(selectedItem)) continue;
-
-            item.IsSelected = false;
+                AddSectionDivider();
+            }
         }
     }
+    
+    private bool AddSection(MaterialNavigationDrawerItem item) => AddItem(item, SectionTemplate ?? GetDefaultSectionDataTemplate(item.Section));
+    
+    private bool AddItem(MaterialNavigationDrawerItem item) => AddItem(item, ItemTemplate ?? GetDefaultItemDataTemplate(item));
+    
+    private bool AddItem(MaterialNavigationDrawerItem item, DataTemplate? itemTemplate)
+    {
+        if (itemTemplate?.CreateContent() is not View itemView) return false;
+        
+        itemView.BindingContext = item;
+        _itemsContainer.Children.Add(itemView);
+        return true;
+    }
+    
+    private void AddSectionDivider()
+    {
+        if (!SectionDividerIsVisible) return;
 
+        var divider = new MaterialDivider
+        {
+            Color = DividerColor,
+            Margin = new Thickness(0, 0, 0, 16)
+        };
+        _itemsContainer.Children.Add(divider);
+    }
+    
     private void AddItemDivider()
     {
         if (!ItemDividerIsVisible) return;
@@ -1083,59 +975,189 @@ public class MaterialNavigationDrawer : ContentView
         };
         _itemsContainer.Children.Add(divider);
     }
-
-    private void AddSectionDivider(int currentIndex, int totalSections)
+    
+    private MaterialCard CreateItemLayout(MaterialNavigationDrawerItem item)
     {
-        if (!SectionDividerIsVisible || currentIndex == totalSections) return;
-
-        var divider = new MaterialDivider
+        var materialCard = new MaterialCard
         {
-            Color = DividerColor,
-            Margin = new Thickness(0, 16)
+            Shadow = null,
+            BorderColor = Colors.Transparent,
+            Padding = new Thickness(16, 0),
+            HeightRequest = ItemHeightRequest,
+            MinimumHeightRequest = ItemHeightRequest,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            BackgroundColor = item.IsSelected ? ActiveIndicatorBackgroundColor : Colors.Transparent,
+            CornerRadius = ActiveIndicatorCornerRadius,
+            Animation = Animation,
+            AnimationParameter = AnimationParameter,
+            CustomAnimation = CustomAnimation,
+            IsEnabled = item.IsEnabled
         };
-        _itemsContainer.Children.Add(divider);
+
+        materialCard.SetBinding(IsEnabledProperty, new Binding(nameof(item.IsEnabled), source: item));
+        materialCard.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(item.IsSelected), source: item, converter: new IsSelectedToFrameBackgroundConverter(this)));
+
+        materialCard.Command = new Command(() =>
+        {
+            if ((item.IsSelected && item.ShowActiveIndicator) || !item.IsEnabled)
+            {
+                ExecuteCommand(item);
+                return;
+            }
+
+            ToggleItemSelection(item);
+            ExecuteCommand(item);
+        });
+        
+        return materialCard;
     }
 
+    private void ExecuteCommand(MaterialNavigationDrawerItem item)
+    {
+        if (item.IsEnabled && Command?.CanExecute(item) == true)
+        {
+            Command.Execute(item);
+        }
+    }
+    
+    private void ToggleItemSelection(MaterialNavigationDrawerItem item)
+    {
+        foreach (var selectedItem in ItemsSource.Where(x => x.IsSelected))
+        {
+            if (selectedItem.Equals(item)) continue;
+            selectedItem.IsSelected = false;
+        }
+        item.IsSelected = !item.IsSelected;
+    }
+    
+    private Grid CreateItemContent(MaterialNavigationDrawerItem item)
+    {
+        var contentContainer = new Grid
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            ColumnSpacing = 12,
+            ColumnDefinitions =
+            [
+                new ColumnDefinition { Width = GridLength.Auto },
+                new ColumnDefinition { Width = GridLength.Star },
+                new ColumnDefinition { Width = GridLength.Auto },
+                //new ColumnDefinition { Width = GridLength.Auto }
+            ],
+        };
+
+        var leadingIcon = CreateLeadingIcon(item);
+        leadingIcon.SetValue(Grid.ColumnProperty, 0);
+
+        var label = CreateItemLabel(item);
+        label.SetValue(Grid.ColumnProperty, 1);
+
+        var badge = CreateItemBadge(item);
+        badge.SetValue(Grid.ColumnProperty, 2);
+
+        var trailingIcon = CreateTrailingIcon(item);
+        trailingIcon.SetValue(Grid.ColumnProperty, 2);
+
+        contentContainer.Children.Add(leadingIcon);
+        contentContainer.Children.Add(label);
+        contentContainer.Children.Add(badge);
+        contentContainer.Children.Add(trailingIcon);
+
+        return contentContainer;
+    }
+    
+    private View CreateLeadingIcon(MaterialNavigationDrawerItem item) => CreateItemIcon(item, true);
+
+    private View CreateTrailingIcon(MaterialNavigationDrawerItem item)=> CreateItemIcon(item, false);
+    
+    private View CreateItemIcon(MaterialNavigationDrawerItem item, bool isLeadingIcon)
+    {
+        var selectedSource = isLeadingIcon ? item.SelectedLeadingIcon : item.SelectedTrailingIcon;
+        var unselectedSource = isLeadingIcon ? item.LeadingIcon : item.TrailingIcon;
+        
+        var icon = new Image
+        {
+            HeightRequest = 24,
+            MinimumHeightRequest = 24,
+            WidthRequest = 24,
+            MinimumWidthRequest = 24,
+            VerticalOptions = LayoutOptions.Center,
+            IsVisible = (item.IsSelected && !string.IsNullOrEmpty(selectedSource)) || (!item.IsSelected && !string.IsNullOrEmpty(unselectedSource)),
+            Source = item.IsSelected ? selectedSource : unselectedSource,
+        };
+
+        if (isLeadingIcon)
+        {
+            SetLeadingIconVisibilityPropertyBindings(icon, item);
+            SetLeadingIconSourcePropertyBindings(icon, item);
+        }
+        else
+        {
+            SetTrailingIconVisibilityPropertyBindings(icon, item);
+            SetTrailingIconSourcePropertyBindings(icon, item);
+        }
+
+        return icon;
+    }
+    
+    private View CreateItemLabel(MaterialNavigationDrawerItem item)
+    {
+        var label = new MaterialLabel
+        {
+            Text = item.Text.Trim(),
+            VerticalTextAlignment = TextAlignment.Center,
+            FontSize = LabelFontSize,
+            FontFamily = LabelFontFamily,
+            TextColor = item.IsEnabled ? item.IsSelected ? ActiveIndicatorLabelColor : LabelColor : DisabledLabelColor
+        };
+
+        SetLabelTextColorPropertyBindings(label, item);
+
+        label.SetBinding(Label.TextProperty, new Binding(nameof(item.Text), source: item));
+        label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(LabelFontFamily), source: this));
+        label.SetBinding(Label.FontSizeProperty, new Binding(nameof(LabelFontSize), source: this));
+        label.SetBinding(Label.FontAttributesProperty, new Binding(nameof(LabelFontAttributes), source: this));
+        label.SetBinding(Label.FontAutoScalingEnabledProperty, new Binding(nameof(LabelFontAutoScalingEnabled), source: this));
+        label.SetBinding(Label.CharacterSpacingProperty, new Binding(nameof(LabelCharactersSpacing), source: this));
+        label.SetBinding(Label.TextTransformProperty, new Binding(nameof(LabelTextTransform), source: this));
+
+        return label;
+    }
+
+    private View CreateItemBadge(MaterialNavigationDrawerItem item)
+    {
+        var badge = new MaterialBadge
+        {
+            Type = BadgeType,
+            TextColor = BadgeTextColor,
+            FontSize = BadgeFontSize,
+            FontFamily = BadgeFontFamily,
+            BackgroundColor = BadgeBackgroundColor,
+            Text = item.BadgeText,
+            IsVisible = !string.IsNullOrWhiteSpace(item.BadgeText)
+        };
+        
+        badge.SetBinding(IsVisibleProperty, new Binding(nameof(item.BadgeText), source: item, converter: new IsNotNullOrEmptyConverter()));
+        badge.SetBinding(MaterialBadge.TypeProperty, new Binding(nameof(BadgeType), source: this));
+        badge.SetBinding(MaterialBadge.TextColorProperty, new Binding(nameof(BadgeTextColor), source: this));
+        badge.SetBinding(MaterialBadge.FontSizeProperty, new Binding(nameof(BadgeFontSize), source: this));
+        badge.SetBinding(MaterialBadge.FontFamilyProperty, new Binding(nameof(BadgeFontFamily), source: this));
+        badge.SetBinding(MaterialBadge.BackgroundColorProperty, new Binding(nameof(BadgeBackgroundColor), source: this));
+        badge.SetBinding(MaterialBadge.TextProperty, new Binding(nameof(item.BadgeText), source: item));
+        
+        return badge;
+    }
+    
     private DataTemplate GetDefaultItemDataTemplate(MaterialNavigationDrawerItem item)
     {
-        string key = $"{item.Section}-{item.Text}";
-        if (_containersWithItems.ContainsKey(key)) return null;
-
         return new DataTemplate(() =>
         {
-            var card = CreateFrame(item);
-
-            var contentContainer = CreateContentContainer(item, out var label, out var iconLeading, out var iconTrailing);
-
-            card.Content = contentContainer;
-
-            card.Command = new Command(() =>
-            {
-                if ((item.IsSelected && item.ShowActiveIndicator) || !item.IsEnabled)
-                {
-                    if (item.IsEnabled && Command?.CanExecute(item) == true) Command.Execute(item);
-
-                    return;
-                }
-
-                DeselectOtherItems(item);
-
-                item.IsSelected = !item.IsSelected;
-
-                if (item.IsEnabled && Command?.CanExecute(item) == true) Command.Execute(item);
-            });
-
-            _containersWithItems[key] = new NavigationDrawerContainerForObjects
-            {
-                Container = card,
-                LeadingIcon = iconLeading,
-                TrailingIcon = iconTrailing,
-                Label = label
-            };
-
-            AddItemDivider();
-
-            return card;
+            var itemLayout = CreateItemLayout(item);
+            var itemContent = CreateItemContent(item);
+            itemLayout.Content = itemContent;
+            
+            return itemLayout;
         });
     }
 
@@ -1161,11 +1183,11 @@ public class MaterialNavigationDrawer : ContentView
 
             label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(SectionLabelColor), source: this));
             label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(SectionLabelFontFamily), source: this));
-            label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SectionLabelFontSize), source: this));
-            label.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(SectionLabelFontAttributes), source: this));
-            label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(SectionLabelFontAutoScalingEnabled), source: this));
-            label.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(SectionLabelCharactersSpacing), source: this));
-            label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(SectionLabelTextTransform), source: this));
+            label.SetBinding(Label.FontSizeProperty, new Binding(nameof(SectionLabelFontSize), source: this));
+            label.SetBinding(Label.FontAttributesProperty, new Binding(nameof(SectionLabelFontAttributes), source: this));
+            label.SetBinding(Label.FontAutoScalingEnabledProperty, new Binding(nameof(SectionLabelFontAutoScalingEnabled), source: this));
+            label.SetBinding(Label.CharacterSpacingProperty, new Binding(nameof(SectionLabelCharactersSpacing), source: this));
+            label.SetBinding(Label.TextTransformProperty, new Binding(nameof(SectionLabelTextTransform), source: this));
 
             return label;
         });
@@ -1188,20 +1210,20 @@ public class MaterialNavigationDrawer : ContentView
             {
                 var isEnabled = (bool)values[0];
                 var isSelected = (bool)values[1];
-                return isEnabled ? isSelected ? ActiveIndicatorLabelColor : LabelColor : DisabledLabelColor;
+                return isEnabled ? (isSelected ? ActiveIndicatorLabelColor : LabelColor) : DisabledLabelColor;
             })
         });
     }
 
     private void SetLeadingIconVisibilityPropertyBindings(Image image, MaterialNavigationDrawerItem item)
     {
-        image.SetBinding(Image.VisualProperty, new MultiBinding
+        image.SetBinding(IsVisibleProperty, new MultiBinding
         {
             Bindings = new Collection<BindingBase>
             {
                 new Binding(nameof(item.IsSelected), source: item),
                 new Binding(nameof(item.SelectedLeadingIcon), source: item),
-                new Binding(nameof(item.UnselectedLeadingIcon), source: item),
+                new Binding(nameof(item.LeadingIcon), source: item),
             },
             Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
             {
@@ -1222,7 +1244,7 @@ public class MaterialNavigationDrawer : ContentView
             {
                 new Binding(nameof(item.IsSelected), source: item),
                 new Binding(nameof(item.SelectedLeadingIcon), source: item),
-                new Binding(nameof(item.UnselectedLeadingIcon), source: item),
+                new Binding(nameof(item.LeadingIcon), source: item),
             },
             Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
             {
@@ -1237,13 +1259,13 @@ public class MaterialNavigationDrawer : ContentView
 
     private void SetTrailingIconVisibilityPropertyBindings(Image image, MaterialNavigationDrawerItem item)
     {
-        image.SetBinding(Image.VisualProperty, new MultiBinding
+        image.SetBinding(IsVisibleProperty, new MultiBinding
         {
             Bindings = new Collection<BindingBase>
             {
                 new Binding(nameof(item.IsSelected), source: item),
                 new Binding(nameof(item.SelectedTrailingIcon), source: item),
-                new Binding(nameof(item.UnselectedTrailingIcon), source: item),
+                new Binding(nameof(item.TrailingIcon), source: item),
             },
             Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
             {
@@ -1264,7 +1286,7 @@ public class MaterialNavigationDrawer : ContentView
             {
                 new Binding(nameof(item.IsSelected), source: item),
                 new Binding(nameof(item.SelectedTrailingIcon), source: item),
-                new Binding(nameof(item.UnselectedTrailingIcon), source: item),
+                new Binding(nameof(item.TrailingIcon), source: item),
             },
             Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
             {
@@ -1294,20 +1316,7 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     #region Converters
-
-    private class NullOrWhitespaceToBoolConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value is string str && !string.IsNullOrWhiteSpace(str);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
+    
     private class HeadlineMarginConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

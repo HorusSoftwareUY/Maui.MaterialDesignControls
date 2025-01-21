@@ -55,10 +55,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         private void LoadItems(bool includeAllItems)
         {
-            _variantItem = new MaterialNavigationDrawerItem()
+            _variantItem = new MaterialNavigationDrawerItem
             {
+                Section = "Mail",
                 SelectedLeadingIcon = "email.png",
-                UnselectedLeadingIcon = "email.png",
+                LeadingIcon = "email.png",
                 Text = "Outbox",
                 BadgeText = "100+",
             };
@@ -69,29 +70,32 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
                 new MaterialNavigationDrawerItem
                 {
+                    Section = "Mail",
                     SelectedLeadingIcon = "email.png",
-                    UnselectedLeadingIcon = "email.png",
+                    LeadingIcon = "email.png",
                     SelectedTrailingIcon = "arrow_drop_down.png",
-                    UnselectedTrailingIcon = "arrow_drop_down.png",
+                    TrailingIcon = "arrow_drop_down.png",
                     Text = "Inbox"
                 },
                 new MaterialNavigationDrawerItem
                 {
+                    Section = "Mail",
                     Text = "Favorites (Different icons)",
                     SelectedLeadingIcon = "star_selected.png",
-                    UnselectedLeadingIcon = "star_unselected.png",
+                    LeadingIcon = "star_unselected.png",
                 },
                 new MaterialNavigationDrawerItem
                 {
+                    Section = "Mail",
                     SelectedLeadingIcon = "trash.png",
-                    UnselectedLeadingIcon = "trash.png",
+                    LeadingIcon = "trash.png",
                     Text = "Trash",
                 },
                 new MaterialNavigationDrawerItem
                 {
                     Section = "Other samples",
                     SelectedLeadingIcon = "card.png",
-                    UnselectedLeadingIcon = "card.png",
+                    LeadingIcon = "card.png",
                     Text = "Selected by default",
                     IsSelected = true
                 },
@@ -105,7 +109,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     {
                         Section = "Other samples",
                         SelectedLeadingIcon = "card.png",
-                        UnselectedLeadingIcon = "card.png",
+                        LeadingIcon = "card.png",
                         Text = "Disabled",
                         IsEnabled = false
                     },
@@ -113,7 +117,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     {
                         Section = "Other samples",
                         SelectedLeadingIcon = "card.png",
-                        UnselectedLeadingIcon = "card.png",
+                        LeadingIcon = "card.png",
                         Text = "Don't show active indicator",
                         ShowActiveIndicator = false
                     },
@@ -121,9 +125,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     {
                         Section = "Other samples",
                         SelectedLeadingIcon = "star_selected.png",
-                        UnselectedLeadingIcon = "star_unselected.png",
+                        LeadingIcon = "star_unselected.png",
                         SelectedTrailingIcon = "card.png",
-                        UnselectedTrailingIcon = "card.png",
+                        TrailingIcon = "card.png",
                         Text = "Custom icon",
                     },
                     new MaterialNavigationDrawerItem
