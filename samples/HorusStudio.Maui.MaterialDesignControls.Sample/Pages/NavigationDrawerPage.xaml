@@ -7,27 +7,66 @@
                        x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.NavigationDrawerPage"
                        x:TypeArguments="vm:NavigationDrawerViewModel"
                        x:DataType="vm:NavigationDrawerViewModel">
+    <ContentPage.Resources>
+        <Style x:Key="DrawerContainer" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{StaticResource White}" />
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="Padding" Value="12,16" />
+        </Style>
+    </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource MainLayout}">
             <material:MaterialLabel Text="{Binding Subtitle}" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Normal" />
-            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-               <VerticalStackLayout> 
-                    <material:MaterialButton 
-                        Text="Change ItemsSource"
-                        Margin="0, 10"
-                        Command="{Binding ChangeItemsSourceCommand}" />
-
-                    <Frame BackgroundColor="White"
-                           CornerRadius="16"
-                           Padding="12,32">
+               <VerticalStackLayout Spacing="16"> 
+                    <Frame Style="{StaticResource DrawerContainer}">
                         <material:MaterialNavigationDrawer 
                             Command="{Binding TestCommand}"
                             ItemsSource="{Binding Items}" />
                     </Frame>
+                   
+                   <material:MaterialButton 
+                       Text="Change ItemsSource"
+                       Command="{Binding ChangeItemsSourceCommand}" />
                </VerticalStackLayout>
+            </Frame>
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="With item dividers" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout Spacing="16"> 
+                    <Frame Style="{StaticResource DrawerContainer}">
+                        <material:MaterialNavigationDrawer 
+                            BadgeBackgroundColor="{StaticResource Primary}"
+                            BadgeTextColor="{StaticResource White}"
+                            Command="{Binding TestCommand}"
+                            ItemsSource="{Binding Items}"
+                            DividerType="Item" />
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Without dividers" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout Spacing="16"> 
+                    <Frame Style="{StaticResource DrawerContainer}">
+                        <material:MaterialNavigationDrawer 
+                            Command="{Binding TestCommand}"
+                            ItemsSource="{Binding Items}"
+                            DividerType="None" />
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
+            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
+                <VerticalStackLayout> 
+                    <Frame Style="{StaticResource DrawerContainer}">
+                        <material:MaterialNavigationDrawer 
+                            ItemsSource="{Binding DisabledItems}" />
+                    </Frame>
+                </VerticalStackLayout>
             </Frame>
         </VerticalStackLayout>
     </ScrollView>

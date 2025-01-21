@@ -22,11 +22,11 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         set => SetProperty(ref _badgeText, value);
     }
 
-    private string _section;
-    public string Section
+    private string _headline;
+    public string Headline
     {
-        get => _section;
-        set => SetProperty(ref _section, value);
+        get => _headline;
+        set => SetProperty(ref _headline, value);
     }
 
     private string _selectedLeadingIcon;
@@ -63,14 +63,7 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         get => _isSelected;
         set => SetProperty(ref _isSelected, value);
     }
-
-    private bool _showActiveIndicator = true;
-    public bool ShowActiveIndicator
-    {
-        get => _showActiveIndicator;
-        set => SetProperty(ref _showActiveIndicator, value);
-    }
-
+    
     private bool _isEnabled = true;
     public bool IsEnabled
     {
@@ -83,8 +76,8 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         if (obj is not MaterialNavigationDrawerItem toCompare)
             return false;
         
-        var key = this.Section + "-" + this.Text;
-        var keyToCompare = toCompare.Section + "-" + toCompare.Text;
+        var key = this.Headline + "-" + this.Text;
+        var keyToCompare = toCompare.Headline + "-" + toCompare.Text;
         return key.Equals(keyToCompare, System.StringComparison.InvariantCultureIgnoreCase);
     }
 

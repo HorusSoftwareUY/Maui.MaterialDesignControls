@@ -16,7 +16,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public override string Title => "Navigation Drawer";
 
         [ObservableProperty]
-        public ObservableCollection<MaterialNavigationDrawerItem> _items;
+        private ObservableCollection<MaterialNavigationDrawerItem> _items;
+        
+        [ObservableProperty]
+        private ObservableCollection<MaterialNavigationDrawerItem> _disabledItems;
 
         #endregion
 
@@ -25,6 +28,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             Subtitle = "Navigation drawers let people switch between UI views on larger devices";
 
             LoadItems(_includeAllItems);
+            LoadDisabledItems();
         }
 
         #region Commands
@@ -57,7 +61,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             _variantItem = new MaterialNavigationDrawerItem
             {
-                Section = "Mail",
+                Headline = "Mail",
                 SelectedLeadingIcon = "email.png",
                 LeadingIcon = "email.png",
                 Text = "Outbox",
@@ -70,7 +74,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
                 new MaterialNavigationDrawerItem
                 {
-                    Section = "Mail",
+                    Headline = "Mail",
                     SelectedLeadingIcon = "email.png",
                     LeadingIcon = "email.png",
                     SelectedTrailingIcon = "arrow_drop_down.png",
@@ -79,21 +83,21 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 },
                 new MaterialNavigationDrawerItem
                 {
-                    Section = "Mail",
+                    Headline = "Mail",
                     Text = "Favorites (Different icons)",
                     SelectedLeadingIcon = "star_selected.png",
                     LeadingIcon = "star_unselected.png",
                 },
                 new MaterialNavigationDrawerItem
                 {
-                    Section = "Mail",
+                    Headline = "Mail",
                     SelectedLeadingIcon = "trash.png",
                     LeadingIcon = "trash.png",
                     Text = "Trash",
                 },
                 new MaterialNavigationDrawerItem
                 {
-                    Section = "Other samples",
+                    Headline = "Other samples",
                     SelectedLeadingIcon = "card.png",
                     LeadingIcon = "card.png",
                     Text = "Selected by default",
@@ -107,7 +111,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 {
                     new MaterialNavigationDrawerItem
                     {
-                        Section = "Other samples",
+                        Headline = "Other samples",
                         SelectedLeadingIcon = "card.png",
                         LeadingIcon = "card.png",
                         Text = "Disabled",
@@ -115,15 +119,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     },
                     new MaterialNavigationDrawerItem
                     {
-                        Section = "Other samples",
-                        SelectedLeadingIcon = "card.png",
-                        LeadingIcon = "card.png",
-                        Text = "Don't show active indicator",
-                        ShowActiveIndicator = false
-                    },
-                    new MaterialNavigationDrawerItem
-                    {
-                        Section = "Other samples",
+                        Headline = "Other samples",
                         SelectedLeadingIcon = "star_selected.png",
                         LeadingIcon = "star_unselected.png",
                         SelectedTrailingIcon = "card.png",
@@ -132,7 +128,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     },
                     new MaterialNavigationDrawerItem
                     {
-                        Section = "Other samples",
+                        Headline = "Other samples",
                         Text = "Without icon",
                     }
                 });
@@ -141,6 +137,61 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             Items = new ObservableCollection<MaterialNavigationDrawerItem>(list);
         }
 
+        private void LoadDisabledItems()
+        {
+            var disabledItems = new List<MaterialNavigationDrawerItem>
+            {
+                new()
+                {
+                    Headline = "Disabled",
+                    LeadingIcon = "email.png",
+                    Text = "With leading icon",
+                    IsEnabled = false
+                },
+                new()
+                {
+                    Headline = "Disabled",
+                    SelectedLeadingIcon = "email.png",
+                    LeadingIcon = "email.png",
+                    Text = "With leading icon and badge",
+                    BadgeText = "24",
+                    IsEnabled = false
+                },
+                new()
+                {
+                    Headline = "Disabled",
+                    SelectedLeadingIcon = "email.png",
+                    LeadingIcon = "email.png",
+                    SelectedTrailingIcon = "arrow_drop_down.png",
+                    TrailingIcon = "arrow_drop_down.png",
+                    Text = "With leading and trailing icons",
+                    IsEnabled = false
+                },
+                new()
+                {
+                    Headline = "Disabled",
+                    Text = "With badge",
+                    BadgeText = "35",
+                    IsEnabled = false
+                },
+                new()
+                {
+                    Headline = "Disabled",
+                    Text = "With trailing icon",
+                    TrailingIcon = "arrow_drop_down.png",
+                    IsEnabled = false
+                },
+                new()
+                {
+                    Headline = "Disabled",
+                    Text = "Without icons",
+                    IsEnabled = false
+                }
+            };
+            
+            DisabledItems = new ObservableCollection<MaterialNavigationDrawerItem>(disabledItems);
+        }
+        
         private void IncrementBadgetText()
         {
             _counter++;
