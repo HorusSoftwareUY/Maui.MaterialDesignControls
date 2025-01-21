@@ -85,7 +85,7 @@ public class MaterialChipsGroup : ContentView
     /// The backing store for the <see cref="Padding" />
     /// bindable property.
     /// </summary>
-    public static readonly new BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialChipsGroup), defaultValue: DefaultPadding);
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialChipsGroup), defaultValue: DefaultPadding);
 
     /// <summary>
     /// The backing store for the <see cref="ChipsPadding" />
@@ -109,7 +109,7 @@ public class MaterialChipsGroup : ContentView
     /// The backing store for the <see cref="IsEnabled" />
     /// bindable property.
     /// </summary>
-    public static readonly new BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialChipsGroup), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialChipsGroup), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialChipsGroup self)
         {
@@ -193,7 +193,7 @@ public class MaterialChipsGroup : ContentView
     /// The backing store for the <see cref="BackgroundColor" />
     /// bindable property.
     /// </summary>
-    public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultBackgroundColor);
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialChipsGroup), defaultValue: DefaultBackgroundColor);
 
     /// <summary>
     /// The backing store for the <see cref="BorderColor" />
@@ -292,8 +292,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public new Thickness Padding
     {
-        get { return (Thickness)GetValue(PaddingProperty); }
-        set { SetValue(PaddingProperty, value); }
+        get => (Thickness)GetValue(PaddingProperty);
+        set => SetValue(PaddingProperty, value);
     }
 
     /// <summary>
@@ -305,8 +305,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public Thickness ChipsPadding
     {
-        get { return (Thickness)GetValue(ChipsPaddingProperty); }
-        set { SetValue(ChipsPaddingProperty, value); }
+        get => (Thickness)GetValue(ChipsPaddingProperty);
+        set => SetValue(ChipsPaddingProperty, value);
     }
 
     /// <summary>
@@ -318,8 +318,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public double ChipsHeightRequest
     {
-        get { return (double)GetValue(ChipsHeightRequestProperty); }
-        set { SetValue(ChipsHeightRequestProperty, value); }
+        get => (double)GetValue(ChipsHeightRequestProperty);
+        set => SetValue(ChipsHeightRequestProperty, value);
     }
 
     /// <summary>
@@ -331,8 +331,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public double ChipsFlexLayoutPercentageBasis
     {
-        get { return (double)GetValue(ChipsFlexLayoutBasisPercentageProperty); }
-        set { SetValue(ChipsFlexLayoutBasisPercentageProperty, value); }
+        get => (double)GetValue(ChipsFlexLayoutBasisPercentageProperty);
+        set => SetValue(ChipsFlexLayoutBasisPercentageProperty, value);
     }
 
     /// <summary>
@@ -344,8 +344,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public new bool IsEnabled
     {
-        get { return (bool)GetValue(IsEnabledProperty); }
-        set { SetValue(IsEnabledProperty, value); }
+        get => (bool)GetValue(IsEnabledProperty);
+        set => SetValue(IsEnabledProperty, value);
     }
 
     /// <summary>
@@ -357,8 +357,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public string LabelText
     {
-        get { return (string)GetValue(LabelTextProperty); }
-        set { SetValue(LabelTextProperty, value); }
+        get => (string)GetValue(LabelTextProperty);
+        set => SetValue(LabelTextProperty, value);
     }
 
     /// <summary>
@@ -370,8 +370,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public IEnumerable ItemsSource
     {
-        get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-        set { SetValue(ItemsSourceProperty, value); }
+        get => (IEnumerable)GetValue(ItemsSourceProperty);
+        set => SetValue(ItemsSourceProperty, value);
     }
 
     /// <summary>
@@ -383,8 +383,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public object SelectedItem
     {
-        get { return (object)GetValue(SelectedItemProperty); }
-        set { SetValue(SelectedItemProperty, value); }
+        get => (object)GetValue(SelectedItemProperty);
+        set => SetValue(SelectedItemProperty, value);
     }
 
     /// <summary>
@@ -399,8 +399,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public IList SelectedItems
     {
-        get { return (IList)GetValue(SelectedItemsProperty); }
-        set { SetValue(SelectedItemsProperty, value); }
+        get => (IList)GetValue(SelectedItemsProperty);
+        set => SetValue(SelectedItemsProperty, value);
     }
 
     /// <summary>
@@ -412,8 +412,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public string SupportingText
     {
-        get { return (string)GetValue(SupportingTextProperty); }
-        set { SetValue(SupportingTextProperty, value); }
+        get => (string)GetValue(SupportingTextProperty);
+        set => SetValue(SupportingTextProperty, value);
     }
 
     /// <summary>
@@ -425,8 +425,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public Color LabelTextColor
     {
-        get { return (Color)GetValue(LabelTextColorProperty); }
-        set { SetValue(LabelTextColorProperty, value); }
+        get => (Color)GetValue(LabelTextColorProperty);
+        set => SetValue(LabelTextColorProperty, value);
     }
 
     /// <summary>
@@ -438,8 +438,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public Color SupportingTextColor
     {
-        get { return (Color)GetValue(SupportingTextColorProperty); }
-        set { SetValue(SupportingTextColorProperty, value); }
+        get => (Color)GetValue(SupportingTextColorProperty);
+        set => SetValue(SupportingTextColorProperty, value);
     }
 
     /// <summary>
@@ -451,8 +451,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public double LabelSize
     {
-        get { return (double)GetValue(LabelSizeProperty); }
-        set { SetValue(LabelSizeProperty, value); }
+        get => (double)GetValue(LabelSizeProperty);
+        set => SetValue(LabelSizeProperty, value);
     }
 
     /// <summary>
@@ -464,8 +464,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public double SupportingSize
     {
-        get { return (double)GetValue(SupportingSizeProperty); }
-        set { SetValue(SupportingSizeProperty, value); }
+        get => (double)GetValue(SupportingSizeProperty);
+        set => SetValue(SupportingSizeProperty, value);
     }
 
     /// <summary>
@@ -477,8 +477,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public Color TextColor
     {
-        get { return (Color)GetValue(TextColorProperty); }
-        set { SetValue(TextColorProperty, value); }
+        get => (Color)GetValue(TextColorProperty);
+        set => SetValue(TextColorProperty, value);
     }
 
     /// <summary>
@@ -490,8 +490,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public new Color BackgroundColor
     {
-        get { return (Color)GetValue(BackgroundColorProperty); }
-        set { SetValue(BackgroundColorProperty, value); }
+        get => (Color)GetValue(BackgroundColorProperty);
+        set => SetValue(BackgroundColorProperty, value);
     }
 
     /// <summary>
@@ -503,8 +503,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public Color BorderColor
     {
-        get { return (Color)GetValue(BorderColorProperty); }
-        set { SetValue(BorderColorProperty, value); }
+        get => (Color)GetValue(BorderColorProperty);
+        set => SetValue(BorderColorProperty, value);
     }
 
     /// <summary>
@@ -516,8 +516,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public double FontSize
     {
-        get { return (double)GetValue(FontSizeProperty); }
-        set { SetValue(FontSizeProperty, value); }
+        get => (double)GetValue(FontSizeProperty);
+        set => SetValue(FontSizeProperty, value);
     }
 
     /// <summary>
@@ -529,8 +529,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public string FontFamily
     {
-        get { return (string)GetValue(FontFamilyProperty); }
-        set { SetValue(FontFamilyProperty, value); }
+        get => (string)GetValue(FontFamilyProperty);
+        set => SetValue(FontFamilyProperty, value);
     }
 
     /// <summary>
@@ -542,8 +542,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public double CornerRadius
     {
-        get { return (double)GetValue(CornerRadiusProperty); }
-        set { SetValue(CornerRadiusProperty, value); }
+        get => (double)GetValue(CornerRadiusProperty);
+        set => SetValue(CornerRadiusProperty, value);
     }
 
     /// <summary>
@@ -555,8 +555,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public bool AnimateError
     {
-        get { return (bool)GetValue(AnimateErrorProperty); }
-        set { SetValue(AnimateErrorProperty, value); }
+        get => (bool)GetValue(AnimateErrorProperty);
+        set => SetValue(AnimateErrorProperty, value);
     }
 
     /// <summary>
@@ -568,8 +568,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public bool IsMultipleSelection
     {
-        get { return (bool)GetValue(IsMultipleSelectionProperty); }
-        set { SetValue(IsMultipleSelectionProperty, value); }
+        get => (bool)GetValue(IsMultipleSelectionProperty);
+        set => SetValue(IsMultipleSelectionProperty, value);
     }
 
     /// <summary>
@@ -581,8 +581,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public AnimationTypes Animation
     {
-        get { return (AnimationTypes)GetValue(AnimationProperty); }
-        set { SetValue(AnimationProperty, value); }
+        get => (AnimationTypes)GetValue(AnimationProperty);
+        set => SetValue(AnimationProperty, value);
     }
 
     /// <summary>
@@ -594,8 +594,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public double? AnimationParameter
     {
-        get { return (double?)GetValue(AnimationParameterProperty); }
-        set { SetValue(AnimationParameterProperty, value); }
+        get => (double?)GetValue(AnimationParameterProperty);
+        set => SetValue(AnimationParameterProperty, value);
     }
 
     /// <summary>
@@ -607,8 +607,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public Align Align
     {
-        get { return (Align)GetValue(AlignProperty); }
-        set { SetValue(AlignProperty, value); }
+        get => (Align)GetValue(AlignProperty);
+        set => SetValue(AlignProperty, value);
     }
 
     /// <summary>
@@ -620,8 +620,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public int VerticalSpacing
     {
-        get { return (int)GetValue(VerticalSpacingProperty); }
-        set { SetValue(VerticalSpacingProperty, value); }
+        get => (int)GetValue(VerticalSpacingProperty);
+        set => SetValue(VerticalSpacingProperty, value);
     }
 
     /// <summary>
@@ -633,8 +633,8 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public int HorizontalSpacing
     {
-        get { return (int)GetValue(HorizontalSpacingProperty); }
-        set { SetValue(HorizontalSpacingProperty, value); }
+        get => (int)GetValue(HorizontalSpacingProperty);
+        set => SetValue(HorizontalSpacingProperty, value);
     }
 
     /// <summary>

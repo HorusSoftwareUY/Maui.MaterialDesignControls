@@ -73,7 +73,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// The backing store for the <see cref="Content" />
     /// bindable property.
     /// </summary>
-    public static new readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(string), typeof(MaterialRadioButton), defaultValue: null);
+    public new static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(string), typeof(MaterialRadioButton), defaultValue: null);
 
     /// <summary>
     /// The backing store for the <see cref="StrokeColor" />
@@ -91,7 +91,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// The backing store for the <see cref="ControlTemplate" />
     /// bindable property.
     /// </summary>
-    public static new readonly BindableProperty ControlTemplateProperty = BindableProperty.Create(nameof(ControlTemplate), typeof(ControlTemplate), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
+    public new static readonly BindableProperty ControlTemplateProperty = BindableProperty.Create(nameof(ControlTemplate), typeof(ControlTemplate), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
     {
         if (bindableObject is MaterialRadioButton self && newValue is ControlTemplate controlTemplate)
         {
@@ -142,7 +142,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// The backing store for the <see cref="IsEnabled" />
     /// bindable property.
     /// </summary>
-    public static new readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialRadioButton), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialRadioButton), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if(bindable is MaterialRadioButton self && newValue is bool)
         {
@@ -251,10 +251,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// We disabled the set for this property because doesn't have sense set the content because we are setting with the
     /// radio button and label.
     /// </summary>
-    public new string Content
-    {
-        get => (string)GetValue(ContentProperty);
-    }
+    public new string Content => (string)GetValue(ContentProperty);
 
     /// <summary>
     /// Gets or sets the <see cref="Text" /> for the label.

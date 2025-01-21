@@ -235,7 +235,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Background" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialButton), defaultValue: DefaultBackground, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialButton), defaultValue: DefaultBackground, propertyChanged: (bindable, o, n) =>
     {
         if (bindable is MaterialButton self)
         {
@@ -246,7 +246,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
     {
         if (bindable is MaterialButton self)
         {
@@ -299,7 +299,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Padding" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialButton), defaultValue: DefaultPadding, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialButton), defaultValue: DefaultPadding, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialButton self)
         {
@@ -331,7 +331,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialButton), defaultValue: DefaultHeightRequest);
+    public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialButton), defaultValue: DefaultHeightRequest);
 
     /// <summary>
     /// The backing store for the <see cref="IsBusy"/> bindable property.
@@ -378,7 +378,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Shadow" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialButton), defaultValue: DefaultShadow, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialButton), defaultValue: DefaultShadow, propertyChanged: (bindable, o, n) =>
     {
         if (bindable is MaterialButton self)
         {

@@ -42,12 +42,12 @@
         /// <summary>
         /// The backing store for the <see cref="Color" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValue: DefaultColor);
+        public new static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValue: DefaultColor);
 
         /// <summary>
         /// The backing store for the <see cref="HeightRequest" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialDivider), defaultValue: DefaultHeightRequest);
+        public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialDivider), defaultValue: DefaultHeightRequest);
 
         #endregion Bindable Properties
 

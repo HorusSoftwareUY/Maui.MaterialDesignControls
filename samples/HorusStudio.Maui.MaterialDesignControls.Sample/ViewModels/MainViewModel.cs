@@ -30,9 +30,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             var containmentGroup = new MenuGroup() { GroupName = "Containment" };
             containmentGroup.Add(new MenuItemViewModel { Title = "Cards", Icon = "ic_card.png", ViewModel = typeof(CardViewModel) });
             containmentGroup.Add(new MenuItemViewModel { Title = "Dividers", Icon = "ic_divider.png", ViewModel = typeof(DividerViewModel) });
-
+            
             var navigationGroup = new MenuGroup() { GroupName = "Navigation" };
             navigationGroup.Add(new MenuItemViewModel { Title = "Top app bars", ViewModel = typeof(TopAppBarViewModel) });
+            navigationGroup.Add(new MenuItemViewModel { Title = "Navigation drawer", Icon = "ic_navigation_drawer.png", ViewModel = typeof(NavigationDrawerViewModel) });
 
             var selectionGroup = new MenuGroup() { GroupName = "Selection" };
             selectionGroup.Add(new MenuItemViewModel { Title = "Chips", Icon = "ic_chip.png", ViewModel = typeof(ChipsViewModel) });

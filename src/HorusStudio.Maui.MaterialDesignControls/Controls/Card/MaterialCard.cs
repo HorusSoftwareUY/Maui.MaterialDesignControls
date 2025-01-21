@@ -168,7 +168,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="BackgroundColor" /> bindable property.
         /// </summary>
-        public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialCard self)
             {
@@ -212,7 +212,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="Shadow" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialCard), defaultValue: DefaultShadow, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialCard), defaultValue: DefaultShadow, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialCard self)
             {
@@ -472,7 +472,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             if (_backgroundColors.TryGetValue(type, out object background) && background != null)
             {
-                if ((BackgroundColor == null && DefaultBackgroundColor == null) || BackgroundColor.Equals(DefaultBackgroundColor))
+                if ((BackgroundColor == null && DefaultBackgroundColor == null))
                 {
                     // Default Material value according to Type
                     if (background is Color backgroundColor)
