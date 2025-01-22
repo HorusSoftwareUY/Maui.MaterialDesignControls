@@ -6,7 +6,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     public partial class DatePickerViewModel : BaseViewModel
     {
         #region Attributes & Properties
-        public override string Title => "Date picker";
+        public override string Title => Models.Pages.DatePicker;
 
         [ObservableProperty]
         private string _supportingTextValue = "Select a date.";

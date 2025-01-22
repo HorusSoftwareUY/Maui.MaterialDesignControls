@@ -76,11 +76,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 #nullable enable
         private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
 #nullable disable
-        private static readonly Color DefaultShadowColor = Colors.Transparent;
-        private static readonly Color DefaultBackgroundColor = Colors.Transparent;
+        private static readonly Color DefaultShadowColor = Color.FromRgba(1,1,1,.01);
+        private static readonly Color DefaultBackgroundColor = Color.FromRgba(1,1,1,.01);
         private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(12);
-        private static readonly float DefaultBorderWidth = 0f;
-        private static readonly Color DefaultBorderColor = Colors.Transparent;
+        private static readonly float DefaultBorderWidth = -1f;
+        private static readonly Color DefaultBorderColor = Color.FromRgba(1,1,1,.01);
         private static readonly Shadow DefaultShadow = null;
 
         private readonly Dictionary<MaterialCardType, object> _backgroundColors = new()
@@ -472,7 +472,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             if (_backgroundColors.TryGetValue(type, out object background) && background != null)
             {
-                if ((BackgroundColor == null && DefaultBackgroundColor == null))
+                if (BackgroundColor is null && DefaultBackgroundColor is null || BackgroundColor!.Equals(DefaultBackgroundColor))
                 {
                     // Default Material value according to Type
                     if (background is Color backgroundColor)

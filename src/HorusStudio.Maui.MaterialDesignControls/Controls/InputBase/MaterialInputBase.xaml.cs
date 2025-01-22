@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;

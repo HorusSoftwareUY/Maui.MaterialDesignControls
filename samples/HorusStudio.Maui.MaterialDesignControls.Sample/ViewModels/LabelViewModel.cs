@@ -7,7 +7,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 	{
         #region Attributes & Properties
 
-        public override string Title => "Labels";
+        public override string Title => Models.Pages.Label;
 
         [ObservableProperty]
         private LabelTypes _labelType = LabelTypes.HeadlineSmall;

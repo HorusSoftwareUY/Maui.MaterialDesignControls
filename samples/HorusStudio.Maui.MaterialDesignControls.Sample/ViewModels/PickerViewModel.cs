@@ -8,7 +8,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        public override string Title => "Picker";
+        public override string Title => Models.Pages.Picker;
 
         [ObservableProperty]
         private string _supportingTextValue = "Select a color.";

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -7,83 +9,97 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     public partial class MainViewModel : BaseViewModel
     {
         #region Attributes & Properties
-
+        
         [ObservableProperty]
-        List<MenuGroup> _menuGroups;
+        private IEnumerable<MaterialNavigationDrawerItem> _menuItems;
 
         public override string Title => string.Empty;
 
         #endregion
 
+        private readonly IDictionary<string, Type> _viewmodelTypeMap = new Dictionary<string, Type>()
+        {
+            { Models.Pages.Button, typeof(ButtonViewModel) },
+            //{ Models.Pages.FloatingButton, typeof(FloatingButtonViewModel) },
+            { Models.Pages.IconButton, typeof(IconButtonViewModel) },
+            //{ Models.Pages.SegmentedButton, typeof(SegmentedButtonViewModel) },
+            { Models.Pages.Badge, typeof(BadgeViewModel) },
+            { Models.Pages.ProgressIndicator, typeof(ProgressIndicatorViewModel) },
+            //{ Models.Pages.Snackbar, typeof(SnackbarViewModel) },
+            //{ Models.Pages.BottomSheet, typeof(BottomSheetViewModel) },
+            { Models.Pages.Card, typeof(CardViewModel) },
+            //{ Models.Pages.Dialog, typeof(DialogViewModel) },
+            { Models.Pages.Divider, typeof(DividerViewModel) },
+            { Models.Pages.NavigationDrawer, typeof(NavigationDrawerViewModel) },
+            { Models.Pages.TopAppBar, typeof(TopAppBarViewModel) },
+            { Models.Pages.Checkbox, typeof(CheckboxViewModel) },
+            { Models.Pages.Chip, typeof(ChipsViewModel) },
+            { Models.Pages.DatePicker, typeof(DatePickerViewModel) },
+            { Models.Pages.Picker, typeof(PickerViewModel) },
+            { Models.Pages.RadioButton, typeof(RadioButtonViewModel) },
+            { Models.Pages.Rating, typeof(RatingViewModel) },
+            { Models.Pages.Selection, typeof(SelectionViewModel) },
+            { Models.Pages.Slider, typeof(SliderViewModel) },
+            { Models.Pages.Switch, typeof(SwitchViewModel) },
+            { Models.Pages.TimePicker, typeof(TimePickerViewModel) },
+            { Models.Pages.TextField, typeof(TextFieldViewModel) },
+            { Models.Pages.MultilineTextField, typeof(MultilineTextFieldViewModel) },
+            { Models.Pages.Label, typeof(LabelViewModel) }
+        };
+        
         public MainViewModel()
         {
-            var groups = new List<MenuGroup>();
+            CreateMenu();
+        }
+        
+        private void CreateMenu()
+        {
+            var menuItems = new List<MaterialNavigationDrawerItem>
+            {
+                new() { Headline = Sections.Actions, Text = Models.Pages.Button, LeadingIcon = "ic_button.png" },
+                new() { Headline = Sections.Actions, Text = Models.Pages.FloatingButton, LeadingIcon = "ic_floating.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Actions, Text = Models.Pages.IconButton, LeadingIcon = "ic_icon_button.png" },
+                new() { Headline = Sections.Actions, Text = Models.Pages.SegmentedButton, LeadingIcon = "ic_segmented.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Communications, Text = Models.Pages.Badge, LeadingIcon = "ic_badge.png" },
+                new() { Headline = Sections.Communications, Text = Models.Pages.ProgressIndicator, LeadingIcon = "ic_progress_indicator.png" },
+                new() { Headline = Sections.Communications, Text = Models.Pages.Snackbar, LeadingIcon = "ic_snackbar.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Containment, Text = Models.Pages.BottomSheet, LeadingIcon = "ic_bottomsheet.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Containment, Text = Models.Pages.Card, LeadingIcon = "ic_card.png" },
+                new() { Headline = Sections.Containment, Text = Models.Pages.Dialog, LeadingIcon = "ic_dialog.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Containment, Text = Models.Pages.Divider, LeadingIcon = "ic_divider.png"},
+                new() { Headline = Sections.Navigation, Text = Models.Pages.NavigationDrawer, LeadingIcon = "ic_navigation_drawer.png" },
+                new() { Headline = Sections.Navigation, Text = Models.Pages.TopAppBar, LeadingIcon = "ic_top_app_bar.png" },
+                new() { Headline = Sections.Selection, Text = Models.Pages.Checkbox, LeadingIcon = "ic_checkbox.png" },
+                new() { Headline = Sections.Selection, Text = Models.Pages.Chip, LeadingIcon = "ic_chip.png" },
+                new() { Headline = Sections.Selection, Text = Models.Pages.DatePicker, LeadingIcon = "ic_date.png" },
+                new() { Headline = Sections.Selection, Text = Models.Pages.Picker, LeadingIcon = "ic_picker.png" },
+                new() { Headline = Sections.Selection, Text = Models.Pages.RadioButton, LeadingIcon = "ic_radio.png" },
+                new() { Headline = Sections.Selection, Text = Models.Pages.Rating, LeadingIcon = "ic_rating.png" },
+                new() { Headline = Sections.Selection, Text = Models.Pages.Selection, LeadingIcon = "ic_selection.png" },
+                new() { Headline = Sections.Selection, Text = Models.Pages.Slider, LeadingIcon = "ic_slider.png" },
+                new() { Headline = Sections.Selection, Text = Models.Pages.Switch, LeadingIcon = "ic_switch.png" },
+                new() { Headline = Sections.Selection, Text = Models.Pages.TimePicker, LeadingIcon = "ic_time.png" },
+                new() { Headline = Sections.TextInputs, Text = Models.Pages.MultilineTextField, LeadingIcon = "ic_editor.png" },
+                new() { Headline = Sections.TextInputs, Text = Models.Pages.TextField, LeadingIcon = "ic_entry.png" },
+                new() { Headline = Sections.Typography, Text = Models.Pages.Label, LeadingIcon = "ic_label.png" }
+            };
 
-            var actionGroup = new MenuGroup() { GroupName = "Actions" };
-            actionGroup.Add(new MenuItemViewModel { Title = "Buttons", Icon = "ic_button.png", ViewModel = typeof(ButtonViewModel) });
-            actionGroup.Add(new MenuItemViewModel { Title = "Icon buttons", Icon = "ic_icon_button.png", ViewModel = typeof(IconButtonViewModel) });
-
-            var communicationGroup = new MenuGroup() { GroupName = "Communication" };
-            communicationGroup.Add(new MenuItemViewModel { Title = "Badges", Icon = "ic_badge.png", ViewModel = typeof(BadgeViewModel) });
-            communicationGroup.Add(new MenuItemViewModel { Title = "Progress indicators", Icon = "ic_progress_indicator.png", ViewModel = typeof(ProgressIndicatorViewModel) });
-
-            var containmentGroup = new MenuGroup() { GroupName = "Containment" };
-            containmentGroup.Add(new MenuItemViewModel { Title = "Cards", Icon = "ic_card.png", ViewModel = typeof(CardViewModel) });
-            containmentGroup.Add(new MenuItemViewModel { Title = "Dividers", Icon = "ic_divider.png", ViewModel = typeof(DividerViewModel) });
-            
-            var navigationGroup = new MenuGroup() { GroupName = "Navigation" };
-            navigationGroup.Add(new MenuItemViewModel { Title = "Top app bars", ViewModel = typeof(TopAppBarViewModel) });
-            navigationGroup.Add(new MenuItemViewModel { Title = "Navigation drawer", Icon = "ic_navigation_drawer.png", ViewModel = typeof(NavigationDrawerViewModel) });
-
-            var selectionGroup = new MenuGroup() { GroupName = "Selection" };
-            selectionGroup.Add(new MenuItemViewModel { Title = "Chips", Icon = "ic_chip.png", ViewModel = typeof(ChipsViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Checkboxes", Icon = "ic_checkbox.png", ViewModel = typeof(CheckboxViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Radio buttons", Icon = "ic_radio.png", ViewModel = typeof(RadioButtonViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Rating", Icon = "ic_rating.png", ViewModel = typeof(RatingViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Switches", Icon = "ic_switch.png", ViewModel = typeof(SwitchViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Sliders", Icon = "ic_slider.png", ViewModel = typeof(SliderViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Picker", Icon = "ic_picker.png", ViewModel = typeof(PickerViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Date picker", Icon = "ic_date.png", ViewModel = typeof(DatePickerViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Time picker", Icon = "ic_time.png", ViewModel = typeof(TimePickerViewModel) });
-            selectionGroup.Add(new MenuItemViewModel { Title = "Selection", Icon = "ic_selection.png", ViewModel = typeof(SelectionViewModel) });
-
-            var textGroup = new MenuGroup() { GroupName = "Text inputs" };
-            textGroup.Add(new MenuItemViewModel { Title = "Labels", Icon = "ic_label.png", ViewModel = typeof(LabelViewModel) });
-            textGroup.Add(new MenuItemViewModel { Title = "Text fields", Icon = "ic_entry.png", ViewModel = typeof(TextFieldViewModel) });
-            textGroup.Add(new MenuItemViewModel { Title = "Multiline text fields", Icon = "ic_editor.png", ViewModel = typeof(MultilineTextFieldViewModel) });
-
-            groups.Add(actionGroup);
-            groups.Add(communicationGroup);
-            groups.Add(containmentGroup);
-            groups.Add(navigationGroup);
-            groups.Add(selectionGroup);
-            groups.Add(textGroup);
-
-            MenuGroups = groups;
+            MenuItems = menuItems;
         }
 
+        [ICommand]
+        private async Task MenuItemClickAsync(MaterialNavigationDrawerItem menuItem)
+        {
+            if (menuItem != null && _viewmodelTypeMap.TryGetValue(menuItem.Text, out Type viewModelType))
+            {
+                await GoToAsync(viewModelType.Name);
+            }
+        }
+         
         [ICommand]
         private async Task AboutUsAsync()
         {
             await GoToAsync<AboutViewModel>();
         }
-        
-        [ICommand]
-        private async Task NavigateAsync(MenuItemViewModel item)
-        {
-            await GoToAsync(item.ViewModel.Name);
-        }
-    }
-
-    public partial class MenuItemViewModel : ObservableObject
-    {
-        [ObservableProperty]
-        string _title;
-
-        [ObservableProperty]
-        ImageSource _icon;
-
-        [ObservableProperty]
-        Type _viewModel;
     }
 }

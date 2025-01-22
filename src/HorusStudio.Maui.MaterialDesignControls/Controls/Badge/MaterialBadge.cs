@@ -264,14 +264,14 @@ public class MaterialBadge : ContentView
         HorizontalOptions = LayoutOptions.Center;
         VerticalOptions = LayoutOptions.Center;
         
-        _frmContainer = new MaterialCard()
+        _frmContainer = new MaterialCard
         {
             BackgroundColor = BackgroundColor,
             CornerRadius = CornerRadius,
             Padding = Padding
         };
 
-        _lblText = new Label()
+        _lblText = new Label
         {
             TextColor = TextColor,
             FontSize = FontSize,

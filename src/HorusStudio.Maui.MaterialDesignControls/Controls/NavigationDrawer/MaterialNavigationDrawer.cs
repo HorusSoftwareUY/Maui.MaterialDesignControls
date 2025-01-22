@@ -781,7 +781,6 @@ public class MaterialNavigationDrawer : ContentView
         var materialCard = new MaterialCard
         {
             Shadow = null,
-            BorderColor = Colors.Transparent,
             Padding = DefaultActiveIndicatorPadding,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
@@ -1004,6 +1003,11 @@ public class MaterialNavigationDrawer : ContentView
                 var selectedLeadingIcon = (string)values[1];
                 var unselectedLeadingIcon = (string)values[2];
 
+                if (string.IsNullOrEmpty(selectedLeadingIcon))
+                {
+                    selectedLeadingIcon = unselectedLeadingIcon;
+                }
+                
                 return (isSelected && !string.IsNullOrEmpty(selectedLeadingIcon) || (!isSelected && !string.IsNullOrEmpty(unselectedLeadingIcon)));
             })
         });
@@ -1024,6 +1028,11 @@ public class MaterialNavigationDrawer : ContentView
                 var isSelected = (bool)values[0];
                 var selectedLeadingIcon = (string)values[1];
                 var unselectedLeadingIcon = (string)values[2];
+
+                if (string.IsNullOrEmpty(selectedLeadingIcon))
+                {
+                    selectedLeadingIcon = unselectedLeadingIcon;
+                }
 
                 return isSelected ? selectedLeadingIcon : unselectedLeadingIcon;
             })
@@ -1046,6 +1055,11 @@ public class MaterialNavigationDrawer : ContentView
                 var selectedTrailingIcon = (string)values[1];
                 var unselectedTrailingIcon = (string)values[2];
 
+                if (string.IsNullOrEmpty(selectedTrailingIcon))
+                {
+                    selectedTrailingIcon = unselectedTrailingIcon;
+                }
+                
                 return (isSelected && !string.IsNullOrEmpty(selectedTrailingIcon) || (!isSelected && !string.IsNullOrEmpty(unselectedTrailingIcon)));
             })
         });
@@ -1067,6 +1081,11 @@ public class MaterialNavigationDrawer : ContentView
                 var selectedTrailingIcon = (string)values[1];
                 var unselectedTrailingIcon = (string)values[2];
 
+                if (string.IsNullOrEmpty(selectedTrailingIcon))
+                {
+                    selectedTrailingIcon = unselectedTrailingIcon;
+                }
+                
                 return isSelected ? selectedTrailingIcon : unselectedTrailingIcon;
             })
         });
