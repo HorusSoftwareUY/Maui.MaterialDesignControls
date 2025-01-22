@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -20,7 +19,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         string _subtitle;
 
         [ObservableProperty]
-        private bool _isEnabled = true;
+        bool _isEnabled = true;
 
         [ObservableProperty]
         bool _isVisible = true;
@@ -30,8 +29,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #endregion Attributes & Properties
 
         public delegate Task DisplayAlertType(string title, string message, string cancel);
+        public delegate Task<string> DisplayActionSheetType(string title, string cancel, string destruction, params string[] buttons);
 
         public DisplayAlertType DisplayAlert { get; set; }
+        public DisplayActionSheetType DisplayActionSheet { get; set; }
 
         #region Navigation
 

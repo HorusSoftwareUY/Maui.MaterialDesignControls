@@ -46,12 +46,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
     {
         #region Attributes and Properties
 
-        private readonly static MaterialProgressIndicatorType DefaultProgressIndicatorType = MaterialProgressIndicatorType.Circular;
-        private readonly static Color DefaultIndicatorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-        private readonly static Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultHeightRequest = -1;
-        private readonly static double DefaultWidthRequest = -1;
-        private readonly static int CircularThickness = 4;
+        private static readonly MaterialProgressIndicatorType DefaultProgressIndicatorType = MaterialProgressIndicatorType.Circular;
+        private static readonly Color DefaultIndicatorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+        private static readonly Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
+        private static readonly double DefaultHeightRequest = -1;
+        private static readonly double DefaultWidthRequest = -1;
+        private static readonly int CircularThickness = 4;
 
         private readonly Dictionary<MaterialProgressIndicatorType, double> _controlDefaultWidths = new()
         {
@@ -112,7 +112,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="IsVisible" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MaterialProgressIndicator), defaultValue: true, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MaterialProgressIndicator), defaultValue: true, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialProgressIndicator self)
             {
@@ -123,7 +123,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="HeightRequest" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultHeightRequest, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultHeightRequest, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialProgressIndicator self
                 && n is double newHeight && (o == null || (o is double oldHeight && !oldHeight.Equals(newHeight))))
@@ -135,7 +135,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="WidthRequest" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultWidthRequest, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultWidthRequest, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialProgressIndicator self
                 && n is double newWidth && (o == null || (o is double oldWidth && !oldWidth.Equals(newWidth))))
