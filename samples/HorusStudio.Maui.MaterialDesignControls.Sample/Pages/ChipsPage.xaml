@@ -10,7 +10,7 @@
 
     <ContentPage.Resources>
         <Style x:Key="GridChipsContainer" TargetType="Grid">
-            <Setter Property="RowDefinitions" Value="Auto,Auto" />
+            <Setter Property="RowDefinitions" Value="40,40" />
             <Setter Property="ColumnDefinitions" Value="*,*" />
             <Setter Property="RowSpacing" Value="16" />
             <Setter Property="ColumnSpacing" Value="16" />
@@ -104,7 +104,6 @@
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filter Chips" />
             <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
                 <Grid Style="{StaticResource GridChipsContainer}">
-                    
                     <material:MaterialChips
                         Grid.Column="0"
                         Grid.Row="0"

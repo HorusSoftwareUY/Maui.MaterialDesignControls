@@ -781,7 +781,6 @@ public class MaterialNavigationDrawer : ContentView
         var materialCard = new MaterialCard
         {
             Shadow = null,
-            BorderColor = Colors.Transparent,
             Padding = DefaultActiveIndicatorPadding,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
