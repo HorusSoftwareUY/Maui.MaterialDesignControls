@@ -7,7 +7,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        public override string Title => "Icon buttons";
+        public override string Title => Models.Pages.IconButton;
 
         #endregion
 

@@ -73,6 +73,8 @@ public class MaterialTimePicker : MaterialInputBase
         
         InputTapCommand = new Command(() =>
         {
+            if (!IsEnabled) return;
+
 #if ANDROID
             var handler = _timePicker.Handler as ITimePickerHandler;
             handler.PlatformView.PerformClick();

@@ -75,6 +75,7 @@ public class MaterialDatePicker : MaterialInputBase
         
         InputTapCommand = new Command(() =>
         {
+            if (!IsEnabled) return;
 #if ANDROID
             var handler = _datePicker.Handler as IDatePickerHandler;
             handler.PlatformView.PerformClick();
@@ -299,7 +300,6 @@ public class MaterialDatePicker : MaterialInputBase
         // Setup events/animations
         _datePicker.Focused += ContentFocusChanged;
         _datePicker.Unfocused += ContentFocusChanged;
-
     }
 
     protected override void OnControlDisappearing()

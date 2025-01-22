@@ -14,7 +14,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private string _valueFormat = "{0:0.0}º C";
 
-        public override string Title => "Slider";
+        public override string Title => Models.Pages.Slider;
 
         #endregion Attributes & Properties
 

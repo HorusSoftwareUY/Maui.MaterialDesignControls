@@ -7,7 +7,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        public override string Title => "Top app bars";
+        public override string Title => Models.Pages.TopAppBar;
 
         [ObservableProperty]
         private bool _iconButtonsEnabled = true;

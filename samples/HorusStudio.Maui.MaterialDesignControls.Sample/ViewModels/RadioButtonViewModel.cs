@@ -8,16 +8,16 @@ public partial class RadioButtonViewModel : BaseViewModel
 {
     #region Attributes & Properties
 
-    public override string Title => "Radio Buttons";
+    public override string Title => Models.Pages.RadioButton;
 
     [ObservableProperty]
-    public ObservableCollection<CustomColor> _itemsSourceColors;
+    private ObservableCollection<CustomColor> _itemsSourceColors;
 
     [ObservableProperty]
-    public CustomColor _checkedColor;
+    private CustomColor _checkedColor;
 
     [ObservableProperty]
-    public bool _isRadioButtonEnabled;
+    private bool _isRadioButtonEnabled;
 
     #endregion
 

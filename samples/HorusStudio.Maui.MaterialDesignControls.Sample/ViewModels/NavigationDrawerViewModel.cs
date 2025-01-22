@@ -13,7 +13,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         private MaterialNavigationDrawerItem _variantItem;
 
-        public override string Title => "Navigation Drawer";
+        public override string Title => Models.Pages.NavigationDrawer;
 
         [ObservableProperty]
         private ObservableCollection<MaterialNavigationDrawerItem> _items;

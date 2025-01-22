@@ -9,7 +9,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        public override string Title => "Chips";
+        public override string Title => Models.Pages.Chip;
 
         [ObservableProperty]
         private bool _isEnabledState;
