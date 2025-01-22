@@ -2,6 +2,14 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) or '$(EnableWindowsTargeting)' == 'true'">$(TargetFrameworks);net8.0-windows10.0.19041;net8.0-windows10.0.20348</TargetFrameworks>
+		<RootNamespace>HorusStudio.Maui.MaterialDesignControls</RootNamespace>
+		<Description>This library provides a UI Toolkit following Material Design 3 guidelines for .NET MAUI.</Description>
+	</PropertyGroup>
+	
+	<!--
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<UseMaui>true</UseMaui>
 		<MauiVersion>8.0.83</MauiVersion>
@@ -15,6 +23,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
+	-->
 
 	<!--
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
@@ -26,6 +35,7 @@
 	</PropertyGroup>
 	-->
 	
+	<!--
 	<ItemGroup Condition="$(TargetFramework.Contains('-android')) != true">
 	  <Compile Remove="**\*.Android.cs" />
 	  <None Include="**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
@@ -40,13 +50,15 @@
 	  <Compile Remove="**\*.Windows.cs" />
 	  <None Include="**\*.Windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
-	
+	-->
 	<ItemGroup>
+		<!-- Images -->
 		<MauiImage Include="Resources\Images\*.svg" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" />
 	</ItemGroup>
+	
 </Project>

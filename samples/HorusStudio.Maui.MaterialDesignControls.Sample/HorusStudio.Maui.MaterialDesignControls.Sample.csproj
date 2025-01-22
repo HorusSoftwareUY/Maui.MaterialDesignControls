@@ -40,18 +40,20 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
+		
 		<!-- Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
+		
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+		<PackageReference Include="Microsoft.Toolkit.Mvvm" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj" />
+		<ProjectReference Include="..\..\src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj" />
 	</ItemGroup>
 </Project>
