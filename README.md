@@ -52,25 +52,25 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * [MaterialCard](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcard.md)
 * [MaterialCheckbox](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcheckbox.md)
 * [MaterialChips](docs/Controls/horusstudio.maui.materialdesigncontrols.materialchips.md)
+* [MaterialDatePicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialdatepicker.md)
 * [MaterialDivider](docs/Controls/horusstudio.maui.materialdesigncontrols.materialdivider.md)
+* [MaterialEntry](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtextfield.md)
 * [MaterialIconButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialiconbutton.md)
 * [MaterialLabel](docs/Controls/horusstudio.maui.materialdesigncontrols.materiallabel.md)
+* [MaterialPicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialpicker.md)
 * [MaterialProgressIndicator](docs/Controls/horusstudio.maui.materialdesigncontrols.materialprogressindicator.md)
 * [MaterialRadioButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialradiobutton.md)
 * [MaterialRating](docs/Controls/horusstudio.maui.materialdesigncontrols.materialrating.md)
+* [MaterialTimePicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtimepicker.md)
 * [MaterialViewButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewbutton.md)
 
 ### Coming soon
 * MaterialChipsGroup
-* MaterialDatePicker
 * MaterialEditor
-* MaterialEntry
 * MaterialCodeEntry
 * MaterialField
-* MaterialPicker
 * MaterialDoublePicker
 * MaterialSelection
-* MaterialTimePicker
 * MaterialSlider
 * MaterialSegmented
 * MaterialFloatingButton

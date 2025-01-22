@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <Authors>Horus Studio</Authors>
+    <Product>$(AssemblyName) ($(TargetFramework))</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>True</IncludeSymbols>
+    <IncludeSource>True</IncludeSource>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>
+    <EscapedCurrentDirectory>$([System.Text.RegularExpressions.Regex]::Escape('$(MSBuildThisFileDirectory)'))</EscapedCurrentDirectory>
+    <RelativeProjectPath>$([System.Text.RegularExpressions.Regex]::Replace('$(MSBuildProjectFullPath)', '$(EscapedCurrentDirectory)', ''))</RelativeProjectPath>
+
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+</Project>

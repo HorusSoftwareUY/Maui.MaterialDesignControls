@@ -18,12 +18,14 @@
             <Setter Property="StrokeShape" Value="RoundRectangle 24" />
         </Style>
 
-        <Style x:Key="MainImageContainer" TargetType="Border">
+        <Style x:Key="MainImageContainer" TargetType="Frame">
             <Setter Property="HeightRequest" Value="160" />
-            <Setter Property="Stroke" Value="Transparent" />
+            <Setter Property="BorderColor" Value="Transparent" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.PrimaryContainer}" />
-            <Setter Property="StrokeShape" Value="RoundRectangle 24" />
+            <Setter Property="CornerRadius" Value="24" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="IsClippedToBounds" Value="True" />
         </Style>
 
         <Style x:Key="SectionHeader" TargetType="VerticalStackLayout">
@@ -34,10 +36,10 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="48,*">
-        <Grid Grid.Row="0" ColumnDefinitions="24,*,24,*,24" Padding="16,0">
-            <ImageButton Grid.Column="0" Source="menu" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding ToggleMenuCommand}" />
-            <Image Grid.Column="2" Source="horus_studio_logo" HeightRequest="24" Aspect="Center" />
-            <ImageButton Grid.Column="4" Source="info" HeightRequest="24" WidthRequest="24" Aspect="Center" Command="{Binding AboutUsCommand}" />
+        <Grid Grid.Row="0" ColumnDefinitions="24,*,24" Padding="16,0" >
+            <ImageButton Grid.Column="0" Source="menu" Aspect="Center" Command="{Binding ToggleMenuCommand}" />
+            <Image Grid.Column="1" Source="horus_studio_logo" Aspect="Center" />
+            <ImageButton Grid.Column="2" Source="info" Aspect="Center" Command="{Binding AboutUsCommand}" />
         </Grid>
 
         <ScrollView Grid.Row="1">
@@ -45,10 +47,10 @@
 
                 <Border Style="{StaticResource MainCard}">
                     <VerticalStackLayout Padding="0,0,0,24">
-                        <Border Style="{StaticResource MainImageContainer}">
+                        <Frame Style="{StaticResource MainImageContainer}">
                             <Image Source="home_material_design.png" 
                                    Aspect="AspectFill"/>
-                        </Border>
+                        </Frame>
 
                         <VerticalStackLayout Spacing="7" Padding="20, 0">
                             <material:MaterialLabel HorizontalTextAlignment="Center" Type="DisplaySmall" FontAttributes="Bold" Text="Material Design Controls"  />
@@ -100,5 +102,5 @@
         </ScrollView>
     </Grid>
 
-    
+
 </local:BaseContentPage>

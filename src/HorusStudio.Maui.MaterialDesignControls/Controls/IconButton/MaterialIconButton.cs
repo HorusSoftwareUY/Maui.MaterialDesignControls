@@ -59,22 +59,22 @@ public class MaterialIconButton : ContentView, ITouchable
 {
     #region Attributes
 
-    private readonly static MaterialIconButtonType DefaultButtonType = MaterialIconButtonType.Standard;
-    private readonly static Color DefaultTintColor = default;
-    private readonly static Brush DefaultBackground = ContentView.BackgroundProperty.DefaultValue as Brush;
-    private readonly static Color DefaultBackgroundColor = Colors.Transparent;
-    private readonly static double DefaultBorderWidth = 0;
-    private readonly static Color DefaultBorderColor = Colors.Transparent;
-    private readonly static int DefaultCornerRadius = 20;
-    private readonly static double DefaultHeightRequest = 40;
-    private readonly static double DefaultWidthRequest = 40;
-    private readonly static Thickness DefaultPadding = new(8);
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
-    private readonly static Color DefaultBusyIndicatorColor = MaterialLightTheme.Primary;
-    private readonly static double DefaultBusyIndicatorSize = 24;
-    private readonly static Shadow DefaultShadow = null;
-    private readonly static ImageSource DefaultImageSource = Image.SourceProperty.DefaultValue as ImageSource;
+    private static readonly MaterialIconButtonType DefaultButtonType = MaterialIconButtonType.Standard;
+    private static readonly Color DefaultTintColor = default;
+    private static readonly Brush DefaultBackground = ContentView.BackgroundProperty.DefaultValue as Brush;
+    private static readonly Color DefaultBackgroundColor = Colors.Transparent;
+    private static readonly double DefaultBorderWidth = 0;
+    private static readonly Color DefaultBorderColor = Colors.Transparent;
+    private static readonly int DefaultCornerRadius = 20;
+    private static readonly double DefaultHeightRequest = 40;
+    private static readonly double DefaultWidthRequest = 40;
+    private static readonly Thickness DefaultPadding = new(8);
+    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly Color DefaultBusyIndicatorColor = MaterialLightTheme.Primary;
+    private static readonly double DefaultBusyIndicatorSize = 24;
+    private static readonly Shadow DefaultShadow = null;
+    private static readonly ImageSource DefaultImageSource = Image.SourceProperty.DefaultValue as ImageSource;
 
     private readonly Dictionary<MaterialIconButtonType, object> _backgroundColors = new()
     {
@@ -158,7 +158,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Background" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialIconButton), defaultValue: DefaultBackground, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialIconButton), defaultValue: DefaultBackground, propertyChanged: (bindable, o, n) =>
     {
         if (bindable is MaterialIconButton self)
         {
@@ -169,7 +169,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialIconButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialIconButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
     {
         if (bindable is MaterialIconButton self)
         {
@@ -212,7 +212,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Padding" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialIconButton), defaultValue: DefaultPadding);
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialIconButton), defaultValue: DefaultPadding);
 
     /// <summary>
     /// The backing store for the <see cref="Animation"/> bindable property.
@@ -232,12 +232,12 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialIconButton), defaultValue: DefaultHeightRequest);
+    public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialIconButton), defaultValue: DefaultHeightRequest);
 
     /// <summary>
     /// The backing store for the <see cref="WidthRequest" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialIconButton), defaultValue: DefaultWidthRequest);
+    public new static readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialIconButton), defaultValue: DefaultWidthRequest);
 
     /// <summary>
     /// The backing store for the <see cref="IsBusy"/> bindable property.
@@ -284,7 +284,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Shadow" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialIconButton), defaultValue: DefaultShadow, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialIconButton), defaultValue: DefaultShadow, propertyChanged: (bindable, o, n) =>
     {
         if (bindable is MaterialIconButton self)
         {

@@ -1,5 +1,4 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
-using HorusStudio.Maui.MaterialDesignControls.Enums;
 using System.Windows.Input;
 
 
@@ -48,15 +47,15 @@ public class MaterialCheckBox : ContentView, ITouchable
 
     #region Attributes
 
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultCheckColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimary, Dark = MaterialDarkTheme.OnPrimary }.GetValueForCurrentTheme<Color>();
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultCheckColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimary, Dark = MaterialDarkTheme.OnPrimary }.GetValueForCurrentTheme<Color>();
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
+    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
 #nullable enable
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
 #nullable disable
 
     #endregion Attributes
@@ -75,7 +74,7 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Content" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(string), typeof(MaterialCheckBox), defaultValue: null);
+    public new static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(string), typeof(MaterialCheckBox), defaultValue: null);
 
     /// <summary>
     /// The backing store for the <see cref="Color" /> bindable property.
@@ -117,7 +116,7 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="IsEnabled" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialCheckBox), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialCheckBox), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialCheckBox self && newValue is bool)
         {
@@ -202,10 +201,7 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <remarks>We disabled the set for this property because doesn't have sense set the content because we are setting with the checkbox and label.</remarks>
-    public new string Content
-    {
-        get { return (string)GetValue(ContentProperty); }
-    }
+    public new string Content => (string)GetValue(ContentProperty);
 
     /// <summary>
     /// Gets or sets the <see cref="Text" /> for the label.
@@ -216,8 +212,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </default>
     public string Text
     {
-        get { return (string)GetValue(TextProperty); }
-        set { SetValue(TextProperty, value); }
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
     }
 
     /// <summary>
@@ -229,8 +225,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </default>
     public Color Color
     {
-        get { return (Color)GetValue(ColorProperty); }
-        set { SetValue(ColorProperty, value); }
+        get => (Color)GetValue(ColorProperty);
+        set => SetValue(ColorProperty, value);
     }
 
     /// <summary>
@@ -243,8 +239,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// <remarks>Only is supported on iOS.</remarks>
     public Color TickColor
     {
-        get { return (Color)GetValue(TickColorProperty); }
-        set { SetValue(TickColorProperty, value); }
+        get => (Color)GetValue(TickColorProperty);
+        set => SetValue(TickColorProperty, value);
     }
 
     /// <summary>
@@ -256,8 +252,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </default>
     public Color TextColor
     {
-        get { return (Color)GetValue(TextColorProperty); }
-        set { SetValue(TextColorProperty, value); }
+        get => (Color)GetValue(TextColorProperty);
+        set => SetValue(TextColorProperty, value);
     }
 
     /// <summary>
@@ -269,8 +265,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </default>
     public bool IsChecked
     {
-        get { return (bool)GetValue(IsCheckedProperty); }
-        set { SetValue(IsCheckedProperty, value); }
+        get => (bool)GetValue(IsCheckedProperty);
+        set => SetValue(IsCheckedProperty, value);
     }
 
     /// <summary>
@@ -281,8 +277,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </default>
     public new bool IsEnabled
     {
-        get { return (bool)GetValue(IsEnabledProperty); }
-        set { SetValue(IsEnabledProperty, value); }
+        get => (bool)GetValue(IsEnabledProperty);
+        set => SetValue(IsEnabledProperty, value);
     }
 
     /// <summary>
@@ -294,8 +290,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </default>
     public string FontFamily
     {
-        get { return (string)GetValue(FontFamilyProperty); }
-        set { SetValue(FontFamilyProperty, value); }
+        get => (string)GetValue(FontFamilyProperty);
+        set => SetValue(FontFamilyProperty, value);
     }
 
     /// <summary>
@@ -303,8 +299,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </summary>
     public double CharacterSpacing
     {
-        get { return (double)GetValue(CharacterSpacingProperty); }
-        set { SetValue(CharacterSpacingProperty, value); }
+        get => (double)GetValue(CharacterSpacingProperty);
+        set => SetValue(CharacterSpacingProperty, value);
     }
 
     /// <summary>
@@ -312,8 +308,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </summary>
     public FontAttributes FontAttributes
     {
-        get { return (FontAttributes)GetValue(FontAttributesProperty); }
-        set { SetValue(FontAttributesProperty, value); }
+        get => (FontAttributes)GetValue(FontAttributesProperty);
+        set => SetValue(FontAttributesProperty, value);
     }
 
     /// <summary>
@@ -324,8 +320,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </default>
     public bool FontAutoScalingEnabled
     {
-        get { return (bool)GetValue(FontAutoScalingEnabledProperty); }
-        set { SetValue(FontAutoScalingEnabledProperty, value); }
+        get => (bool)GetValue(FontAutoScalingEnabledProperty);
+        set => SetValue(FontAutoScalingEnabledProperty, value);
     }
 
     /// <summary>
@@ -336,8 +332,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </default>
     public double FontSize
     {
-        get { return (double)GetValue(FontSizeProperty); }
-        set { SetValue(FontSizeProperty, value); }
+        get => (double)GetValue(FontSizeProperty);
+        set => SetValue(FontSizeProperty, value);
     }
 
     /// <summary>
@@ -345,8 +341,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </summary>
     public TextTransform TextTransform
     {
-        get { return (TextTransform)GetValue(TextTransformProperty); }
-        set { SetValue(TextTransformProperty, value); }
+        get => (TextTransform)GetValue(TextTransformProperty);
+        set => SetValue(TextTransformProperty, value);
     }
 
     /// <summary>
@@ -357,8 +353,8 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// </default>
     public TextSide TextSide
     {
-        get { return (TextSide)GetValue(TextSideProperty); }
-        set { SetValue(TextSideProperty, value); }
+        get => (TextSide)GetValue(TextSideProperty);
+        set => SetValue(TextSideProperty, value);
     }
 
     /// <summary>

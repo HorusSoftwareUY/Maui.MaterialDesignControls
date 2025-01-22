@@ -20,7 +20,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private int _value = 2;
 
-        public override string Title => "Rating";
+        public override string Title => Models.Pages.Rating;
 
         #endregion
 

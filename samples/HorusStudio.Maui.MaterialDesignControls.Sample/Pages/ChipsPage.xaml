@@ -11,7 +11,7 @@
 
     <ContentPage.Resources>
         <Style x:Key="GridChipsContainer" TargetType="Grid">
-            <Setter Property="RowDefinitions" Value="Auto,Auto" />
+            <Setter Property="RowDefinitions" Value="40,40" />
             <Setter Property="ColumnDefinitions" Value="*,*" />
             <Setter Property="RowSpacing" Value="16" />
             <Setter Property="ColumnSpacing" Value="16" />
