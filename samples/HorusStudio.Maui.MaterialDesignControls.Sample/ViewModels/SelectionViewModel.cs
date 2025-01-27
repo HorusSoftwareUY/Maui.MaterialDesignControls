@@ -22,7 +22,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public SelectionViewModel()
         {
-            Subtitle = "Selection controls allow the user to select options.";
+            Subtitle = "Selection control allow people choose an option in a custom way with same look & feel than pickers and text fields. They typically appear in forms and dialogs.";
         }
 
         [ICommand]

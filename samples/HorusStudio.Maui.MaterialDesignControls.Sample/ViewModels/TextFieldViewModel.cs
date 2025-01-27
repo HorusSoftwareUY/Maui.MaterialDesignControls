@@ -22,7 +22,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public TextFieldViewModel()
         {
-            Subtitle = "Text fields let users enter text into a UI. They typically appear in forms and dialogs.";
+            Subtitle = "Text fields let people enter text into a UI. They typically appear in forms and dialogs.";
         }
 
         [ICommand]

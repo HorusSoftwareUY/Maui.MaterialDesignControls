@@ -48,8 +48,22 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" />
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj" />
 	</ItemGroup>
+	
+	<!--
+	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
+	  <Reference Include="HorusStudio.Maui.MaterialDesignControls">
+	    <HintPath>..\..\..\..\..\..\Desktop\Material\v1.0.0\Android\HorusStudio.Maui.MaterialDesignControls.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-ios'))">
+		<Reference Include="HorusStudio.Maui.MaterialDesignControls">
+			<HintPath>..\..\..\..\..\..\Desktop\Material\v1.0.0\iOS\HorusStudio.Maui.MaterialDesignControls.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	-->
 </Project>

@@ -66,6 +66,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             SetBinding(SubtitleProperty, new Binding(nameof(BaseViewModel.Subtitle)));
             SetBinding(CustomizationModeProperty, new Binding(nameof(BaseViewModel.IsCustomize), mode: BindingMode.TwoWay));
             SetBinding(BackCommandProperty, new Binding(nameof(BaseViewModel.GoBackCommand)));
+            
+            Shell.SetNavBarIsVisible(this, false);
         }
 
         protected override void OnNavigatedFrom(NavigatedFromEventArgs args)

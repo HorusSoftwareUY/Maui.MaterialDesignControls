@@ -32,7 +32,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public PickerViewModel()
         {
-            Subtitle = "Pickers let users select an option.";
+            Subtitle = "Pickers let people select an option from a list of values. They typically appear in forms and dialogs.";
             ItemsSource = new ObservableCollection<int>
             {
                 30,31,32,33,34,35,36,37

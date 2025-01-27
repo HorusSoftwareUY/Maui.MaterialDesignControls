@@ -37,6 +37,7 @@
             <Style x:Key="CardControlContainer" TargetType="material:MaterialCard">
                 <Setter Property="BackgroundColor" Value="{x:Static material:MaterialLightTheme.SurfaceContainerLow}" />
                 <Setter Property="CornerRadius" Value="24" />
+                <Setter Property="Padding" Value="16,32" />
             </Style>
 
             <Style x:Key="SectionTitle" TargetType="material:MaterialLabel">
@@ -44,7 +45,8 @@
                 <Setter Property="Margin" Value="0,36,0,0" />
             </Style>
 
-            <ControlTemplate x:Key="MainTemplate" x:DataType="vm:BaseViewModel">
+            <ControlTemplate x:Key="ControlPageWithTopAppBar" 
+                             x:DataType="vm:BaseViewModel">
                 <Grid
                     RowDefinitions="Auto,*">
                     <material:MaterialTopAppBar
@@ -52,15 +54,15 @@
                         Description="{TemplateBinding Subtitle}"
                         LeadingIconCommand="{TemplateBinding BackCommand}"
                         LeadingIconIsBusy="{TemplateBinding Path=BackCommand.IsRunning}"
-                        LeadingIcon="ic_back_b.png"
+                        LeadingIcon="ic_back.png"
                         Type="Large"
-                        ScrollViewName="mdcTemplateScroll"
+                        ScrollViewName="MdcControlPageScroll"
                         x:Name="mdcTopBar">
                         <material:MaterialTopAppBar.TrailingIcons>
                             <material:TrailingIcon
-                                Icon="info.png" />
+                                Icon="ic_web.png" />
                             <material:TrailingIcon
-                                Icon="info.png" />
+                                Icon="ic_preview.png" />
                         </material:MaterialTopAppBar.TrailingIcons>
                         <material:MaterialTopAppBar.Triggers>
                             <DataTrigger TargetType="material:MaterialTopAppBar" Binding="{Binding IsCollapsed, Source={x:Reference mdcTopBar}}" Value="True">
@@ -70,7 +72,7 @@
                             </DataTrigger>
                         </material:MaterialTopAppBar.Triggers>
                     </material:MaterialTopAppBar>
-                    <ScrollView Grid.Row="1" x:Name="mdcTemplateScroll">
+                    <ScrollView Grid.Row="1" x:Name="MdcControlPageScroll">
                         <VerticalStackLayout Style="{StaticResource MainLayout}">
                             <views:ControlsTabsView IsCustomize="{TemplateBinding CustomizationMode, Mode=TwoWay}" />
                             
@@ -79,10 +81,31 @@
                                 <material:MaterialCard
                                     Style="{StaticResource CardControlContainer}"
                                     IsVisible="{TemplateBinding CustomizationMode}"
-                                    Padding="32">
-                                    <material:MaterialLabel Text="Custom view pending" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    Padding="32"
+                                    Margin="0,24">
+                                    <material:MaterialLabel Text="Soon you will be able to customize controls live" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </material:MaterialCard>    
                             </Grid>
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </Grid>
+            </ControlTemplate>
+            
+            <ControlTemplate x:Key="PageWithTopAppBar" 
+                             x:DataType="vm:BaseViewModel">
+                <Grid
+                    RowDefinitions="Auto,*">
+                    <material:MaterialTopAppBar
+                        Headline="{TemplateBinding Title}"
+                        Description="{TemplateBinding Subtitle}"
+                        LeadingIconCommand="{TemplateBinding BackCommand}"
+                        LeadingIconIsBusy="{TemplateBinding Path=BackCommand.IsRunning}"
+                        LeadingIcon="ic_back.png"
+                        Type="Large"
+                        ScrollViewName="MdcPageScroll" />
+                    <ScrollView Grid.Row="1" x:Name="MdcPageScroll">
+                        <VerticalStackLayout Style="{StaticResource MainLayout}">
+                            <ContentPresenter />
                         </VerticalStackLayout>
                     </ScrollView>
                 </Grid>

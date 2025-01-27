@@ -1,108 +1,105 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                       xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-                       xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
-                       xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
-                       x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.PickerPage"
-                       x:TypeArguments="vm:PickerViewModel"
-                       x:DataType="vm:PickerViewModel">
-    <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
-            <material:MaterialLabel Text="{Binding Subtitle}" />
+<local:BaseContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.PickerPage"
+    x:TypeArguments="vm:PickerViewModel"
+    x:DataType="vm:PickerViewModel"
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    
+    <VerticalStackLayout Spacing="8">
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <material:MaterialPicker 
+                ItemsSource="{Binding ItemsSource}"
+                Placeholder="Select an option"
+                Label="Number" />
+        </material:MaterialCard>
+        <material:MaterialLabel Text="Default picker control with a filled background, featuring a movable label and placeholder text." Type="BodySmall" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <VerticalStackLayout>
-                    <material:MaterialPicker 
-                        ItemsSource="{Binding ItemsSource}"
-                        Placeholder="Select an option"
-                        Label="Number" />
-                </VerticalStackLayout>
-            </Frame>
-            <material:MaterialLabel Text="A select control with a filled background, featuring a movable label, placeholder text, and optional icons." />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <material:MaterialPicker 
+                Type="Outlined"
+                BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                ItemsSource="{Binding ItemsSource}"
+                Placeholder="Select an option" />
+        </material:MaterialCard>
+        <material:MaterialLabel Text="Default outlined picker control with a clear outline around the field, featuring a movable label and placeholder text." Type="BodySmall" />
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a custom object to the ItemsSource" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialPicker 
+                    ItemsSource="{Binding ColorsSource}"
+                    PropertyPath="Color"
+                    LeadingIcon="select_color.png"
+                    LeadingIconCommand="{Binding LeadingActionCommand}"
+                    Focused="MaterialPicker_Focused"
+                    Unfocused="MaterialPicker_Focused"
+                    Placeholder="Select a color" />
+                <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="You can define events like focused, unfocused or selected index changed, trailing icon and/or leading icon and a property path when you use a custom object for the ItemsSource (by default it uses the ToString() method of the objects)." Type="BodySmall" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <VerticalStackLayout>
-                    <material:MaterialPicker 
-                        Type="Outlined"
-                        ItemsSource="{Binding ItemsSource}"
-                        Placeholder="Select an option" />
-                </VerticalStackLayout>
-            </Frame>
-            <material:MaterialLabel Text="A select control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." />
-            
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a custom object to the ItemsSource" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <VerticalStackLayout>
-                    <material:MaterialPicker 
-                        ItemsSource="{Binding ColorsSource}"
-                        PropertyPath="Color"
-                        LeadingIcon="select_color.png"
-                        LeadingIconCommand="{Binding LeadingActionCommand}"
-                        Focused="MaterialPicker_Focused"
-                        Unfocused="MaterialPicker_Focused"
-                        Placeholder="Select a color" />
-                    <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
-                </VerticalStackLayout>
-            </Frame>
-            <material:MaterialLabel Text="You can define events like focused, unfocused or selected index changed, trailing icon or leading icon and a property path when you use a custom object for the ItemsSource (by default it uses the ToString() method of the objects)." />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing the style and using selected index changed event" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialPicker 
+                    x:Name="picker"
+                    Type="Outlined"
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    ItemsSource="{Binding ItemsSource}"
+                    SelectedIndexChanged="MaterialPicker_SelectedIndexChanged"
+                    TextColor="DarkGoldenrod"
+                    LabelColor="DarkGreen"
+                    BorderColor="DarkGray"
+                    PlaceholderColor="DarkBlue"
+                    Placeholder="Select an item" />
+                <material:MaterialLabel x:Name="LabelSelectedIndex" Text="Selected Index: -1" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="You can set colors for background, placeholder, label and/or text; and also set an event when the selected index changed." Type="BodySmall" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing the style and using selected index changed event" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <VerticalStackLayout>
-                    <material:MaterialPicker 
-                        x:Name="picker"
-                        Type="Outlined"
-                        ItemsSource="{Binding ItemsSource}"
-                        SelectedIndexChanged="MaterialPicker_SelectedIndexChanged"
-                        TextColor="DarkGoldenrod"
-                        LabelColor="DarkGreen"
-                        BorderColor="DarkGray"
-                        PlaceholderColor="DarkBlue"
-                        Placeholder="Select an item" />
-                    <material:MaterialLabel x:Name="LabelSelectedIndex" Text="Selected Index: -1" />
-                    
-                </VerticalStackLayout>
-            </Frame>
-            <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set an event when the selected index changed." />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialPicker 
+                    SelectedItem="{Binding SelectedColor}"
+                    SupportingText="{Binding SupportingTextValue}"
+                    ItemsSource="{Binding ColorsSource}"
+                    HasError="{Binding HasAnError}"
+                    Placeholder="Select a color" />
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Grid.Column="0" Text="Check" />
+                    <material:MaterialButton Command="{Binding ClearSelectedColorCommand}" Grid.Column="1" Text="Clear" />
+                    <material:MaterialButton Command="{Binding AddNewColorCommand}" Grid.Column="2" Text="Add" />
+                </Grid>
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="You can bind the selected item, set a supporting text, clear the selected value and add new items to the source." Type="BodySmall" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <VerticalStackLayout>
-                    <material:MaterialPicker 
-                        SelectedItem="{Binding SelectedColor}"
-                        SupportingText="{Binding SupportingTextValue}"
-                        ItemsSource="{Binding ColorsSource}"
-                        HasError="{Binding HasAnError}"
-                        Placeholder="Select a color" />
-                    <Grid ColumnSpacing="16">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Grid.Column="0" Text="Check" />
-                        <material:MaterialButton Command="{Binding ClearSelectedColorCommand}" Grid.Column="1" Text="Clear" />
-                        <material:MaterialButton Command="{Binding AddNewColorCommand}" Grid.Column="2" Text="Add" />
-                    </Grid>
-                </VerticalStackLayout>
-            </Frame>
-            <material:MaterialLabel Text="You can bind the selected item, set a supporting text, clear the selected value and add new items to the source." />
-
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <VerticalStackLayout>
-                    <material:MaterialPicker 
-                        Type="Outlined"
-                        Placeholder="Select a new color"
-                        IsEnabled="False"
-                        SelectedItem="{Binding SelectedDisabledColor}"
-                        ItemsSource="{Binding ColorsSource}" />
-                </VerticalStackLayout>
-            </Frame>
-            <material:MaterialLabel Text="You can disabled a picker." />
-        </VerticalStackLayout>
-    </ScrollView>
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialPicker 
+                    Type="Outlined"
+                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    Placeholder="Select a new color"
+                    IsEnabled="False"
+                    ItemsSource="{Binding ColorsSource}"
+                    SelectedItem="{Binding SelectedDisabledColor, Mode=TwoWay}" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="You can disable a picker." Type="BodySmall" />
+    </VerticalStackLayout>
 </local:BaseContentPage>

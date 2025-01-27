@@ -27,7 +27,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public DatePickerViewModel()
         {
-            Subtitle = "Date picker let users to select a date. They typically appear in forms and dialogs.";
+            Subtitle = "Date pickers let people select a date. They typically appear in forms and dialogs.";
         }
 
         [ICommand]

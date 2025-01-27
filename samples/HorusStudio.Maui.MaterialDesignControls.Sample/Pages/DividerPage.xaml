@@ -2,44 +2,35 @@
 <local:BaseContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
-    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.DividerPage"
     x:TypeArguments="vm:DividerViewModel"
-    x:DataType="vm:DividerViewModel">
-    <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
-            <material:MaterialLabel Text="{Binding Subtitle}" />
+    x:DataType="vm:DividerViewModel"
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    
+    <VerticalStackLayout Spacing="8">
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full width dividers" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="0,32">
+            <material:MaterialDivider />
+        </material:MaterialCard>
+        <material:MaterialLabel Text="Full width dividers to indicate separation of content." Type="BodySmall"/>
 
-            <views:ControlsTabsView IsCustomize="{Binding IsCustomize, Mode=TwoWay}" Margin="0,0,0,20" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Inset dividers" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <material:MaterialDivider />
+        </material:MaterialCard>
+        <material:MaterialLabel Text="Inset dividers separate related content, such as emails in a list. They should be used with anchoring elements such as icons or avatars, and align with the leading edge of the screen." Type="BodySmall" />
 
-            <VerticalStackLayout Spacing="8" IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}">
-                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full width dividers" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="0,36">
-                    <material:MaterialDivider />
-                </material:MaterialCard>
-                <material:MaterialLabel Text="Full width dividers to indicate separation of content." Type="BodySmall"/>
-
-                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Inset dividers" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
-                    <material:MaterialDivider />
-                </material:MaterialCard>
-                <material:MaterialLabel Text="Inset dividers separate related content, such as emails in a list. They should be used with anchoring elements such as icons or avatars, and align with the leading edge of the screen." Type="BodySmall" />
-
-                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Appearance" />
-                <material:MaterialCard Style="{StaticResource CardControlContainer}" Padding="16, 36">
-                    <material:MaterialDivider
-                         HeightRequest="{Binding DividerHeight}"
-                         Color="{Binding DividerColor}" />
-                </material:MaterialCard>
-                <material:MaterialButton
-                     Text="Change appearance"
-                     Command="{Binding ChangeAppearanceCommand}" />
-            </VerticalStackLayout>
-
-           
-        </VerticalStackLayout>
-    </ScrollView>
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Appearance" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <material:MaterialDivider
+                 HeightRequest="{Binding DividerHeight}"
+                 Color="{Binding DividerColor}" />
+        </material:MaterialCard>
+        <material:MaterialButton
+             Text="Change appearance"
+             Command="{Binding ChangeAppearanceCommand}" />
+    </VerticalStackLayout>
 </local:BaseContentPage>

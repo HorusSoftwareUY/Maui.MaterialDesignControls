@@ -25,7 +25,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public MultilineTextFieldViewModel()
         {
-            Subtitle = "Multiline Text fields let users enter text into a UI. They typically appear in forms and dialogs.";
+            Subtitle = "Multiline Text fields let people enter text into a UI. They typically appear in forms and dialogs.";
             Observation = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nisl tellus, elementum sit amet semper vel, fermentum vitae turpis. Integer vel auctor orci.";
         }
 

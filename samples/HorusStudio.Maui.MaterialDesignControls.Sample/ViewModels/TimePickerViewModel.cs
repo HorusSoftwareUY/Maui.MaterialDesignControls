@@ -21,7 +21,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public TimePickerViewModel()
         {
-            Subtitle = "Time pickers let users select a time. They typically appear in forms and dialogs.";
+            Subtitle = "Time pickers let people select a time. They typically appear in forms and dialogs.";
         }
 
         [ICommand]

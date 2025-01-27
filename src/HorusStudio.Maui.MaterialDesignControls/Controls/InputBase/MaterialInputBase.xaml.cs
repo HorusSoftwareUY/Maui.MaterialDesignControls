@@ -1238,6 +1238,16 @@ public abstract partial class MaterialInputBase
             }
             .GetValueForCurrentTheme<Color>()
             .WithAlpha(0.38f));
+        
+        disabled.Setters.Add(
+            MaterialInputBase.PlaceholderColorProperty,
+            new AppThemeBindingExtension
+                {
+                    Light = MaterialLightTheme.OnSurface,
+                    Dark = MaterialDarkTheme.OnSurface
+                }
+                .GetValueForCurrentTheme<Color>()
+                .WithAlpha(0.38f));
 
         disabled.Setters.Add(
             MaterialInputBase.SupportingColorProperty,
