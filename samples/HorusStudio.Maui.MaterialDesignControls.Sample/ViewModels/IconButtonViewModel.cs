@@ -9,10 +9,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => Models.Pages.IconButton;
-
-        [ObservableProperty]
-        private bool _isCustomize;
-
+        
         #endregion
 
         public IconButtonViewModel()

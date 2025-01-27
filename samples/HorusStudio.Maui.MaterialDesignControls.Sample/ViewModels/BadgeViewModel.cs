@@ -8,10 +8,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => Models.Pages.Badge;
-
-        [ObservableProperty]
-        private bool _isCustomize;
-
+        
         [ObservableProperty]
         private string _counter = string.Empty;
 

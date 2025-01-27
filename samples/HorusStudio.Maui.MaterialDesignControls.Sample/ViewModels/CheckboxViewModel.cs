@@ -9,9 +9,6 @@ public partial class CheckboxViewModel : BaseViewModel
     public override string Title => Models.Pages.Checkbox;
 
     [ObservableProperty]
-    private bool _isCustomize;
-
-    [ObservableProperty]
     private bool _isCheckboxEnabled;
 
     [ObservableProperty]

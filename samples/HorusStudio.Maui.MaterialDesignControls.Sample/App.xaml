@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Converters"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
+             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -42,7 +44,49 @@
                 <Setter Property="Margin" Value="0,36,0,0" />
             </Style>
 
-            
+            <ControlTemplate x:Key="MainTemplate" x:DataType="vm:BaseViewModel">
+                <Grid
+                    RowDefinitions="Auto,*">
+                    <material:MaterialTopAppBar
+                        Headline="{TemplateBinding Title}"
+                        Description="{TemplateBinding Subtitle}"
+                        LeadingIconCommand="{TemplateBinding BackCommand}"
+                        LeadingIconIsBusy="{TemplateBinding Path=BackCommand.IsRunning}"
+                        LeadingIcon="ic_back_b.png"
+                        Type="Large"
+                        ScrollViewName="mdcTemplateScroll"
+                        x:Name="mdcTopBar">
+                        <material:MaterialTopAppBar.TrailingIcons>
+                            <material:TrailingIcon
+                                Icon="info.png" />
+                            <material:TrailingIcon
+                                Icon="info.png" />
+                        </material:MaterialTopAppBar.TrailingIcons>
+                        <material:MaterialTopAppBar.Triggers>
+                            <DataTrigger TargetType="material:MaterialTopAppBar" Binding="{Binding IsCollapsed, Source={x:Reference mdcTopBar}}" Value="True">
+                                <Setter Property="BackgroundColor" Value="Red" />
+                                <Setter Property="LeadingIcon" Value="ic_info.png" />
+                                <Setter Property="Shadow" Value="{x:Static material:MaterialElevation.Level4}" />
+                            </DataTrigger>
+                        </material:MaterialTopAppBar.Triggers>
+                    </material:MaterialTopAppBar>
+                    <ScrollView Grid.Row="1" x:Name="mdcTemplateScroll">
+                        <VerticalStackLayout Style="{StaticResource MainLayout}">
+                            <views:ControlsTabsView IsCustomize="{TemplateBinding CustomizationMode, Mode=TwoWay}" />
+                            
+                            <Grid>
+                                <ContentPresenter IsVisible="{TemplateBinding CustomizationMode, Converter={StaticResource ReverseBoolConverter}}" />
+                                <material:MaterialCard
+                                    Style="{StaticResource CardControlContainer}"
+                                    IsVisible="{TemplateBinding CustomizationMode}"
+                                    Padding="32">
+                                    <material:MaterialLabel Text="Custom view pending" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </material:MaterialCard>    
+                            </Grid>
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </Grid>
+            </ControlTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

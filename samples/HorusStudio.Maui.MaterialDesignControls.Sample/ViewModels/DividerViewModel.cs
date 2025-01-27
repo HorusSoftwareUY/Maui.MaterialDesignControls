@@ -10,9 +10,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public override string Title => Models.Pages.Divider;
 
         [ObservableProperty]
-        private bool _isCustomize;
-
-        [ObservableProperty]
         private double _dividerHeight = 3;
 
         [ObservableProperty]

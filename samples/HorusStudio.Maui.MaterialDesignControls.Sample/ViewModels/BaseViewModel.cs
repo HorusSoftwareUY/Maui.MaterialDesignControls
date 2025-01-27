@@ -10,29 +10,34 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(IsNotBusy))]
-        bool _isBusy;
+        private bool _isBusy;
 
         public bool IsNotBusy => !IsBusy;
         public abstract string Title { get; }
 
         [ObservableProperty]
-        string _subtitle;
+        private string _subtitle = string.Empty;
 
         [ObservableProperty]
-        bool _isEnabled = true;
+        private bool _isCustomize;
+        
+        [ObservableProperty]
+        private bool _isEnabled = true;
 
         [ObservableProperty]
-        bool _isVisible = true;
-
+        private bool _isVisible = true;
+        
+#if ANDROID
         bool _alreadyOpenFlyout = false;
-
+#endif
+        
         #endregion Attributes & Properties
 
         public delegate Task DisplayAlertType(string title, string message, string cancel);
         public delegate Task<string> DisplayActionSheetType(string title, string cancel, string destruction, params string[] buttons);
 
-        public DisplayAlertType DisplayAlert { get; set; }
-        public DisplayActionSheetType DisplayActionSheet { get; set; }
+        public DisplayAlertType? DisplayAlert { get; set; }
+        public DisplayActionSheetType? DisplayActionSheet { get; set; }
 
         #region Navigation
 
@@ -113,17 +118,17 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        protected Task GoBack() => GoBackAsync();
+        private Task GoBack() => GoBackAsync();
 
         [ICommand]
-        protected async Task GoToAsync(Type type)
+        private async Task GoToAsync(Type type)
         {
             if (Shell.Current.FlyoutIsPresented) Shell.Current.FlyoutIsPresented = false;
             await GoToAsync(type.Name);
         }
 
         [ICommand]
-        protected void ToggleMenu()
+        private void ToggleMenu()
         {
             // Workaround to open the flyout on Android the first time
             // https://github.com/dotnet/maui/issues/8226

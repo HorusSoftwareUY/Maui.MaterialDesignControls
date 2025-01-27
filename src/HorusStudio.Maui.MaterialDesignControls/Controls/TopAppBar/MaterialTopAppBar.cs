@@ -65,13 +65,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static readonly MaterialTopAppBarType DefaultType = MaterialTopAppBarType.CenterAligned;
         private static readonly string DefaultHeadline = null;
         private static readonly Color DefaultHeadlineColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-        private static readonly double DefaultHeadlineFontSize = MaterialFontSize.TitleLarge;
+        private static readonly double DefaultHeadlineFontSize = MaterialFontSize.HeadlineLarge;
         private static readonly string DefaultHeadlineFontFamily = MaterialFontFamily.Default;
         private static readonly FontAttributes DefaultHeadlineFontAttributes = FontAttributes.None;
         private static readonly Thickness DefaultHeadlineMarginAdjustment = default(Thickness);
         private static readonly string DefaultDescription = null;
         private static readonly Color DefaultDescriptionColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-        private static readonly double DefaultDescriptionFontSize = MaterialFontSize.TitleMedium;
+        private static readonly double DefaultDescriptionFontSize = MaterialFontSize.BodyMedium;
         private static readonly string DefaultDescriptionFontFamily = MaterialFontFamily.Default;
         private static readonly FontAttributes DefaultDescriptionFontAttributes = FontAttributes.None;
         private static readonly Thickness DefaultDescriptionMarginAdjustment = new Thickness(DescriptionLateralMargin, 0, DescriptionLateralMargin, 0);
@@ -98,7 +98,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const int MediumLabelLateralMargin = 10;
         private const int LargeLabelLateralMargin = 10;
 
-        private bool _isCollapsed = false;
         private IList _trailingIcons;
 
         #endregion Attributes
@@ -276,6 +275,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// The backing store for the <see cref="ScrollViewAnimationLength" /> bindable property.
         /// </summary>
         public static readonly BindableProperty ScrollViewAnimationLengthProperty = BindableProperty.Create(nameof(ScrollViewAnimationLength), typeof(int), typeof(MaterialTopAppBar), defaultValue: DefaultScrollViewAnimationLength);
+        
+        /// <summary>
+        /// The backing store for the <see cref="IsCollapsed" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty IsCollapsedProperty = BindableProperty.Create(nameof(IsCollapsedProperty), typeof(bool), typeof(MaterialTopAppBar), defaultBindingMode: BindingMode.OneWayToSource, defaultValue: false);
 
         #endregion Bindable Properties
 
@@ -411,7 +415,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see cref="MaterialFontSize.TitleMedium">MaterialFontSize.TitleMedium</see> / Tablet = 19 / Phone = 16
+        /// <see cref="MaterialFontSize.BodyMedium">MaterialFontSize.BodyMedium</see> / Tablet = 17 / Phone = 14
         /// </default>
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double DescriptionFontSize
@@ -620,6 +624,16 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             get => (int)GetValue(ScrollViewAnimationLengthProperty);
             set => SetValue(ScrollViewAnimationLengthProperty, value);
+        }
+        
+        /// <summary>
+        /// Indicates if app bar is collapsed or not. 
+        /// This is a bindable property.
+        /// </summary>
+        public bool IsCollapsed
+        {
+            get => (bool)GetValue(IsCollapsedProperty);
+            private set => SetValue(IsCollapsedProperty, value);
         }
 
         #endregion Properties
@@ -1152,8 +1166,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     int maxHeight = Type == MaterialTopAppBarType.Large ? LargeRowHeight : MediumRowHeight;
                     int minHeight = SmallRowHeight;
 
-                    double maxFontSize = Type == MaterialTopAppBarType.Large ? MaterialFontSize.HeadlineMedium : MaterialFontSize.HeadlineSmall;
-                    double minFontSize = HeadlineFontSize;
+                    double minFontSize = Type == MaterialTopAppBarType.Large ? MaterialFontSize.HeadlineMedium : MaterialFontSize.HeadlineSmall;
+                    double maxFontSize = HeadlineFontSize;
 
                     int maxLabelLateralMargin = Type == MaterialTopAppBarType.Large ? LargeLabelLateralMargin : MediumLabelLateralMargin;
                     int minLabelLateralMargin = SmallLabelLateralMargin;
@@ -1174,19 +1188,20 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void ScrollAnimation(double scrollY, int maxHeight, int minHeight, double maxFontSize, double minFontSize, int maxLabelLateralMargin, int minLabelLateralMargin)
         {
-            if (_isCollapsed && scrollY <= 0)
+            if (IsCollapsed && scrollY <= 0)
             {
                 ExpandTopAppBar(maxHeight, minHeight, maxFontSize, minFontSize, maxLabelLateralMargin, minLabelLateralMargin);
             }
-            else if (!_isCollapsed && scrollY >= 70)
+            else if (!IsCollapsed && scrollY >= 70)
             {
                 CollapseTopAppBar(maxHeight, minHeight, maxFontSize, minFontSize, maxLabelLateralMargin, minLabelLateralMargin);
             }
+            Logger.Debug($"Scroll animation finished, IsCollapsed? {IsCollapsed}");
         }
 
         private void ExpandTopAppBar(int maxHeight, int minHeight, double maxFontSize, double minFontSize, int maxLabelLateralMargin, int minLabelLateralMargin)
         {
-            _isCollapsed = false;
+            IsCollapsed = false;
 
             if (TrailingIcons != null)
             {
@@ -1209,7 +1224,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void CollapseTopAppBar(int maxHeight, int minHeight, double maxFontSize, double minFontSize, int maxLabelLateralMargin, int minLabelLateralMargin)
         {
-            _isCollapsed = true;
+            IsCollapsed = true;
 
             if (TrailingIcons != null)
             {

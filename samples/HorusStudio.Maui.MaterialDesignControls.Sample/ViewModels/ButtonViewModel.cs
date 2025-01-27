@@ -13,9 +13,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private TextDecorations _decorations = TextDecorations.None;
 
-        [ObservableProperty]
-        private bool _isCustomize;
-
         #endregion
 
         public ButtonViewModel()
