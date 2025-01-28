@@ -8,6 +8,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => Models.Pages.Switch;
+        protected override string ControlReferenceUrl => "components/switch/overview";
 
         [ObservableProperty]
         private bool _isToggled = true;

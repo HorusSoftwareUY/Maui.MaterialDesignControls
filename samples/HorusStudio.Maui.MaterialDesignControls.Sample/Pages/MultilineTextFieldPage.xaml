@@ -25,7 +25,7 @@
             <VerticalStackLayout>
                 <material:MaterialMultilineTextField 
                     Type="Outlined"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     Placeholder="Enter text here" />
             </VerticalStackLayout>
         </material:MaterialCard>
@@ -55,7 +55,7 @@
                 <material:MaterialMultilineTextField 
                     MaxLength="100"
                     Type="Outlined"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     VerticalTextAlignment="End"
                     HorizontalTextAlignment="Start"
                     TextColor="DarkGoldenrod"
@@ -87,7 +87,7 @@
             <VerticalStackLayout>
                 <material:MaterialMultilineTextField 
                     Type="Outlined"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     HeightRequest="150"
                     Label="New Info"
                     IsEnabled="False"
@@ -101,7 +101,7 @@
             <VerticalStackLayout>
                 <material:MaterialMultilineTextField 
                     Type="Outlined"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     HeightRequest="150"
                     Label="New Info"
                     IsReadOnly="True"

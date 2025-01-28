@@ -8,6 +8,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => Models.Pages.MultilineTextField;
+        protected override string ControlReferenceUrl => "components/text-fields/overview";
 
         [ObservableProperty]
         private string _supportingTextValue = "Enter the value.";

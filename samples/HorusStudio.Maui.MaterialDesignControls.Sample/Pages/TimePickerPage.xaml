@@ -19,16 +19,15 @@
         </material:MaterialCard>
         <material:MaterialLabel Text="A time picker control with a filled background, featuring a movable label, placeholder text, and optional icons." Type="BodySmall" />
 
-       <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
                 <material:MaterialTimePicker Type="Outlined"
-                                             BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                                             BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                                              Placeholder="Select a time" />
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel Text="A time picker control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." Type="BodySmall" />
-
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using commands and some configuration" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
@@ -49,7 +48,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
                 <material:MaterialTimePicker Type="Outlined"
-                                             BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                                             BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                                              HorizontalTextAlignment="Center"
                                              TextColor="DarkGoldenrod"
                                              LabelColor="DarkGreen"
@@ -83,7 +82,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
                 <material:MaterialTimePicker Type="Outlined"
-                                             BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                                             BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                                              Label="Arrive time"
                                              IsEnabled="False"
                                              Time="10:30" />

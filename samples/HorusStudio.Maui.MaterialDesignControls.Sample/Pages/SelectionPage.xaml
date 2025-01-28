@@ -25,7 +25,7 @@
                 
                 <material:MaterialSelection 
                     Type="Outlined"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     Command="{Binding TapCommand}"
                     CommandParameter="User selection"
                     IsEnabled="False"
@@ -55,7 +55,7 @@
                     Text="{Binding SelectedText}"
                     SupportingText="{Binding SupportingTextValue}"
                     Type="Outlined"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     Command="{Binding TapCommand}"
                     CommandParameter="User selection"
                     HasError="{Binding HasAnError}"

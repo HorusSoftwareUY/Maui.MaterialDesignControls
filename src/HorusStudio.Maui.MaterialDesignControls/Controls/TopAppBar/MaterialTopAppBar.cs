@@ -74,7 +74,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static readonly double DefaultDescriptionFontSize = MaterialFontSize.BodyMedium;
         private static readonly string DefaultDescriptionFontFamily = MaterialFontFamily.Default;
         private static readonly FontAttributes DefaultDescriptionFontAttributes = FontAttributes.None;
-        private static readonly Thickness DefaultDescriptionMarginAdjustment = new Thickness(DescriptionLateralMargin, 0, DescriptionLateralMargin, 0);
+        private static readonly Thickness DefaultDescriptionMarginAdjustment = new Thickness(DescriptionLateralMargin, 8, DescriptionLateralMargin, 16);
         private static readonly ImageSource DefaultLeadingIcon = null;
         private static readonly ICommand DefaultLeadingIconCommand = null;
         private static readonly bool DefaultLeadingIconIsBusy = false;
@@ -97,6 +97,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const int SmallLabelLateralMargin = 48;
         private const int MediumLabelLateralMargin = 10;
         private const int LargeLabelLateralMargin = 10;
+        private static Thickness DefaultIconPadding = new Thickness(12);
 
         private IList _trailingIcons;
 
@@ -456,7 +457,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         /// <remarks>This property does not take into account the Left and Right of the set <see cref="Thickness" />, it only applies the Top and Bottom values.</remarks>
         /// <default>
-        /// new Thickness(10, 0, 10, 0)
+        /// new Thickness(10, 8, 10, 16)
         /// </default>
         public Thickness DescriptionMarginAdjustment
         {
@@ -718,7 +719,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Center,
-                IsVisible = false
+                IsVisible = false,
+                Padding = DefaultIconPadding
             };
             _leadingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
             _leadingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
@@ -968,7 +970,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                         Logger.Debug("TrailingIcons supports a maximum of 3 icon buttons, only the 3 first icons button will be displayed");
                     }
 
-                    if (TrailingIcons.Count >= 3)
+                    if (TrailingIcons.Count == 3)
                     {
                         _secondTrailingColumnDefinition = new ColumnDefinition { Width = SmallRowHeight };
                         ColumnDefinitions.Add(_secondTrailingColumnDefinition);
@@ -985,6 +987,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
                         Grid.SetColumnSpan(_headlineLabel, 4);
                         Grid.SetColumnSpan(_descriptionLabel, 4);
+                    }
+                    else
+                    {
+                        Grid.SetColumnSpan(_headlineLabel, 3);
+                        Grid.SetColumnSpan(_descriptionLabel, 3);
                     }
 
                     var trailingIconIndex = 0;
@@ -1029,7 +1036,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 IsBusy = trailingIcon.IsBusy,
                 VerticalOptions = trailingIconButtonsVerticalOptions,
                 HorizontalOptions = LayoutOptions.Center,
-                IsVisible = true
+                IsVisible = true,
+                Padding = DefaultIconPadding
             };
             trailingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
             trailingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
@@ -1196,7 +1204,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 CollapseTopAppBar(maxHeight, minHeight, maxFontSize, minFontSize, maxLabelLateralMargin, minLabelLateralMargin);
             }
-            Logger.Debug($"Scroll animation finished, IsCollapsed? {IsCollapsed}");
         }
 
         private void ExpandTopAppBar(int maxHeight, int minHeight, double maxFontSize, double minFontSize, int maxLabelLateralMargin, int minLabelLateralMargin)

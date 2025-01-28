@@ -7,6 +7,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
         public override string Title => Models.Pages.DatePicker;
+        protected override string ControlReferenceUrl => "components/date-pickers/overview";
 
         [ObservableProperty]
         private string _supportingTextValue = "Select a date.";

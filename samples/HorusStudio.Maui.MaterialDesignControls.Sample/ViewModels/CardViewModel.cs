@@ -8,6 +8,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => Models.Pages.Card;
+        protected override string ControlReferenceUrl => "components/cards/overview";
 
         private int _index = 0;
         private List<Color> _backgroundColors = new List<Color> { Colors.LightCyan, Colors.LightCoral, Colors.LightGreen };

@@ -6,13 +6,13 @@
     <ContentView.Resources>
 
         <Style x:Key="HomeCard" TargetType="material:MaterialCard">
-            <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.SurfaceContainerLow}" />
+            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
             <Setter Property="CornerRadius" Value="24" />
         </Style>
 
         <Style x:Key="ImageContainer" TargetType="material:MaterialCard">
             <Setter Property="HeightRequest" Value="180" />
-            <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.PrimaryContainer}" />
+            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.PrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.PrimaryContainer}}" />
             <Setter Property="CornerRadius" Value="24" />
         </Style>
 

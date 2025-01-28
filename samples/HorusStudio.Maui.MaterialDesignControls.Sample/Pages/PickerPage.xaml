@@ -24,7 +24,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <material:MaterialPicker 
                 Type="Outlined"
-                BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                 ItemsSource="{Binding ItemsSource}"
                 Placeholder="Select an option" />
         </material:MaterialCard>
@@ -52,7 +52,7 @@
                 <material:MaterialPicker 
                     x:Name="picker"
                     Type="Outlined"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     ItemsSource="{Binding ItemsSource}"
                     SelectedIndexChanged="MaterialPicker_SelectedIndexChanged"
                     TextColor="DarkGoldenrod"
@@ -93,7 +93,7 @@
             <VerticalStackLayout>
                 <material:MaterialPicker 
                     Type="Outlined"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     Placeholder="Select a new color"
                     IsEnabled="False"
                     ItemsSource="{Binding ColorsSource}"

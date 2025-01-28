@@ -17,7 +17,7 @@
                 <material:MaterialSlider 
                     Label="Only label"
                     Value="{Binding Value}"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}" />
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
                 <material:MaterialButton 
                     Command="{Binding CheckValueCommand}"
                     Text="Check value" />
@@ -36,7 +36,7 @@
                     ShowValueIndicator="False"
                     MinimumLabel="-"
                     MaximumLabel="+"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}" />
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
                 <material:MaterialLabel x:Name="displayLabel" Text="The Slider value will be show it here." />
             </VerticalStackLayout>
         </material:MaterialCard>
@@ -55,7 +55,7 @@
                     MinimumImageSource="volum_out.png"
                     MaximumImageSource="volum_in.png"
                     ShowIcons="True"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}" />
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel
@@ -73,7 +73,7 @@
                     ThumbHeight="35"
                     ThumbWidth="35"
                     Maximum="10"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     ThumbImageSource="icon_opacity.png" />
             </VerticalStackLayout>
         </material:MaterialCard>
@@ -92,7 +92,7 @@
                     ValueIndicatorFontSize="12"
                     TrackHeight="14"
                     Maximum="32"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     TrackImageSource="scale.png" />
             </VerticalStackLayout>
         </material:MaterialCard>
@@ -104,7 +104,7 @@
                 <material:MaterialSlider 
                     Label="Value"
                     Value="{Binding Value}"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     IsEnabled="False" />
             </VerticalStackLayout>
         </material:MaterialCard>

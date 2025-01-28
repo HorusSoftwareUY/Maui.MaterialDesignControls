@@ -21,7 +21,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <material:MaterialDatePicker 
                 Type="Outlined"
-                BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                 Placeholder="Select a birth date" />
         </material:MaterialCard>
         <material:MaterialLabel Text="Default outlined date picker control with a clear outline around the field, featuring a movable label and placeholder text." Type="BodySmall" />
@@ -45,7 +45,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <material:MaterialDatePicker 
                 Type="Outlined"
-                BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                 HorizontalTextAlignment="Center"
                 TextColor="DarkGoldenrod"
                 MaximumDate="{Binding MaximumDate}"
@@ -80,7 +80,7 @@
             <VerticalStackLayout>
                 <material:MaterialDatePicker 
                     Type="Outlined"
-                    BackgroundColor="{x:Static material:MaterialLightTheme.SurfaceContainerLow}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     Label="Birth date"
                     IsEnabled="False"
                     Date="10/12/2024" />

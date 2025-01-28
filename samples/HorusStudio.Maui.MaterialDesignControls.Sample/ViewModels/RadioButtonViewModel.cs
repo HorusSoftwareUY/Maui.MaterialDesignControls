@@ -9,6 +9,7 @@ public partial class RadioButtonViewModel : BaseViewModel
     #region Attributes & Properties
 
     public override string Title => Models.Pages.RadioButton;
+    protected override string ControlReferenceUrl => "components/radio-button/overview";
     
     [ObservableProperty]
     private ObservableCollection<CustomColor> _itemsSourceColors;

@@ -23,7 +23,7 @@
             <Setter Property="Padding" Value="0,18" />
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="Type" Value="BodyMedium" />
-            <Setter Property="TextColor" Value="{x:Static material:MaterialLightTheme.Primary}" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
         </Style>
 
     </ContentPage.Resources>
