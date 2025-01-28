@@ -27,6 +27,7 @@
                 <DataTrigger TargetType="material:MaterialTopAppBar" Binding="{Binding TopBarIsCollapsed}" Value="True">
                     <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLowest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLowest}}" />
                     <Setter Property="Shadow" Value="{x:Static material:MaterialElevation.Level2}" />
+                    <Setter Property="ZIndex" Value="1000" />
                 </DataTrigger>
             </material:MaterialTopAppBar.Triggers>
         </material:MaterialTopAppBar>

@@ -44,12 +44,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     {
                         Icon = "ic_web.png",
                         Command = OpenControlReferenceCommand,
-                        IsEnabled = OpenControlReferenceCommand.IsRunning
+                        IsBusy = OpenControlReferenceCommand.IsRunning
                     }/*,
                     new TrailingIcon
                     {
                         Icon = "ic_preview.png",
-                        Command = OpenControlReferenceCommand
+                        Command = OpenControlReferenceCommand,
+                        IsBusy = OpenControlReferenceCommand.IsRunning
                     }*/
                 };
             }

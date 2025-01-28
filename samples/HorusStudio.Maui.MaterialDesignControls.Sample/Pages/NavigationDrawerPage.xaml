@@ -10,7 +10,7 @@
     x:DataType="vm:NavigationDrawerViewModel"
     ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
     <ContentPage.Resources>
-        <Style x:Key="DrawerContainer" TargetType="Frame">
+        <Style x:Key="DrawerContainer" TargetType="material:MaterialCard">
             <Setter Property="BackgroundColor" Value="{StaticResource White}" />
             <Setter Property="CornerRadius" Value="16" />
             <Setter Property="Padding" Value="12,16" />
@@ -21,11 +21,11 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
            <VerticalStackLayout Spacing="16"> 
-                <Frame Style="{StaticResource DrawerContainer}">
+                <material:MaterialCard Style="{StaticResource DrawerContainer}">
                     <material:MaterialNavigationDrawer 
                         Command="{Binding TestCommand}"
                         ItemsSource="{Binding Items}" />
-                </Frame>
+                </material:MaterialCard>
                
                <material:MaterialButton 
                    Text="Change ItemsSource"
@@ -36,36 +36,36 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="With item dividers" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16"> 
-                <Frame Style="{StaticResource DrawerContainer}">
+                <material:MaterialCard Style="{StaticResource DrawerContainer}">
                     <material:MaterialNavigationDrawer 
                         BadgeBackgroundColor="{StaticResource Primary}"
                         BadgeTextColor="{StaticResource White}"
                         Command="{Binding TestCommand}"
                         ItemsSource="{Binding Items}"
                         DividerType="Item" />
-                </Frame>
+                </material:MaterialCard>
             </VerticalStackLayout>
         </material:MaterialCard>
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Without dividers" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16"> 
-                <Frame Style="{StaticResource DrawerContainer}">
+                <material:MaterialCard Style="{StaticResource DrawerContainer}">
                     <material:MaterialNavigationDrawer 
                         Command="{Binding TestCommand}"
                         ItemsSource="{Binding Items}"
                         DividerType="None" />
-                </Frame>
+                </material:MaterialCard>
             </VerticalStackLayout>
         </material:MaterialCard>
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout> 
-                <Frame Style="{StaticResource DrawerContainer}">
+                <material:MaterialCard Style="{StaticResource DrawerContainer}">
                     <material:MaterialNavigationDrawer 
                         ItemsSource="{Binding DisabledItems}" />
-                </Frame>
+                </material:MaterialCard>
             </VerticalStackLayout>
         </material:MaterialCard>
     </VerticalStackLayout>
