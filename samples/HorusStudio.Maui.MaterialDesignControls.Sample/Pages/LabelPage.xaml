@@ -1,114 +1,112 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-             xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
-             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
-             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.LabelPage"
-             x:TypeArguments="vm:LabelViewModel"
-             x:DataType="vm:LabelViewModel">
-    <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
-            <material:MaterialLabel Text="{Binding Subtitle}" />
+<local:BaseContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.LabelPage"
+    x:TypeArguments="vm:LabelViewModel"
+    x:DataType="vm:LabelViewModel"
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+            
+    <VerticalStackLayout Spacing="8">
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Display styles" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialLabel 
+                    Type="DisplayLarge"
+                    Text="Large" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Display styles" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialLabel 
-                        Type="DisplayLarge"
-                        Text="Large" />
+                <material:MaterialLabel 
+                    Type="DisplayMedium"
+                    Text="Medium" />
 
-                    <material:MaterialLabel 
-                        Type="DisplayMedium"
-                        Text="Medium" />
+                <material:MaterialLabel 
+                    Type="DisplaySmall"
+                    Text="Small" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
 
-                    <material:MaterialLabel 
-                        Type="DisplaySmall"
-                        Text="Small" />
-                </VerticalStackLayout>
-            </Frame>
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Headline styles" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialLabel 
+                    Type="HeadlineLarge"
+                    Text="Headline large" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Headline styles" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialLabel 
-                        Type="HeadlineLarge"
-                        Text="Headline large" />
+                <material:MaterialLabel 
+                    Type="HeadlineMedium"
+                    Text="Headline medium" />
 
-                    <material:MaterialLabel 
-                        Type="HeadlineMedium"
-                        Text="Headline medium" />
+                <material:MaterialLabel 
+                    Type="HeadlineSmall"
+                    Text="Headline small" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
 
-                    <material:MaterialLabel 
-                        Type="HeadlineSmall"
-                        Text="Headline small" />
-                </VerticalStackLayout>
-            </Frame>
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Title styles" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialLabel 
+                    Type="TitleLarge"
+                    Text="Title large" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Title styles" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialLabel 
-                        Type="TitleLarge"
-                        Text="Title large" />
+                <material:MaterialLabel 
+                    Type="TitleMedium"
+                    Text="Title medium" />
 
-                    <material:MaterialLabel 
-                        Type="TitleMedium"
-                        Text="Title medium" />
+                <material:MaterialLabel 
+                    Type="TitleSmall"
+                    Text="Title small" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
 
-                    <material:MaterialLabel 
-                        Type="TitleSmall"
-                        Text="Title small" />
-                </VerticalStackLayout>
-            </Frame>
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Body styles" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialLabel 
+                    Type="BodyLarge"
+                    Text="Body large" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Body styles" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialLabel 
-                        Type="BodyLarge"
-                        Text="Body large" />
+                <material:MaterialLabel 
+                    Type="BodyMedium"
+                    Text="Body medium" />
 
-                    <material:MaterialLabel 
-                        Type="BodyMedium"
-                        Text="Body medium" />
+                <material:MaterialLabel 
+                    Type="BodySmall"
+                    Text="Body small" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
 
-                    <material:MaterialLabel 
-                        Type="BodySmall"
-                        Text="Body small" />
-                </VerticalStackLayout>
-            </Frame>
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Label styles" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialLabel 
+                    Type="LabelLarge"
+                    Text="Label large" />
 
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Label styles" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialLabel 
-                        Type="LabelLarge"
-                        Text="Label large" />
+                <material:MaterialLabel 
+                    Type="LabelMedium"
+                    Text="Label medium" />
 
-                    <material:MaterialLabel 
-                        Type="LabelMedium"
-                        Text="Label medium" />
+                <material:MaterialLabel 
+                    Type="LabelSmall"
+                    Text="Label small" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
 
-                    <material:MaterialLabel 
-                        Type="LabelSmall"
-                        Text="Label small" />
-                </VerticalStackLayout>
-            </Frame>
-
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Appearance" />
-            <Frame Style="{StaticResource SurfaceContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialLabel 
-                        Type="{Binding LabelType}"
-                        TextColor="{Binding TextColor}"
-                        Text="Sample text" />
-                </VerticalStackLayout>
-            </Frame>
-            <material:MaterialButton
-                Text="Change appearance"
-                Command="{Binding ChangeAppearanceCommand}" />
-
-        </VerticalStackLayout>
-    </ScrollView>
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Appearance" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialLabel 
+                    Type="{Binding LabelType}"
+                    TextColor="{Binding TextColor}"
+                    Text="Sample text" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialButton
+            Text="Change appearance"
+            Command="{Binding ChangeAppearanceCommand}" />
+    </VerticalStackLayout>
 </local:BaseContentPage>

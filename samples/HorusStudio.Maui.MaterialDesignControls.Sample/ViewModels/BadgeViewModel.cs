@@ -7,8 +7,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        public override string Title => "MaterialBadge";
-
+        public override string Title => Models.Pages.Badge;
+        protected override string ControlReferenceUrl => "components/badges/overview";
+        
         [ObservableProperty]
         private string _counter = string.Empty;
 

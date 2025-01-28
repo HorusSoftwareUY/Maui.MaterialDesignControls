@@ -42,14 +42,14 @@ public class MaterialBadge : ContentView
 {
     #region Attributes
 
-    private readonly static MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
-    private readonly static string DefaultText = string.Empty;
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultFontSize = MaterialFontSize.LabelSmall;
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(8);
-    private readonly static Thickness DefaultPadding = new Thickness(16, 0);
+    private static readonly MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
+    private static readonly string DefaultText = string.Empty;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultFontSize = MaterialFontSize.LabelSmall;
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(8);
+    private static readonly Thickness DefaultPadding = new Thickness(16, 0);
     
     #endregion
 
@@ -100,7 +100,7 @@ public class MaterialBadge : ContentView
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" /> bindable property.
     /// </summary>
-    public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialBadge), defaultValue: DefaultBackgroundColor);
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialBadge), defaultValue: DefaultBackgroundColor);
     
     /// <summary>
     /// The backing store for the <see cref="CornerRadius"/> bindable property.
@@ -110,7 +110,7 @@ public class MaterialBadge : ContentView
     /// <summary>
     /// The backing store for the <see cref="Padding" /> bindable property.
     /// </summary>
-    public static readonly new BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialBadge), defaultValue: DefaultPadding, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialBadge), defaultValue: DefaultPadding, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialBadge self)
         {
@@ -264,14 +264,14 @@ public class MaterialBadge : ContentView
         HorizontalOptions = LayoutOptions.Center;
         VerticalOptions = LayoutOptions.Center;
         
-        _frmContainer = new MaterialCard()
+        _frmContainer = new MaterialCard
         {
             BackgroundColor = BackgroundColor,
             CornerRadius = CornerRadius,
             Padding = Padding
         };
 
-        _lblText = new Label()
+        _lblText = new Label
         {
             TextColor = TextColor,
             FontSize = FontSize,

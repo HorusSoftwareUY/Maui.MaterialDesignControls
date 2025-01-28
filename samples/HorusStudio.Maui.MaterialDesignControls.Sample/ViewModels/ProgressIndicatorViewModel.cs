@@ -7,7 +7,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 	{
         #region Attributes & Properties
 
-        public override string Title => "Progress Indicators";
+        public override string Title => Models.Pages.ProgressIndicator;
+        protected override string ControlReferenceUrl => "components/progress-indicators/overview";
 
         #endregion
 

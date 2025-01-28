@@ -17,13 +17,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private int _value = 2;
 
-        public override string Title => "Rating";
+        public override string Title => Models.Pages.Rating;
 
         #endregion
 
         public RatingViewModel()
         {
-            Subtitle = "This control allows users to view and set ratings that reflect degrees of satisfaction.";
+            Subtitle = "This control allow people to view and set rating values that reflect degrees of satisfaction.";
 
             SelectedIcons = new ObservableCollection<ImageSource>
             {

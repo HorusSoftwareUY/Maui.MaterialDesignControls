@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                       xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-                       xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
-                       xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
-                       x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.CardPage"
-                       x:TypeArguments="vm:CardViewModel"
-                       x:DataType="vm:CardViewModel">
+<local:BaseContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.CardPage"
+    x:TypeArguments="vm:CardViewModel"
+    x:DataType="vm:CardViewModel"
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
 
     <ContentPage.Resources>
         <Style x:Key="VisualStateManagerStyle" TargetType="material:MaterialCard"> 
@@ -40,205 +42,198 @@
         </Style>
     </ContentPage.Resources>
 
-    <ScrollView>
-        <VerticalStackLayout
-            Style="{StaticResource MainLayout}">
-            <material:MaterialLabel
-                Text="{Binding Subtitle}" />
+    <VerticalStackLayout Spacing="8">
+        <material:MaterialLabel
+            Style="{StaticResource SectionTitle}"
+            Text="Card types" />
 
-            <material:MaterialLabel
-                Style="{StaticResource SectionTitle}"
-                Text="Card types" />
-
-            <material:MaterialCard
+        <material:MaterialCard
                 Type="Elevated">
-                <VerticalStackLayout
-                    Spacing="8">
-                    <material:MaterialLabel
-                        Type="TitleMedium"
-                        Text="Elevated type" />
-                    <material:MaterialLabel
-                        Text="Elevated cards provide separation from a patterned background." />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-            
-            <material:MaterialCard
-                Type="Filled">
-                <VerticalStackLayout
-                    Spacing="8">
-                    <material:MaterialLabel
-                        Type="TitleMedium"
-                        Text="Filled type" />
-                    <material:MaterialLabel
-                        Text="Filled cards have high visual impact when used for important content." />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-
-            <material:MaterialCard
-                Type="Outlined">
-                <VerticalStackLayout
-                    Spacing="8">
-                    <material:MaterialLabel
-                        Type="TitleMedium"
-                        Text="Outlined type" />
-                    <material:MaterialLabel
-                        Text="Outline cards contain less important content." />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-
-            <material:MaterialCard
-                Type="Custom">
-                <VerticalStackLayout
-                    Spacing="8">
-                    <material:MaterialLabel
-                        Type="TitleMedium"
-                        Text="Custom type" />
-                    <material:MaterialLabel
-                        Text="Use custom cards if you need to combine properties from different card types." />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-
-            <material:MaterialDivider Margin="0,24,0,0" />
-
-            <material:MaterialLabel
-                Style="{StaticResource SectionTitle}"
-                Text="Visual states" />
-
-            <material:MaterialCard
-                Type="Elevated"
-                IsEnabled="{Binding CardEnabled}"
-                Command="{Binding TapCommand}">
+            <VerticalStackLayout
+                 Spacing="8">
                 <material:MaterialLabel
+                    Type="TitleMedium"
                     Text="Elevated type" />
-            </material:MaterialCard>
-            
-            <material:MaterialCard
-                Type="Filled"
-                IsEnabled="{Binding CardEnabled}"
-                Command="{Binding TapCommand}">
                 <material:MaterialLabel
-                    Text="Filled type" />
-            </material:MaterialCard>
+                    Text="Elevated cards provide separation from a patterned background." Type="BodySmall" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
 
-            <material:MaterialCard
-                Type="Outlined"
-                IsEnabled="{Binding CardEnabled}"
-                Command="{Binding TapCommand}">
+        <material:MaterialCard
+            Type="Filled">
+            <VerticalStackLayout
+                Spacing="8">
                 <material:MaterialLabel
+                    Type="TitleMedium"
+                        Text="Filled type" />
+                <material:MaterialLabel
+                 Text="Filled cards have high visual impact when used for important content." Type="BodySmall"/>
+            </VerticalStackLayout>
+        </material:MaterialCard>
+
+        <material:MaterialCard
+            Type="Outlined">
+            <VerticalStackLayout
+                Spacing="8">
+                <material:MaterialLabel
+                    Type="TitleMedium"
                     Text="Outlined type" />
-            </material:MaterialCard>
+                <material:MaterialLabel
+                    Text="Outline cards contain less important content." Type="BodySmall"/>
+            </VerticalStackLayout>
+        </material:MaterialCard>
 
-            <material:MaterialCard
-                Type="Custom"
-                Style="{StaticResource VisualStateManagerStyle}"
+        <material:MaterialCard
+            Type="Custom">
+            <VerticalStackLayout
+                Spacing="8">
+                <material:MaterialLabel
+                    Type="TitleMedium"
+                    Text="Custom type" />
+                <material:MaterialLabel
+                     Text="Use custom cards if you need to combine properties from different card types." Type="BodySmall" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+
+        <material:MaterialDivider Margin="0,24,0,0" />
+
+        <material:MaterialLabel
+            Style="{StaticResource SectionTitle}"
+            Text="Visual states" />
+
+        <material:MaterialCard
+                Type="Elevated"
                 IsEnabled="{Binding CardEnabled}"
                 Command="{Binding TapCommand}">
-                <material:MaterialLabel
-                    Text="Custom type" />
-            </material:MaterialCard>
-
-            <HorizontalStackLayout
-                HorizontalOptions="Center">
-                <material:MaterialLabel
-                    Text="Is enabled"
-                    HorizontalTextAlignment="End"
-                    VerticalTextAlignment="Center" />
-                <Switch
-                    HorizontalOptions="Start"
-                    IsToggled="{Binding CardEnabled}" />
-            </HorizontalStackLayout>
-
-            <material:MaterialDivider Margin="0,24,0,0" />
-
             <material:MaterialLabel
-                Style="{StaticResource SectionTitle}"
-                Text="Out of the box types with customizations"
-                LineBreakMode="WordWrap" />
-            <material:MaterialCard
-                Type="Elevated"
-                CornerRadius="20"
-                ShadowColor="Green"
-                Command="{Binding TapCommand}">
-                <material:MaterialLabel
-                    Text="Elevated" />
-            </material:MaterialCard>
-            
-            <material:MaterialCard
-                Type="Filled"
-                CornerRadius="25"
-                BackgroundColor="LightBlue"
-                Command="{Binding TapCommand}">
-                <material:MaterialLabel
-                    Text="Filled" />
-            </material:MaterialCard>
+                Text="Elevated type" />
+        </material:MaterialCard>
 
-            <material:MaterialCard
-                Type="Outlined"
-                CornerRadius="20,0,0,20"
-                BorderColor="Green"
-                BorderWidth="4"
-                Command="{Binding TapCommand}">
-                <material:MaterialLabel
-                    Text="Outlined" />
-            </material:MaterialCard>
-
-            <material:MaterialDivider Margin="0,24,0,0" />
-
+        <material:MaterialCard
+            Type="Filled"
+            IsEnabled="{Binding CardEnabled}"
+            Command="{Binding TapCommand}">
             <material:MaterialLabel
-                Style="{StaticResource SectionTitle}"
-                Text="Custom type samples"
-                LineBreakMode="WordWrap" />
+                Text="Filled type" />
+        </material:MaterialCard>
 
-            <material:MaterialCard
-                Type="Custom"
-                CornerRadius="25,25,25,0"
-                BackgroundColor="LightGoldenrodYellow"
-                BorderWidth="0"
-                HorizontalOptions="FillAndExpand">
-                <material:MaterialLabel
-                    Text="Custom type with customizations" />
-            </material:MaterialCard>
+        <material:MaterialCard
+            Type="Outlined"
+            IsEnabled="{Binding CardEnabled}"
+            Command="{Binding TapCommand}">
+            <material:MaterialLabel
+               Text="Outlined type" />
+        </material:MaterialCard>
 
-            <material:MaterialCard
-                Type="Custom"
-                CornerRadius="25"
-                BackgroundColor="{Binding BackgroundColor}"
-                BorderColor="{Binding BorderColor}"
-                BorderWidth="1"                     
-                ShadowColor="{Binding ShadowColor}"
-                HorizontalOptions="FillAndExpand"
-                Command="{Binding ChangeColorsCommand}">
-                <material:MaterialLabel
-                    Text="Custom type with dynamic colors and command" />
-            </material:MaterialCard>
+        <material:MaterialCard
+            Type="Custom"
+            Style="{StaticResource VisualStateManagerStyle}"
+            IsEnabled="{Binding CardEnabled}"
+            Command="{Binding TapCommand}">
+            <material:MaterialLabel
+                Text="Custom type" />
+        </material:MaterialCard>
 
-            <material:MaterialCard
-                Type="Custom"
-                CornerRadius="0,0,20,20"
-                BackgroundColor="LightBlue"
-                BorderColor="DarkBlue"
-                BorderWidth="2.5"
-                ShadowColor="Red"
-                HorizontalOptions="FillAndExpand"
-                Command="{Binding TapCommand}">
-                <material:MaterialLabel
-                    Text="Custom type with customizations and command" />
-            </material:MaterialCard>
+        <HorizontalStackLayout
+            HorizontalOptions="Center">
+            <material:MaterialLabel
+                Text="Is enabled"
+                HorizontalTextAlignment="End"
+                VerticalTextAlignment="Center" />
+            <Switch
+                HorizontalOptions="Start"
+                IsToggled="{Binding CardEnabled}" />
+        </HorizontalStackLayout>
 
-            <material:MaterialCard
-                Type="Custom"
-                CornerRadius="0,20,20,0"
-                BackgroundColor="LightYellow"
-                BorderColor="DarkBlue"
-                ShadowColor="DarkBlue"
-                HorizontalOptions="FillAndExpand"
-                Command="{Binding TapCommand}"
-                Animation="Scale"
-                AnimationParameter="0.8">
-                <material:MaterialLabel
-                    Text="Custom type with customizations and command" />
-            </material:MaterialCard>
+        <material:MaterialDivider Margin="0,24,0,0" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+        <material:MaterialLabel
+            Style="{StaticResource SectionTitle}"
+            Text="Out of the box types with customizations"
+            LineBreakMode="WordWrap" />
+        <material:MaterialCard
+            Type="Elevated"
+            CornerRadius="20"
+            ShadowColor="Green"
+            Command="{Binding TapCommand}">
+            <material:MaterialLabel
+                Text="Elevated" />
+        </material:MaterialCard>
+
+        <material:MaterialCard
+            Type="Filled"
+            CornerRadius="25"
+            BackgroundColor="LightBlue"
+            Command="{Binding TapCommand}">
+            <material:MaterialLabel
+                Text="Filled" />
+        </material:MaterialCard>
+
+        <material:MaterialCard
+            Type="Outlined"
+            CornerRadius="20,0,0,20"
+            BorderColor="Green"
+            BorderWidth="4"
+            Command="{Binding TapCommand}">
+            <material:MaterialLabel
+                Text="Outlined" />
+        </material:MaterialCard>
+
+        <material:MaterialDivider Margin="0,24,0,0" />
+
+        <material:MaterialLabel
+            Style="{StaticResource SectionTitle}"
+            Text="Custom type samples"
+            LineBreakMode="WordWrap" />
+
+        <material:MaterialCard
+            Type="Custom"
+            CornerRadius="25,25,25,0"
+            BackgroundColor="LightGoldenrodYellow"
+            BorderWidth="0"
+            HorizontalOptions="FillAndExpand">
+            <material:MaterialLabel
+                 Text="Custom type with customizations" />
+        </material:MaterialCard>
+
+        <material:MaterialCard
+            Type="Custom"
+            CornerRadius="25"
+            BackgroundColor="{Binding BackgroundColor}"
+            BorderColor="{Binding BorderColor}"
+            BorderWidth="1"                     
+            ShadowColor="{Binding ShadowColor}"
+            HorizontalOptions="FillAndExpand"
+            Command="{Binding ChangeColorsCommand}">
+            <material:MaterialLabel
+                Text="Custom type with dynamic colors and command" />
+        </material:MaterialCard>
+
+        <material:MaterialCard
+            Type="Custom"
+            CornerRadius="0,0,20,20"
+            BackgroundColor="LightBlue"
+            BorderColor="DarkBlue"
+            BorderWidth="2.5"
+            ShadowColor="Red"
+            HorizontalOptions="FillAndExpand"
+            Command="{Binding TapCommand}">
+            <material:MaterialLabel
+                Text="Custom type with customizations and command" />
+        </material:MaterialCard>
+
+        <material:MaterialCard
+            Type="Custom"
+            CornerRadius="0,20,20,0"
+            BackgroundColor="LightYellow"
+            BorderColor="DarkBlue"
+            ShadowColor="DarkBlue"
+            HorizontalOptions="FillAndExpand"
+            Command="{Binding TapCommand}"
+            Animation="Scale"
+            AnimationParameter="0.8">
+            <material:MaterialLabel
+                Text="Custom type with customizations and command" />
+        </material:MaterialCard>
+    </VerticalStackLayout>
 </local:BaseContentPage>

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Maui.Devices;
+using Microsoft.Toolkit.Mvvm.Input;
+using System;
+using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
@@ -7,6 +10,19 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => "About us";
+        
+        #endregion
+
+        #region Commands
+        
+        [ICommand]
+        private async Task LaunchBrowser(string url)
+        {
+            if (!string.IsNullOrWhiteSpace(url) && Uri.TryCreate(url, UriKind.Absolute, out var uri))
+            {
+                await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+            }
+        }
 
         #endregion
     }

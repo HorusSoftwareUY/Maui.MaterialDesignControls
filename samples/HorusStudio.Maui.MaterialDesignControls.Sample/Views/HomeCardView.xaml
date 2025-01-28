@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.HomeCardView">
+    <ContentView.Resources>
+
+        <Style x:Key="HomeCard" TargetType="material:MaterialCard">
+            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
+            <Setter Property="CornerRadius" Value="24" />
+        </Style>
+
+        <Style x:Key="ImageContainer" TargetType="material:MaterialCard">
+            <Setter Property="HeightRequest" Value="180" />
+            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.PrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.PrimaryContainer}}" />
+            <Setter Property="CornerRadius" Value="24" />
+        </Style>
+
+    </ContentView.Resources>
+
+    <material:MaterialCard Style="{StaticResource HomeCard}" Padding="0">
+        <VerticalStackLayout Padding="0,0,0,24">
+            <material:MaterialCard Style="{StaticResource ImageContainer}" Padding="0">
+                <Image Source="{Binding ImageSource}" 
+                       Aspect="{Binding ImageAspect}"/>
+            </material:MaterialCard>
+
+            <VerticalStackLayout Spacing="7" Padding="24, 0">
+                <material:MaterialLabel Type="TitleLarge" Text="{Binding Title}" />
+                <material:MaterialLabel Type="BodyMedium" Text="{Binding Description}" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </material:MaterialCard>
+
+</ContentView>

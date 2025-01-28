@@ -1,4 +1,4 @@
-﻿namespace HorusStudio.Maui.MaterialDesignControls.Enums;
+﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
 public enum TextSide
 {

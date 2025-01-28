@@ -1,15 +1,102 @@
 ﻿using System;
+using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 {
     public abstract class BaseContentPage<TBaseViewModel> : ContentPage where TBaseViewModel : BaseViewModel
     {
+        #region Bindable Properties
+        
+        /// <summary>
+        /// The backing store for the <see cref="Subtitle" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty SubtitleProperty = BindableProperty.Create(nameof(Subtitle), typeof(string), typeof(BaseContentPage<>));
+        
+        /// <summary>
+        /// The backing store for the <see cref="CustomizationMode" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty CustomizationModeProperty = BindableProperty.Create(nameof(CustomizationMode), typeof(bool), typeof(BaseContentPage<>));
+        
+        /// <summary>
+        /// The backing store for the <see cref="BackCommand" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty BackCommandProperty = BindableProperty.Create(nameof(BackCommand), typeof(ICommand), typeof(BaseContentPage<>));
+        
+        /// <summary>
+        /// The backing store for the <see cref="TopBarIcons" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TopBarIconsProperty = BindableProperty.Create(nameof(TopBarIcons), typeof(IEnumerable<TrailingIcon>), typeof(BaseContentPage<>));
+        
+        /// <summary>
+        /// The backing store for the <see cref="TopBarIsCollapsed" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TopBarIsCollapsedProperty = BindableProperty.Create(nameof(TopBarIsCollapsed), typeof(bool), typeof(BaseContentPage<>));
+        
+        #endregion Bindable Properties
+        
+        #region Properties
+        
+        /// <summary>
+        /// Gets or sets a subtitle for page. This is a bindable property.
+        /// </summary>
+        public string Subtitle
+        {
+            get => (string)GetValue(SubtitleProperty);
+            set => SetValue(SubtitleProperty, value);
+        }
+        
+        /// <summary>
+        /// Gets or sets a flag to determine whether customization mode is active or not. This is a bindable property.
+        /// </summary>
+        public bool CustomizationMode
+        {
+            get => (bool)GetValue(CustomizationModeProperty);
+            set => SetValue(CustomizationModeProperty, value);
+        }
+        
+        /// <summary>
+        /// Gets or sets a command to be fired when back button is pressed. This is a bindable property.
+        /// </summary>
+        public ICommand BackCommand
+        {
+            get => (ICommand)GetValue(BackCommandProperty);
+            set => SetValue(BackCommandProperty, value);
+        }
+        
+        /// <summary>
+        /// Gets or sets a collection of icons to be displayed on Top App Bar. This is a bindable property.
+        /// </summary>
+        public IEnumerable<TrailingIcon> TopBarIcons
+        {
+            get => (IEnumerable<TrailingIcon>)GetValue(TopBarIconsProperty);
+            set => SetValue(TopBarIconsProperty, value);
+        }
+        
+        /// <summary>
+        /// Gets or sets a collection of icons to be displayed on Top App Bar. This is a bindable property.
+        /// </summary>
+        public bool TopBarIsCollapsed
+        {
+            get => (bool)GetValue(TopBarIsCollapsedProperty);
+            set => SetValue(TopBarIsCollapsedProperty, value);
+        }
+        
+        #endregion Properties
+        
         public BaseContentPage(TBaseViewModel viewModel)
         {
             BindingContext = viewModel;
             viewModel.DisplayAlert = DisplayAlert;
+            viewModel.DisplayActionSheet = DisplayActionSheet;
+            
             SetBinding(TitleProperty, new Binding(nameof(BaseViewModel.Title)));
+            SetBinding(SubtitleProperty, new Binding(nameof(BaseViewModel.Subtitle)));
+            SetBinding(CustomizationModeProperty, new Binding(nameof(BaseViewModel.IsCustomize), mode: BindingMode.TwoWay));
+            SetBinding(BackCommandProperty, new Binding(nameof(BaseViewModel.GoBackCommand)));
+            SetBinding(TopBarIconsProperty, new Binding(nameof(BaseViewModel.ContextualActions)));
+            
+            Shell.SetNavBarIsVisible(this, false);
         }
 
         protected override void OnNavigatedFrom(NavigatedFromEventArgs args)

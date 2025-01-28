@@ -1,7 +1,10 @@
 ﻿<?xml version = "1.0" encoding = "UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Converters"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
+             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -10,30 +13,94 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+
             <Style x:Key="MainLayout" TargetType="VerticalStackLayout">
                 <Setter Property="Spacing" Value="8" />
                 <Setter Property="Padding" Value="16" />
             </Style>
-
-            <Style x:Key="SurfaceContainer" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="{x:Static material:MaterialLightTheme.SurfaceContainer}" />
-                <Setter Property="BorderColor" Value="{x:Static material:MaterialLightTheme.OutlineVariant}" />
-                <Setter Property="Padding" Value="32" />
+            
+            <Style x:Key="CardControlContainer" TargetType="material:MaterialCard">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
                 <Setter Property="CornerRadius" Value="24" />
-                <Setter Property="HasShadow" Value="False" />
-            </Style>
-
-            <Style x:Key="SurfaceContainerLow" TargetType="Frame" BaseResourceKey="SurfaceContainer">
-                <Setter Property="BackgroundColor" Value="{x:Static material:MaterialLightTheme.SurfaceContainerLow}" />
-                <Setter Property="BorderColor" Value="Transparent" />
-                <Setter Property="Padding" Value="24,16" />
+                <Setter Property="Padding" Value="16,32" />
             </Style>
 
             <Style x:Key="SectionTitle" TargetType="material:MaterialLabel">
                 <Setter Property="Type" Value="TitleLarge" />
-                <Setter Property="Margin" Value="0,42,0,0" />
+                <Setter Property="Margin" Value="0,36,0,0" />
             </Style>
+
+            <ControlTemplate x:Key="ControlPageWithTopAppBar" 
+                             x:DataType="vm:BaseViewModel">
+                <Grid
+                    RowDefinitions="Auto,*">
+                    <material:MaterialTopAppBar
+                        Headline="{TemplateBinding Title}"
+                        Description="{TemplateBinding Subtitle}"
+                        LeadingIconCommand="{TemplateBinding BackCommand}"
+                        LeadingIconIsBusy="{TemplateBinding Path=BackCommand.IsRunning}"
+                        LeadingIcon="ic_back.png"
+                        Type="Large"
+                        ScrollViewName="MdcControlPageScroll"
+                        IsCollapsed="{TemplateBinding TopBarIsCollapsed}"
+                        TrailingIcons="{TemplateBinding TopBarIcons}"
+                        x:Name="mdcTopBar">
+                        <material:MaterialTopAppBar.Triggers>
+                            <DataTrigger TargetType="material:MaterialTopAppBar" Binding="{TemplateBinding TopBarIsCollapsed}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLowest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLowest}}" />
+                                <Setter Property="Shadow" Value="{x:Static material:MaterialElevation.Level2}" />
+                                <Setter Property="ZIndex" Value="1000" />
+                            </DataTrigger>
+                        </material:MaterialTopAppBar.Triggers>
+                    </material:MaterialTopAppBar>
+                    <ScrollView Grid.Row="1" x:Name="MdcControlPageScroll">
+                        <VerticalStackLayout Style="{StaticResource MainLayout}">
+                            <views:ControlsTabsView IsCustomize="{TemplateBinding CustomizationMode, Mode=TwoWay}" />
+                            
+                            <Grid>
+                                <ContentPresenter IsVisible="{TemplateBinding CustomizationMode, Converter={StaticResource ReverseBoolConverter}}" />
+                                <material:MaterialCard
+                                    Style="{StaticResource CardControlContainer}"
+                                    IsVisible="{TemplateBinding CustomizationMode}"
+                                    Padding="32"
+                                    Margin="0,24">
+                                    <material:MaterialLabel Text="Soon you will be able to customize controls live" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </material:MaterialCard>    
+                            </Grid>
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </Grid>
+            </ControlTemplate>
             
+            <ControlTemplate x:Key="PageWithTopAppBar" 
+                             x:DataType="vm:BaseViewModel">
+                <Grid
+                    RowDefinitions="Auto,*">
+                    <material:MaterialTopAppBar
+                        Headline="{TemplateBinding Title}"
+                        Description="{TemplateBinding Subtitle}"
+                        LeadingIconCommand="{TemplateBinding BackCommand}"
+                        LeadingIconIsBusy="{TemplateBinding Path=BackCommand.IsRunning}"
+                        LeadingIcon="ic_back.png"
+                        Type="Large"
+                        IsCollapsed="{TemplateBinding TopBarIsCollapsed}"
+                        ScrollViewName="MdcPageScroll">
+                        <material:MaterialTopAppBar.Triggers>
+                            <DataTrigger TargetType="material:MaterialTopAppBar" Binding="{TemplateBinding TopBarIsCollapsed}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLowest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLowest}}" />
+                                <Setter Property="Shadow" Value="{x:Static material:MaterialElevation.Level2}" />
+                                <Setter Property="ZIndex" Value="1000" />
+                            </DataTrigger>
+                        </material:MaterialTopAppBar.Triggers>
+                    </material:MaterialTopAppBar>
+                    <ScrollView Grid.Row="1" x:Name="MdcPageScroll">
+                        <VerticalStackLayout Style="{StaticResource MainLayout}">
+                            <ContentPresenter />
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </Grid>
+            </ControlTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

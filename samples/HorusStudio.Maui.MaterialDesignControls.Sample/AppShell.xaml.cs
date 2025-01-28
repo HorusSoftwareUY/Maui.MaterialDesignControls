@@ -1,6 +1,4 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
-
-namespace HorusStudio.Maui.MaterialDesignControls.Sample
+﻿namespace HorusStudio.Maui.MaterialDesignControls.Sample
 {
     public partial class AppShell : Shell
     {
@@ -22,26 +20,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 if (page != null)
                 {
                     Routing.RegisterRoute(vm.Name, page);
-                }
-            }
-        }
-
-        protected override void OnBindingContextChanged()
-        {
-            base.OnBindingContextChanged();
-
-            if (BindingContext is MainViewModel vm)
-            {
-                foreach (var mi in vm.MenuItems)
-                {
-                    var item = new MenuItem();
-                    item.SetBinding(MenuItem.TextProperty, nameof(MenuItemViewModel.Title));
-                    item.SetBinding(MenuItem.IconImageSourceProperty, nameof(MenuItemViewModel.Icon));
-                    item.SetBinding(MenuItem.CommandParameterProperty, nameof(MenuItemViewModel.ViewModel));
-                    item.BindingContext = mi;
-                    item.Command = vm.GoToCommand;
-
-                    Items.Add(item);
                 }
             }
         }

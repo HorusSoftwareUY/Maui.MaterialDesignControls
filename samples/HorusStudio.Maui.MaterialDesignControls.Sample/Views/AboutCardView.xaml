@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.AboutCardView">
+
+    <ContentView.Resources>
+
+        <Style x:Key="AboutCard" TargetType="material:MaterialCard">
+            <Setter Property="Padding" Value="24" />
+            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
+            <Setter Property="CornerRadius" Value="24" />
+        </Style>
+
+        <Style x:Key="Logo" TargetType="Image">
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="WidthRequest" Value="40" />
+            <Setter Property="Aspect" Value="AspectFit" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+        </Style>
+
+    </ContentView.Resources>
+
+    <material:MaterialCard Style="{StaticResource AboutCard}">
+        <VerticalStackLayout>
+            <HorizontalStackLayout Spacing="12">
+                <Image Style="{StaticResource Logo}" Source="{Binding FirstIconSource}" />
+                <Image Style="{StaticResource Logo}" Source="{Binding SecondIconSource}" />
+            </HorizontalStackLayout>
+
+            <VerticalStackLayout Spacing="7">
+                <material:MaterialLabel Type="TitleLarge" Text="{Binding Title}" />
+                <material:MaterialLabel Type="BodyMedium" Text="{Binding Description}" />
+            </VerticalStackLayout>
+
+            <material:MaterialButton Text="{Binding TextButton}" 
+                                     Type="{Binding TypeButton}" 
+                                     HorizontalOptions="End" 
+                                     Command="{Binding Command}"
+                                     CommandParameter="{Binding CommandParameter}"/>
+        </VerticalStackLayout>
+    </material:MaterialCard>
+</ContentView>

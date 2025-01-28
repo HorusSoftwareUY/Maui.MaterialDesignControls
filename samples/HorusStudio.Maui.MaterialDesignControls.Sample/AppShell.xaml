@@ -3,7 +3,19 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages">
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    Shell.FlyoutBehavior="Flyout">
 
-    <ShellContent Title="" ContentTemplate="{DataTemplate local:MainPage}" />        
+    <ShellContent
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainViewModel" />
+
+    <Shell.FlyoutContent>
+        <ScrollView Padding="12,16" Background="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}">
+            <material:MaterialNavigationDrawer
+                Command="{Binding MenuItemClickCommand}"
+                ItemsSource="{Binding MenuItems}" />
+        </ScrollView>
+    </Shell.FlyoutContent>
 </Shell>
