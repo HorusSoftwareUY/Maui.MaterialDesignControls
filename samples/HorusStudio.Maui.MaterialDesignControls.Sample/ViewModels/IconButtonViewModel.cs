@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
@@ -8,7 +9,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => Models.Pages.IconButton;
-
+        protected override string ControlReferenceUrl => "components/icon-buttons/overview";
+        
         #endregion
 
         public IconButtonViewModel()

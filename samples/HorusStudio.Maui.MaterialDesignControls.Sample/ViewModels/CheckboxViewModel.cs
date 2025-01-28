@@ -7,6 +7,7 @@ public partial class CheckboxViewModel : BaseViewModel
     #region Attributes & Properties
 
     public override string Title => Models.Pages.Checkbox;
+    protected override string ControlReferenceUrl => "components/checkbox/overview";
 
     [ObservableProperty]
     private bool _isCheckboxEnabled;

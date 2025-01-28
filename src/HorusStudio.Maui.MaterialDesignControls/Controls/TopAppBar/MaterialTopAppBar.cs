@@ -65,16 +65,16 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static readonly MaterialTopAppBarType DefaultType = MaterialTopAppBarType.CenterAligned;
         private static readonly string DefaultHeadline = null;
         private static readonly Color DefaultHeadlineColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-        private static readonly double DefaultHeadlineFontSize = MaterialFontSize.TitleLarge;
+        private static readonly double DefaultHeadlineFontSize = MaterialFontSize.HeadlineLarge;
         private static readonly string DefaultHeadlineFontFamily = MaterialFontFamily.Default;
         private static readonly FontAttributes DefaultHeadlineFontAttributes = FontAttributes.None;
         private static readonly Thickness DefaultHeadlineMarginAdjustment = default(Thickness);
         private static readonly string DefaultDescription = null;
         private static readonly Color DefaultDescriptionColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-        private static readonly double DefaultDescriptionFontSize = MaterialFontSize.TitleMedium;
+        private static readonly double DefaultDescriptionFontSize = MaterialFontSize.BodyMedium;
         private static readonly string DefaultDescriptionFontFamily = MaterialFontFamily.Default;
         private static readonly FontAttributes DefaultDescriptionFontAttributes = FontAttributes.None;
-        private static readonly Thickness DefaultDescriptionMarginAdjustment = new Thickness(DescriptionLateralMargin, 0, DescriptionLateralMargin, 0);
+        private static readonly Thickness DefaultDescriptionMarginAdjustment = new Thickness(DescriptionLateralMargin, 8, DescriptionLateralMargin, 16);
         private static readonly ImageSource DefaultLeadingIcon = null;
         private static readonly ICommand DefaultLeadingIconCommand = null;
         private static readonly bool DefaultLeadingIconIsBusy = false;
@@ -97,8 +97,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const int SmallLabelLateralMargin = 48;
         private const int MediumLabelLateralMargin = 10;
         private const int LargeLabelLateralMargin = 10;
+        private static Thickness DefaultIconPadding = new Thickness(12);
 
-        private bool _isCollapsed = false;
         private IList _trailingIcons;
 
         #endregion Attributes
@@ -276,6 +276,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// The backing store for the <see cref="ScrollViewAnimationLength" /> bindable property.
         /// </summary>
         public static readonly BindableProperty ScrollViewAnimationLengthProperty = BindableProperty.Create(nameof(ScrollViewAnimationLength), typeof(int), typeof(MaterialTopAppBar), defaultValue: DefaultScrollViewAnimationLength);
+        
+        /// <summary>
+        /// The backing store for the <see cref="IsCollapsed" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty IsCollapsedProperty = BindableProperty.Create(nameof(IsCollapsedProperty), typeof(bool), typeof(MaterialTopAppBar), defaultBindingMode: BindingMode.OneWayToSource, defaultValue: false);
 
         #endregion Bindable Properties
 
@@ -411,7 +416,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see cref="MaterialFontSize.TitleMedium">MaterialFontSize.TitleMedium</see> / Tablet = 19 / Phone = 16
+        /// <see cref="MaterialFontSize.BodyMedium">MaterialFontSize.BodyMedium</see> / Tablet = 17 / Phone = 14
         /// </default>
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double DescriptionFontSize
@@ -452,7 +457,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         /// <remarks>This property does not take into account the Left and Right of the set <see cref="Thickness" />, it only applies the Top and Bottom values.</remarks>
         /// <default>
-        /// new Thickness(10, 0, 10, 0)
+        /// new Thickness(10, 8, 10, 16)
         /// </default>
         public Thickness DescriptionMarginAdjustment
         {
@@ -621,6 +626,16 @@ namespace HorusStudio.Maui.MaterialDesignControls
             get => (int)GetValue(ScrollViewAnimationLengthProperty);
             set => SetValue(ScrollViewAnimationLengthProperty, value);
         }
+        
+        /// <summary>
+        /// Indicates if app bar is collapsed or not. 
+        /// This is a bindable property.
+        /// </summary>
+        public bool IsCollapsed
+        {
+            get => (bool)GetValue(IsCollapsedProperty);
+            private set => SetValue(IsCollapsedProperty, value);
+        }
 
         #endregion Properties
 
@@ -704,7 +719,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Center,
-                IsVisible = false
+                IsVisible = false,
+                Padding = DefaultIconPadding
             };
             _leadingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
             _leadingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
@@ -954,7 +970,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                         Logger.Debug("TrailingIcons supports a maximum of 3 icon buttons, only the 3 first icons button will be displayed");
                     }
 
-                    if (TrailingIcons.Count >= 3)
+                    if (TrailingIcons.Count == 3)
                     {
                         _secondTrailingColumnDefinition = new ColumnDefinition { Width = SmallRowHeight };
                         ColumnDefinitions.Add(_secondTrailingColumnDefinition);
@@ -971,6 +987,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
                         Grid.SetColumnSpan(_headlineLabel, 4);
                         Grid.SetColumnSpan(_descriptionLabel, 4);
+                    }
+                    else
+                    {
+                        Grid.SetColumnSpan(_headlineLabel, 3);
+                        Grid.SetColumnSpan(_descriptionLabel, 3);
                     }
 
                     var trailingIconIndex = 0;
@@ -1015,7 +1036,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 IsBusy = trailingIcon.IsBusy,
                 VerticalOptions = trailingIconButtonsVerticalOptions,
                 HorizontalOptions = LayoutOptions.Center,
-                IsVisible = true
+                IsVisible = true,
+                Padding = DefaultIconPadding
             };
             trailingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
             trailingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
@@ -1152,8 +1174,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     int maxHeight = Type == MaterialTopAppBarType.Large ? LargeRowHeight : MediumRowHeight;
                     int minHeight = SmallRowHeight;
 
-                    double maxFontSize = Type == MaterialTopAppBarType.Large ? MaterialFontSize.HeadlineMedium : MaterialFontSize.HeadlineSmall;
-                    double minFontSize = HeadlineFontSize;
+                    double minFontSize = Type == MaterialTopAppBarType.Large ? MaterialFontSize.HeadlineMedium : MaterialFontSize.HeadlineSmall;
+                    double maxFontSize = HeadlineFontSize;
 
                     int maxLabelLateralMargin = Type == MaterialTopAppBarType.Large ? LargeLabelLateralMargin : MediumLabelLateralMargin;
                     int minLabelLateralMargin = SmallLabelLateralMargin;
@@ -1174,11 +1196,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void ScrollAnimation(double scrollY, int maxHeight, int minHeight, double maxFontSize, double minFontSize, int maxLabelLateralMargin, int minLabelLateralMargin)
         {
-            if (_isCollapsed && scrollY <= 0)
+            if (IsCollapsed && scrollY <= 0)
             {
                 ExpandTopAppBar(maxHeight, minHeight, maxFontSize, minFontSize, maxLabelLateralMargin, minLabelLateralMargin);
             }
-            else if (!_isCollapsed && scrollY >= 70)
+            else if (!IsCollapsed && scrollY >= 70)
             {
                 CollapseTopAppBar(maxHeight, minHeight, maxFontSize, minFontSize, maxLabelLateralMargin, minLabelLateralMargin);
             }
@@ -1186,7 +1208,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void ExpandTopAppBar(int maxHeight, int minHeight, double maxFontSize, double minFontSize, int maxLabelLateralMargin, int minLabelLateralMargin)
         {
-            _isCollapsed = false;
+            IsCollapsed = false;
 
             if (TrailingIcons != null)
             {
@@ -1209,7 +1231,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void CollapseTopAppBar(int maxHeight, int minHeight, double maxFontSize, double minFontSize, int maxLabelLateralMargin, int minLabelLateralMargin)
         {
-            _isCollapsed = true;
+            IsCollapsed = true;
 
             if (TrailingIcons != null)
             {

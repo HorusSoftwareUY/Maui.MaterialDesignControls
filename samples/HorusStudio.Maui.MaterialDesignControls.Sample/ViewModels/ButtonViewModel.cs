@@ -9,6 +9,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => Models.Pages.Button;
+        protected override string ControlReferenceUrl => "components/buttons/overview";
 
         [ObservableProperty]
         private TextDecorations _decorations = TextDecorations.None;

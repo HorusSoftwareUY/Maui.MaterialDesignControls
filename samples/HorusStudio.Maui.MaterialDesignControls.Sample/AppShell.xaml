@@ -12,7 +12,7 @@
         Route="MainViewModel" />
 
     <Shell.FlyoutContent>
-        <ScrollView Padding="12,16" Background="{StaticResource Tone1}">
+        <ScrollView Padding="12,16" Background="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}">
             <material:MaterialNavigationDrawer
                 Command="{Binding MenuItemClickCommand}"
                 ItemsSource="{Binding MenuItems}" />

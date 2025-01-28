@@ -8,6 +8,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => Models.Pages.Divider;
+        protected override string ControlReferenceUrl => "components/divider/overview";
 
         [ObservableProperty]
         private double _dividerHeight = 3;

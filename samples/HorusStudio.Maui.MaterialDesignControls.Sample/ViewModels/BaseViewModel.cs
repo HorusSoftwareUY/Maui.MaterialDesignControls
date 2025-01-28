@@ -10,30 +10,70 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(IsNotBusy))]
-        bool _isBusy;
+        private bool _isBusy;
 
         public bool IsNotBusy => !IsBusy;
         public abstract string Title { get; }
+        
+        protected virtual string ControlReferenceUrl => string.Empty;
 
         [ObservableProperty]
-        string _subtitle;
+        private string _subtitle = string.Empty;
 
         [ObservableProperty]
-        bool _isEnabled = true;
+        private bool _isCustomize;
+        
+        [ObservableProperty]
+        private bool _isEnabled = true;
 
         [ObservableProperty]
-        bool _isVisible = true;
-
-        bool _alreadyOpenFlyout = false;
-
+        private bool _isVisible = true;
+        
+        [ObservableProperty]
+        private IEnumerable<TrailingIcon> _contextualActions;
+        
         #endregion Attributes & Properties
 
+        protected BaseViewModel()
+        {
+            if (!string.IsNullOrEmpty(ControlReferenceUrl))
+            {
+                ContextualActions = new[]
+                {
+                    new TrailingIcon
+                    {
+                        Icon = "ic_web.png",
+                        Command = OpenControlReferenceCommand,
+                        IsBusy = OpenControlReferenceCommand.IsRunning
+                    }/*,
+                    new TrailingIcon
+                    {
+                        Icon = "ic_preview.png",
+                        Command = OpenControlReferenceCommand,
+                        IsBusy = OpenControlReferenceCommand.IsRunning
+                    }*/
+                };
+            }
+        }
+        
         public delegate Task DisplayAlertType(string title, string message, string cancel);
         public delegate Task<string> DisplayActionSheetType(string title, string cancel, string destruction, params string[] buttons);
 
-        public DisplayAlertType DisplayAlert { get; set; }
-        public DisplayActionSheetType DisplayActionSheet { get; set; }
+        public DisplayAlertType? DisplayAlert { get; set; }
+        public DisplayActionSheetType? DisplayActionSheet { get; set; }
 
+        [ICommand]
+        private async Task OpenControlReferenceAsync()
+        {
+            const string baseUrl = "https://m3.material.io/";
+            var url = Path.Combine(baseUrl, ControlReferenceUrl);
+            
+            if (!string.IsNullOrWhiteSpace(url) && Uri.TryCreate(url, UriKind.Absolute, out var uri))
+            {
+                await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+            }
+        }
+        
         #region Navigation
 
         public virtual void NavigatedFrom() { }
@@ -113,29 +153,18 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        protected Task GoBack() => GoBackAsync();
+        private Task GoBack() => GoBackAsync();
 
         [ICommand]
-        protected async Task GoToAsync(Type type)
+        private async Task GoToAsync(Type type)
         {
             if (Shell.Current.FlyoutIsPresented) Shell.Current.FlyoutIsPresented = false;
             await GoToAsync(type.Name);
         }
 
         [ICommand]
-        protected void ToggleMenu()
+        private void ToggleMenu()
         {
-            // Workaround to open the flyout on Android the first time
-            // https://github.com/dotnet/maui/issues/8226
-#if ANDROID
-            if (!_alreadyOpenFlyout)
-            {
-                Shell.Current.FlyoutBehavior = FlyoutBehavior.Locked;
-                Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
-                _alreadyOpenFlyout = true;
-            }
-#endif
-
             Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
         }
 

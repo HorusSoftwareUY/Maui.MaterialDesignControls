@@ -23,7 +23,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public RatingViewModel()
         {
-            Subtitle = "This control allows users to view and set ratings that reflect degrees of satisfaction.";
+            Subtitle = "This control allow people to view and set rating values that reflect degrees of satisfaction.";
 
             SelectedIcons = new ObservableCollection<ImageSource>
             {

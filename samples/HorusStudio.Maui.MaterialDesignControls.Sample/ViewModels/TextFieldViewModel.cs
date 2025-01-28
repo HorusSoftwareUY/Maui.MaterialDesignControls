@@ -8,6 +8,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => Models.Pages.TextField;
+        protected override string ControlReferenceUrl => "components/text-fields/overview";
 
         [ObservableProperty]
         private string _supportingTextValue = "Enter the value.";
@@ -22,7 +23,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public TextFieldViewModel()
         {
-            Subtitle = "Text fields let users enter text into a UI. They typically appear in forms and dialogs.";
+            Subtitle = "Text fields let people enter text into a UI. They typically appear in forms and dialogs.";
         }
 
         [ICommand]

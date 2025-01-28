@@ -14,7 +14,7 @@
         <Style x:Key="MainCard" TargetType="Border">
             <Setter Property="Stroke" Value="Transparent" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="{StaticResource Tone1}" />
+            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
             <Setter Property="StrokeShape" Value="RoundRectangle 24" />
         </Style>
 
@@ -22,7 +22,7 @@
             <Setter Property="HeightRequest" Value="160" />
             <Setter Property="BorderColor" Value="Transparent" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.PrimaryContainer}" />
+            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.PrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.PrimaryContainer}}" />
             <Setter Property="CornerRadius" Value="24" />
             <Setter Property="HasShadow" Value="False" />
             <Setter Property="IsClippedToBounds" Value="True" />

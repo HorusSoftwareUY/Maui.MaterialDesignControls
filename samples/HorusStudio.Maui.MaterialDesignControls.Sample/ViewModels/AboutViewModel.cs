@@ -10,7 +10,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         #region Attributes & Properties
 
         public override string Title => "About us";
-
+        
         #endregion
 
         #region Commands
