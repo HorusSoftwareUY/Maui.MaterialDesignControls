@@ -1,6 +1,5 @@
 using CoreGraphics;
 using Foundation;
-using HorusStudio.Maui.MaterialDesignControls.Extensions;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Platform;
 using UIKit;
@@ -65,7 +64,8 @@ public class Snackbar : UIView
 
         if (UseBlur) SetupBlur();
 
-        var window = ExtensionsConverters.GetDefaultWindow();
+        var window = UIKit.WindowExtensions.GetDefaultWindow();
+        if (window == null) return;
         window.AddSubview(this);
 
         var constraints = new List<NSLayoutConstraint>

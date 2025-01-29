@@ -25,7 +25,7 @@ public enum MaterialFloatingButtonPosition
     BottomLeft
 }
 
-public class FloatingButtonConfig
+class FloatingButtonConfig
 {
     public MaterialFloatingButtonType Type { get; set; }
     public MaterialFloatingButtonPosition Position { get; set; }
@@ -33,9 +33,8 @@ public class FloatingButtonConfig
     public Color IconColor { get; set; }
     public string Icon { get; set; }
     public CornerRadius CornerRadius { get; set; }
-    public int IconSize { get; set; }
+    public double IconSize { get; set; }
     public Action Action { get; set; }
-    public object ActionParameter { get; set; }
 }
 
 /// <summary>
@@ -71,16 +70,15 @@ public class FloatingButtonConfig
 /// </example>
 public class MaterialFloatingButton : ContentView
 {
-
     #region Attributes
 
-    private readonly static MaterialFloatingButtonType DefaultFloatingButtonType = MaterialFloatingButtonType.FAB;
-    private readonly static MaterialFloatingButtonPosition DefaultFloatingButtonPosition = MaterialFloatingButtonPosition.BottomRight;
-    private readonly static Color DefaultBackgroundColor =  new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultIconColor = new AppThemeBindingExtension{ Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer}.GetValueForCurrentTheme<Color>();
-    private readonly static ImageSource DefaultIcon = string.Empty;
-    private readonly static CornerRadius DefaultCornerRadius = new(16);
-    private readonly static int DefaultIconSize = 24;
+    private static readonly MaterialFloatingButtonType DefaultFloatingButtonType = MaterialFloatingButtonType.FAB;
+    private static readonly MaterialFloatingButtonPosition DefaultFloatingButtonPosition = MaterialFloatingButtonPosition.BottomRight;
+    private static readonly Color DefaultBackgroundColor =  new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultIconColor = new AppThemeBindingExtension{ Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer}.GetValueForCurrentTheme<Color>();
+    private static readonly ImageSource DefaultIcon = string.Empty;
+    private static readonly CornerRadius DefaultCornerRadius = new(16);
+    private static readonly int DefaultIconSize = 24;
 
     private readonly FloatingButtonImplementation _floatingButtonImplementation = new();
     private FloatingButtonConfig _config = new();
@@ -362,7 +360,7 @@ public class MaterialFloatingButton : ContentView
     {
         string image = Icon.Source();
 
-        _config = new FloatingButtonConfig()
+        _config = new FloatingButtonConfig
         {
             Type = Type,
             Position = Position,
@@ -373,7 +371,7 @@ public class MaterialFloatingButton : ContentView
             IconSize = IconSize,
             Action = () =>
             {
-                if (Command?.CanExecute(CommandParameter) ?? false)
+                if (IsEnabled && (Command?.CanExecute(CommandParameter) ?? false))
                 {
                     Command?.Execute(CommandParameter);
                 }
@@ -396,6 +394,40 @@ public class MaterialFloatingButton : ContentView
 
     private void Appearing(object sender, EventArgs e) => Show();
     private void Disappearing(object sender, EventArgs e) => Hide();
+    
+    internal static IEnumerable<Style> GetStyles()
+    {
+        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
+
+        var disabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
+        disabledState.Setters.Add(
+            MaterialFloatingButton.BackgroundColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.SurfaceContainerHighest,
+                Dark = MaterialDarkTheme.SurfaceContainerHighest
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.9f));
+
+        disabledState.Setters.Add(
+            MaterialFloatingButton.IconColorProperty,
+            new AppThemeBindingExtension
+            {
+                Light = MaterialLightTheme.OnSurface,
+                Dark = MaterialDarkTheme.OnSurface
+            }
+            .GetValueForCurrentTheme<Color>()
+            .WithAlpha(0.38f));
+        
+        commonStatesGroup.States.Add(new VisualState { Name = VisualStateManager.CommonStates.Normal });
+        commonStatesGroup.States.Add(disabledState);
+
+        var style = new Style(typeof(MaterialFloatingButton));
+        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
+
+        return new List<Style> { style };
+    }
     
     #endregion
 }

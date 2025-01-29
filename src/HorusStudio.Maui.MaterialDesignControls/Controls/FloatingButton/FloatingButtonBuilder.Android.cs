@@ -2,104 +2,107 @@ using Android.App;
 using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Widget;
-using Microsoft.Maui.Platform;
-using Color = Microsoft.Maui.Graphics.Color;
-using Google.Android.Material.Snackbar;
 using Button = Android.Widget.Button;
-using HorusStudio.Maui.MaterialDesignControls.Extensions;
-using LayoutDirection = Android.Views.LayoutDirection;
+using Google.Android.Material.Snackbar;
+using Microsoft.Maui.Platform;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class FloatingButtonBuilder_Android : Snackbar.Callback
+class FloatingButtonBuilder : Snackbar.Callback
 {
-
-    #region Properties
-    protected Activity Activity { get; }
-    protected FloatingButtonConfig Config { get; }
+    //#region Properties
     
-    private Action _dismissed;
-
-    #endregion
+    //Activity Activity { get; }
+    //FloatingButtonConfig Config { get; }
+    
+    //#endregion
     
     #region Constructors
 
-    public FloatingButtonBuilder_Android(Activity activity, FloatingButtonConfig config)
-    {
-        Activity = activity ?? throw new ArgumentNullException(nameof(activity));
-        Config = config ?? throw new ArgumentNullException(nameof(config));
-    }
+    //public FloatingButtonBuilder(Activity activity, FloatingButtonConfig config)
+    //{
+        //Activity = activity ?? throw new ArgumentNullException(nameof(activity));
+        //Config = config ?? throw new ArgumentNullException(nameof(config));
+    //}
 
     #endregion
 
     #region Overrides
 
-    public override void OnShown(Google.Android.Material.Snackbar.Snackbar FloatingButton)
+    public override void OnShown(Snackbar control)
     {
-        base.OnShown(FloatingButton);
-        FloatingButton.View.Animate().Alpha(1f).SetDuration(300).Start();
+        base.OnShown(control);
+        control?.View?.Animate()?.Alpha(1f).SetDuration(300).Start();
     }
 
-    public override void OnDismissed(Snackbar transientBottomBar, int e)
+    public override void OnDismissed(Snackbar control, int e)
     {
-        base.OnDismissed(transientBottomBar, e);
-        transientBottomBar?.SetDuration(0);
-        transientBottomBar.View.Animate().Alpha(1f).SetDuration(300).Start();
+        base.OnDismissed(control, e);
+        control?.SetDuration(0);
+        control?.View?.Animate()?.Alpha(1f).SetDuration(300).Start();
     }
 
     #endregion
 
     #region Build
-    public virtual Google.Android.Material.Snackbar.Snackbar Build()
+    
+    public Snackbar Build(Activity activity, FloatingButtonConfig config)
     {
-        
-        var snackbar = Google.Android.Material.Snackbar.Snackbar.Make(
-            Activity,
-            Activity.Window.DecorView.RootView,
-            "",
+        ArgumentNullException.ThrowIfNull(activity);
+        ArgumentNullException.ThrowIfNull(config);
+
+        var snackbar = Snackbar.Make(
+            activity,
+            activity.Window.DecorView.RootView,
+            string.Empty,
             -2
         );
 
         if (snackbar.View.LayoutParameters is FrameLayout.LayoutParams layoutParams)
         {
-            layoutParams.SetMargins(ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16*4), ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16*4));
+            var defaultMargin = 16;
+            var horizontalMargin = defaultMargin.DpToPixels();
+            var verticalMargin = (defaultMargin*4).DpToPixels();
+            layoutParams.SetMargins(horizontalMargin, verticalMargin, horizontalMargin, verticalMargin);
 
-            if (Config.Type == MaterialFloatingButtonType.Large)
+            var defaultPadding = 16;
+            var padding = defaultPadding.DpToPixels();
+            
+            if (config.Type == MaterialFloatingButtonType.Large)
             {
                 layoutParams.Height = 96*2;
                 layoutParams.Width = 96*2;
-                Config.IconSize = 36;
-                Config.CornerRadius = 28;
-                snackbar.View.SetPadding(ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16));
+                config.IconSize = 36;
+                config.CornerRadius = 28;
+                snackbar.View.SetPadding(padding, padding, padding, padding);
 
             }
-            else if (Config.Type == MaterialFloatingButtonType.Small)
+            else if (config.Type == MaterialFloatingButtonType.Small)
             {
                 layoutParams.Height = 40*2;
                 layoutParams.Width = 40*2;
-                Config.IconSize = 24;
-                Config.CornerRadius = 12;
-                snackbar.View.SetPadding(ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16));
-
+                config.IconSize = 24;
+                config.CornerRadius = 12;
+                snackbar.View.SetPadding(padding, padding, padding, padding);
             }
             else
             {
                 layoutParams.Height = 56*2;
                 layoutParams.Width = 56*2;
-                Config.IconSize = 24;
-                Config.CornerRadius = 12;
-                snackbar.View.SetPadding(ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(16));
+                config.IconSize = 24;
+                config.CornerRadius = 12;
+                snackbar.View.SetPadding(padding, padding, padding, padding);
             }
             
-            if (Config.Position == MaterialFloatingButtonPosition.BottomRight)
+            if (config.Position == MaterialFloatingButtonPosition.BottomRight)
             {
                 layoutParams.Gravity = GravityFlags.Right | GravityFlags.Bottom;
             }
-            else if (Config.Position == MaterialFloatingButtonPosition.TopRight)
+            else if (config.Position == MaterialFloatingButtonPosition.TopRight)
             {
                 layoutParams.Gravity = GravityFlags.Right | GravityFlags.Top;
             }
-            else if (Config.Position == MaterialFloatingButtonPosition.TopLeft)
+            else if (config.Position == MaterialFloatingButtonPosition.TopLeft)
             {
                 layoutParams.Gravity = GravityFlags.Left | GravityFlags.Top;
             }
@@ -111,35 +114,34 @@ public class FloatingButtonBuilder_Android : Snackbar.Callback
             snackbar.View.LayoutParameters = layoutParams;
         }
         
-        if (Config.BackgroundColor is not null)
-        {
-            snackbar.View.Background = GetDialogBackground();
-        }
+        snackbar.View.Background = GetDialogBackground(config);
         
         var view = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
 
-        if (Config.Icon is not null)
+        if (!string.IsNullOrEmpty(config.Icon))
         {
-            var button = new Button(Activity);
-            var icon = GetIcon(Config.Icon, Config.IconColor);
-            icon.ScaleTo(Config.IconSize);
+            var iconSize = Convert.ToInt32(config.IconSize);
+            
+            var button = new Button(activity);
+            var icon = GetIcon(config);
+            icon.ScaleTo(iconSize);
             button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
             button.SetCompoundDrawables(null, null, icon, null);
-            button.CompoundDrawablePadding = ExtensionsConverters.DpToPixels(16);
+            button.CompoundDrawablePadding = 16.DpToPixels();
             button.Touch += (sender, args) =>
             {
-                Config.Action?.Invoke();
+                config.Action?.Invoke();
             };
             view.AddView(button,0);
-            view.GetChildAt(1).LayoutParameters.Width = ExtensionsConverters.DpToPixels(Config.IconSize);
+            view.GetChildAt(1).LayoutParameters.Width = iconSize.DpToPixels();
         }
 
         view.GetChildAt(1).SetPadding(0, 0, 0,0);
-        if (Config.Type == MaterialFloatingButtonType.Small)
+        if (config.Type == MaterialFloatingButtonType.Small)
         {
             view.GetChildAt(0).SetPadding(0,0,16,0);
         }
-        else if (Config.Type == MaterialFloatingButtonType.FAB)
+        else if (config.Type == MaterialFloatingButtonType.FAB)
         {
             view.GetChildAt(0).SetPadding(0,0,0,0);
         }
@@ -150,25 +152,24 @@ public class FloatingButtonBuilder_Android : Snackbar.Callback
         return snackbar;
     }
     
-    protected virtual Drawable GetDialogBackground()
+    protected Drawable GetDialogBackground(FloatingButtonConfig config)
     {
         var backgroundDrawable = new GradientDrawable();
-        backgroundDrawable.SetColor(Config.BackgroundColor.ToInt());
-        float[] radii = new float[] { (float)Config.CornerRadius.TopLeft, (float)Config.CornerRadius.TopRight, (float)Config.CornerRadius.BottomRight, (float)Config.CornerRadius.BottomLeft };
-        backgroundDrawable.SetCornerRadius((float)Config.CornerRadius.BottomLeft);
+        backgroundDrawable.SetColor(config.BackgroundColor.ToInt());
+        float[] radii = new float[] { (float)config.CornerRadius.TopLeft, (float)config.CornerRadius.TopRight, (float)config.CornerRadius.BottomRight, (float)config.CornerRadius.BottomLeft };
+        backgroundDrawable.SetCornerRadius((float)config.CornerRadius.BottomLeft);
         return backgroundDrawable;
     }
     
-    protected virtual Drawable GetIcon(string icon, Color color)
+    protected Drawable GetIcon(FloatingButtonConfig config)
     {
-        var imgId = MauiApplication.Current.GetDrawableId(icon);
+        var imgId = MauiApplication.Current.GetDrawableId(config.Icon);
         var img = MauiApplication.Current.GetDrawable(imgId);
         
-        img.SetColorFilter(color.ToPlatform(), FilterMode.SrcIn);
+        img.SetColorFilter(config.IconColor.ToPlatform(), FilterMode.SrcIn);
 
         return img;
     }
 
     #endregion
-
 }

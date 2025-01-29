@@ -1,37 +1,35 @@
-using HorusStudio.Maui.MaterialDesignControls.Extensions;
-#if IOS
+#if IOS || MACCATALYST
 using UIKit;
+#endif
+#if ANDROID
+using Android.App;
 #endif
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 class FloatingButtonImplementation : IDisposable
 {
-    private bool isDisposed;
+    private bool _isDisposed;
 
 #if ANDROID
-    private Google.Android.Material.Snackbar.Snackbar layout;
+    private Google.Android.Material.Snackbar.Snackbar? _layout;
 #endif
 
-#if IOS
-    private FloatingButtonBuilder_MaciOS layout;
+#if IOS || MACCATALYST
+    private FloatingButtonBuilder_MaciOS _layout;
 #endif
-
-    public FloatingButtonImplementation()
-    {
-    }
-
+    
     ~FloatingButtonImplementation() => Dispose(false);
 
     public IDisposable Show(FloatingButtonConfig config)
     {
 #if ANDROID
         var activity = Platform.CurrentActivity;
-        activity.SafeRunOnUi(() =>
+        activity?.SafeRunOnUi(() =>
         {
             Dismiss();
-            layout = new FloatingButtonBuilder_Android(activity, config).Build();
-            layout.Show();
+            _layout = new FloatingButtonBuilder().Build(activity, config);
+            _layout.Show();
         });
 #endif
 #if IOS
@@ -39,8 +37,8 @@ class FloatingButtonImplementation : IDisposable
         app.SafeInvokeOnMainThread(() =>
         {
             Dismiss();
-            layout = new FloatingButtonBuilder_MaciOS(config);
-            layout.Show();
+            _layout = new FloatingButtonBuilder_MaciOS(config);
+            _layout.Show();
         });
 #endif
         return this;
@@ -49,10 +47,10 @@ class FloatingButtonImplementation : IDisposable
     public void Dismiss()
     {
 #if ANDROID
-        layout?.Dismiss();
+        _layout?.Dismiss();
 #endif
 #if IOS
-        layout?.Dismiss();
+        _layout?.Dismiss();
 #endif
     } 
     
@@ -63,20 +61,18 @@ class FloatingButtonImplementation : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    protected virtual void Dispose(bool disposing)
+    protected void Dispose(bool disposing)
     {
-        if (!isDisposed)
+        if (_isDisposed) return;
+        if (disposing)
         {
-            if (disposing)
-            {
 #if ANDROID
-                layout?.Dispose();
+            _layout?.Dispose();
 #endif
 #if IOS
-                layout?.Dispose();
+                _layout?.Dispose();
 #endif
-            }
-            isDisposed = true;
         }
+        _isDisposed = true;
     }
 }

@@ -1,5 +1,3 @@
-using HorusStudio.Maui.MaterialDesignControls.Extensions;
-
 #if IOS
 using UIKit;
 using Microsoft.Maui.Platform;
@@ -7,6 +5,7 @@ using Microsoft.Maui.Platform;
 
 #if ANDROID
 using Platform = Microsoft.Maui.ApplicationModel.Platform;
+using Android.App;
 #endif
 
 namespace HorusStudio.Maui.MaterialDesignControls;

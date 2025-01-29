@@ -1,4 +1,4 @@
-using HorusStudio.Maui.MaterialDesignControls.Utils;
+﻿using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.LifecycleEvents;
 
@@ -127,6 +127,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialMultilineTextField.GetStyles());
             // Slider
             application.Resources.AddStyles(MaterialSlider.GetStyles());
+            // FAB
+            application.Resources.AddStyles(MaterialFloatingButton.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)

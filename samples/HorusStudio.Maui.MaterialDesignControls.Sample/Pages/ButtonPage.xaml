@@ -324,19 +324,15 @@
                  BusyIndicatorColor="DarkGoldenrod"
                  BusyIndicatorSize="44" />
 
-                <material:MaterialLabel
-                 Grid.Row="1"
-                 Grid.Column="0"
-                 Text="Is enabled"
-                 HorizontalOptions="End"
-                 HorizontalTextAlignment="End"
-                 VerticalTextAlignment="Center" />
-
-                <Switch
-                 Grid.Row="1"
-                 Grid.Column="1"
-                 HorizontalOptions="Start"
-                 IsToggled="{Binding IsEnabled}" />
+                <HorizontalStackLayout
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="Center">
+                    <material:MaterialSwitch
+                        Text="Is enabled"
+                        IsToggled="{Binding IsEnabled}" />    
+                </HorizontalStackLayout>
+                
             </Grid>
         </material:MaterialCard>
         <material:MaterialLabel Text="Use custom buttons if you need to combine properties from different button types." Type="BodySmall"/>

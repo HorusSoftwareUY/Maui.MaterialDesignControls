@@ -3,26 +3,29 @@ using Android.Graphics.Drawables;
 using Android.Text;
 using Android.Text.Style;
 using Android.Views;
+using Android.Views.Animations;
 using Android.Widget;
 using Microsoft.Maui.Platform;
 using Color = Microsoft.Maui.Graphics.Color;
 using Google.Android.Material.Snackbar;
-using HorusStudio.Maui.MaterialDesignControls.Extensions;
 using Button = Android.Widget.Button;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 public class SnackbarBuilder : Snackbar.Callback
 {
-    public static Thickness DefaultScreenMargin { get; set; } = new Thickness(20, 50);
-    public static double DefaultIconPadding { get; set; } = 10;
-    public static double DefaultActionIconPadding { get; set; } = 10;
+    //public static Thickness DefaultScreenMargin { get; set; } = new Thickness(20, 50);
+    public static int DefaultIconPadding { get; set; } = 10;
+    public static int DefaultActionIconPadding { get; set; } = 10;
     public static long DefaultFadeInFadeOutAnimationDuration { get; set; } = 300;
 
-    public Thickness ScreenMargin { get; set; } = DefaultScreenMargin;
-    public double IconPadding { get; set; } = DefaultIconPadding;
-    public double ActionIconPadding { get; set; } = DefaultActionIconPadding;
+    //public Thickness ScreenMargin { get; set; } = DefaultScreenMargin;
+    public int IconPadding { get; set; } = DefaultIconPadding;
+    public int ActionIconPadding { get; set; } = DefaultActionIconPadding;
     public long FadeInFadeOutAnimationDuration { get; set; } = DefaultFadeInFadeOutAnimationDuration;
+    
+    private const int HorizontalMargin = 20;
+    private const int VerticalMargin = 50;
     
     private Action _dismissed;
     
@@ -100,7 +103,7 @@ public class SnackbarBuilder : Snackbar.Callback
 
         if (snackbar.View.LayoutParameters is FrameLayout.LayoutParams layoutParams)
         {
-            layoutParams.SetMargins(ExtensionsConverters.DpToPixels(ScreenMargin.Left), ExtensionsConverters.DpToPixels(ScreenMargin.Top), ExtensionsConverters.DpToPixels(ScreenMargin.Right), ExtensionsConverters.DpToPixels(ScreenMargin.Bottom));
+            layoutParams.SetMargins(HorizontalMargin.DpToPixels(), VerticalMargin.DpToPixels(), HorizontalMargin.DpToPixels(), VerticalMargin.DpToPixels());
 
             layoutParams.Gravity = GravityFlags.CenterHorizontal | GravityFlags.Bottom;
 
@@ -109,7 +112,7 @@ public class SnackbarBuilder : Snackbar.Callback
                 layoutParams.Gravity = GravityFlags.CenterHorizontal | GravityFlags.Top;
             }
 
-            snackbar.View.SetPadding(ExtensionsConverters.DpToPixels(16), ExtensionsConverters.DpToPixels(10), ExtensionsConverters.DpToPixels(6), ExtensionsConverters.DpToPixels(5));
+            snackbar.View.SetPadding(16.DpToPixels(), 10.DpToPixels(), 6.DpToPixels(), 5.DpToPixels());
             snackbar.View.LayoutParameters = layoutParams;
         }
         
@@ -122,13 +125,13 @@ public class SnackbarBuilder : Snackbar.Callback
             icon.ScaleTo(Config.IconSize);
             button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
             button.SetCompoundDrawables(null, null, icon, null);
-            button.CompoundDrawablePadding = ExtensionsConverters.DpToPixels(IconPadding);
+            button.CompoundDrawablePadding = IconPadding.DpToPixels();
             button.Touch += (sender, args) =>
             {
                 Config.ActionLeading?.Invoke();
             };
             view.AddView(button,0);
-            view.GetChildAt(0).LayoutParameters.Width = ExtensionsConverters.DpToPixels(Config.IconSize);
+            view.GetChildAt(0).LayoutParameters.Width = Config.IconSize.DpToPixels();
         }
 
         if (Config.TrailingIcon is not null)
@@ -138,13 +141,13 @@ public class SnackbarBuilder : Snackbar.Callback
             icon.ScaleTo(Config.IconSize);
             button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
             button.SetCompoundDrawables(icon, null, null, null);
-            button.CompoundDrawablePadding = ExtensionsConverters.DpToPixels(IconPadding);
+            button.CompoundDrawablePadding = IconPadding.DpToPixels();
             button.Touch += (sender, args) =>
             {
                 Config.ActionTrailing?.Invoke();
             };
             view.AddView(button,3);
-            view.GetChildAt(3).LayoutParameters.Width = ExtensionsConverters.DpToPixels(Config.IconSize);
+            view.GetChildAt(3).LayoutParameters.Width = Config.IconSize.DpToPixels();
         }
 
         view.GetChildAt(1).SetPadding(view.GetChildAt(1).PaddingLeft, 0, view.GetChildAt(1).Right, view.GetChildAt(1).Bottom);
@@ -159,7 +162,7 @@ public class SnackbarBuilder : Snackbar.Callback
     {
         var backgroundDrawable = new GradientDrawable();
         backgroundDrawable.SetColor(Config.BackgroundColor.ToInt());
-        backgroundDrawable.SetCornerRadius(ExtensionsConverters.DpToPixels(Config.CornerRadius));
+        backgroundDrawable.SetCornerRadius(Config.CornerRadius.DpToPixels());
 
         return backgroundDrawable;
     }
@@ -171,7 +174,7 @@ public class SnackbarBuilder : Snackbar.Callback
         text.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.TextFontSize);
         text.Ellipsize = TextUtils.TruncateAt.End;
         text.SetCompoundDrawables(null, null, null, null);
-        text.CompoundDrawablePadding = ExtensionsConverters.DpToPixels(IconPadding);
+        text.CompoundDrawablePadding = IconPadding.DpToPixels();
     }
 
     protected virtual void SetupSnackbarAction(Snackbar snackbar)
@@ -195,7 +198,7 @@ public class SnackbarBuilder : Snackbar.Callback
             (float)Config.ActionFontSize - ((Config.ActionFontSize > MaterialFontSize.LabelLarge) ? 6 : 0));
         button.Ellipsize = TextUtils.TruncateAt.Middle;
         button.SetCompoundDrawables(null, null, null, null);
-        button.CompoundDrawablePadding = ExtensionsConverters.DpToPixels(ActionIconPadding);
+        button.CompoundDrawablePadding = ActionIconPadding.DpToPixels();
     }
 
     protected virtual Drawable GetIcon(string icon, Color color)

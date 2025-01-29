@@ -689,17 +689,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 _leftColumnMainContainer.Width = GridLength.Star;
                 _rightColumnMainContainer.Width = trackWidth;
 
-                if (_textLabel != null)
-                {
-                    Grid.SetRow(_textLabel, 0);
-                    Grid.SetColumn(_textLabel, 0);
-                }
-
-                if (_supportingTextLabel != null)
-                {
-                    Grid.SetRow(_supportingTextLabel, 1);
-                    Grid.SetColumn(_supportingTextLabel, 0);
-                }
+                Grid.SetRow(_textLabel, 0);
+                Grid.SetColumn(_textLabel, 0);
+                
+                Grid.SetRow(_supportingTextLabel, 1);
+                Grid.SetColumn(_supportingTextLabel, 0);
 
                 Grid.SetRow(_switch, 0);
                 Grid.SetColumn(_switch, 1);
@@ -710,22 +704,17 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 _leftColumnMainContainer.Width = trackWidth;
                 _rightColumnMainContainer.Width = GridLength.Star;
 
-                if (_textLabel != null)
-                {
-                    Grid.SetRow(_textLabel, 0);
-                    Grid.SetColumn(_textLabel, 1);
-                }
-
-                if (_supportingTextLabel != null)
-                {
-                    Grid.SetRow(_supportingTextLabel, 1);
-                    Grid.SetColumn(_supportingTextLabel, 1);
-                }
-
+                Grid.SetRow(_textLabel, 0);
+                Grid.SetColumn(_textLabel, 1);
+                
+                Grid.SetRow(_supportingTextLabel, 1);
+                Grid.SetColumn(_supportingTextLabel, 1);
+                
                 Grid.SetRow(_switch, 0);
                 Grid.SetColumn(_switch, 0);
                 Grid.SetRowSpan(_switch, 2);
             }
+            Grid.SetRowSpan(_textLabel, _supportingTextLabel?.IsVisible ?? false ? 1 : 2);
         }
 
         private void SetTrackAndThumbSizes()
@@ -808,6 +797,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 _supportingTextLabel.Text = SupportingText;
                 _supportingTextLabel.IsVisible = !string.IsNullOrEmpty(SupportingText);
             }
+
+            Grid.SetRowSpan(_textLabel, _supportingTextLabel?.IsVisible ?? false ? 1 : 2);
         }
 
         private void SetBorderWidth()

@@ -200,19 +200,14 @@
                     TrailingIcon="horus_logo.png"
                     Style="{StaticResource VisualStateManagerStyle}"/>
 
-                <material:MaterialLabel
+                <HorizontalStackLayout
                     Grid.Row="2"
-                    Grid.Column="0"
-                    Text="Is enabled"
-                    HorizontalTextAlignment="End"
-                    VerticalTextAlignment="Center" />
-
-                <Switch
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    HorizontalOptions="Start"
-                    IsToggled="{Binding IsEnabledState}"/>
-
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="Center">
+                    <material:MaterialSwitch
+                        Text="Is enabled"
+                        IsToggled="{Binding IsEnabledState}" />    
+                </HorizontalStackLayout>
             </Grid>
         </material:MaterialCard>
         <material:MaterialLabel 

@@ -261,10 +261,9 @@
                     Style="{StaticResource VisualStateManagerStyle}" />
 
                 <HorizontalStackLayout HorizontalOptions="Center">
-                    <material:MaterialLabel Text="Is enabled" HorizontalOptions="Start" HorizontalTextAlignment="End" VerticalTextAlignment="Center" />
-                    <Switch HorizontalOptions="Start" IsToggled="{Binding IsRadioButtonEnabled}" />
+                    <material:MaterialSwitch Text="Is enabled" IsToggled="{Binding IsRadioButtonEnabled}" />    
                 </HorizontalStackLayout>
-
+                
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel Text="Setting events, new style using visual state manager and text side" Type="BodySmall" />

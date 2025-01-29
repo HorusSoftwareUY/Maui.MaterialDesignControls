@@ -1,20 +1,17 @@
 using CoreGraphics;
-using Foundation;
-using HorusStudio.Maui.MaterialDesignControls.Extensions;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Platform;
 using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class FloatingButtonBuilder_MaciOS : UIView
+class FloatingButtonBuilder_MaciOS : UIView
 {
     public static bool DefaultUseBlur { get; set; } = true;
     public static bool DefaultUseAnimation { get; set; } = true;
     public static TimeSpan DefaultAnimationDuration { get; set; } = TimeSpan.FromMilliseconds(250);
     public static UIBlurEffectStyle DefaultBlurEffectStyle { get; set; } = UIBlurEffectStyle.Dark;
 
-    protected FloatingButtonConfig Config { get; }
+    FloatingButtonConfig Config { get; }
     
     public FloatingButtonBuilder_MaciOS(FloatingButtonConfig config)
     {
@@ -40,7 +37,8 @@ public class FloatingButtonBuilder_MaciOS : UIView
     {
         this.ClearSubviews();
 
-        var window = ExtensionsConverters.GetDefaultWindow();
+        var window = UIKit.WindowExtensions.GetDefaultWindow();
+        if (window == null) return;
         window.AddSubview(this);
             
         List<NSLayoutConstraint> constraints = new List<NSLayoutConstraint>();

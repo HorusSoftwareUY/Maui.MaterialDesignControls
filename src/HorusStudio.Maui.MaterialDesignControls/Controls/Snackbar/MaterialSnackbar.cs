@@ -37,23 +37,23 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 public class MaterialSnackbar : ContentView
 {
     #region Attributes
-    private readonly static int DefaultIconSize = 24;
-    private readonly static CornerRadius DefaultCornerRadius = new CornerRadius(4);
-    private readonly static Thickness DefaultPadding = new Thickness(16,0,8,0);
-    private readonly static ImageSource DefaultLeadingIcon = null;
-    private readonly static ImageSource DefaultTrailingIcon = null;
-    private readonly static string DefaultActionText = "Action";
-    private readonly static Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialLightTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static string DefaultText = string.Empty;
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultActionTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InversePrimary, Dark = MaterialDarkTheme.InversePrimary }.GetValueForCurrentTheme<Color>();
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultFontSize = MaterialFontSize.LabelLarge;
-    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultBorderWidth = 0;
-    private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
-    private readonly static Shadow DefaultShadow = MaterialElevation.Level3;
-    private readonly static Color DefaultShadowColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Shadow, Dark = MaterialDarkTheme.Shadow }.GetValueForCurrentTheme<Color>();
+    private static readonly int DefaultIconSize = 24;
+    private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(4);
+    private static readonly Thickness DefaultPadding = new Thickness(16,0,8,0);
+    private static readonly ImageSource DefaultLeadingIcon = null;
+    private static readonly ImageSource DefaultTrailingIcon = null;
+    private static readonly string DefaultActionText = "Action";
+    private static readonly Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialLightTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly string DefaultText = string.Empty;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultActionTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InversePrimary, Dark = MaterialDarkTheme.InversePrimary }.GetValueForCurrentTheme<Color>();
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly double DefaultFontSize = MaterialFontSize.LabelLarge;
+    private static readonly Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultBorderWidth = 0;
+    private static readonly Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly Shadow DefaultShadow = MaterialElevation.Level3;
+    private static readonly Color DefaultShadowColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Shadow, Dark = MaterialDarkTheme.Shadow }.GetValueForCurrentTheme<Color>();
 
     #endregion
 
@@ -134,7 +134,7 @@ public class MaterialSnackbar : ContentView
     /// The backing store for the <see cref="Padding" />
     /// bindable property.
     /// </summary>
-    public static new readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialSnackbar), defaultValue: DefaultPadding);
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialSnackbar), defaultValue: DefaultPadding);
     
     /// <summary>
     /// The backing store for the <see cref="CornerRadius" />
