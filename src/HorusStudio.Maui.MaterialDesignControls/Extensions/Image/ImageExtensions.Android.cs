@@ -1,3 +1,5 @@
+using Android.Widget;
+
 namespace Android.Graphics.Drawables;
 
 static class ImageExtensions
@@ -6,14 +8,11 @@ static class ImageExtensions
     
     public static void ScaleTo(this Drawable drawable, int newSize)
     {
-        var width = drawable.IntrinsicWidth;
-        var height = drawable.IntrinsicHeight;
+        var newSizeInDp = newSize.DpToPixels();
+        var currentWidth = drawable.IntrinsicWidth;
+        //var scale = (float)newSize/width;
+        var margin = Math.Abs(newSizeInDp - currentWidth) / 2;
 
-        var ratio = width / height;
-        if (width < height)
-        {
-            drawable.SetBounds(0, 0, DimensionExtensions.DpToPixels(newSize * ratio), DimensionExtensions.DpToPixels(newSize));
-        }
-        else drawable.SetBounds(0, 0, DimensionExtensions.DpToPixels(newSize), DimensionExtensions.DpToPixels(newSize / ratio));
+        drawable.SetBounds(margin, margin, margin, margin);
     }
 }

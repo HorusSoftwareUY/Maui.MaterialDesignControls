@@ -51,12 +51,14 @@ static class VisualElementExtensions
         return parentElements;
     }
 
-    public static T GetParent<T>(this IElement element) where T : IElement
+    public static T? GetParent<T>(this IElement element) where T : IElement
     {
-        if (element?.Parent is null) return default;
-        if (element.Parent is T parent) return parent;
-
-        return element.Parent.GetParent<T>();
+        return element?.Parent switch
+        {
+            null => default,
+            T parent => parent,
+            _ => element.Parent.GetParent<T>()
+        };
     }
 
     private static void GetParentElements(this IElement element, List<IElement> parentElements)

@@ -19,22 +19,10 @@ public enum MaterialFloatingButtonPosition
     TopLeft,
     /// <summary>Top right</summary>
     TopRight,
-    /// <summary>Bottom right</summary>
-    BottomRight,
     /// <summary>Bottom left</summary>
-    BottomLeft
-}
-
-class FloatingButtonConfig
-{
-    public MaterialFloatingButtonType Type { get; set; }
-    public MaterialFloatingButtonPosition Position { get; set; }
-    public Color BackgroundColor { get; set; }
-    public Color IconColor { get; set; }
-    public string Icon { get; set; }
-    public CornerRadius CornerRadius { get; set; }
-    public double IconSize { get; set; }
-    public Action Action { get; set; }
+    BottomLeft,
+    /// <summary>Bottom right</summary>
+    BottomRight
 }
 
 /// <summary>
@@ -77,13 +65,36 @@ public class MaterialFloatingButton : ContentView
     private static readonly Color DefaultBackgroundColor =  new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
     private static readonly Color DefaultIconColor = new AppThemeBindingExtension{ Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer}.GetValueForCurrentTheme<Color>();
     private static readonly ImageSource DefaultIcon = string.Empty;
-    private static readonly CornerRadius DefaultCornerRadius = new(16);
-    private static readonly int DefaultIconSize = 24;
+    private static readonly double DefaultIconSize = 24;
+    private static readonly double DefaultCornerRadius = 16;
+    private static readonly Thickness DefaultMargin = new(16);
+    private static readonly Thickness DefaultPadding = new(16);
 
-    private readonly FloatingButtonImplementation _floatingButtonImplementation = new();
-    private FloatingButtonConfig _config = new();
-    private Page _parentPage;
+    private FloatingButtonImplementation? _floatingButtonImplementation;
+    private Page? _parentPage;
+    private bool _typeChanged;
 
+    private static IDictionary<MaterialFloatingButtonType, double> _iconSizeMappings = new Dictionary<MaterialFloatingButtonType, double> 
+    {
+        { MaterialFloatingButtonType.FAB, 24 },
+        { MaterialFloatingButtonType.Small, 24 },
+        { MaterialFloatingButtonType.Large, 36 },
+    };
+        
+    private static IDictionary<MaterialFloatingButtonType, double> _cornerRadiusMappings = new Dictionary<MaterialFloatingButtonType, double> 
+    {
+        { MaterialFloatingButtonType.FAB, 16 },
+        { MaterialFloatingButtonType.Small, 12 },
+        { MaterialFloatingButtonType.Large, 28 },
+    };
+        
+    private static IDictionary<MaterialFloatingButtonType, double> _paddingMappings = new Dictionary<MaterialFloatingButtonType, double> 
+    {
+        { MaterialFloatingButtonType.FAB, 16 },
+        { MaterialFloatingButtonType.Small, 8 }, 
+        { MaterialFloatingButtonType.Large, 30 },
+    };
+    
     #endregion
 
     #region Bindable Properties
@@ -92,86 +103,44 @@ public class MaterialFloatingButton : ContentView
     /// The backing store for the <see cref="Type" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialFloatingButtonType), typeof(MaterialFloatingButton), defaultValue: DefaultFloatingButtonType, propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        if (bindable is MaterialFloatingButton self)
-        {
-            self.UpdateLayout();
-        }
-    });
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialFloatingButtonType), typeof(MaterialFloatingButton), defaultValue: DefaultFloatingButtonType);
     
     /// <summary>
     /// The backing store for the <see cref="Position" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty PositionProperty = BindableProperty.Create(nameof(Position), typeof(MaterialFloatingButtonPosition), typeof(MaterialFloatingButton), defaultValue: DefaultFloatingButtonPosition, propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        if (bindable is MaterialFloatingButton self)
-        {
-            self.UpdateLayout();
-        }
-    });
+    public static readonly BindableProperty PositionProperty = BindableProperty.Create(nameof(Position), typeof(MaterialFloatingButtonPosition), typeof(MaterialFloatingButton), defaultValue: DefaultFloatingButtonPosition);
     
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" />
     /// bindable property.
     /// </summary>
-    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialFloatingButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        if (bindable is MaterialFloatingButton self)
-        {
-            self.UpdateLayout();
-        }
-    });
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialFloatingButton), defaultValue: DefaultBackgroundColor);
     
     /// <summary>
     /// The backing store for the <see cref="IconColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(MaterialFloatingButton), defaultValue: DefaultIconColor, propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        if (bindable is MaterialFloatingButton self)
-        {
-            self.UpdateLayout();
-        }
-    });
+    public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(MaterialFloatingButton), defaultValue: DefaultIconColor);
     
     /// <summary>
     /// The backing store for the <see cref="Icon" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty IconProperty = BindableProperty.Create(nameof(Icon), typeof(ImageSource), typeof(MaterialFloatingButton), defaultValue: DefaultIcon, propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        if (bindable is MaterialFloatingButton self)
-        {
-            self.UpdateLayout();
-        }
-    });
+    public static readonly BindableProperty IconProperty = BindableProperty.Create(nameof(Icon), typeof(ImageSource), typeof(MaterialFloatingButton), defaultValue: DefaultIcon);
+    
+    /// <summary>
+    /// The backing store for the <see cref="IconSize" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(double), typeof(MaterialFloatingButton), defaultValue: DefaultIconSize);
     
     /// <summary>
     /// The backing store for the <see cref="CornerRadius" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialFloatingButton), defaultValue: DefaultCornerRadius, propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        if (bindable is MaterialFloatingButton self)
-        {
-            self.UpdateLayout();
-        }
-    });
+    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(MaterialFloatingButton), defaultValue: DefaultCornerRadius);
 
-    /// <summary>
-    /// The backing store for the <see cref="IconSize" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(int), typeof(MaterialFloatingButton), defaultValue: DefaultIconSize, propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        if (bindable is MaterialFloatingButton self)
-        {
-            self.UpdateLayout();
-        }
-    });
-    
     /// <summary>
     /// The backing store for the <see cref="Command" />
     /// bindable property.
@@ -184,6 +153,26 @@ public class MaterialFloatingButton : ContentView
     /// </summary>
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialFloatingButton));
     
+    /// <summary>
+    /// The backing store for the <see cref="HeightRequest" /> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialFloatingButton), defaultValue: -1d);
+
+    /// <summary>
+    /// The backing store for the <see cref="WidthRequest" /> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialFloatingButton), defaultValue: -1d);
+    
+    /// <summary>
+    /// The backing store for the <see cref="Margin" /> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty MarginProperty = BindableProperty.Create(nameof(Margin), typeof(Thickness), typeof(MaterialFloatingButton), defaultValue: DefaultMargin);
+    
+    /// <summary>
+    /// The backing store for the <see cref="Padding" /> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialFloatingButton), defaultValue: DefaultPadding);
+
     #endregion
 
     #region Properties
@@ -254,29 +243,29 @@ public class MaterialFloatingButton : ContentView
     }
     
     /// <summary>
-    /// Gets or sets corners in floating button
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// CornerRadius(16)
-    /// </default>
-    public CornerRadius CornerRadius
-    {
-        get => (CornerRadius)GetValue(CornerRadiusProperty);
-        set => SetValue(CornerRadiusProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets size Icon Size
+    /// Gets or sets desired icon size for the element.
     /// This is a bindable property.
     /// </summary>
     /// <default>
     /// 24
     /// </default>
-    public int IconSize
+    public double IconSize
     {
-        get => (int)GetValue(IconSizeProperty);
+        get => (double)GetValue(IconSizeProperty);
         set => SetValue(IconSizeProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets corners in floating button
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// 16
+    /// </default>
+    public double CornerRadius
+    {
+        get => (double)GetValue(CornerRadiusProperty);
+        set => SetValue(CornerRadiusProperty, value);
     }
     
     /// <summary>
@@ -309,6 +298,60 @@ public class MaterialFloatingButton : ContentView
         set => SetValue(CommandParameterProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the desired height override of this element.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// -1
+    /// </default>
+    /// <remarks>
+    /// <para>which means the value is unset; the effective minimum height will be zero.</para>
+    /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
+    /// </remarks>
+    public new double HeightRequest
+    {
+        get => (double)GetValue(HeightRequestProperty);
+        set => SetValue(HeightRequestProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets the desired width override of this element.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// -1
+    /// </default>
+    /// <remarks>
+    /// <para>which means the value is unset; the effective minimum width will be zero.</para>
+    /// <para><see cref="WidthRequest"/> does not immediately change the Bounds of an element; setting the <see cref="WidthRequest"/> will change the resulting width of the element during the next layout pass.</para>
+    /// </remarks>
+    public new double WidthRequest
+    {
+        get => (double)GetValue(WidthRequestProperty);
+        set => SetValue(WidthRequestProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets the desired margin override of this element.
+    /// This is a bindable property.
+    /// </summary>
+    public new Thickness Margin
+    {
+        get => (Thickness)GetValue(MarginProperty);
+        set => SetValue(MarginProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets the desired padding override of this element.
+    /// This is a bindable property.
+    /// </summary>
+    public new Thickness Padding
+    {
+        get => (Thickness)GetValue(PaddingProperty);
+        set => SetValue(PaddingProperty, value);
+    }
+    
     #endregion
 
     public MaterialFloatingButton()
@@ -318,11 +361,10 @@ public class MaterialFloatingButton : ContentView
     
     ~MaterialFloatingButton()
     {
-        if (_parentPage is not null)
-        {
-            _parentPage.Appearing -= Appearing;
-            _parentPage.Disappearing -= Disappearing;
-        }
+        if (_parentPage is null) return;
+        
+        _parentPage.Appearing -= Appearing;
+        _parentPage.Disappearing -= Disappearing;
         //GC.SuppressFinalize(this);
     }
 
@@ -330,70 +372,82 @@ public class MaterialFloatingButton : ContentView
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
-        if (propertyName == IsVisibleProperty.PropertyName)
+        System.Diagnostics.Debug.WriteLine($"PROPERTY CHANGED {propertyName}");
+        switch (propertyName)
         {
-            if (IsVisible)
-            {
-                Show();
-            }
-            else
-            {
-                Hide();
-            }
-        }
-        else if (propertyName == WindowProperty.PropertyName)
-        {
-            if (Window is not null && _parentPage is null)
-            {
+            case nameof(IsVisible):
+                if (IsVisible) Show();
+                else Hide();
+                break;
+            
+            case nameof(Type):
+                _typeChanged = true;
+                if (!_iconSizeMappings.TryGetValue(Type, out var iconSize)
+                    || !_cornerRadiusMappings.TryGetValue(Type, out var cornerRadius)
+                    || !_paddingMappings.TryGetValue(Type, out var padding))
+                    throw new ArgumentOutOfRangeException();
+                
+                IconSize = iconSize;
+                CornerRadius = cornerRadius;
+                Padding = padding;
+                UpdateLayout();
+                _typeChanged = false;
+                break;
+            
+            case nameof(BackgroundColor):
+            case nameof(CornerRadius):
+            case nameof(Margin):
+            case nameof(Padding):
+            case nameof(Icon):
+            case nameof(IconColor):
+            case nameof(Position):
+            case nameof(HeightRequest):
+            case nameof(WidthRequest):
+            case nameof(Command):
+            case nameof(CommandParameter):
+            case nameof(IsEnabled):
+                if (_typeChanged) break;
+                UpdateLayout();
+                break;
+            
+            case nameof(Window):
+                if (Window is null || _parentPage is not null) return;
+            
                 _parentPage = this.GetParent<Page>();
-                if (_parentPage is not null)
-                {
-                    this.DebugTreeView();
-                    _parentPage.Appearing += Appearing;
-                    _parentPage.Disappearing += Disappearing;
-                }
-            }
+                if (_parentPage is null) return;
+            
+                this.DebugTreeView();
+                _parentPage.Appearing += Appearing;
+                _parentPage.Disappearing += Disappearing;
+                break;
+            
+            default:
+                base.OnPropertyChanged(propertyName);
+                break;
         }
     }
 
     private void UpdateLayout()
     {
-        string image = Icon.Source();
-
-        _config = new FloatingButtonConfig
-        {
-            Type = Type,
-            Position = Position,
-            BackgroundColor = BackgroundColor,
-            IconColor = IconColor,
-            Icon = image,
-            CornerRadius = CornerRadius,
-            IconSize = IconSize,
-            Action = () =>
-            {
-                if (IsEnabled && (Command?.CanExecute(CommandParameter) ?? false))
-                {
-                    Command?.Execute(CommandParameter);
-                }
-            } 
-        };
-
+        System.Diagnostics.Debug.WriteLine($"UPDATE LAYOUT");
+        _floatingButtonImplementation = new(this);
         Show();
     }
 
     private void Show()
     {
         if (IsVisible)
-            _floatingButtonImplementation.Show(_config);
+            _floatingButtonImplementation?.Show();
     }
 
     private void Hide()
     {
-        _floatingButtonImplementation.Dismiss();
+        _floatingButtonImplementation?.Dismiss();
     }
 
-    private void Appearing(object sender, EventArgs e) => Show();
-    private void Disappearing(object sender, EventArgs e) => Hide();
+    private void Appearing(object? sender, EventArgs e) => Show();
+    
+    private void Disappearing(object? sender, EventArgs e) => Hide();
     
     internal static IEnumerable<Style> GetStyles()
     {

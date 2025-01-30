@@ -1,7 +1,6 @@
 #if IOS || MACCATALYST
 using UIKit;
-#endif
-#if ANDROID
+#elif ANDROID
 using Android.App;
 #endif
 
@@ -12,44 +11,48 @@ class FloatingButtonImplementation : IDisposable
     private bool _isDisposed;
 
 #if ANDROID
-    private Google.Android.Material.Snackbar.Snackbar? _layout;
+    private FloatingButtonBuilder? _layout;
+#elif IOS || MACCATALYST
+    private FloatingButtonBuilder? _layout;
 #endif
+    
+    public FloatingButtonImplementation() { }
 
-#if IOS || MACCATALYST
-    private FloatingButtonBuilder_MaciOS _layout;
+    public FloatingButtonImplementation(MaterialFloatingButton fab)
+    {
+#if ANDROID
+        _layout = new FloatingButtonBuilder(fab, Platform.CurrentActivity);
 #endif
+    }
+    
     
     ~FloatingButtonImplementation() => Dispose(false);
 
-    public IDisposable Show(FloatingButtonConfig config)
+    public IDisposable Show()
     {
 #if ANDROID
         var activity = Platform.CurrentActivity;
         activity?.SafeRunOnUi(() =>
         {
             Dismiss();
-            _layout = new FloatingButtonBuilder().Build(activity, config);
-            _layout.Show();
+            _layout?.Show();
         });
-#endif
-#if IOS
+#elif IOS || MACCATALYST
         var app = UIApplication.SharedApplication;
         app.SafeInvokeOnMainThread(() =>
         {
             Dismiss();
-            _layout = new FloatingButtonBuilder_MaciOS(config);
-            _layout.Show();
+            _layout?.Show();
         });
 #endif
         return this;
     }
-
+    
     public void Dismiss()
     {
 #if ANDROID
         _layout?.Dismiss();
-#endif
-#if IOS
+#elif IOS || MACCATALYST
         _layout?.Dismiss();
 #endif
     } 
@@ -61,16 +64,15 @@ class FloatingButtonImplementation : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    protected void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
         if (_isDisposed) return;
         if (disposing)
         {
 #if ANDROID
             _layout?.Dispose();
-#endif
-#if IOS
-                _layout?.Dispose();
+#elif IOS || MACCATALYST
+            _layout?.Dispose();
 #endif
         }
         _isDisposed = true;

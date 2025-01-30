@@ -4,21 +4,21 @@ using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-class FloatingButtonBuilder_MaciOS : UIView
+class FloatingButtonBuilder : UIView
 {
     public static bool DefaultUseBlur { get; set; } = true;
     public static bool DefaultUseAnimation { get; set; } = true;
     public static TimeSpan DefaultAnimationDuration { get; set; } = TimeSpan.FromMilliseconds(250);
     public static UIBlurEffectStyle DefaultBlurEffectStyle { get; set; } = UIBlurEffectStyle.Dark;
 
-    FloatingButtonConfig Config { get; }
+    MaterialFloatingButton Config { get; }
     
-    public FloatingButtonBuilder_MaciOS(FloatingButtonConfig config)
+    public FloatingButtonBuilder(MaterialFloatingButton config)
     {
         Config = config;
         TranslatesAutoresizingMaskIntoConstraints = false;
         BackgroundColor = config.BackgroundColor.ToPlatform();
-        Layer.CornerRadius = (float)config.CornerRadius.BottomRight;
+        Layer.CornerRadius = (float)config.CornerRadius;
     }
     
     public virtual void Dismiss()
@@ -43,7 +43,7 @@ class FloatingButtonBuilder_MaciOS : UIView
             
         List<NSLayoutConstraint> constraints = new List<NSLayoutConstraint>();
 
-        var popup = SetupFlatingButton();
+        var popup = SetupFloatingButton();
         this.AddSubview(popup);
 
         if (Config.Type == MaterialFloatingButtonType.FAB)
@@ -111,7 +111,7 @@ class FloatingButtonBuilder_MaciOS : UIView
         }
     }
 
-    protected virtual void SetupBlur()
+    private void SetupBlur()
     {
         var blurEffect = UIBlurEffect.FromStyle(DefaultBlurEffectStyle);
         var effectsView = new UIVisualEffectView
@@ -120,7 +120,7 @@ class FloatingButtonBuilder_MaciOS : UIView
             TranslatesAutoresizingMaskIntoConstraints = false,
             ClipsToBounds = true
         };
-        effectsView.Layer.CornerRadius = (float)Config.CornerRadius.BottomRight;
+        effectsView.Layer.CornerRadius = (float)Config.CornerRadius;
         
 
         this.AddSubview(effectsView);
@@ -134,7 +134,7 @@ class FloatingButtonBuilder_MaciOS : UIView
         ]);
     }
 
-    protected virtual UIView SetupFlatingButton()
+    private UIView SetupFloatingButton()
     {
         var container = new UIStackView
         { 
@@ -145,13 +145,19 @@ class FloatingButtonBuilder_MaciOS : UIView
         
         if (Config.Icon is not null)
         {
-            container.AddArrangedSubview(GetButtonImage(Config.Icon, Config.IconColor, Config.Action));
+            container.AddArrangedSubview(GetButtonImage(Config.Icon.Source(), Config.IconColor, () =>
+            {
+                if (Config.IsEnabled && (Config.Command?.CanExecute(Config.CommandParameter) ?? false))
+                {
+                    Config.Command?.Execute(Config.CommandParameter);
+                }
+            }));
         }
 
         return container;
     }
 
-    protected virtual UIButton GetButtonImage(string icon, Color color, Action? action)
+    private UIButton GetButtonImage(string icon, Color color, Action? action)
     {
         var button = new UIButton
         {
@@ -189,11 +195,12 @@ class FloatingButtonBuilder_MaciOS : UIView
         return button;
     }
 
-    protected virtual UIImageView GetIcon(string Icon, Color color)
+    private UIImageView GetIcon(string icon, Color color)
     {
-        var image = new UIImageView(new CGRect(0, 0, Config.IconSize, Config.IconSize))
+        var iconSize = Config.WidthRequest - Config.Padding.Left - Config.Padding.Right;
+        var image = new UIImageView(new CGRect(0, 0, iconSize, iconSize))
         {
-            Image = new UIImage(Icon).ScaleTo(Config.IconSize),
+            Image = new UIImage(icon).ScaleTo(iconSize),
             ContentMode = UIViewContentMode.Center,
             TranslatesAutoresizingMaskIntoConstraints = false
         };
