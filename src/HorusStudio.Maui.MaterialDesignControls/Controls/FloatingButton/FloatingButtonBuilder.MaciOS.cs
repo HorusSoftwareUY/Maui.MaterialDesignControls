@@ -1,4 +1,3 @@
-using CoreGraphics;
 using Microsoft.Maui.Platform;
 using UIKit;
 
@@ -6,26 +5,52 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 class FloatingButtonBuilder : UIView
 {
-    public static bool DefaultUseBlur { get; set; } = true;
+    #region Attributes & Properties
+    
     public static bool DefaultUseAnimation { get; set; } = true;
     public static TimeSpan DefaultAnimationDuration { get; set; } = TimeSpan.FromMilliseconds(250);
-    public static UIBlurEffectStyle DefaultBlurEffectStyle { get; set; } = UIBlurEffectStyle.Dark;
-
-    MaterialFloatingButton Config { get; }
+    
+    #endregion Attributes & Properties
     
     public FloatingButtonBuilder(MaterialFloatingButton config)
     {
-        Config = config;
-        TranslatesAutoresizingMaskIntoConstraints = false;
-        BackgroundColor = config.BackgroundColor.ToPlatform();
-        Layer.CornerRadius = (float)config.CornerRadius;
+        Build(config);
+    }
+
+    public void Show()
+    {
+        if (DefaultUseAnimation)
+        {
+            Alpha = 0f;
+            Animate(DefaultAnimationDuration.TotalSeconds, () =>
+            {
+                Alpha = 1f;
+            });    
+        }
+        else
+        {
+            Alpha = 1f;
+        }
     }
     
-    public virtual void Dismiss()
+    public void Dismiss()
     {
         try
         {
-            RemoveFromSuperview();
+            //TODO: Check when we should remove view from superview
+            //RemoveFromSuperview();
+            
+            if (DefaultUseAnimation)
+            {
+                Animate(DefaultAnimationDuration.TotalSeconds, () =>
+                {
+                    Alpha = 0f;
+                });    
+            }
+            else
+            {
+                Alpha = 0f;
+            }
         }
         catch(Exception ex)
         {
@@ -33,135 +58,96 @@ class FloatingButtonBuilder : UIView
         }
     }
 
-    public virtual void Show()
+    private void SetRoundedBackground(Color backgroundColor, double cornerRadius)
     {
-        this.ClearSubviews();
-
-        var window = UIKit.WindowExtensions.GetDefaultWindow();
-        if (window == null) return;
-        window.AddSubview(this);
-            
-        List<NSLayoutConstraint> constraints = new List<NSLayoutConstraint>();
-
-        var popup = SetupFloatingButton();
-        this.AddSubview(popup);
-
-        if (Config.Type == MaterialFloatingButtonType.FAB)
-        {
-            NSLayoutConstraint.ActivateConstraints(
-            [
-                popup.LeadingAnchor.ConstraintEqualTo(this.LeadingAnchor, 38/2),
-                popup.TrailingAnchor.ConstraintEqualTo(this.TrailingAnchor, -38/2),
-                popup.TopAnchor.ConstraintEqualTo(this.TopAnchor, 38/2),
-                popup.BottomAnchor.ConstraintEqualTo(this.BottomAnchor, -38/2),
-            ]);
-        }
-        else if (Config.Type == MaterialFloatingButtonType.Small)
-        {
-            NSLayoutConstraint.ActivateConstraints(
-            [
-                popup.LeadingAnchor.ConstraintEqualTo(this.LeadingAnchor, 19/2),
-                popup.TrailingAnchor.ConstraintEqualTo(this.TrailingAnchor, -19/2),
-                popup.TopAnchor.ConstraintEqualTo(this.TopAnchor, 19/2),
-                popup.BottomAnchor.ConstraintEqualTo(this.BottomAnchor, -19/2),
-            ]);
-        }
-        else if (Config.Type == MaterialFloatingButtonType.Large)
-        {
-            NSLayoutConstraint.ActivateConstraints(
-            [
-                popup.LeadingAnchor.ConstraintEqualTo(this.LeadingAnchor, 56/2),
-                popup.TrailingAnchor.ConstraintEqualTo(this.TrailingAnchor, -56/2),
-                popup.TopAnchor.ConstraintEqualTo(this.TopAnchor, 56/2),
-                popup.BottomAnchor.ConstraintEqualTo(this.BottomAnchor, -56/2),
-            ]);
-        }
+        BackgroundColor = backgroundColor.ToPlatform();
+        Layer.CornerRadius = (float)cornerRadius/2;
+        TranslatesAutoresizingMaskIntoConstraints = false;
+        Alpha = 0f;
+    }
+    
+    private void SetMargin(UIWindow window, Thickness margin, MaterialFloatingButtonPosition position)
+    {
+        var constraints = new List<NSLayoutConstraint>();
         
-        if (Config.Position == MaterialFloatingButtonPosition.BottomRight)
+        switch (position)
         {
-            constraints.Add(this.BottomAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.BottomAnchor, -16f));
-            constraints.Add(this.TrailingAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TrailingAnchor, -16f));
-        }
-        else if (Config.Position == MaterialFloatingButtonPosition.TopRight)
-        {
-            constraints.Add(this.TopAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TopAnchor, 56f));
-            constraints.Add(this.TrailingAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TrailingAnchor, -16f));
-        }
-        else if (Config.Position == MaterialFloatingButtonPosition.TopLeft)
-        {
-            constraints.Add(this.TopAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TopAnchor, 56f));
-            constraints.Add(this.LeadingAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.LeadingAnchor, 16f));
-        }
-        else if (Config.Position == MaterialFloatingButtonPosition.BottomLeft)
-        {
-            constraints.Add(this.BottomAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.BottomAnchor, -16f));
-            constraints.Add(this.LeadingAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.LeadingAnchor, 16f));
+            case MaterialFloatingButtonPosition.BottomRight:
+                constraints.Add(BottomAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.BottomAnchor, -1*(float)margin.Bottom));
+                constraints.Add(RightAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.RightAnchor, -1*(float)margin.Right));
+                break;
+            case MaterialFloatingButtonPosition.TopRight:
+                constraints.Add(TopAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TopAnchor, (float)margin.Top));
+                constraints.Add(RightAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.RightAnchor, -1*(float)margin.Right));
+                break;
+            case MaterialFloatingButtonPosition.TopLeft:
+                constraints.Add(TopAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TopAnchor, (float)margin.Top));
+                constraints.Add(LeftAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.LeftAnchor, (float)margin.Left));
+                break;
+            case MaterialFloatingButtonPosition.BottomLeft:
+                constraints.Add(BottomAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.BottomAnchor, -1*(float)margin.Bottom));
+                constraints.Add(LeftAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.LeftAnchor, (float)margin.Left));
+                break;
         }
         
         NSLayoutConstraint.ActivateConstraints([.. constraints]);
-
-        if (DefaultUseAnimation)
-        {
-            this.Alpha = 0;
-
-            UIView.Animate(DefaultAnimationDuration.TotalSeconds, () =>
-            {
-                this.Alpha = 1f;
-            });
-        }
     }
-
-    private void SetupBlur()
+    
+    private void SetSize(UIView view, double height, double width)
     {
-        var blurEffect = UIBlurEffect.FromStyle(DefaultBlurEffectStyle);
-        var effectsView = new UIVisualEffectView
-        {
-            Effect = blurEffect,
-            TranslatesAutoresizingMaskIntoConstraints = false,
-            ClipsToBounds = true
-        };
-        effectsView.Layer.CornerRadius = (float)Config.CornerRadius;
-        
-
-        this.AddSubview(effectsView);
-
         NSLayoutConstraint.ActivateConstraints(
         [
-            effectsView.LeadingAnchor.ConstraintEqualTo(this.LeadingAnchor),
-            effectsView.TrailingAnchor.ConstraintEqualTo(this.TrailingAnchor),
-            effectsView.TopAnchor.ConstraintEqualTo(this.TopAnchor),
-            effectsView.BottomAnchor.ConstraintEqualTo(this.BottomAnchor),
+            view.LeftAnchor.ConstraintEqualTo(this.LeftAnchor, (float)width/4),
+            view.RightAnchor.ConstraintEqualTo(this.RightAnchor, -(float)width/4),
+            view.TopAnchor.ConstraintEqualTo(this.TopAnchor, (float)height/4),
+            view.BottomAnchor.ConstraintEqualTo(this.BottomAnchor, -(float)height/4),
         ]);
     }
-
-    private UIView SetupFloatingButton()
+    
+    private void Build(MaterialFloatingButton fab)
+    {
+        this.ClearSubviews();
+        
+        var window = UIKit.WindowExtensions.GetDefaultWindow();
+        if (window == null) return;
+        window.AddSubview(this);
+        
+        SetRoundedBackground(fab.BackgroundColor, fab.CornerRadius);
+        SetMargin(window, fab.Margin, fab.Position);
+        
+        var content = CreateLayout(fab);
+        AddSubview(content);
+        SetSize(content, fab.IconSize + fab.Padding.VerticalThickness, fab.IconSize + fab.Padding.VerticalThickness);
+    }
+    
+    private UIView CreateLayout(MaterialFloatingButton fab)
     {
         var container = new UIStackView
         { 
             Alignment = UIStackViewAlignment.Center,
             Axis = UILayoutConstraintAxis.Horizontal,
-            TranslatesAutoresizingMaskIntoConstraints = false,
+            TranslatesAutoresizingMaskIntoConstraints = false
         };
-        
-        if (Config.Icon is not null)
+
+        var button = GetButtonImage(fab.Icon.Source(), fab.IconSize, fab.IconColor, () =>
         {
-            container.AddArrangedSubview(GetButtonImage(Config.Icon.Source(), Config.IconColor, () =>
+            if (fab.IsEnabled && (fab.Command?.CanExecute(fab.CommandParameter) ?? false))
             {
-                if (Config.IsEnabled && (Config.Command?.CanExecute(Config.CommandParameter) ?? false))
-                {
-                    Config.Command?.Execute(Config.CommandParameter);
-                }
-            }));
-        }
+                fab.Command?.Execute(fab.CommandParameter);
+            }
+        });
+        container.AddArrangedSubview(button);
 
         return container;
     }
 
-    private UIButton GetButtonImage(string icon, Color color, Action? action)
+    private UIButton GetButtonImage(string? iconSource, double iconSize, Color tintColor, Action? action)
     {
         var button = new UIButton
         {
             TranslatesAutoresizingMaskIntoConstraints = false,
+            BackgroundColor = UIColor.Clear,
+            TintColor = tintColor.ToPlatform()
         };
         
         button.TouchUpInside += (s, a) =>
@@ -169,44 +155,30 @@ class FloatingButtonBuilder : UIView
             action?.Invoke();
         };
         
-        if (OperatingSystem.IsMacCatalystVersionAtLeast(15) || OperatingSystem.IsIOSVersionAtLeast(15))
+        var imageView = GetIcon(iconSource, iconSize);
+        if (imageView?.Image is {} image)
         {
-            var configuration = UIButtonConfiguration.PlainButtonConfiguration;
-            configuration.ContentInsets = new NSDirectionalEdgeInsets(0,10,0,8);
-            button.Configuration = configuration;
-        }
-        else
-        {
-            button.ImageEdgeInsets = new UIEdgeInsets(0,10,0,8);
-        }
-
-        var widthConstraint = NSLayoutConstraint.Create(button, NSLayoutAttribute.Width, NSLayoutRelation.Equal, null, NSLayoutAttribute.NoAttribute, 1f, button.IntrinsicContentSize.Width);
-        widthConstraint.Priority = (int)UILayoutPriority.Required;
-        button.AddConstraint(widthConstraint);
-        var imageView = GetIcon(icon, color);
-        button.BackgroundColor = Colors.Transparent.ToPlatform();
-        if (imageView.Image != null)
-        {
-            button.TintColor = color.ToPlatform();
-            button.ImageView.TintColor = color.ToPlatform();
-            button.SetImage(imageView.Image, UIControlState.Normal);
+            button.SetImage(image, UIControlState.Normal);
         }
 
         return button;
     }
 
-    private UIImageView GetIcon(string icon, Color color)
+    private UIImageView? GetIcon(string? iconSource, double iconSize)
     {
-        var iconSize = Config.WidthRequest - Config.Padding.Left - Config.Padding.Right;
-        var image = new UIImageView(new CGRect(0, 0, iconSize, iconSize))
+        if (string.IsNullOrEmpty(iconSource)) return null;
+        
+        var icon = new UIImage(iconSource)
+            .ScaleTo(iconSize)
+            .ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+        
+        var image = new UIImageView
         {
-            Image = new UIImage(icon).ScaleTo(iconSize),
+            Image = icon,
             ContentMode = UIViewContentMode.Center,
             TranslatesAutoresizingMaskIntoConstraints = false
         };
         
-        image.Image = image.Image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
-        image.TintColor = color.ToPlatform();
         return image;
     }
 }

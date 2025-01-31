@@ -72,23 +72,23 @@ public class MaterialFloatingButton : ContentView
 
     private FloatingButtonImplementation? _floatingButtonImplementation;
     private Page? _parentPage;
-    private bool _typeChanged;
+    private bool _typeChanged = true;
 
-    private static IDictionary<MaterialFloatingButtonType, double> _iconSizeMappings = new Dictionary<MaterialFloatingButtonType, double> 
+    private static readonly IDictionary<MaterialFloatingButtonType, double> IconSizeMappings = new Dictionary<MaterialFloatingButtonType, double> 
     {
         { MaterialFloatingButtonType.FAB, 24 },
         { MaterialFloatingButtonType.Small, 24 },
         { MaterialFloatingButtonType.Large, 36 },
     };
         
-    private static IDictionary<MaterialFloatingButtonType, double> _cornerRadiusMappings = new Dictionary<MaterialFloatingButtonType, double> 
+    private static readonly IDictionary<MaterialFloatingButtonType, double> CornerRadiusMappings = new Dictionary<MaterialFloatingButtonType, double> 
     {
         { MaterialFloatingButtonType.FAB, 16 },
         { MaterialFloatingButtonType.Small, 12 },
         { MaterialFloatingButtonType.Large, 28 },
     };
         
-    private static IDictionary<MaterialFloatingButtonType, double> _paddingMappings = new Dictionary<MaterialFloatingButtonType, double> 
+    private static readonly IDictionary<MaterialFloatingButtonType, double> PaddingMappings = new Dictionary<MaterialFloatingButtonType, double> 
     {
         { MaterialFloatingButtonType.FAB, 16 },
         { MaterialFloatingButtonType.Small, 8 }, 
@@ -354,10 +354,12 @@ public class MaterialFloatingButton : ContentView
     
     #endregion
 
+    /*
     public MaterialFloatingButton()
     {
-        //System.Diagnostics.Debug.WriteLine($"GC TotalMemory: {GC.GetTotalMemory(true)}");
+        System.Diagnostics.Debug.WriteLine($"GC TotalMemory: {GC.GetTotalMemory(true)}");
     }
+    */
     
     ~MaterialFloatingButton()
     {
@@ -372,7 +374,6 @@ public class MaterialFloatingButton : ContentView
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
-        System.Diagnostics.Debug.WriteLine($"PROPERTY CHANGED {propertyName}");
         switch (propertyName)
         {
             case nameof(IsVisible):
@@ -382,9 +383,9 @@ public class MaterialFloatingButton : ContentView
             
             case nameof(Type):
                 _typeChanged = true;
-                if (!_iconSizeMappings.TryGetValue(Type, out var iconSize)
-                    || !_cornerRadiusMappings.TryGetValue(Type, out var cornerRadius)
-                    || !_paddingMappings.TryGetValue(Type, out var padding))
+                if (!IconSizeMappings.TryGetValue(Type, out var iconSize)
+                    || !CornerRadiusMappings.TryGetValue(Type, out var cornerRadius)
+                    || !PaddingMappings.TryGetValue(Type, out var padding))
                     throw new ArgumentOutOfRangeException();
                 
                 IconSize = iconSize;
@@ -395,10 +396,11 @@ public class MaterialFloatingButton : ContentView
                 break;
             
             case nameof(BackgroundColor):
-            case nameof(CornerRadius):
             case nameof(Margin):
+            case nameof(CornerRadius):
             case nameof(Padding):
             case nameof(Icon):
+            case nameof(IconSize):    
             case nameof(IconColor):
             case nameof(Position):
             case nameof(HeightRequest):
@@ -406,7 +408,6 @@ public class MaterialFloatingButton : ContentView
             case nameof(Command):
             case nameof(CommandParameter):
             case nameof(IsEnabled):
-                if (_typeChanged) break;
                 UpdateLayout();
                 break;
             
@@ -429,7 +430,12 @@ public class MaterialFloatingButton : ContentView
 
     private void UpdateLayout()
     {
-        System.Diagnostics.Debug.WriteLine($"UPDATE LAYOUT");
+#if IOS || MACCATALYST
+        if (_floatingButtonImplementation != null)
+        {
+            _floatingButtonImplementation.Dispose();
+        }
+#endif
         _floatingButtonImplementation = new(this);
         Show();
     }

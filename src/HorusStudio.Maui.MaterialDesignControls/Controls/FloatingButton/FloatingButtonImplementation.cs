@@ -15,13 +15,13 @@ class FloatingButtonImplementation : IDisposable
 #elif IOS || MACCATALYST
     private FloatingButtonBuilder? _layout;
 #endif
-    
-    public FloatingButtonImplementation() { }
 
     public FloatingButtonImplementation(MaterialFloatingButton fab)
     {
 #if ANDROID
         _layout = new FloatingButtonBuilder(fab, Platform.CurrentActivity);
+#elif IOS || MACCATALYST
+        _layout = new FloatingButtonBuilder(fab);
 #endif
     }
     
@@ -41,7 +41,6 @@ class FloatingButtonImplementation : IDisposable
         var app = UIApplication.SharedApplication;
         app.SafeInvokeOnMainThread(() =>
         {
-            Dismiss();
             _layout?.Show();
         });
 #endif

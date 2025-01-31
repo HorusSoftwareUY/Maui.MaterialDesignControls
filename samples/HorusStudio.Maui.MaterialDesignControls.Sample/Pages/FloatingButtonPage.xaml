@@ -13,12 +13,20 @@
     <VerticalStackLayout Spacing="8">
         <material:MaterialFloatingButton
             Icon="horus_logo"
+            Type="FAB"
+            Margin="0,64,150,0"
+            BackgroundColor="Red"
+            IconColor="Yellow"
+            Position="TopRight" />
+        
+        <material:MaterialFloatingButton
+            Icon="horus_logo"
             Type="{Binding ButtonType}"
             Position="{Binding PositionButton}"
             Command="{Binding FloatingButtonActionCommand}"
             IsVisible="{Binding IsVisible}"
             IsEnabled="{Binding IsEnabled}" />
-
+        
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Type" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <material:MaterialChipsGroup
