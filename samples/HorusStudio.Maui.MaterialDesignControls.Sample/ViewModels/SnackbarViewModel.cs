@@ -23,7 +23,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async void ShowSnackbarExample()
         {
-            _snackbarUser.ShowSnackbar(new SnackbarConfig()
+            _snackbarUser.ShowSnackbar(new SnackbarConfig
             {
                 Message = "This is snackbar",
                 Action = SnackbarAction,
@@ -33,11 +33,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async void ShowSnackbarIconExample()
         {
-            _snackbarUser.ShowSnackbar(new SnackbarConfig()
+            _snackbarUser.ShowSnackbar(new SnackbarConfig
             {
                 LeadingIcon = "horus_logo.png",
                 TrailingIcon = "horus_logo.png",
                 Message = "Lorem ipsum dolor sit amet",
+                LeadingIconTintColor = Colors.Red,
                 Action = SnackbarAction,
                 ActionLeading = SnackbarLeading,
                 ActionTrailing = SnackbarTrailing,
@@ -47,7 +48,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async void ShowSnackbarFullAPIExample()
         {
-            _snackbarUser.ShowSnackbar(new SnackbarConfig()
+            _snackbarUser.ShowSnackbar(new SnackbarConfig
             {
                 LeadingIcon = "horus_logo.png",
                 TrailingIcon = "horus_logo.png",
@@ -56,7 +57,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 TextColor = Colors.Aqua,
                 ActionTextColor = Colors.Fuchsia,
                 BackgroundColor = Colors.Green,
-                LeadingIconTintColor = Colors.Brown,
+                LeadingIconTintColor = Colors.Red,
                 TrailingIconTintColor = Colors.Coral,
                 Action = SnackbarAction,
                 ActionFontSize = 28,
@@ -69,13 +70,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async void SnackbarLeading()
         {
-            await DisplayAlert(Title, "Leading Tapped", "OK");
+            await DisplayAlert(Title, "Leading icon tapped!", "OK");
         }
         
         [ICommand]
         private async void SnackbarTrailing()
         {
-            await DisplayAlert(Title, "Trailing tapped!", "OK");
+            await DisplayAlert(Title, "Trailing icon tapped!", "OK");
         }
         
         [ICommand]

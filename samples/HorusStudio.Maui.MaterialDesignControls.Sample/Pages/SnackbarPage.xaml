@@ -1,113 +1,89 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                       xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-                       xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
-                       xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
-                       x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SnackbarPage"
-                       x:TypeArguments="vm:SnackbarViewModel"
-                       x:DataType="vm:SnackbarViewModel">
+<local:BaseContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SnackbarPage"
+    x:TypeArguments="vm:SnackbarViewModel"
+    x:DataType="vm:SnackbarViewModel"
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
 
-    <ContentPage.Resources>
-        <Style x:Key="GridSnackbarContainer" TargetType="Grid">
-            <Setter Property="RowDefinitions" Value="Auto,Auto" />
-            <Setter Property="ColumnDefinitions" Value="*,*" />
-            <Setter Property="RowSpacing" Value="16" />
-            <Setter Property="ColumnSpacing" Value="16" />
-        </Style>
-    </ContentPage.Resources>
+    <VerticalStackLayout Spacing="8">
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout Spacing="16" Padding="0,8">
+                <material:MaterialSnackbar
+                    Text="Lorem ipsum dolor sit amet"
+                    ActionText="Action"
+                    LeadingCommand="{Binding SnackbarLeadingCommand}"
+                    TrailingCommand="{Binding SnackbarTrailingCommand}"
+                    ActionCommand="{Binding SnackbarActionCommand}"/>
+                
+                <material:MaterialButton
+                    Type="Elevated"
+                    Text="Show example"
+                    Command="{Binding ShowSnackbarExampleCommand}" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel 
+            Text="Snackbars inform users of a process that an app has performed or will perform. They appear temporarily, towards the bottom of the screen. They shouldn’t interrupt the user experience, and they don’t require user input to disappear."
+            Type="BodySmall" />
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Icon" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout Spacing="16" Padding="0,8">
+                <material:MaterialSnackbar
+                    LeadingIcon="horus_logo.png"
+                    TrailingIcon="horus_logo.png"
+                    LeadingIconTintColor="Red"
+                    Text="Lorem ipsum dolor sit amet"
+                    ActionText="Action"
+                    LeadingCommand="{Binding SnackbarLeadingCommand}"
+                    TrailingCommand="{Binding SnackbarTrailingCommand}"
+                    ActionCommand="{Binding SnackbarActionCommand}"/>
+                
+                <material:MaterialButton
+                    Type="Elevated"
+                    Text="Show example"
+                    Command="{Binding ShowSnackbarIconExampleCommand}"/>
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel 
+            Text="Set leading or trailing icon to snackbar for more events"
+            Type="BodySmall" />
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Full API" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout Spacing="16" Padding="0,8">
+                <material:MaterialSnackbar
+                    BackgroundColor="Green"
+                    TextColor="Aqua"
+                    LeadingIconTintColor="Red"
+                    TrailingIconTintColor="Coral"
+                    ActionTextColor="Fuchsia"
+                    ActionFontSize="28"
+                    IconSize="35"
+                    HeightRequest="90"
+                    LeadingIcon="horus_logo.png"
+                    TrailingIcon="horus_logo.png"
+                    Text="Lorem ipsum dolor sit amet"
+                    ActionText="Action API"
+                    LeadingCommand="{Binding SnackbarLeadingCommand}"
+                    TrailingCommand="{Binding SnackbarTrailingCommand}"
+                    ActionCommand="{Binding SnackbarActionCommand}"/>
+                
+                <material:MaterialButton
+                    Type="Elevated"
+                    Text="Show example"
+                    Command="{Binding ShowSnackbarFullAPIExampleCommand}"/>
+                
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel 
+            Text="Set or change any aspect for you snackbar with full api access."
+            Type="BodySmall"/>
 
-    <ScrollView>
-        <VerticalStackLayout Style="{StaticResource MainLayout}">
-            <material:MaterialLabel Text="{Binding Subtitle}" />
-
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <Grid Style="{StaticResource GridSnackbarContainer}">
-                    
-                    <material:MaterialSnackbar
-                        Grid.ColumnSpan="2"
-                        Grid.Row="0"
-                        Text="Lorem ipsum dolor sit amet"
-                        ActionText="Action"
-                        LeadingCommand="{Binding SnackbarLeadingCommand}"
-                        TrailingCommand="{Binding SnackbarTrailingCommand}"
-                        ActionCommand="{Binding SnackbarActionCommand}"/>
-                    
-                    <material:MaterialButton
-                        Grid.Row="1"
-                        Grid.ColumnSpan="2"
-                        Type="Elevated"
-                        Text="Show example"
-                        Command="{Binding ShowSnackbarExampleCommand}"/>
-                    
-                </Grid>
-            </Frame>
-            <material:MaterialLabel 
-                Text="Snackbars inform users of a process that an app has performed or will perform. They appear temporarily, towards the bottom of the screen. They shouldn’t interrupt the user experience, and they don’t require user input to disappear." />
-            
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Icon" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <Grid Style="{StaticResource GridSnackbarContainer}">
-                    
-                    <material:MaterialSnackbar
-                        Grid.ColumnSpan="2"
-                        Grid.Row="0"
-                        LeadingIcon="horus_logo.png"
-                        TrailingIcon="horus_logo.png"
-                        Text="Lorem ipsum dolor sit amet"
-                        ActionText="Action"
-                        LeadingCommand="{Binding SnackbarLeadingCommand}"
-                        TrailingCommand="{Binding SnackbarTrailingCommand}"
-                        ActionCommand="{Binding SnackbarActionCommand}"/>
-                    
-                    <material:MaterialButton
-                        Grid.Row="1"
-                        Grid.ColumnSpan="2"
-                        Type="Elevated"
-                        Text="Show example"
-                        Command="{Binding ShowSnackbarIconExampleCommand}"/>
-                    
-                </Grid>
-            </Frame>
-            <material:MaterialLabel 
-                Text="Set leading or trailing icon to snackbar for more events" />
-            
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Full API" />
-            <Frame Style="{StaticResource SurfaceContainer}" Padding="16,32">
-                <Grid Style="{StaticResource GridSnackbarContainer}">
-                    
-                    <material:MaterialSnackbar
-                        Grid.ColumnSpan="2"
-                        Grid.Row="0"
-                        BackgroundColor="Green"
-                        TextColor="Aqua"
-                        LeadingIconTintColor="Brown"
-                        TrailingIconTintColor="Coral"
-                        ActionTextColor="Fuchsia"
-                        ActionFontSize="28"
-                        IconSize="35"
-                        HeightRequest="90"
-                        LeadingIcon="horus_logo.png"
-                        TrailingIcon="horus_logo.png"
-                        Text="Lorem ipsum dolor sit amet"
-                        ActionText="Action API"
-                        LeadingCommand="{Binding SnackbarLeadingCommand}"
-                        TrailingCommand="{Binding SnackbarTrailingCommand}"
-                        ActionCommand="{Binding SnackbarActionCommand}"/>
-                    
-                    <material:MaterialButton
-                        Grid.Row="1"
-                        Grid.ColumnSpan="2"
-                        Type="Elevated"
-                        Text="Show example"
-                        Command="{Binding ShowSnackbarFullAPIExampleCommand}"/>
-                    
-                </Grid>
-            </Frame>
-            <material:MaterialLabel 
-                Text="Set or change anyware aspect for you snackbar with full api." />
-
-        </VerticalStackLayout>
-    </ScrollView>
+    </VerticalStackLayout>
 </local:BaseContentPage>
