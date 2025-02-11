@@ -169,7 +169,7 @@ public class Snackbar : UIView
         
         if (Config.LeadingIcon is not null)
         {
-            container.AddArrangedSubview(GetButtonImage(Config.LeadingIcon, Config.LeadingIconTintColor, Config.ActionLeading));
+            container.AddArrangedSubview(GetButtonImage(Config.LeadingIcon.Source.Source(), Config.LeadingIcon.Color, Config.LeadingIcon.Size, Config.LeadingIcon.Action));
         }
 
         container.AddArrangedSubview(GetLabel());
@@ -185,13 +185,13 @@ public class Snackbar : UIView
         
         if (Config.TrailingIcon is not null)
         {
-            container.AddArrangedSubview(GetButtonImage(Config.TrailingIcon, Config.TrailingIconTintColor, Config.ActionTrailing));
+            container.AddArrangedSubview(GetButtonImage(Config.TrailingIcon.Source.Source(), Config.TrailingIcon.Color, Config.TrailingIcon.Size, Config.TrailingIcon.Action));
         }
 
         return container;
     }
 
-    protected virtual UIButton GetButtonImage(string icon, Color color, Action? action)
+    protected virtual UIButton GetButtonImage(string icon, Color color, int size, Action? action)
     {
         var button = new UIButton
         {
@@ -219,7 +219,7 @@ public class Snackbar : UIView
         var widthConstraint = NSLayoutConstraint.Create(button, NSLayoutAttribute.Width, NSLayoutRelation.Equal, null, NSLayoutAttribute.NoAttribute, 1f, button.IntrinsicContentSize.Width);
         widthConstraint.Priority = (int)UILayoutPriority.Required;
         button.AddConstraint(widthConstraint);
-        var imageView = GetIcon(icon, color);
+        var imageView = GetIcon(icon, color, size);
         button.BackgroundColor = Colors.Transparent.ToPlatform();
         if (imageView.Image != null)
         {
@@ -255,12 +255,12 @@ public class Snackbar : UIView
         button.TouchUpInside += (s, a) =>
         {
             this.Dismiss();
-            Config.Action?.Invoke();
+            Config.Action?.Action?.Invoke();
         };
 
         UIFont font = null;
-        font ??= UIFont.SystemFontOfSize((nfloat)Config.ActionFontSize);
-        button.SetAttributedTitle(new NSMutableAttributedString(Config.ActionText, font, Config.ActionTextColor.ToPlatform()), UIControlState.Normal);
+        font ??= UIFont.SystemFontOfSize((nfloat)Config.Action.FontSize);
+        button.SetAttributedTitle(new NSMutableAttributedString(Config.Action.Text, font, Config.Action.Color.ToPlatform()), UIControlState.Normal);
 
         if (OperatingSystem.IsMacCatalystVersionAtLeast(15) || OperatingSystem.IsIOSVersionAtLeast(15))
         {
@@ -281,11 +281,11 @@ public class Snackbar : UIView
         return button;
     }
 
-    protected virtual UIImageView GetIcon(string Icon, Color color)
+    protected virtual UIImageView GetIcon(string Icon, Color color, int size)
     {
-        var image = new UIImageView(new CGRect(0, 0, Config.IconSize, Config.IconSize))
+        var image = new UIImageView(new CGRect(0, 0, size, size))
         {
-            Image = new UIImage(Icon).ScaleTo(Config.IconSize),
+            Image = new UIImage(Icon).ScaleTo(size),
             ContentMode = UIViewContentMode.Center,
             TranslatesAutoresizingMaskIntoConstraints = false
         };
@@ -298,7 +298,7 @@ public class Snackbar : UIView
     protected virtual UIView GetLabel()
     {
         UIFont font = null;
-        font ??= UIFont.SystemFontOfSize((nfloat)Config.TextFontSize);
+        font ??= UIFont.SystemFontOfSize((nfloat)Config.FontSize);
 
         var label = new UILabel
         {

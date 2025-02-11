@@ -48,8 +48,8 @@ class FloatingButtonBuilder : Snackbar.Callback
     
     private static Snackbar Build(MaterialFloatingButton fab, Activity? activity)
     {
-        ArgumentNullException.ThrowIfNull(activity);
         ArgumentNullException.ThrowIfNull(fab);
+        ArgumentNullException.ThrowIfNull(activity);
 
         var rootView = activity!.Window!.DecorView.RootView;
         var snackbar = Snackbar.Make(
@@ -61,12 +61,7 @@ class FloatingButtonBuilder : Snackbar.Callback
 
         if (snackbar.View is Snackbar.SnackbarLayout snackbarView)
         {
-            var insets = new Thickness();
-            var androidVersion = Android.OS.Build.VERSION.SdkInt;
-            if (androidVersion >= BuildVersionCodes.Q && rootView!.RootWindowInsets?.StableInsets is { } stableInsets)
-            {
-                insets = new Thickness(stableInsets.Left, stableInsets.Top, stableInsets.Right, stableInsets.Bottom);
-            }
+            var insets = rootView!.GetInsets();
             
             snackbarView.Alpha = 0f;
             snackbarView

@@ -31,23 +31,14 @@ public partial class SnackbarImplementation
         }));
 #endif
 #if ANDROID
-        Google.Android.Material.Snackbar.Snackbar snackBar = null;
+        SnackbarBuilder snackBar = null;
         var activity = Platform.CurrentActivity;
         activity.SafeRunOnUi(() =>
         {
-            snackBar = new SnackbarBuilder(activity, config).Build();
-
+            snackBar = new SnackbarBuilder(activity, config);
             snackBar.Show();
         });
-        return new DisposableAction(() =>
-        {
-            if (snackBar.IsShown)
-                activity.SafeRunOnUi(() =>
-                {
-                    snackBar.Dismiss();
-                    config.DimissAction?.Invoke();
-                });
-        });
+        return snackBar;
 #endif
         return null;
     }
@@ -60,36 +51,38 @@ public partial class SnackbarImplementation : ISnackbarUser
 
     public virtual IDisposable ShowSnackbar(string message, string leadingIcon, string trailingIcon,
         TimeSpan? dismissTimer, string actionText, Action action, Action actionLeading, Action actionTrailing)
-        => ShowSnackbar(new SnackbarConfig()
+        => ShowSnackbar(new SnackbarConfig(message)
         {
-            Message = message,
-            LeadingIcon = leadingIcon,
-            TrailingIcon = trailingIcon,
+            LeadingIcon = new SnackbarConfig.IconConfig(leadingIcon)
+            {
+              Action = actionLeading
+            },
+            TrailingIcon = new SnackbarConfig.IconConfig(trailingIcon)
+            {
+                Action = actionTrailing
+            },
             Duration = dismissTimer ?? SnackbarConfig.DefaultDuration,
-            Action = action,
-            ActionLeading = actionLeading,
-            ActionTrailing = actionTrailing,
-            ActionText = actionText
+            Action = new SnackbarConfig.ActionConfig (actionText)
+            {
+                Action = action
+            }
         });
 
     public virtual Task ShowSnackbarAsync(string message, string leadingIcon, string trailingIcon,
         TimeSpan? dismissTimer, string actionText, CancellationToken? cancelToken)
-        => ShowSnackbarAsync(new SnackbarConfig()
+        => ShowSnackbarAsync(new SnackbarConfig(message)
         {
-            Message = message,
-            LeadingIcon = leadingIcon,
-            TrailingIcon = trailingIcon,
+            LeadingIcon = new SnackbarConfig.IconConfig(leadingIcon),
+            TrailingIcon = new SnackbarConfig.IconConfig (trailingIcon),
             Duration = dismissTimer ?? SnackbarConfig.DefaultDuration,
-            ActionText = actionText
+            Action = new SnackbarConfig.ActionConfig(actionText)
         }, cancelToken);
 
     public virtual async Task ShowSnackbarAsync(SnackbarConfig config, CancellationToken? cancelToken)
     {
-        if (config.Action is not null)
-            throw new ArgumentException(_noAction);
-        if (config.ActionLeading is not null)
-            throw new ArgumentException(_noAction);
-        if (config.ActionTrailing is not null)
+        if (config.Action is not null || 
+            config.LeadingIcon?.Action is not null || 
+            config.TrailingIcon?.Action is not null)
             throw new ArgumentException(_noAction);
     }
 }

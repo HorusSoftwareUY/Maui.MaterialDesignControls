@@ -6,114 +6,134 @@ public enum SnackbarPosition
     Top
 }
 
-public class SnackbarConfig
+public class SnackbarConfig(string message)
 {
+    #region Default valuea
+    
+    public static Thickness DefaultMargin { get; set; } = new(24);
+    public static Thickness DefaultPadding { get; set; } = new(16,0);
+    public static SnackbarPosition DefaultPosition { get; set; } = SnackbarPosition.Bottom;
     public static int DefaultIconSize { get; set; } = 24;
     public static float DefaultCornerRadius { get; set; } = 4f;
-    
-    private static Color? _defaultBackgroundColor;
-    public static Color? DefaultBackgroundColor 
-    {
-        get
-        {
-            try
-            {
-                return _defaultBackgroundColor?? new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
-            }
-            catch (Exception e)
-            {
-                return MaterialLightTheme.InverseSurface;
-            }
-        }
-        set
-        {
-            if (_defaultBackgroundColor != value) _defaultBackgroundColor = value;
-        }
-    }
-    public static double DefaultTextFontSize { get; set; } = MaterialFontSize.LabelLarge;
-
-    private static Color? _defaultTextColor;
-    public static Color? DefaultTextColor 
-    {
-        get
-        {
-            try
-            {
-                return _defaultTextColor?? new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
-            }
-            catch (Exception e)
-            {
-                return MaterialLightTheme.InverseOnSurface;
-            }
-        }
-        set
-        {
-            if (_defaultTextColor != value) _defaultTextColor = value;
-        }
-    }
-
-    private static Color? _defaultActionTextColor;
-    public static Color? DefaultActionTextColor 
-    { 
-        get
-        {
-            try
-            {
-                return _defaultActionTextColor?? new AppThemeBindingExtension { Light = MaterialLightTheme.InversePrimary, Dark = MaterialDarkTheme.InversePrimary }.GetValueForCurrentTheme<Color>();
-            }
-            catch (Exception e)
-            {
-                return MaterialLightTheme.InversePrimary;
-            }
-        }
-        set
-        {
-            if ( _defaultActionTextColor != value) _defaultActionTextColor = value;
-        }
-    }
-    public static double DefaultActionFontSize { get; set; } = MaterialFontSize.LabelLarge;
-    public static SnackbarPosition DefaultPosition { get; set; } = SnackbarPosition.Bottom;
-    public static string DefaultActionText = "Action";
+    public static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
+    public static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+    public static double DefaultFontSize = MaterialFontSize.BodyMedium;
+    public static Color DefaultActionColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InversePrimary, Dark = MaterialDarkTheme.InversePrimary }.GetValueForCurrentTheme<Color>();
+    public static double DefaultActionSize { get; set; } = MaterialFontSize.BodyMedium;
+    public static Color DefaultIconColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
     public static TimeSpan DefaultDuration { get; set; } = TimeSpan.FromSeconds(3);
+    public static int DefaultSpacing = 16;
+    
+    #endregion
+    
+    public string Message { get; private set; } = message;
+    
+    private Color? _backgroundColor;
+    public Color BackgroundColor
+    {
+        get => _backgroundColor ?? DefaultBackgroundColor;
+        set => _backgroundColor = value;
+    }
 
-    private static Color? _defaultIconTintColor;
-    public static Color? DefaultIconTintColor 
+    private float? _cornerRadius;
+    public float CornerRadius
+    {
+        get => _cornerRadius ?? DefaultCornerRadius; 
+        set => _cornerRadius = value;
+    }
+    
+    private double? _fontSize;
+    public double FontSize
+    {
+        get => _fontSize ?? DefaultFontSize; 
+        set => _fontSize = value;
+    }
+    
+    private Color? _textColor;
+    public Color TextColor 
+    {
+        get => _textColor ?? DefaultTextColor;
+        set => _textColor = value;
+    }
+
+    private Thickness? _margin;
+    public Thickness Margin 
     { 
-        get
+        get => _margin ?? DefaultMargin;
+        set => _margin = value;
+    }
+    
+    private Thickness? _padding;
+    public Thickness Padding 
+    { 
+        get => _padding ?? DefaultPadding;
+        set => _padding = value;
+    }
+
+    private SnackbarPosition? _position;
+    public SnackbarPosition Position
+    {
+        get => _position ?? DefaultPosition; 
+        set => _position = value;
+    }
+
+    private TimeSpan? _duration;
+    public TimeSpan Duration
+    {
+        get => _duration ?? DefaultDuration; 
+        set => _duration = value;
+    }
+    
+    public IconConfig? LeadingIcon { get; set; }
+    
+    public IconConfig? TrailingIcon { get; set; }
+    
+    public ActionConfig? Action { get; set; }
+    
+    public Action? DimissAction { get; set; }
+    
+    private int? _spacing;
+    public int Spacing
+    {
+        get => _spacing ?? DefaultSpacing; 
+        set => _spacing = value;
+    }
+    
+    public class IconConfig(ImageSource source) : BaseActionConfig
+    {
+        public ImageSource Source { get; private set; } = source;
+
+        private int? _size;
+
+        public int Size
         {
-            try
-            {
-                return _defaultIconTintColor?? new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
-            }
-            catch (Exception e)
-            {
-                return MaterialLightTheme.InverseOnSurface;
-            }
-        }
-        set
-        {
-            if ( _defaultIconTintColor != value) _defaultIconTintColor = value;
+             get => _size ?? DefaultIconSize;
+             set => _size = value;
         }
     }
 
-    public Color BackgroundColor { get; set; } = DefaultBackgroundColor;
-    public float CornerRadius { get; set; } = DefaultCornerRadius;
-    public double TextFontSize { get; set; } = DefaultTextFontSize;
-    public Color TextColor { get; set; } = DefaultTextColor;
-    public Color ActionTextColor { get; set; } = DefaultActionTextColor;
-    public double ActionFontSize { get; set; } = DefaultActionFontSize;
-    public SnackbarPosition Position { get; set; } = DefaultPosition;
-    public int IconSize = DefaultIconSize;
-    public Color LeadingIconTintColor { get; set; } = DefaultIconTintColor;
-    
-    public Color TrailingIconTintColor { get; set; } = DefaultIconTintColor;
-    public string Message { get; set; }
-    public string LeadingIcon { get; set; }
-    public string TrailingIcon { get; set; }
-    public TimeSpan Duration { get; set; } = DefaultDuration;
-    public Action Action { get; set; }
-    public Action ActionLeading { get; set; }
-    public Action ActionTrailing { get; set; }
-    public Action DimissAction { get; set; }
-    public string ActionText { get; set; } = DefaultActionText;
+    public class ActionConfig(string text) : BaseActionConfig
+    {
+        public string Text { get; private set; } = text;
+
+        private double? _fontSize;
+        public double FontSize
+        {
+            get => _fontSize ?? DefaultActionSize; 
+            set => _fontSize = value;
+        }
+    }
+
+    public abstract class BaseActionConfig
+    {
+        private Color? _color;
+        public Color Color
+        {
+            get => _color ?? (this is IconConfig ? DefaultIconColor : DefaultActionColor); 
+            set => _color = value;
+        }
+        
+        public Action? Action { get; set; }
+    }
 }
+

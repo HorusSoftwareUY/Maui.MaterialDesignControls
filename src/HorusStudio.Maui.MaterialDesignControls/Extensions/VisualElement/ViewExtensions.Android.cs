@@ -1,4 +1,5 @@
 using Android.Graphics.Drawables;
+using Android.OS;
 using Android.Widget;
 using HorusStudio.Maui.MaterialDesignControls;
 
@@ -73,5 +74,88 @@ static partial class ViewExtensions
         }
         
         return view;
+    }
+    
+    public static View SetGravity(this View view, SnackbarPosition position)
+    {
+        var gravityFlags = position switch
+        {
+            SnackbarPosition.Bottom => GravityFlags.CenterHorizontal | GravityFlags.Bottom,
+            SnackbarPosition.Top => GravityFlags.CenterHorizontal | GravityFlags.Top,
+            _ => throw new ArgumentOutOfRangeException(nameof(position), position, "Snackbar position value is not valid.")
+        };
+        
+        switch (view.LayoutParameters)
+        {
+            case FrameLayout.LayoutParams frameLayoutParams:
+                frameLayoutParams.Gravity = gravityFlags;
+                view.LayoutParameters = frameLayoutParams;
+                break;
+            case LinearLayout.LayoutParams linearLayoutParams:
+                linearLayoutParams.Gravity = gravityFlags;
+                view.LayoutParameters = linearLayoutParams;
+                break;
+        }
+        
+        return view;
+    }
+    
+    public static View SetGravity(this View view, LayoutOptions horizontalLayoutOptions, LayoutOptions verticalLayoutOptions)
+    {
+        var horizontalMappings = new Dictionary<LayoutOptions, GravityFlags>()
+        {
+            { LayoutOptions.Fill, GravityFlags.FillHorizontal },
+            { LayoutOptions.Start, GravityFlags.Left },
+            { LayoutOptions.End, GravityFlags.Right },
+            { LayoutOptions.Center, GravityFlags.CenterHorizontal }
+        };
+        var verticalMappings = new Dictionary<LayoutOptions, GravityFlags>()
+        {
+            { LayoutOptions.Fill, GravityFlags.FillVertical },
+            { LayoutOptions.Start, GravityFlags.Top },
+            { LayoutOptions.End, GravityFlags.Bottom },
+            { LayoutOptions.Center, GravityFlags.CenterVertical }
+        };
+        
+        var gravityFlags = horizontalMappings[horizontalLayoutOptions] | verticalMappings[verticalLayoutOptions];
+        switch (view.LayoutParameters)
+        {
+            case FrameLayout.LayoutParams frameLayoutParams:
+                frameLayoutParams.Gravity = gravityFlags;
+                view.LayoutParameters = frameLayoutParams;
+                break;
+            case LinearLayout.LayoutParams linearLayoutParams:
+                linearLayoutParams.Gravity = gravityFlags;
+                view.LayoutParameters = linearLayoutParams;
+                break;
+        }
+        
+        return view;
+    }
+
+    public static Thickness GetInsets(this View view)
+    {
+        var insets = new Thickness();
+        
+        var androidVersion = Build.VERSION.SdkInt;
+        if (androidVersion >= BuildVersionCodes.Q && view?.RootWindowInsets?.StableInsets is { } stableInsets)
+        {
+            insets = new Thickness(stableInsets.Left, stableInsets.Top, stableInsets.Right, stableInsets.Bottom);
+        }
+        
+        return insets;
+    } 
+    
+    public static void SetVisibility(this View view, bool isVisible, long animationDuration = 0)
+    {
+        var visibility = isVisible ? 1f : 0f;
+        if (animationDuration > 0)
+        {
+            view.Animate()?.Alpha(visibility).SetDuration(animationDuration).Start();    
+        }
+        else
+        {
+            view.Alpha = visibility;
+        }
     }
 }

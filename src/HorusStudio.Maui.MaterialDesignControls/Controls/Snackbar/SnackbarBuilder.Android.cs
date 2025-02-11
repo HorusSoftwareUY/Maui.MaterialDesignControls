@@ -1,243 +1,182 @@
 using Android.App;
+using Android.Content.Res;
+using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Text;
 using Android.Text.Style;
+using Android.Util;
 using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
-using Microsoft.Maui.Platform;
-using Color = Microsoft.Maui.Graphics.Color;
+using Google.Android.Material.Resources;
 using Google.Android.Material.Snackbar;
+using Microsoft.Maui.Platform;
 using Button = Android.Widget.Button;
+using Color = Microsoft.Maui.Graphics.Color;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 public class SnackbarBuilder : Snackbar.Callback
 {
     //public static Thickness DefaultScreenMargin { get; set; } = new Thickness(20, 50);
-    public static int DefaultIconPadding { get; set; } = 10;
-    public static int DefaultActionIconPadding { get; set; } = 10;
-    public static long DefaultFadeInFadeOutAnimationDuration { get; set; } = 300;
+    private static int DefaultIconPadding { get; set; } = 10;
+    private static int DefaultActionIconPadding { get; set; } = 10;
+    private static long DefaultFadeInFadeOutAnimationDuration { get; set; } = 300;
 
     //public Thickness ScreenMargin { get; set; } = DefaultScreenMargin;
-    public int IconPadding { get; set; } = DefaultIconPadding;
-    public int ActionIconPadding { get; set; } = DefaultActionIconPadding;
-    public long FadeInFadeOutAnimationDuration { get; set; } = DefaultFadeInFadeOutAnimationDuration;
+    private static int IconPadding { get; set; } = DefaultIconPadding;
+    private static int ActionIconPadding { get; set; } = DefaultActionIconPadding;
+    private long FadeInFadeOutAnimationDuration { get; set; } = DefaultFadeInFadeOutAnimationDuration;
     
     private const int HorizontalMargin = 20;
     private const int VerticalMargin = 50;
     
-    private Action _dismissed;
-    
-    protected Activity Activity { get; }
-    protected SnackbarConfig Config { get; }
+    private readonly Snackbar? _snackbar;
+    private Android.Widget.ImageButton? _leadingIconView;
+    private Android.Widget.ImageButton? _trailingIconView;
+    private TextView _textView;
+    private Button _actionView;
     
     public SnackbarBuilder(Activity activity, SnackbarConfig config)
     {
-        Activity = activity;
-        Config = config;
+        _snackbar = Build(config, activity);
+        _snackbar.AddCallback(this);
     }
+
+    public void Show() => _snackbar?.Show();
+
+    public void Dismiss() => _snackbar?.Dismiss();
     
-    public override void OnShown(Google.Android.Material.Snackbar.Snackbar snackbar)
+    private Snackbar Build(SnackbarConfig config, Activity? activity)
     {
-        base.OnShown(snackbar);
-
-        var timer = new System.Timers.Timer
-        {
-            Interval = Config.Duration.TotalMilliseconds,
-            AutoReset = false
-        };
-        timer.Elapsed += (s, a) =>
-        {
-            Activity.RunOnUiThread(() =>
-            {
-                snackbar.View.Animate().Alpha(0f).SetDuration(FadeInFadeOutAnimationDuration).Start();
-            });
-        };
-        timer.Start();
-
-        _dismissed = () =>
-        {
-            try
-            {
-                timer.Stop();
-            }
-            catch { }
-        };
-
-        snackbar.View.Animate().Alpha(1f).SetDuration(FadeInFadeOutAnimationDuration).Start();
-    }
-
-    public override void OnDismissed(Google.Android.Material.Snackbar.Snackbar snackbar, int e)
-    {
-        base.OnDismissed(snackbar, e);
-
-        _dismissed?.Invoke();
-    }
-
-    public virtual Google.Android.Material.Snackbar.Snackbar Build()
-    {
-        var snackbar = Google.Android.Material.Snackbar.Snackbar.Make(
-            Activity,
-            Activity.Window.DecorView.RootView,
-            Config.Message,
-            (int)Config.Duration.TotalMilliseconds
+        ArgumentNullException.ThrowIfNull(config);
+        ArgumentNullException.ThrowIfNull(activity);
+        
+        var rootView = activity!.Window!.DecorView.RootView;
+        var snackbar = Snackbar.Make(
+            activity,
+            rootView!,
+            config.Message,
+            (int)config.Duration.TotalMilliseconds
         );
 
-        SetupSnackbarText(snackbar);
-
-        if (Config.TextColor is not null)
+        if (snackbar.View is Snackbar.SnackbarLayout snackbarView &&
+            snackbarView.GetChildAt(0) is SnackbarContentLayout snackbarContent)
         {
-            snackbar.SetTextColor(Config.TextColor.ToInt());
-        }
+            var insets = rootView!.GetInsets();
+            
+            snackbarView
+                .SetRoundedBackground(config.BackgroundColor, config.CornerRadius)
+                .SetMargin(config.Margin, insets)
+                .SetPadding(config.Padding)
+                .SetGravity(config.Position);
 
-        if (Config.Action is not null)
-        {
-            SetupSnackbarAction(snackbar);
-        }
-
-        if (Config.BackgroundColor is not null)
-        {
-            snackbar.View.Background = GetDialogBackground();
-        }
-
-        if (snackbar.View.LayoutParameters is FrameLayout.LayoutParams layoutParams)
-        {
-            layoutParams.SetMargins(HorizontalMargin.DpToPixels(), VerticalMargin.DpToPixels(), HorizontalMargin.DpToPixels(), VerticalMargin.DpToPixels());
-
-            layoutParams.Gravity = GravityFlags.CenterHorizontal | GravityFlags.Bottom;
-
-            if (Config.Position == SnackbarPosition.Top)
+            _textView = ConfigureText(snackbar, snackbarContent, config.FontSize, config.TextColor);
+        
+            if (config.Action is not null)
             {
-                layoutParams.Gravity = GravityFlags.CenterHorizontal | GravityFlags.Top;
+                _actionView = ConfigureAction(activity, snackbar, snackbarContent, config.Action);
+            }
+            if (config.LeadingIcon is not null)
+            {
+                _leadingIconView = AddIcon(activity, config.LeadingIcon, snackbarContent, 0);
+            }
+            if (config.TrailingIcon is not null)
+            {
+                _trailingIconView = AddIcon(activity, config.TrailingIcon, snackbarContent, 3);
             }
 
-            snackbar.View.SetPadding(16.DpToPixels(), 10.DpToPixels(), 6.DpToPixels(), 5.DpToPixels());
-            snackbar.View.LayoutParameters = layoutParams;
-        }
-        
-        var view = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
-
-        if (Config.LeadingIcon is not null)
-        {
-            var button = new Button(Activity);
-            var icon = GetIcon(Config.LeadingIcon, Config.LeadingIconTintColor);
-            icon.ScaleTo(Config.IconSize);
-            button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
-            button.SetCompoundDrawables(null, null, icon, null);
-            button.CompoundDrawablePadding = IconPadding.DpToPixels();
-            button.Touch += (sender, args) =>
+            _textView.SetMargin(new Thickness(_leadingIconView is not null ? config.Spacing : 0,0,0,0));
+            if (_actionView is not null)
             {
-                Config.ActionLeading?.Invoke();
-            };
-            view.AddView(button,0);
-            view.GetChildAt(0).LayoutParameters.Width = Config.IconSize.DpToPixels();
+                var actionViewInternalPadding = 8;
+                _actionView.SetMargin(new Thickness(config.Spacing - actionViewInternalPadding,0,_trailingIconView is not null ? config.Spacing - actionViewInternalPadding : 0,0));
+            }
+            
+            snackbarView.SetVisibility(false);
         }
-
-        if (Config.TrailingIcon is not null)
-        {
-            var button = new Button(Activity);
-            var icon = GetIcon(Config.TrailingIcon, Config.TrailingIconTintColor);
-            icon.ScaleTo(Config.IconSize);
-            button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
-            button.SetCompoundDrawables(icon, null, null, null);
-            button.CompoundDrawablePadding = IconPadding.DpToPixels();
-            button.Touch += (sender, args) =>
-            {
-                Config.ActionTrailing?.Invoke();
-            };
-            view.AddView(button,3);
-            view.GetChildAt(3).LayoutParameters.Width = Config.IconSize.DpToPixels();
-        }
-
-        view.GetChildAt(1).SetPadding(view.GetChildAt(1).PaddingLeft, 0, view.GetChildAt(1).Right, view.GetChildAt(1).Bottom);
-
-        snackbar.AddCallback(this);
-        snackbar.View.Alpha = 0f;
-
+       
         return snackbar;
     }
 
-    protected virtual Drawable GetDialogBackground()
+    private static Android.Widget.ImageButton? AddIcon(Activity activity, SnackbarConfig.IconConfig config, SnackbarContentLayout contentLayout, int index)
     {
-        var backgroundDrawable = new GradientDrawable();
-        backgroundDrawable.SetColor(Config.BackgroundColor.ToInt());
-        backgroundDrawable.SetCornerRadius(Config.CornerRadius.DpToPixels());
-
-        return backgroundDrawable;
-    }
-
-    protected virtual void SetupSnackbarText(Snackbar snackbar)
-    {
-        var l = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
-        var text = l.GetChildAt(0) as TextView;
-        text.SetTextSize(Android.Util.ComplexUnitType.Sp, (float)Config.TextFontSize);
-        text.Ellipsize = TextUtils.TruncateAt.End;
-        text.SetCompoundDrawables(null, null, null, null);
-        text.CompoundDrawablePadding = IconPadding.DpToPixels();
-    }
-
-    protected virtual void SetupSnackbarAction(Snackbar snackbar)
-    {
-        var text = new SpannableString(Config.ActionText);
-        text.SetSpan(new LetterSpacingSpan(0), 0, Config.ActionText.Length, SpanTypes.ExclusiveExclusive);
-
-        if (Config.ActionTextColor is not null)
+        var iconView = CreateImageButton(activity, config.Source, config.Size, config.Color,
+            new Thickness(0), config.Action);
+            
+        if (iconView is not null)
         {
-            snackbar.SetActionTextColor(Config.ActionTextColor.ToInt());
+            contentLayout.AddView(iconView, index);
+            if (iconView.LayoutParameters != null)
+            {
+                iconView.LayoutParameters.Width = config.Size.DpToPixels();
+                iconView.LayoutParameters.Height = ViewGroup.LayoutParams.MatchParent;
+            }
         }
-        
-        snackbar.SetAction(text, v =>
-        {
-            Config.Action?.Invoke();
-        });
 
-        var l = (snackbar.View as Snackbar.SnackbarLayout).GetChildAt(0) as SnackbarContentLayout;
-        var button = l.GetChildAt(1) as Android.Widget.Button;
-        button.SetTextSize(Android.Util.ComplexUnitType.Sp,
-            (float)Config.ActionFontSize - ((Config.ActionFontSize > MaterialFontSize.LabelLarge) ? 6 : 0));
-        button.Ellipsize = TextUtils.TruncateAt.Middle;
-        button.SetCompoundDrawables(null, null, null, null);
-        button.CompoundDrawablePadding = ActionIconPadding.DpToPixels();
+        return iconView;
+    }
+    
+    private static Android.Widget.ImageButton? CreateImageButton(Activity activity, ImageSource source, int size, Color color, Thickness padding, Action action)
+    {
+        var icon = source.ToDrawable(size, color);
+        if (icon is null) return null;
+        
+        var button = new Android.Widget.ImageButton(activity);
+        button.SetImageDrawable(icon);
+        button.SetPadding(padding);
+        button.SetBackgroundColor(Colors.Transparent.ToPlatform());
+        button.Click += (sender, args) => action();
+       
+        return button;
+    }
+    
+    private static TextView? ConfigureText(Snackbar snackbar, SnackbarContentLayout contentLayout, double fontSize, Color textColor)
+    {
+        snackbar.SetTextColor(textColor.ToInt());
+        if (contentLayout.GetChildAt(0) is not TextView textView) return null;
+
+        textView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+        //textView.SetTypeface(actionButton.Typeface, TypefaceStyle.Normal);
+        textView.SetTextSize(Android.Util.ComplexUnitType.Dip, (float)fontSize);
+        textView.Ellipsize = TextUtils.TruncateAt.End;
+        textView.SetPadding(0);
+        textView.SetMargin(0);
+        
+        return textView;
     }
 
-    protected virtual Drawable GetIcon(string icon, Color color)
+    private static Button? ConfigureAction(Activity activity, Snackbar snackbar, SnackbarContentLayout contentLayout, SnackbarConfig.ActionConfig config)
     {
-        var imgId = MauiApplication.Current.GetDrawableId(icon);
-        var img = MauiApplication.Current.GetDrawable(imgId);
-        
-        img.SetColorFilter(color.ToPlatform(), FilterMode.SrcIn);
+        var text = new SpannableString(config.Text);
+        text.SetSpan(new LetterSpacingSpan(0), 0, config.Text.Length, SpanTypes.ExclusiveExclusive);
 
-        return img;
+        snackbar.SetActionTextColor(config.Color.ToInt());
+        snackbar.SetAction(text, v => config.Action?.Invoke());
+
+        if (contentLayout.GetChildAt(1) is not Button actionButton) return null;
+        
+        actionButton.SetBackgroundColor(Colors.Transparent.ToPlatform());
+        actionButton.SetTypeface(actionButton.Typeface, TypefaceStyle.Bold);
+        //var mediumTypeface = Typeface.CreateFromAsset(activity.Assets, MaterialFontFamily.Medium);
+        actionButton.SetTextSize(Android.Util.ComplexUnitType.Dip, (float)config.FontSize);
+        actionButton.Ellipsize = TextUtils.TruncateAt.Middle;
+        
+        return actionButton;
     }
 }
 
-public class LetterSpacingSpan : MetricAffectingSpan
+public class LetterSpacingSpan(float letterSpacing) : MetricAffectingSpan
 {
-    private float _letterSpacing;
+    public float LetterSpacing => letterSpacing;
 
-    public LetterSpacingSpan(float letterSpacing)
-    {
-        _letterSpacing = letterSpacing;
-    }
+    public override void UpdateDrawState(TextPaint? ds) => Apply(ds);
 
-    public float getLetterSpacing()
-    {
-        return _letterSpacing;
-    }
+    public override void UpdateMeasureState(TextPaint paint) => Apply(paint);
 
-    public override void UpdateDrawState(TextPaint ds)
+    private void Apply(TextPaint? paint)
     {
-        Apply(ds);
-    }
-
-    public override void UpdateMeasureState(TextPaint paint)
-    {
-        Apply(paint);
-    }
-
-    private void Apply(TextPaint paint)
-    {
-        paint.LetterSpacing = _letterSpacing;
+        if (paint is null) return;
+        paint.LetterSpacing = LetterSpacing;
     }
 }

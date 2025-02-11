@@ -39,7 +39,7 @@ public class MaterialSnackbar : ContentView
     #region Attributes
     private static readonly int DefaultIconSize = 24;
     private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(4);
-    private static readonly Thickness DefaultPadding = new Thickness(16,0,8,0);
+    private static readonly Thickness DefaultPadding = new Thickness(16,0);
     private static readonly ImageSource DefaultLeadingIcon = null;
     private static readonly ImageSource DefaultTrailingIcon = null;
     private static readonly string DefaultActionText = "Action";

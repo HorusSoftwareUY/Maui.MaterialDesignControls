@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+﻿using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
@@ -23,47 +21,58 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async void ShowSnackbarExample()
         {
-            _snackbarUser.ShowSnackbar(new SnackbarConfig
+            _snackbarUser.ShowSnackbar(new SnackbarConfig("This is snackbar")
             {
-                Message = "This is snackbar",
-                Action = SnackbarAction,
+                Action = new SnackbarConfig.ActionConfig("Action"){ Action = SnackbarAction }
             });
         }
         
         [ICommand]
         private async void ShowSnackbarIconExample()
         {
-            _snackbarUser.ShowSnackbar(new SnackbarConfig
+            _snackbarUser.ShowSnackbar(new SnackbarConfig("Lorem ipsum dolor sit amet")
             {
-                LeadingIcon = "horus_logo.png",
-                TrailingIcon = "horus_logo.png",
-                Message = "Lorem ipsum dolor sit amet",
-                LeadingIconTintColor = Colors.Red,
-                Action = SnackbarAction,
-                ActionLeading = SnackbarLeading,
-                ActionTrailing = SnackbarTrailing,
+                LeadingIcon = new SnackbarConfig.IconConfig("horus_logo.png")
+                {
+                    Color = Colors.Red,
+                    Action = SnackbarLeading
+                },
+                TrailingIcon = new SnackbarConfig.IconConfig("horus_logo.png")
+                {
+                    Action = SnackbarTrailing
+                },
+                Action = new SnackbarConfig.ActionConfig("Action")
+                {
+                    Action = SnackbarAction
+                }
             });
         }
         
         [ICommand]
         private async void ShowSnackbarFullAPIExample()
         {
-            _snackbarUser.ShowSnackbar(new SnackbarConfig
+            _snackbarUser.ShowSnackbar(new SnackbarConfig("Lorem ipsum dolor sit amet")
             {
-                LeadingIcon = "horus_logo.png",
-                TrailingIcon = "horus_logo.png",
-                Message = "Lorem ipsum dolor sit amet",
-                ActionText = "Action API",
+                LeadingIcon = new SnackbarConfig.IconConfig("horus_logo.png")
+                {
+                    Action = SnackbarLeading,
+                    Color = Colors.Red,
+                    Size = 35
+                },
+                TrailingIcon = new SnackbarConfig.IconConfig("horus_logo.png")
+                {
+                    Action = SnackbarTrailing,
+                    Color = Colors.Coral,
+                    Size = 35
+                },
+                Action = new SnackbarConfig.ActionConfig("Action API")
+                {
+                    Action = SnackbarAction,
+                    Color = Colors.Fuchsia,
+                    FontSize = 18
+                },
                 TextColor = Colors.Aqua,
-                ActionTextColor = Colors.Fuchsia,
-                BackgroundColor = Colors.Green,
-                LeadingIconTintColor = Colors.Red,
-                TrailingIconTintColor = Colors.Coral,
-                Action = SnackbarAction,
-                ActionFontSize = 28,
-                IconSize = 35,
-                ActionLeading = SnackbarLeading,
-                ActionTrailing = SnackbarTrailing,
+                BackgroundColor = Colors.Green
             });
         }
 
