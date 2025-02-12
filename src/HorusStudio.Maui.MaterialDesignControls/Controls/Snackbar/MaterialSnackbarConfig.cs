@@ -8,7 +8,7 @@ public enum SnackbarPosition
 
 public class SnackbarConfig(string message)
 {
-    #region Default valuea
+    #region Default values
     
     public static Thickness DefaultMargin { get; set; } = new(24);
     public static Thickness DefaultPadding { get; set; } = new(16,0);
@@ -24,7 +24,7 @@ public class SnackbarConfig(string message)
     public static TimeSpan DefaultDuration { get; set; } = TimeSpan.FromSeconds(3);
     public static int DefaultSpacing = 16;
     
-    #endregion
+    #endregion Default values
     
     public string Message { get; private set; } = message;
     

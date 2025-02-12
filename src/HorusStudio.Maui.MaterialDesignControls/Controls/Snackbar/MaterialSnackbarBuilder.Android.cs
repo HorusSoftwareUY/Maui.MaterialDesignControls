@@ -16,7 +16,7 @@ using Color = Microsoft.Maui.Graphics.Color;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class SnackbarBuilder : Snackbar.Callback
+public class MaterialSnackbarBuilder : Snackbar.Callback
 {
     //public static Thickness DefaultScreenMargin { get; set; } = new Thickness(20, 50);
     private static int DefaultIconPadding { get; set; } = 10;
@@ -37,7 +37,7 @@ public class SnackbarBuilder : Snackbar.Callback
     private TextView _textView;
     private Button _actionView;
     
-    public SnackbarBuilder(Activity activity, SnackbarConfig config)
+    public MaterialSnackbarBuilder(Activity activity, SnackbarConfig config)
     {
         _snackbar = Build(config, activity);
         _snackbar.AddCallback(this);

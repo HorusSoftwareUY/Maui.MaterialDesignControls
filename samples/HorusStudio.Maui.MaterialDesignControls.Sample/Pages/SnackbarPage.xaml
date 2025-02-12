@@ -14,13 +14,6 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="0,8">
-                <material:MaterialSnackbar
-                    Text="Lorem ipsum dolor sit amet"
-                    ActionText="Action"
-                    LeadingCommand="{Binding SnackbarLeadingCommand}"
-                    TrailingCommand="{Binding SnackbarTrailingCommand}"
-                    ActionCommand="{Binding SnackbarActionCommand}"/>
-                
                 <material:MaterialButton
                     Type="Elevated"
                     Text="Show example"
@@ -34,16 +27,6 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Icon" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="0,8">
-                <material:MaterialSnackbar
-                    LeadingIcon="horus_logo.png"
-                    TrailingIcon="horus_logo.png"
-                    LeadingIconTintColor="Red"
-                    Text="Lorem ipsum dolor sit amet"
-                    ActionText="Action"
-                    LeadingCommand="{Binding SnackbarLeadingCommand}"
-                    TrailingCommand="{Binding SnackbarTrailingCommand}"
-                    ActionCommand="{Binding SnackbarActionCommand}"/>
-                
                 <material:MaterialButton
                     Type="Elevated"
                     Text="Show example"
@@ -57,27 +40,10 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Full API" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="0,8">
-                <material:MaterialSnackbar
-                    BackgroundColor="Green"
-                    TextColor="Aqua"
-                    LeadingIconTintColor="Red"
-                    TrailingIconTintColor="Coral"
-                    ActionTextColor="Fuchsia"
-                    ActionFontSize="18"
-                    IconSize="35"
-                    LeadingIcon="horus_logo.png"
-                    TrailingIcon="horus_logo.png"
-                    Text="Lorem ipsum dolor sit amet"
-                    ActionText="Action API"
-                    LeadingCommand="{Binding SnackbarLeadingCommand}"
-                    TrailingCommand="{Binding SnackbarTrailingCommand}"
-                    ActionCommand="{Binding SnackbarActionCommand}"/>
-                
                 <material:MaterialButton
                     Type="Elevated"
                     Text="Show example"
                     Command="{Binding ShowSnackbarFullAPIExampleCommand}"/>
-                
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel 

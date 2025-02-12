@@ -6,7 +6,7 @@ using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class Snackbar : UIView
+public class MaterialSnackbarBuilder : UIView
 {
     private System.Timers.Timer _timer;
     private DateTime _endOfAnimation;
@@ -35,7 +35,7 @@ public class Snackbar : UIView
 
     protected SnackbarConfig Config { get; }
     
-    public Snackbar(SnackbarConfig config)
+    public MaterialSnackbarBuilder(SnackbarConfig config)
     {
         Config = config;
         TranslatesAutoresizingMaskIntoConstraints = false;
