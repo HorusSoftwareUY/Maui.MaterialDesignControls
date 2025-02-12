@@ -1222,6 +1222,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 }
             }
 
+            var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
+            if (animationManager is null) return;
+            
             var mainAnimation = new Animation();
             mainAnimation.Add(0, 1, new Animation(v => RowDefinitions[0].Height = new GridLength(v), minHeight, maxHeight, Easing.Linear));
             mainAnimation.Add(0, 1, new Animation(v => _headlineLabel.FontSize = v, minFontSize, maxFontSize, Easing.Linear));
@@ -1238,6 +1241,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 Grid.SetColumnSpan(_headlineLabel, 3);
             }
 
+            var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
+            if (animationManager is null) return;
+            
             var mainAnimation = new Animation();
             mainAnimation.Add(0, 1, new Animation(v => RowDefinitions[0].Height = new GridLength(v), maxHeight, minHeight, Easing.Linear));
             mainAnimation.Add(0, 1, new Animation(v => _headlineLabel.FontSize = v, maxFontSize, minFontSize, Easing.Linear));

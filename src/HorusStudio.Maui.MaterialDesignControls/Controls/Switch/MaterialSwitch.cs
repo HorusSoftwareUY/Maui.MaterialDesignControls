@@ -826,7 +826,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
             if (animate && Math.Abs(_thumb.TranslationX + _xReference) > 0.0)
             {
                 this.AbortAnimation(SwitchAnimationName);
-
+                
+                var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
+                if (animationManager is null) return;
+                
                 var animation = new Animation
                 {
                     {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, -_xReference)}
@@ -863,8 +866,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
             if (animate && Math.Abs(_thumb.TranslationX - _xReference) > 0.0)
             {
                 this.AbortAnimation(SwitchAnimationName);
-
                 IsToggled = true;
+                
+                var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
+                if (animationManager is null) return;
+                
                 var animation = new Animation
                 {
                     {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, _xReference)}

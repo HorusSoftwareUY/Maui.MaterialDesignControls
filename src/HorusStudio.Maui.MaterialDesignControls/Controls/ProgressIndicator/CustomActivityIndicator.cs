@@ -213,6 +213,9 @@
 
         private void CustomCircleAnimationA()
         {
+            var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
+            if (animationManager is null) return;
+            
             var mainAnimation = new Animation();
             mainAnimation.Add(0, 1, new Animation(v =>
             {
@@ -235,6 +238,9 @@
 
         private void CustomCircleAnimationB()
         {
+            var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
+            if (animationManager is null) return;
+            
             var mainAnimation = new Animation();
             mainAnimation.Add(0, 1, new Animation(v =>
             {
