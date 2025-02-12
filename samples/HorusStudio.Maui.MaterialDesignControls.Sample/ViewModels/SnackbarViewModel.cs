@@ -6,13 +6,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
         
-        private readonly ISnackbarUser _snackbarUser;
+        private readonly IMaterialSnackbar _snackbarUser;
         
         public override string Title => "Snackbar";
 
         #endregion
 
-        public SnackbarViewModel(ISnackbarUser snackbarUser)
+        public SnackbarViewModel(IMaterialSnackbar snackbarUser)
         {
             _snackbarUser = snackbarUser;
             Subtitle = "Snackbars show short updates about app processes at the bottom of the screen";

@@ -6,7 +6,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 {
     public static class MaterialDesignControlsBuilder
     {
-        static ISnackbarUser _currentInstance;
+        static IMaterialSnackbar _currentInstance;
         
         public static MauiAppBuilder ConfigureMaterialDesignControls(this MauiAppBuilder builder)
         {
@@ -36,7 +36,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             return UseSnackbar(builder, false, configure);
         }
 
-        public static ISnackbarUser Instance
+        public static IMaterialSnackbar Instance
         {
             get
             {
