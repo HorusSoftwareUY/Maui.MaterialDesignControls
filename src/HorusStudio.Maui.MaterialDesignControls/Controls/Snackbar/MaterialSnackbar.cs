@@ -1,84 +1,112 @@
-#if IOS || MACCATALYST
-using UIKit;
-using Microsoft.Maui.Platform;
-#endif
-
 #if ANDROID
 using Platform = Microsoft.Maui.ApplicationModel.Platform;
 using Android.App;
+#elif IOS || MACCATALYST
+using UIKit;
 #endif
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-class MaterialSnackbar : IMaterialSnackbar
+class MaterialSnackbar : IMaterialSnackbar, IDisposable
 {
     private const string NoAction = "Action should not be set as async will not use it";
-
-    public IDisposable ShowSnackbar(SnackbarConfig config)
+    private bool _isDisposed;
+    
+#if ANDROID
+    private MaterialSnackbarBuilder? _snackbar;
+#elif IOS || MACCATALYST
+    private MaterialSnackbarBuilder? _snackbar;
+#endif
+    
+    ~MaterialSnackbar() => Dispose(false);
+    
+    public IDisposable Show(SnackbarConfig config)
     {
-#if IOS || MACCATALYST
-        MaterialSnackbarBuilder bar = null;
+#if ANDROID
+        var activity = Platform.CurrentActivity!;
+        activity.SafeRunOnUiThread(() =>
+        {
+            _snackbar = new MaterialSnackbarBuilder(activity, config);
+            _snackbar.Show();
+        });
+        
+#elif IOS || MACCATALYST
         var app = UIApplication.SharedApplication;
-
         app.SafeInvokeOnMainThread(() =>
         {
-            bar = new MaterialSnackbarBuilder(config);
-            bar.Show();
+            _snackbar = new MaterialSnackbarBuilder(config);
+            _snackbar.Show();
         });
-
-        return new DisposableAction(() => app.SafeInvokeOnMainThread(() =>
-        {
-            bar.Dismiss();
-            config.DimissAction?.Invoke();
-        }));
 #endif
-#if ANDROID
-        MaterialSnackbarBuilder snackBar = null;
-        var activity = Platform.CurrentActivity;
-        activity.SafeRunOnUi(() =>
-        {
-            snackBar = new MaterialSnackbarBuilder(activity, config);
-            snackBar.Show();
-        });
-        return snackBar;
-#endif
-        return null;
+        return this;
     }
 
-    public IDisposable ShowSnackbar(string message, string leadingIcon, string trailingIcon,
-        TimeSpan? dismissTimer, string actionText, Action action, Action actionLeading, Action actionTrailing)
-        => ShowSnackbar(new SnackbarConfig(message)
+    public IDisposable Show(string message, 
+        TimeSpan? duration = null, 
+        SnackbarConfig.ActionConfig? action = null, 
+        SnackbarConfig.IconConfig? leadingIcon = null, 
+        SnackbarConfig.IconConfig? trailingIcon = null)
+        => Show(new SnackbarConfig(message)
         {
-            LeadingIcon = new SnackbarConfig.IconConfig(leadingIcon)
-            {
-              Action = actionLeading
-            },
-            TrailingIcon = new SnackbarConfig.IconConfig(trailingIcon)
-            {
-                Action = actionTrailing
-            },
-            Duration = dismissTimer ?? SnackbarConfig.DefaultDuration,
-            Action = new SnackbarConfig.ActionConfig (actionText)
-            {
-                Action = action
-            }
+            LeadingIcon = leadingIcon,
+            TrailingIcon = trailingIcon,
+            Duration = duration ?? SnackbarConfig.DefaultDuration,
+            Action = action
         });
 
-    public Task ShowSnackbarAsync(string message, string leadingIcon, string trailingIcon,
-        TimeSpan? dismissTimer, string actionText, CancellationToken? cancelToken)
-        => ShowSnackbarAsync(new SnackbarConfig(message)
+    public Task ShowAsync(string message, 
+        TimeSpan? duration = null, 
+        SnackbarConfig.ActionConfig? action = null, 
+        SnackbarConfig.IconConfig? leadingIcon = null, 
+        SnackbarConfig.IconConfig? trailingIcon = null, 
+        CancellationToken cancellationToken = default)
+        => ShowAsync(new SnackbarConfig(message)
         {
-            LeadingIcon = new SnackbarConfig.IconConfig(leadingIcon),
-            TrailingIcon = new SnackbarConfig.IconConfig (trailingIcon),
-            Duration = dismissTimer ?? SnackbarConfig.DefaultDuration,
-            Action = new SnackbarConfig.ActionConfig(actionText)
-        }, cancelToken);
+            LeadingIcon = leadingIcon,
+            TrailingIcon = trailingIcon,
+            Duration = duration ?? SnackbarConfig.DefaultDuration,
+            Action = action
+        }, cancellationToken);
 
-    public async Task ShowSnackbarAsync(SnackbarConfig config, CancellationToken? cancelToken)
+    public async Task ShowAsync(SnackbarConfig config, CancellationToken cancellationToken = default)
     {
-        if (config.Action is not null || 
-            config.LeadingIcon?.Action is not null || 
-            config.TrailingIcon?.Action is not null)
-            throw new ArgumentException(NoAction);
+        await using (cancellationToken.Register(() => _snackbar?.Dismiss()))
+        {
+#if ANDROID
+            var activity = Platform.CurrentActivity!;
+            await activity.SafeRunOnUiThreadAsync(() =>
+            {
+                _snackbar = new MaterialSnackbarBuilder(activity, config);
+                return _snackbar.ShowAsync();
+            });
+#elif IOS || MACCATALYST
+            var app = UIApplication.SharedApplication;
+            app.SafeInvokeOnMainThread(() =>
+            {
+                _snackbar = new MaterialSnackbarBuilder(config);
+                _snackbar.Show();
+            });
+#endif
+        }
+    }
+    
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (_isDisposed) return;
+        if (disposing)
+        {
+#if ANDROID
+            _snackbar?.Dispose();
+#elif IOS || MACCATALYST
+            _snackbar?.Dispose();
+#endif
+        }
+        _isDisposed = true;
     }
 }

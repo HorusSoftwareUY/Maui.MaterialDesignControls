@@ -21,59 +21,53 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async void ShowSnackbarExample()
         {
-            _snackbarUser.ShowSnackbar(new SnackbarConfig("This is snackbar")
+            _snackbarUser.Show(new SnackbarConfig("This is snackbar")
             {
-                Action = new SnackbarConfig.ActionConfig("Action"){ Action = SnackbarAction }
+                Action = new SnackbarConfig.ActionConfig("Action", SnackbarAction),
+                OnDismissed = async() => await DisplayAlert(Title, "Snackbar dismissed", "OK")
             });
         }
         
         [ICommand]
         private async void ShowSnackbarIconExample()
         {
-            _snackbarUser.ShowSnackbar(new SnackbarConfig("Lorem ipsum dolor sit amet")
+            _snackbarUser.Show(new SnackbarConfig("Lorem ipsum dolor sit amet")
             {
-                LeadingIcon = new SnackbarConfig.IconConfig("horus_logo.png")
+                LeadingIcon = new SnackbarConfig.IconConfig("horus_logo.png", SnackbarLeading)
                 {
-                    Color = Colors.Red,
-                    Action = SnackbarLeading
+                    Color = Colors.Red
                 },
-                TrailingIcon = new SnackbarConfig.IconConfig("horus_logo.png")
-                {
-                    Action = SnackbarTrailing
-                },
-                Action = new SnackbarConfig.ActionConfig("Action")
-                {
-                    Action = SnackbarAction
-                }
+                TrailingIcon = new SnackbarConfig.IconConfig("horus_logo.png", SnackbarTrailing),
+                Action = new SnackbarConfig.ActionConfig("Action", SnackbarAction)
             });
         }
         
         [ICommand]
-        private async void ShowSnackbarFullAPIExample()
+        private async Task ShowSnackbarFullApiExampleAsync()
         {
-            _snackbarUser.ShowSnackbar(new SnackbarConfig("Lorem ipsum dolor sit amet")
+            var tokenSource = new CancellationTokenSource();
+            tokenSource.CancelAfter(TimeSpan.FromSeconds(3));
+            await _snackbarUser.ShowAsync(new SnackbarConfig("10 seconds duration cancelled at 3 seconds")
             {
-                LeadingIcon = new SnackbarConfig.IconConfig("horus_logo.png")
+                LeadingIcon = new SnackbarConfig.IconConfig("horus_logo.png", SnackbarLeading)
                 {
-                    Action = SnackbarLeading,
                     Color = Colors.Red,
                     Size = 35
                 },
-                TrailingIcon = new SnackbarConfig.IconConfig("horus_logo.png")
+                TrailingIcon = new SnackbarConfig.IconConfig("horus_logo.png", SnackbarTrailing)
                 {
-                    Action = SnackbarTrailing,
                     Color = Colors.Coral,
                     Size = 35
                 },
-                Action = new SnackbarConfig.ActionConfig("Action API")
+                Action = new SnackbarConfig.ActionConfig("Action API", SnackbarAction)
                 {
-                    Action = SnackbarAction,
                     Color = Colors.Fuchsia,
                     FontSize = 18
                 },
+                Duration = TimeSpan.FromSeconds(10),
                 TextColor = Colors.Aqua,
                 BackgroundColor = Colors.Green
-            });
+            }, tokenSource.Token);
         }
 
         [ICommand]

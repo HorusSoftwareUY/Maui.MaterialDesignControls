@@ -32,7 +32,7 @@ class FloatingButtonImplementation : IDisposable
     {
 #if ANDROID
         var activity = Platform.CurrentActivity;
-        activity?.SafeRunOnUi(() =>
+        activity?.SafeRunOnUiThread(() =>
         {
             Dismiss();
             _layout?.Show();

@@ -18,33 +18,60 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 public class MaterialSnackbarBuilder : Snackbar.Callback
 {
-    //public static Thickness DefaultScreenMargin { get; set; } = new Thickness(20, 50);
-    private static int DefaultIconPadding { get; set; } = 10;
-    private static int DefaultActionIconPadding { get; set; } = 10;
-    private static long DefaultFadeInFadeOutAnimationDuration { get; set; } = 300;
-
-    //public Thickness ScreenMargin { get; set; } = DefaultScreenMargin;
-    private static int IconPadding { get; set; } = DefaultIconPadding;
-    private static int ActionIconPadding { get; set; } = DefaultActionIconPadding;
-    private long FadeInFadeOutAnimationDuration { get; set; } = DefaultFadeInFadeOutAnimationDuration;
+    #region Constants
     
-    private const int HorizontalMargin = 20;
-    private const int VerticalMargin = 50;
+    private const int TextMaxLines = 20;
+    private const int ActionInternalPadding = 8;
+    
+    #endregion Constants
+    
+    #region Attributes
     
     private readonly Snackbar? _snackbar;
     private Android.Widget.ImageButton? _leadingIconView;
     private Android.Widget.ImageButton? _trailingIconView;
-    private TextView _textView;
-    private Button _actionView;
+    private TextView? _textView;
+    private Button? _actionView;
+    private Action? _onDismissed;
+    private TaskCompletionSource? _showCompletionSource;
+    
+    #endregion Attributes
     
     public MaterialSnackbarBuilder(Activity activity, SnackbarConfig config)
     {
+        _onDismissed = config.OnDismissed;
         _snackbar = Build(config, activity);
         _snackbar.AddCallback(this);
     }
 
+    #region Snackbar.Callback
+
+    public override void OnDismissed(Snackbar? control, int e)
+    {
+        base.OnDismissed(control, e);
+        
+        if (_showCompletionSource != null)
+        {
+            _showCompletionSource.SetResult();
+            _showCompletionSource = null;
+            return;
+        };
+        _onDismissed?.Invoke();
+    }
+
+    #endregion
+    
     public void Show() => _snackbar?.Show();
 
+    public Task ShowAsync()
+    {
+        if (_snackbar == null) return Task.CompletedTask;
+        
+        _showCompletionSource = new TaskCompletionSource();
+        _snackbar.Show();
+        return _showCompletionSource.Task;
+    }
+    
     public void Dismiss() => _snackbar?.Dismiss();
     
     private Snackbar Build(SnackbarConfig config, Activity? activity)
@@ -52,14 +79,14 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
         ArgumentNullException.ThrowIfNull(config);
         ArgumentNullException.ThrowIfNull(activity);
         
-        var rootView = activity!.Window!.DecorView.RootView;
+        var rootView = activity.Window!.DecorView.RootView;
         var snackbar = Snackbar.Make(
             activity,
             rootView!,
             config.Message,
             (int)config.Duration.TotalMilliseconds
         );
-
+        
         if (snackbar.View is Snackbar.SnackbarLayout snackbarView &&
             snackbarView.GetChildAt(0) is SnackbarContentLayout snackbarContent)
         {
@@ -83,19 +110,20 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
             }
             if (config.TrailingIcon is not null)
             {
-                _trailingIconView = AddIcon(activity, config.TrailingIcon, snackbarContent, 3);
+                _trailingIconView = AddIcon(activity, config.TrailingIcon, snackbarContent, snackbarContent.ChildCount);
             }
 
-            _textView.SetMargin(new Thickness(_leadingIconView is not null ? config.Spacing : 0,0,0,0));
+            _textView!.SetMargin(new Thickness(_leadingIconView is not null ? config.Spacing : 0,0,0,0));
             if (_actionView is not null)
             {
-                var actionViewInternalPadding = 8;
-                _actionView.SetMargin(new Thickness(config.Spacing - actionViewInternalPadding,0,_trailingIconView is not null ? config.Spacing - actionViewInternalPadding : 0,0));
+                
+                _actionView.SetMargin(new Thickness(config.Spacing - ActionInternalPadding,0,_trailingIconView is not null ? config.Spacing - ActionInternalPadding : 0,0));
             }
             
             snackbarView.SetVisibility(false);
         }
        
+        snackbar.SetTextMaxLines(TextMaxLines);
         return snackbar;
     }
 
@@ -117,7 +145,7 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
         return iconView;
     }
     
-    private static Android.Widget.ImageButton? CreateImageButton(Activity activity, ImageSource source, int size, Color color, Thickness padding, Action action)
+    private static Android.Widget.ImageButton? CreateImageButton(Activity activity, ImageSource source, int size, Color color, Thickness padding, Action? action)
     {
         var icon = source.ToDrawable(size, color);
         if (icon is null) return null;
@@ -126,8 +154,11 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
         button.SetImageDrawable(icon);
         button.SetPadding(padding);
         button.SetBackgroundColor(Colors.Transparent.ToPlatform());
-        button.Click += (sender, args) => action();
-       
+        if (action is not null)
+        {
+            button.Click += (sender, args) => action();    
+        }
+        
         return button;
     }
     
@@ -152,7 +183,7 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
         text.SetSpan(new LetterSpacingSpan(0), 0, config.Text.Length, SpanTypes.ExclusiveExclusive);
 
         snackbar.SetActionTextColor(config.Color.ToInt());
-        snackbar.SetAction(text, v => config.Action?.Invoke());
+        snackbar.SetAction(text, v => config.Action.Invoke());
 
         if (contentLayout.GetChildAt(1) is not Button actionButton) return null;
         
@@ -166,7 +197,7 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
     }
 }
 
-public class LetterSpacingSpan(float letterSpacing) : MetricAffectingSpan
+class LetterSpacingSpan(float letterSpacing) : MetricAffectingSpan
 {
     public float LetterSpacing => letterSpacing;
 

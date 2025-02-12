@@ -26,7 +26,7 @@ public class SnackbarConfig(string message)
     
     #endregion Default values
     
-    public string Message { get; private set; } = message;
+    public string Message { get; } = message;
     
     private Color? _backgroundColor;
     public Color BackgroundColor
@@ -90,7 +90,7 @@ public class SnackbarConfig(string message)
     
     public ActionConfig? Action { get; set; }
     
-    public Action? DimissAction { get; set; }
+    public Action? OnDismissed { get; set; }
     
     private int? _spacing;
     public int Spacing
@@ -99,9 +99,9 @@ public class SnackbarConfig(string message)
         set => _spacing = value;
     }
     
-    public class IconConfig(ImageSource source) : BaseActionConfig
+    public class IconConfig(ImageSource source, Action action) : BaseActionConfig(action)
     {
-        public ImageSource Source { get; private set; } = source;
+        public ImageSource Source { get; } = source;
 
         private int? _size;
 
@@ -112,9 +112,9 @@ public class SnackbarConfig(string message)
         }
     }
 
-    public class ActionConfig(string text) : BaseActionConfig
+    public class ActionConfig(string text, Action action) : BaseActionConfig(action)
     {
-        public string Text { get; private set; } = text;
+        public string Text { get; } = text;
 
         private double? _fontSize;
         public double FontSize
@@ -124,7 +124,7 @@ public class SnackbarConfig(string message)
         }
     }
 
-    public abstract class BaseActionConfig
+    public abstract class BaseActionConfig(Action action)
     {
         private Color? _color;
         public Color Color
@@ -133,7 +133,7 @@ public class SnackbarConfig(string message)
             set => _color = value;
         }
         
-        public Action? Action { get; set; }
+        public Action Action { get; } = action;
     }
 }
 
