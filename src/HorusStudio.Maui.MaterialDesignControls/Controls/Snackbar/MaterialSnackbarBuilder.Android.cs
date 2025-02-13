@@ -79,7 +79,7 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
             activity,
             rootView!,
             config.Message,
-            (int)config.Duration.TotalMilliseconds
+            Convert.ToInt32(config.Duration.TotalMilliseconds)
         );
         
         if (snackbar.View is Snackbar.SnackbarLayout snackbarView &&

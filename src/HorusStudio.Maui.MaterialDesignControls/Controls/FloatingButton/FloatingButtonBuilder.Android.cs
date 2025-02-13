@@ -59,7 +59,8 @@ class FloatingButtonBuilder : Snackbar.Callback
             -2
         );
 
-        if (snackbar.View is Snackbar.SnackbarLayout snackbarView)
+        if (snackbar.View is Snackbar.SnackbarLayout snackbarView &&
+            snackbarView.GetChildAt(0) is SnackbarContentLayout snackbarContent)
         {
             var insets = rootView!.GetInsets();
             
@@ -70,29 +71,16 @@ class FloatingButtonBuilder : Snackbar.Callback
                 .SetSize(fab.IconSize + fab.Padding.VerticalThickness, fab.IconSize + fab.Padding.HorizontalThickness)
                 .SetGravity(fab.Position);
 
-            var iconSize = fab.IconSize;
-            var icon = fab.Icon.ToDrawable(iconSize, fab.IconColor);
-            if (icon != null)
-            {
-                var button = new Android.Widget.ImageButton(activity);
-                button.Background = new ColorDrawable(Colors.Transparent.ToPlatform());
-                button.SetImageDrawable(icon);
-                button.SetPadding(fab.Padding);
-                button.Click += (sender, args) =>
+            var iconView = snackbarContent.AddIcon(activity, fab.Icon, Convert.ToInt32(fab.IconSize), fab.IconColor, fab.Padding,
+                () =>
                 {
                     if (fab.IsEnabled && (fab.Command?.CanExecute(fab.CommandParameter) ?? false))
                     {
                         fab.Command?.Execute(fab.CommandParameter);
                     }
-                };
+                }, 0);
             
-                if (snackbarView.GetChildAt(0) is SnackbarContentLayout snackbarContent)
-                {
-                    snackbarContent.AddView(button,0);
-                }
-            
-                if (button.LayoutParameters != null) button.LayoutParameters.Width = ViewGroup.LayoutParams.MatchParent;
-            }
+            if (iconView?.LayoutParameters != null) iconView.LayoutParameters.Width = ViewGroup.LayoutParams.MatchParent;
         }
         
         return snackbar;
