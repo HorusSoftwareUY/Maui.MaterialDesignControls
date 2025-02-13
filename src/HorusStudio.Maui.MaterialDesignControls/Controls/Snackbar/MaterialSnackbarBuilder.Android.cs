@@ -1,14 +1,9 @@
 using Android.App;
-using Android.Content.Res;
 using Android.Graphics;
-using Android.Graphics.Drawables;
 using Android.Text;
 using Android.Text.Style;
-using Android.Util;
 using Android.Views;
-using Android.Views.Animations;
 using Android.Widget;
-using Google.Android.Material.Resources;
 using Google.Android.Material.Snackbar;
 using Microsoft.Maui.Platform;
 using Button = Android.Widget.Button;
@@ -106,20 +101,16 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
             }
             if (config.LeadingIcon is not null)
             {
-                _leadingIconView = AddIcon(activity, config.LeadingIcon, snackbarContent, 0);
+                _leadingIconView = snackbarContent.AddIcon(activity, config.LeadingIcon, 0);
             }
             if (config.TrailingIcon is not null)
             {
-                _trailingIconView = AddIcon(activity, config.TrailingIcon, snackbarContent, snackbarContent.ChildCount);
+                _trailingIconView = snackbarContent.AddIcon(activity, config.TrailingIcon, snackbarContent.ChildCount);
             }
 
             _textView!.SetMargin(new Thickness(_leadingIconView is not null ? config.Spacing : 0,0,0,0));
-            if (_actionView is not null)
-            {
-                
-                _actionView.SetMargin(new Thickness(config.Spacing - ActionInternalPadding,0,_trailingIconView is not null ? config.Spacing - ActionInternalPadding : 0,0));
-            }
-            
+            _actionView?.SetMargin(new Thickness(config.Spacing - ActionInternalPadding,0,_trailingIconView is not null ? config.Spacing - ActionInternalPadding : 0,0));
+
             snackbarView.SetVisibility(false);
         }
        
@@ -127,41 +118,6 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
         return snackbar;
     }
 
-    private static Android.Widget.ImageButton? AddIcon(Activity activity, SnackbarConfig.IconConfig config, SnackbarContentLayout contentLayout, int index)
-    {
-        var iconView = CreateImageButton(activity, config.Source, config.Size, config.Color,
-            new Thickness(0), config.Action);
-            
-        if (iconView is not null)
-        {
-            contentLayout.AddView(iconView, index);
-            if (iconView.LayoutParameters != null)
-            {
-                iconView.LayoutParameters.Width = config.Size.DpToPixels();
-                iconView.LayoutParameters.Height = ViewGroup.LayoutParams.MatchParent;
-            }
-        }
-
-        return iconView;
-    }
-    
-    private static Android.Widget.ImageButton? CreateImageButton(Activity activity, ImageSource source, int size, Color color, Thickness padding, Action? action)
-    {
-        var icon = source.ToDrawable(size, color);
-        if (icon is null) return null;
-        
-        var button = new Android.Widget.ImageButton(activity);
-        button.SetImageDrawable(icon);
-        button.SetPadding(padding);
-        button.SetBackgroundColor(Colors.Transparent.ToPlatform());
-        if (action is not null)
-        {
-            button.Click += (sender, args) => action();    
-        }
-        
-        return button;
-    }
-    
     private static TextView? ConfigureText(Snackbar snackbar, SnackbarContentLayout contentLayout, double fontSize, Color textColor)
     {
         snackbar.SetTextColor(textColor.ToInt());

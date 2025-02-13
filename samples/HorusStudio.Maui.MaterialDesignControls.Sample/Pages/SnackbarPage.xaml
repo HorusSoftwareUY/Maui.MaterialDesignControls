@@ -17,24 +17,37 @@
                 <material:MaterialButton
                     Type="Elevated"
                     Text="Show example"
-                    Command="{Binding ShowSnackbarExampleCommand}" />
+                    Command="{Binding DefaultSnackbarCommand}" />
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel 
             Text="Snackbars inform users of a process that an app has performed or will perform. They appear temporarily, towards the bottom of the screen. They shouldn’t interrupt the user experience, and they don’t require user input to disappear."
             Type="BodySmall" />
         
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Icon" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Dismissed callback" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="0,8">
                 <material:MaterialButton
                     Type="Elevated"
                     Text="Show example"
-                    Command="{Binding ShowSnackbarIconExampleCommand}"/>
+                    Command="{Binding DismissedCallbackSnackbarCommand}"/>
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel 
-            Text="Set leading or trailing icon to snackbar for more events"
+            Text="Set just a message and dismissed callback"
+            Type="BodySmall" />
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar with icon(s)" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout Spacing="16" Padding="0,8">
+                <material:MaterialButton
+                    Type="Elevated"
+                    Text="Show example"
+                    Command="{Binding SnackbarWithIconsCommand}"/>
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel 
+            Text="Set leading and/or trailing icon to snackbar for more events"
             Type="BodySmall" />
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Full API" />
@@ -43,7 +56,7 @@
                 <material:MaterialButton
                     Type="Elevated"
                     Text="Show example"
-                    Command="{Binding ShowSnackbarFullApiExampleCommand}"/>
+                    Command="{Binding FullApiSnackbarCommand}"/>
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel 
