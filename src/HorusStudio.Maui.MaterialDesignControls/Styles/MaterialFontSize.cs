@@ -49,5 +49,24 @@
 
         /// <default> Tablet = 14 / Phone = 11 </default>
         public static double LabelSmall { get; set; } = DeviceInfo.Idiom == DeviceIdiom.Tablet ? 14 : 11;
+
+        internal static void Configure(MaterialSizeOptions options)
+        {
+            if (options.DisplayLarge != null) DisplayLarge = options.DisplayLarge.Value;
+            if (options.DisplayMedium != null) DisplayMedium = options.DisplayMedium.Value;
+            if (options.DisplaySmall != null) DisplaySmall = options.DisplaySmall.Value;
+            if (options.HeadlineLarge != null) HeadlineLarge = options.HeadlineLarge.Value;
+            if (options.HeadlineMedium != null) HeadlineMedium = options.HeadlineMedium.Value;
+            if (options.HeadlineSmall != null) HeadlineSmall = options.HeadlineSmall.Value;
+            if (options.TitleLarge != null) TitleLarge = options.TitleLarge.Value;
+            if (options.TitleMedium != null) TitleMedium = options.TitleMedium.Value;
+            if (options.TitleSmall != null) TitleSmall = options.TitleSmall.Value;
+            if (options.BodyLarge != null) BodyLarge = options.BodyLarge.Value;
+            if (options.BodyMedium != null) BodyMedium = options.BodyMedium.Value;
+            if (options.BodySmall != null) BodySmall = options.BodySmall.Value;
+            if (options.LabelLarge != null) LabelLarge = options.LabelLarge.Value;
+            if (options.LabelMedium != null) LabelMedium = options.LabelMedium.Value;
+            if (options.LabelSmall != null) LabelSmall = options.LabelSmall.Value;
+        }
     }
 }

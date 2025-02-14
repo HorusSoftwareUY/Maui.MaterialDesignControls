@@ -21,4 +21,12 @@ public static class MaterialIcon
     
     /// <default><see langword="null"/></default>
     public static ImageSource TimePicker { get; set; } = DefaultTimePickerIcon;
+
+    internal static void Configure(MaterialIconOptions options)
+    {
+        if (options.DatePicker != null) DatePicker = options.DatePicker;
+        if (options.Picker != null) Picker = options.Picker;
+        if (options.TimePicker != null) TimePicker = options.TimePicker;
+        if (options.Error != null) Error = options.Error;
+    }
 }

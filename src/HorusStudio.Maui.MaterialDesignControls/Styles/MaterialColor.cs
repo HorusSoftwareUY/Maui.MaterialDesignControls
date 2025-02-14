@@ -156,6 +156,44 @@
         /// #9791A1 <img>https://placehold.co/15x15/9791A1/9791A1.png</img>
         /// </default>
         public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
+        
+        internal static void Configure(MaterialTheme options)
+        {
+            if (options.Primary != null) Primary = options.Primary;
+            if (options.OnPrimary != null) OnPrimary = options.OnPrimary;
+            if (options.PrimaryContainer != null) PrimaryContainer = options.PrimaryContainer;
+            if (options.OnPrimaryContainer != null) OnPrimaryContainer = options.OnPrimaryContainer;
+            if (options.Secondary != null) Secondary = options.Secondary;
+            if (options.OnSecondary != null) OnSecondary = options.OnSecondary;
+            if (options.SecondaryContainer != null) SecondaryContainer = options.SecondaryContainer;
+            if (options.OnSecondaryContainer != null) OnSecondaryContainer = options.OnSecondaryContainer;
+            if (options.Error != null) Error = options.Error;
+            if (options.OnError != null) OnError = options.OnError;
+            if (options.ErrorContainer != null) ErrorContainer = options.ErrorContainer;
+            if (options.OnErrorContainer != null) OnErrorContainer = options.OnErrorContainer;
+            if (options.Surface != null) Surface = options.Surface;
+            if (options.OnSurface != null) OnSurface = options.OnSurface;
+            if (options.SurfaceVariant != null) SurfaceVariant = options.SurfaceVariant;
+            if (options.OnSurfaceVariant != null) OnSurfaceVariant = options.OnSurfaceVariant;
+            if (options.SurfaceContainerHighest != null) SurfaceContainerHighest = options.SurfaceContainerHighest;
+            if (options.SurfaceContainerHigh != null) SurfaceContainerHigh = options.SurfaceContainerHigh;
+            if (options.SurfaceContainer != null) SurfaceContainer = options.SurfaceContainer;
+            if (options.SurfaceContainerLow != null) SurfaceContainerLow = options.SurfaceContainerLow;
+            if (options.SurfaceContainerLowest != null) SurfaceContainerLowest = options.SurfaceContainerLowest;
+            if (options.InverseSurface != null) InverseSurface = options.InverseSurface;
+            if (options.InverseOnSurface != null) InverseOnSurface = options.InverseOnSurface;
+            if (options.SurfaceTint != null) SurfaceTint = options.SurfaceTint;
+            if (options.SurfaceTintColor != null) SurfaceTintColor = options.SurfaceTintColor;
+            if (options.Outline != null) Outline = options.Outline;
+            if (options.OutlineVariant != null) OutlineVariant = options.OutlineVariant;
+            if (options.InversePrimary != null) InversePrimary = options.InversePrimary;
+            if (options.SurfaceBright != null) SurfaceBright = options.SurfaceBright;
+            if (options.SurfaceDim != null) SurfaceDim = options.SurfaceDim;
+            if (options.Scrim != null) Scrim = options.Scrim;
+            if (options.Shadow != null) Shadow = options.Shadow;
+            if (options.Text != null) Text = options.Text;
+            if (options.Disable != null) Disable = options.Disable;
+        }
     }
 
     /// <summary>
@@ -314,5 +352,43 @@
         /// #9791A1 <img>https://placehold.co/15x15/9791A1/9791A1.png</img>
         /// </default>
         public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
+
+        internal static void Configure(MaterialTheme options)
+        {
+            if (options.Primary != null) Primary = options.Primary;
+            if (options.OnPrimary != null) OnPrimary = options.OnPrimary;
+            if (options.PrimaryContainer != null) PrimaryContainer = options.PrimaryContainer;
+            if (options.OnPrimaryContainer != null) OnPrimaryContainer = options.OnPrimaryContainer;
+            if (options.Secondary != null) Secondary = options.Secondary;
+            if (options.OnSecondary != null) OnSecondary = options.OnSecondary;
+            if (options.SecondaryContainer != null) SecondaryContainer = options.SecondaryContainer;
+            if (options.OnSecondaryContainer != null) OnSecondaryContainer = options.OnSecondaryContainer;
+            if (options.Error != null) Error = options.Error;
+            if (options.OnError != null) OnError = options.OnError;
+            if (options.ErrorContainer != null) ErrorContainer = options.ErrorContainer;
+            if (options.OnErrorContainer != null) OnErrorContainer = options.OnErrorContainer;
+            if (options.Surface != null) Surface = options.Surface;
+            if (options.OnSurface != null) OnSurface = options.OnSurface;
+            if (options.SurfaceVariant != null) SurfaceVariant = options.SurfaceVariant;
+            if (options.OnSurfaceVariant != null) OnSurfaceVariant = options.OnSurfaceVariant;
+            if (options.SurfaceContainerHighest != null) SurfaceContainerHighest = options.SurfaceContainerHighest;
+            if (options.SurfaceContainerHigh != null) SurfaceContainerHigh = options.SurfaceContainerHigh;
+            if (options.SurfaceContainer != null) SurfaceContainer = options.SurfaceContainer;
+            if (options.SurfaceContainerLow != null) SurfaceContainerLow = options.SurfaceContainerLow;
+            if (options.SurfaceContainerLowest != null) SurfaceContainerLowest = options.SurfaceContainerLowest;
+            if (options.InverseSurface != null) InverseSurface = options.InverseSurface;
+            if (options.InverseOnSurface != null) InverseOnSurface = options.InverseOnSurface;
+            if (options.SurfaceTint != null) SurfaceTint = options.SurfaceTint;
+            if (options.SurfaceTintColor != null) SurfaceTintColor = options.SurfaceTintColor;
+            if (options.Outline != null) Outline = options.Outline;
+            if (options.OutlineVariant != null) OutlineVariant = options.OutlineVariant;
+            if (options.InversePrimary != null) InversePrimary = options.InversePrimary;
+            if (options.SurfaceBright != null) SurfaceBright = options.SurfaceBright;
+            if (options.SurfaceDim != null) SurfaceDim = options.SurfaceDim;
+            if (options.Scrim != null) Scrim = options.Scrim;
+            if (options.Shadow != null) Shadow = options.Shadow;
+            if (options.Text != null) Text = options.Text;
+            if (options.Disable != null) Disable = options.Disable;
+        }
     }
 }

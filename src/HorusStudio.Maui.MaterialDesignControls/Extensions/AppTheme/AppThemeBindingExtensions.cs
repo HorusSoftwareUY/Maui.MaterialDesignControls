@@ -5,15 +5,19 @@ namespace Microsoft.Maui.Controls.Xaml;
 static class AppThemeBindingExtensions
 {
     public static object GetValueForCurrentTheme(this AppThemeBindingExtension instance)
-    {
+    {   
         AppTheme currentTheme = AppTheme.Unspecified;
-        if (MainThread.IsMainThread)
+        
+        if (Application.Current is { } app)
         {
-            currentTheme = Application.Current.RequestedTheme;
-        }
-        else
-        {
-            MainThread.BeginInvokeOnMainThread(() => currentTheme = Application.Current.RequestedTheme);
+            if (MainThread.IsMainThread)
+            {
+                currentTheme = app.RequestedTheme;
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(() => currentTheme = app.RequestedTheme);
+            }    
         }
 
         return currentTheme switch
