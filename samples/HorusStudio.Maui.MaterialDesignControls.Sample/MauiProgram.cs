@@ -23,38 +23,40 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                         fonts.AddFont("Roboto-Medium.ttf", FontMedium);
                         fonts.AddFont("Roboto-Bold.ttf", FontBold);
                     }, new(FontRegular, FontMedium, FontRegular));
+                    
                     /*
+                    // Plugin configuration using C#
                     options.ConfigureThemes(
                         lightTheme: new MaterialTheme
                         {
                             Primary = Colors.Blue,
                             OnPrimary = Colors.LightBlue
-                        }, 
+                        },
                         darkTheme: new MaterialTheme
                         {
                             Primary = Colors.SkyBlue,
                             OnPrimary = Colors.DarkBlue
-                        });  
-                    
+                        });
+
                     options.ConfigureFontSize(new MaterialSizeOptions
                     {
                         BodyMedium = 25,
                         LabelLarge = 20
                     });
-                    
+
                     options.ConfigureFontTracking(new MaterialSizeOptions
                        {
                            BodyMedium = 0.35,
                            LabelLarge = 0.2
                        });
-                    
+
                     options.ConfigureIcons(new MaterialIconOptions
                     {
                         Picker = "arrow_right.png",
                         Error = "info.png",
                         DatePicker = "ic_date.png"
                     });
-                    
+
                     options.ConfigureStringFormat(new MaterialFormatOptions
                     {
                         DateFormat = "dd/MM/yyyy"
@@ -76,7 +78,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                         Parameter = 0.1,
                         Type = AnimationTypes.Scale
                     });
-                    
+
                     options.ConfigureSnackbar(new MaterialSnackbarOptions
                     {
                         DefaultBackgroundColor = Colors.LightGoldenrodYellow,
@@ -84,6 +86,16 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                         DefaultActionColor = Colors.Brown,
                         DefaultIconColor = Colors.Brown
                     });
+                    */
+                    
+                    /*
+                    // Plugin configuration using App Resources (include MaterialCustomizations dictionary on App.xaml) 
+                    options
+                        .ConfigureThemesFromResources("MaterialLight", "MaterialDark")
+                        .ConfigureFontSizeFromResources("MaterialFont")
+                        .ConfigureFontTrackingFromResources()
+                        .ConfigureIconsFromResources("MaterialIcon")
+                        .ConfigureStringFormatFromResources();
                     */
                 });
 

@@ -1,6 +1,6 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class MaterialTheme
+public sealed class MaterialTheme
 {
     public Color? Primary { get; set; }
     public Color? OnPrimary { get; set; }

@@ -313,10 +313,3 @@ public class MaterialSnackbarBuilder : UIView
         return label;
     }
 }
-
-public enum UserInterfaceStyle
-{
-    Unspecified,
-    Light,
-    Dark
-}
