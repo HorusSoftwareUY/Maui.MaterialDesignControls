@@ -37,9 +37,9 @@
         /// </default>
         public static Color SecondaryContainer { get; set; } = Color.FromArgb("#E8DEF8");
         /// <default>
-        /// #1D192B <img>https://placehold.co/15x15/1D192B/1D192B.png</img>
+        /// #4A4458 <img>https://placehold.co/15x15/4A4458/4A4458.png</img>
         /// </default>
-        public static Color OnSecondaryContainer { get; set; } = Color.FromArgb("#1D192B");
+        public static Color OnSecondaryContainer { get; set; } = Color.FromArgb("#4A4458");
 
         // Error colors
         /// <default>

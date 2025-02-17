@@ -94,6 +94,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             application.Resources.AddStyles(MaterialMultilineTextField.GetStyles());
             // Slider
             application.Resources.AddStyles(MaterialSlider.GetStyles());
+            // Segmented
+            application.Resources.AddStyles(MaterialSegmented.GetStyles());
         }
 
         private static void AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
