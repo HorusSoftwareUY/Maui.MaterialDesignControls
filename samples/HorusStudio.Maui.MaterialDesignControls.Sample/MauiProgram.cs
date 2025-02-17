@@ -89,13 +89,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                     */
                     
                     /*
-                    // Plugin configuration using App Resources (include MaterialCustomizations dictionary on App.xaml) 
+                    // Plugin configuration using App Resources (include MaterialCustomizations dictionary on App.xaml)
                     options
-                        .ConfigureThemesFromResources("MaterialLight", "MaterialDark")
-                        .ConfigureFontSizeFromResources("MaterialFont")
-                        .ConfigureFontTrackingFromResources()
-                        .ConfigureIconsFromResources("MaterialIcon")
-                        .ConfigureStringFormatFromResources();
+                        .ConfigureThemesFromResources("Colors.xaml")
+                        .ConfigureFontSizeFromResources("MaterialCustomizations.xaml","MaterialFont")
+                        .ConfigureFontTrackingFromResources("MaterialCustomizations.xaml")
+                        .ConfigureIconsFromResources("MaterialCustomizations.xaml","MaterialIcon")
+                        .ConfigureStringFormatFromResources("MaterialCustomizations.xaml");
                     */
                 });
 

@@ -8,7 +8,7 @@ public sealed record MaterialDesignControlsBuilder(MauiAppBuilder AppBuilder);
 
 public static class MaterialDesignControlsBuilderExtensions
 {
-    private static readonly HashSet<Action<ResourceDictionary>> InitialActions = new();
+    private static readonly HashSet<IntialAction> InitialActions = [];
     
     public static MauiAppBuilder UseMaterialDesignControls(this MauiAppBuilder appBuilder,
         Action<MaterialDesignControlsBuilder>? configureDelegate = null)
@@ -51,14 +51,19 @@ public static class MaterialDesignControlsBuilderExtensions
     }
     
     public static MaterialDesignControlsBuilder ConfigureThemesFromResources(this MaterialDesignControlsBuilder builder, 
+        string? resourceDictionaryName = null,
         string? lightThemeResourcePrefix = null,
         string? darkThemeResourcePrefix = null)
     {
-        InitialActions.Add((resources) =>
+        InitialActions.Add(new IntialAction
         {
-            builder.ConfigureThemes(
-                resources?.FromResources<MaterialTheme>(lightThemeResourcePrefix),
-                resources?.FromResources<MaterialTheme>(darkThemeResourcePrefix));
+            ResourceDictionaryName = resourceDictionaryName,
+            Action = resources =>
+            {
+                builder.ConfigureThemes(
+                    resources?.FromResources<MaterialTheme>(lightThemeResourcePrefix), 
+                    resources?.FromResources<MaterialTheme>(darkThemeResourcePrefix));
+            } 
         });
         return builder;
     }
@@ -70,8 +75,10 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
     
-    public static MaterialDesignControlsBuilder ConfigureFontSizeFromResources(this MaterialDesignControlsBuilder builder, string? resourcePrefix = null) 
-        => builder.ConfigureFromResources<MaterialSizeOptions>(ConfigureFontSize, resourcePrefix);
+    public static MaterialDesignControlsBuilder ConfigureFontSizeFromResources(this MaterialDesignControlsBuilder builder, 
+        string? resourceDictionaryName = null,
+        string? resourcePrefix = null) 
+        => builder.ConfigureFromResources<MaterialSizeOptions>(ConfigureFontSize, resourceDictionaryName, resourcePrefix);
     
     public static MaterialDesignControlsBuilder ConfigureFontTracking(this MaterialDesignControlsBuilder builder, MaterialSizeOptions options)
     {
@@ -80,8 +87,10 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
     
-    public static MaterialDesignControlsBuilder ConfigureFontTrackingFromResources(this MaterialDesignControlsBuilder builder, string? resourcePrefix = null)
-        => builder.ConfigureFromResources<MaterialSizeOptions>(ConfigureFontTracking, resourcePrefix);
+    public static MaterialDesignControlsBuilder ConfigureFontTrackingFromResources(this MaterialDesignControlsBuilder builder, 
+        string? resourceDictionaryName = null,
+        string? resourcePrefix = null)
+        => builder.ConfigureFromResources<MaterialSizeOptions>(ConfigureFontTracking, resourceDictionaryName, resourcePrefix);
     
     public static MaterialDesignControlsBuilder ConfigureElevation(this MaterialDesignControlsBuilder builder, MaterialElevationOptions options)
     {
@@ -90,8 +99,10 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
     
-    public static MaterialDesignControlsBuilder ConfigureElevation(this MaterialDesignControlsBuilder builder, string? resourcePrefix = null)
-        => builder.ConfigureFromResources<MaterialElevationOptions>(ConfigureElevation, resourcePrefix);
+    public static MaterialDesignControlsBuilder ConfigureElevation(this MaterialDesignControlsBuilder builder, 
+        string? resourceDictionaryName = null,
+        string? resourcePrefix = null)
+        => builder.ConfigureFromResources<MaterialElevationOptions>(ConfigureElevation, resourceDictionaryName, resourcePrefix);
     
     public static MaterialDesignControlsBuilder ConfigureStringFormat(this MaterialDesignControlsBuilder builder, MaterialFormatOptions options)
     {
@@ -100,8 +111,10 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
     
-    public static MaterialDesignControlsBuilder ConfigureStringFormatFromResources(this MaterialDesignControlsBuilder builder, string? resourcePrefix = null)
-        => builder.ConfigureFromResources<MaterialFormatOptions>(ConfigureStringFormat, resourcePrefix);
+    public static MaterialDesignControlsBuilder ConfigureStringFormatFromResources(this MaterialDesignControlsBuilder builder, 
+        string? resourceDictionaryName = null,
+        string? resourcePrefix = null)
+        => builder.ConfigureFromResources<MaterialFormatOptions>(ConfigureStringFormat, resourceDictionaryName, resourcePrefix);
     
     public static MaterialDesignControlsBuilder ConfigureIcons(this MaterialDesignControlsBuilder builder, MaterialIconOptions options)
     {
@@ -110,8 +123,10 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
     
-    public static MaterialDesignControlsBuilder ConfigureIconsFromResources(this MaterialDesignControlsBuilder builder, string? resourcePrefix = null)
-        => builder.ConfigureFromResources<MaterialIconOptions>(ConfigureIcons, resourcePrefix);
+    public static MaterialDesignControlsBuilder ConfigureIconsFromResources(this MaterialDesignControlsBuilder builder, 
+        string? resourceDictionaryName = null,
+        string? resourcePrefix = null)
+        => builder.ConfigureFromResources<MaterialIconOptions>(ConfigureIcons, resourceDictionaryName, resourcePrefix);
     
     public static MaterialDesignControlsBuilder ConfigureAnimations(this MaterialDesignControlsBuilder builder, MaterialAnimationOptions options)
     {
@@ -120,8 +135,10 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
     
-    public static MaterialDesignControlsBuilder ConfigureAnimationsFromResources(this MaterialDesignControlsBuilder builder, string? resourcePrefix = null)
-        => builder.ConfigureFromResources<MaterialAnimationOptions>(ConfigureAnimations, resourcePrefix);
+    public static MaterialDesignControlsBuilder ConfigureAnimationsFromResources(this MaterialDesignControlsBuilder builder, 
+        string? resourceDictionaryName = null,
+        string? resourcePrefix = null)
+        => builder.ConfigureFromResources<MaterialAnimationOptions>(ConfigureAnimations, resourceDictionaryName, resourcePrefix);
     
     public static MaterialDesignControlsBuilder ConfigureSnackbar(this MaterialDesignControlsBuilder builder, MaterialSnackbarOptions options)
     {
@@ -144,12 +161,19 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
-    private static MaterialDesignControlsBuilder ConfigureFromResources<T>(this MaterialDesignControlsBuilder builder, Func<MaterialDesignControlsBuilder, T, MaterialDesignControlsBuilder> func, string? resourcePrefix = null) where T : new()
+    private static MaterialDesignControlsBuilder ConfigureFromResources<T>(this MaterialDesignControlsBuilder builder, 
+        Func<MaterialDesignControlsBuilder, T, MaterialDesignControlsBuilder> func, 
+        string? resourceDictionaryName = null,
+        string? resourcePrefix = null) where T : new()
     {
-        InitialActions.Add((resources) =>
+        InitialActions.Add(new IntialAction
         {
-            var opt = resources.FromResources<T>(resourcePrefix);
-            func(builder, opt);
+            ResourceDictionaryName = resourceDictionaryName,
+            Action = resources =>
+            {
+                var opt = resources.FromResources<T>(resourcePrefix);
+                func(builder, opt);
+            }
         });
         return builder;
     }
@@ -204,14 +228,15 @@ public static class MaterialDesignControlsBuilderExtensions
             Logger.Debug("Error initializing Material Design Controls: MAUI Application is null.");
             return;
         }
-
+     
         var resources = Application.Current.Resources;
         if (InitialActions.Count > 0)
         {
-            var allResources = resources.Flatten();
+            ResourceDictionary? allResources = null;
             foreach (var initialAction in InitialActions)
             {
-                initialAction(allResources);
+                var res = GetResources(resources, initialAction.ResourceDictionaryName, ref allResources);
+                initialAction.Action(res);
             }
             InitialActions.Clear();
         }
@@ -219,6 +244,16 @@ public static class MaterialDesignControlsBuilderExtensions
         RegisterDefaultStyles(resources);
     }
 
+    private static ResourceDictionary GetResources(ResourceDictionary rootResources, string? resourcesName, ref ResourceDictionary? allResources)
+    {
+        if (resourcesName != null && 
+            rootResources.MergedDictionaries.FirstOrDefault(d =>
+                d.Source != null && d.Source.ToString().Contains(resourcesName)) is { } rd) return rd;
+            
+        allResources ??= rootResources.Flatten();
+        return allResources;
+    } 
+    
     private static void RegisterDefaultStyles(ResourceDictionary resources)
     {
         resources
@@ -288,5 +323,11 @@ public static class MaterialDesignControlsBuilderExtensions
                 destination.Add(key, source[key]);    
             }
         }
+    }
+
+    private class IntialAction
+    {
+        public required Action<ResourceDictionary> Action { get; set; }
+        public string? ResourceDictionaryName { get; set; }
     }
 }
