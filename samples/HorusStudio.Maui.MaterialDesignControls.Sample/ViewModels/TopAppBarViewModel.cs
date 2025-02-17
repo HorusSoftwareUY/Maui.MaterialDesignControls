@@ -7,7 +7,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        public override string Title => "Top app bars";
+        public override string Title => Models.Pages.TopAppBar;
+        protected override string ControlReferenceUrl => "components/top-app-bar/overview";
 
         [ObservableProperty]
         private bool _iconButtonsEnabled = true;
@@ -17,6 +18,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         [ObservableProperty]
         private List<TrailingIcon> _trailingIcons;
+
+        [ObservableProperty] 
+        private bool _topBarIsCollapsed;
 
         #endregion
 
@@ -47,7 +51,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 {
                     new TrailingIcon
                     {
-                        Icon="info.png",
+                        Icon="ic_web.png",
                         Command= ChangeTrailingIconsCommand
                     },
                     new TrailingIcon

@@ -69,13 +69,15 @@
     /// </todoList>
     public class MaterialLabel : Label
     {
+        // TODO: [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
+
         #region Attributes
 
-        private readonly static LabelTypes DefaultType = LabelTypes.BodyMedium;
-        private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-        private readonly static string DefaultFontFamilyRegular = MaterialFontFamily.Regular;
-        private readonly static string DefaultFontFamilyMedium = MaterialFontFamily.Medium;
-        private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+        private static readonly LabelTypes DefaultType = LabelTypes.BodyMedium;
+        private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+        private static readonly string DefaultFontFamilyRegular = MaterialFontFamily.Regular;
+        private static readonly string DefaultFontFamilyMedium = MaterialFontFamily.Medium;
+        private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
 
         #endregion Attributes
 
@@ -102,7 +104,7 @@
         /// The backing store for the <see cref="FontFamily" />
         /// bindable property.
         /// </summary>
-        public static new readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValue: DefaultFontFamily, propertyChanged: (bindable, o, n) =>
         {
             if (bindable is MaterialLabel self)
             {
@@ -126,7 +128,7 @@
         /// The backing store for the <see cref="TextColor" />
         /// bindable property.
         /// </summary>
-        public static new readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialLabel), defaultValue: DefaultTextColor);
+        public new static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialLabel), defaultValue: DefaultTextColor);
 
         #endregion Bindable Properties
 

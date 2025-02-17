@@ -1,5 +1,4 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
-using HorusStudio.Maui.MaterialDesignControls.Enums;
 using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -47,16 +46,16 @@ public class MaterialRadioButton : ContentView, ITouchable
 {
     #region Attributes
     internal const string DefaultGroupName = "MaterialRadioButton.GroupName";
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultStrokeColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly Color DefaultStrokeColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
+    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
+    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
     internal const string GroupNameChangedMessage = "MaterialRadioButtonGroupNameChanged";
     internal const string ValueChangedMessage = "MaterialRadioButtonValueChanged";
 #nullable enable
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
 #nullable disable
 
     #endregion Attributes
@@ -74,7 +73,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// The backing store for the <see cref="Content" />
     /// bindable property.
     /// </summary>
-    public static new readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(string), typeof(MaterialRadioButton), defaultValue: null);
+    public new static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(string), typeof(MaterialRadioButton), defaultValue: null);
 
     /// <summary>
     /// The backing store for the <see cref="StrokeColor" />
@@ -92,7 +91,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// The backing store for the <see cref="ControlTemplate" />
     /// bindable property.
     /// </summary>
-    public static new readonly BindableProperty ControlTemplateProperty = BindableProperty.Create(nameof(ControlTemplate), typeof(ControlTemplate), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
+    public new static readonly BindableProperty ControlTemplateProperty = BindableProperty.Create(nameof(ControlTemplate), typeof(ControlTemplate), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
     {
         if (bindableObject is MaterialRadioButton self && newValue is ControlTemplate controlTemplate)
         {
@@ -143,7 +142,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// The backing store for the <see cref="IsEnabled" />
     /// bindable property.
     /// </summary>
-    public static new readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialRadioButton), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialRadioButton), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if(bindable is MaterialRadioButton self && newValue is bool)
         {
@@ -252,10 +251,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// We disabled the set for this property because doesn't have sense set the content because we are setting with the
     /// radio button and label.
     /// </summary>
-    public new string Content
-    {
-        get => (string)GetValue(ContentProperty);
-    }
+    public new string Content => (string)GetValue(ContentProperty);
 
     /// <summary>
     /// Gets or sets the <see cref="Text" /> for the label.

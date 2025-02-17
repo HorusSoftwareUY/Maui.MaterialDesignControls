@@ -5,31 +5,25 @@
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.HomeCardView">
     <ContentView.Resources>
 
-        <Style x:Key="HomeCard" TargetType="Border">
-            <Setter Property="Stroke" Value="Transparent" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="{StaticResource Tone1}" />
-            <Setter Property="StrokeShape" Value="RoundRectangle 24" />
+        <Style x:Key="HomeCard" TargetType="material:MaterialCard">
+            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
+            <Setter Property="CornerRadius" Value="24" />
         </Style>
 
-        <Style x:Key="ImageContainer" TargetType="Frame">
+        <Style x:Key="ImageContainer" TargetType="material:MaterialCard">
             <Setter Property="HeightRequest" Value="180" />
-            <Setter Property="BorderColor" Value="Transparent" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="{x:Static material:MaterialLightTheme.PrimaryContainer}" />
+            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.PrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.PrimaryContainer}}" />
             <Setter Property="CornerRadius" Value="24" />
-            <Setter Property="IsClippedToBounds" Value="True" />
-            <Setter Property="HasShadow" Value="False" />
         </Style>
 
     </ContentView.Resources>
 
-    <Border Style="{StaticResource HomeCard}">
+    <material:MaterialCard Style="{StaticResource HomeCard}" Padding="0">
         <VerticalStackLayout Padding="0,0,0,24">
-            <Frame Style="{StaticResource ImageContainer}">
+            <material:MaterialCard Style="{StaticResource ImageContainer}" Padding="0">
                 <Image Source="{Binding ImageSource}" 
                        Aspect="{Binding ImageAspect}"/>
-            </Frame>
+            </material:MaterialCard>
 
             <VerticalStackLayout Spacing="7" Padding="24, 0">
                 <material:MaterialLabel Type="TitleLarge" Text="{Binding Title}" />
@@ -37,6 +31,6 @@
             </VerticalStackLayout>
 
         </VerticalStackLayout>
-    </Border>
+    </material:MaterialCard>
 
 </ContentView>
