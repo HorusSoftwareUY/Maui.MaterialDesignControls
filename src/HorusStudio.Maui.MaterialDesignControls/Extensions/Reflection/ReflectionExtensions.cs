@@ -2,7 +2,7 @@ namespace System;
 
 static class ReflectionExtensions
 {
-    public static object GetPropertyValue(this object obj, string propertyName)
+    public static object? GetPropertyValue(this object obj, string propertyName)
     {
         var prop = obj.GetType().GetProperty(propertyName);
         return prop?.GetValue(obj);

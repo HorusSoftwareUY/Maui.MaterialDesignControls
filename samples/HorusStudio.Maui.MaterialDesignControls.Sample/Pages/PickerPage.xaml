@@ -35,7 +35,7 @@
             <VerticalStackLayout>
                 <material:MaterialPicker 
                     ItemsSource="{Binding ColorsSource}"
-                    PropertyPath="Color"
+                    ItemDisplayPath="Color"
                     LeadingIcon="select_color.png"
                     LeadingIconCommand="{Binding LeadingActionCommand}"
                     Focused="MaterialPicker_Focused"

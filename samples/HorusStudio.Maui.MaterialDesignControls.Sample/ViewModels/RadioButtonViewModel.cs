@@ -67,10 +67,10 @@ public class CustomColor
 
     public string Color { get; set; }
 
-    // We override this method only to show a Custom Object without set PropertyPath in Full API example.
+    // We override this method only to show a Custom Object without set ItemDisplayPath in Full API example.
     public override string ToString()
     {
-        return Color;
+        return $"{Id} - {Color}";
     }
 
     public override bool Equals(object obj)
