@@ -68,7 +68,7 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
-
+        
         TrailingIcon = MaterialIcon.Picker;
         InputTapCommand = new Command(() => _picker.Focus());
         Content = _picker;
@@ -120,10 +120,17 @@ public class MaterialPicker : MaterialInputBase
     public static readonly BindableProperty SelectedIndexChangedCommandProperty = BindableProperty.Create(nameof(SelectedIndexChangedCommand), typeof(ICommand), typeof(MaterialPicker), defaultValue: null);
     
     /// <summary>
-    /// The backing store for the <see cref="PropertyPath" /> bindable property.
+    /// The backing store for the <see cref="ItemDisplayPath" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty PropertyPathProperty = BindableProperty.Create(nameof(PropertyPath), typeof(string), typeof(MaterialPicker), defaultValue: null);
-
+    public static readonly BindableProperty ItemDisplayPathProperty = BindableProperty.Create(nameof(ItemDisplayPath), typeof(string), typeof(MaterialPicker), defaultValue: null, propertyChanged:
+        (bindableObject, _, newValue) =>
+        {
+            if (bindableObject is MaterialPicker self)
+            {
+                self._picker.ItemDisplayBinding = new Binding(newValue as string);
+            }
+        });
+    
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
     /// </summary>
@@ -205,7 +212,7 @@ public class MaterialPicker : MaterialInputBase
     /// <remarks>
     /// To be added.
     /// </remarks>
-    public object SelectedItem
+    public object? SelectedItem
     {
         get => GetValue(SelectedItemProperty);
         set => SetValue(SelectedItemProperty, value);
@@ -245,10 +252,10 @@ public class MaterialPicker : MaterialInputBase
     /// <remarks>
     /// If it´s no defined, the control will use toString() method.
     /// </remarks>
-    public string PropertyPath
+    public string ItemDisplayPath
     {
-        get => (string)GetValue(PropertyPathProperty);
-        set => SetValue(PropertyPathProperty, value);
+        get => (string)GetValue(ItemDisplayPathProperty);
+        set => SetValue(ItemDisplayPathProperty, value);
     }
     
     /// <summary>
@@ -268,7 +275,7 @@ public class MaterialPicker : MaterialInputBase
 
     #region Events
 
-    public event EventHandler SelectedIndexChanged;
+    public event EventHandler? SelectedIndexChanged;
     
     #endregion Events
 
@@ -320,9 +327,9 @@ public class MaterialPicker : MaterialInputBase
     {
         if (SelectedItem != null)
         {
-            Text = string.IsNullOrWhiteSpace(PropertyPath) ? 
-                SelectedItem?.ToString() : 
-                SelectedItem.GetPropertyValue<string>(PropertyPath);
+            Text = (string.IsNullOrWhiteSpace(ItemDisplayPath) ? 
+                SelectedItem.ToString() : 
+                SelectedItem.GetPropertyValue<string>(ItemDisplayPath)) ?? string.Empty;
         }
         else
         {

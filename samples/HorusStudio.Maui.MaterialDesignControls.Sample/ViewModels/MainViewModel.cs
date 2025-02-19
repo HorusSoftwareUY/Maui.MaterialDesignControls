@@ -20,12 +20,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private readonly IDictionary<string, Type> _viewmodelTypeMap = new Dictionary<string, Type>()
         {
             { Models.Pages.Button, typeof(ButtonViewModel) },
-            //{ Models.Pages.FloatingButton, typeof(FloatingButtonViewModel) },
+            { Models.Pages.FloatingButton, typeof(FloatingButtonViewModel) },
             { Models.Pages.IconButton, typeof(IconButtonViewModel) },
             //{ Models.Pages.SegmentedButton, typeof(SegmentedButtonViewModel) },
             { Models.Pages.Badge, typeof(BadgeViewModel) },
             { Models.Pages.ProgressIndicator, typeof(ProgressIndicatorViewModel) },
-            //{ Models.Pages.Snackbar, typeof(SnackbarViewModel) },
+            { Models.Pages.Snackbar, typeof(SnackbarViewModel) },
             //{ Models.Pages.BottomSheet, typeof(BottomSheetViewModel) },
             { Models.Pages.Card, typeof(CardViewModel) },
             //{ Models.Pages.Dialog, typeof(DialogViewModel) },
@@ -57,12 +57,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             var menuItems = new List<MaterialNavigationDrawerItem>
             {
                 new() { Headline = Sections.Actions, Text = Models.Pages.Button, LeadingIcon = "ic_button.png" },
-                new() { Headline = Sections.Actions, Text = Models.Pages.FloatingButton, LeadingIcon = "ic_floating.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Actions, Text = Models.Pages.FloatingButton, LeadingIcon = "ic_floating.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.IconButton, LeadingIcon = "ic_icon_button.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.SegmentedButton, LeadingIcon = "ic_segmented.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
                 new() { Headline = Sections.Communications, Text = Models.Pages.Badge, LeadingIcon = "ic_badge.png" },
                 new() { Headline = Sections.Communications, Text = Models.Pages.ProgressIndicator, LeadingIcon = "ic_progress_indicator.png" },
-                new() { Headline = Sections.Communications, Text = Models.Pages.Snackbar, LeadingIcon = "ic_snackbar.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Communications, Text = Models.Pages.Snackbar, LeadingIcon = "ic_snackbar.png" },
                 new() { Headline = Sections.Containment, Text = Models.Pages.BottomSheet, LeadingIcon = "ic_bottomsheet.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
                 new() { Headline = Sections.Containment, Text = Models.Pages.Card, LeadingIcon = "ic_card.png" },
                 new() { Headline = Sections.Containment, Text = Models.Pages.Dialog, LeadingIcon = "ic_dialog.png", TrailingIcon = "pending_actions.png", IsEnabled = false },

@@ -370,6 +370,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void StartLinearAnimation()
         {
+            var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
+            if (animationManager is null) return;
+            
             var index = 1;
             var mainAnimation = new Animation();
             mainAnimation.Add(0, 1, new Animation(v =>

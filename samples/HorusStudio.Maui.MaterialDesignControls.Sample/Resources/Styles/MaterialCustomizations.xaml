@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <Color x:Key="MaterialLightPrimary">ForestGreen</Color>
+    <Color x:Key="MaterialLightOnPrimary">LightGrey</Color>
+    
+    <Color x:Key="MaterialDarkPrimary">LightGreen</Color>
+    <Color x:Key="MaterialDarkOnPrimary">DarkGreen</Color>
+    
+    <sys:Double x:Key="MaterialFontLabelLarge">20</sys:Double>
+    <sys:Double x:Key="MaterialFontBodyMedium">25</sys:Double>
+    
+    <FileImageSource x:Key="MaterialIconDatePicker">arrow_right.png</FileImageSource>
+    <sys:String x:Key="DateFormat">dd-MM-yyyy</sys:String>
+</ResourceDictionary>

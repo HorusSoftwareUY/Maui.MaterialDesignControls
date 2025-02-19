@@ -137,13 +137,8 @@
                     Style="{StaticResource VisualStateManagerStyle}" />
 
                 <HorizontalStackLayout HorizontalOptions="Center">
-                    <material:MaterialLabel
+                    <material:MaterialSwitch
                         Text="Is enabled"
-                        HorizontalOptions="Start"
-                        HorizontalTextAlignment="End"
-                        VerticalTextAlignment="Center" />
-                                    <Switch
-                        HorizontalOptions="Start"
                         IsToggled="{Binding IsCheckboxEnabled}" />
                 </HorizontalStackLayout>
             </VerticalStackLayout>

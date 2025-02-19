@@ -4,7 +4,9 @@ using static Microsoft.Maui.Controls.Button;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-
+/// <summary>
+/// Define <see cref="MaterialButton" /> types
+/// </summary>
 public enum MaterialButtonType
 {
     /// <summary>Elevated button</summary>
