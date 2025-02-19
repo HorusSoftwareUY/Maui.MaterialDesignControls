@@ -3,139 +3,158 @@ using Foundation;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Platform;
 using UIKit;
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 public class MaterialSnackbarBuilder : UIView
 {
+    #region Constants
+    
+    private const bool UseBlur = true;
+    private const bool UseAnimation = true;
+    private const UIBlurEffectStyle BlurEffectStyle = UIBlurEffectStyle.Dark;
+    private static TimeSpan AnimationDuration = TimeSpan.FromMilliseconds(300);
+    
+    #endregion
+    
+    #region Attributes
+    
     private System.Timers.Timer _timer;
-    private DateTime _endOfAnimation;
+    private Action? _onDismissed;
+    private TaskCompletionSource? _showCompletionSource;
     
-    public static Thickness DefaultPadding { get; set; } = new Thickness(20);
-    public static Thickness DefaultSnackbarMargin { get; set; } = new Thickness(20, 50, 20, 30);
-    public static bool DefaultUseBlur { get; set; } = true;
-    public static bool DefaultUseAnimation { get; set; } = true;
-    public static TimeSpan DefaultAnimationDuration { get; set; } = TimeSpan.FromMilliseconds(250);
-    public static float DefaultIconSpacing { get; set; } = 16f;
-    public static UIBlurEffectStyle DefaultBlurEffectStyle { get; set; } = UIBlurEffectStyle.Dark;
-    
-    public Thickness Padding { get; set; } = DefaultPadding;
-    public Thickness SnackbarMargin { get; set; } = DefaultSnackbarMargin;
-    public bool UseBlur { get; set; } = DefaultUseBlur;
-    public bool UseAnimation { get; set; } = DefaultUseAnimation;
-    public float CornerRadius
-    {
-        get => (float)this.Layer.CornerRadius;
-        set => this.Layer.CornerRadius = value;
-    }
-    public float IconSpacing { get; set; } = DefaultIconSpacing;
-    public UIBlurEffectStyle BlurEffectStyle { get; set; } = DefaultBlurEffectStyle;
-    public event EventHandler Timeout;
-    public TimeSpan AnimationDuration { get; set; } = DefaultAnimationDuration;
-
-    protected SnackbarConfig Config { get; }
+    #endregion
     
     public MaterialSnackbarBuilder(SnackbarConfig config)
     {
-        Config = config;
-        TranslatesAutoresizingMaskIntoConstraints = false;
-        BackgroundColor = config.BackgroundColor.ToPlatform();
-        CornerRadius = config.CornerRadius;
-        
+        Build(config);
     }
     
-    public virtual void Dismiss()
+    public void Show()
     {
-        try
+        _timer.Start();
+        if (UseAnimation)
         {
-            _timer?.Stop();
+            Alpha = 0f;
+            Animate(AnimationDuration.TotalSeconds, () =>
+            {
+                Alpha = 1f;
+            });    
         }
-        catch { }
-        try
+        else
         {
-            this.RemoveFromSuperview();
+            Alpha = 1f;
         }
-        catch { }
+    }
+    
+    public Task ShowAsync()
+    {
+        _showCompletionSource = new TaskCompletionSource();
+        Show();
+        return _showCompletionSource.Task;
+    }
+    
+    public void Dismiss()
+    {
+        UIApplication.SharedApplication.SafeInvokeOnMainThread(() =>
+        {
+            if (UseAnimation)
+            {
+                Animate(AnimationDuration.TotalSeconds, () =>
+                {
+                    Alpha = 0f;
+                });
+            }
+            else
+            {
+                Alpha = 0f;
+            }
+
+            RemoveFromSuperview();
+            
+            if (_showCompletionSource != null)
+            {
+                _showCompletionSource.SetResult();
+                _showCompletionSource = null;
+                return;
+            };
+            _onDismissed?.Invoke();
+        });
     }
 
-    public virtual void Show()
+    private void Build(SnackbarConfig snackbarConfig)
     {
-        this.ClearSubviews();
+        _timer = new System.Timers.Timer(snackbarConfig.Duration) { AutoReset = false };
+        _timer.Elapsed += (s, a) =>
+        {
+            Dismiss();
+        };
+        _onDismissed = snackbarConfig.OnDismissed;
 
-        if (UseBlur) SetupBlur();
+        this.ClearSubviews();
+        if (UseBlur) ConfigureBlur(snackbarConfig);
 
         var window = UIKit.WindowExtensions.GetDefaultWindow();
         if (window == null) return;
         window.AddSubview(this);
 
-        var constraints = new List<NSLayoutConstraint>
-        {
-            this.CenterXAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.CenterXAnchor)
-        };
-
-        _timer = new System.Timers.Timer
-        {
-            Interval = 500
-        };
-
-        var popup = SetupSnackBar();
-
+        this.SetRoundedBackground(snackbarConfig.BackgroundColor, snackbarConfig.CornerRadius);
+        this.SetMargin(window, snackbarConfig.Margin, snackbarConfig.Position);
+       
+        var popup = CreateLayout(snackbarConfig);
         this.AddSubview(popup);
-
+        
         NSLayoutConstraint.ActivateConstraints(
         [
-            popup.LeadingAnchor.ConstraintEqualTo(this.LeadingAnchor, (float)Padding.Left),
-            popup.TrailingAnchor.ConstraintEqualTo(this.TrailingAnchor, (float)-Padding.Right),
-            popup.TopAnchor.ConstraintEqualTo(this.TopAnchor, (float)Padding.Top),
-            popup.BottomAnchor.ConstraintEqualTo(this.BottomAnchor, (float)-Padding.Bottom),
+            popup.LeadingAnchor.ConstraintEqualTo(this.LeadingAnchor, (float)snackbarConfig.Padding.Left),
+            popup.TrailingAnchor.ConstraintEqualTo(this.TrailingAnchor, (float)-snackbarConfig.Padding.Right),
+            popup.TopAnchor.ConstraintEqualTo(this.TopAnchor, (float)snackbarConfig.Padding.Top),
+            popup.BottomAnchor.ConstraintEqualTo(this.BottomAnchor, (float)-snackbarConfig.Padding.Bottom),
         ]);
-
-        constraints.Add(this.LeadingAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.LeadingAnchor, (float)SnackbarMargin.Left));
-        constraints.Add(this.TrailingAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TrailingAnchor, (float)-SnackbarMargin.Right));
-
-        constraints.Add(Config.Position is SnackbarPosition.Bottom
-            ? this.BottomAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.BottomAnchor, (float)-SnackbarMargin.Bottom)
-            : this.TopAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TopAnchor, (float)SnackbarMargin.Top));
-
-        NSLayoutConstraint.ActivateConstraints([.. constraints]);
-
-        if (UseAnimation)
-        {
-            this.Alpha = 0;
-
-            UIView.Animate(AnimationDuration.TotalSeconds, () =>
-            {
-                this.Alpha = 1f;
-            });
-        }
-
-        _endOfAnimation = DateTime.Now + Config.Duration;
-        _timer.Elapsed += (s, a) =>
-        {
-            var rest = (_endOfAnimation - a.SignalTime).TotalSeconds;
-            if (rest > 0) return;
-            _timer.Stop();
-
-            if (!UseAnimation) return;
-
-            this.InvokeOnMainThread(() =>
-            {
-                UIView.Animate(AnimationDuration.TotalSeconds,
-                    () =>
-                    {
-                        this.Alpha = 0f;
-                    },
-                    () =>
-                    {
-                        this.Dismiss();
-                        this.Timeout?.Invoke(this, EventArgs.Empty);
-                    });
-            });
-        };
-        _timer.Start();
     }
 
-    protected virtual void SetupBlur()
+    private UIView CreateLayout(SnackbarConfig snackbarConfig)
+    {
+        var container = new UIStackView
+        {
+            Spacing = snackbarConfig.Spacing,
+            Alignment = UIStackViewAlignment.Center,
+            Axis = UILayoutConstraintAxis.Horizontal,
+            TranslatesAutoresizingMaskIntoConstraints = false
+        };
+        
+        if (snackbarConfig.LeadingIcon?.Source is not null)
+        {
+            container.AddArrangedSubview(
+                ConfigureIconButton(
+                    snackbarConfig.LeadingIcon.Source.Source(), 
+                    snackbarConfig.LeadingIcon.Size, 
+                    snackbarConfig.LeadingIcon.Color, 
+                    snackbarConfig.LeadingIcon.Action));
+        }
+
+        container.AddArrangedSubview(ConfigureText(snackbarConfig));
+
+        if (snackbarConfig.Action?.Action is not null)
+        {
+            container.AddArrangedSubview(ConfigureAction(snackbarConfig, Dismiss));    
+        }
+        
+        if (snackbarConfig.TrailingIcon?.Source is not null)
+        {
+            container.AddArrangedSubview(
+                ConfigureIconButton(
+                    snackbarConfig.TrailingIcon.Source.Source(), 
+                    snackbarConfig.TrailingIcon.Size, 
+                    snackbarConfig.TrailingIcon.Color, 
+                    snackbarConfig.TrailingIcon.Action));
+        }
+
+        return container;
+    }
+    
+    private void ConfigureBlur(SnackbarConfig snackbarConfig)
     {
         var blurEffect = UIBlurEffect.FromStyle(BlurEffectStyle);
         var effectsView = new UIVisualEffectView
@@ -144,7 +163,7 @@ public class MaterialSnackbarBuilder : UIView
             TranslatesAutoresizingMaskIntoConstraints = false,
             ClipsToBounds = true
         };
-        effectsView.Layer.CornerRadius = CornerRadius;
+        effectsView.Layer.CornerRadius = snackbarConfig.CornerRadius;
 
         this.AddSubview(effectsView);
 
@@ -156,122 +175,76 @@ public class MaterialSnackbarBuilder : UIView
             effectsView.BottomAnchor.ConstraintEqualTo(this.BottomAnchor),
         ]);
     }
-
-    protected virtual UIView SetupSnackBar()
-    {
-        var container = new UIStackView
-        {
-            Spacing = IconSpacing,
-            Alignment = UIStackViewAlignment.Center,
-            Axis = UILayoutConstraintAxis.Horizontal,
-            TranslatesAutoresizingMaskIntoConstraints = false
-        };
-        
-        if (Config.LeadingIcon is not null)
-        {
-            container.AddArrangedSubview(GetButtonImage(Config.LeadingIcon.Source.Source(), Config.LeadingIcon.Color, Config.LeadingIcon.Size, Config.LeadingIcon.Action));
-        }
-
-        container.AddArrangedSubview(GetLabel());
-        
-
-        var action = GetAction();
-
-        var widthConstraint = NSLayoutConstraint.Create(action, NSLayoutAttribute.Width, NSLayoutRelation.Equal, null, NSLayoutAttribute.NoAttribute, 1f, action.IntrinsicContentSize.Width);
-        widthConstraint.Priority = (int)UILayoutPriority.Required;
-        action.AddConstraint(widthConstraint);
-
-        container.AddArrangedSubview(action);
-        
-        if (Config.TrailingIcon is not null)
-        {
-            container.AddArrangedSubview(GetButtonImage(Config.TrailingIcon.Source.Source(), Config.TrailingIcon.Color, Config.TrailingIcon.Size, Config.TrailingIcon.Action));
-        }
-
-        return container;
-    }
-
-    protected virtual UIButton GetButtonImage(string icon, Color color, int size, Action? action)
+    
+    private static UIButton ConfigureIconButton(string? iconSource, double iconSize, Color tintColor, Action? action)
     {
         var button = new UIButton
         {
             TranslatesAutoresizingMaskIntoConstraints = false,
+            BackgroundColor = UIColor.Clear,
+            TintColor = tintColor.ToPlatform()
         };
         
         button.TouchUpInside += (s, a) =>
         {
-            this.Dismiss();
             action?.Invoke();
         };
         
-        if (OperatingSystem.IsMacCatalystVersionAtLeast(15) || OperatingSystem.IsIOSVersionAtLeast(15))
+        var imageView = GetIcon(iconSource, iconSize);
+        if (imageView?.Image is {} image)
         {
-            var configuration = UIButtonConfiguration.PlainButtonConfiguration;
-            configuration.ImagePadding = 10;
-            configuration.ContentInsets = new NSDirectionalEdgeInsets(0, 8, 0, 8);
-            button.Configuration = configuration;
-        }
-        else
-        {
-            button.ImageEdgeInsets = new UIEdgeInsets(0, 0, 0, 10f);
+            button.SetImage(image, UIControlState.Normal);
         }
 
-        var widthConstraint = NSLayoutConstraint.Create(button, NSLayoutAttribute.Width, NSLayoutRelation.Equal, null, NSLayoutAttribute.NoAttribute, 1f, button.IntrinsicContentSize.Width);
-        widthConstraint.Priority = (int)UILayoutPriority.Required;
-        button.AddConstraint(widthConstraint);
-        var imageView = GetIcon(icon, color, size);
-        button.BackgroundColor = Colors.Transparent.ToPlatform();
-        if (imageView.Image != null)
-        {
-            button.TintColor = color.ToPlatform();
-            button.ImageView.TintColor = color.ToPlatform();
-            button.SetImage(imageView.Image, UIControlState.Normal);
-        }
-
+        button.SetSize(iconSize, iconSize);
         return button;
     }
 
-    protected virtual UIView GetAction()
+    private static UIImageView? GetIcon(string? iconSource, double iconSize)
     {
-        var container = new UIStackView
+        if (string.IsNullOrEmpty(iconSource)) return null;
+        
+        var icon = new UIImage(iconSource)
+            .ScaleTo(iconSize)
+            .ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+        
+        var image = new UIImageView
         {
-            Spacing = IconSpacing,
-            Alignment = UIStackViewAlignment.Center,
-            Axis = UILayoutConstraintAxis.Horizontal,
+            Image = icon,
+            ContentMode = UIViewContentMode.Center,
             TranslatesAutoresizingMaskIntoConstraints = false
         };
-
-        container.AddArrangedSubview(GetActionButton());
-
-        return container;
+        
+        return image;
     }
 
-    protected virtual UIView GetActionButton()
+    private static UIView ConfigureAction(SnackbarConfig snackbarConfig, Action dismiss)
     {
+        var actionConfig = snackbarConfig.Action;
         var button = new UIButton
         {
-            TranslatesAutoresizingMaskIntoConstraints = false,
+            TranslatesAutoresizingMaskIntoConstraints = false
         };
         button.TouchUpInside += (s, a) =>
         {
-            this.Dismiss();
-            Config.Action?.Action?.Invoke();
+            actionConfig.Action.Invoke();
+            dismiss();
         };
 
         UIFont font = null;
-        font ??= UIFont.SystemFontOfSize((nfloat)Config.Action.FontSize);
-        button.SetAttributedTitle(new NSMutableAttributedString(Config.Action.Text, font, Config.Action.Color.ToPlatform()), UIControlState.Normal);
+        font ??= UIFont.SystemFontOfSize((nfloat)actionConfig.FontSize, UIFontWeight.Semibold);
+        button.SetAttributedTitle(new NSMutableAttributedString(actionConfig.Text, font, actionConfig.Color.ToPlatform()), UIControlState.Normal);
 
         if (OperatingSystem.IsMacCatalystVersionAtLeast(15) || OperatingSystem.IsIOSVersionAtLeast(15))
         {
             var configuration = UIButtonConfiguration.PlainButtonConfiguration;
-            configuration.ImagePadding = 10;
+            configuration.ImagePadding = snackbarConfig.Spacing;
             configuration.ContentInsets = new NSDirectionalEdgeInsets(0, 0, 0, 0);
             button.Configuration = configuration;
         }
         else
         {
-            button.ImageEdgeInsets = new UIEdgeInsets(0, 0, 0, 10f);
+            button.ImageEdgeInsets = new UIEdgeInsets(0, snackbarConfig.Spacing, 0, snackbarConfig.Spacing);
         }
 
         var widthConstraint = NSLayoutConstraint.Create(button, NSLayoutAttribute.Width, NSLayoutRelation.Equal, null, NSLayoutAttribute.NoAttribute, 1f, button.IntrinsicContentSize.Width);
@@ -281,29 +254,15 @@ public class MaterialSnackbarBuilder : UIView
         return button;
     }
 
-    protected virtual UIImageView GetIcon(string Icon, Color color, int size)
-    {
-        var image = new UIImageView(new CGRect(0, 0, size, size))
-        {
-            Image = new UIImage(Icon).ScaleTo(size),
-            ContentMode = UIViewContentMode.Center,
-            TranslatesAutoresizingMaskIntoConstraints = false
-        };
-        
-        image.Image = image.Image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
-        image.TintColor = color.ToPlatform();
-        return image;
-    }
-
-    protected virtual UIView GetLabel()
+    private static UIView ConfigureText(SnackbarConfig snackbarConfig)
     {
         UIFont font = null;
-        font ??= UIFont.SystemFontOfSize((nfloat)Config.FontSize);
+        font ??= UIFont.SystemFontOfSize((nfloat)snackbarConfig.FontSize);
 
         var label = new UILabel
         {
-            Text = Config.Message,
-            TextColor = Config.TextColor.ToPlatform(),
+            Text = snackbarConfig.Message,
+            TextColor = snackbarConfig.TextColor.ToPlatform(),
             Font = font,
             LineBreakMode = UILineBreakMode.WordWrap,
             Lines = 0,

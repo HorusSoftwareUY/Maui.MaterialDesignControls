@@ -57,41 +57,6 @@ class FloatingButtonBuilder : UIView
             Console.WriteLine($"Not dismiss floating button ex: {ex.Message}");
         }
     }
-
-    private void SetRoundedBackground(Color backgroundColor, double cornerRadius)
-    {
-        BackgroundColor = backgroundColor.ToPlatform();
-        Layer.CornerRadius = (float)cornerRadius/2;
-        TranslatesAutoresizingMaskIntoConstraints = false;
-        Alpha = 0f;
-    }
-    
-    private void SetMargin(UIWindow window, Thickness margin, MaterialFloatingButtonPosition position)
-    {
-        var constraints = new List<NSLayoutConstraint>();
-        
-        switch (position)
-        {
-            case MaterialFloatingButtonPosition.BottomRight:
-                constraints.Add(BottomAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.BottomAnchor, -1*(float)margin.Bottom));
-                constraints.Add(RightAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.RightAnchor, -1*(float)margin.Right));
-                break;
-            case MaterialFloatingButtonPosition.TopRight:
-                constraints.Add(TopAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TopAnchor, (float)margin.Top));
-                constraints.Add(RightAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.RightAnchor, -1*(float)margin.Right));
-                break;
-            case MaterialFloatingButtonPosition.TopLeft:
-                constraints.Add(TopAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TopAnchor, (float)margin.Top));
-                constraints.Add(LeftAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.LeftAnchor, (float)margin.Left));
-                break;
-            case MaterialFloatingButtonPosition.BottomLeft:
-                constraints.Add(BottomAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.BottomAnchor, -1*(float)margin.Bottom));
-                constraints.Add(LeftAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.LeftAnchor, (float)margin.Left));
-                break;
-        }
-        
-        NSLayoutConstraint.ActivateConstraints([.. constraints]);
-    }
     
     private void SetSize(UIView view, double height, double width)
     {
@@ -106,14 +71,15 @@ class FloatingButtonBuilder : UIView
     
     private void Build(MaterialFloatingButton fab)
     {
+        Alpha = 0f;
         this.ClearSubviews();
         
         var window = UIKit.WindowExtensions.GetDefaultWindow();
         if (window == null) return;
         window.AddSubview(this);
         
-        SetRoundedBackground(fab.BackgroundColor, fab.CornerRadius);
-        SetMargin(window, fab.Margin, fab.Position);
+        this.SetRoundedBackground(fab.BackgroundColor, fab.CornerRadius/2);
+        this.SetMargin(window, fab.Margin, fab.Position);
         
         var content = CreateLayout(fab);
         AddSubview(content);

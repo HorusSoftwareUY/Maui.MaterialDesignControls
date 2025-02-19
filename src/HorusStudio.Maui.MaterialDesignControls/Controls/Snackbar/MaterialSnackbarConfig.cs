@@ -11,7 +11,7 @@ public class SnackbarConfig(string message)
     #region Default values
     
     public static Thickness DefaultMargin { get; set; } = new(24);
-    public static Thickness DefaultPadding { get; set; } = new(16,0);
+    public static Thickness DefaultPadding { get; set; } = new(16);
     public static SnackbarPosition DefaultPosition { get; set; } = SnackbarPosition.Bottom;
     public static int DefaultIconSize { get; set; } = 24;
     public static float DefaultCornerRadius { get; set; } = 4f;

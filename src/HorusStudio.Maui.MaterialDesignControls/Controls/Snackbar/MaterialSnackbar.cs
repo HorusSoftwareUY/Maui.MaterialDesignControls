@@ -81,10 +81,10 @@ class MaterialSnackbar : IMaterialSnackbar, IDisposable
             });
 #elif IOS || MACCATALYST
             var app = UIApplication.SharedApplication;
-            app.SafeInvokeOnMainThread(() =>
+            await app.SafeInvokeOnMainThreadAsync(() =>
             {
                 _snackbar = new MaterialSnackbarBuilder(config);
-                _snackbar.Show();
+                return _snackbar.ShowAsync();
             });
 #endif
         }
