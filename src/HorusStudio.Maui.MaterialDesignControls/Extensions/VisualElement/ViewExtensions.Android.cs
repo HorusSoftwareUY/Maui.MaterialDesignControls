@@ -76,12 +76,12 @@ static partial class ViewExtensions
         return view;
     }
     
-    public static View SetGravity(this View view, SnackbarPosition position)
+    public static View SetGravity(this View view, MaterialSnackbarPosition position)
     {
         var gravityFlags = position switch
         {
-            SnackbarPosition.Bottom => GravityFlags.CenterHorizontal | GravityFlags.Bottom,
-            SnackbarPosition.Top => GravityFlags.CenterHorizontal | GravityFlags.Top,
+            MaterialSnackbarPosition.Bottom => GravityFlags.CenterHorizontal | GravityFlags.Bottom,
+            MaterialSnackbarPosition.Top => GravityFlags.CenterHorizontal | GravityFlags.Top,
             _ => throw new ArgumentOutOfRangeException(nameof(position), position, "Snackbar position value is not valid.")
         };
         

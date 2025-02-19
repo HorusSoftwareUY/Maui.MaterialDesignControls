@@ -1,8 +1,8 @@
 using Android.App;
 using Android.Views;
 using HorusStudio.Maui.MaterialDesignControls;
-using Microsoft.Maui.Platform;
 using ImageButton = Android.Widget.ImageButton;
+using Microsoft.Maui.Platform;
 
 namespace Google.Android.Material.Snackbar;
 
@@ -12,7 +12,8 @@ public static class SnackbarExtensions
         ImageSource source, 
         int size, 
         Microsoft.Maui.Graphics.Color color, 
-        Thickness padding, Action? action)
+        Thickness padding, 
+        Action? action)
     {
         var icon = source.ToDrawable(size, color);
         if (icon is null) return null;
@@ -23,7 +24,7 @@ public static class SnackbarExtensions
         button.SetBackgroundColor(Colors.Transparent.ToPlatform());
         if (action is not null)
         {
-            button.Click += (sender, args) => action();    
+            button.Click += (sender, args) => action.Invoke();    
         }
         
         return button;
@@ -51,7 +52,7 @@ public static class SnackbarExtensions
 
     public static ImageButton? AddIcon(this SnackbarContentLayout contentLayout,
         Activity activity,
-        SnackbarConfig.IconConfig config,
+        MaterialSnackbarConfig.IconConfig config,
         int index)
     {
         var iconView = AddIcon(contentLayout, activity, config.Source, config.Size, config.Color, new Thickness(0), config.Action, index);
@@ -62,5 +63,4 @@ public static class SnackbarExtensions
         }
         return iconView;
     }
-        
 }

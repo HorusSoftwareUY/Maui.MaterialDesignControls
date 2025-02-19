@@ -143,7 +143,7 @@ public static class MaterialDesignControlsBuilderExtensions
     public static MaterialDesignControlsBuilder ConfigureSnackbar(this MaterialDesignControlsBuilder builder, MaterialSnackbarOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
-        SnackbarConfig.Configure(options);
+        MaterialSnackbarConfig.Configure(options);
         return builder;
     } 
     
@@ -155,7 +155,7 @@ public static class MaterialDesignControlsBuilderExtensions
         builder.AppBuilder.Services.AddSingleton(typeof(IMaterialSnackbar), typeof(T));
         if (options != null)
         {
-            SnackbarConfig.Configure(options);
+            MaterialSnackbarConfig.Configure(options);
         }
 
         return builder;

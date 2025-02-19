@@ -8,7 +8,7 @@ public static class ViewExtensions
     public static void SetRoundedBackground(this UIView view, Color color, double radius)
     {
         view.BackgroundColor = color.ToPlatform();
-        view.Layer.CornerRadius = (float)radius;
+        view.Layer.CornerRadius = (float)radius / 2;
         view.TranslatesAutoresizingMaskIntoConstraints = false;
     }
     
@@ -39,7 +39,7 @@ public static class ViewExtensions
         NSLayoutConstraint.ActivateConstraints([.. constraints]);
     }
     
-    public static void SetMargin(this UIView view, UIWindow window, Thickness margin, SnackbarPosition position)
+    public static void SetMargin(this UIView view, UIWindow window, Thickness margin, MaterialSnackbarPosition position)
     {
         var constraints = new List<NSLayoutConstraint>
         {
@@ -49,10 +49,10 @@ public static class ViewExtensions
 
         switch (position)
         {
-            case SnackbarPosition.Top:
+            case MaterialSnackbarPosition.Top:
                 constraints.Add(view.TopAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.TopAnchor, (float)margin.Top));
                 break;
-            case SnackbarPosition.Bottom:
+            case MaterialSnackbarPosition.Bottom:
                 constraints.Add(view.BottomAnchor.ConstraintEqualTo(window.SafeAreaLayoutGuide.BottomAnchor, -1*(float)margin.Bottom));
                 break;
         }

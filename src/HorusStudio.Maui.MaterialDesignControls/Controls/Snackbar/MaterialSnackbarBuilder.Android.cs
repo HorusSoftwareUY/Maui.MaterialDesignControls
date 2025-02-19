@@ -16,7 +16,6 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
     #region Constants
     
     private const int TextMaxLines = 20;
-    private const int ActionInternalPadding = 8;
     
     #endregion Constants
     
@@ -32,9 +31,13 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
     
     #endregion Attributes
     
-    public MaterialSnackbarBuilder(Activity activity, SnackbarConfig config)
+    public MaterialSnackbarBuilder(Activity activity, MaterialSnackbarConfig config)
     {
         _onDismissed = config.OnDismissed;
+
+        var extraPadding = 12;
+        config.Padding = new Thickness(config.Padding.Left, config.Padding.Top - extraPadding, config.Padding.Right, config.Padding.Bottom - extraPadding);
+        
         _snackbar = Build(config, activity);
         _snackbar.AddCallback(this);
     }
@@ -69,7 +72,7 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
     
     public void Dismiss() => _snackbar?.Dismiss();
     
-    private Snackbar Build(SnackbarConfig config, Activity? activity)
+    private Snackbar Build(MaterialSnackbarConfig config, Activity? activity)
     {
         ArgumentNullException.ThrowIfNull(config);
         ArgumentNullException.ThrowIfNull(activity);
@@ -86,7 +89,6 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
             snackbarView.GetChildAt(0) is SnackbarContentLayout snackbarContent)
         {
             var insets = rootView!.GetInsets();
-            
             snackbarView
                 .SetRoundedBackground(config.BackgroundColor, config.CornerRadius)
                 .SetMargin(config.Margin, insets)
@@ -109,7 +111,7 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
             }
 
             _textView!.SetMargin(new Thickness(_leadingIconView is not null ? config.Spacing : 0,0,0,0));
-            _actionView?.SetMargin(new Thickness(config.Spacing - ActionInternalPadding,0,_trailingIconView is not null ? config.Spacing - ActionInternalPadding : 0,0));
+            _actionView?.SetMargin(new Thickness(config.Spacing,0,_trailingIconView is not null ? config.Spacing : 0,0));
 
             snackbarView.SetVisibility(false);
         }
@@ -121,19 +123,18 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
     private static TextView? ConfigureText(Snackbar snackbar, SnackbarContentLayout contentLayout, double fontSize, Color textColor)
     {
         snackbar.SetTextColor(textColor.ToInt());
-        if (contentLayout.GetChildAt(0) is not TextView textView) return null;
-
-        textView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+        if (contentLayout.MessageView is not {} textView) return null;
+        
+        textView.SetBackgroundColor(Android.Graphics.Color.Transparent);
         //textView.SetTypeface(actionButton.Typeface, TypefaceStyle.Normal);
         textView.SetTextSize(Android.Util.ComplexUnitType.Dip, (float)fontSize);
         textView.Ellipsize = TextUtils.TruncateAt.End;
-        textView.SetPadding(0);
-        textView.SetMargin(0);
+        textView.SetIncludeFontPadding(false);
         
         return textView;
     }
 
-    private static Button? ConfigureAction(Activity activity, Snackbar snackbar, SnackbarContentLayout contentLayout, SnackbarConfig.ActionConfig config)
+    private static Button? ConfigureAction(Activity activity, Snackbar snackbar, SnackbarContentLayout contentLayout, MaterialSnackbarConfig.ActionConfig config)
     {
         var text = new SpannableString(config.Text);
         text.SetSpan(new LetterSpacingSpan(0), 0, config.Text.Length, SpanTypes.ExclusiveExclusive);
@@ -141,13 +142,15 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
         snackbar.SetActionTextColor(config.Color.ToInt());
         snackbar.SetAction(text, v => config.Action.Invoke());
 
-        if (contentLayout.GetChildAt(1) is not Button actionButton) return null;
+        if (contentLayout.ActionView is not {} actionButton) return null;
         
         actionButton.SetBackgroundColor(Colors.Transparent.ToPlatform());
         actionButton.SetTypeface(actionButton.Typeface, TypefaceStyle.Bold);
         //var mediumTypeface = Typeface.CreateFromAsset(activity.Assets, MaterialFontFamily.Medium);
         actionButton.SetTextSize(Android.Util.ComplexUnitType.Dip, (float)config.FontSize);
         actionButton.Ellipsize = TextUtils.TruncateAt.Middle;
+        actionButton.SetPadding(0);
+        actionButton.SetIncludeFontPadding(false);
         
         return actionButton;
     }

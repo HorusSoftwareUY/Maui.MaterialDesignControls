@@ -4,7 +4,7 @@ public sealed class MaterialSnackbarOptions
 {
     public Thickness? DefaultMargin { get; set; }
     public Thickness? DefaultPadding { get; set; }
-    public SnackbarPosition? DefaultPosition { get; set; }
+    public MaterialSnackbarPosition? DefaultPosition { get; set; }
     public int? DefaultIconSize { get; set; }
     public float? DefaultCornerRadius { get; set; }
     public Color? DefaultBackgroundColor { get; set; }

@@ -78,7 +78,7 @@ class FloatingButtonBuilder : UIView
         if (window == null) return;
         window.AddSubview(this);
         
-        this.SetRoundedBackground(fab.BackgroundColor, fab.CornerRadius/2);
+        this.SetRoundedBackground(fab.BackgroundColor, fab.CornerRadius);
         this.SetMargin(window, fab.Margin, fab.Position);
         
         var content = CreateLayout(fab);

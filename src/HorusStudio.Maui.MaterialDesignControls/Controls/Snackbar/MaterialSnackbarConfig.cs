@@ -1,104 +1,287 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public enum SnackbarPosition
+/// <summary>
+/// Define <see cref="MaterialSnackbar" /> position on screen
+/// </summary>
+public enum MaterialSnackbarPosition
 {
+    /// <summary>
+    /// Display at bottom of screen             
+    /// </summary>
     Bottom,
+    /// <summary>
+    /// Display at top of screen
+    /// </summary>
     Top
 }
 
-public class SnackbarConfig(string message)
+/// <summary>
+/// User-defined configuration to display a <see cref="MaterialSnackbar" />
+/// </summary>
+/// <param name="message">Message to be displayed on snackbar</param>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialSnackbar.gif</img>
+///
+/// <h3>C# sample</h3>
+/// <code>
+/// IMaterialSnackbar _snackbar = ...
+/// var config = new MaterialSnackbarConfig("Lorem ipsum dolor sit amet")
+/// {
+///     LeadingIcon = new MaterialSnackbarConfig.IconConfig("info.png", () => Console.WriteLine("Leading icon tapped!"))),
+///     TrailingIcon = new MaterialSnackbarConfig.IconConfig("ic_close.png", () => Console.WriteLine("Trailing icon tapped!")))
+/// };
+/// _snackbar.Show(config);
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SnackbarPage.xaml)
+/// 
+/// </example>
+/// <todoList>
+/// * Add FontFamily configuration
+/// * [iOS] When sizes are too big, last element on UI gets cropped
+/// </todoList>
+public class MaterialSnackbarConfig(string message)
 {
     #region Default values
     
+    /// <summary>
+    /// Margin to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>24</default>
     public static Thickness DefaultMargin { get; set; } = new(24);
+    
+    /// <summary>
+    /// Padding to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>16</default>
     public static Thickness DefaultPadding { get; set; } = new(16);
-    public static SnackbarPosition DefaultPosition { get; set; } = SnackbarPosition.Bottom;
+    
+    /// <summary>
+    /// Position to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default><see cref="MaterialSnackbarPosition.Bottom">MaterialSnackbarPosition.Bottom</see></default>
+    public static MaterialSnackbarPosition DefaultPosition { get; set; } = MaterialSnackbarPosition.Bottom;
+    
+    /// <summary>
+    /// Icon size to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>24</default>
     public static int DefaultIconSize { get; set; } = 24;
-    public static float DefaultCornerRadius { get; set; } = 4f;
+    
+    /// <summary>
+    /// Corner radius to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>8</default>
+    public static float DefaultCornerRadius { get; set; } = 8f;
+    
+    /// <summary>
+    /// Background <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.InverseSurface">MaterialLightTheme.InverseSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseSurface">MaterialDarkTheme.InverseSurface</see>
+    /// </default>
     public static Color DefaultBackgroundColor { get; set; } = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
+    
+    /// <summary>
+    /// Text <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.InverseOnSurface">MaterialLightTheme.InverseOnSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseOnSurface">MaterialDarkTheme.InverseOnSurface</see>
+    /// </default>
     public static Color DefaultTextColor { get; set; } = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+    
+    /// <summary>
+    /// Text font size to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.BodyMedium">MaterialFontSize.BodyMedium</see>
+    /// </default>
     public static double DefaultFontSize { get; set; } = MaterialFontSize.BodyMedium;
+    
+    /// <summary>
+    /// Action text <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.InversePrimary">MaterialLightTheme.InversePrimary</see> - Dark: <see cref="MaterialDarkTheme.InversePrimary">MaterialDarkTheme.InversePrimary</see>
+    /// </default>
     public static Color DefaultActionColor { get; set; } = new AppThemeBindingExtension { Light = MaterialLightTheme.InversePrimary, Dark = MaterialDarkTheme.InversePrimary }.GetValueForCurrentTheme<Color>();
+    
+    /// <summary>
+    /// Action font size to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.BodyMedium">MaterialFontSize.BodyMedium</see>
+    /// </default>
     public static double DefaultActionSize { get; set; } = MaterialFontSize.BodyMedium;
+    
+    /// <summary>
+    /// Icon <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.InverseOnSurface">MaterialLightTheme.InverseOnSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseOnSurface">MaterialDarkTheme.InverseOnSurface</see>
+    /// </default>
     public static Color DefaultIconColor { get; set; } = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+    
+    /// <summary>
+    /// Duration applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>3 seconds</default>
     public static TimeSpan DefaultDuration { get; set; } = TimeSpan.FromSeconds(3);
+    
+    /// <summary>
+    /// Spacing between components to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>16</default>
     public static int DefaultSpacing { get; set; } = 16;
     
     #endregion Default values
     
-    public string Message { get; } = message;
+    #region Attributes
     
     private Color? _backgroundColor;
+    private float? _cornerRadius;
+    private double? _fontSize;
+    private Color? _textColor;
+    private Thickness? _margin;
+    private Thickness? _padding;
+    private MaterialSnackbarPosition? _position;
+    private TimeSpan? _duration;
+    private int? _spacing;
+    
+    #endregion Attributes
+    
+    #region Properties
+    
+    /// <summary>
+    /// Gets text to be displayed on snackbar.
+    /// </summary>
+    public string Message { get; } = message;
+    
+    /// <summary>
+    /// Gets or sets a color that describes the background color of snackbar.
+    /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.InverseSurface">MaterialLightTheme.InverseSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseSurface">MaterialDarkTheme.InverseSurface</see>
+    /// </default>
     public Color BackgroundColor
     {
         get => _backgroundColor ?? DefaultBackgroundColor;
         set => _backgroundColor = value;
     }
 
-    private float? _cornerRadius;
+    /// <summary>
+    /// Gets or sets corner radius for snackbar
+    /// </summary>
+    /// <default>8</default>
     public float CornerRadius
     {
         get => _cornerRadius ?? DefaultCornerRadius; 
         set => _cornerRadius = value;
     }
     
-    private double? _fontSize;
+    /// <summary>
+    /// Gets or sets text size for snackbar.
+    /// </summary>
+    /// <default>
+    /// <see cref="MaterialFontSize.BodyMedium">MaterialFontSize.BodyMedium</see>
+    /// </default>
     public double FontSize
     {
         get => _fontSize ?? DefaultFontSize; 
         set => _fontSize = value;
     }
     
-    private Color? _textColor;
+    /// <summary>
+    /// Gets or sets a color for text on snackbar.
+    /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.InverseOnSurface">MaterialLightTheme.InverseOnSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseOnSurface">MaterialDarkTheme.InverseOnSurface</see>
+    /// </default>
     public Color TextColor 
     {
         get => _textColor ?? DefaultTextColor;
         set => _textColor = value;
     }
 
-    private Thickness? _margin;
+    /// <summary>
+    /// Gets or sets snackbar margin.
+    /// </summary>
+    /// <default>24</default>
     public Thickness Margin 
     { 
         get => _margin ?? DefaultMargin;
         set => _margin = value;
     }
     
-    private Thickness? _padding;
+    /// <summary>
+    /// Gets or sets snackbar padding.
+    /// </summary>
+    /// <default>16</default>
     public Thickness Padding 
     { 
         get => _padding ?? DefaultPadding;
         set => _padding = value;
     }
 
-    private SnackbarPosition? _position;
-    public SnackbarPosition Position
+    /// <summary>
+    /// Gets or sets snackbar position on screen.
+    /// </summary>
+    /// <default>
+    /// <see cref="MaterialSnackbarPosition.Bottom">MaterialSnackbarPosition.Bottom</see>
+    /// </default>
+    public MaterialSnackbarPosition Position
     {
         get => _position ?? DefaultPosition; 
         set => _position = value;
     }
 
-    private TimeSpan? _duration;
+    /// <summary>
+    /// Gets or sets time that snackbar will be displayed.
+    /// </summary>
+    /// <default>3 seconds</default>
     public TimeSpan Duration
     {
         get => _duration ?? DefaultDuration; 
         set => _duration = value;
     }
     
+    /// <summary>
+    /// Gets or sets configuration for leading icon, if available.
+    /// </summary>
+    /// <default><see langword="null"/></default>
     public IconConfig? LeadingIcon { get; set; }
     
+    /// <summary>
+    /// Gets or sets configuration for trailing icon, if available.
+    /// </summary>
+    /// <default><see langword="null"/></default>
     public IconConfig? TrailingIcon { get; set; }
     
+    /// <summary>
+    /// Gets or sets configuration for custom action, if available.
+    /// </summary>
+    /// <default><see langword="null"/></default>
     public ActionConfig? Action { get; set; }
     
+    /// <summary>
+    /// Action to be executed when snackbar is dismissed.
+    /// </summary>
+    /// <default><see langword="null"/></default>
     public Action? OnDismissed { get; set; }
     
-    private int? _spacing;
+    /// <summary>
+    /// Gets or sets space between snackbar components.
+    /// </summary>
+    /// <default>16</default>
     public int Spacing
     {
         get => _spacing ?? DefaultSpacing; 
         set => _spacing = value;
     }
 
+    #endregion Properties
+    
     internal static void Configure(MaterialSnackbarOptions options)
     {
         if (options.DefaultDuration != null) DefaultDuration = options.DefaultDuration.Value;
@@ -116,12 +299,24 @@ public class SnackbarConfig(string message)
         if (options.DefaultIconSize != null) DefaultIconSize = options.DefaultIconSize.Value;
     }
     
-    public class IconConfig(ImageSource source, Action action) : BaseActionConfig(action)
+    /// <summary>
+    /// User-defined configuration for an icon button on <see cref="MaterialSnackbar"/>
+    /// </summary>
+    /// <param name="source">Icon <see cref="ImageSource"/></param>
+    /// <param name="action">Action to be executed when icon is tapped</param>
+    public class IconConfig(ImageSource source, Action? action = null) : BaseActionConfig(action)
     {
+        /// <summary>
+        /// Gets icon source
+        /// </summary>
+        /// <remarks>Required</remarks>
         public ImageSource Source { get; } = source;
 
         private int? _size;
-
+        /// <summary>
+        /// Gets or sets icon size for snackbar.
+        /// </summary>
+        /// <default>24</default>
         public int Size
         {
              get => _size ?? DefaultIconSize;
@@ -129,11 +324,26 @@ public class SnackbarConfig(string message)
         }
     }
 
+    /// <summary>
+    /// User-defined configuration for an action button on <see cref="MaterialSnackbar"/>
+    /// </summary>
+    /// <param name="text">Text for action button</param>
+    /// <param name="action">Action to be executed when button is tapped</param>
     public class ActionConfig(string text, Action action) : BaseActionConfig(action)
     {
+        /// <summary>
+        /// Gets text for action button
+        /// </summary>
+        /// <remarks>Required</remarks>
         public string Text { get; } = text;
 
         private double? _fontSize;
+        /// <summary>
+        /// Gets or sets font size for action text.
+        /// </summary>
+        /// <default>
+        /// <see cref="MaterialFontSize.BodyMedium">MaterialFontSize.BodyMedium</see>
+        /// </default>
         public double FontSize
         {
             get => _fontSize ?? DefaultActionSize; 
@@ -141,16 +351,46 @@ public class SnackbarConfig(string message)
         }
     }
 
-    public abstract class BaseActionConfig(Action action)
+    /// <summary>
+    /// User-defined base configuration for an actions on <see cref="MaterialSnackbar"/>
+    /// </summary>
+    public abstract class BaseActionConfig
     {
         private Color? _color;
+        /// <summary>
+        /// Gets or sets color for action/icon.
+        /// </summary>
+        /// <default>
+        /// Action: [ Light: <see cref="MaterialLightTheme.InversePrimary">MaterialLightTheme.InversePrimary</see> - Dark: <see cref="MaterialDarkTheme.InversePrimary">MaterialDarkTheme.InversePrimary</see> ]
+        /// Icon: [ Light: <see cref="MaterialLightTheme.InverseOnSurface">MaterialLightTheme.InverseOnSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseOnSurface">MaterialDarkTheme.InverseOnSurface</see> ]
+        /// </default>
         public Color Color
         {
             get => _color ?? (this is IconConfig ? DefaultIconColor : DefaultActionColor); 
             set => _color = value;
         }
         
-        public Action Action { get; } = action;
+        private Action? _action;
+
+        /// <summary>
+        /// Gets or sets an action to be executed when action/icon is tapped.
+        /// </summary>
+        /// <default>
+        /// <see langword="null"/>
+        /// </default>
+        /// <remarks>Required for action button</remarks>
+        public Action? Action
+        {
+            get => _action; 
+            set => _action = value;
+        }
+        
+        protected BaseActionConfig() {}
+
+        protected BaseActionConfig(Action? action)
+        {
+            Action = action;
+        }
     }
 }
 

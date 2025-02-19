@@ -20,7 +20,7 @@ class MaterialSnackbar : IMaterialSnackbar, IDisposable
     
     ~MaterialSnackbar() => Dispose(false);
     
-    public IDisposable Show(SnackbarConfig config)
+    public IDisposable Show(MaterialSnackbarConfig config)
     {
 #if ANDROID
         var activity = Platform.CurrentActivity!;
@@ -43,32 +43,32 @@ class MaterialSnackbar : IMaterialSnackbar, IDisposable
 
     public IDisposable Show(string message, 
         TimeSpan? duration = null, 
-        SnackbarConfig.ActionConfig? action = null, 
-        SnackbarConfig.IconConfig? leadingIcon = null, 
-        SnackbarConfig.IconConfig? trailingIcon = null)
-        => Show(new SnackbarConfig(message)
+        MaterialSnackbarConfig.ActionConfig? action = null, 
+        MaterialSnackbarConfig.IconConfig? leadingIcon = null, 
+        MaterialSnackbarConfig.IconConfig? trailingIcon = null)
+        => Show(new MaterialSnackbarConfig(message)
         {
             LeadingIcon = leadingIcon,
             TrailingIcon = trailingIcon,
-            Duration = duration ?? SnackbarConfig.DefaultDuration,
+            Duration = duration ?? MaterialSnackbarConfig.DefaultDuration,
             Action = action
         });
 
     public Task ShowAsync(string message, 
         TimeSpan? duration = null, 
-        SnackbarConfig.ActionConfig? action = null, 
-        SnackbarConfig.IconConfig? leadingIcon = null, 
-        SnackbarConfig.IconConfig? trailingIcon = null, 
+        MaterialSnackbarConfig.ActionConfig? action = null, 
+        MaterialSnackbarConfig.IconConfig? leadingIcon = null, 
+        MaterialSnackbarConfig.IconConfig? trailingIcon = null, 
         CancellationToken cancellationToken = default)
-        => ShowAsync(new SnackbarConfig(message)
+        => ShowAsync(new MaterialSnackbarConfig(message)
         {
             LeadingIcon = leadingIcon,
             TrailingIcon = trailingIcon,
-            Duration = duration ?? SnackbarConfig.DefaultDuration,
+            Duration = duration ?? MaterialSnackbarConfig.DefaultDuration,
             Action = action
         }, cancellationToken);
 
-    public async Task ShowAsync(SnackbarConfig config, CancellationToken cancellationToken = default)
+    public async Task ShowAsync(MaterialSnackbarConfig config, CancellationToken cancellationToken = default)
     {
         await using (cancellationToken.Register(() => _snackbar?.Dismiss()))
         {
