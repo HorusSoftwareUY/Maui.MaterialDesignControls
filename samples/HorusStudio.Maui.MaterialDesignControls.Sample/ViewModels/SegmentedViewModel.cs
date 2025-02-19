@@ -10,7 +10,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
 
-        public override string Title => "Segmented button";
+        public override string Title => Models.Pages.SegmentedButton;
+        protected override string ControlReferenceUrl => "components/segmented-buttons/overview";
 
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(TextButtonTypeSelected))]
@@ -47,11 +48,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public SegmentedViewModel()
         {
             Subtitle = "Segmented buttons help people select options, switch views, or sort elements.";
-        }
-        
-        public override void Appearing()
-        {
-            base.Appearing();
             
             SegmentedType = MaterialSegmentedType.Filled;
             
@@ -94,8 +90,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new MaterialSegmentedItem
                 {
                     Text = "Opt1",
-                    SelectedIcon = "horus_logo.png",
-                    UnselectedIcon = "horus_studio_logo.png"
+                    SelectedIcon = "ic_checkbox.png",
+                    UnselectedIcon = "logo.png"
                 },
                 new MaterialSegmentedItem
                 {
@@ -105,13 +101,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new MaterialSegmentedItem
                 {
                     Text = "Opt3",
-                    SelectedIcon = "logo.png"
+                    SelectedIcon = "ic_checkbox.png"
                 }
             };
-            
-            OnItemMultipleSelectedCommand.Execute(null);
-        }
 
+            OnItemMultipleSelected();
+        }
+        
         [ICommand]
         private async Task OnItemSelectedOutlinedAsync()    
         {
@@ -121,7 +117,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private void OnItemMultipleSelected()
         {
-            TextItemsSelectedFilled = $"Selected: " + string.Join(", ", Items2.Where(w => w.IsSelected).Select(s => s.Text));
+            var selectedText = "-";
+            if (_items2.Any(w => w.IsSelected))
+            {
+                selectedText = string.Join(", ", Items2.Where(w => w.IsSelected).Select(s => s.Text));
+            }
+            TextItemsSelectedFilled = $"Selected: {selectedText}";
         }
 
         [ICommand]

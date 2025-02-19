@@ -22,7 +22,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             { Models.Pages.Button, typeof(ButtonViewModel) },
             //{ Models.Pages.FloatingButton, typeof(FloatingButtonViewModel) },
             { Models.Pages.IconButton, typeof(IconButtonViewModel) },
-            //{ Models.Pages.SegmentedButton, typeof(SegmentedButtonViewModel) },
+            { Models.Pages.SegmentedButton, typeof(SegmentedViewModel) },
             { Models.Pages.Badge, typeof(BadgeViewModel) },
             { Models.Pages.ProgressIndicator, typeof(ProgressIndicatorViewModel) },
             //{ Models.Pages.Snackbar, typeof(SnackbarViewModel) },
