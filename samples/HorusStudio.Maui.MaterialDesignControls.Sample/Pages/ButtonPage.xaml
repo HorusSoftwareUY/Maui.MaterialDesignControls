@@ -237,6 +237,7 @@
                  Grid.Row="0"
                  Grid.Column="1"
                  Type="Text"
+                 TextDecorations="Underline"
                  Text="Enabled"
                  Command="{Binding MaterialButton9Command}"
                  CommandParameter="Text button clicked!"
@@ -254,6 +255,7 @@
                  Grid.Row="1"
                  Grid.Column="1"
                  Type="Text"
+                 TextDecorations="Underline"
                  Text="Disabled"
                  IsEnabled="False" />
             </Grid>
