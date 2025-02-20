@@ -932,8 +932,6 @@ public class MaterialButton : ContentView, ITouchable
     private void CreateLayout()
     {
         Shadow = DefaultShadow;
-        HorizontalOptions = LayoutOptions.Center;
-        VerticalOptions = LayoutOptions.Center;
 
         // Button
         _button = new()
@@ -985,6 +983,7 @@ public class MaterialButton : ContentView, ITouchable
 
         _activityIndicatorContainer = new Grid { _internalActivityIndicator };
         _activityIndicatorContainer.IsVisible = !_button.IsVisible;
+        _activityIndicatorContainer.SetBinding(Grid.WidthRequestProperty, new Binding(nameof(Width), source: _button));
 
         // Main Layout
         var rowDefinition = new RowDefinition();
