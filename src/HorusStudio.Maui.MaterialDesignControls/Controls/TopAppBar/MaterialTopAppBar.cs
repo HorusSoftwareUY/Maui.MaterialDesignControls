@@ -1190,7 +1190,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }
             catch (Exception ex)
             {
-                Logger.Log(ex);
+                Logger.LogException(ex);
             }
         }
 

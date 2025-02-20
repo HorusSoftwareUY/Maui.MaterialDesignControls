@@ -17,6 +17,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 .UseMauiApp<App>()
                 .UseMaterialDesignControls(options =>
                 {
+                    options.EnableDebug();
                     options.ConfigureFonts(fonts =>
                     {
                         fonts.AddFont("Roboto-Regular.ttf", FontRegular);
