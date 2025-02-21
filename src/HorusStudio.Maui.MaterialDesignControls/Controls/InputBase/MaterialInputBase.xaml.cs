@@ -1140,10 +1140,10 @@ public abstract partial class MaterialInputBase
 
         if (type == MaterialInputType.Outlined)
         {
-            var outlinedHint = (Label)GetTemplateChild("OutlinedHint");
-            if (outlinedHint != null)
+            var outlinedHintContainerBackground = (ContentView)GetTemplateChild("OutlinedHintContainerBackground");
+            if (outlinedHintContainerBackground != null)
             {
-                SetBackgroundColorToView(type, outlinedHint);
+                SetBackgroundColorToView(type, outlinedHintContainerBackground);
             }
         }
     }
