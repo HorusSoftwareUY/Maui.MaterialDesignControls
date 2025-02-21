@@ -66,6 +66,7 @@ public abstract partial class MaterialInputBase
     protected static readonly double DefaultSupportingSize = MaterialFontSize.BodySmall;
     protected static readonly Thickness DefaultSupportingMargin = new (16, 4);
     protected static readonly double DefaultHeightRequest = 48.0;
+    protected static readonly bool DefaultAlwaysShowLabel = false;
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
@@ -148,6 +149,11 @@ public abstract partial class MaterialInputBase
             self.Label = value;
         }
     });
+    
+    /// <summary>
+    /// The backing store for the <see cref="AlwaysShowLabel" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty AlwaysShowLabelProperty = BindableProperty.Create(nameof(AlwaysShowLabel), typeof(bool), typeof(MaterialInputBase), defaultValue: DefaultAlwaysShowLabel);
 
     /// <summary>
     /// The backing store for the <see cref="SupportingText" /> bindable property.
@@ -510,7 +516,7 @@ public abstract partial class MaterialInputBase
         get => (string)GetValue(PlaceholderProperty);
         set => SetValue(PlaceholderProperty, value);
     }
-
+    
     /// <summary>
     /// Gets or sets the text displayed as the label of the input.
     /// This is a bindable property.
@@ -522,6 +528,19 @@ public abstract partial class MaterialInputBase
     {
         get => (string)GetValue(LabelProperty);
         set => SetValue(LabelProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets if the label is always displayed.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// False
+    /// </default>
+    public bool AlwaysShowLabel
+    {
+        get => (bool)GetValue(AlwaysShowLabelProperty);
+        set => SetValue(AlwaysShowLabelProperty, value);
     }
 
     /// <summary>
