@@ -9,12 +9,10 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 public sealed record MaterialDesignControlsBuilder(MauiAppBuilder AppBuilder);
 
 public static class MaterialDesignControlsBuilderExtensions
-{
-    private static readonly HashSet<IntialAction> InitialActions = [];
-    
+{   
     public static MauiAppBuilder UseMaterialDesignControls(this MauiAppBuilder appBuilder,
         Action<MaterialDesignControlsBuilder>? configureDelegate = null)
-    {
+    {   
         Logger.Debug("Configuring Material Design Controls");
         try
         {
@@ -112,20 +110,19 @@ public static class MaterialDesignControlsBuilderExtensions
     {
         Logger.Debug("Enqueuing Themes loading task from resources");
         
-        InitialActions.Add(new IntialAction
-        {
-            ResourceDictionaryName = resourceDictionaryName,
-            Action = resources =>
+        MaterialDesignControls.EnqueueAction(
+            resourceDictionaryName,
+            resources =>
             {
                 Logger.DebugWithCaller($"Configuring Themes from Resources source: {resources.Source}", nameof(MaterialDesignControlsBuilder), nameof(ConfigureThemesFromResources));
                 
                 builder.ConfigureThemes(
-                    resources?.FromResources<MaterialTheme>(lightThemeResourcePrefix), 
-                    resources?.FromResources<MaterialTheme>(darkThemeResourcePrefix));
+                    resources.FromResources<MaterialTheme>(lightThemeResourcePrefix), 
+                    resources.FromResources<MaterialTheme>(darkThemeResourcePrefix));
                 
                 Logger.DebugWithCaller("Themes configuration from resources COMPLETED", nameof(MaterialDesignControlsBuilder), nameof(ConfigureThemesFromResources));
-            } 
-        });
+            });
+        
         return builder;
     }
     
@@ -296,10 +293,9 @@ public static class MaterialDesignControlsBuilderExtensions
         
         Logger.DebugWithCaller($"Enqueuing {methodName} loading task from resources", callerFilePath, callerMemberName);
         
-        InitialActions.Add(new IntialAction
-        {
-            ResourceDictionaryName = resourceDictionaryName,
-            Action = resources =>
+        MaterialDesignControls.EnqueueAction(
+            resourceDictionaryName,
+            resources =>
             {
                 Logger.DebugWithCaller($"Configuring {methodName} from Resources source: {resources.Source}", callerFilePath, callerMemberName);
                 
@@ -307,8 +303,8 @@ public static class MaterialDesignControlsBuilderExtensions
                 func(builder, opt);    
                 
                 Logger.DebugWithCaller($"{methodName} configuration from resources COMPLETED", callerFilePath, callerMemberName);
-            }
-        });
+            });
+        
         return builder;
     }
     
@@ -344,76 +340,36 @@ public static class MaterialDesignControlsBuilderExtensions
         appLifeCycle.AddAndroid(android => android
             .OnApplicationCreate(_ =>
             {
-                InitializeComponents();
+                RegisterDefaultStyles();
             }));
 #elif IOS || MACCATALYST
         appLifeCycle.AddiOS(ios => ios
             .FinishedLaunching((_, _) =>
             {
-                InitializeComponents();
+                RegisterDefaultStyles();
                 return true;
             }));
 #elif WINDOWS
         appLifeCycle.AddWindows(windows => windows
             .OnLaunched((_, _) =>
             {
-                InitializeComponents();
+                RegisterDefaultStyles();
             }));
 #endif
     }
 
-    private static void InitializeComponents()
+    
+    
+    private static void RegisterDefaultStyles()
     {
-        Logger.Debug("Start Components initialization");
+        Logger.Debug("Start registering components default styles");
         if (Application.Current == null)
         {
             Logger.Debug("Error initializing Material Design Controls: MAUI Application is null.");
             return;
         }
-
-        var resources = Application.Current.Resources;
-        if (InitialActions.Count > 0)
-        {
-            Logger.Debug($"Initialization from Resources tasks found: {InitialActions.Count}");
-            ResourceDictionary? allResources = null;
-            foreach (var initialAction in InitialActions)
-            {
-                Logger.Debug("Getting resources for initialization task");
-                var res = GetResources(resources, initialAction.ResourceDictionaryName, ref allResources);
-                initialAction.Action(res);
-            }
-            InitialActions.Clear();
-            Logger.Debug("Initialization tasks COMPLETED");
-        }
-        else
-        {
-            Logger.Debug("No initialization from Resources tasks where found");
-        }
-
-        Logger.Debug("Registering default styles on current Application");
-        RegisterDefaultStyles(resources);
-            
-        Logger.Debug("Components initialization COMPLETED");
-    }
-
-    private static ResourceDictionary GetResources(ResourceDictionary rootResources, string? resourcesName, ref ResourceDictionary? allResources)
-    {
-        if (resourcesName != null &&
-            rootResources.MergedDictionaries.FirstOrDefault(d =>
-                d.Source != null && d.Source.ToString().Contains(resourcesName)) is { } rd)
-        {
-            Logger.Debug($"Specific ResourceDictionary {resourcesName} found");
-            return rd;
-        }
-        Logger.Debug($"ResourceDictionary {resourcesName} was not found");
         
-        allResources ??= rootResources.Flatten();
-        return allResources;
-    } 
-    
-    private static void RegisterDefaultStyles(ResourceDictionary resources)
-    {
-        resources
+        Application.Current.Resources
             .AddStyles(MaterialButton.GetStyles())
             .AddStyles(MaterialIconButton.GetStyles())
             .AddStyles(MaterialSwitch.GetStyles())
@@ -430,13 +386,35 @@ public static class MaterialDesignControlsBuilderExtensions
             .AddStyles(MaterialMultilineTextField.GetStyles())
             .AddStyles(MaterialSlider.GetStyles())
             .AddStyles(MaterialFloatingButton.GetStyles());
+        
+        Logger.Debug("Components styles registration COMPLETED");
     }
 
+     
+    
     private static ResourceDictionary AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
     {
         foreach (var style in styles)
         {
-            resources.Add(style);
+            Logger.Debug($"Registering default style for {style.TargetType.Name}");
+            
+            var implicitStyleName = style.TargetType.FullName!;
+            if (resources.TryGetValue(implicitStyleName, out var resource))
+            {
+                if (resource is Style currentStyle)
+                {
+                    Logger.Debug($"Applying Developer's overrides to default style for {style.TargetType.Name}");
+                    foreach (var setter in currentStyle.Setters)
+                    {
+                        style.Setters.Add(setter);
+                    }    
+                }
+                resources[implicitStyleName] = style;
+            }
+            else
+            {
+                resources.Add(style);    
+            }
         }    
     
         return resources;
@@ -464,37 +442,5 @@ public static class MaterialDesignControlsBuilderExtensions
         Logger.Debug($"Loaded configuration: {JsonSerializer.Serialize(result, JsonSerializationUtils.Instance.SerializerOptions)}");
         
         return result;
-    }
-
-    private static ResourceDictionary Flatten(this ResourceDictionary resources)
-    {
-        var result = new ResourceDictionary();
-        Logger.Debug("Getting all merged resources");
-        
-        resources.CopyTo(result);
-        foreach (var mergedDictionary in resources.MergedDictionaries)
-        {
-            mergedDictionary.CopyTo(result);
-        }
-        
-        Logger.Debug("Resources discovery COMPLETED");
-        return result;
-    }
-
-    private static void CopyTo(this ResourceDictionary source, ResourceDictionary destination)
-    {
-        foreach (var key in source.Keys)
-        {
-            if (!destination.ContainsKey(key))
-            {
-                destination.Add(key, source[key]);    
-            }
-        }
-    }
-
-    private class IntialAction
-    {
-        public required Action<ResourceDictionary> Action { get; set; }
-        public string? ResourceDictionaryName { get; set; }
     }
 }
