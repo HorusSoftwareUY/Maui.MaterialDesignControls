@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using HorusStudio.Maui.MaterialDesignControls.Converters;
-using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -43,33 +42,35 @@ public class MaterialNavigationDrawer : ContentView
 {
     #region Attributes
 
-    private static readonly Color DefaultHeadlineColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private static readonly double DefaultHeadlineFontSize = MaterialFontSize.TitleSmall;
-    private static readonly double DefaultHeadlineCharacterSpacing = MaterialFontTracking.TitleSmall;
-    private static readonly TextTransform DefaultHeadlineTextTransform = TextTransform.Default;
-    private static readonly Thickness DefaultHeadlineMargin = new (4, 16);
-    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
-    private static readonly double DefaultFontSize = MaterialFontSize.LabelLarge;
-    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.LabelLarge;
-    private static readonly TextTransform DefaultTextTransform = TextTransform.Default;
-    private static readonly Color DefaultActiveIndicatorBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialDarkTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
-    private static readonly Color DefaultActiveIndicatorTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer }.GetValueForCurrentTheme<Color>();
-    private static readonly float DefaultActiveIndicatorCornerRadius = 28.0f;
-    private static readonly Thickness DefaultActiveIndicatorPadding = new(16,0);
-    private static readonly MaterialNavigationDrawerDivider DefaultDivider = MaterialNavigationDrawerDivider.Section;
-    private static readonly Color DefaultDividerColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
-    private static readonly Thickness DefaultDividerMargin =  new (16, 1);
-    private static readonly Color DefaultBadgeTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    private static readonly double DefaultBadgeFontSize = MaterialFontSize.LabelLarge;
-    private static readonly Color DefaultDisabledColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialDarkTheme.Disable }.GetValueForCurrentTheme<Color>();
-    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineFontSize = _ => MaterialFontSize.TitleSmall;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineCharacterSpacing = _ => MaterialFontTracking.TitleSmall;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineTextTransform = _ => TextTransform.Default;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineMargin = _ => new Thickness(4, 16);
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.LabelLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextTransform = _ => TextTransform.Default;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveIndicatorBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialDarkTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveIndicatorTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveIndicatorCornerRadius = _ => 28.0f;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveIndicatorPadding = _ => new Thickness(16,0);
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDivider = _ => MaterialNavigationDrawerDividerType.Section;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDividerColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDividerMargin = _ => new Thickness(16, 1);
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeFontSize = _ => MaterialFontSize.LabelLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDisabledColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialDarkTheme.Disable }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
 #nullable enable
-    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
 #nullable disable
-    private static readonly double DefaultIconSize = 24;
-    private static readonly double DefaultItemHeightRequest = 56.0;
-    private static readonly double DefaultItemContentSpacing = 12;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconSize = _ => 24.0;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultItemHeightRequest = _ => 56.0;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultItemContentSpacing = _ => 12.0;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeType = _ => MaterialBadgeType.Large;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeBackground = _ => Colors.Transparent;
 
     #endregion Attributes
 
@@ -84,22 +85,22 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="HeadlineTextColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineTextColorProperty = BindableProperty.Create(nameof(HeadlineTextColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineColor);
+    public static readonly BindableProperty HeadlineTextColorProperty = BindableProperty.Create(nameof(HeadlineTextColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultHeadlineColor);
 
     /// <summary>
     /// The backing store for the <see cref="HeadlineFontSize" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineFontSizeProperty = BindableProperty.Create(nameof(HeadlineFontSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineFontSize);
+    public static readonly BindableProperty HeadlineFontSizeProperty = BindableProperty.Create(nameof(HeadlineFontSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultHeadlineFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="HeadlineFontFamily" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineFontFamilyProperty = BindableProperty.Create(nameof(HeadlineFontFamily), typeof(string), typeof(MaterialNavigationDrawer), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty HeadlineFontFamilyProperty = BindableProperty.Create(nameof(HeadlineFontFamily), typeof(string), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="HeadlineMargin" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineMarginProperty = BindableProperty.Create(nameof(HeadlineMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineMargin);
+    public static readonly BindableProperty HeadlineMarginProperty = BindableProperty.Create(nameof(HeadlineMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultHeadlineMargin);
 
     /// <summary>
     /// The backing store for the <see cref="HeadlineFontAttributes" /> bindable property.
@@ -114,42 +115,42 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="HeadlineCharactersSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineCharactersSpacingProperty = BindableProperty.Create(nameof(HeadlineCharactersSpacing), typeof(double), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineCharacterSpacing);
+    public static readonly BindableProperty HeadlineCharactersSpacingProperty = BindableProperty.Create(nameof(HeadlineCharactersSpacing), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultHeadlineCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="HeadlineTextTransform" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineTextTransformProperty = BindableProperty.Create(nameof(HeadlineTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineTextTransform);
+    public static readonly BindableProperty HeadlineTextTransformProperty = BindableProperty.Create(nameof(HeadlineTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultHeadlineTextTransform);
 
     /// <summary>
     /// The backing store for the <see cref="ActiveIndicatorBackgroundColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ActiveIndicatorBackgroundColorProperty = BindableProperty.Create(nameof(ActiveIndicatorBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: DefaultActiveIndicatorBackgroundColor);
+    public static readonly BindableProperty ActiveIndicatorBackgroundColorProperty = BindableProperty.Create(nameof(ActiveIndicatorBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultActiveIndicatorBackgroundColor);
 
     /// <summary>
     /// The backing store for the <see cref="ActiveIndicatorLabelColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ActiveIndicatorLabelColorProperty = BindableProperty.Create(nameof(ActiveIndicatorLabelColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: DefaultActiveIndicatorTextColor);
+    public static readonly BindableProperty ActiveIndicatorLabelColorProperty = BindableProperty.Create(nameof(ActiveIndicatorLabelColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultActiveIndicatorTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="ActiveIndicatorCornerRadius" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ActiveIndicatorCornerRadiusProperty = BindableProperty.Create(nameof(ActiveIndicatorCornerRadius), typeof(float), typeof(MaterialNavigationDrawer), defaultValue: DefaultActiveIndicatorCornerRadius);
+    public static readonly BindableProperty ActiveIndicatorCornerRadiusProperty = BindableProperty.Create(nameof(ActiveIndicatorCornerRadius), typeof(float), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultActiveIndicatorCornerRadius);
 
     /// <summary>
     /// The backing store for the <see cref="LabelColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: DefaultTextColor);
+    public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="LabelFontSize" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelFontSizeProperty = BindableProperty.Create(nameof(LabelFontSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValue: DefaultFontSize);
+    public static readonly BindableProperty LabelFontSizeProperty = BindableProperty.Create(nameof(LabelFontSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="LabelFontFamily" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelFontFamilyProperty = BindableProperty.Create(nameof(LabelFontFamily), typeof(string), typeof(MaterialNavigationDrawer), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty LabelFontFamilyProperty = BindableProperty.Create(nameof(LabelFontFamily), typeof(string), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="LabelFontAttributes" /> bindable property.
@@ -164,47 +165,47 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="LabelCharactersSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelCharactersSpacingProperty = BindableProperty.Create(nameof(LabelCharactersSpacing), typeof(double), typeof(MaterialNavigationDrawer), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty LabelCharactersSpacingProperty = BindableProperty.Create(nameof(LabelCharactersSpacing), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="LabelTextTransform" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelTextTransformProperty = BindableProperty.Create(nameof(LabelTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: DefaultTextTransform);
+    public static readonly BindableProperty LabelTextTransformProperty = BindableProperty.Create(nameof(LabelTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultTextTransform);
 
     /// <summary>
     /// The backing store for the <see cref="DividerType" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DividerTypeProperty = BindableProperty.Create(nameof(DividerType), typeof(MaterialNavigationDrawerDivider), typeof(MaterialNavigationDrawer), defaultValue: DefaultDivider);
+    public static readonly BindableProperty DividerTypeProperty = BindableProperty.Create(nameof(DividerType), typeof(MaterialNavigationDrawerDividerType), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultDivider);
 
     /// <summary>
     /// The backing store for the <see cref="DividerColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DividerColorProperty = BindableProperty.Create(nameof(DividerColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: DefaultDividerColor);
+    public static readonly BindableProperty DividerColorProperty = BindableProperty.Create(nameof(DividerColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultDividerColor);
 
     /// <summary>
     /// The backing store for the <see cref="BadgeType" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BadgeTypeProperty = BindableProperty.Create(nameof(BadgeType), typeof(MaterialBadgeType), typeof(MaterialNavigationDrawer), defaultValue: MaterialBadgeType.Large);
+    public static readonly BindableProperty BadgeTypeProperty = BindableProperty.Create(nameof(BadgeType), typeof(MaterialBadgeType), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultBadgeType);
 
     /// <summary>
     /// The backing store for the <see cref="BadgeTextColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BadgeTextColorProperty = BindableProperty.Create(nameof(BadgeTextColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: DefaultBadgeTextColor);
+    public static readonly BindableProperty BadgeTextColorProperty = BindableProperty.Create(nameof(BadgeTextColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultBadgeTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="BadgeFontSize" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BadgeFontSizeProperty = BindableProperty.Create(nameof(BadgeFontSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValue: DefaultBadgeFontSize);
+    public static readonly BindableProperty BadgeFontSizeProperty = BindableProperty.Create(nameof(BadgeFontSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultBadgeFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="BadgeFontFamily" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BadgeFontFamilyProperty = BindableProperty.Create(nameof(BadgeFontFamily), typeof(string), typeof(MaterialNavigationDrawer), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty BadgeFontFamilyProperty = BindableProperty.Create(nameof(BadgeFontFamily), typeof(string), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="BadgeBackgroundColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BadgeBackgroundColorProperty = BindableProperty.Create(nameof(BadgeBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: Colors.Transparent);
+    public static readonly BindableProperty BadgeBackgroundColorProperty = BindableProperty.Create(nameof(BadgeBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultBadgeBackground);
 
     /// <summary>
     /// The backing store for the <see cref="SectionTemplate" /> bindable property.
@@ -230,7 +231,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="ItemHeightRequest" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ItemHeightRequestProperty = BindableProperty.Create(nameof(ItemHeightRequest), typeof(double), typeof(MaterialNavigationDrawer), defaultValue: DefaultItemHeightRequest);
+    public static readonly BindableProperty ItemHeightRequestProperty = BindableProperty.Create(nameof(ItemHeightRequest), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultItemHeightRequest);
 
     /// <summary>
     /// The backing store for the <see cref="Command" /> bindable property.
@@ -240,13 +241,13 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="Animation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialNavigationDrawer), defaultValue: DefaultAnimationType);
+    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultAnimationType);
 
 #nullable enable
     /// <summary>
     /// The backing store for the <see cref="AnimationParameter"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialNavigationDrawer), defaultValue: DefaultAnimationParameter);
+    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultAnimationParameter);
 #nullable disable
 
     /// <summary>
@@ -257,7 +258,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="DisabledLabelColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DisabledLabelColorProperty = BindableProperty.Create(nameof(DisabledLabelColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: DefaultDisabledColor);
+    public static readonly BindableProperty DisabledLabelColorProperty = BindableProperty.Create(nameof(DisabledLabelColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultDisabledColor);
 
     #endregion Bindable Properties
 
@@ -483,11 +484,11 @@ public class MaterialNavigationDrawer : ContentView
     /// Gets or sets if dividers are visible between sections, items or not visible. This is a bindable property.
     /// </summary>
     /// <default>
-    /// Dividers between sections: <see cref="MaterialNavigationDrawerDivider.Section">NavigationDrawerDividerType.Section</see> 
+    /// Dividers between sections: <see cref="MaterialNavigationDrawerDividerType.Section">NavigationDrawerDividerType.Section</see> 
     /// </default>
-    public MaterialNavigationDrawerDivider DividerType
+    public MaterialNavigationDrawerDividerType DividerType
     {
-        get => (MaterialNavigationDrawerDivider)GetValue(DividerTypeProperty);
+        get => (MaterialNavigationDrawerDividerType)GetValue(DividerTypeProperty);
         set => SetValue(DividerTypeProperty, value);
     }
 
@@ -688,22 +689,31 @@ public class MaterialNavigationDrawer : ContentView
 
     private View CreateLayout()
     {
-        var container = new StackLayout
+        Utils.Logger.Debug("Creating navigation drawer layout");
+        try
         {
-            Spacing = 0,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Start,
-        };
-
-        _itemsContainer = new StackLayout
+            var container = new StackLayout
+            {
+                Spacing = 0,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Start,
+            };
+            
+            _itemsContainer = new StackLayout
+            {
+                Spacing = 0,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill
+            };
+            container.Children.Add(_itemsContainer);
+            
+            return container;
+        }
+        catch (Exception ex)
         {
-            Spacing = 0,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill
-        };
-        container.Children.Add(_itemsContainer);
-        
-        return container;
+            Utils.Logger.LogException("ERROR creating navigation drawer layout", ex, this);
+            return null;
+        }
     }
     
     private void SetItemSource()
@@ -714,8 +724,10 @@ public class MaterialNavigationDrawer : ContentView
 
     private void CreateItems()
     {
+        Utils.Logger.Debug("Setting items source");
         if (ItemsSource == null) return;
 
+        Utils.Logger.Debug("Creating items");
         var groupedItems = ItemsSource.GroupBy(x => x.Headline).ToList();
         int sectionIndex = 0, totalSections = groupedItems.Count;
         var sectionAdded = false;
@@ -731,17 +743,42 @@ public class MaterialNavigationDrawer : ContentView
                 var itemAdded = AddItem(item);
                 if (itemAdded && itemIndex++ < totalItems - 1) AddItemDivider();
             }
-
+            Utils.Logger.Debug($"{itemIndex} of {totalItems} item(s) successfully added {(string.IsNullOrEmpty(firstItem?.Headline) ? string.Empty : $"to section '{firstItem.Headline}'")}");
+            
             if (sectionAdded && sectionIndex++ < totalSections - 1)
             {
                 AddSectionDivider();
             }
         }
     }
-    
-    private bool AddSection(MaterialNavigationDrawerItem item) => AddItem(item, SectionTemplate ?? GetDefaultSectionDataTemplate(item));
-    
-    private bool AddItem(MaterialNavigationDrawerItem item) => AddItem(item, ItemTemplate ?? GetDefaultItemDataTemplate(item));
+
+    private bool AddSection(MaterialNavigationDrawerItem item)
+    {
+        try
+        {
+            Utils.Logger.Debug($"Creating section '{item.Headline}'");
+            return AddItem(item, SectionTemplate ?? GetDefaultSectionDataTemplate(item));
+        }
+        catch (Exception ex)
+        {
+            Utils.Logger.LogException($"ERROR creating section '{item.Headline}'", ex, this);
+        }
+        return false;
+    }
+
+    private bool AddItem(MaterialNavigationDrawerItem item)
+    {
+        try
+        {
+            Utils.Logger.Debug($"Creating item '{item.Text}'");
+            return AddItem(item, ItemTemplate ?? GetDefaultItemDataTemplate(item));
+        }
+        catch (Exception ex)
+        {
+            Utils.Logger.LogException($"ERROR creating item '{item.Headline}'", ex, this);
+        }
+        return false;
+    } 
     
     private bool AddItem(MaterialNavigationDrawerItem item, DataTemplate? itemTemplate)
     {
@@ -754,56 +791,81 @@ public class MaterialNavigationDrawer : ContentView
     
     private void AddSectionDivider()
     {
-        if (DividerType == MaterialNavigationDrawerDivider.None) return;
-
-        var divider = new MaterialDivider
+        try
         {
-            Margin = DefaultDividerMargin
-        };
-        divider.SetBinding(MaterialDivider.ColorProperty, new Binding(nameof(DividerColor), source: this));
-        _itemsContainer.Children.Add(divider);
+            if (DividerType == MaterialNavigationDrawerDividerType.None) return;
+            
+            Utils.Logger.Debug("Adding section divider");
+            AddDivider();
+        }
+        catch (Exception ex)
+        {
+            Utils.Logger.LogException("ERROR adding section divider", ex, this);
+        }
     }
     
     private void AddItemDivider()
     {
-        if (DividerType != MaterialNavigationDrawerDivider.Item) return;
+        try
+        {
+            if (DividerType != MaterialNavigationDrawerDividerType.Item) return;
 
+            Utils.Logger.Debug("Adding item divider");
+            AddDivider();
+        }
+        catch (Exception ex)
+        {
+            Utils.Logger.LogException("ERROR adding item divider", ex, this);
+        }
+    }
+
+    private void AddDivider()
+    {
         var divider = new MaterialDivider
         {
-            Margin = DefaultDividerMargin
+            Margin = (Thickness)DefaultDividerMargin.Invoke(this)
         };
         divider.SetBinding(MaterialDivider.ColorProperty, new Binding(nameof(DividerColor), source: this));
         _itemsContainer.Children.Add(divider);
     }
-    
+
     private MaterialCard CreateItemLayout(MaterialNavigationDrawerItem item)
     {
-        var materialCard = new MaterialCard
+        try
         {
-            Shadow = null,
-            Padding = DefaultActiveIndicatorPadding,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
-        };
+            Utils.Logger.Debug("Creating item layout");
+            var materialCard = new MaterialCard
+            {
+                Shadow = null,
+                Padding = (Thickness)DefaultActiveIndicatorPadding.Invoke(this),
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+            };
 
-        materialCard.SetBinding(IsEnabledProperty, new Binding(nameof(item.IsEnabled), source: item));
-        materialCard.SetBinding(HeightRequestProperty, new Binding(nameof(ItemHeightRequest), source: this));
-        materialCard.SetBinding(MinimumHeightRequestProperty, new Binding(nameof(ItemHeightRequest), source: this));
-        materialCard.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(item.IsSelected), source: item, converter: new IsSelectedToFrameBackgroundConverter(this)));
-        materialCard.SetBinding(MaterialCard.CornerRadiusProperty, new Binding(nameof(ActiveIndicatorCornerRadius), source: this));
-        materialCard.SetBinding(MaterialCard.AnimationProperty, new Binding(nameof(Animation), source: this));
-        materialCard.SetBinding(MaterialCard.AnimationParameterProperty, new Binding(nameof(AnimationParameter), source: this));
-        materialCard.SetBinding(MaterialCard.CustomAnimationProperty, new Binding(nameof(CustomAnimation), source: this));
+            materialCard.SetBinding(IsEnabledProperty, new Binding(nameof(item.IsEnabled), source: item));
+            materialCard.SetBinding(HeightRequestProperty, new Binding(nameof(ItemHeightRequest), source: this));
+            materialCard.SetBinding(MinimumHeightRequestProperty, new Binding(nameof(ItemHeightRequest), source: this));
+            materialCard.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(item.IsSelected), source: item, converter: new IsSelectedToFrameBackgroundConverter(this)));
+            materialCard.SetBinding(MaterialCard.CornerRadiusProperty, new Binding(nameof(ActiveIndicatorCornerRadius), source: this));
+            materialCard.SetBinding(MaterialCard.AnimationProperty, new Binding(nameof(Animation), source: this));
+            materialCard.SetBinding(MaterialCard.AnimationParameterProperty, new Binding(nameof(AnimationParameter), source: this));
+            materialCard.SetBinding(MaterialCard.CustomAnimationProperty, new Binding(nameof(CustomAnimation), source: this));
 
-        materialCard.Command = new Command(() =>
-        {
-            if (!item.IsEnabled) return;
+            materialCard.Command = new Command(() =>
+            {
+                if (!item.IsEnabled) return;
 
-            ToggleItemSelection(item);
-            ExecuteCommand(item);
-        });
+                ToggleItemSelection(item);
+                ExecuteCommand(item);
+            });
         
-        return materialCard;
+            return materialCard;
+        }
+        catch (Exception ex)
+        {
+            Utils.Logger.LogException("ERROR creating item layout", ex, this);
+            return null;
+        }
     }
 
     private void ExecuteCommand(MaterialNavigationDrawerItem item)
@@ -816,46 +878,65 @@ public class MaterialNavigationDrawer : ContentView
     
     private void ToggleItemSelection(MaterialNavigationDrawerItem item)
     {
-        foreach (var selectedItem in ItemsSource.Where(x => x.IsSelected))
+        try
         {
-            if (selectedItem.Equals(item)) continue;
-            selectedItem.IsSelected = false;
+            if (item is null) return;
+            
+            Utils.Logger.Debug($"Selecting item {item.Text}");
+            foreach (var selectedItem in ItemsSource.Where(x => x.IsSelected))
+            {
+                if (selectedItem.Equals(item)) continue;
+                selectedItem.IsSelected = false;
+            }
+            item.IsSelected = true;
         }
-        item.IsSelected = true;
+        catch (Exception ex)
+        {
+            Utils.Logger.LogException("ERROR selecting item", ex, this);
+        }
     }
     
     private Grid CreateItemContent(MaterialNavigationDrawerItem item)
     {
-        var contentContainer = new Grid
+        try
         {
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
-            ColumnSpacing = 0,
-            ColumnDefinitions =
-            [
-                new ColumnDefinition { Width = GridLength.Auto },
-                new ColumnDefinition { Width = GridLength.Star },
-                new ColumnDefinition { Width = GridLength.Auto }
-            ],
-        };
+            Utils.Logger.Debug("Creating item content");
+            var contentContainer = new Grid
+            {
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+                ColumnSpacing = 0,
+                ColumnDefinitions =
+                [
+                    new ColumnDefinition { Width = GridLength.Auto },
+                    new ColumnDefinition { Width = GridLength.Star },
+                    new ColumnDefinition { Width = GridLength.Auto }
+                ],
+            };
 
-        var leadingIcon = CreateLeadingIcon(item);
-        leadingIcon.SetValue(Grid.ColumnProperty, 0);
-        contentContainer.Children.Add(leadingIcon);
+            var leadingIcon = CreateLeadingIcon(item);
+            leadingIcon.SetValue(Grid.ColumnProperty, 0);
+            contentContainer.Children.Add(leadingIcon);
         
-        var label = CreateItemLabel(item);
-        label.SetValue(Grid.ColumnProperty, 1);
-        contentContainer.Children.Add(label);
+            var label = CreateItemLabel(item);
+            label.SetValue(Grid.ColumnProperty, 1);
+            contentContainer.Children.Add(label);
         
-        var badge = CreateItemBadge(item);
-        badge.SetValue(Grid.ColumnProperty, 2);
-        contentContainer.Children.Add(badge);
+            var badge = CreateItemBadge(item);
+            badge.SetValue(Grid.ColumnProperty, 2);
+            contentContainer.Children.Add(badge);
         
-        var trailingIcon = CreateTrailingIcon(item);
-        trailingIcon.SetValue(Grid.ColumnProperty, 2);
-        contentContainer.Children.Add(trailingIcon);
+            var trailingIcon = CreateTrailingIcon(item);
+            trailingIcon.SetValue(Grid.ColumnProperty, 2);
+            contentContainer.Children.Add(trailingIcon);
 
-        return contentContainer;
+            return contentContainer;
+        }
+        catch (Exception ex)
+        {
+            Utils.Logger.LogException("ERROR creating item content", ex, this);
+            return null;
+        }
     }
     
     private View CreateLeadingIcon(MaterialNavigationDrawerItem item) => CreateItemIcon(item, true);
@@ -864,27 +945,29 @@ public class MaterialNavigationDrawer : ContentView
     
     private View CreateItemIcon(MaterialNavigationDrawerItem item, bool isLeadingIcon)
     {
+        var iconSize = (double)DefaultIconSize.Invoke(this);
         var icon = new Image
         {
-            HeightRequest = DefaultIconSize,
-            MinimumHeightRequest = DefaultIconSize,
-            WidthRequest = DefaultIconSize,
-            MinimumWidthRequest = DefaultIconSize,
+            HeightRequest = iconSize,
+            MinimumHeightRequest = iconSize,
+            WidthRequest = iconSize,
+            MinimumWidthRequest = iconSize,
             VerticalOptions = LayoutOptions.Center
         };
         var tintColorBehavior = new IconTintColorBehavior();
         tintColorBehavior.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(item.IsEnabled), source: item, converter: new ItemEnabledToColorConverter(this)));
         icon.Behaviors.Add(tintColorBehavior);
-        
+
+        var itemContentSpacing = (double)DefaultItemContentSpacing.Invoke(this);
         if (isLeadingIcon)
         {
-            icon.Margin = new Thickness(0,0,DefaultItemContentSpacing,0);
+            icon.Margin = new Thickness(0,0,itemContentSpacing,0);
             SetLeadingIconVisibilityPropertyBindings(icon, item);
             SetLeadingIconSourcePropertyBindings(icon, item);
         }
         else
         {
-            icon.Margin = new Thickness(DefaultItemContentSpacing,0,0,0);
+            icon.Margin = new Thickness(itemContentSpacing,0,0,0);
             SetTrailingIconVisibilityPropertyBindings(icon, item);
             SetTrailingIconSourcePropertyBindings(icon, item);
         }
@@ -923,7 +1006,7 @@ public class MaterialNavigationDrawer : ContentView
         badge.SetBinding(MaterialBadge.FontFamilyProperty, new Binding(nameof(BadgeFontFamily), source: this));
         badge.SetBinding(MaterialBadge.BackgroundColorProperty, new Binding(nameof(BadgeBackgroundColor), source: this));
         badge.SetBinding(MaterialBadge.TextProperty, new Binding(nameof(item.BadgeText), source: item));
-        badge.Margin = new Thickness(DefaultItemContentSpacing,0,0,0);
+        badge.Margin = new Thickness((double)DefaultItemContentSpacing.Invoke(this),0,0,0);
         
         return badge;
     }
@@ -947,7 +1030,7 @@ public class MaterialNavigationDrawer : ContentView
             var label = new MaterialLabel
             {
                 VerticalTextAlignment = TextAlignment.Center,
-                Padding = new Thickness(DefaultItemContentSpacing, 0)
+                Padding = new Thickness((double)DefaultItemContentSpacing.Invoke(this), 0)
             };
 
             label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(HeadlineTextColor), source: this));
@@ -1157,10 +1240,16 @@ public class MaterialNavigationDrawer : ContentView
 
     #endregion Converters
 
-    public enum MaterialNavigationDrawerDivider
+    /// <summary>
+    /// Divider types for <see cref="MaterialNavigationDrawer" />
+    /// </summary>
+    public enum MaterialNavigationDrawerDividerType
     {
+        /// <summary>Between sections</summary>
         Section,
+        /// <summary>Between items</summary>
         Item,
+        /// <summary>No divider</summary>
         None
     }
 }

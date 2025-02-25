@@ -44,29 +44,36 @@ public static class MaterialDesignControlsBuilderExtensions
         Logger.DebugMode = true;
         return builder;
     }
+    
+    public static MaterialDesignControlsBuilder OnException(this MaterialDesignControlsBuilder builder,
+        Action<object?, Exception> configureDelegate)
+    {
+        Logger.OnException += configureDelegate.Invoke;
+        return builder;
+    }
 
     private static void ConfigurationWithLogger(Action onTry, Action<Exception>? onCatch = null, bool @throw = false, [CallerFilePath] string? callerFilePath = null, [CallerMemberName] string? callerMemberName = null)
     {
-        Logger.DebugWithCaller("Init configuration", callerFilePath, callerMemberName);
-        Logger.LogOnExceptionWithCaller(onTry,
+        Logger.DebugWithCallerInfo("Init configuration", callerFilePath, callerMemberName);
+        Logger.LogOnExceptionWithCallerInfo(onTry,
             ex =>
             {
-                Logger.DebugWithCaller("Configuration completed with ERROR", callerFilePath, callerMemberName);
+                Logger.DebugWithCallerInfo("Configuration completed with ERROR", callerFilePath, callerMemberName);
                 onCatch?.Invoke(ex);
             }, @throw, callerFilePath, callerMemberName);
-        Logger.DebugWithCaller("Configuration COMPLETED", callerFilePath, callerMemberName);
+        Logger.DebugWithCallerInfo("Configuration COMPLETED", callerFilePath, callerMemberName);
     }
     
     private static void ConfigurationWithLoggerAndCaller(Action onTry, Action<Exception>? onCatch = null, bool @throw = false, string? callerFilePath = null, string? callerMemberName = null)
     {
-        Logger.DebugWithCaller("Init configuration", callerFilePath, callerMemberName);
-        Logger.LogOnExceptionWithCaller(onTry,
+        Logger.DebugWithCallerInfo("Init configuration", callerFilePath, callerMemberName);
+        Logger.LogOnExceptionWithCallerInfo(onTry,
             ex =>
             {
-                Logger.DebugWithCaller("Configuration completed with ERROR", callerFilePath, callerMemberName);
+                Logger.DebugWithCallerInfo("Configuration completed with ERROR", callerFilePath, callerMemberName);
                 onCatch?.Invoke(ex);
             }, @throw, callerFilePath, callerMemberName);
-        Logger.DebugWithCaller("Configuration COMPLETED", callerFilePath, callerMemberName);
+        Logger.DebugWithCallerInfo("Configuration COMPLETED", callerFilePath, callerMemberName);
     }
     
     public static MaterialDesignControlsBuilder ConfigureFonts(this MaterialDesignControlsBuilder builder, Action<IFontCollection>? configureDelegate, MaterialFontOptions options)
@@ -114,13 +121,13 @@ public static class MaterialDesignControlsBuilderExtensions
             resourceDictionaryName,
             resources =>
             {
-                Logger.DebugWithCaller($"Configuring Themes from Resources source: {resources.Source}", nameof(MaterialDesignControlsBuilder), nameof(ConfigureThemesFromResources));
+                Logger.DebugWithCallerInfo($"Configuring Themes from Resources source: {resources.Source}", nameof(MaterialDesignControlsBuilder), nameof(ConfigureThemesFromResources));
                 
                 builder.ConfigureThemes(
                     resources.FromResources<MaterialTheme>(lightThemeResourcePrefix), 
                     resources.FromResources<MaterialTheme>(darkThemeResourcePrefix));
                 
-                Logger.DebugWithCaller("Themes configuration from resources COMPLETED", nameof(MaterialDesignControlsBuilder), nameof(ConfigureThemesFromResources));
+                Logger.DebugWithCallerInfo("Themes configuration from resources COMPLETED", nameof(MaterialDesignControlsBuilder), nameof(ConfigureThemesFromResources));
             });
         
         return builder;
@@ -291,18 +298,18 @@ public static class MaterialDesignControlsBuilderExtensions
             .Replace("Configure", string.Empty)
             .Replace("FromResources", string.Empty);
         
-        Logger.DebugWithCaller($"Enqueuing {methodName} loading task from resources", callerFilePath, callerMemberName);
+        Logger.DebugWithCallerInfo($"Enqueuing {methodName} loading task from resources", callerFilePath, callerMemberName);
         
         MaterialDesignControls.EnqueueAction(
             resourceDictionaryName,
             resources =>
             {
-                Logger.DebugWithCaller($"Configuring {methodName} from Resources source: {resources.Source}", callerFilePath, callerMemberName);
+                Logger.DebugWithCallerInfo($"Configuring {methodName} from Resources source: {resources.Source}", callerFilePath, callerMemberName);
                 
                 var opt = resources.FromResources<T>(resourcePrefix);
                 func(builder, opt);    
                 
-                Logger.DebugWithCaller($"{methodName} configuration from resources COMPLETED", callerFilePath, callerMemberName);
+                Logger.DebugWithCallerInfo($"{methodName} configuration from resources COMPLETED", callerFilePath, callerMemberName);
             });
         
         return builder;
