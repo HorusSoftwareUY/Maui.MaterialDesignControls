@@ -56,14 +56,5 @@
                 <material:MaterialSwitch IsToggled="{Binding IsEnabled}" Text="Is enabled" />
             </VerticalStackLayout>
         </material:MaterialCard>
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Pablo" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialButton
-                    Text="Navigate"
-                    Command="{Binding NavigateCommand}"/>
-            </VerticalStackLayout >
-        </material:MaterialCard>
     </VerticalStackLayout>
 </local:BaseContentPage>

@@ -71,17 +71,15 @@ namespace HorusStudio.Maui.MaterialDesignControls
     {
         #region Attributes
 
-        private static readonly MaterialCardType DefaultCardType = MaterialCardType.Filled;
-        private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
-#nullable enable
-        private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
-#nullable disable
+        private const MaterialCardType DefaultCardType = MaterialCardType.Filled;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
         private static readonly Color DefaultShadowColor = Color.FromRgba(1,1,1,.01);
         private static readonly Color DefaultBackgroundColor = Color.FromRgba(1,1,1,.01);
         private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(12);
-        private static readonly float DefaultBorderWidth = -1f;
+        private const float DefaultBorderWidth = -1f;
         private static readonly Color DefaultBorderColor = Color.FromRgba(1,1,1,.01);
-        private static readonly Shadow DefaultShadow = null;
+        private static readonly Shadow DefaultShadow = null!;
 
         private readonly Dictionary<MaterialCardType, object> _backgroundColors = new()
         {
@@ -142,12 +140,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="Animation" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialCard), defaultValue: DefaultAnimationType);
+        public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialCard), defaultValueCreator: DefaultAnimationType);
 
         /// <summary>
         /// The backing store for the <see cref="AnimationParameter" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialCard), defaultValue: DefaultAnimationParameter);
+        public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialCard), defaultValueCreator: DefaultAnimationParameter);
 
         /// <summary>
         /// The backing store for the <see cref="CustomAnimation" /> bindable property.
@@ -157,18 +155,18 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="ShadowColor" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(nameof(ShadowColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultShadowColor, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(nameof(ShadowColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultShadowColor, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialCard self)
             {
-                self.SetShadowColor(self.Type);
+                self.SetShadowColor();
             }
         });
 
         /// <summary>
         /// The backing store for the <see cref="BackgroundColor" /> bindable property.
         /// </summary>
-        public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialCard self)
             {
@@ -179,7 +177,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="BorderColor" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultBorderColor, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultBorderColor, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialCard self)
             {
@@ -190,18 +188,18 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="CornerRadius" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialCard), defaultValue: DefaultCornerRadius, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialCard), defaultValue: DefaultCornerRadius, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialCard self)
             {
-                self.SetCornerRadius(self.Type);
+                self.SetCornerRadius();
             }
         });
 
         /// <summary>
         /// The backing store for the <see cref="BorderWidth" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(float), typeof(MaterialCard), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(float), typeof(MaterialCard), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialCard self)
             {
@@ -212,7 +210,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="Shadow" /> bindable property.
         /// </summary>
-        public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialCard), defaultValue: DefaultShadow, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialCard), defaultValue: DefaultShadow, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialCard self)
             {
@@ -273,7 +271,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             set => SetValue(AnimationProperty, value);
         }
 
-#nullable enable
         /// <summary>
         /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
         /// This is a bindable property.
@@ -286,7 +283,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             get => (double?)GetValue(AnimationParameterProperty);
             set => SetValue(AnimationParameterProperty, value);
         }
-#nullable disable
 
         /// <summary>
         /// Gets or sets a custom animation to be executed when card is clicked.
@@ -370,9 +366,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Events
 
-        private EventHandler _clicked;
-        private EventHandler _pressed;
-        private EventHandler _released;
+        private EventHandler? _clicked;
+        private EventHandler? _pressed;
+        private EventHandler? _released;
         private readonly object _objectLock = new();
 
         /// <summary>
@@ -463,8 +459,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             SetBackgroundColor(type);
             SetBorderColor(type);
             SetBorderWidth(type);
-            SetCornerRadius(type);
-            SetShadowColor(type);
+            SetCornerRadius();
+            SetShadowColor();
             SetShadow(type);
         }
         
@@ -548,7 +544,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }
         }
 
-        private void SetCornerRadius(MaterialCardType type)
+        private void SetCornerRadius()
         {
             StrokeShape = new RoundRectangle
             {
@@ -556,7 +552,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             };
         }
 
-        private void SetShadowColor(MaterialCardType type)
+        private void SetShadowColor()
         {
             if (base.Shadow != null && !ShadowColor.Equals(DefaultShadowColor))
             {
@@ -617,7 +613,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             switch (gestureType)
             {
                 case TouchType.Pressed:
-                    _pressed?.Invoke(this, null);
+                    _pressed?.Invoke(this, EventArgs.Empty);
                     VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
                     break;
 
@@ -628,11 +624,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     }
                     else if (_released != null)
                     {
-                        _released.Invoke(this, null);
+                        _released.Invoke(this, EventArgs.Empty);
                     }
                     else if (_clicked != null)
                     {
-                        _clicked.Invoke(this, null);
+                        _clicked.Invoke(this, EventArgs.Empty);
                     }
 
                     VisualStateManager.GoToState(this, ButtonCommonStates.Normal);

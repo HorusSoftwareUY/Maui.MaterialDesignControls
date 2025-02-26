@@ -45,20 +45,20 @@ public class MaterialNavigationDrawer : ContentView
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineFontSize = _ => MaterialFontSize.TitleSmall;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineCharacterSpacing = _ => MaterialFontTracking.TitleSmall;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineTextTransform = _ => TextTransform.Default;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineMargin = _ => new Thickness(4, 16);
+    private const TextTransform DefaultHeadlineTextTransform = TextTransform.Default;
+    private static readonly Thickness DefaultHeadlineMargin = new (4, 16);
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.LabelLarge;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextTransform = _ => TextTransform.Default;
+    private const TextTransform DefaultTextTransform = TextTransform.Default;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveIndicatorBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialDarkTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveIndicatorTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer }.GetValueForCurrentTheme<Color>();
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveIndicatorCornerRadius = _ => 28.0f;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveIndicatorPadding = _ => new Thickness(16,0);
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDivider = _ => MaterialNavigationDrawerDividerType.Section;
+    private const float DefaultActiveIndicatorCornerRadius = 28.0f;
+    private static readonly Thickness DefaultActiveIndicatorPadding = new(16,0);
+    private const MaterialNavigationDrawerDividerType DefaultDivider = MaterialNavigationDrawerDividerType.Section;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDividerColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDividerMargin = _ => new Thickness(16, 1);
+    private static readonly Thickness DefaultDividerMargin = new (16, 1);
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeFontSize = _ => MaterialFontSize.LabelLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDisabledColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialDarkTheme.Disable }.GetValueForCurrentTheme<Color>();
@@ -66,11 +66,11 @@ public class MaterialNavigationDrawer : ContentView
 #nullable enable
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
 #nullable disable
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconSize = _ => 24.0;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultItemHeightRequest = _ => 56.0;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultItemContentSpacing = _ => 12.0;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeType = _ => MaterialBadgeType.Large;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeBackground = _ => Colors.Transparent;
+    private const double DefaultIconSize = 24.0;
+    private const double DefaultItemHeightRequest = 56.0;
+    private const double DefaultItemContentSpacing = 12.0;
+    private const MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
+    private static readonly Color DefaultBadgeBackground = Colors.Transparent;
 
     #endregion Attributes
 
@@ -100,7 +100,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="HeadlineMargin" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineMarginProperty = BindableProperty.Create(nameof(HeadlineMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultHeadlineMargin);
+    public static readonly BindableProperty HeadlineMarginProperty = BindableProperty.Create(nameof(HeadlineMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineMargin);
 
     /// <summary>
     /// The backing store for the <see cref="HeadlineFontAttributes" /> bindable property.
@@ -120,7 +120,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="HeadlineTextTransform" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty HeadlineTextTransformProperty = BindableProperty.Create(nameof(HeadlineTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultHeadlineTextTransform);
+    public static readonly BindableProperty HeadlineTextTransformProperty = BindableProperty.Create(nameof(HeadlineTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineTextTransform);
 
     /// <summary>
     /// The backing store for the <see cref="ActiveIndicatorBackgroundColor" /> bindable property.
@@ -135,7 +135,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="ActiveIndicatorCornerRadius" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ActiveIndicatorCornerRadiusProperty = BindableProperty.Create(nameof(ActiveIndicatorCornerRadius), typeof(float), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultActiveIndicatorCornerRadius);
+    public static readonly BindableProperty ActiveIndicatorCornerRadiusProperty = BindableProperty.Create(nameof(ActiveIndicatorCornerRadius), typeof(float), typeof(MaterialNavigationDrawer), defaultValue: DefaultActiveIndicatorCornerRadius);
 
     /// <summary>
     /// The backing store for the <see cref="LabelColor" /> bindable property.
@@ -170,12 +170,12 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="LabelTextTransform" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelTextTransformProperty = BindableProperty.Create(nameof(LabelTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultTextTransform);
+    public static readonly BindableProperty LabelTextTransformProperty = BindableProperty.Create(nameof(LabelTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: DefaultTextTransform);
 
     /// <summary>
     /// The backing store for the <see cref="DividerType" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DividerTypeProperty = BindableProperty.Create(nameof(DividerType), typeof(MaterialNavigationDrawerDividerType), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultDivider);
+    public static readonly BindableProperty DividerTypeProperty = BindableProperty.Create(nameof(DividerType), typeof(MaterialNavigationDrawerDividerType), typeof(MaterialNavigationDrawer), defaultValue: DefaultDivider);
 
     /// <summary>
     /// The backing store for the <see cref="DividerColor" /> bindable property.
@@ -185,7 +185,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="BadgeType" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BadgeTypeProperty = BindableProperty.Create(nameof(BadgeType), typeof(MaterialBadgeType), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultBadgeType);
+    public static readonly BindableProperty BadgeTypeProperty = BindableProperty.Create(nameof(BadgeType), typeof(MaterialBadgeType), typeof(MaterialNavigationDrawer), defaultValue: DefaultBadgeType);
 
     /// <summary>
     /// The backing store for the <see cref="BadgeTextColor" /> bindable property.
@@ -205,7 +205,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="BadgeBackgroundColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BadgeBackgroundColorProperty = BindableProperty.Create(nameof(BadgeBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultBadgeBackground);
+    public static readonly BindableProperty BadgeBackgroundColorProperty = BindableProperty.Create(nameof(BadgeBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: DefaultBadgeBackground);
 
     /// <summary>
     /// The backing store for the <see cref="SectionTemplate" /> bindable property.
@@ -231,7 +231,7 @@ public class MaterialNavigationDrawer : ContentView
     /// <summary>
     /// The backing store for the <see cref="ItemHeightRequest" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ItemHeightRequestProperty = BindableProperty.Create(nameof(ItemHeightRequest), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultItemHeightRequest);
+    public static readonly BindableProperty ItemHeightRequestProperty = BindableProperty.Create(nameof(ItemHeightRequest), typeof(double), typeof(MaterialNavigationDrawer), defaultValue: DefaultItemHeightRequest);
 
     /// <summary>
     /// The backing store for the <see cref="Command" /> bindable property.
@@ -823,7 +823,7 @@ public class MaterialNavigationDrawer : ContentView
     {
         var divider = new MaterialDivider
         {
-            Margin = (Thickness)DefaultDividerMargin.Invoke(this)
+            Margin = DefaultDividerMargin
         };
         divider.SetBinding(MaterialDivider.ColorProperty, new Binding(nameof(DividerColor), source: this));
         _itemsContainer.Children.Add(divider);
@@ -837,9 +837,9 @@ public class MaterialNavigationDrawer : ContentView
             var materialCard = new MaterialCard
             {
                 Shadow = null,
-                Padding = (Thickness)DefaultActiveIndicatorPadding.Invoke(this),
+                Padding = DefaultActiveIndicatorPadding,
                 HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill
             };
 
             materialCard.SetBinding(IsEnabledProperty, new Binding(nameof(item.IsEnabled), source: item));
@@ -945,29 +945,27 @@ public class MaterialNavigationDrawer : ContentView
     
     private View CreateItemIcon(MaterialNavigationDrawerItem item, bool isLeadingIcon)
     {
-        var iconSize = (double)DefaultIconSize.Invoke(this);
         var icon = new Image
         {
-            HeightRequest = iconSize,
-            MinimumHeightRequest = iconSize,
-            WidthRequest = iconSize,
-            MinimumWidthRequest = iconSize,
+            HeightRequest = DefaultIconSize,
+            MinimumHeightRequest = DefaultIconSize,
+            WidthRequest = DefaultIconSize,
+            MinimumWidthRequest = DefaultIconSize,
             VerticalOptions = LayoutOptions.Center
         };
         var tintColorBehavior = new IconTintColorBehavior();
         tintColorBehavior.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(item.IsEnabled), source: item, converter: new ItemEnabledToColorConverter(this)));
         icon.Behaviors.Add(tintColorBehavior);
 
-        var itemContentSpacing = (double)DefaultItemContentSpacing.Invoke(this);
         if (isLeadingIcon)
         {
-            icon.Margin = new Thickness(0,0,itemContentSpacing,0);
+            icon.Margin = new Thickness(0,0,DefaultItemContentSpacing,0);
             SetLeadingIconVisibilityPropertyBindings(icon, item);
             SetLeadingIconSourcePropertyBindings(icon, item);
         }
         else
         {
-            icon.Margin = new Thickness(itemContentSpacing,0,0,0);
+            icon.Margin = new Thickness(DefaultItemContentSpacing,0,0,0);
             SetTrailingIconVisibilityPropertyBindings(icon, item);
             SetTrailingIconSourcePropertyBindings(icon, item);
         }
@@ -1006,7 +1004,7 @@ public class MaterialNavigationDrawer : ContentView
         badge.SetBinding(MaterialBadge.FontFamilyProperty, new Binding(nameof(BadgeFontFamily), source: this));
         badge.SetBinding(MaterialBadge.BackgroundColorProperty, new Binding(nameof(BadgeBackgroundColor), source: this));
         badge.SetBinding(MaterialBadge.TextProperty, new Binding(nameof(item.BadgeText), source: item));
-        badge.Margin = new Thickness((double)DefaultItemContentSpacing.Invoke(this),0,0,0);
+        badge.Margin = new Thickness(DefaultItemContentSpacing,0,0,0);
         
         return badge;
     }
@@ -1030,7 +1028,7 @@ public class MaterialNavigationDrawer : ContentView
             var label = new MaterialLabel
             {
                 VerticalTextAlignment = TextAlignment.Center,
-                Padding = new Thickness((double)DefaultItemContentSpacing.Invoke(this), 0)
+                Padding = new Thickness(DefaultItemContentSpacing, 0)
             };
 
             label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(HeadlineTextColor), source: this));

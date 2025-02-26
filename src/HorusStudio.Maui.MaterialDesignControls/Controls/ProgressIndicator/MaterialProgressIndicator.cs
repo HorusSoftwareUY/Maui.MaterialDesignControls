@@ -44,14 +44,14 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// </example>
     public class MaterialProgressIndicator : ContentView
     {
-        #region Attributes and Properties
+        #region Attributes
 
-        private static readonly MaterialProgressIndicatorType DefaultProgressIndicatorType = MaterialProgressIndicatorType.Circular;
-        private static readonly Color DefaultIndicatorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-        private static readonly Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
-        private static readonly double DefaultHeightRequest = -1;
-        private static readonly double DefaultWidthRequest = -1;
-        private static readonly int CircularThickness = 4;
+        private const MaterialProgressIndicatorType DefaultProgressIndicatorType = MaterialProgressIndicatorType.Circular;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTrackColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
+        private const double DefaultHeightRequest = -1;
+        private const double DefaultWidthRequest = -1;
+        private const int CircularThickness = 4;
 
         private readonly Dictionary<MaterialProgressIndicatorType, double> _controlDefaultWidths = new()
         {
@@ -67,7 +67,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private const string LinearAnimationName = "LinearAnimation";
 
-        #endregion Attributes and Properties
+        #endregion Attributes
 
         #region Bindable properties
 
@@ -90,7 +90,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="IndicatorColor" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty IndicatorColorProperty = BindableProperty.Create(nameof(IndicatorColor), typeof(Color), typeof(MaterialProgressIndicator), defaultValue: DefaultIndicatorColor, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty IndicatorColorProperty = BindableProperty.Create(nameof(IndicatorColor), typeof(Color), typeof(MaterialProgressIndicator), defaultValueCreator: DefaultIndicatorColor, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialProgressIndicator self)
             {
@@ -101,7 +101,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="TrackColor" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty TrackColorProperty = BindableProperty.Create(nameof(TrackColor), typeof(Color), typeof(MaterialProgressIndicator), defaultValue: DefaultTrackColor, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty TrackColorProperty = BindableProperty.Create(nameof(TrackColor), typeof(Color), typeof(MaterialProgressIndicator), defaultValueCreator: DefaultTrackColor, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialProgressIndicator self)
             {
@@ -112,7 +112,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="IsVisible" /> bindable property.
         /// </summary>
-        public new static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MaterialProgressIndicator), defaultValue: true, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MaterialProgressIndicator), defaultValue: true, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialProgressIndicator self)
             {
@@ -193,7 +193,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see cref="True">True</see>
+        /// <see langword="True">True</see>
         /// </default>
         public new bool IsVisible
         {
@@ -225,8 +225,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Layout
 
-        private BoxView _progressBar;
-        private CustomActivityIndicator _customActivityIndicator;
+        private BoxView _progressBar = null!;
+        private CustomActivityIndicator _customActivityIndicator = null!;
 
         #endregion Layout
 
@@ -246,7 +246,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Methods
 
-        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             if (propertyName == nameof(Window)
                 && Window == null)
@@ -342,8 +342,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void SetHeightRequest(MaterialProgressIndicatorType type)
         {
-            var height = this.HeightRequest != DefaultHeightRequest ?
-                    this.HeightRequest :
+            var height = HeightRequest != DefaultHeightRequest ?
+                    HeightRequest :
                     _controlDefaultHeights[type];
 
             base.HeightRequest = height;
@@ -388,7 +388,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     _progressBar.Margin = new Thickness(Width * v, 0, 0, 0);
                 }
             }, 0, 1, Easing.CubicOut));
-            mainAnimation.Commit(this, LinearAnimationName + Id, 16, 1500, Easing.Linear, (v, c) => ++index,
+            mainAnimation.Commit(this, LinearAnimationName + Id, 16, 1500, Easing.Linear, (_, _) => ++index,
             () => Type == MaterialProgressIndicatorType.Linear && IsVisible);
         }
 

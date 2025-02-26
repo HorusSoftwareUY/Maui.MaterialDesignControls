@@ -42,14 +42,14 @@ public class MaterialBadge : ContentView
 {
     #region Attributes
 
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeType = _ => MaterialBadgeType.Large;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultText = _ => string.Empty;
+    private const MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
+    private static readonly string DefaultText = string.Empty;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelSmall;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCornerRadius = _ => new CornerRadius(8);
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultPadding = _ => new Thickness(4, 0);
+    private static readonly CornerRadius DefaultCornerRadius = new(8);
+    private static readonly Thickness DefaultPadding = new(4, 0);
     
     private const double DefaultSmallSize = 6;
     private const double DefaultSize = 16;
@@ -62,7 +62,7 @@ public class MaterialBadge : ContentView
     /// <summary>
     /// The backing store for the <see cref="Type" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialBadgeType), typeof(MaterialBadge), defaultValueCreator: DefaultBadgeType, propertyChanged: (bindable, oldValue, newValue) =>
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialBadgeType), typeof(MaterialBadge), defaultValue: DefaultBadgeType, propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (bindable is MaterialBadge self)
         {
@@ -78,7 +78,7 @@ public class MaterialBadge : ContentView
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialBadge), defaultValueCreator: DefaultText);
+    public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialBadge), defaultValue: DefaultText);
     
     /// <summary>
     /// The backing store for the <see cref="TextColor" /> bindable property.
@@ -103,12 +103,12 @@ public class MaterialBadge : ContentView
     /// <summary>
     /// The backing store for the <see cref="CornerRadius"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialBadge), defaultValueCreator: DefaultCornerRadius);
+    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialBadge), defaultValue: DefaultCornerRadius);
     
     /// <summary>
     /// The backing store for the <see cref="Padding" /> bindable property.
     /// </summary>
-    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialBadge), defaultValueCreator: DefaultPadding);
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialBadge), defaultValue: DefaultPadding);
     
     #endregion
 
@@ -242,8 +242,7 @@ public class MaterialBadge : ContentView
     {
         CreateLayout();
         
-        var defaultBadgeType = (MaterialBadgeType)DefaultBadgeType.Invoke(this);
-        if (Type == defaultBadgeType)
+        if (Type == DefaultBadgeType)
         {
             UpdateLayoutAfterTypeChanged(Type);
         }
@@ -295,7 +294,7 @@ public class MaterialBadge : ContentView
             var isSmall = type is MaterialBadgeType.Small;
             
             HeightRequest = isSmall ? DefaultSmallSize : DefaultSize;
-            CornerRadius = isSmall ? new CornerRadius(DefaultSmallRadius) : (CornerRadius)DefaultCornerRadius.Invoke(this);
+            CornerRadius = isSmall ? new CornerRadius(DefaultSmallRadius) : DefaultCornerRadius;
             MinimumWidthRequest = isSmall ? DefaultSmallSize : DefaultSize;
             MinimumHeightRequest = isSmall ? DefaultSmallSize : DefaultSize;
             _lblText.IsVisible = !isSmall;
