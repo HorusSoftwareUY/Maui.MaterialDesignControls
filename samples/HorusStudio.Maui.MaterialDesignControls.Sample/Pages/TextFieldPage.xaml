@@ -40,7 +40,11 @@
                 <VerticalStackLayout>
                     <material:MaterialTextField
                         Type="Outlined"
+                        Label="Label"
+                        AlwaysShowLabel="{Binding FixedLabel}"
                         Placeholder="Enter text here" />
+                    
+                    <material:MaterialSwitch Text="Label is fixed" IsToggled="{Binding FixedLabel}" />
                     
                     <material:MaterialTextField
                         Type="Outlined"

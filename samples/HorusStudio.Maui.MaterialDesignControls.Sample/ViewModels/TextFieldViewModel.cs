@@ -17,7 +17,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private string _text = "";
 
         [ObservableProperty]
-        private bool _hasAnError = false;
+        private bool _hasAnError;
+        
+        [ObservableProperty]
+        private bool _fixedLabel;
 
         #endregion
 
