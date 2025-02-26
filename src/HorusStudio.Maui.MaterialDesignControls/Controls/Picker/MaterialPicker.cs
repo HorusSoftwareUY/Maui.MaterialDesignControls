@@ -35,6 +35,9 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/PickerPage.xaml)
 /// 
 /// </example>
+/// <todoList>
+/// * [Android] Use the colors defined in Material in the picker dialog
+/// </todoList>
 public class MaterialPicker : MaterialInputBase
 {
     #region Attributes
