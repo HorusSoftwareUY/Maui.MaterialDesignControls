@@ -37,8 +37,8 @@ public class MaterialTextField : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private static readonly Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCursorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 
@@ -88,7 +88,7 @@ public class MaterialTextField : MaterialInputBase
 #if ANDROID
         _entry.ReturnCommand = new Command(() =>
         {
-            var view = _entry.Handler.PlatformView as Android.Views.View;
+            var view = _entry?.Handler?.PlatformView as Android.Views.View;
             view?.ClearFocus();
 
             if (ReturnCommand?.CanExecute(ReturnCommandParameter) ?? false)
@@ -182,7 +182,7 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTextField), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTextField), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="IsReadOnly" /> bindable property.
@@ -192,7 +192,7 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CursorColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialTextField), defaultValue: DefaultCursorColor);
+    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialTextField), defaultValueCreator: DefaultCursorColor);
 
     #endregion Bindable Properties
 
@@ -281,7 +281,7 @@ public class MaterialTextField : MaterialInputBase
     /// </default>
     public object ReturnCommandParameter
     {
-        get => (object)GetValue(ReturnCommandParameterProperty);
+        get => GetValue(ReturnCommandParameterProperty);
         set => SetValue(ReturnCommandParameterProperty, value);
     }
 
@@ -443,21 +443,21 @@ public class MaterialTextField : MaterialInputBase
 
     #region Events
 
-    public event EventHandler TextChanged;
+    public event EventHandler? TextChanged;
 
     #endregion Events
 
     #region Methods
 
-    private void TxtEntry_TextChanged(object sender, TextChangedEventArgs e)
+    private void TxtEntry_TextChanged(object? sender, TextChangedEventArgs e)
     {
         var changedByTextTransform = Text != null && _entry.Text != null && Text.ToLower() == _entry.Text.ToLower();
-        this.Text = this._entry.Text;
+        Text = _entry.Text;
 
         if (!changedByTextTransform)
         {
-            this.TextChangedCommand?.Execute(null);
-            this.TextChanged?.Invoke(this, e);
+            TextChangedCommand?.Execute(null);
+            TextChanged?.Invoke(this, e);
         }
     }
 
@@ -466,15 +466,17 @@ public class MaterialTextField : MaterialInputBase
 #if ANDROID
         if (_entry == null) return;
 
+        var horizontalOffset = 3;
+        var verticalOffset = -7.5;
         switch (type)
         {
             case MaterialInputType.Filled:
                 _entry.VerticalOptions = LayoutOptions.End;
-                _entry.Margin = new Thickness(0, 0, 0, -8);
+                _entry.Margin = new Thickness(horizontalOffset, 0, 0, verticalOffset);
                 break;
             case MaterialInputType.Outlined:
                 _entry.VerticalOptions = LayoutOptions.Center;
-                _entry.Margin = new Thickness(0, -7.5);
+                _entry.Margin = new Thickness(horizontalOffset, verticalOffset);
                 break;
         }
 #endif

@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -41,32 +40,33 @@ public abstract partial class MaterialInputBase
 {
     #region Attributes
 
-    protected static readonly MaterialInputType DefaultInputType = MaterialInputType.Filled;
-    protected static readonly bool DefaultIsEnabled = true;
-    protected static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    protected static readonly Color DefaultIconTintColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    protected static readonly Brush DefaultBackground = Entry.BackgroundProperty.DefaultValue as Brush;
-    protected static readonly Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer }.GetValueForCurrentTheme<Color>();
-    protected static readonly double DefaultBorderWidth = 1;
-    protected static readonly Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected const MaterialInputType DefaultInputType = MaterialInputType.Filled;
+    protected const bool DefaultIsEnabled = true;
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconTintColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly Brush? DefaultBackground = Entry.BackgroundProperty.DefaultValue as Brush;
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer }.GetValueForCurrentTheme<Color>();
+    protected const double DefaultBorderWidth = 1;
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultBorderColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     protected static readonly CornerRadius DefaultCornerRadius = new(0);
-    protected static readonly TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
-    protected static readonly string DefaultFontFamily = MaterialFontFamily.Default;
-    protected static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
-    protected static readonly Color DefaultPlaceholderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    protected static readonly Color DefaultLabelColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    protected static readonly double DefaultLabelSize = MaterialFontSize.BodySmall;
+    protected const TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.BodyLarge;
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultPlaceholderColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultLabelColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultLabelSize = _ => MaterialFontSize.BodySmall;
     #if ANDROID
     protected static readonly Thickness DefaultLabelMargin = new (0,-4,0,0);
     #elif IOS || MACCATALYST
     protected static readonly Thickness DefaultLabelMargin = new (0,-2,0,0);
     #endif
     protected static readonly Thickness DefaultLabelPadding = new (0);
-    protected static readonly Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    protected static readonly double DefaultSupportingSize = MaterialFontSize.BodySmall;
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingSize = _ => MaterialFontSize.BodySmall;
     protected static readonly Thickness DefaultSupportingMargin = new (16, 4);
-    protected static readonly double DefaultHeightRequest = 48.0;
-    protected static readonly bool DefaultAlwaysShowLabel = false;
+    protected const double DefaultHeightRequest = 48.0;
+    protected const bool DefaultAlwaysShowLabel = false;
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultErrorIcon = _ => MaterialIcon.Error;
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
@@ -163,17 +163,17 @@ public abstract partial class MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="TextColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultTextColor);
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="LeadingIconTintColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LeadingIconTintColorProperty = BindableProperty.Create(nameof(LeadingIconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultIconTintColor);
+    public static readonly BindableProperty LeadingIconTintColorProperty = BindableProperty.Create(nameof(LeadingIconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultIconTintColor);
 
     /// <summary>
     /// The backing store for the <see cref="TrailingIconTintColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TrailingIconTintColorProperty = BindableProperty.Create(nameof(TrailingIconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultIconTintColor);
+    public static readonly BindableProperty TrailingIconTintColorProperty = BindableProperty.Create(nameof(TrailingIconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultIconTintColor);
 
     /// <summary>
     /// The backing store for the <see cref="Background" /> bindable property.
@@ -189,7 +189,7 @@ public abstract partial class MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" /> bindable property.
     /// </summary>
-    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialInputBase self)
         {
@@ -205,7 +205,7 @@ public abstract partial class MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="BorderColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultBorderColor);
+    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultBorderColor);
 
     /// <summary>
     /// The backing store for the <see cref="CornerRadius"/> bindable property.
@@ -231,7 +231,7 @@ public abstract partial class MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="ErrorIcon" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ErrorIconProperty = BindableProperty.Create(nameof(ErrorIcon), typeof(ImageSource), typeof(MaterialInputBase), defaultValue: MaterialIcon.Error);
+    public static readonly BindableProperty ErrorIconProperty = BindableProperty.Create(nameof(ErrorIcon), typeof(ImageSource), typeof(MaterialInputBase), defaultValueCreator: DefaultErrorIcon);
 
     /// <summary>
     /// The backing store for the <see cref="IsFocused"/> bindable property.
@@ -246,12 +246,12 @@ public abstract partial class MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="FontFamily"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialInputBase), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialInputBase), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="FontSize"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultFontSize);
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialInputBase), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="FontAttributes" /> bindable property.
@@ -261,32 +261,32 @@ public abstract partial class MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="PlaceholderFontFamily"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty PlaceholderFontFamilyProperty = BindableProperty.Create(nameof(PlaceholderFontFamily), typeof(string), typeof(MaterialInputBase), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty PlaceholderFontFamilyProperty = BindableProperty.Create(nameof(PlaceholderFontFamily), typeof(string), typeof(MaterialInputBase), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="PlaceholderSize"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty PlaceholderSizeProperty = BindableProperty.Create(nameof(PlaceholderSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultFontSize);
+    public static readonly BindableProperty PlaceholderSizeProperty = BindableProperty.Create(nameof(PlaceholderSize), typeof(double), typeof(MaterialInputBase), defaultValueCreator: DefaultFontSize);
     
     /// <summary>
     /// The backing store for the <see cref="PlaceholderColor"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultPlaceholderColor);
+    public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultPlaceholderColor);
 
     /// <summary>
     /// The backing store for the <see cref="LabelColor"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultLabelColor);
+    public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultLabelColor);
 
     /// <summary>
     /// The backing store for the <see cref="LabelSize"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelSizeProperty = BindableProperty.Create(nameof(LabelSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultLabelSize);
+    public static readonly BindableProperty LabelSizeProperty = BindableProperty.Create(nameof(LabelSize), typeof(double), typeof(MaterialInputBase), defaultValueCreator: DefaultLabelSize);
     
     /// <summary>
     /// The backing store for the <see cref="LabelFontFamily"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelFontFamilyProperty = BindableProperty.Create(nameof(LabelFontFamily), typeof(string), typeof(MaterialInputBase), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty LabelFontFamilyProperty = BindableProperty.Create(nameof(LabelFontFamily), typeof(string), typeof(MaterialInputBase), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="LabelMargin"/> bindable property.
@@ -306,17 +306,17 @@ public abstract partial class MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="SupportingColor"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty SupportingColorProperty = BindableProperty.Create(nameof(SupportingColor), typeof(Color), typeof(MaterialInputBase), defaultValue: DefaultSupportingTextColor);
+    public static readonly BindableProperty SupportingColorProperty = BindableProperty.Create(nameof(SupportingColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultSupportingTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="SupportingSize"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty SupportingSizeProperty = BindableProperty.Create(nameof(SupportingSize), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultSupportingSize);
+    public static readonly BindableProperty SupportingSizeProperty = BindableProperty.Create(nameof(SupportingSize), typeof(double), typeof(MaterialInputBase), defaultValueCreator: DefaultSupportingSize);
 
     /// <summary>
     /// The backing store for the <see cref="SupportingFontFamily"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty SupportingFontFamilyProperty = BindableProperty.Create(nameof(SupportingFontFamily), typeof(string), typeof(MaterialInputBase), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty SupportingFontFamilyProperty = BindableProperty.Create(nameof(SupportingFontFamily), typeof(string), typeof(MaterialInputBase), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="SupportingMargin"/> bindable property.
@@ -1192,7 +1192,7 @@ public abstract partial class MaterialInputBase
         else
         {
             // Unsupported for current input type, ignore
-            view.BackgroundColor = DefaultBackgroundColor;
+            view.BackgroundColor = (Color)DefaultBackgroundColor.Invoke(this);
         }
     }
 

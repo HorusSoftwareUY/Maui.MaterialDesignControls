@@ -37,8 +37,8 @@ public class MaterialMultilineTextField : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private static readonly Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCursorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 
@@ -141,7 +141,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialMultilineTextField), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialMultilineTextField), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="IsReadOnly" /> bindable property.
@@ -151,7 +151,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CursorColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialMultilineTextField), defaultValue: DefaultCursorColor);
+    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialMultilineTextField), defaultValueCreator: DefaultCursorColor);
 
     /// <summary>
     /// The backing store for the <see cref="AutoSize" /> bindable property.
@@ -337,21 +337,21 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     #region Events
 
-    public event EventHandler TextChanged;
+    public event EventHandler? TextChanged;
     
     #endregion Events
 
     #region Methods
 
-    private void TxtEditor_TextChanged(object sender, TextChangedEventArgs e)
+    private void TxtEditor_TextChanged(object? sender, TextChangedEventArgs e)
     {
         var changedByTextTransform = Text != null && _editor.Text != null && Text.ToLower() == _editor.Text.ToLower();
-        this.Text = this._editor.Text;
+        Text = _editor.Text;
 
         if (!changedByTextTransform)
         {
-            this.TextChangedCommand?.Execute(null);
-            this.TextChanged?.Invoke(this, e);
+            TextChangedCommand?.Execute(null);
+            TextChanged?.Invoke(this, e);
         }
 
         UpdateEditorHeight(AutoSize);
@@ -362,6 +362,7 @@ public class MaterialMultilineTextField : MaterialInputBase
         if (_editor == null) return;
 
 #if ANDROID
+        var horizontalOffset = 3;
         var verticalOffset = -7.5;
 #elif IOS || MACCATALYST
         var horizontalOffset = -5;
@@ -372,7 +373,7 @@ public class MaterialMultilineTextField : MaterialInputBase
             case MaterialInputType.Filled:
                 _editor.VerticalOptions = LayoutOptions.End;
 #if ANDROID
-                _editor.Margin = new Thickness(0, 0, 0, verticalOffset);
+                _editor.Margin = new Thickness(horizontalOffset, 0, 0, verticalOffset);
 #elif IOS || MACCATALYST
                 if (HeightRequest <= DefaultHeightRequest)
                     _editor.Margin = new Thickness(horizontalOffset, (-1)*verticalOffset, 0, verticalOffset);
@@ -381,7 +382,7 @@ public class MaterialMultilineTextField : MaterialInputBase
             case MaterialInputType.Outlined:
                 _editor.VerticalOptions = LayoutOptions.Center;
 #if ANDROID
-                _editor.Margin = new Thickness(0, verticalOffset, 0, verticalOffset);
+                _editor.Margin = new Thickness(horizontalOffset, verticalOffset, 0, verticalOffset);
 #elif IOS || MACCATALYST
                 if (HeightRequest <= DefaultHeightRequest)
                     _editor.Margin = new Thickness(horizontalOffset, verticalOffset, 0, verticalOffset);

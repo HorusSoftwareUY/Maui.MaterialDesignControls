@@ -131,6 +131,8 @@
         <Style x:Key="BaseIcon" TargetType="material:MaterialIconButton">
             <Setter Property="HeightRequest" Value="{StaticResource DefaultIconSize}" />
             <Setter Property="WidthRequest" Value="{StaticResource DefaultIconSize}" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="CornerRadius" Value="0" />
         </Style>
