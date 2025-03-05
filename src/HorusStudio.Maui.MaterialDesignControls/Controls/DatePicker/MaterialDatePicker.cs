@@ -42,7 +42,7 @@ public class MaterialDatePicker : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
 
     #endregion Attributes
 
@@ -79,7 +79,7 @@ public class MaterialDatePicker : MaterialInputBase
             if (!IsEnabled) return;
 #if ANDROID
             var handler = _datePicker.Handler as IDatePickerHandler;
-            handler.PlatformView.PerformClick();
+            handler?.PlatformView.PerformClick();
 #elif IOS || MACCATALYST
             _datePicker.Focus();
 #endif
@@ -133,7 +133,7 @@ public class MaterialDatePicker : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialDatePicker), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialDatePicker), defaultValueCreator: DefaultCharacterSpacing);
     
     /// <summary>
     /// The backing store for the <see cref="DateSelectedCommand" /> bindable property.

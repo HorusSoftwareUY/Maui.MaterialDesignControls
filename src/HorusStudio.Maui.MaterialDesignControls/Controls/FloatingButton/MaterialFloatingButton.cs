@@ -60,19 +60,18 @@ public class MaterialFloatingButton : ContentView
 {
     #region Attributes
 
-    private static readonly MaterialFloatingButtonType DefaultFloatingButtonType = MaterialFloatingButtonType.FAB;
-    private static readonly MaterialFloatingButtonPosition DefaultFloatingButtonPosition = MaterialFloatingButtonPosition.BottomRight;
-    private static readonly Color DefaultBackgroundColor =  new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
-    private static readonly Color DefaultIconColor = new AppThemeBindingExtension{ Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer}.GetValueForCurrentTheme<Color>();
+    private const MaterialFloatingButtonType DefaultFloatingButtonType = MaterialFloatingButtonType.FAB;
+    private const MaterialFloatingButtonPosition DefaultFloatingButtonPosition = MaterialFloatingButtonPosition.BottomRight;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ =>  new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconColor = _ => new AppThemeBindingExtension{ Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer}.GetValueForCurrentTheme<Color>();
     private static readonly ImageSource DefaultIcon = string.Empty;
-    private static readonly double DefaultIconSize = 24;
-    private static readonly double DefaultCornerRadius = 16;
+    private const double DefaultIconSize = 24;
+    private const double DefaultCornerRadius = 16;
     private static readonly Thickness DefaultMargin = new(16);
     private static readonly Thickness DefaultPadding = new(16);
 
     private FloatingButtonImplementation? _floatingButtonImplementation;
     private Page? _parentPage;
-    private bool _typeChanged = true;
 
     private static readonly IDictionary<MaterialFloatingButtonType, double> IconSizeMappings = new Dictionary<MaterialFloatingButtonType, double> 
     {
@@ -115,13 +114,13 @@ public class MaterialFloatingButton : ContentView
     /// The backing store for the <see cref="BackgroundColor" />
     /// bindable property.
     /// </summary>
-    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialFloatingButton), defaultValue: DefaultBackgroundColor);
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialFloatingButton), defaultValueCreator: DefaultBackgroundColor);
     
     /// <summary>
     /// The backing store for the <see cref="IconColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(MaterialFloatingButton), defaultValue: DefaultIconColor);
+    public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(MaterialFloatingButton), defaultValueCreator: DefaultIconColor);
     
     /// <summary>
     /// The backing store for the <see cref="Icon" />
@@ -372,7 +371,7 @@ public class MaterialFloatingButton : ContentView
 
     #region Methods
 
-    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         switch (propertyName)
         {
@@ -382,7 +381,6 @@ public class MaterialFloatingButton : ContentView
                 break;
             
             case nameof(Type):
-                _typeChanged = true;
                 if (!IconSizeMappings.TryGetValue(Type, out var iconSize)
                     || !CornerRadiusMappings.TryGetValue(Type, out var cornerRadius)
                     || !PaddingMappings.TryGetValue(Type, out var padding))
@@ -392,7 +390,6 @@ public class MaterialFloatingButton : ContentView
                 CornerRadius = cornerRadius;
                 Padding = padding;
                 UpdateLayout();
-                _typeChanged = false;
                 break;
             
             case nameof(BackgroundColor):

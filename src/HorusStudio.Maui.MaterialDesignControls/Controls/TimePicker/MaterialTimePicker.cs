@@ -42,7 +42,7 @@ public class MaterialTimePicker : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
 
     #endregion Attributes
 
@@ -78,7 +78,7 @@ public class MaterialTimePicker : MaterialInputBase
 
 #if ANDROID
             var handler = _timePicker.Handler as ITimePickerHandler;
-            handler.PlatformView.PerformClick();
+            handler?.PlatformView.PerformClick();
 #elif IOS || MACCATALYST
             _timePicker.Focus();
 #endif
@@ -122,7 +122,7 @@ public class MaterialTimePicker : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTimePicker), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTimePicker), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="TimeSelectedCommand" /> bindable property.

@@ -9,11 +9,21 @@ internal class MaterialRadioButtonGroupController
 {
     #region Attributes
 
-    readonly Element _layout;
-    string _groupName;
-    private object _selectedValue;
-    public string GroupName { get => _groupName; set => SetGroupName(value); }
-    public object SelectedValue { get => _selectedValue; set => SetSelectedValue(value); }
+    private readonly Element _layout;
+    private string _groupName = null!;
+    private object _selectedValue = null!;
+
+    public string GroupName
+    {
+        get => _groupName; 
+        set => SetGroupName(value);
+    }
+
+    public object SelectedValue
+    {
+        get => _selectedValue; 
+        set => SetSelectedValue(value);
+    }
 
     #endregion Attributes
 
@@ -74,19 +84,19 @@ internal class MaterialRadioButtonGroupController
 
     void HandleRadioButtonValueChanged(MaterialRadioButton radioButton, MaterialRadioButtonValueChanged args)
     {
-        if (radioButton.GroupName != _groupName || !MatchesScope(args) || radioButton.Value is null || this.SelectedValue is null)
+        if (radioButton.GroupName != _groupName || !MatchesScope(args) || radioButton.Value is null || SelectedValue is null)
         {
             return;
         }
 
-        if (object.Equals(radioButton.Value, this.SelectedValue))
+        if (Equals(radioButton.Value, SelectedValue))
         {
             radioButton.SetValue(MaterialRadioButton.IsCheckedProperty, true);
             _layout.SetValue(MaterialRadioButtonGroup.SelectedValueProperty, radioButton.Value);
         }
     }
 
-    void ChildAdded(object sender, ElementEventArgs e)
+    void ChildAdded(object? sender, ElementEventArgs e)
     {
         if (string.IsNullOrEmpty(_groupName))
         {
@@ -118,19 +128,14 @@ internal class MaterialRadioButtonGroupController
             _layout.SetValue(MaterialRadioButtonGroup.SelectedValueProperty, radioButton.Value);
         }
 
-        if (radioButton.Value != null && this.SelectedValue != null && object.Equals(radioButton.Value, this.SelectedValue))
+        if (radioButton.Value != null && SelectedValue != null && Equals(radioButton.Value, SelectedValue))
         {
             radioButton.SetValue(MaterialRadioButton.IsCheckedProperty, true);
         }
     }
 
-    void UpdateGroupName(Element element, string name, string oldName = null)
+    void UpdateGroupName(MaterialRadioButton radioButton, string name, string? oldName = null)
     {
-        if (!(element is MaterialRadioButton radioButton))
-        {
-            return;
-        }
-
         var currentName = radioButton.GroupName;
 
         if (string.IsNullOrEmpty(currentName) || currentName == oldName || oldName is null)
@@ -139,11 +144,11 @@ internal class MaterialRadioButtonGroupController
         }
     }
 
-    void UpdateGroupNames(Element element, string name, string oldName = null)
+    void UpdateGroupNames(Element element, string name, string? oldName = null)
     {
-        foreach (Element descendant in element.GetVisualTreeDescendants())
+        foreach (var descendant in element.GetVisualTreeDescendants())
         {
-            UpdateGroupName(descendant, name, oldName);
+            if (descendant is MaterialRadioButton radioButton) UpdateGroupName(radioButton, name, oldName);
         }
     }
 
@@ -155,7 +160,7 @@ internal class MaterialRadioButtonGroupController
         {
 
 #pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
-            MessagingCenter.Send<Element, MaterialRadioButtonGroupValueChanged>(_layout, MaterialRadioButtonGroup.GroupValueChangedMessage,
+            MessagingCenter.Send(_layout, MaterialRadioButtonGroup.GroupValueChangedMessage,
                 new MaterialRadioButtonGroupValueChanged(_groupName, MaterialRadioButtonGroup.GetVisualRoot(_layout), radioButtonValue));
 #pragma warning restore CS0618 // Type or member is obsolete
         }

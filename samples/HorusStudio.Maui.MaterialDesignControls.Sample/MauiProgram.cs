@@ -1,6 +1,5 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
-using Microsoft.Extensions.Logging;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample
 {
@@ -17,6 +16,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 .UseMauiApp<App>()
                 .UseMaterialDesignControls(options =>
                 {
+                    options.EnableDebug();
+                    /*
+                    options.OnException((sender, exception) =>
+                    {
+                        System.Diagnostics.Debug.WriteLine($"EXCEPTION ON LIBRARY: {sender} - {exception}");
+                    });
+                    */
                     options.ConfigureFonts(fonts =>
                     {
                         fonts.AddFont("Roboto-Regular.ttf", FontRegular);
@@ -91,18 +97,14 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                     /*
                     // Plugin configuration using App Resources (include MaterialCustomizations dictionary on App.xaml)
                     options
-                        .ConfigureThemesFromResources("Colors.xaml")
+                        .ConfigureThemesFromResources("MaterialCustomizations.xaml", "MaterialLight", "MaterialDark")
                         .ConfigureFontSizeFromResources("MaterialCustomizations.xaml","MaterialFont")
                         .ConfigureFontTrackingFromResources("MaterialCustomizations.xaml")
                         .ConfigureIconsFromResources("MaterialCustomizations.xaml","MaterialIcon")
                         .ConfigureStringFormatFromResources("MaterialCustomizations.xaml");
                     */
                 });
-
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
-            
+         
             builder.Services
                 .AutoConfigureViewModelsAndPages();
 
