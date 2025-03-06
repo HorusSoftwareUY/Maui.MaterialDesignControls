@@ -2,12 +2,12 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
 {
-	public partial class TouchBehavior : PlatformBehavior<Microsoft.Maui.Controls.View>
+	public partial class TouchBehavior
 	{
         #region Attributes
 
-        private Android.Views.View _view;
-        private ITouchable _touchableElement;
+        private Android.Views.View? _view;
+        private ITouchable? _touchableElement;
         private float? _firstX;
         private float? _firstY;
         private bool _ignored;
@@ -36,9 +36,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
                 _view.Touch -= OnViewOnTouch;
         }
 
-        private void OnViewOnTouch(object sender, Android.Views.View.TouchEventArgs e)
+        private void OnViewOnTouch(object? sender, Android.Views.View.TouchEventArgs e)
         {
-            switch (e.Event.ActionMasked)
+            switch (e?.Event?.ActionMasked)
             {
                 case MotionEventActions.ButtonPress:
                 case MotionEventActions.Down:
@@ -49,8 +49,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
                     _touchableElement?.OnTouch(TouchType.Cancelled);
                     break;
                 case MotionEventActions.Move:
-                    var motionEvent = e.Event as MotionEvent;
-
+                    var motionEvent = e.Event;
                     if (motionEvent != null)
                     {
                         var x = motionEvent.GetX();

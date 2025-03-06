@@ -50,6 +50,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private bool _isOnToggledState;
         private double _xReference;
         private bool ReduceThumbSize => UnselectedIcon == null;
+        private TapGestureRecognizer _onTapped = null!;
 
         #endregion Attributes
 
@@ -602,22 +603,21 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             _switch.Children.Add(_track);
             _switch.Children.Add(_thumb);
-
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (_, _) =>
+            
+            _onTapped = new TapGestureRecognizer();
+            _onTapped.Tapped += (_, _) =>
             {
-                if (IsEnabled)
+                if (!IsEnabled) return;
+                
+                IsToggled = !IsToggled;
+                Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
+                if (ToggledCommand?.CanExecute(IsToggled) == true)
                 {
-                    IsToggled = !IsToggled;
-                    Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
                     ToggledCommand?.Execute(IsToggled);
                 }
             };
-
-            var contentViewGesture = new ContentView();
-            contentViewGesture.GestureRecognizers.Add(tapGestureRecognizer);
-            _switch.Children.Add(contentViewGesture);
-
+            _switch.GestureRecognizers.Add(_onTapped);
+            
             Content = _switch;
         }
 
@@ -673,6 +673,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             UpdateLayoutAfterTextSideChanged(TextSide);
 
+            _mainContainer.GestureRecognizers.Add(_onTapped);
             Content = _mainContainer;
         }
 

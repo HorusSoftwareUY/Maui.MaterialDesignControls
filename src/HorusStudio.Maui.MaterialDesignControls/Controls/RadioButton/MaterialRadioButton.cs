@@ -566,14 +566,12 @@ public class MaterialRadioButton : ContentView, ITouchable
 
     public async void OnTouch(TouchType gestureType)
     {
-        if (IsEnabled)
-        {
-            await TouchAnimation.AnimateAsync(this, gestureType);
+        if (!IsEnabled) return;
+        await TouchAnimation.AnimateAsync(this, gestureType);
 
-            if (gestureType == TouchType.Released && !IsChecked)
-            {
-                IsChecked = !IsChecked;
-            }
+        if (gestureType == TouchType.Released && !IsChecked)
+        {
+            IsChecked = !IsChecked;
         }
     }
 

@@ -5,7 +5,7 @@ using System.Windows.Input;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// It is a button to which you can add a custom view.
+/// It is a touchable view.
 /// </summary>
 public class MaterialViewButton : ContentView, ITouchable
 {
@@ -21,7 +21,12 @@ public class MaterialViewButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Command" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialViewButton));
+    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialViewButton), propertyChanged:
+        (bindable, _, _) =>
+        {
+            var self = (MaterialViewButton)bindable;
+            self.UpdateTouchBehavior();
+        });
 
     /// <summary>
     /// The backing store for the <see cref="CommandParameter" /> bindable property.
@@ -116,53 +121,135 @@ public class MaterialViewButton : ContentView, ITouchable
 
     #endregion Properties
 
-    #region Constructors
+    #region Events
 
-    public MaterialViewButton()
+    private EventHandler? _clicked;
+    private EventHandler? _pressed;
+    private EventHandler? _released;
+    private readonly object _objectLock = new();
+
+    /// <summary>
+    /// Occurs when the card is clicked/tapped.
+    /// </summary>
+    public event EventHandler Clicked
     {
-        SetTapGestureRecognizer();
-        Behaviors.Add(new TouchBehavior());
+        add
+        {
+            lock (_objectLock)
+            {
+                _clicked += value;
+                UpdateTouchBehavior();
+            }
+        }
+        remove
+        {
+            lock (_objectLock)
+            {
+                _clicked -= value;
+                UpdateTouchBehavior();
+            }
+        }
     }
 
-    #endregion Constructors
+    /// <summary>
+    /// Occurs when the card is pressed.
+    /// </summary>
+    public event EventHandler Pressed
+    {
+        add
+        {
+            lock (_objectLock)
+            {
+                _pressed += value;
+                UpdateTouchBehavior();
+            }
+        }
+        remove
+        {
+            lock (_objectLock)
+            {
+                _pressed -= value;
+                UpdateTouchBehavior();
+            }
+        }
+    }
 
+    /// <summary>
+    /// Occurs when the card is released.
+    /// </summary>
+    public event EventHandler Released
+    {
+        add
+        {
+            lock (_objectLock)
+            {
+                _released += value;
+                UpdateTouchBehavior();
+            }
+        }
+        remove
+        {
+            lock (_objectLock)
+            {
+                _released -= value;
+                UpdateTouchBehavior();
+            }
+        }
+    }
+
+    #endregion Events
+    
     #region ITouchable
 
     public async void OnTouch(TouchType gestureType)
     {
-        if (IsEnabled)
+        Utils.Logger.Debug($"Gesture: {gestureType}");
+
+        if (!IsEnabled) return;
+        await TouchAnimation.AnimateAsync(this, gestureType);
+        
+        switch (gestureType)
         {
-            await TouchAnimation.AnimateAsync(this, gestureType);
+            case TouchType.Pressed:
+                _pressed?.Invoke(this, EventArgs.Empty);
+                break;
+
+            case TouchType.Released:
+                if (Command != null && Command.CanExecute(CommandParameter))
+                {
+                    Command.Execute(CommandParameter);
+                }
+                if (_released != null)
+                {
+                    _released.Invoke(this, EventArgs.Empty);
+                }
+                else if (_clicked != null)
+                {
+                    _clicked.Invoke(this, EventArgs.Empty);
+                }
+                
+                break;
         }
     }
 
     #endregion ITouchable
 
     #region Methods
-
-    private void SetTapGestureRecognizer()
+    
+    private void UpdateTouchBehavior()
     {
-        GestureRecognizers.Clear();
-        var tapGestureRecognizer = new TapGestureRecognizer
+        var touchBehavior = Behaviors.FirstOrDefault(b => b is TouchBehavior) as TouchBehavior;
+            
+        if (Command != null || _clicked != null || _pressed != null || _released != null)
         {
-            Command = Command,
-            CommandParameter = CommandParameter
-        };
-
-        GestureRecognizers.Add(tapGestureRecognizer);
-    }
-
-    protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        switch (propertyName)
+            if (touchBehavior == null)
+            {
+                Behaviors.Add(new TouchBehavior());
+            }
+        }
+        else if (touchBehavior != null)
         {
-            case nameof(Command):
-            case nameof(CommandParameter):
-                SetTapGestureRecognizer();
-                break;
-            default:
-                base.OnPropertyChanged(propertyName);
-                break;
+            Behaviors.Remove(touchBehavior);
         }
     }
 

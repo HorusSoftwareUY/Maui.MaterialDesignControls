@@ -70,7 +70,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     public class MaterialCard : Border, ITouchable
     {
         #region Attributes
-
+        
         private const MaterialCardType DefaultCardType = MaterialCardType.Filled;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
@@ -80,6 +80,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const float DefaultBorderWidth = -1f;
         private static readonly Color DefaultBorderColor = Color.FromRgba(1,1,1,.01);
         private static readonly Shadow DefaultShadow = null!;
+        private static readonly Thickness DefaultPadding = new Thickness(16);
 
         private readonly Dictionary<MaterialCardType, object> _backgroundColors = new()
         {
@@ -130,7 +131,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="Command" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialCard), defaultValue: null);
+        public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialCard), defaultValue: null, propertyChanged:
+            (bindable, _, _) =>
+            {
+                var self = (MaterialCard)bindable;
+                self.UpdateTouchBehavior();
+            });
 
         /// <summary>
         /// The backing store for the <see cref="CommandParameter" /> bindable property.
@@ -381,6 +387,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 lock (_objectLock)
                 {
                     _clicked += value;
+                    UpdateTouchBehavior();
                 }
             }
             remove
@@ -388,6 +395,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 lock (_objectLock)
                 {
                     _clicked -= value;
+                    UpdateTouchBehavior();
                 }
             }
         }
@@ -402,6 +410,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 lock (_objectLock)
                 {
                     _pressed += value;
+                    UpdateTouchBehavior();
                 }
             }
             remove
@@ -409,6 +418,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 lock (_objectLock)
                 {
                     _pressed -= value;
+                    UpdateTouchBehavior();
                 }
             }
         }
@@ -423,6 +433,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 lock (_objectLock)
                 {
                     _released += value;
+                    UpdateTouchBehavior();
                 }
             }
             remove
@@ -430,6 +441,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 lock (_objectLock)
                 {
                     _released -= value;
+                    UpdateTouchBehavior();
                 }
             }
         }
@@ -440,9 +452,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         public MaterialCard()
         {
-            Padding = new Thickness(16);
-
-            Behaviors.Add(new TouchBehavior());
+            Padding = DefaultPadding;
 
             if (Type == DefaultCardType)
             {
@@ -599,17 +609,34 @@ namespace HorusStudio.Maui.MaterialDesignControls
             }
         }
 
+        private void UpdateTouchBehavior()
+        {
+            var touchBehavior = Behaviors.FirstOrDefault(b => b is TouchBehavior) as TouchBehavior;
+            
+            if (Command != null || _clicked != null || _pressed != null || _released != null)
+            {
+                if (touchBehavior == null)
+                {
+                    Behaviors.Add(new TouchBehavior());
+                }
+            }
+            else if (touchBehavior != null)
+            {
+                Behaviors.Remove(touchBehavior);
+            }
+        }
+
         #endregion Methods
 
         #region ITouchable
 
         public async void OnTouch(TouchType gestureType)
         {
-            if (!IsEnabled || (Command == null && _pressed == null && _released == null && _clicked == null))
-                return;
+            Utils.Logger.Debug($"Gesture: {gestureType}");
 
+            if (!IsEnabled) return;
             await TouchAnimation.AnimateAsync(this, gestureType);
-
+            
             switch (gestureType)
             {
                 case TouchType.Pressed:
@@ -622,7 +649,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     {
                         Command.Execute(CommandParameter);
                     }
-                    else if (_released != null)
+                    if (_released != null)
                     {
                         _released.Invoke(this, EventArgs.Empty);
                     }

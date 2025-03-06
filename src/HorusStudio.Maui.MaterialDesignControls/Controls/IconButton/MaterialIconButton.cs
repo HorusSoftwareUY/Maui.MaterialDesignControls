@@ -901,8 +901,10 @@ public class MaterialIconButton : ContentView, ITouchable
 
     public async void OnTouch(TouchType gestureType)
     {
-        await TouchAnimation.AnimateAsync(this, gestureType);
+        Utils.Logger.Debug($"Gesture: {gestureType}");
+        
         if (!IsEnabled) return;
+        await TouchAnimation.AnimateAsync(this, gestureType);
 
         switch (gestureType)
         {
@@ -916,7 +918,7 @@ public class MaterialIconButton : ContentView, ITouchable
                 {
                     Command.Execute(CommandParameter);
                 }
-                else if (_released != null)
+                if (_released != null)
                 {
                     _released.Invoke(this, EventArgs.Empty);
                 }
