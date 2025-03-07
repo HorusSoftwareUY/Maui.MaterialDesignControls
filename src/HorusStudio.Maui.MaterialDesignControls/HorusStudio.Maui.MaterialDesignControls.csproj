@@ -8,6 +8,7 @@
 	
 	<ItemGroup>
 		<EmbeddedResource Include="Images\*" />
+		<None Include="Images\icon.png" Pack="true" PackagePath="\" />
 	</ItemGroup>
 	
 	<ItemGroup>

@@ -7,6 +7,7 @@
     <Title>Material Design Controls for .NET MAUI</Title>
     <Description>This library provides a UI Toolkit following Material Design 3 guidelines for .NET MAUI.</Description>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://www.horus.com.uy</PackageProjectUrl>
