@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -681,6 +682,7 @@ public class MaterialIconButton : ContentView, ITouchable
             Aspect = Aspect.AspectFit
         };
 
+        _image.Loaded += async (s, e) => await ImageLoaded(s as Image);
         _image.SetBinding(Image.SourceProperty, new Binding(nameof(ImageSource), source: this));
 
         var iconTintColor = new IconTintColorBehavior();
@@ -896,13 +898,33 @@ public class MaterialIconButton : ContentView, ITouchable
             _border.Shadow = DefaultShadow;
         }
     }
+    
+    private async Task ImageLoaded(Image? image)
+    {
+        if (image?.Source is null) return;
+        
+        try
+        {
+            var res = await image.Source.GetPlatformImageAsync(image.Handler!.MauiContext!);
+            if (res == null)
+            {
+                Logger.Debug($"Failed to load image");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogException($"ERROR loading image", ex, this);
+        }
+    }
 
     #region ITouchable
 
     public async void OnTouch(TouchType gestureType)
     {
-        await TouchAnimation.AnimateAsync(this, gestureType);
+        Utils.Logger.Debug($"Gesture: {gestureType}");
+        
         if (!IsEnabled) return;
+        await TouchAnimation.AnimateAsync(this, gestureType);
 
         switch (gestureType)
         {
@@ -916,7 +938,7 @@ public class MaterialIconButton : ContentView, ITouchable
                 {
                     Command.Execute(CommandParameter);
                 }
-                else if (_released != null)
+                if (_released != null)
                 {
                     _released.Invoke(this, EventArgs.Empty);
                 }

@@ -2,12 +2,12 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
 {
-	public partial class TouchBehavior : PlatformBehavior<View>
+	public partial class TouchBehavior
     {
         #region Attributes
 
-        private UIView _view;
-        private TouchGestureRecognizer _touchGestureRecognizer;
+        private UIView? _view;
+        private TouchGestureRecognizer? _touchGestureRecognizer;
 
         #endregion Attributes
 

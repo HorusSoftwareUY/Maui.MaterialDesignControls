@@ -760,6 +760,7 @@ public class MaterialButton : ContentView, ITouchable
     #region Events
 
     private EventHandler? _clicked;
+    private EventHandler? _pressed;
     private EventHandler? _released;
     private readonly object _objectLock = new();
 
@@ -773,7 +774,6 @@ public class MaterialButton : ContentView, ITouchable
             lock (_objectLock)
             {
                 _clicked += value;
-                _button.Clicked += value;
             }
         }
         remove
@@ -781,7 +781,6 @@ public class MaterialButton : ContentView, ITouchable
             lock (_objectLock)
             {
                 _clicked -= value;
-                _button.Clicked -= value;
             }
         }
     }
@@ -795,14 +794,14 @@ public class MaterialButton : ContentView, ITouchable
         {
             lock (_objectLock)
             {
-                _button.Pressed += value;
+                _pressed += value;
             }
         }
         remove
         {
             lock (_objectLock)
             {
-                _button.Pressed -= value;
+                _pressed -= value;
             }
         }
     }
@@ -817,7 +816,6 @@ public class MaterialButton : ContentView, ITouchable
             lock (_objectLock)
             {
                 _released += value;
-                _button.Released += value;
             }
         }
         remove
@@ -825,7 +823,6 @@ public class MaterialButton : ContentView, ITouchable
             lock (_objectLock)
             {
                 _released -= value;
-                _button.Released -= value;
             }
         }
     }
@@ -890,10 +887,6 @@ public class MaterialButton : ContentView, ITouchable
         OnTouch(TouchType.Released);
     }
 
-    protected virtual void InternalClickedHandler(object? sender, EventArgs e)
-    {
-    }
-
     #endregion Events
 
     #region Layout
@@ -945,8 +938,7 @@ public class MaterialButton : ContentView, ITouchable
         _button.SetBinding(Button.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
         _button.SetBinding(Button.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         _button.SetBinding(CustomButton.TextDecorationsProperty, new Binding(nameof(TextDecorations), source: this));
-
-        _button.Clicked += InternalClickedHandler;
+        
         _button.Pressed += InternalPressedHandler;
         _button.Released += InternalReleasedHandler;
         _button.Focused += InternalFocusHandler;
@@ -1202,9 +1194,12 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     #region ITouchable
-
+    
     public async void OnTouch(TouchType gestureType)
     {
+        Utils.Logger.Debug($"Gesture: {gestureType}");
+
+        if (!IsEnabled || (Command == null && _pressed == null && _released == null && _clicked == null)) return;
         await TouchAnimation.AnimateAsync(this, gestureType);
 
         if (gestureType == TouchType.Released)
@@ -1213,7 +1208,7 @@ public class MaterialButton : ContentView, ITouchable
             {
                 Command.Execute(CommandParameter);
             }
-            else if (_released != null)
+            if (_released != null)
             {
                 _released.Invoke(this, EventArgs.Empty);
             }
@@ -1222,8 +1217,12 @@ public class MaterialButton : ContentView, ITouchable
                 _clicked.Invoke(this, EventArgs.Empty);
             }
         }
+        else if (gestureType == TouchType.Pressed)
+        {
+            _pressed?.Invoke(this, EventArgs.Empty);
+        }
     }
-
+    
     #endregion ITouchable
 
     #region Styles

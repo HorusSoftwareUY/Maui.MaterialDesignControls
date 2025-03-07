@@ -500,20 +500,18 @@ public class MaterialCheckBox : ContentView, ITouchable
         base.Content = _mainLayout;
     }
 
-#endregion Constructors
+    #endregion Constructors
 
     #region ITouchable
 
     public async void OnTouch(TouchType gestureType)
     {
-        if (IsEnabled)
-        {
-            await TouchAnimation.AnimateAsync(this, gestureType);
+        if (!IsEnabled) return;
+        await TouchAnimation.AnimateAsync(this, gestureType);
 
-            if (gestureType == TouchType.Released)
-            {
-                IsChecked = !IsChecked;
-            }
+        if (gestureType == TouchType.Released)
+        {
+            IsChecked = !IsChecked;
         }
     }
 
