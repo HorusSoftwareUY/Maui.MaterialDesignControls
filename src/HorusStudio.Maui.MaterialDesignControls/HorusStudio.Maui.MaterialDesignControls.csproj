@@ -7,8 +7,7 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<!-- Images -->
-		<MauiImage Include="Resources\Images\*.svg" />
+		<EmbeddedResource Include="Images\*" />
 	</ItemGroup>
 	
 	<ItemGroup>
