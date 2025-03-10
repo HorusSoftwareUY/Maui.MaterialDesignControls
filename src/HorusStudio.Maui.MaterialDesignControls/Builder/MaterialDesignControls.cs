@@ -2,12 +2,18 @@ using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// Material Design Controls initializer class
+/// </summary>
 public static class MaterialDesignControls
 {
     private static readonly HashSet<InitialTask> InitialTasks = [];
     
+    /// <summary>
+    /// Register resources and initialize Material Design Controls
+    /// </summary>
     public static void InitializeComponents()
-    {
+    {   
         Logger.Debug("Start Components initialization");
         if (Application.Current == null)
         {

@@ -1,6 +1,6 @@
 # MaterialViewButton
 
-It is a button to which you can add a custom view.
+It is a touchable view.
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -71,5 +71,25 @@ Gets or sets a custom animation to be executed when a icon is clicked.
 Property type: ICustomAnimation<br>
 
 Default value: null.
+
+<br>
+
+## Events
+
+### <a id="events-clicked"/>**Clicked**
+
+Occurs when the card is clicked/tapped.
+
+<br>
+
+### <a id="events-pressed"/>**Pressed**
+
+Occurs when the card is pressed.
+
+<br>
+
+### <a id="events-released"/>**Released**
+
+Occurs when the card is released.
 
 <br>

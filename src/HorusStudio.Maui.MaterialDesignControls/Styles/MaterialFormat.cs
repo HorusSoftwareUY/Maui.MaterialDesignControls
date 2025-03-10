@@ -1,7 +1,7 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// MaterialIcon define default icons used by the library
+/// MaterialFormat define default string formats used by the library
 /// </summary>
 public static class MaterialFormat
 {

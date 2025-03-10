@@ -1,38 +1,44 @@
-# MaterialPicker
+# MaterialSelection
 
-A picker  let users select an option.
+A selection  Selection controls allow the user to select options.
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
-Inherits from: MaterialPicker → MaterialInputBase
+Inherits from: MaterialSelection → MaterialInputBase
 
 <br>
 
-![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialPicker.gif)
+![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialSelection.gif)
 
 ### XAML sample
 
 ```csharp
 xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 
-<material:MaterialPicker
-    ItemsSource="{Binding ItemsSource}"
-    TrailingIcon="picker_arrow.png"
-    Placeholder="Select an option" />
+<material:MaterialSelection
+        Command="{Binding TapCommand}"
+        CommandParameter="User selection"
+        Label="User"
+        LeadingIconSource="ic_floating.png"
+        Placeholder="Select user"
+        Text="{Binding SelectedText}" />
 ```
 
 ### C# sample
 
 ```csharp
-var picker = new MaterialPicker
+var selection = new MaterialSelection
 {
-    ItemsSource= ItemsSource,
-    TrailingIcon="picker_arrow.png"
-    Placeholder="Select an option"
+        Command = TapCommand,
+        CommandParameter = "User selection",
+        Label = "User",
+        LeadingIconSource = "ic_floating.png",
+        Placeholder = "Select user",
+        Text = SelectedText
 };
 ```
 
-[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/PickerPage.xaml)
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SelectionPage.xaml)
 
 ## Properties
 
@@ -91,18 +97,19 @@ Remarks: Set this value to a non-zero value in order to have a visible border.
 
 <br>
 
-### <a id="properties-characterspacing"/>**CharacterSpacing**
+### <a id="properties-command"/>**Command**
 
-Gets or sets a value that indicates the number of device-independent units that
- should be in between characters in the text displayed by the Entry. Applies to
- Text and Placeholder.
- The number of device-independent units that should be in between characters in the text.
+Gets or sets selection command. This is a bindable property.
 
-Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+Property type: ICommand<br>
 
-Default value: MaterialFontTracking.BodyLarge 0.5
+<br>
 
-Remarks: To be added.
+### <a id="properties-commandparameter"/>**CommandParameter**
+
+Gets or sets the command parameter. This is a bindable property.
+
+Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 <br>
 
@@ -144,19 +151,6 @@ Gets or sets a value that indicates whether the font for the text of this input
  is bold, italic, or neither. This is a bindable property.
 
 Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.fontattributes)<br>
-
-<br>
-
-### <a id="properties-fontautoscalingenabled"/>**FontAutoScalingEnabled**
-
-Determines whether or not the font of this entry should scale automatically according
- to the operating system settings. This is a bindable property.
-
-Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-Default value: True
-
-Remarks: Typically this should always be enabled for accessibility reasons.
 
 <br>
 
@@ -237,32 +231,6 @@ Gets state focused entry
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Default value: False
-
-<br>
-
-### <a id="properties-itemdisplaypath"/>**ItemDisplayPath**
-
-Gets or sets the property path.
- This property is used to map an object and display a property of it.
-
-Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-Default value: null
-
-Remarks: If it´s no defined, the control will use toString() method.
-
-<br>
-
-### <a id="properties-itemssource"/>**ItemsSource**
-
-Gets or sets the source list of items to template and display.
- To be added.
-
-Property type: [IEnumerable](https://learn.microsoft.com/en-us/dotnet/api/system.collections.ienumerable)<br>
-
-Default value: Null
-
-Remarks: To be added.
 
 <br>
 
@@ -422,40 +390,6 @@ Default value: MaterialFontSize.BodyLarge Tablet = 19 / Phone = 16
 
 <br>
 
-### <a id="properties-selectedindex"/>**SelectedIndex**
-
-Gets the index of the selected item of the picker. This is a bindable
- property.
- An 0-based index representing the selected item in the list. Default is -1.
-
-Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-Remarks: A value of -1 represents no item selected.
-
-<br>
-
-### <a id="properties-selectedindexchangedcommand"/>**SelectedIndexChangedCommand**
-
-Gets or sets an ICommand to be executed when selected index has changed. This is a bindable
- property.
-
-Property type: ICommand<br>
-
-<br>
-
-### <a id="properties-selecteditem"/>**SelectedItem**
-
-Gets or sets the selected item.
- To be added.
-
-Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
-
-Default value: Null
-
-Remarks: To be added.
-
-<br>
-
 ### <a id="properties-supportingcolor"/>**SupportingColor**
 
 Gets or sets text color for supporting text. This is a bindable property.
@@ -519,7 +453,7 @@ Default value: null
 
 ### <a id="properties-text"/>**Text**
 
-Gets or sets the text This property cannot be changed by the user.
+Gets or sets the text displayed as the content of the input.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
@@ -605,17 +539,3 @@ Property type: ICommand<br>
 Default value: null
 
 <br>
-
-### <a id="properties-verticaltextalignment"/>**VerticalTextAlignment**
-
-Gets or sets the vertical text alignment. This is a bindable property.
-
-Property type: [TextAlignment](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.textalignment)<br>
-
-Default value: null
-
-<br>
-
-## Known issues and pending features
-
-* [Android] Use the colors defined in Material in the picker dialog

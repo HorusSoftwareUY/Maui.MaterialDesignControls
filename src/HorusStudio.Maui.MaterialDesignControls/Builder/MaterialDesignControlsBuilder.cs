@@ -6,10 +6,20 @@ using System.Text.Json;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// Material Design Controls builder.
+/// </summary>
+/// <param name="AppBuilder">MAUI application builder.</param>
 public sealed record MaterialDesignControlsBuilder(MauiAppBuilder AppBuilder);
 
 public static class MaterialDesignControlsBuilderExtensions
-{   
+{
+    /// <summary>
+    /// Register Material Design Controls on application builder.
+    /// </summary>
+    /// <param name="appBuilder">MAUI application builder.</param>
+    /// <param name="configureDelegate">Configuration delegate. Optional.</param>
+    /// <returns>Updated MAUI application builder</returns>
     public static MauiAppBuilder UseMaterialDesignControls(this MauiAppBuilder appBuilder,
         Action<MaterialDesignControlsBuilder>? configureDelegate = null)
     {   
@@ -39,43 +49,38 @@ public static class MaterialDesignControlsBuilderExtensions
         return appBuilder;
     }
 
+    /// <summary>
+    /// Enables debug logging.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder EnableDebug(this MaterialDesignControlsBuilder builder)
     {
         Logger.DebugMode = true;
         return builder;
     }
     
+    /// <summary>
+    /// Registers a delegate to be invoked in case of Exception.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="configureDelegate">Custom defined delegate.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder OnException(this MaterialDesignControlsBuilder builder,
         Action<object?, Exception> configureDelegate)
     {
         Logger.OnException += configureDelegate.Invoke;
         return builder;
     }
-
-    private static void ConfigurationWithLogger(Action onTry, Action<Exception>? onCatch = null, bool @throw = false, [CallerFilePath] string? callerFilePath = null, [CallerMemberName] string? callerMemberName = null)
-    {
-        Logger.DebugWithCallerInfo("Init configuration", callerFilePath, callerMemberName);
-        Logger.LogOnExceptionWithCallerInfo(onTry,
-            ex =>
-            {
-                Logger.DebugWithCallerInfo("Configuration completed with ERROR", callerFilePath, callerMemberName);
-                onCatch?.Invoke(ex);
-            }, @throw, callerFilePath, callerMemberName);
-        Logger.DebugWithCallerInfo("Configuration COMPLETED", callerFilePath, callerMemberName);
-    }
     
-    private static void ConfigurationWithLoggerAndCaller(Action onTry, Action<Exception>? onCatch = null, bool @throw = false, string? callerFilePath = null, string? callerMemberName = null)
-    {
-        Logger.DebugWithCallerInfo("Init configuration", callerFilePath, callerMemberName);
-        Logger.LogOnExceptionWithCallerInfo(onTry,
-            ex =>
-            {
-                Logger.DebugWithCallerInfo("Configuration completed with ERROR", callerFilePath, callerMemberName);
-                onCatch?.Invoke(ex);
-            }, @throw, callerFilePath, callerMemberName);
-        Logger.DebugWithCallerInfo("Configuration COMPLETED", callerFilePath, callerMemberName);
-    }
-    
+    /// <summary>
+    /// Registers custom fonts on MAUI Application and Material Design Controls library.
+    /// It also indicates MDC which font to use for Regular, Medium and Default.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="configureDelegate">Custom defined delegate for font collection. Optional.</param>
+    /// <param name="options">Set Regular, Medium and Default fonts to be used by MDC.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureFonts(this MaterialDesignControlsBuilder builder, Action<IFontCollection>? configureDelegate, MaterialFontOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -92,6 +97,13 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
     
+    /// <summary>
+    /// Overrides, partially or fully, default color palettes for one or both Light and Dark themes.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="lightTheme"><see cref="MaterialTheme" /> configuration for Light theme. Optional.</param>
+    /// <param name="darkTheme"><see cref="MaterialTheme" /> configuration for Dark theme. Optional.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureThemes(this MaterialDesignControlsBuilder builder, MaterialTheme? lightTheme, MaterialTheme? darkTheme)
     {
         if (lightTheme is not null)
@@ -110,6 +122,15 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
     
+    /// <summary>
+    /// Overrides, partially or fully, default color palettes for one or both Light and Dark themes from Resources.
+    /// MDC will match resource keys with <see cref="MaterialTheme" /> property names.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="lightThemeResourcePrefix">Prefix for Light theme colors. Optional.</param>
+    /// <param name="darkThemeResourcePrefix">Prefix for Dark theme colors. Optional.</param>
+    /// <returns></returns>
     public static MaterialDesignControlsBuilder ConfigureThemesFromResources(this MaterialDesignControlsBuilder builder, 
         string? resourceDictionaryName = null,
         string? lightThemeResourcePrefix = null,
@@ -133,6 +154,12 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
     
+    /// <summary>
+    /// Overrides, partially or fully, default font sizes for texts.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="options"><see cref="MaterialSizeOptions" /> configuration for font sizes.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureFontSize(this MaterialDesignControlsBuilder builder, MaterialSizeOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -140,6 +167,14 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default font sizes for texts from Resources.
+    /// MDC will match resource keys with <see cref="MaterialSizeOptions" /> property names.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureFontSizeFromResources(
         this MaterialDesignControlsBuilder builder,
         string? resourceDictionaryName = null,
@@ -155,6 +190,12 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default font tracking sizes for texts.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="options"><see cref="MaterialSizeOptions" /> configuration for font tracking sizes.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureFontTracking(this MaterialDesignControlsBuilder builder, MaterialSizeOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -162,6 +203,14 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default font tracking sizes for texts from Resources.
+    /// MDC will match resource keys with <see cref="MaterialSizeOptions" /> property names.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureFontTrackingFromResources(
         this MaterialDesignControlsBuilder builder,
         string? resourceDictionaryName = null,
@@ -177,6 +226,12 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default <see cref="Shadow"/> configuration for elevation levels.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="options"><see cref="MaterialElevationOptions" /> configuration for elevation levels.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureElevation(this MaterialDesignControlsBuilder builder, MaterialElevationOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -184,6 +239,14 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default <see cref="Shadow"/> configuration for elevation levels from Resources.
+    /// MDC will match resource keys with <see cref="MaterialElevationOptions" /> property names.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureElevationFromResources(this MaterialDesignControlsBuilder builder,
         string? resourceDictionaryName = null,
         string? resourcePrefix = null)
@@ -198,6 +261,12 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default string formats used by Material Design Controls.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="options"><see cref="MaterialFormatOptions" /> configuration for string formats.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureStringFormat(this MaterialDesignControlsBuilder builder, MaterialFormatOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -205,6 +274,14 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default string formats from Resources.
+    /// MDC will match resource keys with <see cref="MaterialFormatOptions" /> property names.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureStringFormatFromResources(
         this MaterialDesignControlsBuilder builder,
         string? resourceDictionaryName = null,
@@ -220,6 +297,12 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default icons used by Material Design Controls.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="options"><see cref="MaterialIconOptions" /> configuration for icons.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureIcons(this MaterialDesignControlsBuilder builder, MaterialIconOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -227,6 +310,14 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default icons used by Material Design Controls from Resources.
+    /// MDC will match resource keys with <see cref="MaterialIconOptions" /> property names.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureIconsFromResources(this MaterialDesignControlsBuilder builder,
         string? resourceDictionaryName = null,
         string? resourcePrefix = null)
@@ -241,6 +332,12 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default animations used by Material Design Controls.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="options"><see cref="MaterialAnimationOptions" /> configuration for animations.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureAnimations(this MaterialDesignControlsBuilder builder, MaterialAnimationOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -248,6 +345,14 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default animations used by Material Design Controls from Resources.
+    /// MDC will match resource keys with <see cref="MaterialAnimationOptions" /> property names.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureAnimationsFromResources(
         this MaterialDesignControlsBuilder builder,
         string? resourceDictionaryName = null,
@@ -263,6 +368,12 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Overrides, partially or fully, default <see cref="MaterialSnackbar"/> configuration globally.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="options"><see cref="MaterialSnackbarOptions" /> configuration for <see cref="MaterialSnackbar"/>.</param>
+    /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureSnackbar(this MaterialDesignControlsBuilder builder, MaterialSnackbarOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -270,6 +381,13 @@ public static class MaterialDesignControlsBuilderExtensions
         return builder;
     } 
     
+    /// <summary>
+    /// Registers a custom defined implementation for <see cref="IMaterialSnackbar"/> and set global default configuration.
+    /// </summary>
+    /// <param name="builder">Material Design Controls builder.</param>
+    /// <param name="options"><see cref="MaterialSnackbarOptions" /> configuration for <see cref="MaterialSnackbar"/>.</param>
+    /// <typeparam name="T">User-defined implementation for <see cref="IMaterialSnackbar"/>.</typeparam>
+    /// <returns></returns>
     public static MaterialDesignControlsBuilder ConfigureSnackbar<T>(this MaterialDesignControlsBuilder builder, MaterialSnackbarOptions? options = null) where T : IMaterialSnackbar
     {
         ConfigurationWithLogger(() =>
@@ -286,34 +404,8 @@ public static class MaterialDesignControlsBuilderExtensions
         
         return builder;
     }
-
-    private static MaterialDesignControlsBuilder ConfigureFromResources<T>(this MaterialDesignControlsBuilder builder, 
-        Func<MaterialDesignControlsBuilder, T, MaterialDesignControlsBuilder> func, 
-        string? resourceDictionaryName = null,
-        string? resourcePrefix = null,
-        string? callerFilePath = null,
-        string? callerMemberName = null) where T : new()
-    {
-        var methodName = callerMemberName?
-            .Replace("Configure", string.Empty)
-            .Replace("FromResources", string.Empty);
-        
-        Logger.DebugWithCallerInfo($"Enqueuing {methodName} loading task from resources", callerFilePath, callerMemberName);
-        
-        MaterialDesignControls.EnqueueAction(
-            resourceDictionaryName,
-            resources =>
-            {
-                Logger.DebugWithCallerInfo($"Configuring {methodName} from Resources source: {resources.Source}", callerFilePath, callerMemberName);
-                
-                var opt = resources.FromResources<T>(resourcePrefix);
-                func(builder, opt);    
-                
-                Logger.DebugWithCallerInfo($"{methodName} configuration from resources COMPLETED", callerFilePath, callerMemberName);
-            });
-        
-        return builder;
-    }
+ 
+    #region MauiAppBuilder
     
     private static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
@@ -364,8 +456,10 @@ public static class MaterialDesignControlsBuilderExtensions
             }));
 #endif
     }
-
     
+    #endregion MauiAppBuilder
+    
+    #region Styles & Resources
     
     private static void RegisterDefaultStyles()
     {
@@ -396,8 +490,6 @@ public static class MaterialDesignControlsBuilderExtensions
         
         Logger.Debug("Components styles registration COMPLETED");
     }
-
-     
     
     private static ResourceDictionary AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
     {
@@ -427,6 +519,34 @@ public static class MaterialDesignControlsBuilderExtensions
         return resources;
     }
 
+    private static MaterialDesignControlsBuilder ConfigureFromResources<T>(this MaterialDesignControlsBuilder builder, 
+        Func<MaterialDesignControlsBuilder, T, MaterialDesignControlsBuilder> func, 
+        string? resourceDictionaryName = null,
+        string? resourcePrefix = null,
+        string? callerFilePath = null,
+        string? callerMemberName = null) where T : new()
+    {
+        var methodName = callerMemberName?
+            .Replace("Configure", string.Empty)
+            .Replace("FromResources", string.Empty);
+        
+        Logger.DebugWithCallerInfo($"Enqueuing {methodName} loading task from resources", callerFilePath, callerMemberName);
+        
+        MaterialDesignControls.EnqueueAction(
+            resourceDictionaryName,
+            resources =>
+            {
+                Logger.DebugWithCallerInfo($"Configuring {methodName} from Resources source: {resources.Source}", callerFilePath, callerMemberName);
+                
+                var opt = resources.FromResources<T>(resourcePrefix);
+                func(builder, opt);    
+                
+                Logger.DebugWithCallerInfo($"{methodName} configuration from resources COMPLETED", callerFilePath, callerMemberName);
+            });
+        
+        return builder;
+    }
+    
     private static T FromResources<T>(this ResourceDictionary dictionary, string? prefix = null) where T : new()
     {
         var resSource = dictionary.Source?.ToString();
@@ -450,4 +570,34 @@ public static class MaterialDesignControlsBuilderExtensions
         
         return result;
     }
+    
+    #endregion Styles & Resources
+    
+    #region Logging
+    
+    private static void ConfigurationWithLogger(Action onTry, Action<Exception>? onCatch = null, bool @throw = false, [CallerFilePath] string? callerFilePath = null, [CallerMemberName] string? callerMemberName = null)
+    {
+        Logger.DebugWithCallerInfo("Init configuration", callerFilePath, callerMemberName);
+        Logger.LogOnExceptionWithCallerInfo(onTry,
+            ex =>
+            {
+                Logger.DebugWithCallerInfo("Configuration completed with ERROR", callerFilePath, callerMemberName);
+                onCatch?.Invoke(ex);
+            }, @throw, callerFilePath, callerMemberName);
+        Logger.DebugWithCallerInfo("Configuration COMPLETED", callerFilePath, callerMemberName);
+    }
+    
+    private static void ConfigurationWithLoggerAndCaller(Action onTry, Action<Exception>? onCatch = null, bool @throw = false, string? callerFilePath = null, string? callerMemberName = null)
+    {
+        Logger.DebugWithCallerInfo("Init configuration", callerFilePath, callerMemberName);
+        Logger.LogOnExceptionWithCallerInfo(onTry,
+            ex =>
+            {
+                Logger.DebugWithCallerInfo("Configuration completed with ERROR", callerFilePath, callerMemberName);
+                onCatch?.Invoke(ex);
+            }, @throw, callerFilePath, callerMemberName);
+        Logger.DebugWithCallerInfo("Configuration COMPLETED", callerFilePath, callerMemberName);
+    }
+    
+    #endregion Logging
 }

@@ -1078,19 +1078,7 @@ public class MaterialNavigationDrawer : ContentView
                 new Binding(nameof(item.SelectedLeadingIcon), source: item),
                 new Binding(nameof(item.LeadingIcon), source: item),
             },
-            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
-            {
-                var isSelected = (bool)values[0];
-                var selectedLeadingIcon = (string)values[1];
-                var unselectedLeadingIcon = (string)values[2];
-
-                if (string.IsNullOrEmpty(selectedLeadingIcon))
-                {
-                    selectedLeadingIcon = unselectedLeadingIcon;
-                }
-                
-                return (isSelected && !string.IsNullOrEmpty(selectedLeadingIcon) || (!isSelected && !string.IsNullOrEmpty(unselectedLeadingIcon)));
-            })
+            Converter = new MultiValueConverter(GetIconVisibility)
         });
     }
 
@@ -1104,19 +1092,7 @@ public class MaterialNavigationDrawer : ContentView
                 new Binding(nameof(item.SelectedLeadingIcon), source: item),
                 new Binding(nameof(item.LeadingIcon), source: item),
             },
-            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
-            {
-                var isSelected = (bool)values[0];
-                var selectedLeadingIcon = (string)values[1];
-                var unselectedLeadingIcon = (string)values[2];
-
-                if (string.IsNullOrEmpty(selectedLeadingIcon))
-                {
-                    selectedLeadingIcon = unselectedLeadingIcon;
-                }
-
-                return isSelected ? selectedLeadingIcon : unselectedLeadingIcon;
-            })
+            Converter = new MultiValueConverter(GetIconSource)
         });
     }
 
@@ -1130,19 +1106,7 @@ public class MaterialNavigationDrawer : ContentView
                 new Binding(nameof(item.SelectedTrailingIcon), source: item),
                 new Binding(nameof(item.TrailingIcon), source: item),
             },
-            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
-            {
-                var isSelected = (bool)values[0];
-                var selectedTrailingIcon = (string)values[1];
-                var unselectedTrailingIcon = (string)values[2];
-
-                if (string.IsNullOrEmpty(selectedTrailingIcon))
-                {
-                    selectedTrailingIcon = unselectedTrailingIcon;
-                }
-                
-                return (isSelected && !string.IsNullOrEmpty(selectedTrailingIcon) || (!isSelected && !string.IsNullOrEmpty(unselectedTrailingIcon)));
-            })
+            Converter = new MultiValueConverter(GetIconVisibility)
         });
     }
 
@@ -1156,38 +1120,56 @@ public class MaterialNavigationDrawer : ContentView
                 new Binding(nameof(item.SelectedTrailingIcon), source: item),
                 new Binding(nameof(item.TrailingIcon), source: item),
             },
-            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
-            {
-                var isSelected = (bool)values[0];
-                var selectedTrailingIcon = (string)values[1];
-                var unselectedTrailingIcon = (string)values[2];
-
-                if (string.IsNullOrEmpty(selectedTrailingIcon))
-                {
-                    selectedTrailingIcon = unselectedTrailingIcon;
-                }
-                
-                return isSelected ? selectedTrailingIcon : unselectedTrailingIcon;
-            })
+            Converter = new MultiValueConverter(GetIconSource)
         });
     }
 
+    private object GetIconVisibility(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        try
+        {
+            var isSelected = (bool)values[0];
+            var selectedIcon = (ImageSource?)values[1];
+            var unselectedIcon = (ImageSource?)values[2];
+
+            selectedIcon ??= unselectedIcon;
+
+            return (isSelected && selectedIcon is not null) ||
+                   (!isSelected && unselectedIcon is not null);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+    
+    private object GetIconSource(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        try
+        {
+            var isSelected = (bool)values[0];
+            var selectedIcon = (ImageSource?)values[1];
+            var unselectedIcon = (ImageSource?)values[2];
+
+            selectedIcon ??= unselectedIcon;
+
+            return isSelected ? selectedIcon : unselectedIcon;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+    
     #endregion Setters
 
     #region Converters
 
-    private class IsSelectedToFrameBackgroundConverter : IValueConverter
+    private class IsSelectedToFrameBackgroundConverter(MaterialNavigationDrawer drawer) : IValueConverter
     {
-        private readonly MaterialNavigationDrawer _drawer;
-
-        public IsSelectedToFrameBackgroundConverter(MaterialNavigationDrawer drawer)
-        {
-            _drawer = drawer;
-        }
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? _drawer.ActiveIndicatorBackgroundColor : Colors.Transparent;
+            return (bool)value ? drawer.ActiveIndicatorBackgroundColor : Colors.Transparent;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -1196,18 +1178,11 @@ public class MaterialNavigationDrawer : ContentView
         }
     }
     
-    private class ItemEnabledToColorConverter : IValueConverter
+    private class ItemEnabledToColorConverter(MaterialNavigationDrawer drawer) : IValueConverter
     {
-        private readonly MaterialNavigationDrawer _drawer;
-
-        public ItemEnabledToColorConverter(MaterialNavigationDrawer drawer)
-        {
-            _drawer = drawer;
-        }
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? _drawer.LabelColor : _drawer.DisabledLabelColor;
+            return (bool)value ? drawer.LabelColor : drawer.DisabledLabelColor;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -1216,18 +1191,11 @@ public class MaterialNavigationDrawer : ContentView
         }
     }
 
-    public class MultiValueConverter : IMultiValueConverter
+    private class MultiValueConverter(Func<object[], Type, object, CultureInfo, object> convert) : IMultiValueConverter
     {
-        private readonly Func<object[], Type, object, CultureInfo, object> _convert;
-
-        public MultiValueConverter(Func<object[], Type, object, CultureInfo, object> convert)
-        {
-            _convert = convert;
-        }
-
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return _convert(values, targetType, parameter, culture);
+            return convert(values, targetType, parameter, culture);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

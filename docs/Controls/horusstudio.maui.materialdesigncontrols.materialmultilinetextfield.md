@@ -1,38 +1,34 @@
-# MaterialPicker
+# MaterialMultilineTextField
 
-A picker  let users select an option.
+A text field  let users enter multiline text into a UI and follows Material Design Guidelines [](https://m3.material.io/components/text-fields/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
-Inherits from: MaterialPicker → MaterialInputBase
+Inherits from: MaterialMultilineTextField → MaterialInputBase
 
 <br>
 
-![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialPicker.gif)
+![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialMultilineTextField.gif)
 
 ### XAML sample
 
 ```csharp
 xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 
-<material:MaterialPicker
-    ItemsSource="{Binding ItemsSource}"
-    TrailingIcon="picker_arrow.png"
-    Placeholder="Select an option" />
+<material:MaterialMultilineTextField
+    Placeholder="Enter text here" />
 ```
 
 ### C# sample
 
 ```csharp
-var picker = new MaterialPicker
+var textField = new MaterialMultilineTextField
 {
-    ItemsSource= ItemsSource,
-    TrailingIcon="picker_arrow.png"
-    Placeholder="Select an option"
+    Placeholder = "Enter text here"
 };
 ```
 
-[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/PickerPage.xaml)
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/MultilineTextFieldPage.xaml)
 
 ## Properties
 
@@ -44,6 +40,18 @@ Gets or sets if the label is always displayed.
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Default value: False
+
+<br>
+
+### <a id="properties-autosize"/>**AutoSize**
+
+Gets or sets a value that controls whether the editor will change size to accommodate
+ input as the user enters it.
+ Whether the editor will change size to accommodate input as the user enters it.
+
+Property type: [EditorAutoSizeOption](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.editorautosizeoption)<br>
+
+Remarks: Automatic resizing is turned off by default.
 
 <br>
 
@@ -100,8 +108,6 @@ Gets or sets a value that indicates the number of device-independent units that
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-Default value: MaterialFontTracking.BodyLarge 0.5
-
 Remarks: To be added.
 
 <br>
@@ -113,6 +119,24 @@ Gets or sets the corner radius for the input, in device-independent units. This 
 Property type: [CornerRadius](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.cornerradius)<br>
 
 Default value: CornerRadius(0)
+
+<br>
+
+### <a id="properties-cursorcolor"/>**CursorColor**
+
+Gets or sets a color of the caret indicator.
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Remarks: This Property only works on iOS and 'ndroid' 29 or later
+
+<br>
+
+### <a id="properties-cursorposition"/>**CursorPosition**
+
+Gets or sets input's cursor position. This is a bindable property.
+
+Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 <br>
 
@@ -150,7 +174,7 @@ Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/mic
 ### <a id="properties-fontautoscalingenabled"/>**FontAutoScalingEnabled**
 
 Determines whether or not the font of this entry should scale automatically according
- to the operating system settings. This is a bindable property.
+ to the operating system settings. Default value is true. This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
@@ -240,29 +264,45 @@ Default value: False
 
 <br>
 
-### <a id="properties-itemdisplaypath"/>**ItemDisplayPath**
+### <a id="properties-isreadonly"/>**IsReadOnly**
 
-Gets or sets the property path.
- This property is used to map an object and display a property of it.
+Gets or sets a value that indicates whether user should be prevented from modifying the text.
+ If true, user cannot modify text. Else, false.
 
-Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: null
+Default value: False
 
-Remarks: If it´s no defined, the control will use toString() method.
+Remarks: The IsReadonly property does not alter the visual appearance of the control, unlike the IsEnabled property that also changes the visual appearance of the control
 
 <br>
 
-### <a id="properties-itemssource"/>**ItemsSource**
+### <a id="properties-isspellcheckenabled"/>**IsSpellCheckEnabled**
 
-Gets or sets the source list of items to template and display.
- To be added.
+Gets or sets a value that controls whether spell checking is enabled.
+ true if spell checking is enabled. Otherwise false.
 
-Property type: [IEnumerable](https://learn.microsoft.com/en-us/dotnet/api/system.collections.ienumerable)<br>
-
-Default value: Null
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Remarks: To be added.
+
+<br>
+
+### <a id="properties-istextpredictionenabled"/>**IsTextPredictionEnabled**
+
+Determines whether text prediction and automatic text correction is enabled.
+
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+Default value: True
+
+<br>
+
+### <a id="properties-keyboard"/>**Keyboard**
+
+Gets or sets input's keyboard. This is a bindable property.
+
+Property type: [Keyboard](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.keyboard)<br>
 
 <br>
 
@@ -381,6 +421,14 @@ Default value: Light: MaterialLightTheme.OnSurfaceVariant - Dark: MaterialDarkTh
 
 <br>
 
+### <a id="properties-maxlength"/>**MaxLength**
+
+Gets or sets input's max length. This is a bindable property.
+
+Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+<br>
+
 ### <a id="properties-placeholder"/>**Placeholder**
 
 Gets or sets the text displayed as the placeholder of the input.
@@ -419,40 +467,6 @@ Gets or sets font size for placeholder. This is a bindable property.
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 Default value: MaterialFontSize.BodyLarge Tablet = 19 / Phone = 16
-
-<br>
-
-### <a id="properties-selectedindex"/>**SelectedIndex**
-
-Gets the index of the selected item of the picker. This is a bindable
- property.
- An 0-based index representing the selected item in the list. Default is -1.
-
-Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-Remarks: A value of -1 represents no item selected.
-
-<br>
-
-### <a id="properties-selectedindexchangedcommand"/>**SelectedIndexChangedCommand**
-
-Gets or sets an ICommand to be executed when selected index has changed. This is a bindable
- property.
-
-Property type: ICommand<br>
-
-<br>
-
-### <a id="properties-selecteditem"/>**SelectedItem**
-
-Gets or sets the selected item.
- To be added.
-
-Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
-
-Default value: Null
-
-Remarks: To be added.
 
 <br>
 
@@ -519,12 +533,20 @@ Default value: null
 
 ### <a id="properties-text"/>**Text**
 
-Gets or sets the text This property cannot be changed by the user.
+Gets or sets the text displayed as the content of the input.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 Default value: null
+
+<br>
+
+### <a id="properties-textchangedcommand"/>**TextChangedCommand**
+
+Gets or sets input's text changed command. This is a bindable property.
+
+Property type: ICommand<br>
 
 <br>
 
@@ -535,6 +557,14 @@ Gets or sets the  for the text of the input. This is a bindable property.
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 Default value: Light: MaterialLightTheme.OnSurface - Dark: MaterialDarkTheme.OnSurface
+
+<br>
+
+### <a id="properties-texttransform"/>**TextTransform**
+
+Gets or sets input's texttransform. This is a bindable property.
+
+Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.texttransform)<br>
 
 <br>
 
@@ -612,10 +642,8 @@ Gets or sets the vertical text alignment. This is a bindable property.
 
 Property type: [TextAlignment](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.textalignment)<br>
 
-Default value: null
-
 <br>
 
 ## Known issues and pending features
 
-* [Android] Use the colors defined in Material in the picker dialog
+* [iOS] FontAttributes doesn´t work
