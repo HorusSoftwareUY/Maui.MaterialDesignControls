@@ -334,7 +334,7 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
+    /// Gets or sets the parameter to pass to the <see cref="Command">Command</see> property.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -453,7 +453,7 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
+    /// Gets or sets the parameter to pass to the <see cref="Animation">Animation</see> property.
     /// This is a bindable property.
     /// </summary>
     /// <default>

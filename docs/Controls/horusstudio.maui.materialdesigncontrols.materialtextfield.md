@@ -32,6 +32,17 @@ var textField = new MaterialTextField
 
 ## Properties
 
+### <a id="properties-alwaysshowlabel"/>**AlwaysShowLabel**
+
+Gets or sets if the label is always displayed.
+ This is a bindable property.
+
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+Default value: False
+
+<br>
+
 ### <a id="properties-background"/>**Background**
 
 Gets or sets a  that describes the background of the input. This is a bindable property.
@@ -134,9 +145,21 @@ Default value: 0
 
 <br>
 
+### <a id="properties-erroricon"/>**ErrorIcon**
+
+Allows you to display a trailing icon when input has error. This is a bindable property.
+
+Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
+
+Default value: null
+
+Remarks: For more options have a look at MaterialIconButton.
+
+<br>
+
 ### <a id="properties-focusedcommand"/>**FocusedCommand**
 
-Gets or sets a focused command. This is a bindable property.
+Gets or sets a Command to be invoked when input is Focused. This is a bindable property.
 
 Property type: ICommand<br>
 
@@ -146,12 +169,10 @@ Default value: null
 
 ### <a id="properties-fontattributes"/>**FontAttributes**
 
-Gets or sets a value that indicates whether the font for the text of this entry
+Gets or sets a value that indicates whether the font for the text of this input
  is bold, italic, or neither. This is a bindable property.
 
 Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.fontattributes)<br>
-
-Default value: null
 
 <br>
 
@@ -170,7 +191,7 @@ Remarks: Typically this should always be enabled for accessibility reasons.
 
 ### <a id="properties-fontfamily"/>**FontFamily**
 
-Gets or sets the font family for the input. This is a bindable property.
+Gets or sets font family for input. This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -180,7 +201,7 @@ Default value: MaterialFontFamily.Default
 
 ### <a id="properties-fontsize"/>**FontSize**
 
-Gets or sets the font size for the input. This is a bindable property.
+Gets or sets font size for input. This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -195,6 +216,14 @@ Gets or sets if the input has an error. This is a bindable property.
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Default value: False
+
+<br>
+
+### <a id="properties-heightrequest"/>**HeightRequest**
+
+Gets or sets the height request
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 <br>
 
@@ -216,13 +245,13 @@ Property type: ICommand<br>
 
 Default value: null
 
-Remarks: This property is used internally and it's recommended to avoid setting it directly.
+Remarks: This property is used internally, and it's recommended to avoid setting it directly.
 
 <br>
 
 ### <a id="properties-isenabled"/>**IsEnabled**
 
-Gets or sets if the input is enabled or diabled. This is a bindable property.
+Gets or sets if the input is enabled or disabled. This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
@@ -309,7 +338,7 @@ Default value: null
 
 ### <a id="properties-labelcolor"/>**LabelColor**
 
-Gets or sets the label color. This is a bindable property.
+Gets or sets text color for label. This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -319,7 +348,7 @@ Default value: Light: MaterialLightTheme.OnSurfaceVariant - Dark: MaterialDarkTh
 
 ### <a id="properties-labelfontfamily"/>**LabelFontFamily**
 
-Gets or sets the label font family. This is a bindable property.
+Gets or sets font family for label. This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -329,7 +358,7 @@ Default value: MaterialFontFamily.Default
 
 ### <a id="properties-labellinebreakmode"/>**LabelLineBreakMode**
 
-Gets or sets the label line break mode. This is a bindable property.
+Gets or sets line break mode for label. This is a bindable property.
 
 Property type: [LineBreakMode](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.linebreakmode)<br>
 
@@ -339,7 +368,7 @@ Default value:
 
 ### <a id="properties-labelmargin"/>**LabelMargin**
 
-Gets or sets the label margin. This is a bindable property.
+Gets or sets margin for label. This is a bindable property.
  The default value is 0
 
 Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
@@ -348,13 +377,36 @@ Default value: Thickness(0)
 
 <br>
 
+### <a id="properties-labelpadding"/>**LabelPadding**
+
+Gets or sets padding for label. This is a bindable property.
+ The default value is 0
+
+Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
+
+Default value: Filled: Thickness(0). Outlined: Thickness(4,1)
+
+<br>
+
 ### <a id="properties-labelsize"/>**LabelSize**
 
-Gets or sets the label size. This is a bindable property.
+Gets or sets font size for label. This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-Default value: MaterialFontSize.BodyLarge Tablet = 19 / Phone = 16
+Default value: MaterialFontSize.BodySmall Tablet = 15 / Phone = 12
+
+<br>
+
+### <a id="properties-leadingicon"/>**LeadingIcon**
+
+Allows you to display a leading icon (bitmap image) on the input. This is a bindable property.
+
+Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
+
+Default value: null
+
+Remarks: For more options have a look at MaterialIconButton.
 
 <br>
 
@@ -375,18 +427,6 @@ Gets or sets a Leading icon command parameter. This is a bindable property.
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 Default value: null
-
-<br>
-
-### <a id="properties-leadingiconsource"/>**LeadingIconSource**
-
-Allows you to display a leading icon (bitmap image) on the input. This is a bindable property.
-
-Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
-
-Default value: null
-
-Remarks: For more options have a look at MaterialIconButton.
 
 <br>
 
@@ -423,11 +463,31 @@ Default value: null
 
 ### <a id="properties-placeholdercolor"/>**PlaceholderColor**
 
-Gets or sets the place holder color for the input. This is a bindable property.
+Gets or sets text color for placeholder. This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 Default value: Light: MaterialLightTheme.OnSurfaceVariant - Dark: MaterialDarkTheme.OnSurfaceVariant
+
+<br>
+
+### <a id="properties-placeholderfontfamily"/>**PlaceholderFontFamily**
+
+Gets or sets font family for placeholder. This is a bindable property.
+
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Default value: MaterialFontFamily.Default
+
+<br>
+
+### <a id="properties-placeholdersize"/>**PlaceholderSize**
+
+Gets or sets font size for placeholder. This is a bindable property.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: MaterialFontSize.BodyLarge Tablet = 19 / Phone = 16
 
 <br>
 
@@ -463,19 +523,19 @@ Default value:
 
 <br>
 
-### <a id="properties-showtrailingicononlyonerror"/>**ShowTrailingIconOnlyOnError**
+### <a id="properties-supportingcolor"/>**SupportingColor**
 
-Gets or sets if show the trailing icon only on error. This is a bindable property.
+Gets or sets text color for supporting text. This is a bindable property.
 
-Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: false
+Default value: Light: MaterialLightTheme.OnSurfaceVariant - Dark: MaterialDarkTheme.OnSurfaceVariant
 
 <br>
 
 ### <a id="properties-supportingfontfamily"/>**SupportingFontFamily**
 
-Gets or sets the font family for the input. This is a bindable property.
+Gets or sets font family for supporting text. This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -483,19 +543,9 @@ Default value: MaterialFontFamily.Default
 
 <br>
 
-### <a id="properties-supportingfontsize"/>**SupportingFontSize**
-
-Gets or sets the font size for the input. This is a bindable property.
-
-Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
-
-Default value: MaterialFontSize.BodySmall Tablet = 15 / Phone = 12
-
-<br>
-
 ### <a id="properties-supportinglinebreakmode"/>**SupportingLineBreakMode**
 
-Gets or sets the supporting line break mode. This is a bindable property.
+Gets or sets line break mode for supporting text. This is a bindable property.
 
 Property type: [LineBreakMode](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.linebreakmode)<br>
 
@@ -505,11 +555,21 @@ Default value:
 
 ### <a id="properties-supportingmargin"/>**SupportingMargin**
 
-Gets or sets the label margin. This is a bindable property.
+Gets or sets margin for supporting text. This is a bindable property.
 
 Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
 
 Default value: Thickness(16, 4)
+
+<br>
+
+### <a id="properties-supportingsize"/>**SupportingSize**
+
+Gets or sets font size for supporting text. This is a bindable property.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: MaterialFontSize.BodySmall Tablet = 15 / Phone = 12
 
 <br>
 
@@ -521,16 +581,6 @@ Gets or sets the text displayed as the supporting text of the input.
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 Default value: null
-
-<br>
-
-### <a id="properties-supportingtextcolor"/>**SupportingTextColor**
-
-Gets or sets the supporting text color. This is a bindable property.
-
-Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
-
-Default value: Light: MaterialLightTheme.OnSurfaceVariant - Dark: MaterialDarkTheme.OnSurfaceVariant
 
 <br>
 
@@ -575,6 +625,18 @@ Default value:
 
 <br>
 
+### <a id="properties-trailingicon"/>**TrailingIcon**
+
+Allows you to display a trailing icon (bitmap image) on the input. This is a bindable property.
+
+Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
+
+Default value: null
+
+Remarks: For more options have a look at MaterialIconButton.
+
+<br>
+
 ### <a id="properties-trailingiconcommand"/>**TrailingIconCommand**
 
 Gets or sets a Trailing Icon command. This is a bindable property.
@@ -592,18 +654,6 @@ Gets or sets a Trailing Icon command parameter. This is a bindable property.
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 Default value: null
-
-<br>
-
-### <a id="properties-trailingiconsource"/>**TrailingIconSource**
-
-Allows you to display a trailing icon (bitmap image) on the input. This is a bindable property.
-
-Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
-
-Default value: null
-
-Remarks: For more options have a look at MaterialIconButton.
 
 <br>
 
@@ -635,7 +685,7 @@ Default value: MaterialInputType.Filled
 
 ### <a id="properties-unfocusedcommand"/>**UnfocusedCommand**
 
-Gets or sets a unfocused command. This is a bindable property.
+Gets or sets a Command to be invoked when input is Unfocused. This is a bindable property.
 
 Property type: ICommand<br>
 

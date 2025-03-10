@@ -8,6 +8,14 @@ Namespace: HorusStudio.Maui.MaterialDesignControls
 
 ## Properties
 
+#### Disable
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: #9791A1 ![](https://placehold.co/15x15/9791A1/9791A1.png)
+
+<br>
+
 #### Error
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>

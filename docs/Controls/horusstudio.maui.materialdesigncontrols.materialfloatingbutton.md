@@ -17,7 +17,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 
 <material:MaterialFloatingButton
       Icon="IconButton"
-      ActionCommand="{Binding FloatingButtonActionCommand}"
+      Command="{Binding FloatingButtonActionCommand}"
       x:Name="MaterialFloatingButton"/>
 ```
 
@@ -27,7 +27,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 var MaterialFloatingButton = new MaterialFloatingButton()
 {
     Icon = "IconButton",
-    ActionCommand = ActionCommand
+    Command = ActionCommand
 };
 ```
 
@@ -35,7 +35,18 @@ var MaterialFloatingButton = new MaterialFloatingButton()
 
 ## Properties
 
-### <a id="properties-actioncommand"/>**ActionCommand**
+### <a id="properties-backgroundcolor"/>**BackgroundColor**
+
+Gets or sets background color floating button
+ This is a bindable property.
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Theme: Light = MaterialLightTheme.PrimaryContainer - Dark = MaterialDarkTheme.PrimaryContainer
+
+<br>
+
+### <a id="properties-command"/>**Command**
 
 Gets or sets command when press floating button
  This is a bindable property.
@@ -51,9 +62,9 @@ Remarks: This property is used to associate a command with an instance of FAB. T
 
 <br>
 
-### <a id="properties-actioncommandparameter"/>**ActionCommandParameter**
+### <a id="properties-commandparameter"/>**CommandParameter**
 
-Gets or sets the parameter to pass to the MaterialFloatingButton.ActionCommand property.
+Gets or sets the parameter to pass to the MaterialFloatingButton.Command property.
  This is a bindable property.
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
@@ -62,25 +73,32 @@ Default value: Null
 
 <br>
 
-### <a id="properties-backgroundcolor"/>**BackgroundColor**
-
-Gets or sets background color floating button
- This is a bindable property.
-
-Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
-
-Default value: Theme: Light = MaterialLightTheme.PrimaryContainer - Dark = MaterialDarkTheme.PrimaryContainer
-
-<br>
-
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
 Gets or sets corners in floating button
  This is a bindable property.
 
-Property type: [CornerRadius](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.cornerradius)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-Default value: CornerRadius(16)
+Default value: 16
+
+<br>
+
+### <a id="properties-heightrequest"/>**HeightRequest**
+
+Gets or sets the desired height override of this element.
+ This is a bindable property.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: -1
+
+Remarks:
+
+- <para>which means the value is unset; the effective minimum height will be zero.</para>
+
+- <para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.HeightRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.HeightRequest" /> will change the resulting height of the element during the next layout pass.</para>
 
 <br>
 
@@ -108,12 +126,30 @@ Default value: Theme: Light = MaterialLightTheme.OnPrimaryContainer - Dark = Mat
 
 ### <a id="properties-iconsize"/>**IconSize**
 
-Gets or sets size Icon Size
+Gets or sets desired icon size for the element.
  This is a bindable property.
 
-Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 Default value: 24
+
+<br>
+
+### <a id="properties-margin"/>**Margin**
+
+Gets or sets the desired margin override of this element.
+ This is a bindable property.
+
+Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
+
+<br>
+
+### <a id="properties-padding"/>**Padding**
+
+Gets or sets the desired padding override of this element.
+ This is a bindable property.
+
+Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
 
 <br>
 
@@ -128,8 +164,8 @@ Property type: MaterialFloatingButtonPosition<br>
 | --- | --: | --- |
 | TopLeft | 0 | Top left |
 | TopRight | 1 | Top right |
-| BottomRight | 2 | Bottom right |
-| BottomLeft | 3 | Bottom left |
+| BottomLeft | 2 | Bottom left |
+| BottomRight | 3 | Bottom right |
 
 Default value: MaterialFloatingButtonPosition.BottomRight
 
@@ -149,5 +185,23 @@ Property type: MaterialFloatingButtonType<br>
 | Large | 2 | A large FAB is useful when the layout calls for a clear and prominent primary action, and where a larger footprint would help the user engage |
 
 Default value: MaterialFloatingButtonType.FAB
+
+<br>
+
+### <a id="properties-widthrequest"/>**WidthRequest**
+
+Gets or sets the desired width override of this element.
+ This is a bindable property.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: -1
+
+Remarks:
+
+- <para>which means the value is unset; the effective minimum width will be zero.</para>
+
+- <para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.WidthRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.WidthRequest" /> will change the resulting width of the element during the next layout pass.</para>
 
 <br>

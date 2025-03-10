@@ -1,41 +1,35 @@
-# MaterialDesignControls Plugin for .NET MAUI
+# MaterialDesignControls Plugin for .NET MAUI <!-- omit from toc -->
 
-<img src="resources/material_design_icon.jpg" width="128">
+<p align="center">
+    <img src="resources/git_banner.png" width="500">
+</p>
 
 MaterialDesignControls for .NET MAUI, provides a collection of UI controls that follow [Material Design 3 Guidelines](https://m3.material.io/).
+
+## Content table <!-- omit from toc -->
+- [Demo](#demo)
+- [Platform support](#platform-support)
+- [Setup](#setup)
+- [Getting started](#getting-started)
+- [Controls](#controls)
+  - [Coming soon](#coming-soon)
+- [Styles](#styles)
+- [Configurations](#configurations)
+  - [Configuration by code](#configuration-by-code)
+    - [Themes](#themes)
+    - [Font sizes](#font-sizes)
+    - [Font tracking sizes](#font-tracking-sizes)
+    - [Icons](#icons)
+    - [String formats](#string-formats)
+  - [Using Resources](#using-resources)
+- [Samples](#samples)
+- [Developed by](#developed-by)
+- [Contributions](#contributions)
+- [License](#license)
 
 ## Demo
 
 [TODO:VIDEO_DEMO]
-
-## Content table
-- [MaterialDesignControls Plugin for .NET MAUI](#materialdesigncontrols-plugin-for-net-maui)
-  - [Demo](#demo)
-  - [Content table](#content-table)
-  - [Setup](#setup)
-  - [Platform support](#platform-support)
-  - [Getting started](#getting-started)
-  - [Controls](#controls)
-    - [Coming soon](#coming-soon)
-  - [Styles](#styles)
-  - [Configuration](#configuration)
-    - [Configuration by code](#configuration-by-code)
-      - [Themes](#themes)
-      - [Font sizes](#font-sizes)
-      - [Font tracking sizes](#font-tracking-sizes)
-      - [Icons](#icons)
-      - [String formats](#string-formats)
-    - [Using Resources](#using-resources)
-  - [Sample app](#sample-app)
-  - [Developed by](#developed-by)
-  - [Contributions](#contributions)
-  - [License](#license)
-
-## Setup
-* Available on [NuGet](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/)
-```csharp
-dotnet add package HorusStudio.Maui.MaterialDesignControls
-```
 
 ## Platform support
 MaterialDesignControls Plugin provides cross-platform controls for:
@@ -43,6 +37,12 @@ MaterialDesignControls Plugin provides cross-platform controls for:
 * iOS
 * macOS
 * Windows (upcoming)
+
+## Setup
+* Available on [NuGet](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/)
+```csharp
+dotnet add package HorusStudio.Maui.MaterialDesignControls
+```
 
 ## Getting started
 In order to use MaterialDesignControls, you need to register it into your `MauiAppBuilder` on `MauiProgram.cs` file:
@@ -83,25 +83,25 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * [MaterialCard](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcard.md)
 * [MaterialCheckbox](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcheckbox.md)
 * [MaterialChips](docs/Controls/horusstudio.maui.materialdesigncontrols.materialchips.md)
-* MaterialChipsGroup
+* [MaterialChipsGroup](docs/Controls/horusstudio.maui.materialdesigncontrols.materialchipsgroup.md)
 * [MaterialDatePicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialdatepicker.md)
 * [MaterialDivider](docs/Controls/horusstudio.maui.materialdesigncontrols.materialdivider.md)
-* MaterialFloatingButton
+* [MaterialFloatingButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialfloatingbutton.md)
 * [MaterialIconButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialiconbutton.md)
 * [MaterialLabel](docs/Controls/horusstudio.maui.materialdesigncontrols.materiallabel.md)
-* MaterialMultilineTextField
-* MaterialNavigationDrawer
+* [MaterialMultilineTextField](docs/Controls/horusstudio.maui.materialdesigncontrols.materialmultilinetextfield.md)
+* [MaterialNavigationDrawer](docs/Controls/horusstudio.maui.materialdesigncontrols.materialnavigationdrawer.md)
 * [MaterialPicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialpicker.md)
 * [MaterialProgressIndicator](docs/Controls/horusstudio.maui.materialdesigncontrols.materialprogressindicator.md)
 * [MaterialRadioButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialradiobutton.md)
 * [MaterialRating](docs/Controls/horusstudio.maui.materialdesigncontrols.materialrating.md)
-* MaterialSelection
-* MaterialSlider
-* MaterialSwitch
-* MaterialSnackbar
+* [MaterialSelection](docs/Controls/horusstudio.maui.materialdesigncontrols.materialselection.md)
+* [MaterialSlider](docs/Controls/horusstudio.maui.materialdesigncontrols.materialslider.md)
+* [MaterialSwitch](docs/Controls/horusstudio.maui.materialdesigncontrols.materialswitch.md)
+* [MaterialSnackbar](docs/Controls/horusstudio.maui.materialdesigncontrols.imaterialsnackbar.md)
 * [MaterialTextField](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtextfield.md)
 * [MaterialTimePicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtimepicker.md)
-* MaterialTopAppBar
+* [MaterialTopAppBar](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtopappbar.md)
 * [MaterialViewButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewbutton.md)
 
 ### Coming soon
@@ -123,10 +123,10 @@ MaterialDesignControls define several Helpers with default configuration for col
 * [MaterialFontFamily](docs/Styles/horusstudio.maui.materialdesigncontrols.materialfontfamily.md)
 * [MaterialFontSize](docs/Styles/horusstudio.maui.materialdesigncontrols.materialfontsize.md)
 * [MaterialFontTracking](docs/Styles/horusstudio.maui.materialdesigncontrols.materialfonttracking.md)
-* MaterialIcon
-* MaterialFormat
+* [MaterialIcon](docs/Styles/horusstudio.maui.materialdesigncontrols.materialicon.md)
+* [MaterialFormat](docs/Styles/horusstudio.maui.materialdesigncontrols.materialformat.md)
 
-## Configuration
+## Configurations
 You can override those defaults following too different approaches, one entirely on C# code, and the other using `ResourceDictionaries`. 
 ```csharp
 var builder = MauiApp.CreateBuilder();
@@ -279,18 +279,21 @@ If you have all your resources (Colors, sizes, etc) on ResourceDictionaries, you
 ```
 
 
-## Sample app
+## Samples
 
-[Sample app here.](samples/HorusStudio.Maui.MaterialDesignControls.Sample)
+Find more usages and samples on our [sample app](samples/HorusStudio.Maui.MaterialDesignControls.Sample).
 
 ## Developed by
-<a href="http://horus.com.uy"><img src="https://assets-global.website-files.com/64a7016392b0b7da3a8604e3/64a7016392b0b7da3a8604ed_horus.svg" width="128"></a>
+<a href="http://horus.com.uy"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="resources/logo_dark.png">
+  <img src="resources/logo_light.png" width="200">
+</picture></a>
 
 
 ## Contributions
-Contributions are welcome! If you find a bug want a feature added please report it.
+Contributions are welcome! If you find a bug and/or want a feature added please report it.
 
 If you want to contribute code please file an issue, create a branch, and file a pull request.
 
 ## License 
-MIT License - see LICENSE.txt
+MIT License.

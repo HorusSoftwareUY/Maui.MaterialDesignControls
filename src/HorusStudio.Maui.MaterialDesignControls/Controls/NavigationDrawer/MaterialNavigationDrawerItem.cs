@@ -8,70 +8,109 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// </summary>
 public class MaterialNavigationDrawerItem : INotifyPropertyChanged
 {
-    private string _text;
+    #region Attributes
+    
+    private string _text = null!;
+    private string? _badgeText;
+    private string? _headline;
+    private ImageSource? _selectedLeadingIcon;
+    private ImageSource? _leadingIcon;
+    private ImageSource? _selectedTrailingIcon;
+    private ImageSource? _trailingIcon;
+    private bool _isSelected;
+    private bool _isEnabled = true;
+    
+    #endregion Attributes
+    
+    #region Properties
+    
+    /// <summary>
+    /// Gets or sets text to be displayed for item.
+    /// </summary>
     public string Text
     {
         get => _text;
         set => SetProperty(ref _text, value);
     }
 
-    private string _badgeText;
-    public string BadgeText
+    /// <summary>
+    /// Gets or set text for badge, if present. Optional.
+    /// </summary>
+    public string? BadgeText
     {
         get => _badgeText;
         set => SetProperty(ref _badgeText, value);
     }
 
-    private string _headline;
-    public string Headline
+    /// <summary>
+    /// Gets or sets headline text for item. Optional.
+    /// </summary>
+    public string? Headline
     {
         get => _headline;
         set => SetProperty(ref _headline, value);
     }
 
-    private string _selectedLeadingIcon;
-    public string SelectedLeadingIcon
+    /// <summary>
+    /// Gets or sets an icon source for leading icon when item is selected. Optional.
+    /// </summary>
+    public ImageSource? SelectedLeadingIcon
     {
         get => _selectedLeadingIcon;
         set => SetProperty(ref _selectedLeadingIcon, value);
     }
-
-    private string _leadingIcon;
-    public string LeadingIcon
+    
+    /// <summary>
+    /// Gets or sets an icon source for leading icon. Optional.
+    /// </summary>
+    public ImageSource? LeadingIcon
     {
         get => _leadingIcon;
         set => SetProperty(ref _leadingIcon, value);
     }
 
-    private string _selectedTrailingIcon;
-    public string SelectedTrailingIcon
+    /// <summary>
+    /// Gets or sets an icon source for trailing icon when item is selected. Optional.
+    /// </summary>
+    public ImageSource? SelectedTrailingIcon
     {
         get => _selectedTrailingIcon;
         set => SetProperty(ref _selectedTrailingIcon, value);
     }
-
-    private string _trailingIcon;
-    public string TrailingIcon
+    
+    /// <summary>
+    /// Gets or sets an icon source for trailing icon. Optional.
+    /// </summary>
+    public ImageSource? TrailingIcon
     {
         get => _trailingIcon;
         set => SetProperty(ref _trailingIcon, value);
     }
-
-    private bool _isSelected;
+    
+    /// <summary>
+    /// Gets or sets if item is selected or not.
+    /// </summary>
     public bool IsSelected
     {
         get => _isSelected;
         set => SetProperty(ref _isSelected, value);
     }
     
-    private bool _isEnabled = true;
+    /// <summary>
+    /// Gets or sets if item is enabled or not.
+    /// </summary>
     public bool IsEnabled
     {
         get => _isEnabled;
         set => SetProperty(ref _isEnabled, value);
     }
     
-    public override bool Equals(object obj)
+    /// <inheritdoc />
+    public event PropertyChangedEventHandler? PropertyChanged;
+    
+    #endregion Properties
+    
+    public override bool Equals(object? obj)
     {
         if (obj is not MaterialNavigationDrawerItem toCompare)
             return false;
@@ -81,10 +120,13 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         return key.Equals(keyToCompare, System.StringComparison.InvariantCultureIgnoreCase);
     }
 
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Headline, Text);
+    }
+
     public override string ToString() =>
         string.IsNullOrWhiteSpace(Text) ? "No defined text" : Text;
-
-    public event PropertyChangedEventHandler PropertyChanged;
 
     private void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
     {

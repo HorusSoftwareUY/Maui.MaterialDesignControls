@@ -57,7 +57,7 @@ Default value: AnimationTypes.Fade
 
 ### <a id="properties-animationparameter"/>**AnimationParameter**
 
-Gets or sets the parameter to pass to the MaterialIconButton.Animation property.
+Gets or sets the parameter to pass to the Animation property.
  This is a bindable property.
 
 Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
@@ -137,7 +137,7 @@ Remarks: This property is used to associate a command with an instance of a butt
 
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
-Gets or sets the parameter to pass to the MaterialIconButton.Command property.
+Gets or sets the parameter to pass to the Command property.
  This is a bindable property.
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
@@ -267,6 +267,16 @@ Property type: MaterialIconButtonType<br>
 | Custom | 4 | Custom material icon button |
 
 Default value: MaterialIconButtonType.Filled
+
+<br>
+
+### <a id="properties-usetintcolor"/>**UseTintColor**
+
+Gets or sets if button should use tint color.
+ The default value is true.
+ This is a bindable property.
+
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 <br>
 
