@@ -7,13 +7,17 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 	{
         #region Attributes & Properties
 
-        public override string Title => "Labels";
+        public override string Title => Models.Pages.Label;
+        protected override string ControlReferenceUrl => "styles/typography/type-scale-tokens";
 
         [ObservableProperty]
         private LabelTypes _labelType = LabelTypes.HeadlineSmall;
 
         [ObservableProperty]
         private Color _textColor = Colors.DarkGreen;
+
+        [ObservableProperty]
+        private string _fontFamily = "FontRegular";
 
         #endregion
 
@@ -27,6 +31,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             TextColor = LabelType == LabelTypes.HeadlineSmall ? Colors.DarkRed : Colors.DarkGreen;
             LabelType = LabelType == LabelTypes.HeadlineSmall ? LabelTypes.LabelMedium : LabelTypes.HeadlineSmall;
+            FontFamily = LabelType == LabelTypes.HeadlineSmall ? "FontBold" : "FontRegular";
         }
     }
 }

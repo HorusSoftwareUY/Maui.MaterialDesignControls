@@ -40,26 +40,22 @@ public class MaterialRating : ContentView
 {
     #region Attributes
 
-    private readonly static Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultStrokeColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private readonly static double DefaultStrokeThickness = 2.0;
-    private readonly static int DefaultItemsSize = 5;
-    private readonly static int DefaultItemsPerRow = 5;
-    private readonly static string DefaultFontFamily = MaterialFontFamily.Default;
-    private readonly static double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private readonly static double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
-#nullable enable
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
-#nullable disable
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultStrokeColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private const double DefaultStrokeThickness = 2.0;
+    private const int DefaultItemsSize = 5;
+    private const int DefaultItemsPerRow = 5;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
 
     #endregion Attributes
 
     #region Layout
 
-    private MaterialLabel _label;
-    private Grid _mainLayout;
-    private Grid _containerLayout;
+    private readonly Grid _containerLayout;
 
     #endregion Layout
 
@@ -73,17 +69,17 @@ public class MaterialRating : ContentView
     /// <summary>
     /// The backing store for the <see cref="LabelColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialRating), defaultValue: DefaultTextColor);
+    public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialRating), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="FontFamily" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialRating), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialRating), defaultValueCreator: DefaultFontFamily);
     
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialRating), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialRating), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="FontAttributes" /> bindable property.
@@ -98,7 +94,7 @@ public class MaterialRating : ContentView
     /// <summary>
     /// The backing store for the <see cref="FontSize" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialRating), defaultValue: DefaultFontSize);
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialRating), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="LabelTransform" /> bindable property.
@@ -108,7 +104,7 @@ public class MaterialRating : ContentView
     /// <summary>
     /// The backing store for the <see cref="IsEnabled" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialRating), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialRating), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, newValue) =>
     {
         if (bindable is MaterialRating self && newValue is bool)
         {
@@ -123,14 +119,12 @@ public class MaterialRating : ContentView
     /// <summary>
     /// The backing store for the <see cref="Animation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialRating), defaultValue: DefaultAnimationType);
+    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialRating), defaultValueCreator: DefaultAnimationType);
 
-#nullable enable
     /// <summary>
     /// The backing store for the <see cref="AnimationParameter"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialRating), defaultValue: DefaultAnimationParameter);
-#nullable disable
+    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialRating), defaultValueCreator: DefaultAnimationParameter);
 
     /// <summary>
     /// The backing store for the <see cref="CustomAnimation"/> bindable property.
@@ -140,7 +134,7 @@ public class MaterialRating : ContentView
     /// <summary>
     /// The backing store for the <see cref="StrokeColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create(nameof(StrokeColor), typeof(Color), typeof(MaterialRating), defaultValue: DefaultStrokeColor);
+    public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create(nameof(StrokeColor), typeof(Color), typeof(MaterialRating), defaultValueCreator: DefaultStrokeColor);
 
     /// <summary>
     /// The backing store for the <see cref="StrokeThickness" /> bindable property.
@@ -201,8 +195,8 @@ public class MaterialRating : ContentView
     /// </default>
     public string Label
     {
-        get { return (string)GetValue(LabelProperty); }
-        set { SetValue(LabelProperty, value); }
+        get => (string)GetValue(LabelProperty);
+        set => SetValue(LabelProperty, value);
     }
 
     /// <summary>
@@ -214,8 +208,8 @@ public class MaterialRating : ContentView
     /// </default>
     public Color LabelColor
     {
-        get { return (Color)GetValue(LabelColorProperty); }
-        set { SetValue(LabelColorProperty, value); }
+        get => (Color)GetValue(LabelColorProperty);
+        set => SetValue(LabelColorProperty, value);
     }
 
     /// <summary>
@@ -227,8 +221,8 @@ public class MaterialRating : ContentView
     /// </default>
     public string FontFamily
     {
-        get { return (string)GetValue(FontFamilyProperty); }
-        set { SetValue(FontFamilyProperty, value); }
+        get => (string)GetValue(FontFamilyProperty);
+        set => SetValue(FontFamilyProperty, value);
     }
 
     /// <summary>
@@ -237,8 +231,8 @@ public class MaterialRating : ContentView
     /// </summary>
     public double CharacterSpacing
     {
-        get { return (double)GetValue(CharacterSpacingProperty); }
-        set { SetValue(CharacterSpacingProperty, value); }
+        get => (double)GetValue(CharacterSpacingProperty);
+        set => SetValue(CharacterSpacingProperty, value);
     }
 
     /// <summary>
@@ -247,8 +241,8 @@ public class MaterialRating : ContentView
     /// </summary>
     public FontAttributes FontAttributes
     {
-        get { return (FontAttributes)GetValue(FontAttributesProperty); }
-        set { SetValue(FontAttributesProperty, value); }
+        get => (FontAttributes)GetValue(FontAttributesProperty);
+        set => SetValue(FontAttributesProperty, value);
     }
 
     /// <summary>
@@ -260,8 +254,8 @@ public class MaterialRating : ContentView
     /// </default>
     public bool FontAutoScalingEnabled
     {
-        get { return (bool)GetValue(FontAutoScalingEnabledProperty); }
-        set { SetValue(FontAutoScalingEnabledProperty, value); }
+        get => (bool)GetValue(FontAutoScalingEnabledProperty);
+        set => SetValue(FontAutoScalingEnabledProperty, value);
     }
 
     /// <summary>
@@ -272,8 +266,8 @@ public class MaterialRating : ContentView
     /// </default>
     public double FontSize
     {
-        get { return (double)GetValue(FontSizeProperty); }
-        set { SetValue(FontSizeProperty, value); }
+        get => (double)GetValue(FontSizeProperty);
+        set => SetValue(FontSizeProperty, value);
     }
 
     /// <summary>
@@ -282,8 +276,8 @@ public class MaterialRating : ContentView
     /// </summary>
     public TextTransform LabelTransform
     {
-        get { return (TextTransform)GetValue(LabelTransformProperty); }
-        set { SetValue(LabelTransformProperty, value); }
+        get => (TextTransform)GetValue(LabelTransformProperty);
+        set => SetValue(LabelTransformProperty, value);
     }
 
     /// <summary>
@@ -292,8 +286,8 @@ public class MaterialRating : ContentView
     /// </summary>
     public new bool IsEnabled
     {
-        get { return (bool)GetValue(IsEnabledProperty); }
-        set { SetValue(IsEnabledProperty, value); }
+        get => (bool)GetValue(IsEnabledProperty);
+        set => SetValue(IsEnabledProperty, value);
     }
 
     /// <summary>
@@ -309,7 +303,6 @@ public class MaterialRating : ContentView
         set => SetValue(AnimationProperty, value);
     }
 
-#nullable enable
     /// <summary>
     /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
     /// This is a bindable property.
@@ -322,7 +315,6 @@ public class MaterialRating : ContentView
         get => (double?)GetValue(AnimationParameterProperty);
         set => SetValue(AnimationParameterProperty, value);
     }
-#nullable disable
 
     /// <summary>
     /// Gets or sets a custom animation to be executed when a icon is clicked.
@@ -343,8 +335,8 @@ public class MaterialRating : ContentView
     /// </summary>
     public Color StrokeColor
     {
-        get { return (Color)GetValue(StrokeColorProperty); }
-        set { SetValue(StrokeColorProperty, value); }
+        get => (Color)GetValue(StrokeColorProperty);
+        set => SetValue(StrokeColorProperty, value);
     }
 
     /// <summary>
@@ -353,8 +345,8 @@ public class MaterialRating : ContentView
     /// </summary>
     public double StrokeThickness
     {
-        get { return (double)GetValue(StrokeThicknessProperty); }
-        set { SetValue(StrokeThicknessProperty, value); }
+        get => (double)GetValue(StrokeThicknessProperty);
+        set => SetValue(StrokeThicknessProperty, value);
     }
 
     /// <summary>
@@ -418,8 +410,8 @@ public class MaterialRating : ContentView
     /// </default>
     public int ItemsSize
     {
-        get { return (int)GetValue(ItemsSizeProperty); }
-        set { SetValue(ItemsSizeProperty, value); }
+        get => (int)GetValue(ItemsSizeProperty);
+        set => SetValue(ItemsSizeProperty, value);
     }
 
     /// <summary>
@@ -431,8 +423,8 @@ public class MaterialRating : ContentView
     /// </default>
     public int ItemsPerRow
     {
-        get { return (int)GetValue(ItemsPerRowProperty); }
-        set { SetValue(ItemsPerRowProperty, value); }
+        get => (int)GetValue(ItemsPerRowProperty);
+        set => SetValue(ItemsPerRowProperty, value);
     }
 
     /// <summary>
@@ -444,8 +436,8 @@ public class MaterialRating : ContentView
     /// </default>
     public int Value
     {
-        get { return (int)GetValue(ValueProperty); }
-        set { SetValue(ValueProperty, value); }
+        get => (int)GetValue(ValueProperty);
+        set => SetValue(ValueProperty, value);
     }
 
     #endregion Properties
@@ -454,7 +446,7 @@ public class MaterialRating : ContentView
 
     public MaterialRating()
     {
-        _mainLayout = new()
+        Grid mainLayout = new()
         {
             Margin = new Thickness(0),
             VerticalOptions = LayoutOptions.Center,
@@ -479,26 +471,26 @@ public class MaterialRating : ContentView
             }
         };
 
-        _label = new()
+        MaterialLabel label = new()
         {
             TextColor = LabelColor,
             Text = Label,
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Center,
         };
-        _label.SetValue(Grid.RowProperty, 0);
+        label.SetValue(Grid.RowProperty, 0);
 
-        _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Label), source: this));
-        _label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(LabelColor), source: this));
-        _label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-        _label.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
-        _label.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
-        _label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
-        _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-        _label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTransform), source: this));
-        _label.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Label), source: this));
+        label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(LabelColor), source: this));
+        label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        label.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
+        label.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
+        label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
+        label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTransform), source: this));
+        label.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
 
-        _mainLayout.Children.Add(_label);
+        mainLayout.Children.Add(label);
 
         _containerLayout = new()
         {
@@ -512,11 +504,11 @@ public class MaterialRating : ContentView
         _containerLayout.SetBinding(Grid.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         _containerLayout.SetValue(Grid.RowProperty, 1);
 
-        _mainLayout.Children.Add(_containerLayout);
+        mainLayout.Children.Add(_containerLayout);
 
         SetGridContent();
 
-        base.Content = _mainLayout;
+        Content = mainLayout;
     }
 
     #endregion Constructors
@@ -544,14 +536,14 @@ public class MaterialRating : ContentView
         var useCustomIconsForEachRating = SelectedIconsSource is not null && UnselectedIconsSource is not null;
         if (useCustomIconsForEachRating) 
         {
-            itemsSize = Math.Min(SelectedIconsSource.Count(), UnselectedIconsSource.Count());
+            itemsSize = Math.Min(SelectedIconsSource!.Count(), UnselectedIconsSource!.Count());
         }
 
         int rows = (int)Math.Ceiling(itemsSize * 1.0 / ItemsPerRow * 1.0);
         var itemsPerRow = ItemsPerRow;
         if (rows == 1 && useCustomIconsForEachRating)
         {
-            itemsPerRow = Math.Min(SelectedIconsSource.Count(), UnselectedIconsSource.Count());
+            itemsPerRow = Math.Min(SelectedIconsSource!.Count(), UnselectedIconsSource!.Count());
         }
 
         _containerLayout.RowDefinitions = new RowDefinitionCollection();
@@ -803,7 +795,7 @@ public class MaterialRating : ContentView
     }
 
     // We override this method to execute SetGridContent when some property of rating changed that is used to populate the rating icons
-    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         switch (propertyName)
         {

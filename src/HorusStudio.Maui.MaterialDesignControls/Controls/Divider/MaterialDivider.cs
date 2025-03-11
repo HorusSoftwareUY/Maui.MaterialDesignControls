@@ -32,8 +32,8 @@
     {
         #region Attributes
 
-        private readonly static Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
-        private readonly static double DefaultHeightRequest = 1.0;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
+        private const double DefaultHeightRequest = 1.0;
 
         #endregion Attributes
 
@@ -42,12 +42,12 @@
         /// <summary>
         /// The backing store for the <see cref="Color" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValue: DefaultColor);
+        public new static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValueCreator: DefaultColor);
 
         /// <summary>
         /// The backing store for the <see cref="HeightRequest" /> bindable property.
         /// </summary>
-        public static new readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialDivider), defaultValue: DefaultHeightRequest);
+        public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialDivider), defaultValue: DefaultHeightRequest);
 
         #endregion Bindable Properties
 
@@ -62,8 +62,8 @@
         /// </default>
         public new Color Color
         {
-            get { return (Color)GetValue(ColorProperty); }
-            set { SetValue(ColorProperty, value); }
+            get => (Color)GetValue(ColorProperty);
+            set =>  SetValue(ColorProperty, value);
         }
 
         /// <summary>
@@ -75,8 +75,8 @@
         /// </default>
         public new double HeightRequest
         {
-            get { return (double)GetValue(HeightRequestProperty); }
-            set { SetValue(HeightRequestProperty, value); }
+            get => (double)GetValue(HeightRequestProperty);
+            set => SetValue(HeightRequestProperty, value);
         }
 
         #endregion Properties

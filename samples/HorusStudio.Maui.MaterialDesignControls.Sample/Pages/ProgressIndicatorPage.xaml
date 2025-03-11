@@ -1,75 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-             xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
-             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
-             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.ProgressIndicatorPage"
-             x:TypeArguments="vm:ProgressIndicatorViewModel"
-             x:DataType="vm:ProgressIndicatorViewModel">
-    <ScrollView>
-        <VerticalStackLayout
-            Style="{StaticResource MainLayout}">
-            <material:MaterialLabel
-                Text="{Binding Subtitle}" />
+<local:BaseContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.ProgressIndicatorPage"
+    x:TypeArguments="vm:ProgressIndicatorViewModel"
+    x:DataType="vm:ProgressIndicatorViewModel"
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    
+    <VerticalStackLayout Spacing="8">
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Linear" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout Spacing="32">
+                <material:MaterialProgressIndicator
+                     Type="Linear"
+                     VerticalOptions="Center"
+                     IsVisible="{Binding IsVisible}" />
+                <material:MaterialProgressIndicator
+                     Type="Linear"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     IsVisible="{Binding IsVisible}"
+                     HeightRequest="10"
+                     WidthRequest="200"
+                     IndicatorColor="DarkBlue"
+                     TrackColor="LightBlue" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="Linear progress indicators are composed of track and indicator." Type="BodySmall" />
 
-            <material:MaterialLabel
-                Style="{StaticResource SectionTitle}" Text="Linear" />
-            <Frame
-                Style="{StaticResource SurfaceContainer}">
-                <VerticalStackLayout
-                    Spacing="32">
-                    <material:MaterialProgressIndicator
-                        Type="Linear"
-                        VerticalOptions="Center"
-                        IsVisible="{Binding IsVisible}" />
-                    <material:MaterialProgressIndicator
-                        Type="Linear"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Center"
-                        IsVisible="{Binding IsVisible}"
-                        HeightRequest="10"
-                        WidthRequest="200"
-                        IndicatorColor="DarkBlue"
-                        TrackColor="LightBlue" />
-                </VerticalStackLayout>
-            </Frame>
-            <material:MaterialLabel
-                Text="Linear progress indicators are composed of track and indicator." />
-
-            <material:MaterialLabel
-                Style="{StaticResource SectionTitle}"
-                Text="Circular" />
-            <Frame
-                Style="{StaticResource SurfaceContainer}">
-                <HorizontalStackLayout
-                    Spacing="44"
-                    HorizontalOptions="Center">
-                    <material:MaterialProgressIndicator
-                        Type="Circular"
-                        VerticalOptions="Center"
-                        IsVisible="{Binding IsVisible}" />
-                    <material:MaterialProgressIndicator
-                        Type="Circular"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Center"
-                        IsVisible="{Binding IsVisible}"
-                        HeightRequest="24"
-                        WidthRequest="24"
-                        IndicatorColor="DarkBlue" />
-                </HorizontalStackLayout>
-            </Frame>
-            <material:MaterialLabel
-                Text="Circular progress indicators are composed of an invisible track and an indicator." />
-
-            <HorizontalStackLayout>
-                <Switch
-                    IsToggled="{Binding IsVisible}" />
-                <material:MaterialLabel
-                    Text="IsVisible"
-                    VerticalTextAlignment="Center" />
+        <material:MaterialLabel
+             Style="{StaticResource SectionTitle}"
+             Text="Circular" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <HorizontalStackLayout
+                 Spacing="44"
+                 HorizontalOptions="Center">
+                <material:MaterialProgressIndicator
+                     Type="Circular"
+                     VerticalOptions="Center"
+                     IsVisible="{Binding IsVisible}" />
+                <material:MaterialProgressIndicator
+                     Type="Circular"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     IsVisible="{Binding IsVisible}"
+                     HeightRequest="24"
+                     WidthRequest="24"
+                     IndicatorColor="DarkBlue" />
             </HorizontalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="Circular progress indicators are composed of an invisible track and an indicator." Type="BodySmall" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <material:MaterialSwitch Text="Is visible" IsToggled="{Binding IsVisible}" />    
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
 </local:BaseContentPage>

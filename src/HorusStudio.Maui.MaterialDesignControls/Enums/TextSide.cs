@@ -1,6 +1,12 @@
-﻿namespace HorusStudio.Maui.MaterialDesignControls.Enums;
+﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// Indicates on which side of content is text
+/// </summary>
 public enum TextSide
 {
-    Right, Left
+    /// <summary>Right</summary>
+    Right, 
+    /// <summary>Left</summary>
+    Left
 }

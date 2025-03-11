@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.FloatingButtonPage"
+    x:TypeArguments="vm:FloatingButtonViewModel"
+    x:DataType="vm:FloatingButtonViewModel"
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+
+    <VerticalStackLayout Spacing="8">
+        <material:MaterialFloatingButton
+            Icon="horus_logo"
+            Type="FAB"
+            Margin="0,64,150,0"
+            BackgroundColor="Red"
+            IconColor="Yellow"
+            Position="TopRight" />
+        
+        <material:MaterialFloatingButton
+            Icon="horus_logo"
+            Type="{Binding ButtonType}"
+            Position="{Binding PositionButton}"
+            Command="{Binding FloatingButtonActionCommand}"
+            IsVisible="{Binding IsVisible}"
+            IsEnabled="{Binding IsEnabled}" />
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Type" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <material:MaterialChipsGroup
+                IsMultipleSelection="False"
+                HorizontalSpacing="8"
+                VerticalSpacing="8"
+                ItemsSource="{Binding Types}"
+                SelectedItem="{Binding ButtonType, Mode=TwoWay}" />
+        </material:MaterialCard>
+        <material:MaterialLabel Text="You can choose between FAB, small FAB and large FAB types." Type="BodySmall" />
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Position" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <material:MaterialChipsGroup
+                IsMultipleSelection="False"
+                HorizontalSpacing="8"
+                VerticalSpacing="8"
+                ItemsSource="{Binding Positions}"
+                SelectedItem="{Binding PositionButton, Mode=TwoWay}" />
+        </material:MaterialCard>
+        <material:MaterialLabel Text="You can set FAB position on 4 different corners." Type="BodySmall" />
+
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Visibility" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout HorizontalOptions="Center">
+                <material:MaterialSwitch IsToggled="{Binding IsVisible}" Text="Is visible" />
+                <material:MaterialSwitch IsToggled="{Binding IsEnabled}" Text="Is enabled" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+    </VerticalStackLayout>
+</local:BaseContentPage>

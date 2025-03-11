@@ -140,32 +140,32 @@
 
         public int Thickness
         {
-            get { return (int)GetValue(ThicknessProperty); }
-            set { SetValue(ThicknessProperty, value); }
+            get => (int)GetValue(ThicknessProperty);
+            set => SetValue(ThicknessProperty, value);
         }
 
         public Color IndicatorColor
         {
-            get { return (Color)GetValue(IndicatorColorProperty); }
-            set { SetValue(IndicatorColorProperty, value); }
+            get => (Color)GetValue(IndicatorColorProperty);
+            set => SetValue(IndicatorColorProperty, value);
         }
 
         public Color TrackColor
         {
-            get { return (Color)GetValue(TrackColorProperty); }
-            set { SetValue(TrackColorProperty, value); }
+            get => (Color)GetValue(TrackColorProperty);
+            set => SetValue(TrackColorProperty, value);
         }
 
         public int Size
         {
-            get { return (int)GetValue(SizeProperty); }
-            set { SetValue(SizeProperty, value); }
+            get => (int)GetValue(SizeProperty);
+            set => SetValue(SizeProperty, value);
         }
 
         public bool IsRunning
         {
-            get { return (bool)GetValue(IsRunningProperty); }
-            set { SetValue(IsRunningProperty, value); }
+            get => (bool)GetValue(IsRunningProperty);
+            set => SetValue(IsRunningProperty, value);
         }
 
         #endregion Properties
@@ -213,6 +213,9 @@
 
         private void CustomCircleAnimationA()
         {
+            var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
+            if (animationManager is null) return;
+            
             var mainAnimation = new Animation();
             mainAnimation.Add(0, 1, new Animation(v =>
             {
@@ -235,6 +238,9 @@
 
         private void CustomCircleAnimationB()
         {
+            var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
+            if (animationManager is null) return;
+            
             var mainAnimation = new Animation();
             mainAnimation.Add(0, 1, new Animation(v =>
             {

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -59,22 +60,22 @@ public class MaterialIconButton : ContentView, ITouchable
 {
     #region Attributes
 
-    private readonly static MaterialIconButtonType DefaultButtonType = MaterialIconButtonType.Standard;
-    private readonly static Color DefaultTintColor = default;
-    private readonly static Brush DefaultBackground = ContentView.BackgroundProperty.DefaultValue as Brush;
-    private readonly static Color DefaultBackgroundColor = Colors.Transparent;
-    private readonly static double DefaultBorderWidth = 0;
-    private readonly static Color DefaultBorderColor = Colors.Transparent;
-    private readonly static int DefaultCornerRadius = 20;
-    private readonly static double DefaultHeightRequest = 40;
-    private readonly static double DefaultWidthRequest = 40;
-    private readonly static Thickness DefaultPadding = new(8);
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
-    private readonly static Color DefaultBusyIndicatorColor = MaterialLightTheme.Primary;
-    private readonly static double DefaultBusyIndicatorSize = 24;
-    private readonly static Shadow DefaultShadow = null;
-    private readonly static ImageSource DefaultImageSource = Image.SourceProperty.DefaultValue as ImageSource;
+    private const MaterialIconButtonType DefaultButtonType = MaterialIconButtonType.Standard;
+    private static readonly Color? DefaultTintColor = default;
+    private static readonly Brush? DefaultBackground = ContentView.BackgroundProperty.DefaultValue as Brush;
+    private static readonly Color DefaultBackgroundColor =  Color.FromRgba(1,1,1,.01);
+    private const double DefaultBorderWidth = 0;
+    private static readonly Color DefaultBorderColor =  Color.FromRgba(1,1,1,.01);
+    private const int DefaultCornerRadius = 20;
+    private const double DefaultHeightRequest = 40;
+    private const double DefaultWidthRequest = 40;
+    private static readonly Thickness DefaultPadding = new(8);
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private const double DefaultBusyIndicatorSize = 24;
+    private static readonly Shadow DefaultShadow = null!;
+    private static readonly ImageSource? DefaultImageSource = Image.SourceProperty.DefaultValue as ImageSource;
 
     private readonly Dictionary<MaterialIconButtonType, object> _backgroundColors = new()
     {
@@ -142,7 +143,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="IconTintColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty IconTintColorProperty = BindableProperty.Create(nameof(IconTintColor), typeof(Color), typeof(MaterialIconButton), defaultValue: DefaultTintColor, propertyChanged: (bindable, o, n) =>
+    public static readonly BindableProperty IconTintColorProperty = BindableProperty.Create(nameof(IconTintColor), typeof(Color), typeof(MaterialIconButton), defaultValue: DefaultTintColor, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialIconButton self)
         {
@@ -158,7 +159,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Background" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialIconButton), defaultValue: DefaultBackground, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialIconButton), defaultValue: DefaultBackground, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialIconButton self)
         {
@@ -169,7 +170,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialIconButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialIconButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialIconButton self)
         {
@@ -180,7 +181,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="BorderWidth"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialIconButton), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, o, n) =>
+    public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialIconButton), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialIconButton self)
         {
@@ -191,7 +192,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="BorderColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialIconButton), defaultValue: DefaultBorderColor, propertyChanged: (bindable, o, n) =>
+    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialIconButton), defaultValue: DefaultBorderColor, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialIconButton self)
         {
@@ -212,17 +213,17 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Padding" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialIconButton), defaultValue: DefaultPadding);
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialIconButton), defaultValue: DefaultPadding);
 
     /// <summary>
     /// The backing store for the <see cref="Animation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialIconButton), defaultValue: DefaultAnimationType);
+    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialIconButton), defaultValueCreator: DefaultAnimationType);
 
     /// <summary>
     /// The backing store for the <see cref="AnimationParameter"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialIconButton), defaultValue: DefaultAnimationParameter);
+    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialIconButton), defaultValueCreator: DefaultAnimationParameter);
 
     /// <summary>
     /// The backing store for the <see cref="CustomAnimation"/> bindable property.
@@ -232,12 +233,12 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialIconButton), defaultValue: DefaultHeightRequest);
+    public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialIconButton), defaultValue: DefaultHeightRequest);
 
     /// <summary>
     /// The backing store for the <see cref="WidthRequest" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialIconButton), defaultValue: DefaultWidthRequest);
+    public new static readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialIconButton), defaultValue: DefaultWidthRequest);
 
     /// <summary>
     /// The backing store for the <see cref="IsBusy"/> bindable property.
@@ -254,7 +255,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="BusyIndicatorColor"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty BusyIndicatorColorProperty = BindableProperty.Create(nameof(BusyIndicatorColor), typeof(Color), typeof(MaterialIconButton), defaultValue: DefaultBusyIndicatorColor);
+    public static readonly BindableProperty BusyIndicatorColorProperty = BindableProperty.Create(nameof(BusyIndicatorColor), typeof(Color), typeof(MaterialIconButton), defaultValueCreator: DefaultBusyIndicatorColor);
 
     /// <summary>
     /// The backing store for the <see cref="BusyIndicatorSize"/> bindable property.
@@ -284,7 +285,7 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Shadow" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialIconButton), defaultValue: DefaultShadow, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialIconButton), defaultValue: DefaultShadow, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialIconButton self)
         {
@@ -333,7 +334,7 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
+    /// Gets or sets the parameter to pass to the <see cref="Command">Command</see> property.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -452,7 +453,7 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
+    /// Gets or sets the parameter to pass to the <see cref="Animation">Animation</see> property.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -549,9 +550,9 @@ public class MaterialIconButton : ContentView, ITouchable
     /// Gets or sets a custom <see cref="View" /> for busy indicator.
     /// This is a bindable property.
     /// </summary>
-    public View CustomBusyIndicator
+    public View? CustomBusyIndicator
     {
-        get => (View)GetValue(CustomBusyIndicatorProperty);
+        get => (View?)GetValue(CustomBusyIndicatorProperty);
         set => SetValue(CustomBusyIndicatorProperty, value);
     }
 
@@ -581,9 +582,9 @@ public class MaterialIconButton : ContentView, ITouchable
 
     #region Events
 
-    private EventHandler _clicked;
-    private EventHandler _pressed;
-    private EventHandler _released;
+    private EventHandler? _clicked;
+    private EventHandler? _pressed;
+    private EventHandler? _released;
     private readonly object _objectLock = new();
 
     /// <summary>
@@ -653,12 +654,12 @@ public class MaterialIconButton : ContentView, ITouchable
 
     #region Layout
 
-    private Grid _mainLayout;
-    private Border _border;
-    private Image _image;
-    private MaterialProgressIndicator _activityIndicator;
-    private View _internalActivityIndicator;
-    private Grid _activityIndicatorContainer;
+    private Grid _mainLayout = null!;
+    private Border _border = null!;
+    private Image _image = null!;
+    private MaterialProgressIndicator _activityIndicator = null!;
+    private View _internalActivityIndicator = null!;
+    private Grid _activityIndicatorContainer = null!;
 
     #endregion Layout
 
@@ -674,15 +675,14 @@ public class MaterialIconButton : ContentView, ITouchable
     private void CreateLayout()
     {
         Shadow = DefaultShadow;
-        HorizontalOptions = LayoutOptions.Center;
-        VerticalOptions = LayoutOptions.Center;
-
+        
         // Icon
         _image = new()
         {
             Aspect = Aspect.AspectFit
         };
 
+        _image.Loaded += async (s, e) => await ImageLoaded(s as Image);
         _image.SetBinding(Image.SourceProperty, new Binding(nameof(ImageSource), source: this));
 
         var iconTintColor = new IconTintColorBehavior();
@@ -724,6 +724,8 @@ public class MaterialIconButton : ContentView, ITouchable
 
         _activityIndicatorContainer = new Grid { _internalActivityIndicator };
         _activityIndicatorContainer.IsVisible = !_image.IsVisible;
+        _activityIndicatorContainer.SetBinding(Grid.WidthRequestProperty, new Binding(nameof(Width), source: _border));
+
 
         // Main Layout
         var rowDefinition = new RowDefinition();
@@ -896,18 +898,38 @@ public class MaterialIconButton : ContentView, ITouchable
             _border.Shadow = DefaultShadow;
         }
     }
+    
+    private async Task ImageLoaded(Image? image)
+    {
+        if (image?.Source is null) return;
+        
+        try
+        {
+            var res = await image.Source.GetPlatformImageAsync(image.Handler!.MauiContext!);
+            if (res == null)
+            {
+                Logger.Debug($"Failed to load image");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogException($"ERROR loading image", ex, this);
+        }
+    }
 
     #region ITouchable
 
     public async void OnTouch(TouchType gestureType)
     {
-        await TouchAnimation.AnimateAsync(this, gestureType);
+        Utils.Logger.Debug($"Gesture: {gestureType}");
+        
         if (!IsEnabled) return;
+        await TouchAnimation.AnimateAsync(this, gestureType);
 
         switch (gestureType)
         {
             case TouchType.Pressed:
-                _pressed?.Invoke(this, null);
+                _pressed?.Invoke(this, EventArgs.Empty);
                 VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
                 break;
 
@@ -916,13 +938,13 @@ public class MaterialIconButton : ContentView, ITouchable
                 {
                     Command.Execute(CommandParameter);
                 }
-                else if (_released != null)
+                if (_released != null)
                 {
-                    _released.Invoke(this, null);
+                    _released.Invoke(this, EventArgs.Empty);
                 }
                 else if (_clicked != null)
                 {
-                    _clicked.Invoke(this, null);
+                    _clicked.Invoke(this, EventArgs.Empty);
                 }
 
                 VisualStateManager.GoToState(this, ButtonCommonStates.Normal);

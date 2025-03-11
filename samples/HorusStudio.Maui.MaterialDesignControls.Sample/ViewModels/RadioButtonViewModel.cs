@@ -8,16 +8,17 @@ public partial class RadioButtonViewModel : BaseViewModel
 {
     #region Attributes & Properties
 
-    public override string Title => "Radio Buttons";
+    public override string Title => Models.Pages.RadioButton;
+    protected override string ControlReferenceUrl => "components/radio-button/overview";
+    
+    [ObservableProperty]
+    private ObservableCollection<CustomColor> _itemsSourceColors;
 
     [ObservableProperty]
-    public ObservableCollection<CustomColor> _itemsSourceColors;
+    private CustomColor _checkedColor;
 
     [ObservableProperty]
-    public CustomColor _checkedColor;
-
-    [ObservableProperty]
-    public bool _isRadioButtonEnabled;
+    private bool _isRadioButtonEnabled;
 
     #endregion
 
@@ -66,10 +67,10 @@ public class CustomColor
 
     public string Color { get; set; }
 
-    // We override this method only to show a Custom Object without set PropertyPath in Full API example.
+    // We override this method only to show a Custom Object without set ItemDisplayPath in Full API example.
     public override string ToString()
     {
-        return Color;
+        return $"{Id} - {Color}";
     }
 
     public override bool Equals(object obj)

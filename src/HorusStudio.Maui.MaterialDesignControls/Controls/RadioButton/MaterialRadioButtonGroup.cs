@@ -23,7 +23,7 @@ public static class MaterialRadioButtonGroup
         BindableProperty.CreateAttached("MaterialRadioButtonGroupController", typeof(MaterialRadioButtonGroupController), typeof(Microsoft.Maui.ILayout), default(MaterialRadioButtonGroupController),
         defaultValueCreator: (b) => {
 
-            return new MaterialRadioButtonGroupController(b as Microsoft.Maui.ILayout);
+            return new MaterialRadioButtonGroupController((Microsoft.Maui.ILayout)b);
 
         },
         propertyChanged: (b, o, n) => OnControllerChanged(b, (MaterialRadioButtonGroupController)o, (MaterialRadioButtonGroupController)n));
@@ -41,10 +41,9 @@ public static class MaterialRadioButtonGroup
     /// <summary>
     /// The backing store for the <see cref="MaterialGroupName" /> bindable property.
     /// </summary>
-
     public static readonly BindableProperty GroupNameProperty =
         BindableProperty.CreateAttached("MaterialGroupName", typeof(string), typeof(Microsoft.Maui.ILayout), null,
-        propertyChanged: (b, o, n) => { GetMaterialRadioButtonGroupController(b).GroupName = (string)n; });
+        propertyChanged: (b, _, n) => { GetMaterialRadioButtonGroupController(b).GroupName = (string)n; });
 
     /// <summary>
     /// Returns the bindableObject's group name
@@ -66,9 +65,9 @@ public static class MaterialRadioButtonGroup
     /// The backing store for the <see cref="MaterialSelectedValue" /> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedValueProperty =
-        BindableProperty.Create("MaterialSelectedValue", typeof(object), typeof(Microsoft.Maui.ILayout), null,
+        BindableProperty.Create("MaterialSelectedValue", typeof(object), typeof(Microsoft.Maui.ILayout),
         defaultBindingMode: BindingMode.TwoWay,
-        propertyChanged: (b, o, n) => { GetMaterialRadioButtonGroupController(b).SelectedValue = n; });
+        propertyChanged: (b, _, n) => { GetMaterialRadioButtonGroupController(b).SelectedValue = n; });
 
     /// <summary>
     /// Returns the bindableObject's selected value
@@ -87,7 +86,6 @@ public static class MaterialRadioButtonGroup
     }
 
     #endregion Properties
-
 
     internal static void UpdateRadioButtonGroup(MaterialRadioButton radioButton)
     {
@@ -111,12 +109,12 @@ public static class MaterialRadioButtonGroup
         {
             // Traverse logical children
             IEnumerable children = ((IElementController)parent).LogicalChildren;
-            IEnumerator itor = children.GetEnumerator();
-            while (itor.MoveNext())
+            foreach (object child in children)
             {
-                var rb = itor.Current as MaterialRadioButton;
-                if (rb != null && rb != radioButton && string.IsNullOrEmpty(rb.GroupName) && (rb.IsChecked == true))
+                if (child is MaterialRadioButton rb && rb != radioButton && string.IsNullOrEmpty(rb.GroupName) && rb.IsChecked)
+                {
                     rb.SetValueFromRenderer(MaterialRadioButton.IsCheckedProperty, false);
+                }
             }
         }
 
@@ -131,7 +129,7 @@ public static class MaterialRadioButtonGroup
         return parent;
     }
 
-    static void OnControllerChanged(BindableObject bindableObject, MaterialRadioButtonGroupController oldController,
+    static void OnControllerChanged(BindableObject bindableObject, MaterialRadioButtonGroupController _,
         MaterialRadioButtonGroupController newController)
     {
         if (newController == null)
