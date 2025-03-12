@@ -3,33 +3,45 @@ using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-class FloatingButtonBuilder : UIView
+class FloatingButton : UIView
 {
     #region Attributes & Properties
     
+    private readonly MaterialFloatingButton _fab;
     public static bool DefaultUseAnimation { get; set; } = true;
     public static TimeSpan DefaultAnimationDuration { get; set; } = TimeSpan.FromMilliseconds(250);
     
     #endregion Attributes & Properties
     
-    public FloatingButtonBuilder(MaterialFloatingButton config)
+    public FloatingButton(MaterialFloatingButton config)
     {
+        _fab = config;
         Build(config);
     }
 
     public void Show()
     {
-        if (DefaultUseAnimation)
+        try
         {
-            Alpha = 0f;
-            Animate(DefaultAnimationDuration.TotalSeconds, () =>
+            Utils.Logger.Debug("Showing FAB");
+            if (DefaultUseAnimation)
+            {
+                Alpha = 0f;
+                Animate(DefaultAnimationDuration.TotalSeconds, () =>
+                {
+                    Alpha = 1f;
+                });    
+            }
+            else
             {
                 Alpha = 1f;
-            });    
+            }
+            Utils.Logger.Debug("FAB showed");
         }
-        else
+        catch(Exception ex)
         {
-            Alpha = 1f;
+            Utils.Logger.LogException("ERROR showing FAB", ex, _fab);
+            throw;
         }
     }
     
@@ -37,6 +49,7 @@ class FloatingButtonBuilder : UIView
     {
         try
         {
+            Utils.Logger.Debug("Dismissing FAB");
             //TODO: Check when we should remove view from superview
             //RemoveFromSuperview();
             
@@ -51,39 +64,41 @@ class FloatingButtonBuilder : UIView
             {
                 Alpha = 0f;
             }
+            Utils.Logger.Debug("FAB dismissed");
         }
         catch(Exception ex)
         {
-            Console.WriteLine($"Not dismiss floating button ex: {ex.Message}");
+            Utils.Logger.LogException("ERROR dismissing FAB", ex, _fab);
+            throw;
         }
-    }
-    
-    private void SetSize(UIView view, double height, double width)
-    {
-        NSLayoutConstraint.ActivateConstraints(
-        [
-            view.LeftAnchor.ConstraintEqualTo(this.LeftAnchor, (float)width/4),
-            view.RightAnchor.ConstraintEqualTo(this.RightAnchor, -(float)width/4),
-            view.TopAnchor.ConstraintEqualTo(this.TopAnchor, (float)height/4),
-            view.BottomAnchor.ConstraintEqualTo(this.BottomAnchor, -(float)height/4),
-        ]);
     }
     
     private void Build(MaterialFloatingButton fab)
     {
-        Alpha = 0f;
-        this.ClearSubviews();
-        
-        var window = UIKit.WindowExtensions.GetDefaultWindow();
-        if (window == null) return;
-        window.AddSubview(this);
-        
-        this.SetRoundedBackground(fab.BackgroundColor, fab.CornerRadius);
-        this.SetMargin(window, fab.Margin, fab.Position);
-        
-        var content = CreateLayout(fab);
-        AddSubview(content);
-        SetSize(content, fab.IconSize + fab.Padding.VerticalThickness, fab.IconSize + fab.Padding.VerticalThickness);
+        Utils.Logger.Debug("Creating FAB");
+        try
+        {
+            Alpha = 0f;
+            this.ClearSubviews();
+
+            var window = UIKit.WindowExtensions.GetDefaultWindow();
+            if (window == null) return;
+            window.AddSubview(this);
+
+            this.SetRoundedBackground(fab.BackgroundColor, fab.CornerRadius);
+            this.SetMargin(window, fab.Margin, fab.Position);
+
+            var content = CreateLayout(fab);
+            AddSubview(content);
+            SetSize(content, fab.IconSize + fab.Padding.VerticalThickness,
+                fab.IconSize + fab.Padding.VerticalThickness);
+            
+            Utils.Logger.Debug("FAB created");
+        }
+        catch (Exception ex)
+        {
+            Utils.Logger.LogException("ERROR creating FAB", ex, _fab);
+        }
     }
     
     private UIView CreateLayout(MaterialFloatingButton fab)
@@ -106,7 +121,7 @@ class FloatingButtonBuilder : UIView
 
         return container;
     }
-
+    
     private UIButton GetButtonImage(string? iconSource, double iconSize, Color tintColor, Action? action)
     {
         var button = new UIButton
@@ -146,5 +161,16 @@ class FloatingButtonBuilder : UIView
         };
         
         return image;
+    }
+    
+    private void SetSize(UIView view, double height, double width)
+    {
+        NSLayoutConstraint.ActivateConstraints(
+        [
+            view.LeftAnchor.ConstraintEqualTo(this.LeftAnchor, (float)width/4),
+            view.RightAnchor.ConstraintEqualTo(this.RightAnchor, -(float)width/4),
+            view.TopAnchor.ConstraintEqualTo(this.TopAnchor, (float)height/4),
+            view.BottomAnchor.ConstraintEqualTo(this.BottomAnchor, -(float)height/4),
+        ]);
     }
 }
