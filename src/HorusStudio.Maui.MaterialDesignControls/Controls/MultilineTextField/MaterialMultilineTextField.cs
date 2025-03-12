@@ -31,7 +31,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// </example>
 /// <todoList>
-/// * [iOS] FontAttributes doesn´t work
+/// * [iOS] FontAttributes doesn't work
 /// </todoList>
 public class MaterialMultilineTextField : MaterialInputBase
 {

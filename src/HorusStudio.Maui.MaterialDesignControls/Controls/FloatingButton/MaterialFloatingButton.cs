@@ -57,6 +57,9 @@ public enum MaterialFloatingButtonPosition
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/FloatingButtonPage.xaml)
 /// 
 /// </example>
+/// <todoList>
+/// * [Android] Only one Floating Button visible per Page
+/// </todoList>
 public class MaterialFloatingButton : ContentView
 {
     #region Attributes

@@ -205,3 +205,7 @@ Remarks:
   <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.WidthRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.WidthRequest" /> will change the resulting width of the element during the next layout pass.</para>
 
 <br>
+
+## Known issues and pending features
+
+* [Android] Only one Floating Button visible per Page
