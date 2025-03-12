@@ -13,6 +13,7 @@
     <PackageProjectUrl>https://www.horus.com.uy</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HorusSoftwareUY/Maui.MaterialDesignControls</RepositoryUrl>
     <PackageTags>dotnet-maui;dotnet;maui;cross-platform;android;ios;macos;maccatalyst;materialdesign;ui</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
       - [Android] Bug #49: MaterialFloatingButton does not appear
     </PackageReleaseNotes>
