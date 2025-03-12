@@ -3,45 +3,50 @@ using UIKit;
 #elif ANDROID
 using Android.App;
 #endif
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 class FloatingButtonImplementation : IDisposable
 {
     private bool _isDisposed;
-
+    private bool _isShowing;
+    private readonly MaterialFloatingButton _fab;
+    
 #if ANDROID
-    private FloatingButtonBuilder? _layout;
+    private readonly FloatingButton? _layout;
 #elif IOS || MACCATALYST
-    private FloatingButtonBuilder? _layout;
+    private readonly FloatingButton? _layout;
 #endif
 
     public FloatingButtonImplementation(MaterialFloatingButton fab)
     {
+        _fab = fab;
 #if ANDROID
-        _layout = new FloatingButtonBuilder(fab, Platform.CurrentActivity);
+        _layout = new FloatingButton(fab, Platform.CurrentActivity);
 #elif IOS || MACCATALYST
-        _layout = new FloatingButtonBuilder(fab);
+        _layout = new FloatingButton(fab);
 #endif
     }
-    
     
     ~FloatingButtonImplementation() => Dispose(false);
 
     public IDisposable Show()
     {
+        if (_isShowing) return this;
 #if ANDROID
         var activity = Platform.CurrentActivity;
         activity?.SafeRunOnUiThread(() =>
         {
-            Dismiss();
             _layout?.Show();
+            _isShowing = true;
         });
 #elif IOS || MACCATALYST
         var app = UIApplication.SharedApplication;
         app.SafeInvokeOnMainThread(() =>
         {
             _layout?.Show();
+            _isShowing = true;
         });
 #endif
         return this;
@@ -49,18 +54,33 @@ class FloatingButtonImplementation : IDisposable
     
     public void Dismiss()
     {
+        try
+        {
 #if ANDROID
-        _layout?.Dismiss();
+            _layout?.Dismiss();
 #elif IOS || MACCATALYST
-        _layout?.Dismiss();
+            _layout?.Dismiss();
 #endif
+            _isShowing = false;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogException("ERROR dismissing FAB", ex, _fab);
+        }
     } 
     
 	public void Dispose()
     {
-        Dismiss();
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
+        try
+        {
+            Dismiss();
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogException("ERROR disposing FAB", ex, _fab);
+        }
     }
 
     private void Dispose(bool disposing)

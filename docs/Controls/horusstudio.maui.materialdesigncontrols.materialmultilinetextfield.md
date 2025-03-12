@@ -646,4 +646,4 @@ Property type: [TextAlignment](https://learn.microsoft.com/en-us/dotnet/api/micr
 
 ## Known issues and pending features
 
-* [iOS] FontAttributes doesn´t work
+* [iOS] FontAttributes doesn't work

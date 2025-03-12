@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -56,6 +57,9 @@ public enum MaterialFloatingButtonPosition
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/FloatingButtonPage.xaml)
 /// 
 /// </example>
+/// <todoList>
+/// * [Android] Only one Floating Button visible per Page
+/// </todoList>
 public class MaterialFloatingButton : ContentView
 {
     #region Attributes
@@ -72,6 +76,7 @@ public class MaterialFloatingButton : ContentView
 
     private FloatingButtonImplementation? _floatingButtonImplementation;
     private Page? _parentPage;
+    private bool _updateLayout = true;
 
     private static readonly IDictionary<MaterialFloatingButtonType, double> IconSizeMappings = new Dictionary<MaterialFloatingButtonType, double> 
     {
@@ -175,6 +180,8 @@ public class MaterialFloatingButton : ContentView
     #endregion
 
     #region Properties
+    
+    private bool Initialized => _parentPage != null;
     
     /// <summary>
     /// Gets or sets Type button
@@ -370,26 +377,33 @@ public class MaterialFloatingButton : ContentView
     }
 
     #region Methods
-
+    
     protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         switch (propertyName)
         {
             case nameof(IsVisible):
+                Logger.Debug($"Change visibility to '{IsVisible}'");
                 if (IsVisible) Show();
                 else Hide();
                 break;
             
             case nameof(Type):
+                Logger.Debug($"Set type '{Type}'");
                 if (!IconSizeMappings.TryGetValue(Type, out var iconSize)
                     || !CornerRadiusMappings.TryGetValue(Type, out var cornerRadius)
                     || !PaddingMappings.TryGetValue(Type, out var padding))
                     throw new ArgumentOutOfRangeException();
-                
-                IconSize = iconSize;
-                CornerRadius = cornerRadius;
-                Padding = padding;
+
+                WithoutUpdatingLayout(() =>
+                {
+                    IconSize = iconSize;
+                    CornerRadius = cornerRadius;
+                    Padding = padding;
+                    _updateLayout = true;
+                });
                 UpdateLayout();
+                
                 break;
             
             case nameof(BackgroundColor):
@@ -414,9 +428,11 @@ public class MaterialFloatingButton : ContentView
                 _parentPage = this.GetParent<Page>();
                 if (_parentPage is null) return;
             
-                this.DebugTreeView();
+                Logger.Debug($"Initialize component on '{_parentPage.GetType().FullName}' page");
                 _parentPage.Appearing += Appearing;
                 _parentPage.Disappearing += Disappearing;
+                
+                UpdateLayout();
                 break;
             
             default:
@@ -425,22 +441,40 @@ public class MaterialFloatingButton : ContentView
         }
     }
 
+    private void WithoutUpdatingLayout(Action action)
+    {
+        _updateLayout = false;
+        action();
+        _updateLayout = true;
+    }
+
     private void UpdateLayout()
     {
-#if IOS || MACCATALYST
-        if (_floatingButtonImplementation != null)
+        if (!Initialized || !_updateLayout) return;
+        
+        Logger.Debug("Updating layout");
+        try
         {
-            _floatingButtonImplementation.Dispose();
-        }
+#if IOS || MACCATALYST
+            if (_floatingButtonImplementation != null)
+            {
+                _floatingButtonImplementation.Dispose();
+            }
 #endif
-        _floatingButtonImplementation = new(this);
-        Show();
+            _floatingButtonImplementation = new(this);
+            Show();
+            Logger.Debug("Layout updated");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogException("ERROR updating layout", ex);
+        }
     }
 
     private void Show()
     {
-        if (IsVisible)
-            _floatingButtonImplementation?.Show();
+        if (!IsVisible) return;
+        _floatingButtonImplementation?.Show();
     }
 
     private void Hide()

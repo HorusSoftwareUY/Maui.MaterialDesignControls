@@ -23,6 +23,7 @@ MaterialDesignControls for .NET MAUI, provides a collection of UI controls that 
     - [String formats](#string-formats)
   - [Using Resources](#using-resources)
 - [Samples](#samples)
+- [Release notes](#release-notes)
 - [Developed by](#developed-by)
 - [Contributions](#contributions)
 - [License](#license)
@@ -283,11 +284,12 @@ If you have all your resources (Colors, sizes, etc) on ResourceDictionaries, you
 
 Find more usages and samples on our [sample app](samples/HorusStudio.Maui.MaterialDesignControls.Sample).
 
+## Release notes
+
+Check out our progress [here](ReleaseNotes.md).
+
 ## Developed by
-<a href="http://horus.com.uy"><picture>
-  <source media="(prefers-color-scheme: dark)" srcset="resources/logo_dark.png">
-  <img src="resources/logo_light.png" width="200">
-</picture></a>
+<a href="http://horus.com.uy"><img src="resources/logo.png" width="200"></a>
 
 
 ## Contributions

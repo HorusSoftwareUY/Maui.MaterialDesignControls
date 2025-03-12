@@ -34,8 +34,8 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// </example>
 /// <todoList>
-/// * [iOS] Font attributes doesn´t work
-/// * [iOS] Horizontal Text Aligment doesn´t work when there is a date selected
+/// * [iOS] Font attributes doesn't work
+/// * [iOS] Horizontal text alignment doesn't work when there is a date selected
 /// * [Android] Use the colors defined in Material in the date picker dialog
 /// </todoList>
 public class MaterialDatePicker : MaterialInputBase

@@ -705,4 +705,4 @@ Default value: null
 
 ## Known issues and pending features
 
-* [iOS] FontAttributes doesn´t work
+* [iOS] FontAttributes doesn't work
