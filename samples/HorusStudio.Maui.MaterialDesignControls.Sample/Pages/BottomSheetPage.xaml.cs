@@ -14,12 +14,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 
         private async Task OpenBottomSheet(string controlName)
         {
-            await this.FindByName<MaterialBottomSheet>(controlName)?.Open();
+            await this.FindByName<MaterialBottomSheet2>(controlName)?.Open();
         }
 
         private async Task CloseBottomSheet(string controlName)
         {
-            await this.FindByName<MaterialBottomSheet>(controlName)?.Close();
+            await this.FindByName<MaterialBottomSheet2>(controlName)?.Close();
         }
 
         void materialBottomSheet4_Opened(System.Object sender, System.EventArgs e)

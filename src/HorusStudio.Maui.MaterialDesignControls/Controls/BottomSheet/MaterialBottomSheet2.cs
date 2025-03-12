@@ -4,19 +4,19 @@ using System.Runtime.CompilerServices;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A bottom sheet <see cref="View" /> show secondary content anchored to the bottom of the screen and follows Material Design Guidelines <see href="https://m3.material.io/components/bottom-sheets/overview" />.
+/// A bottom sheet <see cref="View" /> show secondary content anchored to the bottom of the screen and follows <see href="https://m3.material.io/components/bottom-sheets/overview">Material Design Guidelines</see>.
 /// </summary>
 /// <example>
 ///
-/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialBottomSheet.gif</img>
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialBottomSheet2.gif</img>
 ///
 /// <h3>XAML sample</h3>
 /// <code>
 /// <xaml>
 /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 /// 
-/// &lt;material:MaterialBottomSheet x:Name="materialBottomSheet1"&gt;
-///                &lt;material:MaterialBottomSheet.Content&gt;
+/// &lt;material:MaterialBottomSheet2 x:Name="materialBottomSheet1"&gt;
+///                &lt;material:MaterialBottomSheet2.Content&gt;
 ///                    &lt;VerticalStackLayout Spacing = "10"
 ///                                 Padding="22,44,22,12">
 ///                        &lt;material:MaterialLabel FontFamily = "{StaticResource BoldFont}"
@@ -32,44 +32,33 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 ///                                                 Text="Material Design is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material Design streamlines collaboration between designers and developers, and helps teams quickly build beautiful products."
 ///                                                 TextColor="{StaticResource DarkGrayColor}" /&gt;
 ///                    &lt;/VerticalStackLayout&gt;
-///                &lt;/material:MaterialBottomSheet.Content&gt;
-///            &lt;/material:MaterialBottomSheet&gt;
+///                &lt;/material:MaterialBottomSheet2.Content&gt;
+///            &lt;/material:MaterialBottomSheet2&gt;
 /// </xaml>
 /// </code>
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/BottomSheetPage.xaml)
 /// 
 /// </example>
-public class MaterialBottomSheet : ContentView
+public class MaterialBottomSheet2 : ContentView
 {
     #region Attributes
 
-    private readonly static Color DefaultScrimColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Scrim, Dark = MaterialDarkTheme.Scrim }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerLow, Dark = MaterialDarkTheme.SurfaceContainerLow }.GetValueForCurrentTheme<Color>();
-    private readonly static Color DefaultDragHandleColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultScrimColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Scrim, Dark = MaterialDarkTheme.Scrim }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerLow, Dark = MaterialDarkTheme.SurfaceContainerLow }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDragHandleColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private static readonly CornerRadius DefaultCornerRadius = new (28, 28, 0, 0);
 
     private double _currentPosition = 0;
-
     private double _bottomSafeArea = 0;
-
     private double _dragHandleMargin = 22;
-
     private double _translationYClosedCorrection = 10;
-
     private double _openPosition = 0;
-
     private BoxView _scrimBoxView;
-
     private ContentView _containerView;
-
     private MaterialCard _sheetView;
-
     private Grid _sheetViewLayout;
-
     private BoxView _dragHandleView;
-
-    private double ContainerHeightWithBottomSafeArea => ContainerHeight + _bottomSafeArea;
-
-    private double TranslationYClosed => ContainerHeight + _translationYClosedCorrection + (_bottomSafeArea * 2);
+    private Grid _mainLayout;
 
     #endregion Attributes
 
@@ -78,9 +67,9 @@ public class MaterialBottomSheet : ContentView
     /// <summary>
     /// The backing store for the <see cref="ContainerHeight" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ContainerHeightProperty = BindableProperty.Create(nameof(ContainerHeight), typeof(double), typeof(MaterialBottomSheet), defaultValue: -1.0, propertyChanged: (bindableObject, oldValue, newValue) => 
+    public static readonly BindableProperty ContainerHeightProperty = BindableProperty.Create(nameof(ContainerHeight), typeof(double), typeof(MaterialBottomSheet2), defaultValue: -1.0, propertyChanged: (bindableObject, _, _) => 
     { 
-        if (bindableObject is MaterialBottomSheet self)
+        if (bindableObject is MaterialBottomSheet2 self)
         {
             self.SetInitialState();
         }
@@ -89,9 +78,9 @@ public class MaterialBottomSheet : ContentView
     /// <summary>
     /// The backing store for the <see cref="ContainerRelativeHeight" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ContainerRelativeHeightProperty = BindableProperty.Create(nameof(ContainerRelativeHeight), typeof(double), typeof(MaterialBottomSheet), defaultValue: -1.0, propertyChanged: (bindableObject, oldValue, newValue) =>
+    public static readonly BindableProperty ContainerRelativeHeightProperty = BindableProperty.Create(nameof(ContainerRelativeHeight), typeof(double), typeof(MaterialBottomSheet2), defaultValue: -1.0, propertyChanged: (bindableObject, _, _) =>
     {
-        if (bindableObject is MaterialBottomSheet self)
+        if (bindableObject is MaterialBottomSheet2 self)
         {
             self.SetInitialState();
         }
@@ -100,9 +89,9 @@ public class MaterialBottomSheet : ContentView
     /// <summary>
     /// The backing store for the <see cref="MaximumContainerHeightRequest" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MaximumContainerHeightRequestProperty = BindableProperty.Create(nameof(MaximumContainerHeightRequest), typeof(double), typeof(MaterialBottomSheet), defaultValue: -1.0, propertyChanged: (bindableObject, oldValue, newValue) =>
+    public static readonly BindableProperty MaximumContainerHeightRequestProperty = BindableProperty.Create(nameof(MaximumContainerHeightRequest), typeof(double), typeof(MaterialBottomSheet2), defaultValue: -1.0, propertyChanged: (bindableObject, _, _) =>
     {
-        if (bindableObject is MaterialBottomSheet self)
+        if (bindableObject is MaterialBottomSheet2 self)
         {
             self.SetInitialState();
         }
@@ -111,101 +100,91 @@ public class MaterialBottomSheet : ContentView
     /// <summary>
     /// The backing store for the <see cref="Content" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(View), typeof(MaterialBottomSheet), defaultValue: default(View), propertyChanged: (bindableObject, oldValue, newValue) =>
+    public new static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(View), typeof(MaterialBottomSheet2), propertyChanged: (bindableObject, _, newValue) =>
     {
-        if (bindableObject is MaterialBottomSheet self)
+        if (bindableObject is MaterialBottomSheet2 self)
         {
-            if (self._sheetViewLayout.Children.Count > 0)
-                self._sheetViewLayout.Children.Clear();
-
-            var containerContentView = (View)newValue;
-
-            if (containerContentView.Margin != new Thickness(0))
-                Logger.Debug("Avoid utilizing the Margin property within the root element of the MaterialBottomSheet's content, as its usage may result in errors or unexpected behaviors.");
-
-            containerContentView.VerticalOptions = self.ContentVerticalOptions;
-
-            self._sheetViewLayout.Add(containerContentView, 0, 0);
-            self._sheetViewLayout.Add(self._dragHandleView, 0, 0);
-
-            self.ApplyContainerHeight(containerContentView);
+            self.SetContent((View)newValue);
         }
     });
-
+/*
     /// <summary>
     /// The backing store for the <see cref="ContentVerticalOptions" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ContentVerticalOptionsProperty = BindableProperty.Create(nameof(ContentVerticalOptions), typeof(LayoutOptions), typeof(MaterialBottomSheet), defaultValue: LayoutOptions.Start);
-
+    public static readonly BindableProperty ContentVerticalOptionsProperty = BindableProperty.Create(nameof(ContentVerticalOptions), typeof(LayoutOptions), typeof(MaterialBottomSheet2), defaultValue: LayoutOptions.Fill);
+*/
     /// <summary>
     /// The backing store for the <see cref="ScrimColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ScrimColorProperty = BindableProperty.Create(nameof(ScrimColor), typeof(Color), typeof(MaterialBottomSheet), defaultValue: DefaultScrimColor);
+    public static readonly BindableProperty ScrimColorProperty = BindableProperty.Create(nameof(ScrimColor), typeof(Color), typeof(MaterialBottomSheet2), defaultValueCreator: DefaultScrimColor);
 
     /// <summary>
     /// The backing store for the <see cref="ScrimOpacity" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ScrimOpacityProperty = BindableProperty.Create(nameof(ScrimColor), typeof(double), typeof(MaterialBottomSheet), defaultValue: 0.4);
+    public static readonly BindableProperty ScrimOpacityProperty = BindableProperty.Create(nameof(ScrimColor), typeof(double), typeof(MaterialBottomSheet2), defaultValue: 0.4);
 
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" /> bindable property.
     /// </summary>
-    public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialBottomSheet), defaultValue: DefaultBackgroundColor);
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialBottomSheet2), defaultValueCreator: DefaultBackgroundColor);
 
     /// <summary>
     /// The backing store for the <see cref="CornerRadius" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(MaterialBottomSheet), defaultValue: 28.0);
+    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialBottomSheet2), defaultValue: DefaultCornerRadius);
 
     /// <summary>
     /// The backing store for the <see cref="DragHandleColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DragHandleColorProperty = BindableProperty.Create(nameof(DragHandleColor), typeof(Color), typeof(MaterialBottomSheet), defaultValue: DefaultDragHandleColor);
+    public static readonly BindableProperty DragHandleColorProperty = BindableProperty.Create(nameof(DragHandleColor), typeof(Color), typeof(MaterialBottomSheet2), defaultValueCreator: DefaultDragHandleColor);
 
     /// <summary>
     /// The backing store for the <see cref="DragHandleIsVisible" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DragHandleIsVisibleProperty = BindableProperty.Create(nameof(DragHandleIsVisible), typeof(bool), typeof(MaterialBottomSheet), defaultValue: true);
+    public static readonly BindableProperty DragHandleIsVisibleProperty = BindableProperty.Create(nameof(DragHandleIsVisible), typeof(bool), typeof(MaterialBottomSheet2), defaultValue: true);
 
     /// <summary>
     /// The backing store for the <see cref="DragHandleWidth" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DragHandleWidthProperty = BindableProperty.Create(nameof(DragHandleWidth), typeof(double), typeof(MaterialBottomSheet), defaultValue: 40.0);
+    public static readonly BindableProperty DragHandleWidthProperty = BindableProperty.Create(nameof(DragHandleWidth), typeof(double), typeof(MaterialBottomSheet2), defaultValue: 40.0);
 
     /// <summary>
     /// The backing store for the <see cref="DragHandleHeight" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DragHandleHeightProperty = BindableProperty.Create(nameof(DragHandleHeight), typeof(double), typeof(MaterialBottomSheet), defaultValue: 5.0);
+    public static readonly BindableProperty DragHandleHeightProperty = BindableProperty.Create(nameof(DragHandleHeight), typeof(double), typeof(MaterialBottomSheet2), defaultValue: 5.0);
 
     /// <summary>
     /// The backing store for the <see cref="IsOpened" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty IsOpenedProperty = BindableProperty.Create(nameof(IsOpened), typeof(bool), typeof(MaterialBottomSheet), defaultValue: false, defaultBindingMode: BindingMode.OneWayToSource);
+    public static readonly BindableProperty IsOpenedProperty = BindableProperty.Create(nameof(IsOpened), typeof(bool), typeof(MaterialBottomSheet2), defaultValue: false, defaultBindingMode: BindingMode.OneWayToSource);
 
     /// <summary>
     /// The backing store for the <see cref="AnimationDuration" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationDurationProperty = BindableProperty.Create(nameof(AnimationDuration), typeof(int), typeof(MaterialBottomSheet), defaultValue: 250);
+    public static readonly BindableProperty AnimationDurationProperty = BindableProperty.Create(nameof(AnimationDuration), typeof(int), typeof(MaterialBottomSheet2), defaultValue: 250);
 
     /// <summary>
     /// The backing store for the <see cref="DismissThreshold" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DismissThresholdProperty = BindableProperty.Create(nameof(DismissThreshold), typeof(double), typeof(MaterialBottomSheet), defaultValue: 0.4);
+    public static readonly BindableProperty DismissThresholdProperty = BindableProperty.Create(nameof(DismissThreshold), typeof(double), typeof(MaterialBottomSheet2), defaultValue: 0.4);
 
     /// <summary>
     /// The backing store for the <see cref="IsSwipeEnabled" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty IsSwipeEnabledProperty = BindableProperty.Create(nameof(IsSwipeEnabled), typeof(bool), typeof(MaterialBottomSheet), defaultValue: true);
+    public static readonly BindableProperty IsSwipeEnabledProperty = BindableProperty.Create(nameof(IsSwipeEnabled), typeof(bool), typeof(MaterialBottomSheet2), defaultValue: true);
 
     /// <summary>
     /// The backing store for the <see cref="DismissWhenScrimIsTapped" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty DismissWhenScrimIsTappedProperty = BindableProperty.Create(nameof(DismissWhenScrimIsTapped), typeof(bool), typeof(MaterialBottomSheet), defaultValue: true);
+    public static readonly BindableProperty DismissWhenScrimIsTappedProperty = BindableProperty.Create(nameof(DismissWhenScrimIsTapped), typeof(bool), typeof(MaterialBottomSheet2), defaultValue: true);
 
     #endregion Bindable Properties
 
     #region Properties
 
+    private double ContainerHeightWithBottomSafeArea => ContainerHeight + _bottomSafeArea;
+    private double TranslationYClosed => ContainerHeight + _translationYClosedCorrection + (_bottomSafeArea * 2);
+    
     /// <summary>
     /// Gets or sets the container height. This is a bindable property.
     /// </summary>
@@ -253,20 +232,20 @@ public class MaterialBottomSheet : ContentView
         get => (View)GetValue(ContentProperty);
         set => SetValue(ContentProperty, value);
     }
-
+/*
     /// <summary>
     /// Gets or sets the Content Vertical Options property.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="LayoutOptions.Start"/>. LayoutOptions.Start
+    /// <see cref="LayoutOptions.Fill"/>. LayoutOptions.Fill
     /// </default>
     public LayoutOptions ContentVerticalOptions
     {
         get => (LayoutOptions)GetValue(ContentVerticalOptionsProperty);
         set => SetValue(ContentVerticalOptionsProperty, value);
     }
-
+*/
     /// <summary>
     /// Gets or sets a color that describes the control's scrim.
     /// This is a bindable property.
@@ -311,9 +290,9 @@ public class MaterialBottomSheet : ContentView
     /// <default>
     /// 28.0
     /// </default>
-    public double CornerRadius
+    public CornerRadius CornerRadius
     {
-        get => (double)GetValue(CornerRadiusProperty);
+        get => (CornerRadius)GetValue(CornerRadiusProperty);
         set => SetValue(CornerRadiusProperty, value);
     }
 
@@ -430,17 +409,16 @@ public class MaterialBottomSheet : ContentView
 
     #region Events
 
-    public event EventHandler Opened;
-
-    public event EventHandler Closed;
+    public event EventHandler? Opened;
+    public event EventHandler? Closed;
 
     #endregion Events
 
     #region Constructors
 
-    public MaterialBottomSheet()
+    public MaterialBottomSheet2()
     {
-        var mainLayout = new Grid();
+        _mainLayout = new Grid();
 
         _scrimBoxView = new BoxView
         {
@@ -459,7 +437,7 @@ public class MaterialBottomSheet : ContentView
         };
         _scrimBoxView.GestureRecognizers.Add(scrimTapGestureRecognizer);
 
-        mainLayout.Children.Add(_scrimBoxView);
+        _mainLayout.Children.Add(_scrimBoxView);
 
         _containerView = new ContentView
         {
@@ -473,33 +451,27 @@ public class MaterialBottomSheet : ContentView
 
         _sheetView = new MaterialCard
         {
-            VerticalOptions = LayoutOptions.End,
+            Type = MaterialCardType.Custom,
+            BorderWidth = 0,
             Shadow = null,
-            BackgroundColor = BackgroundColor,
-            CornerRadius = new CornerRadius(CornerRadius, CornerRadius, 0, 0),
-            Content = Content,
-            HeightRequest = ContainerHeightWithBottomSafeArea,
-            Padding = new Thickness(0)
+            //Shadow = MaterialElevation.Level1,
+            VerticalOptions = LayoutOptions.End,
+            HeightRequest = ContainerHeightWithBottomSafeArea
         };
 
         _sheetView.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
         _sheetView.SetBinding(MaterialCard.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
+        _sheetView.SetBinding(MaterialCard.PaddingProperty, new Binding(nameof(Padding), source: this));
 
         // Remove MaterialCard effects to avoid a pan gesture lose
         _sheetView.Effects.Clear();
 
-        _sheetViewLayout = new Grid();
-
         _dragHandleView = new BoxView
         {
-            Color = DragHandleColor,
             CornerRadius = DragHandleHeight / 2,
-            HeightRequest = DragHandleHeight,
-            WidthRequest = DragHandleWidth,
-            HorizontalOptions = LayoutOptions.Center,
             Margin = new Thickness(_dragHandleMargin),
-            VerticalOptions = LayoutOptions.Start,
-            IsVisible = DragHandleIsVisible
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Start
         };
 
         _dragHandleView.SetBinding(BoxView.WidthRequestProperty, new Binding(nameof(DragHandleWidth), source: this));
@@ -507,13 +479,12 @@ public class MaterialBottomSheet : ContentView
         _dragHandleView.SetBinding(BoxView.ColorProperty, new Binding(nameof(DragHandleColor), source: this));
         _dragHandleView.SetBinding(BoxView.IsVisibleProperty, new Binding(nameof(DragHandleIsVisible), source: this));
 
+        _sheetViewLayout = new Grid();
         _sheetView.Content = _sheetViewLayout;
-
         _containerView.Content = _sheetView;
-
-        mainLayout.Children.Add(_containerView);
-
-        base.Content = mainLayout;
+        _mainLayout.Children.Add(_containerView);
+        
+        base.Content = _mainLayout;
         InputTransparent = true;
     }
 
@@ -528,10 +499,10 @@ public class MaterialBottomSheet : ContentView
             case nameof(DragHandleHeight):
                 _dragHandleView.CornerRadius = DragHandleHeight / 2;
                 break;
-            case nameof(ContentVerticalOptions):
+            /*case nameof(ContentVerticalOptions):
                 if (Content != null)
                     Content.VerticalOptions = ContentVerticalOptions;
-                break;
+                break;*/
             default:
                 base.OnPropertyChanged(propertyName);
                 break;
@@ -554,8 +525,8 @@ public class MaterialBottomSheet : ContentView
 
     private void ApplyContainerHeight(View containerContentView)
     {
-        if (ContainerRelativeHeight != (double)ContainerRelativeHeightProperty.DefaultValue
-            && ContainerHeight == (double)ContainerHeightProperty.DefaultValue)
+        if (!ContainerRelativeHeight.Equals((double)ContainerRelativeHeightProperty.DefaultValue)
+            && ContainerHeight.Equals((double)ContainerHeightProperty.DefaultValue))
         {
             if (Height > 0)
             {
@@ -565,12 +536,12 @@ public class MaterialBottomSheet : ContentView
             {
                 SizeChanged += (s, e) =>
                 {
-                    var totalHeight = ((View)s).Height;
+                    var totalHeight = (s as View)?.Height ?? 0;
                     ContainerHeight = totalHeight * ContainerRelativeHeight;
                 };
             }
         }
-        else if (ContainerHeight == (double)ContainerHeightProperty.DefaultValue)
+        else if (ContainerHeight.Equals((double)ContainerHeightProperty.DefaultValue))
         {
             if (containerContentView.Height > 0)
             {
@@ -586,7 +557,7 @@ public class MaterialBottomSheet : ContentView
             {
                 containerContentView.SizeChanged += (s, e) =>
                 {
-                    var containerContentViewHeight = ((View)s).Height;
+                    var containerContentViewHeight = (s as View)?.Height ?? 0;
                     if (MaximumContainerHeightRequest > 0)
                     {
                         ContainerHeight = containerContentViewHeight > MaximumContainerHeightRequest ?
@@ -599,7 +570,7 @@ public class MaterialBottomSheet : ContentView
         }
     }
 
-    private async void Container_PanUpdated(object sender, PanUpdatedEventArgs e)
+    private async void Container_PanUpdated(object? sender, PanUpdatedEventArgs e)
     {
         if (!IsSwipeEnabled)
             return;
@@ -623,15 +594,33 @@ public class MaterialBottomSheet : ContentView
         }
         catch (Exception ex)
         {
-            Logger.Log(ex);
+            Logger.LogException(ex);
         }
     }
 
+    private void SetContent(View content)
+    {
+        if (_sheetViewLayout.Children.Count > 0)
+            _sheetViewLayout.Children.Clear();
+        
+        if (content.Margin != new Thickness(0))
+            Logger.Debug("Avoid using Margin property within the root element of the MaterialBottomSheet2's content, as its usage may result in errors or unexpected behaviors.");
+
+        //content.VerticalOptions = ContentVerticalOptions;
+
+        _sheetViewLayout.Add(content, 0, 0);
+        _sheetViewLayout.Add(_dragHandleView, 0, 0);
+
+        ApplyContainerHeight(content);
+    }
+    
     public async Task Open()
     {
         try
         {
-            IsVisible = true;
+            Parent.RemoveLogicalChild(this);
+            Application.Current.Windows[0].AddLogicalChild(this);
+            //Window.AddLogicalChild(_mainLayout);
             await Task.WhenAll
             (
                 _scrimBoxView.FadeTo(ScrimOpacity, length: (uint)AnimationDuration),
@@ -639,19 +628,18 @@ public class MaterialBottomSheet : ContentView
             );
 
             var raiseOpened = !IsOpened;
-
             IsOpened = true;
 
             if (raiseOpened)
             {
-                Opened?.Invoke(this, null);
+                Opened?.Invoke(this, EventArgs.Empty);
             }
-
+            
             InputTransparent = _scrimBoxView.InputTransparent = false;
         }
         catch (Exception ex)
         {
-            Logger.Log(ex);
+            Logger.LogException(ex);
         }
     }
 
@@ -667,19 +655,18 @@ public class MaterialBottomSheet : ContentView
             IsVisible = false;
 
             var raiseClosed = IsOpened;
-
             IsOpened = false;
 
             if (raiseClosed)
             {
-                Closed?.Invoke(this, null);
+                Closed?.Invoke(this, EventArgs.Empty);
             }
 
             InputTransparent = _scrimBoxView.InputTransparent = true;
         }
         catch (Exception ex)
         {
-            Logger.Log(ex);
+            Logger.LogException(ex);
         }
     }
 
@@ -736,7 +723,7 @@ public class MaterialBottomSheet : ContentView
 
         var disabledState = new VisualState { Name = ButtonCommonStates.Disabled };
         disabledState.Setters.Add(
-            MaterialBottomSheet.BackgroundColorProperty,
+            MaterialBottomSheet2.BackgroundColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.Surface,
@@ -745,10 +732,10 @@ public class MaterialBottomSheet : ContentView
             .GetValueForCurrentTheme<Color>()
             .WithAlpha(0.38f));
 
-        disabledState.Setters.Add(MaterialBottomSheet.ShadowProperty, null);
+        disabledState.Setters.Add(MaterialBottomSheet2.ShadowProperty, null);
 
         //disabledState.Setters.Add(
-        //    MaterialBottomSheet.BorderColorProperty,
+        //    MaterialBottomSheet2.BorderColorProperty,
         //    new AppThemeBindingExtension
         //    {
         //        Light = MaterialLightTheme.Surface,
@@ -757,19 +744,19 @@ public class MaterialBottomSheet : ContentView
         //    .GetValueForCurrentTheme<Color>()
         //    .WithAlpha(0.38f));
 
-        //disabledState.Setters.Add(MaterialBottomSheet.OpacityProperty, 0.38f);
+        //disabledState.Setters.Add(MaterialBottomSheet2.OpacityProperty, 0.38f);
 
         var pressedState = new VisualState { Name = ButtonCommonStates.Pressed };
-        //pressedState.Setters.Add(MaterialBottomSheet.OpacityProperty, 1f);
+        //pressedState.Setters.Add(MaterialBottomSheet2.OpacityProperty, 1f);
 
         var normalState = new VisualState { Name = ButtonCommonStates.Normal };
-        //normalState.Setters.Add(MaterialBottomSheet.OpacityProperty, 1f);
+        //normalState.Setters.Add(MaterialBottomSheet2.OpacityProperty, 1f);
 
         commonStatesGroup.States.Add(normalState);
         commonStatesGroup.States.Add(disabledState);
         commonStatesGroup.States.Add(pressedState);
 
-        var style = new Style(typeof(MaterialBottomSheet));
+        var style = new Style(typeof(MaterialBottomSheet2));
         style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
 
         return new List<Style> { style };

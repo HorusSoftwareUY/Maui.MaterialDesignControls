@@ -5,7 +5,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// Elevation is the distance between two surfaces on the z-axis <see href="https://m3.material.io/styles/elevation/overview">see here.</see>
     /// </summary>
 	public static class MaterialElevation
-	{
+    {
+        public static Shadow Level0 { get; set; } = null!;
+
         /// <default>
         /// <br> Brush = Material.Shadow </br>
         /// <br> Radius = Android: 5 / MacOS,Windows,iOS: 1.5f </br>

@@ -1,12 +1,12 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
+using HorusStudio.Maui.MaterialDesignControls.Models;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
 /// Wrapper for items defined within a <see cref="MaterialNavigationDrawer"/>.
 /// </summary>
-public class MaterialNavigationDrawerItem : INotifyPropertyChanged
+public class MaterialNavigationDrawerItem : BindableObjectBase
 {
     #region Attributes
     
@@ -105,9 +105,6 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
         set => SetProperty(ref _isEnabled, value);
     }
     
-    /// <inheritdoc />
-    public event PropertyChangedEventHandler? PropertyChanged;
-    
     #endregion Properties
     
     public override bool Equals(object? obj)
@@ -127,18 +124,4 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
 
     public override string ToString() =>
         string.IsNullOrWhiteSpace(Text) ? "No defined text" : Text;
-
-    private void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
-    {
-        if (EqualityComparer<T>.Default.Equals(backingStore, value))
-            return;
-
-        backingStore = value;
-        OnPropertyChanged(propertyName);
-    }
-
-    private void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 }
