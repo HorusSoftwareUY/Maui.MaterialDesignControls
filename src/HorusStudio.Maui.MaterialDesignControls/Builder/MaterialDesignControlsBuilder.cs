@@ -429,7 +429,8 @@ public static class MaterialDesignControlsBuilderExtensions
                 .AddHandler(typeof(CustomPicker), typeof(CustomPickerHandler))
                 .AddHandler(typeof(CustomEditor), typeof(CustomEditorHandler))
                 .AddHandler(typeof(CustomCheckBox), typeof(CustomCheckboxHandler))
-                .AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
+                .AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler))
+                .AddHandler(typeof(MaterialBottomSheet), typeof(BottomSheetHandler));
         });
     }
 

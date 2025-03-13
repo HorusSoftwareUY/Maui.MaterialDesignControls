@@ -158,4 +158,11 @@ static partial class ViewExtensions
             view.Alpha = visibility;
         }
     }
+    
+    public static Point GetLocationOnScreen(this View view)
+    {
+        var location = new int[2];
+        view.GetLocationOnScreen(location);
+        return new Point(location[0], location[1]);
+    }
 }

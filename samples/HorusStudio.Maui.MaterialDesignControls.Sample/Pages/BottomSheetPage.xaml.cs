@@ -1,4 +1,5 @@
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
+using HorusStudio.Maui.MaterialDesignControls.Sample.Views;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 {
@@ -11,15 +12,33 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             viewModel.OpenBottomSheetControl = async (controlName) => await OpenBottomSheet(controlName);
             viewModel.CloseBottomSheetControl = async (controlName) => await CloseBottomSheet(controlName);
         }
-
+        
         private async Task OpenBottomSheet(string controlName)
         {
-            await this.FindByName<MaterialBottomSheet2>(controlName)?.Open();
+            var control = this.FindByName(controlName);
+            switch (control)
+            {
+                case MaterialBottomSheet2 legacySheet:
+                    await legacySheet.Open();
+                    break;
+                case MaterialBottomSheet materialSheet:
+                    await materialSheet.ShowAsync();
+                    break;
+            }
         }
 
         private async Task CloseBottomSheet(string controlName)
         {
-            await this.FindByName<MaterialBottomSheet2>(controlName)?.Close();
+            var control = this.FindByName(controlName);
+            switch (control)
+            {
+                case MaterialBottomSheet2 legacySheet:
+                    await legacySheet.Close();
+                    break;
+                case MaterialBottomSheet materialSheet:
+                    await materialSheet.DismissAsync();
+                    break;
+            }
         }
 
         void materialBottomSheet4_Opened(System.Object sender, System.EventArgs e)
@@ -30,6 +49,22 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         void materialBottomSheet4_Closed(System.Object sender, System.EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Closed!!!!!");
+        }
+
+        private async void MaterialButton_OnClicked(object? sender, EventArgs e)
+        {
+            var sheet = new MaterialBottomSheet
+            {
+                Content = BottomSheetContent,
+                BackgroundColor = Colors.WhiteSmoke,
+                CornerRadius = 16,
+                HasHandle = true,
+                Detents = [
+                    new FullscreenDetent(),
+                    new ContentDetent { IsDefault = true }
+                ]
+            };
+            await sheet.ShowAsync(Window);
         }
     }
 }
