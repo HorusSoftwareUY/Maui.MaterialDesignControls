@@ -29,6 +29,7 @@
                                       Content="{StaticResource BottomSheetContent}">
             <material:MaterialBottomSheet.Detents>
                 <material:FullscreenDetent />
+                <material:MediumDetent />
                 <material:ContentDetent IsDefault="True" />
             </material:MaterialBottomSheet.Detents>
         </material:MaterialBottomSheet>

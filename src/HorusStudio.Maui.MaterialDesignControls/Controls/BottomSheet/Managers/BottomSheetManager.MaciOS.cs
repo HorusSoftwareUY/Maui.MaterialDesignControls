@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 using UIKit;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-/*
-partial class BottomSheetManager
+internal partial class BottomSheetManager
 {
     static NSObject _keyboardWillShowObserver;
     private static nfloat _keyboardHeight;
@@ -13,7 +12,7 @@ partial class BottomSheetManager
     static partial void PlatformShow(Window window, MaterialBottomSheet sheet, bool animated)
     {
         sheet.Parent = window;
-        var controller = new BottomSheetViewController(window.Handler.MauiContext, sheet);
+        var controller = new BottomSheetController(window.Handler.MauiContext, sheet);
         sheet.Controller = controller;
 
         if (_keyboardWillShowObserver is null)
@@ -83,7 +82,7 @@ partial class BottomSheetManager
                 controller.SheetPresentationController.LargestUndimmedDetentIdentifier = largestDetentIdentifier;
             }
 
-            controller.SheetPresentationController.SelectedDetentIdentifier = BottomSheetViewController.GetIdentifierForDetent(sheet.SelectedDetent);
+            controller.SheetPresentationController.SelectedDetentIdentifier = BottomSheetController.GetIdentifierForDetent(sheet.SelectedDetent);
         }
 
         if (OperatingSystem.IsIOSVersionAtLeast(13))
@@ -108,4 +107,3 @@ partial class BottomSheetManager
 
     internal static NFloat KeyboardHeight => _keyboardHeight;
 }
-*/

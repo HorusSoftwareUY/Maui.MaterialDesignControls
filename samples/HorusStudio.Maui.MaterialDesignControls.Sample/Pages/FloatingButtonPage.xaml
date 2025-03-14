@@ -11,6 +11,7 @@
     ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
 
     <VerticalStackLayout Spacing="8">
+        <!--
         <material:MaterialFloatingButton
             Icon="horus_logo"
             Type="FAB"
@@ -18,7 +19,7 @@
             BackgroundColor="Red"
             IconColor="Yellow"
             Position="TopRight" />
-        
+        -->
         <material:MaterialFloatingButton
             Icon="horus_logo"
             Type="{Binding ButtonType}"

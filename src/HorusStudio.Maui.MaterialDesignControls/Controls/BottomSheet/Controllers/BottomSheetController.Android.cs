@@ -123,7 +123,7 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
         return _states?.FirstOrDefault(kv => kv.Value == state).Key;
     }
 
-    private void Dismiss(bool animated)
+    internal void Dismiss(bool animated)
     {
         if (animated)
         {
@@ -146,7 +146,7 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
 
     private void Layout() => LayoutDetents(_heights!, GetAvailableHeight());
 
-    private void UpdateBackground()
+    internal void UpdateBackground()
     {
         Paint paint = _sheet!.BackgroundBrush;
         if (_frame is not null)
@@ -190,7 +190,7 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
         }
     }
 
-    private void UpdateHandleColor()
+    internal void UpdateHandleColor()
     {
         if (_handle is not null && _sheet?.HandleColor is not null)
         {
@@ -430,7 +430,7 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
         ((BottomSheetHandler)_sheet!.Handler!).UpdateSelectedDetent(_sheet);
     }
 
-    private void UpdateSelectedDetent()
+    internal void UpdateSelectedDetent()
     {
         var detent = GetDetentForState(_behavior!.State);
         if (detent is not null)
@@ -439,7 +439,7 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
         }
     }
 
-    private void UpdateStateFromDetent()
+    internal void UpdateStateFromDetent()
     {
         if (_sheet?.SelectedDetent is null || _behavior is null || _states is null)
         {
@@ -448,7 +448,7 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
         _behavior.State = GetStateForDetent(_sheet.SelectedDetent);
     }
 
-    private void UpdateHasBackdrop()
+    internal void UpdateHasBackdrop()
     {
         _windowContainer?.SetBackdropVisibility(_sheet?.HasBackdrop ?? false);
     }

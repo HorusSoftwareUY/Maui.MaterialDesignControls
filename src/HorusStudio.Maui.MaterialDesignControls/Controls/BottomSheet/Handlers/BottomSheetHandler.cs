@@ -54,6 +54,7 @@ internal partial class BottomSheetHandler : ContentViewHandler
     
     #region Methods
     
+    private static void MapBackground(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformMapBackground(sheet);
     private static void MapCornerRadius(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateCornerRadius(sheet);
     private static void MapHasBackdrop(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateHasBackdrop(sheet);
     private static void MapHandleColor(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateHandleColor(sheet);
@@ -61,6 +62,7 @@ internal partial class BottomSheetHandler : ContentViewHandler
     private static void MapSelectedDetent(BottomSheetHandler handler, MaterialBottomSheet view) => handler.PlatformMapSelectedDetent(view);
     internal void UpdateSelectedDetent(MaterialBottomSheet view) => PlatformUpdateSelectedDetent(view);
 
+    partial void PlatformMapBackground(MaterialBottomSheet view);
     partial void PlatformMapSelectedDetent(MaterialBottomSheet view);
     partial void PlatformUpdateHandleColor(MaterialBottomSheet view);
     partial void PlatformUpdateHasBackdrop(MaterialBottomSheet view);
