@@ -10,11 +10,47 @@
     x:DataType="vm:BottomSheetViewModel"
     ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
     
+    <ContentPage.Resources>
+        <ContentView x:Key="BottomSheetContent" x:Name="BottomSheetContent">
+            <VerticalStackLayout Spacing="10"
+                                 Padding="24">
+                <material:MaterialLabel Text="Material Design The49" />
+                <material:MaterialLabel FontAttributes="Bold"
+                                        Text="The49" />
+                <material:MaterialLabel Text="Lalalalala Material Design is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material Design streamlines collaboration between designers and developers, and helps teams quickly build beautiful products." />
+            </VerticalStackLayout>
+        </ContentView>
+        <material:MaterialBottomSheet x:Key="MySheet" x:Name="MySheet" 
+                                      BackgroundColor="LightYellow"
+                                      HasHandle="True" 
+                                      HandleColor="Aqua"
+                                      HasBackdrop="True"
+                                      CornerRadius="20" 
+                                      Content="{StaticResource BottomSheetContent}">
+            <material:MaterialBottomSheet.Detents>
+                <material:FullscreenDetent />
+                <material:ContentDetent IsDefault="True" />
+            </material:MaterialBottomSheet.Detents>
+        </material:MaterialBottomSheet>
+    </ContentPage.Resources>
+    
     <Grid RowDefinitions="Auto,*">
         <VerticalStackLayout Spacing="8">
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default" />
             <material:MaterialCard Style="{StaticResource CardControlContainer}">
                 <VerticalStackLayout>
+                    <material:MaterialButton Type="Text"
+                                             Command="{Binding OpenBottomSheetCommand}"
+                                             CommandParameter="MySheet"
+                                             Text="As a resource" />
+                    <material:MaterialButton Type="Text"
+                                             Clicked="MaterialButton_OnClicked"
+                                             Text="Instantiating control" />
+                    <!--<material:MaterialButton Type="Text"
+                                             Command="{Binding OpenBottomSheetCommand}"
+                                             CommandParameter="MySheet"
+                                             Text="The49" />-->
+                    <!--
                     <material:MaterialButton Type="Text"
                                              Command="{Binding OpenBottomSheetCommand}"
                                              CommandParameter="BottomSheet1"
@@ -33,7 +69,7 @@
                                              Command="{Binding OpenBottomSheetCommand}"
                                              CommandParameter="BottomSheet4"
                                              Text="Dynamic size and MaximumContainerHeightRequest" />
-
+                    -->
                     <!--<material:MaterialDivider />
 
                     <material:MaterialButton Type="Text"
@@ -44,97 +80,6 @@
             <material:MaterialLabel Text="You can use MaterialRating with default properties." />
         </VerticalStackLayout>
         
-        <!--Dynamic size-->
-        <material:MaterialBottomSheet2 x:Name="BottomSheet1"
-                                      Grid.Row="1">
-            <material:MaterialBottomSheet2.Content>
-
-                <VerticalStackLayout Spacing="10"
-                                     Padding="22,44,22,12">
-                    <material:MaterialLabel Text="Material Design 1" />
-                    <material:MaterialLabel FontAttributes="Bold"
-                                            Text="Plugin for Xamarin Forms" />
-                    <material:MaterialLabel Text="Material Design is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material Design streamlines collaboration between designers and developers, and helps teams quickly build beautiful products." />
-                </VerticalStackLayout>
-            </material:MaterialBottomSheet2.Content>
-        </material:MaterialBottomSheet2>
-
-        <!--Fixed size with ContainerHeight-->
-        <material:MaterialBottomSheet2 x:Name="BottomSheet2"
-                                      Grid.Row="1"
-                                      ContainerHeight="600"><!--ContentVerticalOptions="Start"-->
-            <material:MaterialBottomSheet2.Content>
-                <StackLayout Spacing="10"
-                             Padding="22,44,22,12">
-
-                    <material:MaterialLabel Text="Material Design 2" />
-                    <material:MaterialLabel FontAttributes="Bold"
-                                            Text="Plugin for Xamarin Forms" />
-                    <material:MaterialLabel Text="Material Design is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material Design streamlines collaboration between designers and developers, and helps teams quickly build beautiful products." />
-
-                </StackLayout>
-            </material:MaterialBottomSheet2.Content>
-        </material:MaterialBottomSheet2>
-
-        <!--Fixed relative size with ContainerRelativeHeight-->
-        <material:MaterialBottomSheet2 x:Name="BottomSheet3"
-                                      ContainerRelativeHeight="0.8"
-                                      Grid.Row="1">
-            <material:MaterialBottomSheet2.Content>
-                <StackLayout Spacing="10"
-                             Padding="22,44,22,12">
-
-                    <material:MaterialLabel Text="Material Design 3" />
-                    <material:MaterialLabel FontAttributes="Bold"
-                                            Text="Plugin for Xamarin Forms" />
-                    <material:MaterialLabel Text="Material Design is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material Design streamlines collaboration between designers and developers, and helps teams quickly build beautiful products." />
-
-                </StackLayout>
-            </material:MaterialBottomSheet2.Content>
-        </material:MaterialBottomSheet2>
-
-        <!--Dynamic size with MaximumContainerHeightRequest-->
-        <material:MaterialBottomSheet2 x:Name="BottomSheet4"
-                                      Grid.Row="1"
-                                      MaximumContainerHeightRequest="300"
-                                      Opened="materialBottomSheet4_Opened"
-                                      Closed="materialBottomSheet4_Closed">
-            <material:MaterialBottomSheet2.Content>
-                <StackLayout Padding="22,44,22,0">
-                    <material:MaterialLabel HorizontalTextAlignment="Center"
-                                            Text="MaterialBottomSheet2 sample 4" />
-                    <ScrollView>
-
-                        <StackLayout>
-                            <material:MaterialLabel HorizontalTextAlignment="Center"
-                                                    Text="1" />
-                            <material:MaterialLabel HorizontalTextAlignment="Center"
-                                                    Text="2" />
-                            <material:MaterialLabel HorizontalTextAlignment="Center"
-                                                    Text="3" />
-                            <material:MaterialLabel HorizontalTextAlignment="Center"
-                                                    Text="4" />
-                            <material:MaterialLabel HorizontalTextAlignment="Center"
-                                                    Text="5" />
-                            <material:MaterialLabel HorizontalTextAlignment="Center"
-                                                    Text="6" />
-                            <material:MaterialLabel HorizontalTextAlignment="Center"
-                                                    Text="7" />
-                            <material:MaterialLabel HorizontalTextAlignment="Center"
-                                                    Text="8" />
-                            <material:MaterialLabel HorizontalTextAlignment="Center"
-                                                    Text="9" />
-                            <material:MaterialLabel HorizontalTextAlignment="Center"
-                                                    Text="10" />
-                        </StackLayout>
-
-                    </ScrollView>
-                    <material:MaterialButton Type="Text"
-                                             Command="{Binding CloseBottomSheetCommand}"
-                                             CommandParameter="BottomSheet4"
-                                             Text="Close" />
-                </StackLayout>
-            </material:MaterialBottomSheet2.Content>
-        </material:MaterialBottomSheet2>
+        
     </Grid>
 </local:BaseContentPage>

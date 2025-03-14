@@ -13,9 +13,14 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// <summary>
 /// From The49.Maui.BottomSheet
 /// </summary>
-public partial class BottomSheetHandler : ContentViewHandler
+internal partial class BottomSheetHandler : ContentViewHandler
 {
-    public static new IPropertyMapper<MaterialBottomSheet, BottomSheetHandler> Mapper =
+    #region Properties
+    
+    public new MaterialBottomSheet? VirtualView { get; private protected set; }
+    public new PlatformView? PlatformView { get; private protected set; }
+    
+    private static readonly IPropertyMapper<MaterialBottomSheet, BottomSheetHandler> PropertiesMapper =
         new PropertyMapper<MaterialBottomSheet, BottomSheetHandler>(ContentViewHandler.Mapper)
         {
             [nameof(IContentView.Background)] = MapBackground,
@@ -25,41 +30,36 @@ public partial class BottomSheetHandler : ContentViewHandler
             [nameof(MaterialBottomSheet.CornerRadius)] = MapCornerRadius,
         };
 
-    private static void MapCornerRadius(BottomSheetHandler handler, MaterialBottomSheet sheet)
-    {
-        handler.PlatformUpdateCornerRadius(sheet);
-    }
-
-    private static void MapHasBackdrop(BottomSheetHandler handler, MaterialBottomSheet sheet)
-    {
-        handler.PlatformUpdateHasBackdrop(sheet);
-    }
-
-    private static void MapHandleColor(BottomSheetHandler handler, MaterialBottomSheet sheet)
-    {
-        handler.PlatformUpdateHandleColor(sheet);
-    }
-
-    public static new CommandMapper<MaterialBottomSheet, BottomSheetHandler> CommandMapper =
+    private static readonly CommandMapper<MaterialBottomSheet, BottomSheetHandler> CommandsMapper =
         new(ContentViewHandler.CommandMapper)
         {
             [nameof(MaterialBottomSheet.DismissAsync)] = MapDismiss,
         };
-
-    private static void MapDismiss(BottomSheetHandler handler, MaterialBottomSheet view, object? request)
+    
+    #endregion Properties
+    
+    public BottomSheetHandler() : base(PropertiesMapper, CommandsMapper)
     {
-        handler.Dismiss(view, request ?? false);
     }
 
-    public static void MapSelectedDetent(BottomSheetHandler handler, MaterialBottomSheet view)
+    public BottomSheetHandler(IPropertyMapper? mapper)
+        : base(mapper ?? PropertiesMapper, CommandsMapper)
     {
-        handler.PlatformMapSelectedDetent(view);
     }
 
-    internal void UpdateSelectedDetent(MaterialBottomSheet view)
+    public BottomSheetHandler(IPropertyMapper? mapper, CommandMapper? commandMapper)
+        : base(mapper ?? PropertiesMapper, commandMapper ?? CommandsMapper)
     {
-        PlatformUpdateSelectedDetent(view);
     }
+    
+    #region Methods
+    
+    private static void MapCornerRadius(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateCornerRadius(sheet);
+    private static void MapHasBackdrop(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateHasBackdrop(sheet);
+    private static void MapHandleColor(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateHandleColor(sheet);
+    private static void MapDismiss(BottomSheetHandler handler, MaterialBottomSheet view, object? request) => handler.Dismiss(view, request ?? false);
+    private static void MapSelectedDetent(BottomSheetHandler handler, MaterialBottomSheet view) => handler.PlatformMapSelectedDetent(view);
+    internal void UpdateSelectedDetent(MaterialBottomSheet view) => PlatformUpdateSelectedDetent(view);
 
     partial void PlatformMapSelectedDetent(MaterialBottomSheet view);
     partial void PlatformUpdateHandleColor(MaterialBottomSheet view);
@@ -68,21 +68,5 @@ public partial class BottomSheetHandler : ContentViewHandler
     partial void PlatformUpdateCornerRadius(MaterialBottomSheet view);
     partial void Dismiss(MaterialBottomSheet view, object request);
 
-    public BottomSheetHandler() : base(Mapper, CommandMapper)
-    {
-    }
-
-    public BottomSheetHandler(IPropertyMapper? mapper)
-        : base(mapper ?? Mapper, CommandMapper)
-    {
-    }
-
-    public BottomSheetHandler(IPropertyMapper? mapper, CommandMapper? commandMapper)
-        : base(mapper ?? Mapper, commandMapper ?? CommandMapper)
-    {
-    }
-
-    new MaterialBottomSheet? VirtualView { get; }
-    new PlatformView? PlatformView { get; }
-
+    #endregion Methods
 }
