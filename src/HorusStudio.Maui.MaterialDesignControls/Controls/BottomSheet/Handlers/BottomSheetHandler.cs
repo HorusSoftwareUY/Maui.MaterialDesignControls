@@ -25,9 +25,12 @@ internal partial class BottomSheetHandler : ContentViewHandler
         {
             [nameof(IContentView.Background)] = MapBackground,
             [nameof(MaterialBottomSheet.HandleColor)] = MapHandleColor,
-            [nameof(MaterialBottomSheet.HasBackdrop)] = MapHasBackdrop,
+            [nameof(MaterialBottomSheet.HandleOpacity)] = MapHandleColor,
+            [nameof(MaterialBottomSheet.TypeProperty)] = MapHasScrim,
+            [nameof(MaterialBottomSheet.ScrimColor)] = MapScrimColor,
+            [nameof(MaterialBottomSheet.ScrimOpacity)] = MapScrimColor,
             [nameof(MaterialBottomSheet.SelectedDetent)] = MapSelectedDetent,
-            [nameof(MaterialBottomSheet.CornerRadius)] = MapCornerRadius,
+            [nameof(MaterialBottomSheet.CornerRadius)] = MapCornerRadius
         };
 
     private static readonly CommandMapper<MaterialBottomSheet, BottomSheetHandler> CommandsMapper =
@@ -56,7 +59,8 @@ internal partial class BottomSheetHandler : ContentViewHandler
     
     private static void MapBackground(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformMapBackground(sheet);
     private static void MapCornerRadius(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateCornerRadius(sheet);
-    private static void MapHasBackdrop(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateHasBackdrop(sheet);
+    private static void MapHasScrim(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateHasScrim(sheet);
+    private static void MapScrimColor(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateScrimColor(sheet);
     private static void MapHandleColor(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateHandleColor(sheet);
     private static void MapDismiss(BottomSheetHandler handler, MaterialBottomSheet view, object? request) => handler.Dismiss(view, request ?? false);
     private static void MapSelectedDetent(BottomSheetHandler handler, MaterialBottomSheet view) => handler.PlatformMapSelectedDetent(view);
@@ -65,7 +69,8 @@ internal partial class BottomSheetHandler : ContentViewHandler
     partial void PlatformMapBackground(MaterialBottomSheet view);
     partial void PlatformMapSelectedDetent(MaterialBottomSheet view);
     partial void PlatformUpdateHandleColor(MaterialBottomSheet view);
-    partial void PlatformUpdateHasBackdrop(MaterialBottomSheet view);
+    partial void PlatformUpdateHasScrim(MaterialBottomSheet view);
+    partial void PlatformUpdateScrimColor(MaterialBottomSheet view);
     partial void PlatformUpdateSelectedDetent(MaterialBottomSheet view);
     partial void PlatformUpdateCornerRadius(MaterialBottomSheet view);
     partial void Dismiss(MaterialBottomSheet view, object request);

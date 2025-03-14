@@ -20,12 +20,9 @@
                 <material:MaterialLabel Text="Lalalalala Material Design is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material Design streamlines collaboration between designers and developers, and helps teams quickly build beautiful products." />
             </VerticalStackLayout>
         </ContentView>
-        <material:MaterialBottomSheet x:Key="MySheet" x:Name="MySheet" 
-                                      BackgroundColor="LightYellow"
-                                      HasHandle="True" 
-                                      HandleColor="Aqua"
-                                      HasBackdrop="True"
-                                      CornerRadius="20" 
+        
+        <material:MaterialBottomSheet x:Key="DefaultSheet" 
+                                      x:Name="DefaultSheet"
                                       Content="{StaticResource BottomSheetContent}">
             <material:MaterialBottomSheet.Detents>
                 <material:FullscreenDetent />
@@ -33,6 +30,13 @@
                 <material:ContentDetent IsDefault="True" />
             </material:MaterialBottomSheet.Detents>
         </material:MaterialBottomSheet>
+        
+        <material:MaterialBottomSheet x:Key="ModalSheet" 
+                                      x:Name="ModalSheet"
+                                      Type="Modal">
+            <material:MaterialLabel Type="HeadlineLarge" Text="Modal" />
+        </material:MaterialBottomSheet>
+        
     </ContentPage.Resources>
     
     <Grid RowDefinitions="Auto,*">
@@ -42,11 +46,12 @@
                 <VerticalStackLayout>
                     <material:MaterialButton Type="Text"
                                              Command="{Binding OpenBottomSheetCommand}"
-                                             CommandParameter="MySheet"
-                                             Text="As a resource" />
+                                             CommandParameter="DefaultSheet"
+                                             Text="Default sheet" />
                     <material:MaterialButton Type="Text"
-                                             Clicked="MaterialButton_OnClicked"
-                                             Text="Instantiating control" />
+                                             Command="{Binding OpenBottomSheetCommand}"
+                                             CommandParameter="ModalSheet"
+                                             Text="Default Modal sheet" />
                     <!--<material:MaterialButton Type="Text"
                                              Command="{Binding OpenBottomSheetCommand}"
                                              CommandParameter="MySheet"

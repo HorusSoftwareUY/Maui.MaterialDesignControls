@@ -32,11 +32,10 @@ internal partial class BottomSheetManager
         {
             var largestDetentIdentifier = UISheetPresentationControllerDetentIdentifier.Unknown;
 
-            if (!sheet.HasBackdrop)
+            if (sheet.Type == MaterialBottomSheetType.Standard)
             {
                 controller.SheetPresentationController.LargestUndimmedDetentIdentifier = UISheetPresentationControllerDetentIdentifier.Large;
             }
-
 
             var pageDetents = sheet.GetEnabledDetents().ToList();
 
@@ -77,7 +76,7 @@ internal partial class BottomSheetManager
 
             controller.SheetPresentationController.Detents = detents.ToArray();
 
-            if (!sheet.HasBackdrop)
+            if (sheet.Type == MaterialBottomSheetType.Standard)
             {
                 controller.SheetPresentationController.LargestUndimmedDetentIdentifier = largestDetentIdentifier;
             }

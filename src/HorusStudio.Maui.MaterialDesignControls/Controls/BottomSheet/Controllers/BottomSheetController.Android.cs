@@ -195,6 +195,7 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
         if (_handle is not null && _sheet?.HandleColor is not null)
         {
             _handle.SetColorFilter(_sheet.HandleColor.ToPlatform());
+            _handle.Alpha = _sheet.HandleOpacity ?? _sheet.HandleColor.Alpha;    
         }
     }
 
@@ -367,7 +368,7 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
 
         _frame.AddView(c);
 
-        UpdateHasBackdrop();
+        UpdateHasScrim();
         UpdateHandleColor();
 
         if (animated)
@@ -448,9 +449,15 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
         _behavior.State = GetStateForDetent(_sheet.SelectedDetent);
     }
 
-    internal void UpdateHasBackdrop()
+    internal void UpdateHasScrim()
     {
-        _windowContainer?.SetBackdropVisibility(_sheet?.HasBackdrop ?? false);
+        _windowContainer?.SetBackdropVisibility(_sheet?.Type == MaterialBottomSheetType.Modal);
+    }
+    
+    internal void UpdateScrimColor()
+    {
+        if (_sheet?.ScrimColor is null) return;
+        _windowContainer?.SetBackdropColor(_sheet.ScrimColor.ToPlatform(), _sheet.ScrimOpacity);
     }
     
     #endregion Methods
@@ -648,10 +655,13 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
     private sealed class BottomSheetBackdrop : AView
     {
         private const string AlphaProperty = "alpha";
-        private const float AlphaVisible = .5f;
+        private const float DefaultAlpha = .5f;
         private const float AlphaInvisible = 0f;
-        private static readonly Android.Graphics.Color BackgroundColor = Android.Graphics.Color.Black; 
+        private static readonly Android.Graphics.Color DefaultBackgroundColor = Android.Graphics.Color.Black; 
         private readonly int _animationDuration;
+        
+        private float? _alpha;
+        private float AlphaValue => _alpha ?? DefaultAlpha;
         
         // TODO: Configure backdrop color and animation duration
         public BottomSheetBackdrop(Context context) : base(context)
@@ -659,13 +669,23 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
             _animationDuration = context.Resources!.GetInteger(Resource.Integer.bottom_sheet_slide_duration);
             
             Clickable = true;
-            Background = new ColorDrawable(BackgroundColor);
-            Alpha = AlphaVisible;
+            Background = new ColorDrawable(DefaultBackgroundColor);
+            Alpha = DefaultAlpha;
         }
 
+        public void SetBackgroundColor(Android.Graphics.Color color, float? alpha)
+        {
+            _alpha = alpha;
+            Background = new ColorDrawable(color);
+            if (_alpha != null)
+            {
+                Alpha = _alpha.Value;                
+            }
+        }
+        
         public void AnimateIn()
         {
-            var alphaAnimator = ObjectAnimator.OfFloat(this, AlphaProperty, AlphaInvisible, AlphaVisible);
+            var alphaAnimator = ObjectAnimator.OfFloat(this, AlphaProperty, AlphaInvisible, AlphaValue);
             if (alphaAnimator == null) return;
             
             alphaAnimator.SetDuration(_animationDuration);
@@ -674,7 +694,7 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
 
         public void AnimateOut()
         {
-            var alphaAnimator = ObjectAnimator.OfFloat(this, AlphaProperty, AlphaVisible, AlphaInvisible);
+            var alphaAnimator = ObjectAnimator.OfFloat(this, AlphaProperty, AlphaValue, AlphaInvisible);
             if (alphaAnimator == null) return;
             
             alphaAnimator.SetDuration(_animationDuration);
@@ -696,6 +716,11 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
         public void SetBackdropVisibility(bool hasBackdrop)
         {
             Backdrop.Visibility = hasBackdrop ? ViewStates.Visible : ViewStates.Gone;
+        }
+
+        public void SetBackdropColor(Android.Graphics.Color color, float? alpha)
+        {
+            Backdrop.SetBackgroundColor(color, alpha);
         }
     }
     

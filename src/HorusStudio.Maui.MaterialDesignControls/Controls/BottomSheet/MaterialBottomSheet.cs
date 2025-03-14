@@ -2,6 +2,12 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+public enum MaterialBottomSheetType
+{
+    Standard,
+    Modal
+}
+
 public enum DismissOrigin
 {
     Gesture,
@@ -13,27 +19,48 @@ public enum DismissOrigin
 /// </summary>
 public partial class MaterialBottomSheet : ContentView
 {
+    #region Attributes
+    
+    private const MaterialBottomSheetType DefaultType = MaterialBottomSheetType.Standard;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerLow, Dark = MaterialDarkTheme.SurfaceContainerLow }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHandleColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    private const float DefaultHandleOpacity = 0.4f;
+    private const double DefaultCornerRadius = 28;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultScrimColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Scrim, Dark = MaterialDarkTheme.Scrim }.GetValueForCurrentTheme<Color>();
+    private const float DefaultScrimOpacity = 0.5f;
+    private static readonly IList<Detent> DefaultDetents = [];
+    private DismissOrigin _dismissOrigin = DismissOrigin.Gesture;
+    private const bool DefaultHasHandle = true;
+    private const bool DefaultIsCancelable = true;
+    private bool _isShown = false;
+    
+    #endregion Attributes
+    
+    #region Bindable Properties
+    
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialBottomSheetType), typeof(MaterialBottomSheet), DefaultType);
     public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialBottomSheet), defaultValue: null);
-    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialBottomSheet), defaultValue: null);
-    public static readonly BindableProperty DetentsProperty = BindableProperty.Create(nameof(Detents), typeof(IList<Detent>), typeof(MaterialBottomSheet),
-        defaultValueCreator: bindable =>
-        {
-            return new List<Detent>();
-        });
-    public static readonly BindableProperty HasBackdropProperty = BindableProperty.Create(nameof(HasBackdrop), typeof(bool), typeof(MaterialBottomSheet), false);
-    public static readonly BindableProperty HasHandleProperty = BindableProperty.Create(nameof(HasHandle), typeof(bool), typeof(MaterialBottomSheet), false);
-    public static readonly BindableProperty HandleColorProperty = BindableProperty.Create(nameof(HandleColor), typeof(Color), typeof(MaterialBottomSheet), null);
-    public static readonly BindableProperty IsCancelableProperty = BindableProperty.Create(nameof(IsCancelable), typeof(bool), typeof(MaterialBottomSheet), true);
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialBottomSheet), defaultValueCreator: DefaultBackgroundColor);
+    public static readonly BindableProperty DetentsProperty = BindableProperty.Create(nameof(Detents), typeof(IList<Detent>), typeof(MaterialBottomSheet),defaultValue: DefaultDetents);
+    public static readonly BindableProperty ScrimColorProperty = BindableProperty.Create(nameof(ScrimColor), typeof(Color), typeof(MaterialBottomSheet), defaultValueCreator: DefaultScrimColor);
+    public static readonly BindableProperty ScrimOpacityProperty = BindableProperty.Create(nameof(ScrimOpacity), typeof(float), typeof(MaterialBottomSheet), defaultValue: DefaultScrimOpacity);
+    public static readonly BindableProperty HasHandleProperty = BindableProperty.Create(nameof(HasHandle), typeof(bool), typeof(MaterialBottomSheet), DefaultHasHandle);
+    public static readonly BindableProperty HandleColorProperty = BindableProperty.Create(nameof(HandleColor), typeof(Color), typeof(MaterialBottomSheet), defaultValueCreator: DefaultHandleColor);
+    public static readonly BindableProperty HandleOpacityProperty = BindableProperty.Create(nameof(HandleOpacity), typeof(float), typeof(MaterialBottomSheet), defaultValue: DefaultHandleOpacity);
+    public static readonly BindableProperty IsCancelableProperty = BindableProperty.Create(nameof(IsCancelable), typeof(bool), typeof(MaterialBottomSheet), DefaultIsCancelable);
     public static readonly BindableProperty SelectedDetentProperty = BindableProperty.Create(nameof(SelectedDetent), typeof(Detent), typeof(MaterialBottomSheet), null, BindingMode.TwoWay);
-    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(MaterialBottomSheet), -1d);
+    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(MaterialBottomSheet), DefaultCornerRadius);
 
-    //public event EventHandler<float> Sliding;
-    public event EventHandler<DismissOrigin>? Dismissed;
-    public event EventHandler? Showing;
-    public event EventHandler? Shown;
+    #endregion Bindable Properties
+    
+    #region Properties
 
-    DismissOrigin _dismissOrigin = DismissOrigin.Gesture;
-
+    public MaterialBottomSheetType Type
+    {
+        get => (MaterialBottomSheetType)GetValue(TypeProperty);
+        set => SetValue(TypeProperty, value);
+    }
+    
     [TypeConverter(typeof(BrushTypeConverter))]
     public new Brush Background
     {
@@ -46,19 +73,41 @@ public partial class MaterialBottomSheet : ContentView
         get => (Color)GetValue(BackgroundColorProperty);
         set => SetValue(BackgroundColorProperty, value);
     }
-
+    
+    internal Brush? BackgroundBrush
+    {
+        get
+        {
+            if (Background?.IsEmpty == false)
+            {
+                return Background;
+            }
+            if (BackgroundColor.IsNotDefault())
+            {
+                return new SolidColorBrush(BackgroundColor);
+            }
+            return null;
+        }
+    }
+    
     public IList<Detent> Detents
     {
         get => (IList<Detent>)GetValue(DetentsProperty);
         set => SetValue(DetentsProperty, value);
     }
 
-    public bool HasBackdrop
+    public Color? ScrimColor
     {
-        get => (bool)GetValue(HasBackdropProperty);
-        set => SetValue(HasBackdropProperty, value);
+        get => (Color?)GetValue(ScrimColorProperty);
+        set => SetValue(ScrimColorProperty, value);
     }
-
+    
+    public float? ScrimOpacity
+    {
+        get => (float?)GetValue(ScrimOpacityProperty);
+        set => SetValue(ScrimOpacityProperty, value);
+    }
+    
     public bool HasHandle
     {
         get => (bool)GetValue(HasHandleProperty);
@@ -69,6 +118,12 @@ public partial class MaterialBottomSheet : ContentView
     {
         get => (Color?)GetValue(HandleColorProperty);
         set => SetValue(HandleColorProperty, value);
+    }
+    
+    public float? HandleOpacity
+    {
+        get => (float?)GetValue(HandleOpacityProperty);
+        set => SetValue(HandleOpacityProperty, value);
     }
 
     public bool IsCancelable
@@ -89,7 +144,17 @@ public partial class MaterialBottomSheet : ContentView
         set => SetValue(CornerRadiusProperty, value);
     }
 
-    public MaterialBottomSheet() : base()
+    #endregion Properties
+    
+    #region Events
+    
+    public event EventHandler<DismissOrigin>? Dismissed;
+    public event EventHandler? Showing;
+    public event EventHandler? Shown;
+    
+    #endregion Events
+    
+    public MaterialBottomSheet()
     {
         Resources.Add(new Style(typeof(Label)));
     }
@@ -106,6 +171,8 @@ public partial class MaterialBottomSheet : ContentView
 
     public Task ShowAsync(Window window, bool animated = true)
     {
+        if (_isShown) return Task.CompletedTask;
+        
         var completionSource = new TaskCompletionSource();
         void OnShown(object? sender, EventArgs e)
         {
@@ -155,22 +222,7 @@ public partial class MaterialBottomSheet : ContentView
     {
         Parent?.RemoveLogicalChild(this);
         Dismissed?.Invoke(this, _dismissOrigin);
-    }
-
-    internal Brush? BackgroundBrush
-    {
-        get
-        {
-            if (Background?.IsEmpty == false)
-            {
-                return Background;
-            }
-            if (BackgroundColor.IsNotDefault())
-            {
-                return new SolidColorBrush(BackgroundColor);
-            }
-            return null;
-        }
+        _isShown = false;
     }
 
     internal void NotifyShowing()
@@ -180,5 +232,6 @@ public partial class MaterialBottomSheet : ContentView
     internal void NotifyShown()
     {
         Shown?.Invoke(this, EventArgs.Empty);
+        _isShown = true;
     }
 }

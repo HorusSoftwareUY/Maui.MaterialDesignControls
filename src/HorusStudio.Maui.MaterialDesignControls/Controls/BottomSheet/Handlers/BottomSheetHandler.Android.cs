@@ -31,9 +31,14 @@ internal partial class BottomSheetHandler : ContentViewHandler
         view.Controller.UpdateStateFromDetent();
     }
 
-    partial void PlatformUpdateHasBackdrop(MaterialBottomSheet view)
+    partial void PlatformUpdateHasScrim(MaterialBottomSheet view)
     {
-        view.Controller.UpdateHasBackdrop();
+        view.Controller.UpdateHasScrim();
+    }
+    
+    partial void PlatformUpdateScrimColor(MaterialBottomSheet view)
+    {
+        view.Controller.UpdateScrimColor();
     }
 
     partial void PlatformUpdateCornerRadius(MaterialBottomSheet view)
