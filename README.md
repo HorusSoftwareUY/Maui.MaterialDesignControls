@@ -30,7 +30,7 @@ MaterialDesignControls for .NET MAUI, provides a collection of UI controls that 
 
 ## Demo
 
-[TODO:VIDEO_DEMO]
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/FyGZbp_P5os/0.jpg)](https://www.youtube.com/watch?v=FyGZbp_P5os)
 
 ## Platform support
 MaterialDesignControls Plugin provides cross-platform controls for:
