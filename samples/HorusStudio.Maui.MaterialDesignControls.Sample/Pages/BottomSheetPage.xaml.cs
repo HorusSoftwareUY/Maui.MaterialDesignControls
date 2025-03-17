@@ -1,5 +1,4 @@
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
-using HorusStudio.Maui.MaterialDesignControls.Sample.Views;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 {
@@ -19,9 +18,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             var control = this.FindByName(controlName);
             switch (control)
             {
-                case MaterialBottomSheet2 legacySheet:
-                    await legacySheet.Open();
-                    break;
                 case MaterialBottomSheet materialSheet:
                     await materialSheet.ShowAsync();
                     break;
@@ -33,39 +29,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             var control = this.FindByName(controlName);
             switch (control)
             {
-                case MaterialBottomSheet2 legacySheet:
-                    await legacySheet.Close();
-                    break;
                 case MaterialBottomSheet materialSheet:
                     await materialSheet.DismissAsync();
                     break;
             }
-        }
-
-        void materialBottomSheet4_Opened(System.Object sender, System.EventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("Opened!!!!!");
-        }
-
-        void materialBottomSheet4_Closed(System.Object sender, System.EventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("Closed!!!!!");
-        }
-
-        private async void MaterialButton_OnClicked(object? sender, EventArgs e)
-        {
-            var sheet = new MaterialBottomSheet
-            {
-                Content = BottomSheetContent,
-                BackgroundColor = Colors.WhiteSmoke,
-                CornerRadius = 16,
-                HasHandle = true,
-                Detents = [
-                    new FullscreenDetent(),
-                    new ContentDetent { IsDefault = true }
-                ]
-            };
-            await sheet.ShowAsync(Window);
         }
 
         private void CustomSheet_OnShown(object? sender, EventArgs e)
