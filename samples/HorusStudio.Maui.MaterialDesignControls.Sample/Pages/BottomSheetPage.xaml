@@ -8,22 +8,30 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.BottomSheetPage"
     x:TypeArguments="vm:BottomSheetViewModel"
     x:DataType="vm:BottomSheetViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    x:Name="this">
     
     <ContentPage.Resources>
+        <Style x:Key="BaseSheet" TargetType="material:MaterialBottomSheet">
+            <Setter Property="Padding" Value="24,32,24,16" />
+        </Style>
         <ContentView x:Key="BottomSheetContent" x:Name="BottomSheetContent">
-            <VerticalStackLayout Spacing="10"
-                                 Padding="24">
-                <material:MaterialLabel Text="Material Design The49" />
-                <material:MaterialLabel FontAttributes="Bold"
-                                        Text="The49" />
-                <material:MaterialLabel Text="Lalalalala Material Design is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material Design streamlines collaboration between designers and developers, and helps teams quickly build beautiful products." />
+            <VerticalStackLayout Spacing="16">
+                <material:MaterialLabel Type="TitleLarge" 
+                                        Text="Standard bottom sheet" />
+                <material:MaterialLabel Text="Bottom sheets are a versatile component that can contain a wide variety of information and layouts, including menu items (in list or grid layouts), actions, and supplemental content." />
+                <material:MaterialButton Text="Dismiss"
+                                         Command="{Binding BindingContext.CloseBottomSheetCommand, Source={x:Reference this}}"
+                                         CommandParameter="DefaultSheet"
+                                         Type="Outlined"
+                                         Margin="0,16,0,0" />
             </VerticalStackLayout>
         </ContentView>
         
         <material:MaterialBottomSheet x:Key="DefaultSheet" 
                                       x:Name="DefaultSheet"
-                                      Content="{StaticResource BottomSheetContent}">
+                                      Content="{StaticResource BottomSheetContent}"
+                                      Style="{StaticResource BaseSheet}">
             <material:MaterialBottomSheet.Detents>
                 <material:FullscreenDetent />
                 <material:MediumDetent />
@@ -33,8 +41,71 @@
         
         <material:MaterialBottomSheet x:Key="ModalSheet" 
                                       x:Name="ModalSheet"
-                                      Type="Modal">
-            <material:MaterialLabel Type="HeadlineLarge" Text="Modal" />
+                                      Type="Modal"
+                                      Style="{StaticResource BaseSheet}">
+            <VerticalStackLayout Spacing="16">
+                <material:MaterialLabel Type="TitleLarge" 
+                                        Text="Modal bottom sheet" />
+                <material:MaterialLabel Text="Like dialogs, modal bottom sheets appear in front of app content, disabling all other app functionality when they appear, and remaining on screen until confirmed, dismissed, or a required action has been taken." />
+                <material:MaterialLabel Text="Use a modal bottom sheet as an alternative to inline menus or simple dialogs on mobile, especially when offering a long list of action items, or when items require longer descriptions and icons." />
+                <material:MaterialButton Text="Dismiss"
+                                         Command="{Binding BindingContext.CloseBottomSheetCommand, Source={x:Reference this}}"
+                                         CommandParameter="ModalSheet"
+                                         Type="Outlined"
+                                         Margin="0,16,0,0" />
+            </VerticalStackLayout>
+        </material:MaterialBottomSheet>
+        
+        <material:MaterialBottomSheet x:Key="NoHandleSheet" 
+                                      x:Name="NoHandleSheet"
+                                      HasHandle="False"
+                                      Style="{StaticResource BaseSheet}">
+            <VerticalStackLayout Spacing="16">
+                <material:MaterialLabel Type="TitleLarge" 
+                                        Text="Standard without handle bottom sheet" />
+                <material:MaterialLabel Text="Bottom sheets are a versatile component that can contain a wide variety of information and layouts, including menu items (in list or grid layouts), actions, and supplemental content." />
+            </VerticalStackLayout>
+        </material:MaterialBottomSheet>
+        
+        <material:MaterialBottomSheet x:Key="NotCancelableSheet" 
+                                      x:Name="NotCancelableSheet"
+                                      Type="Modal"
+                                      IsCancelable="False"
+                                      Style="{StaticResource BaseSheet}">
+            <VerticalStackLayout Spacing="16">
+                <material:MaterialLabel Type="TitleLarge" 
+                                        Text="Not cancelable bottom sheet" />
+                <material:MaterialLabel Text="This bottom sheet is only cancelable by tapping on Dismiss button." />
+                <material:MaterialButton Text="Dismiss"
+                                         Command="{Binding BindingContext.CloseBottomSheetCommand, Source={x:Reference this}}"
+                                         CommandParameter="NotCancelableSheet"
+                                         Type="Outlined"
+                                         Margin="0,16,0,0" />
+            </VerticalStackLayout>
+        </material:MaterialBottomSheet>
+        
+        <material:MaterialBottomSheet x:Key="CustomSheet" 
+                                      x:Name="CustomSheet"
+                                      Type="Modal"
+                                      Style="{StaticResource BaseSheet}"
+                                      BackgroundColor="#333333"
+                                      HandleColor="Goldenrod"
+                                      ScrimColor="BlueViolet"
+                                      ScrimOpacity=".2"
+                                      Shown="CustomSheet_OnShown"
+                                      Dismissed="CustomSheet_OnDismissed">
+            <VerticalStackLayout Spacing="16">
+                <material:MaterialLabel Type="TitleLarge" 
+                                        Text="Custom bottom sheet"
+                                        TextColor="White" />
+                <material:MaterialLabel Text="Modal bottom sheet with customizations such as colors, events, etc."
+                                        TextColor="White" />
+                <material:MaterialButton Text="Dismiss"
+                                         Command="{Binding BindingContext.CloseBottomSheetCommand, Source={x:Reference this}}"
+                                         CommandParameter="CustomSheet"
+                                         Type="Outlined"
+                                         Margin="0,16,0,0" />
+            </VerticalStackLayout>
         </material:MaterialBottomSheet>
         
     </ContentPage.Resources>
@@ -43,49 +114,64 @@
         <VerticalStackLayout Spacing="8">
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default" />
             <material:MaterialCard Style="{StaticResource CardControlContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialButton Type="Text"
+                <VerticalStackLayout Spacing="16">
+                    <material:MaterialLabel Text="Standard bottom sheets co-exist with the screen’s main UI region and allow for simultaneously viewing and interacting with both regions, especially when the main UI region is frequently scrolled or panned." />
+                    <material:MaterialButton Text="Show"
                                              Command="{Binding OpenBottomSheetCommand}"
                                              CommandParameter="DefaultSheet"
-                                             Text="Default sheet" />
-                    <material:MaterialButton Type="Text"
-                                             Command="{Binding OpenBottomSheetCommand}"
-                                             CommandParameter="ModalSheet"
-                                             Text="Default Modal sheet" />
-                    <!--<material:MaterialButton Type="Text"
-                                             Command="{Binding OpenBottomSheetCommand}"
-                                             CommandParameter="MySheet"
-                                             Text="The49" />-->
-                    <!--
-                    <material:MaterialButton Type="Text"
-                                             Command="{Binding OpenBottomSheetCommand}"
-                                             CommandParameter="BottomSheet1"
-                                             Text="Dynamic size" />
-                    <material:MaterialButton Type="Text"
-                                             Command="{Binding OpenBottomSheetCommand}"
-                                             CommandParameter="BottomSheet2"
-                                             Text="Fixed size" />
-
-                    <material:MaterialButton Type="Text"
-                                             Command="{Binding OpenBottomSheetCommand}"
-                                             CommandParameter="BottomSheet3"
-                                             Text="Relative size" />
-
-                    <material:MaterialButton Type="Text"
-                                             Command="{Binding OpenBottomSheetCommand}"
-                                             CommandParameter="BottomSheet4"
-                                             Text="Dynamic size and MaximumContainerHeightRequest" />
-                    -->
-                    <!--<material:MaterialDivider />
-
-                    <material:MaterialButton Type="Text"
-                                              Command="{Binding OpenInModalPageCommand}"
-                                              Text="Open in modal page" />-->
+                                             HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </material:MaterialCard>
-            <material:MaterialLabel Text="You can use MaterialRating with default properties." />
+            <material:MaterialLabel Text="Use a standard bottom sheet to display content that complements the screen’s primary content, such as an audio player in a music app." Type="BodySmall" />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Modal" />
+            <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <VerticalStackLayout Spacing="16">
+                    <material:MaterialLabel Text="Like dialogs, modal bottom sheets appear in front of app content, disabling all other app functionality when they appear, and remaining on screen until confirmed, dismissed, or a required action has been taken." />
+                    <material:MaterialButton Text="Show"
+                                             Command="{Binding OpenBottomSheetCommand}"
+                                             CommandParameter="ModalSheet"
+                                             HorizontalOptions="Center" />    
+                </VerticalStackLayout>
+            </material:MaterialCard>
+            <material:MaterialLabel Text="Use a modal bottom sheet as an alternative to inline menus or simple dialogs on mobile, especially when offering a long list of action items, or when items require longer descriptions and icons." Type="BodySmall" />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default without handle" />
+            <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <VerticalStackLayout Spacing="16">
+                    <material:MaterialLabel Text="Standard bottom sheets co-exist with the screen’s main UI region and allow for simultaneously viewing and interacting with both regions, especially when the main UI region is frequently scrolled or panned." />
+                    <material:MaterialButton Text="Show"
+                                             Command="{Binding OpenBottomSheetCommand}"
+                                             CommandParameter="NoHandleSheet"
+                                             HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </material:MaterialCard>
+            <material:MaterialLabel Text="Use a standard bottom sheet without handle." Type="BodySmall" />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Not cancelable" />
+            <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <VerticalStackLayout Spacing="16">
+                    <material:MaterialLabel Text="This bottom sheet is only cancelable by tapping on Dismiss button." />
+                    <material:MaterialButton Text="Show"
+                                             Command="{Binding OpenBottomSheetCommand}"
+                                             CommandParameter="NotCancelableSheet"
+                                             HorizontalOptions="Center" />    
+                </VerticalStackLayout>
+            </material:MaterialCard>
+            <material:MaterialLabel Text="This kind of bottom sheet is intended for required user's action." Type="BodySmall" />
+            
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom" />
+            <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <VerticalStackLayout Spacing="16">
+                    <material:MaterialLabel Text="Background, handle and scrim colors configured (*)." />
+                    <material:MaterialLabel Text="(*) Handle and scrim configuration applies on Android only." Type="BodySmall" />
+                    <material:MaterialButton Text="Show"
+                                             Command="{Binding OpenBottomSheetCommand}"
+                                             CommandParameter="CustomSheet"
+                                             HorizontalOptions="Center" />    
+                </VerticalStackLayout>
+            </material:MaterialCard>
+            <material:MaterialLabel Text="You can customize different things, such as colors, events, etc." Type="BodySmall" />
         </VerticalStackLayout>
-        
-        
     </Grid>
 </local:BaseContentPage>

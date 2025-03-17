@@ -67,5 +67,15 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             };
             await sheet.ShowAsync(Window);
         }
+
+        private void CustomSheet_OnShown(object? sender, EventArgs e)
+        {
+            DisplayAlert("Custom Sheet", "Custom Sheet is shown.", "OK");
+        }
+
+        private void CustomSheet_OnDismissed(object? sender, DismissOrigin e)
+        {
+            DisplayAlert("Custom Sheet", $"Custom Sheet is dismissed from {e.ToString()}.", "OK");
+        }
     }
 }

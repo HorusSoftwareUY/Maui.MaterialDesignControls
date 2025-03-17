@@ -349,7 +349,8 @@ internal class BottomSheetController(IMauiContext windowMauiContext, MaterialBot
         _isDuringShowingAnimation = true;
 
         EnsureWindowContainer(context);
-        _stayOnFront!.AddView(_windowContainer);
+        _stayOnFront!.RemoveAllViews();
+        _stayOnFront.AddView(_windowContainer);
         _frame!.RemoveAllViews();
 
         // The Android view for the page could already have a ContainerView as a parent if it was shown as a bottom sheet before

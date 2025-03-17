@@ -15,8 +15,40 @@ public enum DismissOrigin
 }
 
 /// <summary>
-/// From The49.Maui.BottomSheet
+/// A bottom sheet <see cref="View" /> show secondary content anchored to the bottom of the screen and follows <see href="https://m3.material.io/components/bottom-sheets/overview">Material Design Guidelines</see>.
 /// </summary>
+/// <example>
+///
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialBottomSheet.gif</img>
+///
+/// <h3>XAML sample</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;material:MaterialBottomSheet x:Name="ModalSheet"
+///                                  Type="Modal"&gt;
+///    &lt;VerticalStackLayout Spacing="16"&gt;
+///      &lt;material:MaterialLabel Type="TitleLarge" Text="Modal bottom sheet" /&gt;
+///      &lt;material:MaterialLabel Text="Use a modal bottom sheet as an alternative to inline menus or simple dialogs on mobile..." /&gt;
+///    &lt;/VerticalStackLayout&gt;
+/// &lt;/material:MaterialBottomSheet&gt;
+/// </xaml>
+/// </code>
+/// 
+/// <h3>C# sample</h3>
+/// <code>
+/// var bottomSheet = new MaterialBottomSheet();
+/// bottomSheet.ShowAsync();
+///</code>
+///
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/BottomSheetPage.xaml)
+/// 
+/// </example>
+/// <todoList>
+/// * [Android] Scrim color gets lost after showing and closing sheet once.
+/// * [iOS] Corner radius gets lost after showing and closing sheet once.
+/// </todoList>
 public partial class MaterialBottomSheet : ContentView
 {
     #region Attributes
