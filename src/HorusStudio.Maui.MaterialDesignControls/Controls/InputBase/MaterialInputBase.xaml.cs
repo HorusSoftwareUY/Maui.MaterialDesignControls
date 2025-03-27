@@ -939,10 +939,7 @@ public abstract partial class MaterialInputBase
     {
         InitializeComponent();
 
-        if (Type == DefaultInputType)
-        {
-            UpdateLayoutAfterTypeChanged(Type);
-        }
+        UpdateLayoutAfterTypeChanged(Type);
     }
 
     #endregion Constructor
