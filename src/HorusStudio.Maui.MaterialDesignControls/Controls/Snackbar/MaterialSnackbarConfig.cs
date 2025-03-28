@@ -39,7 +39,6 @@ public enum MaterialSnackbarPosition
 /// </example>
 /// <todoList>
 /// * Add FontFamily configuration
-/// * [iOS] When sizes are too big, last element on UI gets cropped
 /// </todoList>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public class MaterialSnackbarConfig(string message)
