@@ -5,6 +5,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// <summary>
 /// Material Design Controls initializer class
 /// </summary>
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public static class MaterialDesignControls
 {
     private static readonly HashSet<InitialTask> InitialTasks = [];

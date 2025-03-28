@@ -1,5 +1,6 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public sealed class MaterialIconOptions
 {
     public ImageSource? Error { get; set; }
