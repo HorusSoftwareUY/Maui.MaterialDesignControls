@@ -198,6 +198,11 @@ class MaterialSnackbarBuilder : UIView
         }
 
         button.SetSize(iconSize, iconSize);
+
+        var widthConstraint = NSLayoutConstraint.Create(button, NSLayoutAttribute.Width, NSLayoutRelation.Equal, null, NSLayoutAttribute.NoAttribute, 1f, button.IntrinsicContentSize.Width);
+        widthConstraint.Priority = (int)UILayoutPriority.Required;
+        button.AddConstraint(widthConstraint);
+
         return button;
     }
 
