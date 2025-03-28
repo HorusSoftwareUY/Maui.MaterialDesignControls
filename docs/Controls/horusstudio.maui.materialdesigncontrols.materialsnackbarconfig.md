@@ -307,4 +307,3 @@ Default value: null
 ## Known issues and pending features
 
 * Add FontFamily configuration
- * [iOS] When sizes are too big, last element on UI gets cropped

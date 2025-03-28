@@ -10,8 +10,10 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// Material Design Controls builder.
 /// </summary>
 /// <param name="AppBuilder">MAUI application builder.</param>
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public sealed record MaterialDesignControlsBuilder(MauiAppBuilder AppBuilder);
 
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public static class MaterialDesignControlsBuilderExtensions
 {
     /// <summary>

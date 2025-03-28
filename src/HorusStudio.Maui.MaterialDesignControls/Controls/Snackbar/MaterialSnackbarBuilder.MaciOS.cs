@@ -7,7 +7,7 @@ using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class MaterialSnackbarBuilder : UIView
+class MaterialSnackbarBuilder : UIView
 {
     #region Constants
     

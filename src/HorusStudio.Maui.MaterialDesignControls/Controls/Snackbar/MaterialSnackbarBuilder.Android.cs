@@ -11,7 +11,7 @@ using Color = Microsoft.Maui.Graphics.Color;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class MaterialSnackbarBuilder : Snackbar.Callback
+class MaterialSnackbarBuilder : Snackbar.Callback
 {
     #region Constants
     

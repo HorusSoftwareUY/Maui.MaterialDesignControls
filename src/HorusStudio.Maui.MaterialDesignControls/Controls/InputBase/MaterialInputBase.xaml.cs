@@ -36,6 +36,7 @@ public enum MaterialInputTypeStates
     OutlinedErrorFocused
 }
 
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public abstract partial class MaterialInputBase
 {
     #region Attributes

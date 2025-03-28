@@ -69,7 +69,7 @@ partial class CustomPickerHandler
     }
 }
 
-public class CustomWindowCallback : Java.Lang.Object, Android.Views.Window.ICallback
+class CustomWindowCallback : Java.Lang.Object, Android.Views.Window.ICallback
 {
     private readonly Android.Views.Window.ICallback _originalCallback;
     private readonly System.Action _pickerUnfocus;

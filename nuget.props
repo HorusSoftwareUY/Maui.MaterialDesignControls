@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup Condition=" $(MSBuildProjectName.Equals('HorusStudio.Maui.MaterialDesignControls')) ">
     <PackageId>HorusStudio.Maui.MaterialDesignControls</PackageId>
-    <Version>1.0.0-preview.4</Version>
+    <Version>1.0.0-preview.5</Version>
     <Authors>Horus Studio and contributors</Authors>
     <Company>Horus Studio</Company>
     <Title>Material Design Controls for .NET MAUI</Title>
@@ -15,7 +15,10 @@
     <PackageTags>dotnet-maui;dotnet;maui;cross-platform;android;ios;macos;maccatalyst;materialdesign;ui</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
-      - [Android] Bug #49: MaterialFloatingButton does not appear
+      - Bug: Outlined inputs not rendered when overriding global style
+      - Bug: Tint color fixed on MaterialIconButton
+      - Bug: ConfigureSnackbar throw NullReferenceException if BackgroundColor was not set
+      - [iOS] Bug: Leading and trailing icons width on Snackbar
     </PackageReleaseNotes>
 
     <PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>
