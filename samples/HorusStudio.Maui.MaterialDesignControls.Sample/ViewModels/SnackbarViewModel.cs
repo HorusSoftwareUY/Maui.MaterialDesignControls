@@ -25,7 +25,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             _snackbar.Show(new MaterialSnackbarConfig("Default snackbar with custom action")
             {
-                Action = new MaterialSnackbarConfig.ActionConfig("Close action", SnackbarAction)
+                Action = new MaterialSnackbarConfig.ActionConfig("Close action", SnackbarAction),
             });
         }
         
@@ -74,7 +74,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 Action = new MaterialSnackbarConfig.ActionConfig("Action API", SnackbarAction)
                 {
                     Color = Colors.Fuchsia,
-                    FontSize = 18
+                    FontSize = 18,
+                    TextDecorations = TextDecorations.Strikethrough
                 },
                 Duration = TimeSpan.FromSeconds(10),
                 TextColor = Colors.Aqua,

@@ -150,6 +150,14 @@ public class MaterialSnackbarConfig(string message)
     }
     
     /// <summary>
+    /// Action text decorations to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>
+    /// <see cref="TextDecorations.None">TextDecorations.None</see>
+    /// </default>
+    public static TextDecorations DefaultActionTextDecorations { get; set; }
+    
+    /// <summary>
     /// Icon <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
     /// </summary>
     /// <default>
@@ -332,6 +340,7 @@ public class MaterialSnackbarConfig(string message)
         if (options.DefaultPosition != null) DefaultPosition = options.DefaultPosition.Value;
         if (options.DefaultSpacing != null) DefaultSpacing = options.DefaultSpacing.Value;
         if (options.DefaultActionSize != null) DefaultActionSize = options.DefaultActionSize.Value;
+        if (options.DefaultActionTextDecorations != null) DefaultActionTextDecorations = options.DefaultActionTextDecorations.Value;
         if (options.DefaultCornerRadius != null) DefaultCornerRadius = options.DefaultCornerRadius.Value;
         if (options.DefaultFontSize != null) DefaultFontSize = options.DefaultFontSize.Value;
         if (options.DefaultIconSize != null) DefaultIconSize = options.DefaultIconSize.Value;
@@ -388,6 +397,19 @@ public class MaterialSnackbarConfig(string message)
         {
             get => _fontSize ?? DefaultActionSize; 
             set => _fontSize = value;
+        }
+        
+        private TextDecorations? _textDecorations;
+        /// <summary>
+        /// Gets or sets <see cref="TextDecorations">TextDecorations</see> for action.
+        /// </summary>
+        /// <default>
+        /// <see cref="TextDecorations.None">TextDecorations.None</see>
+        /// </default>
+        public TextDecorations TextDecorations
+        {
+            get => _textDecorations ?? DefaultActionTextDecorations; 
+            set => _textDecorations = value;
         }
     }
 
