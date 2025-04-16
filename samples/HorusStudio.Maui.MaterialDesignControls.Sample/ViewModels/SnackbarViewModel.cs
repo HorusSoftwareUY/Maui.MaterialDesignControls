@@ -75,7 +75,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 {
                     Color = Colors.Fuchsia,
                     FontSize = 18,
-                    TextDecorations = TextDecorations.Strikethrough
+                    TextDecorations = TextDecorations.Underline
                 },
                 Duration = TimeSpan.FromSeconds(10),
                 TextColor = Colors.Aqua,
