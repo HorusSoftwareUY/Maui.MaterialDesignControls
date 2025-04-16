@@ -275,6 +275,11 @@ public abstract partial class MaterialInputBase
     public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultPlaceholderColor);
 
     /// <summary>
+    /// The backing store for the <see cref="PlaceholderLineBreakMode"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty PlaceholderLineBreakModeProperty = BindableProperty.Create(nameof(PlaceholderLineBreakMode), typeof(LineBreakMode), typeof(MaterialInputBase), defaultValue: LineBreakMode.NoWrap);
+
+    /// <summary>
     /// The backing store for the <see cref="LabelColor"/> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultLabelColor);
@@ -696,6 +701,18 @@ public abstract partial class MaterialInputBase
     {
         get => (Color)GetValue(PlaceholderColorProperty);
         set => SetValue(PlaceholderColorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets line break mode for placeholder. This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="LineBreakMode.NoWrap"/>
+    /// </default>
+    public LineBreakMode PlaceholderLineBreakMode
+    {
+        get => (LineBreakMode)GetValue(PlaceholderLineBreakModeProperty);
+        set => SetValue(PlaceholderLineBreakModeProperty, value);
     }
 
     /// <summary>

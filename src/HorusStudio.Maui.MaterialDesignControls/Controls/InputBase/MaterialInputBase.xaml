@@ -70,6 +70,7 @@
             <Setter Property="TextColor" Value="{Binding PlaceholderColor, Source={x:Reference InputBase}}" />
             <Setter Property="FontFamily" Value="{Binding PlaceholderFontFamily, Source={x:Reference InputBase}}" />
             <Setter Property="FontSize" Value="{Binding PlaceholderSize, Source={x:Reference InputBase}}" />
+            <Setter Property="LineBreakMode" Value="{Binding PlaceholderLineBreakMode, Source={x:Reference InputBase}}" />
             <Setter Property="Text" Value="{Binding Placeholder, Source={x:Reference InputBase}}" />
             <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
