@@ -76,6 +76,16 @@ Default value: MaterialFontSize.BodyMedium
 
 <br>
 
+### <a id="properties-defaultactiontextdecorations"/>**DefaultActionTextDecorations**
+
+Action text decorations to be applied by default to every MaterialSnackbar that doesn't set one
+
+Property type: [TextDecorations](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.textdecorations)<br>
+
+Default value: TextDecorations.None
+
+<br>
+
 ### <a id="properties-defaultbackgroundcolor"/>**DefaultBackgroundColor**
 
 Background  to be applied by default to every MaterialSnackbar that doesn't set one

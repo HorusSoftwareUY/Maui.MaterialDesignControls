@@ -707,7 +707,7 @@ public abstract partial class MaterialInputBase
     /// Gets or sets line break mode for placeholder. This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="LineBreakMode.NoWrap"/>
+    /// <see cref="LineBreakMode.NoWrap">LineBreakMode.NoWrap</see>
     /// </default>
     public LineBreakMode PlaceholderLineBreakMode
     {
