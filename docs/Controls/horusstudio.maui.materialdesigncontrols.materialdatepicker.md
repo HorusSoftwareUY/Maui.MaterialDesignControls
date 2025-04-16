@@ -435,6 +435,16 @@ Default value: MaterialFontFamily.Default
 
 <br>
 
+### <a id="properties-placeholderlinebreakmode"/>**PlaceholderLineBreakMode**
+
+Gets or sets line break mode for placeholder. This is a bindable property.
+
+Property type: [LineBreakMode](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.linebreakmode)<br>
+
+Default value: LineBreakMode.NoWrap
+
+<br>
+
 ### <a id="properties-placeholdersize"/>**PlaceholderSize**
 
 Gets or sets font size for placeholder. This is a bindable property.

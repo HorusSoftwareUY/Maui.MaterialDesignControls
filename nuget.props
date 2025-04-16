@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup Condition=" $(MSBuildProjectName.Equals('HorusStudio.Maui.MaterialDesignControls')) ">
     <PackageId>HorusStudio.Maui.MaterialDesignControls</PackageId>
-    <Version>1.0.0-preview.5</Version>
+    <Version>1.0.0-preview.6</Version>
     <Authors>Horus Studio and contributors</Authors>
     <Company>Horus Studio</Company>
     <Title>Material Design Controls for .NET MAUI</Title>
@@ -15,10 +15,9 @@
     <PackageTags>dotnet-maui;dotnet;maui;cross-platform;android;ios;macos;maccatalyst;materialdesign;ui</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
-      - Bug: Outlined inputs not rendered when overriding global style
-      - Bug: Tint color fixed on MaterialIconButton
-      - Bug: ConfigureSnackbar throw NullReferenceException if BackgroundColor was not set
-      - [iOS] Bug: Leading and trailing icons width on Snackbar
+      - Add LineBreakMode to inputs placeholder
+      - Add TextDecorations to Snackbar action
+      - [iOS] Bug: Fix Snackbar background color
     </PackageReleaseNotes>
 
     <PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>
