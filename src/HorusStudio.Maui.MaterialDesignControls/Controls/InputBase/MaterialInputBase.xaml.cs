@@ -201,7 +201,19 @@ public abstract partial class MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="BorderWidth"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultBorderWidth);
+    public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
+    {
+        if (bindable is MaterialInputBase self)
+        {
+            self.SetBorderWidth(self.Type);
+        }
+    });
+
+    /// <summary>
+    /// The backing store for the <see cref="BorderWidth"/> bindable property.
+    /// </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal static readonly BindableProperty InternalBorderWidthProperty = BindableProperty.Create(nameof(InternalBorderWidth), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultBorderWidth);
 
     /// <summary>
     /// The backing store for the <see cref="BorderColor" /> bindable property.
@@ -469,6 +481,16 @@ public abstract partial class MaterialInputBase
     {
         get => (double)GetValue(BorderWidthProperty);
         set => SetValue(BorderWidthProperty, value);
+    }
+
+    /// <summary>
+    /// This property is for internal use by the control. The <see cref="BorderWidth">BorderWidth</see> property should be used instead.
+    /// </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public double InternalBorderWidth
+    {
+        get => (double)GetValue(InternalBorderWidthProperty);
+        set => SetValue(InternalBorderWidthProperty, value);
     }
 
     /// <summary>
@@ -1043,9 +1065,15 @@ public abstract partial class MaterialInputBase
 
     private void SetBorderWidth(MaterialInputType type)
     {
-        if (_borderWidths.TryGetValue(GetCurrentTypeState(type), out double borderWidth))
+        if (!BorderWidth.Equals(DefaultBorderWidth))
         {
-            this.BorderWidth = borderWidth;
+            // Set by user
+            this.InternalBorderWidth = this.BorderWidth;
+        }
+        else if (_borderWidths.TryGetValue(GetCurrentTypeState(type), out double borderWidth))
+        {
+            // Default Material value according to Type
+            this.InternalBorderWidth = borderWidth;
         }
     }
 
