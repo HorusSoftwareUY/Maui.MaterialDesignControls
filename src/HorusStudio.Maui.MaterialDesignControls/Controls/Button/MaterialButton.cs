@@ -578,7 +578,7 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// Gets or sets the if the icon applies the tint color.
     /// This is a bindable property.
     /// </summary>
     /// <default>
