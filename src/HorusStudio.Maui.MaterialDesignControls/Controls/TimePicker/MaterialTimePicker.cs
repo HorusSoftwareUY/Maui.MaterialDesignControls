@@ -72,19 +72,10 @@ public class MaterialTimePicker : MaterialInputBase
         _timePicker.SetBinding(TimePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _timePicker.SetBinding(CustomTimePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         
-        InputTapCommand = new Command(() =>
-        {
-            if (!IsEnabled) return;
-
-#if ANDROID
-            var handler = _timePicker.Handler as ITimePickerHandler;
-            handler?.PlatformView.PerformClick();
-#elif IOS || MACCATALYST
-            _timePicker.Focus();
-#endif
-        });
-
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
         TrailingIcon = MaterialIcon.TimePicker;
+        TrailingIconCommand = new Command(() => DoFocus());
         Content = _timePicker;
     }
 
@@ -303,6 +294,18 @@ public class MaterialTimePicker : MaterialInputBase
             TimeSelectedCommand?.Execute(null);
         }                               
         TimeSelected?.Invoke(this, new TimeSelectedEventArgs(oldValue, newValue));
+    }
+
+    private void DoFocus()
+    {
+        if (!IsEnabled) return;
+
+#if ANDROID
+        var handler = _timePicker.Handler as ITimePickerHandler;
+        handler?.PlatformView.PerformClick();
+#elif IOS || MACCATALYST
+        _timePicker.Focus();
+#endif
     }
 
     #endregion Methods
