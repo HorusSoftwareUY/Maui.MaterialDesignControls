@@ -169,6 +169,14 @@ public class MaterialMultilineTextField : MaterialInputBase
     #region Properties
 
     /// <summary>
+    /// Internal implementation of the <see cref="Editor" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Editor InternalEditor => _editor;
+
+    /// <summary>
     /// Gets or sets the text displayed as the content of the input.
     /// This is a bindable property.
     /// </summary>

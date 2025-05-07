@@ -199,6 +199,14 @@ public class MaterialTextField : MaterialInputBase
     #region Properties
 
     /// <summary>
+    /// Internal implementation of the <see cref="Entry" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Entry InternalEntry => _entry;
+
+    /// <summary>
     /// Gets or sets the text displayed as the content of the input.
     /// This is a bindable property.
     /// </summary>

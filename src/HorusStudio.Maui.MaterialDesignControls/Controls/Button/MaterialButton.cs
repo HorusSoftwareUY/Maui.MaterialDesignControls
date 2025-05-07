@@ -394,6 +394,14 @@ public class MaterialButton : ContentView, ITouchable
     #region Properties
 
     /// <summary>
+    /// Internal implementation of the <see cref="Button" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Button InternalButton => _button;
+
+    /// <summary>
     /// Gets or sets the button type according to <see cref="MaterialButtonType"/> enum.
     /// This is a bindable property.
     /// </summary>

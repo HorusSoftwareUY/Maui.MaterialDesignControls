@@ -192,6 +192,14 @@ public class MaterialCheckBox : ContentView, ITouchable
     #region Properties
 
     /// <summary>
+    /// Internal implementation of the <see cref="CheckBox" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public CheckBox InternalCheckBox => _checkbox;
+
+    /// <summary>
     /// Gets the <see cref="Content" /> for the RadioButton.
     /// This is a bindable property.
     /// </summary>
