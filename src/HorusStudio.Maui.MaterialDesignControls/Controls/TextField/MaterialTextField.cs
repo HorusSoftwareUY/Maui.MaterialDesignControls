@@ -80,10 +80,9 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
         _entry.SetBinding(BorderlessEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
 
-        InputTapCommand = new Command(() =>
-        {
-            if (!IsReadOnly) _entry.Focus();
-        });
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
+        TrailingIconCommand = new Command(() => DoFocus());
 
 #if ANDROID
         _entry.ReturnCommand = new Command(() =>
@@ -502,6 +501,11 @@ public class MaterialTextField : MaterialInputBase
         _entry.Focused -= ContentFocusChanged;
         _entry.Unfocused -= ContentFocusChanged;
         _entry.TextChanged -= TxtEntry_TextChanged;
+    }
+
+    private void DoFocus()
+    {
+        if (!IsReadOnly) _entry.Focus();
     }
 
     #endregion Methods
