@@ -451,10 +451,21 @@ public class MaterialTextField : MaterialInputBase
 
     private void TxtEntry_TextChanged(object? sender, TextChangedEventArgs e)
     {
-        var changedByTextTransform = Text != null && _entry.Text != null && Text.ToLower() == _entry.Text.ToLower();
-        Text = _entry.Text;
+        var invokeTextChanged = true;
 
-        if (!changedByTextTransform)
+        if (_entry.Text != null)
+        {
+            if (TextTransform == TextTransform.Lowercase)
+            {
+                invokeTextChanged = _entry.Text.Where(char.IsLetter).All(char.IsLower);
+            }
+            else if (TextTransform == TextTransform.Uppercase)
+            {
+                invokeTextChanged = _entry.Text.Where(char.IsLetter).All(char.IsUpper);
+            }
+        }
+
+        if (invokeTextChanged)
         {
             TextChangedCommand?.Execute(null);
             TextChanged?.Invoke(this, e);

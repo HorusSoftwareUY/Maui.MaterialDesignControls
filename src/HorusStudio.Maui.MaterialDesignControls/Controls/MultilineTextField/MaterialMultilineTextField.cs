@@ -345,10 +345,21 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     private void TxtEditor_TextChanged(object? sender, TextChangedEventArgs e)
     {
-        var changedByTextTransform = Text != null && _editor.Text != null && Text.ToLower() == _editor.Text.ToLower();
-        Text = _editor.Text;
+        var invokeTextChanged = true;
 
-        if (!changedByTextTransform)
+        if (_editor.Text != null)
+        {
+            if (TextTransform == TextTransform.Lowercase)
+            {
+                invokeTextChanged = _editor.Text.Where(char.IsLetter).All(char.IsLower);
+            }
+            else if (TextTransform == TextTransform.Uppercase)
+            {
+                invokeTextChanged = _editor.Text.Where(char.IsLetter).All(char.IsUpper);
+            }
+        }
+
+        if (invokeTextChanged)
         {
             TextChangedCommand?.Execute(null);
             TextChanged?.Invoke(this, e);
