@@ -1006,14 +1006,10 @@ public abstract partial class MaterialInputBase
     private void OnAppearing()
     {
         // Add tap gesture to the input control to do focus
-        var border = (Border)GetTemplateChild("InputBorder");
+        var border = (BorderButton)GetTemplateChild("InputBorder");
         if (border != null)
         {
-            var tapGestureRecognizer = new TapGestureRecognizer
-            {
-                Command = InputTapCommand
-            };
-            border.GestureRecognizers.Add(tapGestureRecognizer);
+            border.Command = InputTapCommand;
         }
 
         OnControlAppearing();
@@ -1140,7 +1136,7 @@ public abstract partial class MaterialInputBase
 
     private void SetBackground(MaterialInputType type)
     {
-        var inputBorder = (Border)GetTemplateChild("InputBorder");
+        var inputBorder = (BorderButton)GetTemplateChild("InputBorder");
         if (inputBorder != null)
         {
             SetBackgroundToView(type, inputBorder);
@@ -1166,7 +1162,7 @@ public abstract partial class MaterialInputBase
 
     private void SetBackgroundColor(MaterialInputType type)
     {
-        var inputBorder = (Border)GetTemplateChild("InputBorder");
+        var inputBorder = (BorderButton)GetTemplateChild("InputBorder");
         if (inputBorder != null)
         {
             SetBackgroundColorToView(type, inputBorder);
@@ -1213,7 +1209,7 @@ public abstract partial class MaterialInputBase
 
     private void SetCornerRadius(MaterialInputType type)
     {
-        var inputBorder = (Border)GetTemplateChild("InputBorder");
+        var inputBorder = (BorderButton)GetTemplateChild("InputBorder");
         if (inputBorder != null)
         {
             if (_cornerRadius.TryGetValue(type, out CornerRadius cornerRadius))

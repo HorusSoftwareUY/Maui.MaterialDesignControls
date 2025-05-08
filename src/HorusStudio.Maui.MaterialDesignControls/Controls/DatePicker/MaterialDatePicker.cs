@@ -74,18 +74,10 @@ public class MaterialDatePicker : MaterialInputBase
         _datePicker.SetBinding(DatePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _datePicker.SetBinding(CustomDatePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         
-        InputTapCommand = new Command(() =>
-        {
-            if (!IsEnabled) return;
-#if ANDROID
-            var handler = _datePicker.Handler as IDatePickerHandler;
-            handler?.PlatformView.PerformClick();
-#elif IOS || MACCATALYST
-            _datePicker.Focus();
-#endif
-        });
-
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
         TrailingIcon = MaterialIcon.DatePicker;
+        TrailingIconCommand = new Command(() => DoFocus());
         Content = _datePicker;
     }
 
@@ -343,7 +335,19 @@ public class MaterialDatePicker : MaterialInputBase
         }                               
         DateSelected?.Invoke(this, new DateSelectedEventArgs(oldValue, newValue));
     }
-    
+
+    private void DoFocus()
+    {
+        if (!IsEnabled) return;
+
+#if ANDROID
+        var handler = _datePicker.Handler as IDatePickerHandler;
+        handler?.PlatformView.PerformClick();
+#elif IOS || MACCATALYST
+        _datePicker.Focus();
+#endif
+    }
+
     #endregion Methods
 
     #region Styles

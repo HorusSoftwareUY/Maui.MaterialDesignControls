@@ -1,4 +1,5 @@
-﻿using UIKit;
+﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors.Touch;
+using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
 {
@@ -21,6 +22,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
             {
                 _view.UserInteractionEnabled = true;
                 _touchGestureRecognizer = new TouchGestureRecognizer(touchableElement);
+                var proxy = new ShouldReceiveTouchProxy(bindable, platformView);
+                _touchGestureRecognizer.ShouldReceiveTouch = proxy.ShouldReceiveTouch;
                 _view.AddGestureRecognizer(_touchGestureRecognizer);
             }
         }

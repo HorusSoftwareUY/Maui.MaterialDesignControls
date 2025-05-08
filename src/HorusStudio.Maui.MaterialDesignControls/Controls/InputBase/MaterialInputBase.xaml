@@ -17,16 +17,16 @@
         <converters:TrailingIconIsVisibleConverter x:Key="IsTrailingIconVisible" />
         <converters:TrailingIconSourceConverter x:Key="TrailingIconSource" />
         
-        <Style x:Key="MainBorder" TargetType="Border">
+        <Style x:Key="MainBorder" TargetType="material:BorderButton">
             <Setter Property="HeightRequest" Value="{Binding HeightRequest, Source={x:Reference InputBase}}" />
             <Setter Property="Background" Value="{Binding Background, Source={x:Reference InputBase}}" />
         </Style>
         
-        <Style x:Key="FilledBorder" TargetType="Border" BaseResourceKey="MainBorder">
+        <Style x:Key="FilledBorder" TargetType="material:BorderButton" BaseResourceKey="MainBorder">
             <Setter Property="StrokeThickness" Value="0" />
         </Style>
         
-        <Style x:Key="OutlinedBorder" TargetType="Border" BaseResourceKey="MainBorder">
+        <Style x:Key="OutlinedBorder" TargetType="material:BorderButton" BaseResourceKey="MainBorder">
             <Setter Property="Margin" Value="0,8,0,0" />
             <Setter Property="Stroke" Value="{Binding BorderColor, Source={x:Reference InputBase}}" />
             <Setter Property="StrokeThickness" Value="{Binding BorderWidth, Source={x:Reference InputBase}}" />
@@ -170,7 +170,7 @@
         
         <ControlTemplate x:Key="FilledControlTemplate">
             <VerticalStackLayout Spacing="0" x:Name="ContainerFilled">
-                <Border x:Name="InputBorder" Style="{StaticResource FilledBorder}">
+                <material:BorderButton x:Name="InputBorder" Style="{StaticResource FilledBorder}">
                     <Grid>
                         <StackLayout Style="{StaticResource FilledMainContent}">
                             <material:MaterialIconButton Style="{StaticResource LeadingIcon}" />
@@ -188,7 +188,7 @@
 
                         <BoxView HeightRequest="{Binding BorderWidth, Source={x:Reference InputBase}}" Color="{Binding BorderColor, Source={x:Reference InputBase}}" VerticalOptions="EndAndExpand" />
                     </Grid>
-                </Border>
+                </material:BorderButton>
 
                 <Label Style="{StaticResource SupportingText}" />
             </VerticalStackLayout>
@@ -197,7 +197,7 @@
         <ControlTemplate x:Key="OutlinedControlTemplate">
             <VerticalStackLayout Spacing="0" x:Name="ContainerOutlined">
                 <Grid>
-                    <Border x:Name="InputBorder" Style="{StaticResource OutlinedBorder}">
+                    <material:BorderButton x:Name="InputBorder" Style="{StaticResource OutlinedBorder}">
                         <StackLayout Style="{StaticResource MainContent}">
                             <material:MaterialIconButton Style="{StaticResource LeadingIcon}" />
                             
@@ -208,7 +208,7 @@
 
                             <material:MaterialIconButton Style="{StaticResource TrailingIcon}" />
                         </StackLayout>
-                    </Border>
+                    </material:BorderButton>
                     <Label x:Name="OutlinedHint" Style="{StaticResource Hint}" />
                 </Grid>
 
