@@ -145,6 +145,14 @@ public class MaterialDatePicker : MaterialInputBase
     #region Properties
 
     /// <summary>
+    /// Internal implementation of the <see cref="DatePicker" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public DatePicker InternalDatePicker => _datePicker;
+
+    /// <summary>
     /// Gets or sets the text displayed as the content of the input. This property cannot be changed by the user.
     /// This is a bindable property.
     /// </summary>

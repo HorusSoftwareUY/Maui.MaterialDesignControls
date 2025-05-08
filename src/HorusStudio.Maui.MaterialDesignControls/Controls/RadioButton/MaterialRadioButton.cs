@@ -241,6 +241,15 @@ public class MaterialRadioButton : ContentView, ITouchable
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="RadioButton" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public RadioButton InternalRadioButton => _radioButton;
+
     /// <summary>
     /// Gets the <see cref="Content" /> for the RadioButton.
     /// This is a bindable property.
