@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls.Shapes;
+﻿using HorusStudio.Maui.MaterialDesignControls.Converters;
+using Microsoft.Maui.Controls.Shapes;
 using System.Runtime.CompilerServices;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
@@ -451,6 +452,7 @@ public class MaterialRating : ContentView
             Margin = new Thickness(0),
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Fill,
+            RowSpacing = 0,
             RowDefinitions = new()
             {
                 new()
@@ -489,12 +491,13 @@ public class MaterialRating : ContentView
         label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
         label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTransform), source: this));
         label.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        label.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(Label), source: this, converter: new IsNotNullOrEmptyConverter()));
 
         mainLayout.Children.Add(label);
 
         _containerLayout = new()
         {
-            Margin = new Thickness(0, 5, 0, 0),
+            Margin = new Thickness(0),
             Padding = new Thickness(0),
             ColumnSpacing = 0,
             RowSpacing = 0,
