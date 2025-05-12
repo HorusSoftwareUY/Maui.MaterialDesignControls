@@ -44,7 +44,7 @@ public class MaterialTextField : MaterialInputBase
 
     #region Layout
 
-    private readonly BorderlessEntry _entry;
+    private readonly CustomEntry _entry;
 
     #endregion Layout
 
@@ -52,7 +52,7 @@ public class MaterialTextField : MaterialInputBase
 
     public MaterialTextField()
     {
-        _entry = new BorderlessEntry
+        _entry = new CustomEntry
         {
             HorizontalOptions = LayoutOptions.Fill
         };
@@ -78,7 +78,7 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(InputView.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
         _entry.SetBinding(Entry.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _entry.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
-        _entry.SetBinding(BorderlessEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
+        _entry.SetBinding(CustomEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
 
         InputTapCommand = new Command(() =>
         {

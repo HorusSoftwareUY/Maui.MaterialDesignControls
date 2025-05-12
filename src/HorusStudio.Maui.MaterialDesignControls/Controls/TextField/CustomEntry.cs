@@ -3,14 +3,14 @@
 /// <summary>
 /// An <see cref="Entry" /> without border lines on every platform.
 /// </summary>
-internal class BorderlessEntry : Entry
+internal class CustomEntry : Entry
 {
     #region Bindable Properties
 
     /// <summary>
     /// The backing store for the <see cref="CursorColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(BorderlessEntry), defaultValue: null);
+    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(CustomEntry), defaultValue: null);
 
     #endregion
 
@@ -30,7 +30,7 @@ internal class BorderlessEntry : Entry
 
     #region Constructor
 
-    public BorderlessEntry(){ }
+    public CustomEntry(){ }
 
     #endregion Constructor
 }

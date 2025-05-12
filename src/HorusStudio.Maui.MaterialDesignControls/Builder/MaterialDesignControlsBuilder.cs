@@ -16,6 +16,21 @@ public sealed record MaterialDesignControlsBuilder(MauiAppBuilder AppBuilder);
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public static class MaterialDesignControlsBuilderExtensions
 {
+    private static Action<MaterialHandlerOptions>? _configureHandler;
+
+    private static List<(Type, Type, Type)> _controlHandlerMappings = new List<(Type, Type, Type)>
+    {
+        (typeof(MaterialButton), typeof(CustomButton), typeof(CustomButtonHandler)),
+        (typeof(MaterialRadioButton), typeof(CustomRadioButton), typeof(CustomRadioButtonHandler)),
+        (typeof(MaterialTextField), typeof(CustomEntry), typeof(MaterialTextFieldHandler)),
+        (typeof(MaterialTimePicker), typeof(CustomTimePicker), typeof(CustomTimePickerHandler)),
+        (typeof(MaterialDatePicker), typeof(CustomDatePicker), typeof(CustomDatePickerHandler)),
+        (typeof(MaterialPicker), typeof(CustomPicker), typeof(CustomPickerHandler)),
+        (typeof(MaterialMultilineTextField), typeof(CustomEditor), typeof(CustomEditorHandler)),
+        (typeof(MaterialCheckBox), typeof(CustomCheckBox), typeof(CustomCheckboxHandler)),
+        (typeof(MaterialSlider), typeof(CustomSlider), typeof(CustomSliderHandler)),
+    };
+
     /// <summary>
     /// Register Material Design Controls on application builder.
     /// </summary>
@@ -23,11 +38,13 @@ public static class MaterialDesignControlsBuilderExtensions
     /// <param name="configureDelegate">Configuration delegate. Optional.</param>
     /// <returns>Updated MAUI application builder</returns>
     public static MauiAppBuilder UseMaterialDesignControls(this MauiAppBuilder appBuilder,
-        Action<MaterialDesignControlsBuilder>? configureDelegate = null)
+        Action<MaterialDesignControlsBuilder>? configureDelegate = null, Action<MaterialHandlerOptions>? configureHandler = null)
     {   
         Logger.Debug("Configuring Material Design Controls");
         try
         {
+            _configureHandler = configureHandler;
+
             appBuilder
                 .ConfigureMauiHandlers(ConfigureHandlers)
                 .ConfigureLifecycleEvents(ConfigureLifeCycleEvents);
@@ -406,9 +423,9 @@ public static class MaterialDesignControlsBuilderExtensions
         
         return builder;
     }
- 
+
     #region MauiAppBuilder
-    
+
     private static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
         ConfigurationWithLogger(() =>
@@ -425,14 +442,51 @@ public static class MaterialDesignControlsBuilderExtensions
             handlers
                 .AddHandler(typeof(CustomButton), typeof(CustomButtonHandler))
                 .AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler))
-                .AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler))
+                .AddHandler(typeof(CustomEntry), typeof(MaterialTextFieldHandler))
                 .AddHandler(typeof(CustomTimePicker), typeof(CustomTimePickerHandler))
                 .AddHandler(typeof(CustomDatePicker), typeof(CustomDatePickerHandler))
                 .AddHandler(typeof(CustomPicker), typeof(CustomPickerHandler))
                 .AddHandler(typeof(CustomEditor), typeof(CustomEditorHandler))
                 .AddHandler(typeof(CustomCheckBox), typeof(CustomCheckboxHandler))
                 .AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
-        });
+
+            if (_configureHandler is not null)
+            {
+                var customHandlers = new MaterialHandlerOptions();
+                _configureHandler.Invoke(customHandlers);
+
+                if (customHandlers is not null && customHandlers.Any())
+                {
+                    foreach (var customHandler in customHandlers)
+                    {
+                        if (!_controlHandlerMappings.Any(x => x.Item1 == customHandler.Key))
+                        {
+                            throw new ArgumentException("One of the configured handlers uses a ViewType that is not recognized as a customizable control in Material Design");
+                        }
+
+                        var controlHandlerMapping = _controlHandlerMappings.FirstOrDefault(x => x.Item1 == customHandler.Key);
+                        if (customHandler.Value != null && customHandler.Value.IsSubclassOf(controlHandlerMapping.Item3))
+                        {
+                            handlers.AddHandler(controlHandlerMapping.Item2, customHandler.Value);
+                            Logger.Debug($"The {customHandler.Value.Name} handler has been configured for the {controlHandlerMapping.Item1.Name} control");
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"The handler configured for the {controlHandlerMapping.Item1.Name} control must inherit from {controlHandlerMapping.Item3.Name}");
+                        }
+                    }
+                }
+                else
+                {
+                    Logger.Debug("No custom handlers have been set for configuration");
+                }
+            }
+            else
+            {
+                Logger.Debug("No custom handlers have been set for configuration");
+            }
+
+        }, @throw: true);
     }
 
     private static void ConfigureLifeCycleEvents(ILifecycleBuilder appLifeCycle)

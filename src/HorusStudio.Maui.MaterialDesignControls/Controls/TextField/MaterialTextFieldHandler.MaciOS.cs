@@ -3,7 +3,7 @@ using Microsoft.Maui.Platform;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class BorderlessEntryHandler
+public partial class MaterialTextFieldHandler
 {
     public static void MapBorder(IEntryHandler handler, IEntry entry)
     {
@@ -14,7 +14,7 @@ partial class BorderlessEntryHandler
 
     public static void MapCursorColor(IEntryHandler handler, IEntry entry)
     {
-        if (entry is BorderlessEntry customEntry && customEntry.CursorColor != null)
+        if (entry is CustomEntry customEntry && customEntry.CursorColor != null)
         {
             handler.PlatformView.TintColor = customEntry.CursorColor.ToPlatform();
         }

@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class BorderlessEntryHandler
+public partial class MaterialTextFieldHandler
 {
     public static void MapBorder(IEntryHandler handler, IEntry entry)
     {

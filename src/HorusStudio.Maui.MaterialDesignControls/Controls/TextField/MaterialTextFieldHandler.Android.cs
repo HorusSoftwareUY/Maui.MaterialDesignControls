@@ -4,7 +4,7 @@ using Android.OS;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class BorderlessEntryHandler
+public partial class MaterialTextFieldHandler
 {
     public static void MapBorder(IEntryHandler handler, IEntry entry)
     {
@@ -15,7 +15,7 @@ partial class BorderlessEntryHandler
 
     public static void MapCursorColor(IEntryHandler handler, IEntry entry)
     {
-        if (entry is BorderlessEntry customEntry && customEntry.CursorColor != null && handler.PlatformView is Android.Widget.EditText editText)
+        if (entry is CustomEntry customEntry && customEntry.CursorColor != null && handler.PlatformView is Android.Widget.EditText editText)
         {
             BuildVersionCodes androidVersion = Build.VERSION.SdkInt;
             if (androidVersion >= BuildVersionCodes.Q)
