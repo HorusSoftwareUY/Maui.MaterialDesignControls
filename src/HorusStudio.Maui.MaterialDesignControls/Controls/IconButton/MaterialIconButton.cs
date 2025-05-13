@@ -158,6 +158,11 @@ public class MaterialIconButton : ContentView, ITouchable
     internal static readonly BindableProperty InternalIconTintColorProperty = BindableProperty.Create(nameof(InternalIconTintColor), typeof(Color), typeof(MaterialIconButton), defaultValue: DefaultIconTintColor);
 
     /// <summary>
+    /// The backing store for the <see cref="ApplyIconTintColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ApplyIconTintColorProperty = BindableProperty.Create(nameof(ApplyIconTintColor), typeof(bool), typeof(MaterialIconButton), defaultValue: true);
+
+    /// <summary>
     /// The backing store for the <see cref="Background" /> bindable property.
     /// </summary>
     public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialIconButton), defaultValue: DefaultBackground, propertyChanged: (bindable, _, _) =>
@@ -441,6 +446,19 @@ public class MaterialIconButton : ContentView, ITouchable
     }
 
     /// <summary>
+    /// Gets or sets the if the icon applies the tint color.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="true"/>
+    /// </default>
+    public bool ApplyIconTintColor
+    {
+        get => (bool)GetValue(ApplyIconTintColorProperty);
+        set => SetValue(ApplyIconTintColorProperty, value);
+    }
+
+    /// <summary>
     /// Gets or sets an animation to be executed when button is clicked.
     /// This is a bindable property.
     /// </summary>
@@ -688,6 +706,7 @@ public class MaterialIconButton : ContentView, ITouchable
 
         var iconTintColor = new IconTintColorBehavior();
         iconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(InternalIconTintColor), source: this));
+        iconTintColor.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(ApplyIconTintColor), source: this));
         _image.Behaviors.Add(iconTintColor);
 
         // Container

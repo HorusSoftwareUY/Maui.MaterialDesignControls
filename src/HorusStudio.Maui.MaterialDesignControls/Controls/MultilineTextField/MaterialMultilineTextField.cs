@@ -169,6 +169,14 @@ public class MaterialMultilineTextField : MaterialInputBase
     #region Properties
 
     /// <summary>
+    /// Internal implementation of the <see cref="Editor" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Editor InternalEditor => _editor;
+
+    /// <summary>
     /// Gets or sets the text displayed as the content of the input.
     /// This is a bindable property.
     /// </summary>
@@ -345,10 +353,21 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     private void TxtEditor_TextChanged(object? sender, TextChangedEventArgs e)
     {
-        var changedByTextTransform = Text != null && _editor.Text != null && Text.ToLower() == _editor.Text.ToLower();
-        Text = _editor.Text;
+        var invokeTextChanged = true;
 
-        if (!changedByTextTransform)
+        if (_editor.Text != null)
+        {
+            if (TextTransform == TextTransform.Lowercase)
+            {
+                invokeTextChanged = _editor.Text.Where(char.IsLetter).All(char.IsLower);
+            }
+            else if (TextTransform == TextTransform.Uppercase)
+            {
+                invokeTextChanged = _editor.Text.Where(char.IsLetter).All(char.IsUpper);
+            }
+        }
+
+        if (invokeTextChanged)
         {
             TextChangedCommand?.Execute(null);
             TextChanged?.Invoke(this, e);

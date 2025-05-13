@@ -953,8 +953,19 @@ public class MaterialNavigationDrawer : ContentView
             MinimumWidthRequest = DefaultIconSize,
             VerticalOptions = LayoutOptions.Center
         };
+
         var tintColorBehavior = new IconTintColorBehavior();
         tintColorBehavior.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(item.IsEnabled), source: item, converter: new ItemEnabledToColorConverter(this)));
+
+        if (isLeadingIcon)
+        {
+            tintColorBehavior.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(item.ApplyLeadingIconTintColor), source: item));
+        }
+        else
+        {
+            tintColorBehavior.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(item.ApplyTrailingIconTintColor), source: item));
+        }
+
         icon.Behaviors.Add(tintColorBehavior);
 
         if (isLeadingIcon)

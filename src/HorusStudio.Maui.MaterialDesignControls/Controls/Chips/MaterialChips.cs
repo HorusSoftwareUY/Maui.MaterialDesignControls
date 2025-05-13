@@ -251,10 +251,20 @@ public class MaterialChips : ContentView, ITouchable
     public static readonly BindableProperty LeadingIconTintColorProperty = BindableProperty.Create(nameof(LeadingIconTintColor), typeof(Color), typeof(MaterialChips), defaultValueCreator: DefaultIconTintColor);
 
     /// <summary>
+    /// The backing store for the <see cref="ApplyLeadingIconTintColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ApplyLeadingIconTintColorProperty = BindableProperty.Create(nameof(ApplyLeadingIconTintColor), typeof(bool), typeof(MaterialChips), defaultValue: true);
+
+    /// <summary>
     /// The backing store for the <see cref="TrailingIconTintColor" />
     /// bindable property.
     /// </summary>
     public static readonly BindableProperty TrailingIconTintColorProperty = BindableProperty.Create(nameof(TrailingIconTintColor), typeof(Color), typeof(MaterialChips), defaultValueCreator: DefaultIconTintColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="ApplyTrailingIconTintColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ApplyTrailingIconTintColorProperty = BindableProperty.Create(nameof(ApplyTrailingIconTintColor), typeof(bool), typeof(MaterialChips), defaultValue: true);
 
     /// <summary>
     /// The backing store for the <see cref="ShadowColor" />
@@ -520,6 +530,19 @@ public class MaterialChips : ContentView, ITouchable
     }
 
     /// <summary>
+    /// Gets or sets the if the leading icon applies the tint color.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="true"/>
+    /// </default>
+    public bool ApplyLeadingIconTintColor
+    {
+        get => (bool)GetValue(ApplyLeadingIconTintColorProperty);
+        set => SetValue(ApplyLeadingIconTintColorProperty, value);
+    }
+
+    /// <summary>
     /// Gets or sets a color that describes the trailing icon color of the chips.
     /// This is a bindable property.
     /// </summary>
@@ -530,6 +553,19 @@ public class MaterialChips : ContentView, ITouchable
     {
         get => (Color)GetValue(TrailingIconTintColorProperty);
         set => SetValue(TrailingIconTintColorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the if the trailing icon applies the tint color.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="true"/>
+    /// </default>
+    public bool ApplyTrailingIconTintColor
+    {
+        get => (bool)GetValue(ApplyTrailingIconTintColorProperty);
+        set => SetValue(ApplyTrailingIconTintColorProperty, value);
     }
 
     /// <summary>
@@ -726,6 +762,7 @@ public class MaterialChips : ContentView, ITouchable
 
         var leadingIconTintColor = new IconTintColorBehavior();
         leadingIconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(LeadingIconTintColor), source: this));
+        leadingIconTintColor.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(ApplyLeadingIconTintColor), source: this));
         _leadingIcon.Behaviors.Add(leadingIconTintColor);
 
         _textLabel = new MaterialLabel
@@ -748,6 +785,7 @@ public class MaterialChips : ContentView, ITouchable
 
         var trailingIconTintColor = new IconTintColorBehavior();
         trailingIconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(TrailingIconTintColor), source: this));
+        trailingIconTintColor.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(ApplyTrailingIconTintColor), source: this));
         _trailingIcon.Behaviors.Add(trailingIconTintColor);
 
         _hStack = new HorizontalStackLayout

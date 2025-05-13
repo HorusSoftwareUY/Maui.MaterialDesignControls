@@ -146,6 +146,14 @@ public class MaterialPicker : MaterialInputBase
     #region Properties
 
     /// <summary>
+    /// Internal implementation of the <see cref="Picker" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Picker InternalPicker => _picker;
+
+    /// <summary>
     /// Gets or sets the vertical text alignment. This is a bindable property.
     /// </summary>
     /// <default>

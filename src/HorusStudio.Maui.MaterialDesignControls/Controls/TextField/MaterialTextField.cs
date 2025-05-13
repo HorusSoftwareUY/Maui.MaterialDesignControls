@@ -198,6 +198,14 @@ public class MaterialTextField : MaterialInputBase
     #region Properties
 
     /// <summary>
+    /// Internal implementation of the <see cref="Entry" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Entry InternalEntry => _entry;
+
+    /// <summary>
     /// Gets or sets the text displayed as the content of the input.
     /// This is a bindable property.
     /// </summary>
@@ -450,10 +458,21 @@ public class MaterialTextField : MaterialInputBase
 
     private void TxtEntry_TextChanged(object? sender, TextChangedEventArgs e)
     {
-        var changedByTextTransform = Text != null && _entry.Text != null && Text.ToLower() == _entry.Text.ToLower();
-        Text = _entry.Text;
+        var invokeTextChanged = true;
 
-        if (!changedByTextTransform)
+        if (_entry.Text != null)
+        {
+            if (TextTransform == TextTransform.Lowercase)
+            {
+                invokeTextChanged = _entry.Text.Where(char.IsLetter).All(char.IsLower);
+            }
+            else if (TextTransform == TextTransform.Uppercase)
+            {
+                invokeTextChanged = _entry.Text.Where(char.IsLetter).All(char.IsUpper);
+            }
+        }
+
+        if (invokeTextChanged)
         {
             TextChangedCommand?.Execute(null);
             TextChanged?.Invoke(this, e);
