@@ -102,7 +102,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                         .ConfigureIconsFromResources("MaterialCustomizations.xaml","MaterialIcon")
                         .ConfigureStringFormatFromResources("MaterialCustomizations.xaml");
                     */
-                }, configureHandler: handlers =>
+                }, configureHandlers: handlers =>
                 {
                     handlers.AddHandler(typeof(MaterialTextField), typeof(Handlers.CustomMaterialTextFieldHandler));
                 });

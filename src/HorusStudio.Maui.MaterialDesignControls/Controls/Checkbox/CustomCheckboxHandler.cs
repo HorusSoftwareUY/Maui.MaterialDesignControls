@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomCheckboxHandler : CheckBoxHandler
+public partial class CustomCheckboxHandler : CheckBoxHandler
 {
     public CustomCheckboxHandler() : base(Mapper, CommandMapper)
     {

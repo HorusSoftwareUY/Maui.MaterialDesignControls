@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomEditorHandler : EditorHandler
+public partial class CustomEditorHandler : EditorHandler
 {
     public CustomEditorHandler() : base(Mapper, CommandMapper)
     {

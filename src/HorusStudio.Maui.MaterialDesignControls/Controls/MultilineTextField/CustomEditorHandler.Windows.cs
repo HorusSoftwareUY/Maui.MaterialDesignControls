@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomEditorHandler
+public partial class CustomEditorHandler
 {
     public static void MapActiveIndicator(IEditorHandler handler, IEditor editor)
     {

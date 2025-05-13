@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomRadioButtonHandler : RadioButtonHandler
+public partial class CustomRadioButtonHandler : RadioButtonHandler
 {
     public CustomRadioButtonHandler() : base(Mapper, CommandMapper)
     {

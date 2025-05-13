@@ -5,7 +5,7 @@ using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomCheckboxHandler
+public partial class CustomCheckboxHandler
 {
     public new static void MapForeground(ICheckBoxHandler handler, ICheckBox check)
     {

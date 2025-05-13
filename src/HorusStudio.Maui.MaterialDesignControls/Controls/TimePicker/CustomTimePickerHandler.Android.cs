@@ -3,7 +3,8 @@ using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
-partial class CustomTimePickerHandler
+
+public partial class CustomTimePickerHandler
 {
     public static void MapBorder(ITimePickerHandler handler, ITimePicker timePicker)
     {

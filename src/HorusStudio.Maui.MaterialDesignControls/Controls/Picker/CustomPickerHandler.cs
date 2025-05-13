@@ -1,7 +1,8 @@
 ﻿using Microsoft.Maui.Handlers;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
-partial class CustomPickerHandler : PickerHandler
+
+public partial class CustomPickerHandler : PickerHandler
 {
     public CustomPickerHandler() : base(Mapper, CommandMapper)
     {

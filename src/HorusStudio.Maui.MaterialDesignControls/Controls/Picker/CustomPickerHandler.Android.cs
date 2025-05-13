@@ -6,7 +6,7 @@ using Android.Widget;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomPickerHandler
+public partial class CustomPickerHandler
 {
     private Android.Views.Window.ICallback _windowCallback;
     

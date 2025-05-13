@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomDatePickerHandler
+public partial class CustomDatePickerHandler
 {
     public static void MapBorder(IDatePickerHandler handler, IDatePicker picker)
     {

@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomPickerHandler
+public partial class CustomPickerHandler
 {
     public static void MapBorder(IPickerHandler handler, IPicker picker)
     {

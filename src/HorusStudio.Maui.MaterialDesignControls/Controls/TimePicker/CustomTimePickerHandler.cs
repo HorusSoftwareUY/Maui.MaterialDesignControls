@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomTimePickerHandler : TimePickerHandler
+public partial class CustomTimePickerHandler : TimePickerHandler
 {
     public CustomTimePickerHandler() : base(Mapper, CommandMapper)
     {

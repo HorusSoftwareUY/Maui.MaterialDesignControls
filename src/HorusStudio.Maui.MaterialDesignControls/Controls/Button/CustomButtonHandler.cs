@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomButtonHandler: ButtonHandler
+public partial class CustomButtonHandler: ButtonHandler
 {
 	public CustomButtonHandler(): base(Mapper, CommandMapper)
 	{

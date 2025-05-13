@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomSliderHandler : SliderHandler
+public partial class CustomSliderHandler : SliderHandler
 {
     public CustomSliderHandler() : base(Mapper, CommandMapper)
     {

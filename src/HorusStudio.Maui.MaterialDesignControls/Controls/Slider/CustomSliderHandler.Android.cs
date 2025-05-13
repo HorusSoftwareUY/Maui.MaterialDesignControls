@@ -14,7 +14,7 @@ using Android.Content;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-partial class CustomSliderHandler
+public partial class CustomSliderHandler
 {
     public static async void MapDesignProperties(ISliderHandler handler, ISlider slider)
     {
