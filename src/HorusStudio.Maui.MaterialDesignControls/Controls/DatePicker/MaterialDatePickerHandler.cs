@@ -2,9 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomDatePickerHandler : DatePickerHandler
+public partial class MaterialDatePickerHandler : DatePickerHandler
 {
-    public CustomDatePickerHandler() : base(Mapper, CommandMapper)
+    public MaterialDatePickerHandler() : base(Mapper, CommandMapper)
     {
         Mapper.Add(nameof(CustomDatePicker), MapBorder);
         Mapper.Add(nameof(CustomDatePicker.HorizontalTextAlignment), MapHorizontalTextAlignment);

@@ -4,7 +4,7 @@ using Microsoft.Maui.Platform;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomDatePickerHandler
+public partial class MaterialDatePickerHandler
 {
     public static void MapBorder(IDatePickerHandler handler, IDatePicker picker)
     {

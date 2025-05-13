@@ -24,7 +24,7 @@ public static class MaterialDesignControlsBuilderExtensions
         (typeof(MaterialRadioButton), typeof(CustomRadioButton), typeof(CustomRadioButtonHandler)),
         (typeof(MaterialTextField), typeof(CustomEntry), typeof(MaterialTextFieldHandler)),
         (typeof(MaterialTimePicker), typeof(CustomTimePicker), typeof(CustomTimePickerHandler)),
-        (typeof(MaterialDatePicker), typeof(CustomDatePicker), typeof(CustomDatePickerHandler)),
+        (typeof(MaterialDatePicker), typeof(CustomDatePicker), typeof(MaterialDatePickerHandler)),
         (typeof(MaterialPicker), typeof(CustomPicker), typeof(CustomPickerHandler)),
         (typeof(MaterialMultilineTextField), typeof(CustomEditor), typeof(CustomEditorHandler)),
         (typeof(MaterialCheckBox), typeof(CustomCheckBox), typeof(MaterialCheckBoxHandler)),
@@ -445,7 +445,7 @@ public static class MaterialDesignControlsBuilderExtensions
                 .AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler))
                 .AddHandler(typeof(CustomEntry), typeof(MaterialTextFieldHandler))
                 .AddHandler(typeof(CustomTimePicker), typeof(CustomTimePickerHandler))
-                .AddHandler(typeof(CustomDatePicker), typeof(CustomDatePickerHandler))
+                .AddHandler(typeof(CustomDatePicker), typeof(MaterialDatePickerHandler))
                 .AddHandler(typeof(CustomPicker), typeof(CustomPickerHandler))
                 .AddHandler(typeof(CustomEditor), typeof(CustomEditorHandler))
                 .AddHandler(typeof(CustomCheckBox), typeof(MaterialCheckBoxHandler))

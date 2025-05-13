@@ -6,7 +6,7 @@ using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomDatePickerHandler
+public partial class MaterialDatePickerHandler
 {
 #if IOS
     protected override void ConnectHandler(MauiDatePicker platformView)
