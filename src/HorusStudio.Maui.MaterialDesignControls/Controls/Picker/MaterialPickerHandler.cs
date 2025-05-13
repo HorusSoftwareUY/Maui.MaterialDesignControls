@@ -2,9 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomPickerHandler : PickerHandler
+public partial class MaterialPickerHandler : PickerHandler
 {
-    public CustomPickerHandler() : base(Mapper, CommandMapper)
+    public MaterialPickerHandler() : base(Mapper, CommandMapper)
     {
         Mapper.Add(nameof(CustomPicker), MapBorder);
         Mapper.Add(nameof(CustomPicker.HorizontalTextAlignment), MapHorizontalTextAlignment);

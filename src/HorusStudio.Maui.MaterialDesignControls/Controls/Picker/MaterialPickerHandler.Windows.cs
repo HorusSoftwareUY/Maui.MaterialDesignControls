@@ -3,7 +3,7 @@ using Microsoft.Maui.Platform;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomPickerHandler
+public partial class MaterialPickerHandler
 {
     public static void MapBorder(IPickerHandler handler, IPicker picker)
     {

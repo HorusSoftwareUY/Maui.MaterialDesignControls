@@ -25,7 +25,7 @@ public static class MaterialDesignControlsBuilderExtensions
         (typeof(MaterialTextField), typeof(CustomEntry), typeof(MaterialTextFieldHandler)),
         (typeof(MaterialTimePicker), typeof(CustomTimePicker), typeof(CustomTimePickerHandler)),
         (typeof(MaterialDatePicker), typeof(CustomDatePicker), typeof(MaterialDatePickerHandler)),
-        (typeof(MaterialPicker), typeof(CustomPicker), typeof(CustomPickerHandler)),
+        (typeof(MaterialPicker), typeof(CustomPicker), typeof(MaterialPickerHandler)),
         (typeof(MaterialMultilineTextField), typeof(CustomEditor), typeof(MaterialMultilineTextFieldHandler)),
         (typeof(MaterialCheckBox), typeof(CustomCheckBox), typeof(MaterialCheckBoxHandler)),
         (typeof(MaterialSlider), typeof(CustomSlider), typeof(CustomSliderHandler)),
@@ -446,7 +446,7 @@ public static class MaterialDesignControlsBuilderExtensions
                 .AddHandler(typeof(CustomEntry), typeof(MaterialTextFieldHandler))
                 .AddHandler(typeof(CustomTimePicker), typeof(CustomTimePickerHandler))
                 .AddHandler(typeof(CustomDatePicker), typeof(MaterialDatePickerHandler))
-                .AddHandler(typeof(CustomPicker), typeof(CustomPickerHandler))
+                .AddHandler(typeof(CustomPicker), typeof(MaterialPickerHandler))
                 .AddHandler(typeof(CustomEditor), typeof(MaterialMultilineTextFieldHandler))
                 .AddHandler(typeof(CustomCheckBox), typeof(MaterialCheckBoxHandler))
                 .AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
