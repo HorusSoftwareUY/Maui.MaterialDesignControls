@@ -2,9 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomTimePickerHandler : TimePickerHandler
+public partial class MaterialTimePickerHandler : TimePickerHandler
 {
-    public CustomTimePickerHandler() : base(Mapper, CommandMapper)
+    public MaterialTimePickerHandler() : base(Mapper, CommandMapper)
     {
         Mapper.Add(nameof(CustomTimePicker), MapBorder);
         Mapper.Add(nameof(CustomTimePicker.HorizontalTextAlignment), MapHorizontalTextAlignment);

@@ -6,7 +6,7 @@ using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomTimePickerHandler
+public partial class MaterialTimePickerHandler
 {
 #if IOS
     protected override void ConnectHandler(MauiTimePicker platformView)

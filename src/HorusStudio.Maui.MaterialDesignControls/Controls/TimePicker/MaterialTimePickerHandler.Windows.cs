@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomTimePickerHandler
+public partial class MaterialTimePickerHandler
 {
     public static void MapBorder(ITimePickerHandler handler, ITimePicker timePicker)
     {
