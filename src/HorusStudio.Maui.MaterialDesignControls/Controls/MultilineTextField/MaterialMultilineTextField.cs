@@ -77,9 +77,9 @@ public class MaterialMultilineTextField : MaterialInputBase
         _editor.SetBinding(CustomEditor.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
         _editor.SetBinding(Editor.AutoSizeProperty, new Binding(nameof(AutoSize), source: this));
 
-        InputTapCommand = new Command(() => {
-            if (!IsReadOnly) _editor.Focus();
-        });
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
+        TrailingIconCommand = new Command(() => DoFocus());
 
         Content = _editor;
     }
@@ -439,6 +439,11 @@ public class MaterialMultilineTextField : MaterialInputBase
             this.HeightRequest = -1.0;
             this.InvalidateMeasure();
         }
+    }
+
+    private void DoFocus()
+    {
+        if (!IsReadOnly) _editor.Focus();
     }
 
     #endregion Methods
