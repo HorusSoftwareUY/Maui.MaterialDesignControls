@@ -2,9 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomEditorHandler : EditorHandler
+public partial class MaterialMultilineTextFieldHandler : EditorHandler
 {
-    public CustomEditorHandler() : base(Mapper, CommandMapper)
+    public MaterialMultilineTextFieldHandler() : base(Mapper, CommandMapper)
     {
         Mapper.Add(nameof(CustomEditor), MapActiveIndicator);
         Mapper.Add(nameof(CustomEditor.CursorColor), MapCursorColor);

@@ -4,7 +4,7 @@ using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomEditorHandler
+public partial class MaterialMultilineTextFieldHandler
 {
     public static void MapActiveIndicator(IEditorHandler handler, IEditor editor)
     {
