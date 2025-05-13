@@ -2,9 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomCheckboxHandler : CheckBoxHandler
+public partial class MaterialCheckBoxHandler : CheckBoxHandler
 {
-    public CustomCheckboxHandler() : base(Mapper, CommandMapper)
+    public MaterialCheckBoxHandler() : base(Mapper, CommandMapper)
     {
         Mapper.Add(nameof(CheckBox.Color), MapForeground);
 

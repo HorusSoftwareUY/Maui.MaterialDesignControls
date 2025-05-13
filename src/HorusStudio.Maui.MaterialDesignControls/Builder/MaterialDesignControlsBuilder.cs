@@ -27,7 +27,7 @@ public static class MaterialDesignControlsBuilderExtensions
         (typeof(MaterialDatePicker), typeof(CustomDatePicker), typeof(CustomDatePickerHandler)),
         (typeof(MaterialPicker), typeof(CustomPicker), typeof(CustomPickerHandler)),
         (typeof(MaterialMultilineTextField), typeof(CustomEditor), typeof(CustomEditorHandler)),
-        (typeof(MaterialCheckBox), typeof(CustomCheckBox), typeof(CustomCheckboxHandler)),
+        (typeof(MaterialCheckBox), typeof(CustomCheckBox), typeof(MaterialCheckBoxHandler)),
         (typeof(MaterialSlider), typeof(CustomSlider), typeof(CustomSliderHandler)),
     };
 
@@ -448,7 +448,7 @@ public static class MaterialDesignControlsBuilderExtensions
                 .AddHandler(typeof(CustomDatePicker), typeof(CustomDatePickerHandler))
                 .AddHandler(typeof(CustomPicker), typeof(CustomPickerHandler))
                 .AddHandler(typeof(CustomEditor), typeof(CustomEditorHandler))
-                .AddHandler(typeof(CustomCheckBox), typeof(CustomCheckboxHandler))
+                .AddHandler(typeof(CustomCheckBox), typeof(MaterialCheckBoxHandler))
                 .AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
 
             if (_configureHandlers is not null)
