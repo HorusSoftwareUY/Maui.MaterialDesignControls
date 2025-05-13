@@ -2,7 +2,11 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls.Behaviors.Touch
 {
-	public class ShouldReceiveTouchProxy
+    /// <summary>
+    /// This implementation is based on the following internal implementation of MAUI:
+    /// https://github.com/dotnet/maui/blob/f65f1eaad38b7e41d352383479f54b410d637c75/src/Controls/src/Core/Platform/GestureManager/GesturePlatformManager.iOS.cs#L735
+    /// </summary>
+	internal class ShouldReceiveTouchProxy
 	{
         #region Attributes
 
