@@ -5,7 +5,7 @@ using CoreGraphics;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomSliderHandler : ISliderHandler
+public partial class MaterialSliderHandler : ISliderHandler
 {
     public static async void MapDesignProperties(ISliderHandler handler, ISlider slider)
     {

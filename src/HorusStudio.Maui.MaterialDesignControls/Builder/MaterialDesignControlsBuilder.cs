@@ -28,7 +28,7 @@ public static class MaterialDesignControlsBuilderExtensions
         (typeof(MaterialPicker), typeof(CustomPicker), typeof(MaterialPickerHandler)),
         (typeof(MaterialMultilineTextField), typeof(CustomEditor), typeof(MaterialMultilineTextFieldHandler)),
         (typeof(MaterialCheckBox), typeof(CustomCheckBox), typeof(MaterialCheckBoxHandler)),
-        (typeof(MaterialSlider), typeof(CustomSlider), typeof(CustomSliderHandler)),
+        (typeof(MaterialSlider), typeof(CustomSlider), typeof(MaterialSliderHandler)),
     };
 
     /// <summary>
@@ -449,7 +449,7 @@ public static class MaterialDesignControlsBuilderExtensions
                 .AddHandler(typeof(CustomPicker), typeof(MaterialPickerHandler))
                 .AddHandler(typeof(CustomEditor), typeof(MaterialMultilineTextFieldHandler))
                 .AddHandler(typeof(CustomCheckBox), typeof(MaterialCheckBoxHandler))
-                .AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
+                .AddHandler(typeof(CustomSlider), typeof(MaterialSliderHandler));
 
             if (_configureHandlers is not null)
             {

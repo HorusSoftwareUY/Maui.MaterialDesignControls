@@ -2,9 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomSliderHandler : SliderHandler
+public partial class MaterialSliderHandler : SliderHandler
 {
-    public CustomSliderHandler() : base(Mapper, CommandMapper)
+    public MaterialSliderHandler() : base(Mapper, CommandMapper)
     {
         Mapper.Add(nameof(CustomSlider.MinimumTrackColor), MapDesignProperties);
         Mapper.Add(nameof(CustomSlider.MaximumTrackColor), MapDesignProperties);
