@@ -2,9 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomButtonHandler: ButtonHandler
+public partial class MaterialButtonHandler : ButtonHandler
 {
-	public CustomButtonHandler(): base(Mapper, CommandMapper)
+	public MaterialButtonHandler (): base(Mapper, CommandMapper)
 	{
 		Mapper.Add(nameof(CustomButton.TextDecorations), MapTextDecorations);
 	}

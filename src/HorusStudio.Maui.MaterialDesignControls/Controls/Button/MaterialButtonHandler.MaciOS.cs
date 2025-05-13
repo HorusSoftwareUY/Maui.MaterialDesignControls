@@ -2,7 +2,7 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomButtonHandler
+public partial class MaterialButtonHandler 
 {
     public static void MapTextDecorations(IButtonHandler handler, IButton button)
     {
@@ -12,4 +12,3 @@ public partial class CustomButtonHandler
         }
     }
 }
-
