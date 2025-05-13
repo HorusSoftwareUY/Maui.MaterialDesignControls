@@ -16,7 +16,7 @@ public sealed record MaterialDesignControlsBuilder(MauiAppBuilder AppBuilder);
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public static class MaterialDesignControlsBuilderExtensions
 {
-    private static Action<MaterialHandlerOptions>? _configureHandler;
+    private static Action<MaterialHandlerOptions>? _configureHandlers;
 
     private static List<(Type, Type, Type)> _controlHandlerMappings = new List<(Type, Type, Type)>
     {
@@ -36,14 +36,15 @@ public static class MaterialDesignControlsBuilderExtensions
     /// </summary>
     /// <param name="appBuilder">MAUI application builder.</param>
     /// <param name="configureDelegate">Configuration delegate. Optional.</param>
+    /// <param name="configureHandlers">Configuration handlers. Optional.</param>
     /// <returns>Updated MAUI application builder</returns>
     public static MauiAppBuilder UseMaterialDesignControls(this MauiAppBuilder appBuilder,
-        Action<MaterialDesignControlsBuilder>? configureDelegate = null, Action<MaterialHandlerOptions>? configureHandler = null)
+        Action<MaterialDesignControlsBuilder>? configureDelegate = null, Action<MaterialHandlerOptions>? configureHandlers = null)
     {   
         Logger.Debug("Configuring Material Design Controls");
         try
         {
-            _configureHandler = configureHandler;
+            _configureHandlers = configureHandlers;
 
             appBuilder
                 .ConfigureMauiHandlers(ConfigureHandlers)
@@ -450,10 +451,10 @@ public static class MaterialDesignControlsBuilderExtensions
                 .AddHandler(typeof(CustomCheckBox), typeof(CustomCheckboxHandler))
                 .AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler));
 
-            if (_configureHandler is not null)
+            if (_configureHandlers is not null)
             {
                 var customHandlers = new MaterialHandlerOptions();
-                _configureHandler.Invoke(customHandlers);
+                _configureHandlers.Invoke(customHandlers);
 
                 if (customHandlers is not null && customHandlers.Any())
                 {
