@@ -21,7 +21,7 @@ public static class MaterialDesignControlsBuilderExtensions
     private static List<(Type, Type, Type)> _controlHandlerMappings = new List<(Type, Type, Type)>
     {
         (typeof(MaterialButton), typeof(CustomButton), typeof(MaterialButtonHandler )),
-        (typeof(MaterialRadioButton), typeof(CustomRadioButton), typeof(CustomRadioButtonHandler)),
+        (typeof(MaterialRadioButton), typeof(CustomRadioButton), typeof(MaterialRadioButtonHandler)),
         (typeof(MaterialTextField), typeof(CustomEntry), typeof(MaterialTextFieldHandler)),
         (typeof(MaterialTimePicker), typeof(CustomTimePicker), typeof(CustomTimePickerHandler)),
         (typeof(MaterialDatePicker), typeof(CustomDatePicker), typeof(MaterialDatePickerHandler)),
@@ -442,7 +442,7 @@ public static class MaterialDesignControlsBuilderExtensions
         {
             handlers
                 .AddHandler(typeof(CustomButton), typeof(MaterialButtonHandler ))
-                .AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler))
+                .AddHandler(typeof(CustomRadioButton), typeof(MaterialRadioButtonHandler))
                 .AddHandler(typeof(CustomEntry), typeof(MaterialTextFieldHandler))
                 .AddHandler(typeof(CustomTimePicker), typeof(CustomTimePickerHandler))
                 .AddHandler(typeof(CustomDatePicker), typeof(MaterialDatePickerHandler))

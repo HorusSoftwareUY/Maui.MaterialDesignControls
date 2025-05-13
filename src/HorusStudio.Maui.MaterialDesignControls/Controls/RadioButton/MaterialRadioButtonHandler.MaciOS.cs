@@ -5,7 +5,7 @@ using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomRadioButtonHandler 
+public partial class MaterialRadioButtonHandler 
 {
     public new static void MapStrokeColor(IRadioButtonHandler handler, IRadioButton radioButton)
     {

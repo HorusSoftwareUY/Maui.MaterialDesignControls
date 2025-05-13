@@ -2,9 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public partial class CustomRadioButtonHandler : RadioButtonHandler
+public partial class MaterialRadioButtonHandler : RadioButtonHandler
 {
-    public CustomRadioButtonHandler() : base(Mapper, CommandMapper)
+    public MaterialRadioButtonHandler() : base(Mapper, CommandMapper)
     {
         Mapper.Add(nameof(CustomRadioButton.StrokeColor), MapStrokeColor);
 
