@@ -29,7 +29,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                         fonts.AddFont("Roboto-Medium.ttf", FontMedium);
                         fonts.AddFont("Roboto-Bold.ttf", FontBold);
                     }, new(FontRegular, FontMedium, FontRegular));
-                    
                     /*
                     // Plugin configuration using C#
                     options.ConfigureThemes(
@@ -93,7 +92,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                         DefaultIconColor = Colors.Brown
                     });
                     */
-                    
+
                     /*
                     // Plugin configuration using App Resources (include MaterialCustomizations dictionary on App.xaml)
                     options
@@ -103,6 +102,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                         .ConfigureIconsFromResources("MaterialCustomizations.xaml","MaterialIcon")
                         .ConfigureStringFormatFromResources("MaterialCustomizations.xaml");
                     */
+                }, configureHandlers: handlers =>
+                {
+                    handlers.AddHandler(typeof(MaterialTextField), typeof(Handlers.CustomMaterialTextFieldHandler));
                 });
          
             builder.Services

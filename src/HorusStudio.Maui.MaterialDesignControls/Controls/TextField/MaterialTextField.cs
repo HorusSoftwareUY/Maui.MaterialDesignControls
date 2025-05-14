@@ -44,7 +44,7 @@ public class MaterialTextField : MaterialInputBase
 
     #region Layout
 
-    private readonly BorderlessEntry _entry;
+    private readonly CustomEntry _entry;
 
     #endregion Layout
 
@@ -52,7 +52,7 @@ public class MaterialTextField : MaterialInputBase
 
     public MaterialTextField()
     {
-        _entry = new BorderlessEntry
+        _entry = new CustomEntry
         {
             HorizontalOptions = LayoutOptions.Fill
         };
@@ -78,12 +78,11 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(InputView.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
         _entry.SetBinding(Entry.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _entry.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
-        _entry.SetBinding(BorderlessEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
+        _entry.SetBinding(CustomEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
 
-        InputTapCommand = new Command(() =>
-        {
-            if (!IsReadOnly) _entry.Focus();
-        });
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
+        TrailingIconCommand = new Command(() => DoFocus());
 
 #if ANDROID
         _entry.ReturnCommand = new Command(() =>
@@ -197,6 +196,14 @@ public class MaterialTextField : MaterialInputBase
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="Entry" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Entry InternalEntry => _entry;
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input.
@@ -451,10 +458,21 @@ public class MaterialTextField : MaterialInputBase
 
     private void TxtEntry_TextChanged(object? sender, TextChangedEventArgs e)
     {
-        var changedByTextTransform = Text != null && _entry.Text != null && Text.ToLower() == _entry.Text.ToLower();
-        Text = _entry.Text;
+        var invokeTextChanged = true;
 
-        if (!changedByTextTransform)
+        if (_entry.Text != null)
+        {
+            if (TextTransform == TextTransform.Lowercase)
+            {
+                invokeTextChanged = _entry.Text.Where(char.IsLetter).All(char.IsLower);
+            }
+            else if (TextTransform == TextTransform.Uppercase)
+            {
+                invokeTextChanged = _entry.Text.Where(char.IsLetter).All(char.IsUpper);
+            }
+        }
+
+        if (invokeTextChanged)
         {
             TextChangedCommand?.Execute(null);
             TextChanged?.Invoke(this, e);
@@ -502,6 +520,11 @@ public class MaterialTextField : MaterialInputBase
         _entry.Focused -= ContentFocusChanged;
         _entry.Unfocused -= ContentFocusChanged;
         _entry.TextChanged -= TxtEntry_TextChanged;
+    }
+
+    private void DoFocus()
+    {
+        if (!IsReadOnly) _entry.Focus();
     }
 
     #endregion Methods
