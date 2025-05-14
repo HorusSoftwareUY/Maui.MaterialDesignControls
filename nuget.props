@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup Condition=" $(MSBuildProjectName.Equals('HorusStudio.Maui.MaterialDesignControls')) ">
     <PackageId>HorusStudio.Maui.MaterialDesignControls</PackageId>
-    <Version>1.0.0-preview.6</Version>
+    <Version>1.1.0</Version>
     <Authors>Horus Studio and contributors</Authors>
     <Company>Horus Studio</Company>
     <Title>Material Design Controls for .NET MAUI</Title>
@@ -15,9 +15,12 @@
     <PackageTags>dotnet-maui;dotnet;maui;cross-platform;android;ios;macos;maccatalyst;materialdesign;ui</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
-      - Add LineBreakMode to inputs placeholder
-      - Add TextDecorations to Snackbar action
-      - [iOS] Bug: Fix Snackbar background color
+      - Configure if icon tint color should be automatically set to TextColor or not on: MaterialButton, MaterialChips, MaterialIconButton and MaterialNavigationDrawerItem
+      - Fix TextChanged and TextChangedCommand not being fired on MaterialTextField and MaterialMultilineTextField
+      - Expose internal MAUI control used on: MaterialButton, MaterialCheckBox, MaterialDatePicker, MaterialMultilineTextField, MaterialPicker, MaterialRadioButton, MaterialSlider, MaterialTextField and MaterialTimePicker
+      - Fix spacing on MaterialRating when label is empty
+      - Fix touch bubbling on iOS for: MaterialButton, MaterialDatePicker, MaterialIconButton, MaterialMultilineTextField, MaterialPicker, MaterialSwitch, MaterialTextField and MaterialTimePicker
+      - Ability to override custom handlers for: MaterialButton, MaterialRadioButton, MaterialTextField, MaterialTimePicker, MaterialDatePicker, MaterialPicker, MaterialMultilineTextField, MaterialCheckbox and MaterialSlider
     </PackageReleaseNotes>
 
     <PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>
