@@ -32,6 +32,8 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// </example>
 /// <todoList>
 /// * [iOS] FontAttributes doesn't work
+/// * HeightRequest doesn't work, it is not respected when writing and making a text change.
+/// * VerticalTextAlignment doesn't work
 /// </todoList>
 public class MaterialMultilineTextField : MaterialInputBase
 {

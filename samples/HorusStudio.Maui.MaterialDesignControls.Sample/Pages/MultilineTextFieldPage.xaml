@@ -50,8 +50,6 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and other properties" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
-                <!--TODO: fix height request--> 
-                <!--TODO: add text vertical aligment-->
                 <material:MaterialMultilineTextField 
                     MaxLength="100"
                     Type="Outlined"
