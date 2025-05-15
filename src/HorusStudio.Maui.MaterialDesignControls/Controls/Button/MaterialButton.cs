@@ -4,7 +4,9 @@ using static Microsoft.Maui.Controls.Button;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-
+/// <summary>
+/// Define <see cref="MaterialButton" /> types
+/// </summary>
 public enum MaterialButtonType
 {
     /// <summary>Elevated button</summary>
@@ -68,26 +70,24 @@ public class MaterialButton : ContentView, ITouchable
 
     private static readonly MaterialButtonType DefaultButtonType = MaterialButtonType.Filled;
     private static readonly ButtonContentLayout DefaultContentLayout = new(ButtonContentLayout.ImagePosition.Left, 8);
-    private static readonly Color DefaultTextColor = Colors.Transparent;
-    private static readonly Color DefaultTintColor = default;
-    private static readonly string DefaultFontFamily = MaterialFontFamily.Medium;
-    private static readonly double DefaultFontSize = MaterialFontSize.LabelLarge;
-    private static readonly Brush DefaultBackground = Button.BackgroundProperty.DefaultValue as Brush;
-    private static readonly Color DefaultBackgroundColor = Colors.Transparent;
-    private static readonly double DefaultBorderWidth = 0;
-    private static readonly Color DefaultBorderColor = Colors.Transparent;
-    private static readonly int DefaultCornerRadius = 20;
-    private static readonly double DefaultHeightRequest = 40;
+    private static readonly Color DefaultTextColor = Color.FromRgba(1,1,1,.01);
+    private static readonly Color? DefaultTintColor = null;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Medium;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelLarge;
+    private static readonly Brush? DefaultBackground = Button.BackgroundProperty.DefaultValue as Brush;
+    private static readonly Color DefaultBackgroundColor = Color.FromRgba(1,1,1,.01);
+    private const double DefaultBorderWidth = 0;
+    private static readonly Color DefaultBorderColor = Color.FromRgba(1,1,1,.01);
+    private const int DefaultCornerRadius = 20;
+    private const double DefaultHeightRequest = 40;
     private static readonly Thickness DefaultPadding = new(24, 0);
     private static readonly Thickness DefaultLeftIconPadding = new(16, 0, 24, 0);
     private static readonly Thickness DefaultRightIconPadding = new(24, 0, 16, 0);
-    private static readonly AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
-#nullable enable
-    private static readonly double? DefaultAnimationParameter = MaterialAnimation.Parameter;
-#nullable disable
-    private static readonly Color DefaultBusyIndicatorColor = MaterialLightTheme.Primary;
-    private static readonly double DefaultBusyIndicatorSize = 24;
-    private static readonly Shadow DefaultShadow = null;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private const double DefaultBusyIndicatorSize = 24;
+    private static readonly Shadow DefaultShadow = null!;
 
     private readonly Dictionary<MaterialButtonType, object> _backgroundColors = new()
     {
@@ -178,7 +178,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="TextColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTextColor, propertyChanged: (bindable, o, n) =>
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTextColor, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialButton self)
         {
@@ -189,18 +189,24 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="IconTintColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty IconTintColorProperty = BindableProperty.Create(nameof(IconTintColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTintColor, propertyChanged: (bindable, o, n) =>
+    public static readonly BindableProperty IconTintColorProperty = BindableProperty.Create(nameof(IconTintColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTintColor, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialButton self)
         {
-            self.SetTintColor(self.Type);
+            self.SetIconTintColor(self.Type);
         }
     });
 
     /// <summary>
-    /// The backing store for the <see cref="TintColor" /> bindable property.
+    /// The backing store for the <see cref="InternalIconTintColor" /> bindable property.
     /// </summary>
-    internal static readonly BindableProperty TintColorProperty = BindableProperty.Create(nameof(TintColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTintColor);
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal static readonly BindableProperty InternalTintColorProperty = BindableProperty.Create(nameof(InternalIconTintColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTintColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="ApplyIconTintColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ApplyIconTintColorProperty = BindableProperty.Create(nameof(ApplyIconTintColor), typeof(bool), typeof(MaterialButton), defaultValue: true);
 
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
@@ -210,12 +216,12 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="FontFamily" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialButton), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialButton), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="FontSize" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialButton), defaultValue: DefaultFontSize);
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialButton), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="TextTransform" /> bindable property.
@@ -235,7 +241,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Background" /> bindable property.
     /// </summary>
-    public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialButton), defaultValue: DefaultBackground, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialButton), defaultValue: DefaultBackground, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialButton self)
         {
@@ -246,7 +252,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" /> bindable property.
     /// </summary>
-    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialButton self)
         {
@@ -257,7 +263,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="BorderWidth"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialButton), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, o, n) =>
+    public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialButton), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialButton self)
         {
@@ -268,7 +274,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="BorderColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultBorderColor, propertyChanged: (bindable, o, n) =>
+    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultBorderColor, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialButton self)
         {
@@ -299,7 +305,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Padding" /> bindable property.
     /// </summary>
-    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialButton), defaultValue: DefaultPadding, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialButton), defaultValue: DefaultPadding, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialButton self)
         {
@@ -315,14 +321,12 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Animation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialButton), defaultValue: DefaultAnimationType);
+    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialButton), defaultValueCreator: DefaultAnimationType);
 
     /// <summary>
     /// The backing store for the <see cref="AnimationParameter"/> bindable property.
     /// </summary>
-#nullable enable
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialButton), defaultValue: DefaultAnimationParameter);
-#nullable disable
+    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialButton), defaultValueCreator: DefaultAnimationParameter);
     /// <summary>
     /// The backing store for the <see cref="CustomAnimation"/> bindable property.
     /// </summary>
@@ -348,7 +352,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="BusyIndicatorColor"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty BusyIndicatorColorProperty = BindableProperty.Create(nameof(BusyIndicatorColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultBusyIndicatorColor);
+    public static readonly BindableProperty BusyIndicatorColorProperty = BindableProperty.Create(nameof(BusyIndicatorColor), typeof(Color), typeof(MaterialButton), defaultValueCreator: DefaultBusyIndicatorColor);
 
     /// <summary>
     /// The backing store for the <see cref="BusyIndicatorSize"/> bindable property.
@@ -378,7 +382,7 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="Shadow" /> bindable property.
     /// </summary>
-    public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialButton), defaultValue: DefaultShadow, propertyChanged: (bindable, o, n) =>
+    public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialButton), defaultValue: DefaultShadow, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialButton self)
         {
@@ -394,6 +398,14 @@ public class MaterialButton : ContentView, ITouchable
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="Button" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Button InternalButton => _button;
 
     /// <summary>
     /// Gets or sets the button type according to <see cref="MaterialButtonType"/> enum.
@@ -553,9 +565,8 @@ public class MaterialButton : ContentView, ITouchable
         set => SetValue(TextColorProperty, value);
     }
 
-#nullable enable
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// Gets or sets the <see cref="Color" /> for the icon of the button.
     /// This is a bindable property.
     /// </summary>
     public Color? IconTintColor
@@ -565,15 +576,27 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// This property is for internal use by the control. The <see cref="IconTintColor">IconTintColor</see> property should be used instead.
+    /// </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public Color? InternalIconTintColor
+    {
+        get => (Color?)GetValue(InternalTintColorProperty);
+        set => SetValue(InternalTintColorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the if the icon applies the tint color.
     /// This is a bindable property.
     /// </summary>
-    public Color? TintColor
+    /// <default>
+    /// <see langword="true"/>
+    /// </default>
+    public bool ApplyIconTintColor
     {
-        get => (Color?)GetValue(TintColorProperty);
-        set => SetValue(TintColorProperty, value);
+        get => (bool)GetValue(ApplyIconTintColorProperty);
+        set => SetValue(ApplyIconTintColorProperty, value);
     }
-#nullable disable
 
     /// <summary>
     /// Gets or sets the spacing between each of the characters of <see cref="Text"/> when displayed on the button.
@@ -653,7 +676,6 @@ public class MaterialButton : ContentView, ITouchable
         set => SetValue(AnimationProperty, value);
     }
 
-#nullable enable
     /// <summary>
     /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
     /// This is a bindable property.
@@ -666,7 +688,6 @@ public class MaterialButton : ContentView, ITouchable
         get => (double?)GetValue(AnimationParameterProperty);
         set => SetValue(AnimationParameterProperty, value);
     }
-#nullable disable
 
     /// <summary>
     /// Gets or sets a custom animation to be executed when button is clicked.
@@ -735,9 +756,9 @@ public class MaterialButton : ContentView, ITouchable
     /// Gets or sets a custom <see cref="View" /> for busy indicator.
     /// This is a bindable property.
     /// </summary>
-    public View CustomBusyIndicator
+    public View? CustomBusyIndicator
     {
-        get => (View)GetValue(CustomBusyIndicatorProperty);
+        get => (View?)GetValue(CustomBusyIndicatorProperty);
         set => SetValue(CustomBusyIndicatorProperty, value);
     }
 
@@ -765,8 +786,9 @@ public class MaterialButton : ContentView, ITouchable
 
     #region Events
 
-    private EventHandler _clicked;
-    private EventHandler _released;
+    private EventHandler? _clicked;
+    private EventHandler? _pressed;
+    private EventHandler? _released;
     private readonly object _objectLock = new();
 
     /// <summary>
@@ -779,7 +801,6 @@ public class MaterialButton : ContentView, ITouchable
             lock (_objectLock)
             {
                 _clicked += value;
-                _button.Clicked += value;
             }
         }
         remove
@@ -787,7 +808,6 @@ public class MaterialButton : ContentView, ITouchable
             lock (_objectLock)
             {
                 _clicked -= value;
-                _button.Clicked -= value;
             }
         }
     }
@@ -801,14 +821,14 @@ public class MaterialButton : ContentView, ITouchable
         {
             lock (_objectLock)
             {
-                _button.Pressed += value;
+                _pressed += value;
             }
         }
         remove
         {
             lock (_objectLock)
             {
-                _button.Pressed -= value;
+                _pressed -= value;
             }
         }
     }
@@ -823,7 +843,6 @@ public class MaterialButton : ContentView, ITouchable
             lock (_objectLock)
             {
                 _released += value;
-                _button.Released += value;
             }
         }
         remove
@@ -831,7 +850,6 @@ public class MaterialButton : ContentView, ITouchable
             lock (_objectLock)
             {
                 _released -= value;
-                _button.Released -= value;
             }
         }
     }
@@ -878,43 +896,33 @@ public class MaterialButton : ContentView, ITouchable
         }
     }
 
-    protected virtual void InternalFocusHandler(object sender, FocusEventArgs e)
+    protected virtual void InternalFocusHandler(object? sender, FocusEventArgs e)
     {
-        if (e.IsFocused)
-        {
-            VisualStateManager.GoToState(this, ButtonCommonStates.Focused);
-        }
-        else
-        {
-            VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
-        }
+        VisualStateManager.GoToState(this,
+            e.IsFocused ? ButtonCommonStates.Focused : ButtonCommonStates.Normal);
     }
 
-    protected virtual void InternalPressedHandler(object sender, EventArgs e)
+    protected virtual void InternalPressedHandler(object? sender, EventArgs e)
     {
         VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
         OnTouch(TouchType.Pressed);
     }
 
-    protected virtual void InternalReleasedHandler(object sender, EventArgs e)
+    protected virtual void InternalReleasedHandler(object? sender, EventArgs e)
     {
         VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
         OnTouch(TouchType.Released);
-    }
-
-    protected virtual void InternalClickedHandler(object sender, EventArgs e)
-    {
     }
 
     #endregion Events
 
     #region Layout
 
-    private Grid _mainLayout;
-    private CustomButton _button;
-    private MaterialProgressIndicator _activityIndicator;
-    private View _internalActivityIndicator;
-    private Grid _activityIndicatorContainer;
+    private Grid _mainLayout = null!;
+    private CustomButton _button = null!;
+    private MaterialProgressIndicator _activityIndicator = null!;
+    private View _internalActivityIndicator = null!;
+    private Grid _activityIndicatorContainer = null!;
 
     #endregion Layout
 
@@ -930,8 +938,6 @@ public class MaterialButton : ContentView, ITouchable
     private void CreateLayout()
     {
         Shadow = DefaultShadow;
-        HorizontalOptions = LayoutOptions.Center;
-        VerticalOptions = LayoutOptions.Center;
 
         // Button
         _button = new()
@@ -959,15 +965,15 @@ public class MaterialButton : ContentView, ITouchable
         _button.SetBinding(Button.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
         _button.SetBinding(Button.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         _button.SetBinding(CustomButton.TextDecorationsProperty, new Binding(nameof(TextDecorations), source: this));
-
-        _button.Clicked += InternalClickedHandler;
+        
         _button.Pressed += InternalPressedHandler;
         _button.Released += InternalReleasedHandler;
         _button.Focused += InternalFocusHandler;
         _button.Unfocused += InternalFocusHandler;
 
         var iconTintColor = new IconTintColorBehavior();
-        iconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(TintColor), source: this));
+        iconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(InternalIconTintColor), source: this));
+        iconTintColor.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(ApplyIconTintColor), source: this));
         _button.Behaviors.Add(iconTintColor);
 
         // Busy indicator
@@ -983,6 +989,7 @@ public class MaterialButton : ContentView, ITouchable
 
         _activityIndicatorContainer = new Grid { _internalActivityIndicator };
         _activityIndicatorContainer.IsVisible = !_button.IsVisible;
+        _activityIndicatorContainer.SetBinding(Grid.WidthRequestProperty, new Binding(nameof(Width), source: _button));
 
         // Main Layout
         var rowDefinition = new RowDefinition();
@@ -1003,7 +1010,7 @@ public class MaterialButton : ContentView, ITouchable
         SetBackground(type);
         SetBackgroundColor(type);
         SetTextColor(type);
-        SetTintColor(type);
+        SetIconTintColor(type);
         SetBorderColor(type);
         SetBorderWidth(type);
         SetShadow(type);
@@ -1084,7 +1091,7 @@ public class MaterialButton : ContentView, ITouchable
         }
     }
 
-    private void SetTintColor(MaterialButtonType type)
+    private void SetIconTintColor(MaterialButtonType type)
     {
         if (_textColors.TryGetValue(type, out object tint) && tint != null)
         {
@@ -1093,23 +1100,23 @@ public class MaterialButton : ContentView, ITouchable
                 // Default Material value according to Type
                 if (tint is Color tintColor)
                 {
-                    TintColor = tintColor;
+                    InternalIconTintColor = tintColor;
                 }
                 else if (tint is AppThemeBindingExtension theme)
                 {
-                    TintColor = theme.GetValueForCurrentTheme<Color>();
+                    InternalIconTintColor = theme.GetValueForCurrentTheme<Color>();
                 }
             }
             else
             {
                 // Set by user
-                TintColor = IconTintColor;
+                InternalIconTintColor = IconTintColor;
             }
         }
         else
         {
             // Unsupported for current button type, ignore
-            TintColor = DefaultTintColor;
+            InternalIconTintColor = DefaultTintColor;
         }
     }
 
@@ -1166,7 +1173,7 @@ public class MaterialButton : ContentView, ITouchable
 
     private void SetShadow(MaterialButtonType type)
     {
-        if (_shadows.TryGetValue(type, out Shadow shadow))
+        if (_shadows.TryGetValue(type, out Shadow? shadow))
         {
             if ((Shadow == null && DefaultShadow == null) || Shadow.Equals(DefaultShadow))
             {
@@ -1194,7 +1201,7 @@ public class MaterialButton : ContentView, ITouchable
             ((Padding.Equals(DefaultLeftIconPadding) || Padding.Equals(DefaultRightIconPadding)) && hasIcon))
         {
             // Default Material value according to Type
-            if (hasIcon)
+            if (hasIcon && ContentLayout != null)
             {
                 if (ContentLayout.Position == ButtonContentLayout.ImagePosition.Left)
                 {
@@ -1215,9 +1222,12 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     #region ITouchable
-
+    
     public async void OnTouch(TouchType gestureType)
     {
+        Utils.Logger.Debug($"Gesture: {gestureType}");
+
+        if (!IsEnabled || (Command == null && _pressed == null && _released == null && _clicked == null)) return;
         await TouchAnimation.AnimateAsync(this, gestureType);
 
         if (gestureType == TouchType.Released)
@@ -1226,17 +1236,21 @@ public class MaterialButton : ContentView, ITouchable
             {
                 Command.Execute(CommandParameter);
             }
-            else if (_released != null)
+            if (_released != null)
             {
-                _released.Invoke(this, null);
+                _released.Invoke(this, EventArgs.Empty);
             }
             else if (_clicked != null)
             {
-                _clicked.Invoke(this, null);
+                _clicked.Invoke(this, EventArgs.Empty);
             }
         }
+        else if (gestureType == TouchType.Pressed)
+        {
+            _pressed?.Invoke(this, EventArgs.Empty);
+        }
     }
-
+    
     #endregion ITouchable
 
     #region Styles
@@ -1303,7 +1317,7 @@ public class MaterialButton : ContentView, ITouchable
     #endregion Styles
 }
 
-public class ButtonCommonStates : VisualStateManager.CommonStates
+public abstract class ButtonCommonStates : VisualStateManager.CommonStates
 {
     public const string Pressed = "Pressed";
 }

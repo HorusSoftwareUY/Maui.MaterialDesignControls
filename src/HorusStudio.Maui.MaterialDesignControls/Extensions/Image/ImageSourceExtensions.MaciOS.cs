@@ -2,7 +2,7 @@
 using UIKit;
 
 namespace Microsoft.Maui.Controls;
-static class ImageSourceExtensions
+static partial class ImageSourceExtensions
 {
     public static async Task<UIImage> ToUIImageAsync(this ImageSource source)
     {

@@ -75,6 +75,15 @@ namespace HorusStudio.Maui.MaterialDesignControls
             Opacity = DeviceInfo.Platform == DevicePlatform.Android ? .5f : .45f,
             Offset = DeviceInfo.Platform == DevicePlatform.Android ? new Point(-3.5, 5) : new Point(0, 3)
         };
+
+        internal static void Configure(MaterialElevationOptions options)
+        {
+            if (options.Level1 != null) Level1 = options.Level1;
+            if (options.Level2 != null) Level2 = options.Level2;
+            if (options.Level3 != null) Level3 = options.Level3;
+            if (options.Level4 != null) Level4 = options.Level4;
+            if (options.Level5 != null) Level5 = options.Level5;
+        }
     }
 }
 

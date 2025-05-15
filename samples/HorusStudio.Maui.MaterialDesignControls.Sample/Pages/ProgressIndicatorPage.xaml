@@ -54,11 +54,8 @@
         </material:MaterialCard>
         <material:MaterialLabel Text="Circular progress indicators are composed of an invisible track and an indicator." Type="BodySmall" />
 
-        <HorizontalStackLayout>
-            <Switch IsToggled="{Binding IsVisible}" />
-            <material:MaterialLabel
-                 Text="IsVisible"
-                 VerticalTextAlignment="Center" />
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <material:MaterialSwitch Text="Is visible" IsToggled="{Binding IsVisible}" />    
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </local:BaseContentPage>

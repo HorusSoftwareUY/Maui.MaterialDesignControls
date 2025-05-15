@@ -57,7 +57,7 @@ Default value: AnimationTypes.Fade
 
 ### <a id="properties-animationparameter"/>**AnimationParameter**
 
-Gets or sets the parameter to pass to the MaterialIconButton.Animation property.
+Gets or sets the parameter to pass to the Animation property.
  This is a bindable property.
 
 Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
@@ -137,7 +137,7 @@ Remarks: This property is used to associate a command with an instance of a butt
 
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
-Gets or sets the parameter to pass to the MaterialIconButton.Command property.
+Gets or sets the parameter to pass to the Command property.
  This is a bindable property.
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
@@ -195,7 +195,7 @@ Remarks:
 
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
-Gets or sets the  for the text of the button.
+Gets or sets the  for the icon of the button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -210,6 +210,14 @@ Allows you to display a bitmap image on the Button.
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
 Remarks: For more options have a look at .
+
+<br>
+
+### <a id="properties-internalicontintcolor"/>**InternalIconTintColor**
+
+This property is for internal use by the control. The IconTintColor property should be used instead.
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -242,15 +250,6 @@ Property type: [Shadow](https://learn.microsoft.com/en-us/dotnet/api/microsoft.m
 
 <br>
 
-### <a id="properties-tintcolor"/>**TintColor**
-
-Gets or sets the  for the text of the button.
- This is a bindable property.
-
-Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
-
-<br>
-
 ### <a id="properties-type"/>**Type**
 
 Gets or sets the button type according to MaterialIconButtonType enum.
@@ -267,6 +266,16 @@ Property type: MaterialIconButtonType<br>
 | Custom | 4 | Custom material icon button |
 
 Default value: MaterialIconButtonType.Filled
+
+<br>
+
+### <a id="properties-useicontintcolor"/>**UseIconTintColor**
+
+Gets or sets if button should use tint color.
+ The default value is true.
+ This is a bindable property.
+
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 <br>
 

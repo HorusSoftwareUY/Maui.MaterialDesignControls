@@ -197,7 +197,7 @@
         </material:MaterialCard>
         <material:MaterialLabel Text="We can set stroke color, text color, text size, font attributes, text transform, group name, characters spacing and other properties." Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using attachable properties" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using attached properties" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="0">
                 <VerticalStackLayout material:MaterialRadioButtonGroup.GroupName="testinggroup" material:MaterialRadioButtonGroup.SelectedValue="{Binding CheckedColor}" BindableLayout.ItemsSource="{Binding ItemsSourceColors}">
@@ -261,10 +261,9 @@
                     Style="{StaticResource VisualStateManagerStyle}" />
 
                 <HorizontalStackLayout HorizontalOptions="Center">
-                    <material:MaterialLabel Text="Is enabled" HorizontalOptions="Start" HorizontalTextAlignment="End" VerticalTextAlignment="Center" />
-                    <Switch HorizontalOptions="Start" IsToggled="{Binding IsRadioButtonEnabled}" />
+                    <material:MaterialSwitch Text="Is enabled" IsToggled="{Binding IsRadioButtonEnabled}" />    
                 </HorizontalStackLayout>
-
+                
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel Text="Setting events, new style using visual state manager and text side" Type="BodySmall" />

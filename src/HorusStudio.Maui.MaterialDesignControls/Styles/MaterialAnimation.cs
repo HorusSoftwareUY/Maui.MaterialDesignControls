@@ -14,5 +14,12 @@
 
         /// <default><see langword="True"></see></default>
         public static bool AnimateOnError { get; set; } = true;
+
+        internal static void Configure(MaterialAnimationOptions options)
+        {
+            if (options.AnimateOnError != null) AnimateOnError = options.AnimateOnError.Value;
+            if (options.Type != null) Type = options.Type.Value;
+            if (options.Parameter != null) Parameter = options.Parameter.Value;
+        }
     }
 }

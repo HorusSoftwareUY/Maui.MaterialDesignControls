@@ -1,5 +1,6 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public class TimeSelectedEventArgs : EventArgs
 {
     public TimeSpan? OldValue { get; private set; }

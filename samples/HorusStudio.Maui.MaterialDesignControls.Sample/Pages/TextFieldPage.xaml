@@ -40,7 +40,11 @@
                 <VerticalStackLayout>
                     <material:MaterialTextField
                         Type="Outlined"
+                        Label="Label"
+                        AlwaysShowLabel="{Binding FixedLabel}"
                         Placeholder="Enter text here" />
+                    
+                    <material:MaterialSwitch Text="Fixed label" IsToggled="{Binding FixedLabel}" />
                     
                     <material:MaterialTextField
                         Type="Outlined"
@@ -79,7 +83,7 @@
                     
                     <material:MaterialTextField 
                         Type="Outlined"
-                        Keyboard="Telephone"
+                        Keyboard="Numeric"
                         ReturnType="Send"
                         TrailingIcon="star_selected.png"
                         TrailingIconCommand="{Binding TrailingActionCommand}"
@@ -193,5 +197,17 @@
                 </VerticalStackLayout>
             </material:MaterialCard>
             <material:MaterialLabel Text="You can set read only and is password." Type="BodySmall" />
+
+            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom handler" />
+            <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                <VerticalStackLayout>
+                    <material:MaterialTextField 
+                        Type="Filled"
+                        Label="Phone number"
+                        Text="Text here"
+                        Keyboard="Telephone"/>
+                </VerticalStackLayout>
+            </material:MaterialCard>
+            <material:MaterialLabel Text="This control uses a custom handler implemented in the sample app, which adds a custom button to close the keyboard. The button is shown when the input gains focus and only when the keyboard type is set to telephone." Type="BodySmall" />
         </VerticalStackLayout>
 </local:BaseContentPage>

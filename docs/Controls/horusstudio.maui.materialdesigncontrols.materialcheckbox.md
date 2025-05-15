@@ -211,6 +211,11 @@ Defines the location of the label. This is a bindable property.
 
 Property type: TextSide<br>
 
+| Name | Value | Description |
+| --- | --: | --- |
+| Right | 0 | Right |
+| Left | 1 | Left |
+
 Default value: TextSide.Left
 
 <br>

@@ -11,6 +11,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+                <!--<ResourceDictionary Source="Resources/Styles/MaterialCustomizations.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
 
             <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />

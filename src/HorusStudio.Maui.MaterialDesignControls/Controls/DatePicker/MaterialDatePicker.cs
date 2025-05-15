@@ -34,14 +34,15 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// </example>
 /// <todoList>
-/// * [iOS] Font attributes doesn´t work
-/// * [iOS] Horizontal Text Aligment doesn´t work when there is a date selected
+/// * [iOS] Font attributes doesn't work
+/// * [iOS] Horizontal text alignment doesn't work when there is a date selected
+/// * [Android] Use the colors defined in Material in the date picker dialog
 /// </todoList>
 public class MaterialDatePicker : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
 
     #endregion Attributes
 
@@ -73,18 +74,10 @@ public class MaterialDatePicker : MaterialInputBase
         _datePicker.SetBinding(DatePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _datePicker.SetBinding(CustomDatePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         
-        InputTapCommand = new Command(() =>
-        {
-            if (!IsEnabled) return;
-#if ANDROID
-            var handler = _datePicker.Handler as IDatePickerHandler;
-            handler.PlatformView.PerformClick();
-#elif IOS || MACCATALYST
-            _datePicker.Focus();
-#endif
-        });
-
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
         TrailingIcon = MaterialIcon.DatePicker;
+        TrailingIconCommand = new Command(() => DoFocus());
         Content = _datePicker;
     }
 
@@ -132,7 +125,7 @@ public class MaterialDatePicker : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialDatePicker), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialDatePicker), defaultValueCreator: DefaultCharacterSpacing);
     
     /// <summary>
     /// The backing store for the <see cref="DateSelectedCommand" /> bindable property.
@@ -142,6 +135,14 @@ public class MaterialDatePicker : MaterialInputBase
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="DatePicker" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public DatePicker InternalDatePicker => _datePicker;
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input. This property cannot be changed by the user.
@@ -334,7 +335,19 @@ public class MaterialDatePicker : MaterialInputBase
         }                               
         DateSelected?.Invoke(this, new DateSelectedEventArgs(oldValue, newValue));
     }
-    
+
+    private void DoFocus()
+    {
+        if (!IsEnabled) return;
+
+#if ANDROID
+        var handler = _datePicker.Handler as IDatePickerHandler;
+        handler?.PlatformView.PerformClick();
+#elif IOS || MACCATALYST
+        _datePicker.Focus();
+#endif
+    }
+
     #endregion Methods
 
     #region Styles

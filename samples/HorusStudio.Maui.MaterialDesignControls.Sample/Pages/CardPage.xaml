@@ -134,14 +134,9 @@
                 Text="Custom type" />
         </material:MaterialCard>
 
-        <HorizontalStackLayout
-            HorizontalOptions="Center">
-            <material:MaterialLabel
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <material:MaterialSwitch
                 Text="Is enabled"
-                HorizontalTextAlignment="End"
-                VerticalTextAlignment="Center" />
-            <Switch
-                HorizontalOptions="Start"
                 IsToggled="{Binding CardEnabled}" />
         </HorizontalStackLayout>
 

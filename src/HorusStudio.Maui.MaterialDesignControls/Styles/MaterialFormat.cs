@@ -1,11 +1,11 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// MaterialIcon define default icons used by the library
+/// MaterialFormat define default string formats used by the library
 /// </summary>
 public static class MaterialFormat
 {
-    public const string DefaultDateFormat = "dd/MM/yyyy";
+    public const string DefaultDateFormat = "yyyy/MM/dd";
     public const string DefaultTimeFormat = "t";
     
     /// <default>dd/MM/yyyy</default>
@@ -13,4 +13,10 @@ public static class MaterialFormat
     
     /// <default>[h]h:mm [a.m.|p.m.]</default>
     public static string TimeFormat { get; set; } = DefaultTimeFormat;
+
+    internal static void Configure(MaterialFormatOptions options)
+    {
+        if (options.DateFormat != null) DateFormat = options.DateFormat;
+        if (options.TimeFormat != null) TimeFormat = options.TimeFormat;
+    }
 }

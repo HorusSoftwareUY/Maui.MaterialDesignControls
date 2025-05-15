@@ -35,11 +35,14 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/PickerPage.xaml)
 /// 
 /// </example>
+/// <todoList>
+/// * [Android] Use the colors defined in Material in the picker dialog
+/// </todoList>
 public class MaterialPicker : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
 
     #endregion Attributes
 
@@ -69,8 +72,10 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
 
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
         TrailingIcon = MaterialIcon.Picker;
-        InputTapCommand = new Command(() => _picker.Focus());
+        TrailingIconCommand = new Command(() => DoFocus());
         Content = _picker;
     }
 
@@ -91,7 +96,7 @@ public class MaterialPicker : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialPicker), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialPicker), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="ItemsSource" /> bindable property.
@@ -120,10 +125,17 @@ public class MaterialPicker : MaterialInputBase
     public static readonly BindableProperty SelectedIndexChangedCommandProperty = BindableProperty.Create(nameof(SelectedIndexChangedCommand), typeof(ICommand), typeof(MaterialPicker), defaultValue: null);
     
     /// <summary>
-    /// The backing store for the <see cref="PropertyPath" /> bindable property.
+    /// The backing store for the <see cref="ItemDisplayPath" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty PropertyPathProperty = BindableProperty.Create(nameof(PropertyPath), typeof(string), typeof(MaterialPicker), defaultValue: null);
-
+    public static readonly BindableProperty ItemDisplayPathProperty = BindableProperty.Create(nameof(ItemDisplayPath), typeof(string), typeof(MaterialPicker), defaultValue: null, propertyChanged:
+        (bindableObject, _, newValue) =>
+        {
+            if (bindableObject is MaterialPicker self)
+            {
+                self._picker.ItemDisplayBinding = new Binding(newValue as string);
+            }
+        });
+    
     /// <summary>
     /// The backing store for the <see cref="Text" /> bindable property.
     /// </summary>
@@ -132,6 +144,14 @@ public class MaterialPicker : MaterialInputBase
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="Picker" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Picker InternalPicker => _picker;
 
     /// <summary>
     /// Gets or sets the vertical text alignment. This is a bindable property.
@@ -205,7 +225,7 @@ public class MaterialPicker : MaterialInputBase
     /// <remarks>
     /// To be added.
     /// </remarks>
-    public object SelectedItem
+    public object? SelectedItem
     {
         get => GetValue(SelectedItemProperty);
         set => SetValue(SelectedItemProperty, value);
@@ -245,10 +265,10 @@ public class MaterialPicker : MaterialInputBase
     /// <remarks>
     /// If it´s no defined, the control will use toString() method.
     /// </remarks>
-    public string PropertyPath
+    public string ItemDisplayPath
     {
-        get => (string)GetValue(PropertyPathProperty);
-        set => SetValue(PropertyPathProperty, value);
+        get => (string)GetValue(ItemDisplayPathProperty);
+        set => SetValue(ItemDisplayPathProperty, value);
     }
     
     /// <summary>
@@ -268,7 +288,7 @@ public class MaterialPicker : MaterialInputBase
 
     #region Events
 
-    public event EventHandler SelectedIndexChanged;
+    public event EventHandler? SelectedIndexChanged;
     
     #endregion Events
 
@@ -320,9 +340,9 @@ public class MaterialPicker : MaterialInputBase
     {
         if (SelectedItem != null)
         {
-            Text = string.IsNullOrWhiteSpace(PropertyPath) ? 
-                SelectedItem?.ToString() : 
-                SelectedItem.GetPropertyValue<string>(PropertyPath);
+            Text = (string.IsNullOrWhiteSpace(ItemDisplayPath) ? 
+                SelectedItem.ToString() : 
+                SelectedItem.GetPropertyValue<string>(ItemDisplayPath)) ?? string.Empty;
         }
         else
         {
@@ -330,7 +350,7 @@ public class MaterialPicker : MaterialInputBase
         }
     }
     
-    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+    private void Picker_SelectedIndexChanged(object? sender, EventArgs e)
     {
         if (SelectedIndexChangedCommand?.CanExecute(null) ?? false)
         {
@@ -338,7 +358,14 @@ public class MaterialPicker : MaterialInputBase
         }
         SelectedIndexChanged?.Invoke(this, e);
     }
-    
+
+    private void DoFocus()
+    {
+        if (!IsEnabled) return;
+
+        _picker.Focus();
+    }
+
     #endregion Methods
 
     #region Styles

@@ -200,22 +200,43 @@
                     TrailingIcon="horus_logo.png"
                     Style="{StaticResource VisualStateManagerStyle}"/>
 
-                <material:MaterialLabel
+                <HorizontalStackLayout
                     Grid.Row="2"
-                    Grid.Column="0"
-                    Text="Is enabled"
-                    HorizontalTextAlignment="End"
-                    VerticalTextAlignment="Center" />
-
-                <Switch
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    HorizontalOptions="Start"
-                    IsToggled="{Binding IsEnabledState}"/>
-
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="Center">
+                    <material:MaterialSwitch
+                        Text="Is enabled"
+                        IsToggled="{Binding IsEnabledState}" />    
+                </HorizontalStackLayout>
             </Grid>
         </material:MaterialCard>
         <material:MaterialLabel 
             Text="You can modify the chip as you require, this is useful when you need to add it to specific spaces or follow the required layout throughout your app." Type="BodySmall" />
+        
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Chips Group (single-selection)" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <material:MaterialChipsGroup 
+                LabelText="Chips"
+                SupportingText="You must select one"
+                IsMultipleSelection="False"
+                IsEnabled="{Binding IsEnabledState}"
+                HorizontalSpacing="4"
+                SelectedItem="{Binding SelectedChip}"
+                ItemsSource="{Binding Chips}"/>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="You can easily group chips together to give the user a list of single-select options, even offering a way to display animated validation text." Type="BodySmall" />
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Chips Group (multi-selection)" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <material:MaterialChipsGroup 
+                LabelText="Chips"
+                IsMultipleSelection="True"
+                ChipsFlexLayoutPercentageBasis="0.5"
+                Align="Center"
+                SelectedItems="{Binding SelectedChips}"
+                ItemsSource="{Binding Chips}"/>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="You can also provide a group to select multiple options. The chips group allows for chips alignment, spacing, percentage size, and more." Type="BodySmall" />
     </VerticalStackLayout>
 </local:BaseContentPage>

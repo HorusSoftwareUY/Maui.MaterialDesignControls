@@ -66,4 +66,10 @@
 		</Reference>
 	</ItemGroup>
 	-->
+	<ItemGroup>
+	  <None Remove="Handlers\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Handlers\" />
+	</ItemGroup>
 </Project>

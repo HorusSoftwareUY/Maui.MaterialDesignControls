@@ -238,6 +238,11 @@ Defines the location of the label.
 
 Property type: TextSide<br>
 
+| Name | Value | Description |
+| --- | --: | --- |
+| Right | 0 | Right |
+| Left | 1 | Left |
+
 Default value: TextSide.Left
 
 <br>

@@ -31,20 +31,20 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// </example>
 /// <todoList>
-/// * [iOS] FontAttributes doesn´t work
+/// * [iOS] FontAttributes doesn't work
 /// </todoList>
 public class MaterialTextField : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
-    private static readonly Color DefaultCursorColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCursorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 
     #region Layout
 
-    private readonly BorderlessEntry _entry;
+    private readonly CustomEntry _entry;
 
     #endregion Layout
 
@@ -52,7 +52,7 @@ public class MaterialTextField : MaterialInputBase
 
     public MaterialTextField()
     {
-        _entry = new BorderlessEntry
+        _entry = new CustomEntry
         {
             HorizontalOptions = LayoutOptions.Fill
         };
@@ -78,17 +78,16 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(InputView.IsSpellCheckEnabledProperty, new Binding(nameof(IsSpellCheckEnabled), source: this));
         _entry.SetBinding(Entry.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _entry.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
-        _entry.SetBinding(BorderlessEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
+        _entry.SetBinding(CustomEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
 
-        InputTapCommand = new Command(() =>
-        {
-            if (!IsReadOnly) _entry.Focus();
-        });
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
+        TrailingIconCommand = new Command(() => DoFocus());
 
 #if ANDROID
         _entry.ReturnCommand = new Command(() =>
         {
-            var view = _entry.Handler.PlatformView as Android.Views.View;
+            var view = _entry?.Handler?.PlatformView as Android.Views.View;
             view?.ClearFocus();
 
             if (ReturnCommand?.CanExecute(ReturnCommandParameter) ?? false)
@@ -182,7 +181,7 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTextField), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTextField), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="IsReadOnly" /> bindable property.
@@ -192,11 +191,19 @@ public class MaterialTextField : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CursorColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialTextField), defaultValue: DefaultCursorColor);
+    public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialTextField), defaultValueCreator: DefaultCursorColor);
 
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="Entry" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Entry InternalEntry => _entry;
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input.
@@ -281,7 +288,7 @@ public class MaterialTextField : MaterialInputBase
     /// </default>
     public object ReturnCommandParameter
     {
-        get => (object)GetValue(ReturnCommandParameterProperty);
+        get => GetValue(ReturnCommandParameterProperty);
         set => SetValue(ReturnCommandParameterProperty, value);
     }
 
@@ -443,21 +450,32 @@ public class MaterialTextField : MaterialInputBase
 
     #region Events
 
-    public event EventHandler TextChanged;
+    public event EventHandler? TextChanged;
 
     #endregion Events
 
     #region Methods
 
-    private void TxtEntry_TextChanged(object sender, TextChangedEventArgs e)
+    private void TxtEntry_TextChanged(object? sender, TextChangedEventArgs e)
     {
-        var changedByTextTransform = Text != null && _entry.Text != null && Text.ToLower() == _entry.Text.ToLower();
-        this.Text = this._entry.Text;
+        var invokeTextChanged = true;
 
-        if (!changedByTextTransform)
+        if (_entry.Text != null)
         {
-            this.TextChangedCommand?.Execute(null);
-            this.TextChanged?.Invoke(this, e);
+            if (TextTransform == TextTransform.Lowercase)
+            {
+                invokeTextChanged = _entry.Text.Where(char.IsLetter).All(char.IsLower);
+            }
+            else if (TextTransform == TextTransform.Uppercase)
+            {
+                invokeTextChanged = _entry.Text.Where(char.IsLetter).All(char.IsUpper);
+            }
+        }
+
+        if (invokeTextChanged)
+        {
+            TextChangedCommand?.Execute(null);
+            TextChanged?.Invoke(this, e);
         }
     }
 
@@ -466,15 +484,17 @@ public class MaterialTextField : MaterialInputBase
 #if ANDROID
         if (_entry == null) return;
 
+        var horizontalOffset = 3;
+        var verticalOffset = -7.5;
         switch (type)
         {
             case MaterialInputType.Filled:
                 _entry.VerticalOptions = LayoutOptions.End;
-                _entry.Margin = new Thickness(0, 0, 0, -8);
+                _entry.Margin = new Thickness(horizontalOffset, 0, 0, verticalOffset);
                 break;
             case MaterialInputType.Outlined:
                 _entry.VerticalOptions = LayoutOptions.Center;
-                _entry.Margin = new Thickness(0, -7.5);
+                _entry.Margin = new Thickness(horizontalOffset, verticalOffset);
                 break;
         }
 #endif
@@ -500,6 +520,11 @@ public class MaterialTextField : MaterialInputBase
         _entry.Focused -= ContentFocusChanged;
         _entry.Unfocused -= ContentFocusChanged;
         _entry.TextChanged -= TxtEntry_TextChanged;
+    }
+
+    private void DoFocus()
+    {
+        if (!IsReadOnly) _entry.Focus();
     }
 
     #endregion Methods
