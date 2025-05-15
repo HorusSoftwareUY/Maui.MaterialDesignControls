@@ -65,12 +65,10 @@
     /// 
     /// </example>
     /// <todoList>
-    /// * [iOS] FontAttributes doesn't work.
+    /// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue).
     /// </todoList>
     public class MaterialLabel : Label
     {
-        // TODO: [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
-
         #region Attributes
 
         private const LabelTypes DefaultType = LabelTypes.BodyMedium;

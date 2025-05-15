@@ -8,11 +8,37 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// <summary>
     /// A switch <see cref="View" /> that allows the selection of an item on or off, and follows Material Design Guidelines <see href="https://m3.material.io/components/switch/overview" />.
     /// </summary>
+    /// <example>
+    ///
+    /// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialSwitch.jpg</img>
+    ///
+    /// <h3>XAML sample</h3>
+    /// <code>
+    /// <xaml>
+    /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    /// 
+    /// &lt;material:MaterialSwitch
+    ///         IsToggled="True"/&gt;
+    /// </xaml>
+    /// </code>
+    /// 
+    /// <h3>C# sample</h3>
+    /// <code>
+    /// var switch = new MaterialSwitch()
+    /// {
+    ///     IsToggled = True
+    /// };
+    ///</code>
+    ///
+    /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SwitchPage.xaml)
+    /// 
+    /// </example>
+    /// <todoList>
+    /// * Track color animation: change from on-track color to off-track color within the toggle animation.
+    /// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
+    /// </todoList>
     public class MaterialSwitch : ContentView, ITouchable
     {
-        // TODO: Track color animation: change from on-track color to off-track color within the toggle animation
-        // TODO: [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
-
         #region Attributes
 
         private const bool DefaultIsToggled = false;
