@@ -13,7 +13,7 @@
     <VerticalStackLayout Spacing="8">
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="16" Padding="0,8">
+            <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
                     Type="Elevated"
                     Text="Show example"
@@ -26,7 +26,7 @@
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Dismissed callback" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="16" Padding="0,8">
+            <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
                     Type="Elevated"
                     Text="Show example"
@@ -39,7 +39,7 @@
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar with icon(s)" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="16" Padding="0,8">
+            <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
                     Type="Elevated"
                     Text="Show example"
@@ -52,7 +52,7 @@
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Full API" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="16" Padding="0,8">
+            <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
                     Type="Elevated"
                     Text="Show example"

@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -7,53 +8,51 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// <summary>
     /// A switch <see cref="View" /> that allows the selection of an item on or off, and follows Material Design Guidelines <see href="https://m3.material.io/components/switch/overview" />.
     /// </summary>
-    public class MaterialSwitch : ContentView
+    public class MaterialSwitch : ContentView, ITouchable
     {
         // TODO: Track color animation: change from on-track color to off-track color within the toggle animation
         // TODO: [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
 
         #region Attributes
 
-        private static readonly bool DefaultIsToggled = false;
-        private static readonly bool DefaultIsEnabled = true;
-        private static readonly Color DefaultTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
+        private const bool DefaultIsToggled = false;
+        private const bool DefaultIsEnabled = true;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTrackColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
 
 #if IOS || MACCATALYST
-        private static readonly double DefaultTrackWidthRequest = 52;
-        private static readonly double DefaultTrackHeightRequest = 32;
+        private const double DefaultTrackWidthRequest = 52;
+        private const double DefaultTrackHeightRequest = 32;
 #elif ANDROID
         // Sizes recommended by Material Design are increased by 4 points due to how the border is rendered in Android
-        private static readonly double DefaultTrackWidthRequest = 56;
-        private static readonly double DefaultTrackHeightRequest = 36;
+        private const double DefaultTrackWidthRequest = 56;
+        private const double DefaultTrackHeightRequest = 36;
 #endif
-        
-        private static readonly double DefaultBorderWidth = 2;
-        private static readonly Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
-        private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-        private static readonly Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
-        private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
-        private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
-        private static readonly FontAttributes DefaultFontAttributes = FontAttributes.None;
-        private static readonly TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
-        private static readonly TextSide DefaultTextSide = TextSide.Left;
-        private static readonly Color DefaultSupportingTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-        private static readonly double DefaultSupportingFontSize = MaterialFontSize.BodySmall;
-        private static readonly string DefaultSupportingFontFamily = MaterialFontFamily.Default;
-        private static readonly FontAttributes DefaultSupportingFontAttributes = FontAttributes.None;
-        private static readonly double DefaultSpacing = 16.0;
-        private static readonly double DefaultTextSpacing = 4.0;
 
+        private const double DefaultBorderWidth = 2;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultThumbColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBorderColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.BodyLarge;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
+        private const FontAttributes DefaultFontAttributes = FontAttributes.None;
+        private const TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
+        private const TextSide DefaultTextSide = TextSide.Left;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingFontSize = _ => MaterialFontSize.BodySmall;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingFontFamily = _ => MaterialFontFamily.Default;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+        private const FontAttributes DefaultSupportingFontAttributes = FontAttributes.None;
+        private const double DefaultSpacing = 16.0;
+        private const double DefaultTextSpacing = 4.0;
+        private const uint ToggleAnimationDuration = 150;
+        private const double ThumbTrackSizeDifference = 8;
+        private const double ThumbUnselectedWithoutIconScale = 0.7;
+        private const string SwitchAnimationName = "SwitchAnimation";
+        
         private bool _isOnToggledState;
         private double _xReference;
-
-        private readonly uint _toggleAnimationDuration = 150;
-
-        private readonly double _thumbTrackSizeDifference = 8;
-        private readonly double _thumbUnselectedWithoutIconScale = 0.7;
-
-        private bool _reduceThumbSize => UnselectedIcon == null;
-
-        private const string SwitchAnimationName = "SwitchAnimation";
+        private bool ReduceThumbSize => UnselectedIcon == null;
 
         #endregion Attributes
 
@@ -62,12 +61,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="TrackColor"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty TrackColorProperty = BindableProperty.Create(nameof(TrackColor), typeof(Color), typeof(MaterialSwitch), DefaultTrackColor);
+        public static readonly BindableProperty TrackColorProperty = BindableProperty.Create(nameof(TrackColor), typeof(Color), typeof(MaterialSwitch), defaultValueCreator: DefaultTrackColor);
 
         /// <summary>
         /// The backing store for the <see cref="TrackWidthRequest" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty TrackWidthRequestProperty = BindableProperty.Create(nameof(TrackWidthRequest), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultTrackWidthRequest, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty TrackWidthRequestProperty = BindableProperty.Create(nameof(TrackWidthRequest), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultTrackWidthRequest, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialSwitch self)
             {
@@ -78,7 +77,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="TrackHeightRequest" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty TrackHeightRequestProperty = BindableProperty.Create(nameof(TrackHeightRequest), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultTrackHeightRequest, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty TrackHeightRequestProperty = BindableProperty.Create(nameof(TrackHeightRequest), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultTrackHeightRequest, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialSwitch self)
             {
@@ -89,12 +88,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="BorderColor"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialSwitch), DefaultBorderColor);
+        public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialSwitch), defaultValueCreator: DefaultBorderColor);
 
         /// <summary>
         /// The backing store for the <see cref="BorderWidth"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialSwitch), DefaultBorderWidth, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialSwitch), DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialSwitch self)
             {
@@ -105,7 +104,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="IsToggled"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty IsToggledProperty = BindableProperty.Create(nameof(IsToggled), typeof(bool), typeof(MaterialSwitch), DefaultIsToggled, BindingMode.TwoWay, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty IsToggledProperty = BindableProperty.Create(nameof(IsToggled), typeof(bool), typeof(MaterialSwitch), DefaultIsToggled, BindingMode.TwoWay, propertyChanged: (bindable, _, n) =>
         {
             if (bindable is MaterialSwitch self)
             {
@@ -121,12 +120,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="ThumbColor"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(nameof(ThumbColor), typeof(Color), typeof(MaterialSwitch), DefaultThumbColor);
+        public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(nameof(ThumbColor), typeof(Color), typeof(MaterialSwitch), defaultValueCreator: DefaultThumbColor);
 
         /// <summary>
         /// The backing store for the <see cref="SelectedIcon"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty SelectedIconProperty = BindableProperty.Create(nameof(SelectedIcon), typeof(ImageSource), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty SelectedIconProperty = BindableProperty.Create(nameof(SelectedIcon), typeof(ImageSource), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialSwitch self)
             {
@@ -138,7 +137,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="UnselectedIcon"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty UnselectedIconProperty = BindableProperty.Create(nameof(UnselectedIcon), typeof(ImageSource), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty UnselectedIconProperty = BindableProperty.Create(nameof(UnselectedIcon), typeof(ImageSource), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialSwitch self)
             {
@@ -150,7 +149,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="Text"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialSwitch self)
             {
@@ -161,17 +160,17 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="TextColor"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialSwitch), defaultValue: DefaultTextColor);
+        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialSwitch), defaultValueCreator: DefaultTextColor);
 
         /// <summary>
         /// The backing store for the <see cref="FontSize"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultFontSize);
+        public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialSwitch), defaultValueCreator: DefaultFontSize);
 
         /// <summary>
         /// The backing store for the <see cref="FontFamily"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSwitch), defaultValue: DefaultFontFamily);
+        public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSwitch), defaultValueCreator: DefaultFontFamily);
 
         /// <summary>
         /// The backing store for the <see cref="FontAttributes" /> bindable property.
@@ -186,7 +185,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="TextSide"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty TextSideProperty = BindableProperty.Create(nameof(TextSide), typeof(TextSide), typeof(MaterialSwitch), defaultValue: DefaultTextSide, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty TextSideProperty = BindableProperty.Create(nameof(TextSide), typeof(TextSide), typeof(MaterialSwitch), defaultValue: DefaultTextSide, propertyChanged: (bindable, _, n) =>
         {
             if (bindable is MaterialSwitch self)
             {
@@ -197,7 +196,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="SupportingText"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, o, n) =>
+        public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialSwitch self)
             {
@@ -208,17 +207,17 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="SupportingTextColor"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty SupportingTextColorProperty = BindableProperty.Create(nameof(SupportingTextColor), typeof(Color), typeof(MaterialSwitch), defaultValue: DefaultSupportingTextColor);
+        public static readonly BindableProperty SupportingTextColorProperty = BindableProperty.Create(nameof(SupportingTextColor), typeof(Color), typeof(MaterialSwitch), defaultValueCreator: DefaultSupportingTextColor);
 
         /// <summary>
         /// The backing store for the <see cref="SupportingFontSize"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty SupportingFontSizeProperty = BindableProperty.Create(nameof(SupportingFontSize), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultSupportingFontSize);
+        public static readonly BindableProperty SupportingFontSizeProperty = BindableProperty.Create(nameof(SupportingFontSize), typeof(double), typeof(MaterialSwitch), defaultValueCreator: DefaultSupportingFontSize);
 
         /// <summary>
         /// The backing store for the <see cref="SupportingFontFamily"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty SupportingFontFamilyProperty = BindableProperty.Create(nameof(SupportingFontFamily), typeof(string), typeof(MaterialSwitch), defaultValue: DefaultSupportingFontFamily);
+        public static readonly BindableProperty SupportingFontFamilyProperty = BindableProperty.Create(nameof(SupportingFontFamily), typeof(string), typeof(MaterialSwitch), defaultValueCreator: DefaultSupportingFontFamily);
 
         /// <summary>
         /// The backing store for the <see cref="SupportingFontAttributes" /> bindable property.
@@ -238,13 +237,28 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="IsEnabled"/> bindable property.
         /// </summary>
-        public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(VisualElement), defaultValue: DefaultIsEnabled, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, o, n) =>
+        public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(VisualElement), defaultValue: DefaultIsEnabled, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, _) =>
         {
             if (bindable is MaterialSwitch self)
             {
                 self.SetVisualState();
             }
         });
+
+        // <summary>
+        /// The backing store for the <see cref="Animation"/> bindable property.
+        /// </summary>
+        public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialSwitch), defaultValueCreator: DefaultAnimationType);
+
+        /// <summary>
+        /// The backing store for the <see cref="AnimationParameter"/> bindable property.
+        /// </summary>
+        public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialSwitch), defaultValueCreator: DefaultAnimationParameter);
+
+        /// <summary>
+        /// The backing store for the <see cref="CustomAnimation"/> bindable property.
+        /// </summary>
+        public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialSwitch));
 
         #endregion Bindable Properties
 
@@ -494,25 +508,64 @@ namespace HorusStudio.Maui.MaterialDesignControls
             set => SetValue(IsEnabledProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets an animation to be executed when button is clicked.
+        /// This is a bindable property.
+        /// </summary>
+        /// <default>
+        /// <see cref="AnimationTypes.Fade"/>
+        /// </default>
+        public AnimationTypes Animation
+        {
+            get => (AnimationTypes)GetValue(AnimationProperty);
+            set => SetValue(AnimationProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the parameter to pass to the <see cref="Animation">Animation</see> property.
+        /// This is a bindable property.
+        /// </summary>
+        /// <default>
+        /// Null
+        /// </default>
+        public double? AnimationParameter
+        {
+            get => (double?)GetValue(AnimationParameterProperty);
+            set => SetValue(AnimationParameterProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a custom animation to be executed when button is clicked.
+        /// This is a bindable property.
+        /// </summary>
+        /// <default>
+        /// Null
+        /// </default>
+        public ICustomAnimation CustomAnimation
+        {
+            get => (ICustomAnimation)GetValue(CustomAnimationProperty);
+            set => SetValue(CustomAnimationProperty, value);
+        }
+
         #endregion Properties
 
         #region Events
 
-        public event EventHandler<ToggledEventArgs> Toggled;
+        public event EventHandler<ToggledEventArgs>? Toggled;
 
         #endregion Events
 
         #region Layout
 
-        private Grid _mainContainer;
-        private ColumnDefinition _leftColumnMainContainer;
-        private ColumnDefinition _rightColumnMainContainer;
-        private MaterialLabel _textLabel;
-        private Grid _switch;
-        private Border _track;
-        private Border _thumb;
-        private Image _icon;
-        private MaterialLabel _supportingTextLabel;
+        private Grid _mainContainer = null!;
+        private ColumnDefinition _leftColumnMainContainer = null!;
+        private ColumnDefinition _rightColumnMainContainer = null!;
+        private MaterialLabel _textLabel = null!;
+        private Grid _switch = null!;
+        private Border _track = null!;
+        private Border _thumb = null!;
+        private Image _icon = null!;
+        private MaterialLabel _supportingTextLabel = null!;
 
         #endregion Layout
 
@@ -532,7 +585,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Methods
 
-        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
 
@@ -607,20 +660,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _switch.Children.Add(_track);
             _switch.Children.Add(_thumb);
 
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (s, e) =>
-            {
-                if (IsEnabled)
-                {
-                    IsToggled = !IsToggled;
-                    Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
-                    ToggledCommand?.Execute(IsToggled);
-                }
-            };
-
-            var contentViewGesture = new ContentView();
-            contentViewGesture.GestureRecognizers.Add(tapGestureRecognizer);
-            _switch.Children.Add(contentViewGesture);
+            Behaviors.Add(new TouchBehavior());
 
             Content = _switch;
         }
@@ -721,7 +761,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             var trackWidth = TrackWidthRequest >= DefaultTrackWidthRequest ? TrackWidthRequest : DefaultTrackWidthRequest;
             var trackHeight = TrackHeightRequest >= DefaultTrackHeightRequest ? TrackHeightRequest : DefaultTrackHeightRequest;
-            var thumbSelectedSize = trackHeight - _thumbTrackSizeDifference;
+            var thumbSelectedSize = trackHeight - ThumbTrackSizeDifference;
 
             _track.StrokeShape = new RoundRectangle
             {
@@ -772,7 +812,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     Content = _mainContainer;
                 }
 
-                _textLabel.Text = Text;
+                _textLabel!.Text = Text;
                 _textLabel.IsVisible = !string.IsNullOrEmpty(Text);
             }
         }
@@ -794,7 +834,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     Content = _mainContainer;
                 }
 
-                _supportingTextLabel.Text = SupportingText;
+                _supportingTextLabel!.Text = SupportingText;
                 _supportingTextLabel.IsVisible = !string.IsNullOrEmpty(SupportingText);
             }
 
@@ -835,12 +875,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, -_xReference)}
                 };
 
-                if (_reduceThumbSize)
+                if (ReduceThumbSize)
                 {
-                    animation.Add(0, 1, new Animation(v => _thumb.Scale = v, 1, _thumbUnselectedWithoutIconScale));
+                    animation.Add(0, 1, new Animation(v => _thumb.Scale = v, 1, ThumbUnselectedWithoutIconScale));
                 }
 
-                animation.Commit(this, SwitchAnimationName, 16, _toggleAnimationDuration, null, (_, __) =>
+                animation.Commit(this, SwitchAnimationName, 16, ToggleAnimationDuration, null, (_, _) =>
                 {
                     this.AbortAnimation(SwitchAnimationName);
                     _isOnToggledState = false;
@@ -876,12 +916,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, _xReference)}
                 };
 
-                if (_reduceThumbSize)
+                if (ReduceThumbSize)
                 {
-                    animation.Add(0, 1, new Animation(v => _thumb.Scale = v, _thumbUnselectedWithoutIconScale, 1));
+                    animation.Add(0, 1, new Animation(v => _thumb.Scale = v, ThumbUnselectedWithoutIconScale));
                 }
 
-                animation.Commit(this, SwitchAnimationName, 16, _toggleAnimationDuration, null, (_, __) =>
+                animation.Commit(this, SwitchAnimationName, 16, ToggleAnimationDuration, null, (_, _) =>
                 {
                     this.AbortAnimation(SwitchAnimationName);
                     _isOnToggledState = true;
@@ -912,15 +952,15 @@ namespace HorusStudio.Maui.MaterialDesignControls
             else
             {
                 _icon.Source = UnselectedIcon;
-                _icon.IsVisible = !_reduceThumbSize;
+                _icon.IsVisible = !ReduceThumbSize;
             }
         }
 
         private void SetThumbSize()
         {
-            if (!IsToggled && _reduceThumbSize)
+            if (!IsToggled && ReduceThumbSize)
             {
-                _thumb.Scale = _thumbUnselectedWithoutIconScale;
+                _thumb.Scale = ThumbUnselectedWithoutIconScale;
             }
             else
             {
@@ -955,6 +995,38 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         #endregion Methods
+
+        #region ITouchable
+
+        public async void OnTouch(TouchType gestureType)
+        {
+            Utils.Logger.Debug($"Gesture: {gestureType}");
+
+            if (!IsEnabled) return;
+            await TouchAnimation.AnimateAsync(this, gestureType);
+
+            switch (gestureType)
+            {
+                case TouchType.Pressed:
+                    VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
+                    break;
+                case TouchType.Released:
+                    IsToggled = !IsToggled;
+                    Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
+                    if (ToggledCommand?.CanExecute(IsToggled) == true)
+                    {
+                        ToggledCommand?.Execute(IsToggled);
+                    }
+
+                    VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
+                    break;
+                default:
+                    VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
+                    break;
+            }
+        }
+
+        #endregion ITouchable
 
         #region Styles
 

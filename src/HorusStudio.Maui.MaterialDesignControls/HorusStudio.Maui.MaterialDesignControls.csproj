@@ -1,16 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>$(NetVersion)-android;$(NetVersion)-ios;$(NetVersion)-maccatalyst</TargetFrameworks>
+		<TargetFrameworks>$(NetVersion)-android;$(NetVersion)-ios;$(NetVersion)-maccatalyst;$(NetVersion)-ios17.0;$(NetVersion)-maccatalyst17.0</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) or '$(EnableWindowsTargeting)' == 'true'">$(TargetFrameworks);$(NetVersion)-windows10.0.19041;$(NetVersion)-windows10.0.20348</TargetFrameworks>
 		<RootNamespace>HorusStudio.Maui.MaterialDesignControls</RootNamespace>
-		<Description>This library provides a UI Toolkit following Material Design 3 guidelines for .NET MAUI.</Description>
-		<Version>1.0.4</Version>
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<!-- Images -->
-		<MauiImage Include="Resources\Images\*.svg" />
+		<EmbeddedResource Include="Images\*" />
+		<None Include="Images\icon.png" Pack="true" PackagePath="\" />
+		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 	
 	<ItemGroup>

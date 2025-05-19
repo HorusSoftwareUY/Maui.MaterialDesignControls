@@ -17,16 +17,16 @@
         <converters:TrailingIconIsVisibleConverter x:Key="IsTrailingIconVisible" />
         <converters:TrailingIconSourceConverter x:Key="TrailingIconSource" />
         
-        <Style x:Key="MainBorder" TargetType="Border">
+        <Style x:Key="MainBorder" TargetType="material:BorderButton">
             <Setter Property="HeightRequest" Value="{Binding HeightRequest, Source={x:Reference InputBase}}" />
             <Setter Property="Background" Value="{Binding Background, Source={x:Reference InputBase}}" />
         </Style>
         
-        <Style x:Key="FilledBorder" TargetType="Border" BaseResourceKey="MainBorder">
+        <Style x:Key="FilledBorder" TargetType="material:BorderButton" BaseResourceKey="MainBorder">
             <Setter Property="StrokeThickness" Value="0" />
         </Style>
         
-        <Style x:Key="OutlinedBorder" TargetType="Border" BaseResourceKey="MainBorder">
+        <Style x:Key="OutlinedBorder" TargetType="material:BorderButton" BaseResourceKey="MainBorder">
             <Setter Property="Margin" Value="0,8,0,0" />
             <Setter Property="Stroke" Value="{Binding BorderColor, Source={x:Reference InputBase}}" />
             <Setter Property="StrokeThickness" Value="{Binding BorderWidth, Source={x:Reference InputBase}}" />
@@ -70,6 +70,7 @@
             <Setter Property="TextColor" Value="{Binding PlaceholderColor, Source={x:Reference InputBase}}" />
             <Setter Property="FontFamily" Value="{Binding PlaceholderFontFamily, Source={x:Reference InputBase}}" />
             <Setter Property="FontSize" Value="{Binding PlaceholderSize, Source={x:Reference InputBase}}" />
+            <Setter Property="LineBreakMode" Value="{Binding PlaceholderLineBreakMode, Source={x:Reference InputBase}}" />
             <Setter Property="Text" Value="{Binding Placeholder, Source={x:Reference InputBase}}" />
             <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -81,6 +82,13 @@
                         <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
                     </MultiTrigger.Conditions>
                     <Setter Property="IsVisible" Value="true" />
+                </MultiTrigger>
+                <MultiTrigger TargetType="Label">
+                    <MultiTrigger.Conditions>
+                        <BindingCondition Binding="{Binding Type, Source={x:Reference InputBase}}" Value="Filled" />
+                        <BindingCondition Binding="{Binding AlwaysShowLabel, Source={x:Reference InputBase}}" Value="true" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="VerticalTextAlignment" Value="End" />
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
@@ -117,6 +125,7 @@
                     <MultiTrigger.Conditions>
                         <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
                         <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                        <BindingCondition Binding="{Binding AlwaysShowLabel, Source={x:Reference InputBase}}" Value="false" />
                     </MultiTrigger.Conditions>
                     <Setter Property="IsVisible" Value="false" />
                 </MultiTrigger>
@@ -154,6 +163,8 @@
         <Style x:Key="BaseIcon" TargetType="material:MaterialIconButton">
             <Setter Property="HeightRequest" Value="{StaticResource DefaultIconSize}" />
             <Setter Property="WidthRequest" Value="{StaticResource DefaultIconSize}" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="CornerRadius" Value="0" />
         </Style>
@@ -190,7 +201,7 @@
         
         <ControlTemplate x:Key="FilledControlTemplate">
             <VerticalStackLayout Spacing="0" x:Name="ContainerFilled">
-                <Border x:Name="InputBorder" Style="{StaticResource FilledBorder}">
+                <material:BorderButton x:Name="InputBorder" Style="{StaticResource FilledBorder}">
                     <Grid>
                         <StackLayout Style="{StaticResource FilledMainContent}">
                             <material:MaterialIconButton Style="{StaticResource LeadingIcon}" />
@@ -208,7 +219,7 @@
 
                         <BoxView HeightRequest="{Binding BorderWidth, Source={x:Reference InputBase}}" Color="{Binding BorderColor, Source={x:Reference InputBase}}" VerticalOptions="EndAndExpand" />
                     </Grid>
-                </Border>
+                </material:BorderButton>
 
                 <Label Style="{StaticResource SupportingText}" />
             </VerticalStackLayout>
@@ -217,7 +228,7 @@
         <ControlTemplate x:Key="OutlinedControlTemplate">
             <VerticalStackLayout Spacing="0" x:Name="ContainerOutlined">
                 <Grid>
-                    <Border x:Name="InputBorder" Style="{StaticResource OutlinedBorder}">
+                    <material:BorderButton x:Name="InputBorder" Style="{StaticResource OutlinedBorder}">
                         <StackLayout Style="{StaticResource MainContent}">
                             <material:MaterialIconButton Style="{StaticResource LeadingIcon}" />
                             
@@ -228,7 +239,7 @@
 
                             <material:MaterialIconButton Style="{StaticResource TrailingIcon}" />
                         </StackLayout>
-                    </Border>
+                    </material:BorderButton>
                     
                     <Grid
                         Style="{StaticResource OutlinedHintContainer}">

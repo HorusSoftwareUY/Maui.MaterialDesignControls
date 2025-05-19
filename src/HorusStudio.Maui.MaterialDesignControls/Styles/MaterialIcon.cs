@@ -5,22 +5,24 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// </summary>
 public static class MaterialIcon
 {
-    public const string DefaultErrorIcon = "mdc_ic_error.png";
-    public const string DefaultDatePickerIcon = "mdc_ic_datepicker.png";
-    public const string DefaultPickerIcon = "mdc_ic_picker.png";
-    public const string DefaultTimePickerIcon = "mdc_ic_timepicker.png";
+    private const string DefaultErrorIcon = "mdc_ic_error.png";
+    private const string DefaultDatePickerIcon = "mdc_ic_datepicker.png";
+    private const string DefaultPickerIcon = "mdc_ic_picker.png";
+    private const string DefaultTimePickerIcon = "mdc_ic_timepicker.png";
     
-    /// <default><see langword="null"/></default>
-    public static ImageSource Picker { get; set; } = DefaultPickerIcon;
+    private static ImageSource GetResource(string resourceName) => ImageSource.FromResource($"{typeof(MaterialIcon).Namespace}.Images.{resourceName}"); 
     
-    /// <default><see langword="null"/></default>
-    public static ImageSource Error { get; set; } = DefaultErrorIcon;
+    /// <default><see href="https://fonts.google.com/icons?selected=Material+Icons+Outlined:error"/></default>
+    public static ImageSource Picker { get; set; } = GetResource(DefaultPickerIcon);
     
-    /// <default><see langword="null"/></default>
-    public static ImageSource DatePicker { get; set; } = DefaultDatePickerIcon;
+    /// <default><see href="https://fonts.google.com/icons?selected=Material+Icons+Outlined:expand_more"/></default>
+    public static ImageSource Error { get; set; } = GetResource(DefaultErrorIcon);
     
-    /// <default><see langword="null"/></default>
-    public static ImageSource TimePicker { get; set; } = DefaultTimePickerIcon;
+    /// <default><see href="https://fonts.google.com/icons?selected=Material+Icons+Outlined:calendar_today"/></default>
+    public static ImageSource DatePicker { get; set; } = GetResource(DefaultDatePickerIcon);
+    
+    /// <default><see href="https://fonts.google.com/icons?selected=Material+Icons+Outlined:schedule"/></default>
+    public static ImageSource TimePicker { get; set; } = GetResource(DefaultTimePickerIcon);
 
     internal static void Configure(MaterialIconOptions options)
     {

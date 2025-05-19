@@ -32,8 +32,8 @@
     {
         #region Attributes
 
-        private static readonly Color DefaultColor = new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
-        private static readonly double DefaultHeightRequest = 1.0;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
+        private const double DefaultHeightRequest = 1.0;
 
         #endregion Attributes
 
@@ -42,7 +42,7 @@
         /// <summary>
         /// The backing store for the <see cref="Color" /> bindable property.
         /// </summary>
-        public new static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValue: DefaultColor);
+        public new static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValueCreator: DefaultColor);
 
         /// <summary>
         /// The backing store for the <see cref="HeightRequest" /> bindable property.

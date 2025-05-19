@@ -40,42 +40,39 @@ public class MaterialSlider : ContentView
 {
     #region Attributes
 
-    private static readonly Color DefaultTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
-    private static readonly Color DefaultThumbColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private static readonly Color DefaultActiveTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-    private static readonly Color DefaultInactiveTrackColor = new AppThemeBindingExtension { Light = MaterialLightTheme.SecondaryContainer, Dark = MaterialDarkTheme.SecondaryContainer }.GetValueForCurrentTheme<Color>();
-    private static readonly Color DefaultValueIndicatorBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
-    private static readonly Color DefaultValueIndicatorTextColor = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
-    private static readonly string DefaultFontFamily = MaterialFontFamily.Default;
-    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyMedium;
-    private static readonly double DefaultFontSize = MaterialFontSize.BodyLarge;
-    private static readonly double DefaultValueIndicatorFontSize = MaterialFontSize.BodyMedium;
-    private static readonly string DefaultValueIndicatorFormat = "{0:0.00}";
-    private bool MinimumImageIsVisible = false;
-    private bool MinimumLabelIsVisible = false;
-    private bool MaximumImageIsVisible = false;
-    private bool MaximumLabelIsVisible = false;
-    private static readonly int DefaultThumbWidth = 4;
-    private static readonly int DefaultValueIndicatorSize = 44;
-    private static readonly int DefaultThumbHeight = 44;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultThumbColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveTrackColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultInactiveTrackColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SecondaryContainer, Dark = MaterialDarkTheme.SecondaryContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultValueIndicatorBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultValueIndicatorTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyMedium;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultValueIndicatorFontSize = _ => MaterialFontSize.BodyMedium;
+    private const string DefaultValueIndicatorFormat = "{0:0.00}";
+    private const int DefaultThumbWidth = 4;
+    private const int DefaultValueIndicatorSize = 44;
+    private const int DefaultThumbHeight = 44;
 
-    private bool _isDragging = false;
+    private bool _isDragging;
+    private bool _minimumImageIsVisible;
+    private bool _minimumLabelIsVisible;
+    private bool _maximumImageIsVisible;
+    private bool _maximumLabelIsVisible;
 
     #endregion Attributes
 
     #region Layout
 
-    private MaterialLabel _label;
-    private MaterialLabel _minimumLabel;
-    private Image _minimumImage;
-    private CustomSlider _slider;
-    private MaterialLabel _maximumLabel;
-    private Image _maximumImage;
-    private Grid _mainLayout;
-    private Grid _containerLayout;
-    private Image _backgroundImage;
-    private Ellipse _valueIndicatorContainer;
-    private MaterialLabel _valueIndicatorText;
+    private readonly MaterialLabel _minimumLabel;
+    private readonly Image _minimumImage;
+    private readonly CustomSlider _slider;
+    private readonly MaterialLabel _maximumLabel;
+    private readonly Image _maximumImage;
+    private readonly Image _backgroundImage;
+    private readonly Ellipse _valueIndicatorContainer;
+    private readonly MaterialLabel _valueIndicatorText;
 
     #endregion Layout
 
@@ -91,17 +88,17 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="LabelColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultTextColor);
+    public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="FontFamily" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSlider), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSlider), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialSlider), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="FontAttributes" /> bindable property.
@@ -116,7 +113,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="FontSize" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialSlider), defaultValue: DefaultFontSize);
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="LabelTransform" /> bindable property.
@@ -141,17 +138,17 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="MinimumLabelColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MinimumLabelColorProperty = BindableProperty.Create(nameof(MinimumLabelColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultTextColor);
+    public static readonly BindableProperty MinimumLabelColorProperty = BindableProperty.Create(nameof(MinimumLabelColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="MinimumFontFamily" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MinimumFontFamilyProperty = BindableProperty.Create(nameof(MinimumFontFamily), typeof(string), typeof(MaterialSlider), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty MinimumFontFamilyProperty = BindableProperty.Create(nameof(MinimumFontFamily), typeof(string), typeof(MaterialSlider), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="MinimumCharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MinimumCharacterSpacingProperty = BindableProperty.Create(nameof(MinimumCharacterSpacing), typeof(double), typeof(MaterialSlider), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty MinimumCharacterSpacingProperty = BindableProperty.Create(nameof(MinimumCharacterSpacing), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="MinimumFontAttributes" /> bindable property.
@@ -166,7 +163,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="MinimumFontSize" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MinimumFontSizeProperty = BindableProperty.Create(nameof(MinimumFontSize), typeof(double), typeof(MaterialSlider), defaultValue: DefaultFontSize);
+    public static readonly BindableProperty MinimumFontSizeProperty = BindableProperty.Create(nameof(MinimumFontSize), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="MinimumLabelTransform" /> bindable property.
@@ -192,7 +189,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="ActiveTrackColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ActiveTrackColorProperty = BindableProperty.Create(nameof(ActiveTrackColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultActiveTrackColor);
+    public static readonly BindableProperty ActiveTrackColorProperty = BindableProperty.Create(nameof(ActiveTrackColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultActiveTrackColor);
 
     #endregion Minimum
 
@@ -212,17 +209,17 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="MaximumLabelColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MaximumLabelColorProperty = BindableProperty.Create(nameof(MaximumLabelColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultTextColor);
+    public static readonly BindableProperty MaximumLabelColorProperty = BindableProperty.Create(nameof(MaximumLabelColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="MaximumFontFamily" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MaximumFontFamilyProperty = BindableProperty.Create(nameof(MaximumFontFamily), typeof(string), typeof(MaterialSlider), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty MaximumFontFamilyProperty = BindableProperty.Create(nameof(MaximumFontFamily), typeof(string), typeof(MaterialSlider), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MaximumCharacterSpacingProperty = BindableProperty.Create(nameof(MaximumCharacterSpacing), typeof(double), typeof(MaterialSlider), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty MaximumCharacterSpacingProperty = BindableProperty.Create(nameof(MaximumCharacterSpacing), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="MaximumFontAttributes" /> bindable property.
@@ -237,7 +234,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="MaximumFontSize" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty MaximumFontSizeProperty = BindableProperty.Create(nameof(MaximumFontSize), typeof(double), typeof(MaterialSlider), defaultValue: DefaultFontSize);
+    public static readonly BindableProperty MaximumFontSizeProperty = BindableProperty.Create(nameof(MaximumFontSize), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="LabelTransform" /> bindable property.
@@ -263,7 +260,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="InactiveTrackColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty InactiveTrackColorProperty = BindableProperty.Create(nameof(InactiveTrackColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultInactiveTrackColor);
+    public static readonly BindableProperty InactiveTrackColorProperty = BindableProperty.Create(nameof(InactiveTrackColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultInactiveTrackColor);
 
     #endregion Maximum
 
@@ -282,7 +279,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="TrackImageSource" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty TrackImageSourceProperty = BindableProperty.Create(nameof(TrackImageSource), typeof(ImageSource), typeof(MaterialSlider), defaultValue: null, propertyChanged: (bindableObject, _, newValue) => 
+    public static readonly BindableProperty TrackImageSourceProperty = BindableProperty.Create(nameof(TrackImageSource), typeof(ImageSource), typeof(MaterialSlider), defaultValue: null, propertyChanged: (bindableObject, _, _) => 
     { 
         if (bindableObject is MaterialSlider self)
         {
@@ -297,7 +294,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="ThumbColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(nameof(ThumbColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultThumbColor);
+    public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(nameof(ThumbColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultThumbColor);
 
     /// <summary>
     /// The backing store for the <see cref="ThumbImageSource" /> bindable property.
@@ -326,9 +323,9 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="ValueIndicatorBackgroundColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueIndicatorBackgroundColorProperty = BindableProperty.Create(nameof(ValueIndicatorBackgroundColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorBackgroundColor, propertyChanged: (BindableObject, _, newValue) =>
+    public static readonly BindableProperty ValueIndicatorBackgroundColorProperty = BindableProperty.Create(nameof(ValueIndicatorBackgroundColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultValueIndicatorBackgroundColor, propertyChanged: (bindableObject, _, newValue) =>
     {
-        if (BindableObject is MaterialSlider self && newValue is Color newBackgorundColor)
+        if (bindableObject is MaterialSlider self && newValue is Color newBackgorundColor)
         {
             self._valueIndicatorContainer.Fill = new SolidColorBrush(newBackgorundColor);
             self._valueIndicatorContainer.Stroke = new SolidColorBrush(newBackgorundColor);
@@ -354,12 +351,12 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="ValueIndicatorTextColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueIndicatorTextColorProperty = BindableProperty.Create(nameof(ValueIndicatorTextColor), typeof(Color), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorTextColor);
+    public static readonly BindableProperty ValueIndicatorTextColorProperty = BindableProperty.Create(nameof(ValueIndicatorTextColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultValueIndicatorTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="ValueIndicatorFontSize" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueIndicatorFontSizeProperty = BindableProperty.Create(nameof(ValueIndicatorFontSize), typeof(double), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorFontSize);
+    public static readonly BindableProperty ValueIndicatorFontSizeProperty = BindableProperty.Create(nameof(ValueIndicatorFontSize), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultValueIndicatorFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="ValueIndicatorFormat" /> bindable property.
@@ -371,7 +368,7 @@ public class MaterialSlider : ContentView
     /// <summary>
     /// The backing store for the <see cref="IsEnabled" /> bindable property.
     /// </summary>
-    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialSlider), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialSlider), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, newValue) =>
     {
         if (bindable is MaterialSlider self && newValue is bool)
         {
@@ -419,6 +416,14 @@ public class MaterialSlider : ContentView
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="Slider" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Slider InternalSlider => _slider;
 
     #region Label
 
@@ -975,7 +980,7 @@ public class MaterialSlider : ContentView
     {
         Padding = ShowValueIndicator ? new Thickness(0, ValueIndicatorSize / 1.5, 0, 10) : new Thickness(0);
 
-        _mainLayout = new()
+        Grid mainLayout = new()
         {
             IsClippedToBounds = true,
             Margin = new Thickness(0, 0),
@@ -1001,29 +1006,27 @@ public class MaterialSlider : ContentView
             }
         };
 
-        _label = new()
+        MaterialLabel label = new()
         {
-            TextColor = LabelColor,
-            Text = Label,
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Center,
             Margin = new Thickness(16, 0, 16, 4)
         };
-        _label.SetValue(Grid.RowProperty, 0);
+        label.SetValue(Grid.RowProperty, 0);
 
-        _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Label), source: this));
-        _label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(LabelColor), source: this));
-        _label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-        _label.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
-        _label.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
-        _label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
-        _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-        _label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTransform), source: this));
-        _label.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Label), source: this));
+        label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(LabelColor), source: this));
+        label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        label.SetBinding(MaterialLabel.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
+        label.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
+        label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
+        label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTransform), source: this));
+        label.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
 
-        _mainLayout.Children.Add(_label);
+        mainLayout.Children.Add(label);
 
-        _containerLayout = new()
+        Grid containerLayout = new()
         {
             Margin = new Thickness(0, 5, 0, 0),
             Padding = new Thickness(0),
@@ -1039,7 +1042,7 @@ public class MaterialSlider : ContentView
             {
                 new()
                 {
-                Width = GridLength.Auto
+                    Width = GridLength.Auto
                 },
                 new()
                 {
@@ -1053,7 +1056,7 @@ public class MaterialSlider : ContentView
             VerticalOptions = LayoutOptions.Fill
         };
 
-        _containerLayout.SetValue(Grid.RowProperty, 1);
+        containerLayout.SetValue(Grid.RowProperty, 1);
 
         _backgroundImage = new()
         {
@@ -1065,14 +1068,12 @@ public class MaterialSlider : ContentView
         _backgroundImage.SetValue(Grid.RowProperty, 0);
         _backgroundImage.SetValue(Grid.ColumnProperty, 1);
 
-        _containerLayout.Children.Add(_backgroundImage);
+        containerLayout.Children.Add(_backgroundImage);
         _backgroundImage.SetBinding(Image.SourceProperty, new Binding(nameof(TrackImageSource), source: this));
 
         _minimumLabel = new()
         {
             IsVisible = false,
-            TextColor = MinimumLabelColor,
-            Text = MinimumLabel,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
             Margin = new Thickness(0, 0, 5, 0)
@@ -1090,7 +1091,7 @@ public class MaterialSlider : ContentView
         _minimumLabel.SetValue(Grid.RowProperty, 0);
         _minimumLabel.SetValue(Grid.ColumnProperty, 0);
 
-        _containerLayout.Children.Add(_minimumLabel);
+        containerLayout.Children.Add(_minimumLabel);
 
         _minimumImage = new()
         {
@@ -1107,7 +1108,7 @@ public class MaterialSlider : ContentView
         _minimumImage.SetValue(Grid.RowProperty, 0);
         _minimumImage.SetValue(Grid.ColumnProperty, 0);
 
-        _containerLayout.Children.Add(_minimumImage);
+        containerLayout.Children.Add(_minimumImage);
 
         _slider = new()
         {
@@ -1141,13 +1142,11 @@ public class MaterialSlider : ContentView
         _slider.DragStarted += OnDragStarted;
         _slider.ValueChanged += OnValueChanged;
 
-        _containerLayout.Children.Add(_slider);
+        containerLayout.Children.Add(_slider);
 
         _maximumLabel = new()
         {
             IsVisible = false,
-            TextColor = MaximumLabelColor,
-            Text = MaximumLabel,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
             Margin = new Thickness(5, 0, 0, 0)
@@ -1166,7 +1165,7 @@ public class MaterialSlider : ContentView
         _maximumLabel.SetValue(Grid.RowProperty, 0);
         _maximumLabel.SetValue(Grid.ColumnProperty, 2);
 
-        _containerLayout.Children.Add(_maximumLabel);
+        containerLayout.Children.Add(_maximumLabel);
 
         _maximumImage = new()
         {
@@ -1183,14 +1182,10 @@ public class MaterialSlider : ContentView
         _maximumImage.SetValue(Grid.RowProperty, 0);
         _maximumImage.SetValue(Grid.ColumnProperty, 2);
 
-        _containerLayout.Children.Add(_maximumImage);
+        containerLayout.Children.Add(_maximumImage);
 
         _valueIndicatorContainer = new Ellipse
         {
-            WidthRequest = ValueIndicatorSize,
-            HeightRequest = ValueIndicatorSize,
-            Fill = new SolidColorBrush(ValueIndicatorBackgroundColor),
-            Stroke = new SolidColorBrush(ValueIndicatorBackgroundColor),
             StrokeThickness = 2,
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Center,
@@ -1200,13 +1195,13 @@ public class MaterialSlider : ContentView
 
         _valueIndicatorContainer.SetBinding(Ellipse.WidthRequestProperty, new Binding(nameof(ValueIndicatorSize), source: this));
         _valueIndicatorContainer.SetBinding(Ellipse.HeightRequestProperty, new Binding(nameof(ValueIndicatorSize), source: this));
+        _valueIndicatorContainer.SetBinding(Ellipse.FillProperty, new Binding(nameof(ValueIndicatorBackgroundColor), source: this));
+        _valueIndicatorContainer.SetBinding(Ellipse.StrokeProperty, new Binding(nameof(ValueIndicatorBackgroundColor), source: this));
 
         _valueIndicatorText = new MaterialLabel
         {
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
-            TextColor = DefaultTextColor,
-            FontSize = DefaultFontSize,
             IsVisible = false,
             MaxLines = 1,
         };
@@ -1215,21 +1210,21 @@ public class MaterialSlider : ContentView
         _valueIndicatorText.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(ValueIndicatorTextColor), source: this));
         _valueIndicatorText.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(ValueIndicatorFontSize), source: this));
 
-        _mainLayout.Children.Add(_containerLayout);
-        _mainLayout.Children.Add(_valueIndicatorContainer);
-        _mainLayout.Children.Add(_valueIndicatorText);
+        mainLayout.Children.Add(containerLayout);
+        mainLayout.Children.Add(_valueIndicatorContainer);
+        mainLayout.Children.Add(_valueIndicatorText);
 
-        base.Content = _mainLayout;
-        _mainLayout.IsClippedToBounds = false;
+        Content = mainLayout;
+        mainLayout.IsClippedToBounds = false;
     }
 
     #endregion Constructors
 
     #region Events
 
-    public event EventHandler<ValueChangedEventArgs> ValueChanged;
-    public event EventHandler DragCompleted;
-    public event EventHandler DragStarted;
+    public event EventHandler<ValueChangedEventArgs>? ValueChanged;
+    public event EventHandler? DragCompleted;
+    public event EventHandler? DragStarted;
 
     #endregion Events
 
@@ -1237,27 +1232,27 @@ public class MaterialSlider : ContentView
 
     private void SetMinimumPropertiesIsVisible()
     {
-        MinimumImageIsVisible = ShowIcons && MinimumImageSource is not null;
-        MinimumLabelIsVisible = !string.IsNullOrEmpty(MinimumLabel) && (!ShowIcons || !MinimumImageIsVisible);
-        _minimumLabel.IsVisible = MinimumLabelIsVisible;
-        _minimumImage.IsVisible = MinimumImageIsVisible;
+        _minimumImageIsVisible = ShowIcons && MinimumImageSource is not null;
+        _minimumLabelIsVisible = !string.IsNullOrEmpty(MinimumLabel) && (!ShowIcons || !_minimumImageIsVisible);
+        _minimumLabel.IsVisible = _minimumLabelIsVisible;
+        _minimumImage.IsVisible = _minimumImageIsVisible;
     }
 
     private void SetMaximumPropertiesIsVisible()
     {
-        MaximumImageIsVisible = ShowIcons && MaximumImageSource is not null;
-        MaximumLabelIsVisible = !string.IsNullOrEmpty(MaximumLabel) && (!ShowIcons || !MaximumImageIsVisible);
-        _maximumLabel.IsVisible = MaximumLabelIsVisible;
-        _maximumImage.IsVisible = MaximumImageIsVisible;
+        _maximumImageIsVisible = ShowIcons && MaximumImageSource is not null;
+        _maximumLabelIsVisible = !string.IsNullOrEmpty(MaximumLabel) && (!ShowIcons || !_maximumImageIsVisible);
+        _maximumLabel.IsVisible = _maximumLabelIsVisible;
+        _maximumImage.IsVisible = _maximumImageIsVisible;
     }
 
-    private void OnDragStarted(object sender, EventArgs e)
+    private void OnDragStarted(object? sender, EventArgs e)
     {
         _isDragging = true;
         DragStarted?.Invoke(sender, e);
     }
 
-    private void OnDragCompleted(object sender, EventArgs e)
+    private void OnDragCompleted(object? sender, EventArgs e)
     {
         _valueIndicatorContainer.IsVisible = false;
         _valueIndicatorText.IsVisible = false;
@@ -1265,7 +1260,7 @@ public class MaterialSlider : ContentView
         DragCompleted?.Invoke(sender, e);
     }
 
-    private void OnValueChanged(object sender, ValueChangedEventArgs e)
+    private void OnValueChanged(object? sender, ValueChangedEventArgs e)
     {
         this.Value = e.NewValue;
         UpdateThumbLabelPosition();

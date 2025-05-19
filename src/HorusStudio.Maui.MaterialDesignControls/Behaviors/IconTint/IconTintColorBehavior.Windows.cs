@@ -24,12 +24,13 @@ public partial class IconTintColorBehavior
     /// <inheritdoc/>
     protected override void OnAttachedTo(View bindable, FrameworkElement platformView)
     {
-        ApplyTintColor(platformView, bindable, TintColor);
+        if (IsEnabled)
+            ApplyTintColor(platformView, bindable, TintColor);
 
         bindable.PropertyChanged += OnElementPropertyChanged;
         this.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == TintColorProperty.PropertyName)
+            if (e.PropertyName == TintColorProperty.PropertyName && IsEnabled)
             {
                 if (currentColorBrush is not null && TintColor is not null)
                 {
@@ -39,6 +40,10 @@ public partial class IconTintColorBehavior
                 {
                     ApplyTintColor(platformView, bindable, TintColor);
                 }
+            }
+            else
+            {
+                RemoveTintColor(platformView);
             }
         };
     }

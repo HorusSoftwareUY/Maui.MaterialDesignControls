@@ -1,5 +1,6 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public sealed class MaterialSizeOptions
 {
     public double? DisplayLarge { get; set; }

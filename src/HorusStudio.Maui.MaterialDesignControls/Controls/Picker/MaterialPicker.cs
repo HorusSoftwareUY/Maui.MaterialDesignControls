@@ -35,11 +35,14 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/PickerPage.xaml)
 /// 
 /// </example>
+/// <todoList>
+/// * [Android] Use the colors defined in Material in the picker dialog
+/// </todoList>
 public class MaterialPicker : MaterialInputBase
 {
     #region Attributes
 
-    private static readonly double DefaultCharacterSpacing = MaterialFontTracking.BodyLarge;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
 
     #endregion Attributes
 
@@ -68,9 +71,11 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
-        
+
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
         TrailingIcon = MaterialIcon.Picker;
-        InputTapCommand = new Command(() => _picker.Focus());
+        TrailingIconCommand = new Command(() => DoFocus());
         Content = _picker;
     }
 
@@ -91,7 +96,7 @@ public class MaterialPicker : MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialPicker), defaultValue: DefaultCharacterSpacing);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialPicker), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
     /// The backing store for the <see cref="ItemsSource" /> bindable property.
@@ -139,6 +144,14 @@ public class MaterialPicker : MaterialInputBase
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="Picker" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Picker InternalPicker => _picker;
 
     /// <summary>
     /// Gets or sets the vertical text alignment. This is a bindable property.
@@ -337,7 +350,7 @@ public class MaterialPicker : MaterialInputBase
         }
     }
     
-    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+    private void Picker_SelectedIndexChanged(object? sender, EventArgs e)
     {
         if (SelectedIndexChangedCommand?.CanExecute(null) ?? false)
         {
@@ -345,7 +358,14 @@ public class MaterialPicker : MaterialInputBase
         }
         SelectedIndexChanged?.Invoke(this, e);
     }
-    
+
+    private void DoFocus()
+    {
+        if (!IsEnabled) return;
+
+        _picker.Focus();
+    }
+
     #endregion Methods
 
     #region Styles

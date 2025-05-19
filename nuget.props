@@ -1,14 +1,30 @@
 <Project>
-  <PropertyGroup>
-    <Authors>Horus Studio</Authors>
+  <PropertyGroup Condition=" $(MSBuildProjectName.Equals('HorusStudio.Maui.MaterialDesignControls')) ">
+    <PackageId>HorusStudio.Maui.MaterialDesignControls</PackageId>
+    <Version>1.1.0</Version>
+    <Authors>Horus Studio and contributors</Authors>
+    <Company>Horus Studio</Company>
+    <Title>Material Design Controls for .NET MAUI</Title>
+    <Description>This library provides a UI Toolkit following Material Design 3 guidelines for .NET MAUI.</Description>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <IncludeSymbols>True</IncludeSymbols>
-    <IncludeSource>True</IncludeSource>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.horus.com.uy</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HorusSoftwareUY/Maui.MaterialDesignControls</RepositoryUrl>
+    <PackageTags>dotnet-maui;dotnet;maui;cross-platform;android;ios;macos;maccatalyst;materialdesign;ui</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>
+      - Configure if icon tint color should be automatically set to TextColor or not on: MaterialButton, MaterialChips, MaterialIconButton and MaterialNavigationDrawerItem
+      - Fix TextChanged and TextChangedCommand not being fired on MaterialTextField and MaterialMultilineTextField
+      - Expose internal MAUI control used on: MaterialButton, MaterialCheckBox, MaterialDatePicker, MaterialMultilineTextField, MaterialPicker, MaterialRadioButton, MaterialSlider, MaterialTextField and MaterialTimePicker
+      - Fix spacing on MaterialRating when label is empty
+      - Fix touch bubbling on iOS for: MaterialButton, MaterialDatePicker, MaterialIconButton, MaterialMultilineTextField, MaterialPicker, MaterialSwitch, MaterialTextField and MaterialTimePicker
+      - Ability to override custom handlers for: MaterialButton, MaterialRadioButton, MaterialTextField, MaterialTimePicker, MaterialDatePicker, MaterialPicker, MaterialMultilineTextField, MaterialCheckbox and MaterialSlider
+    </PackageReleaseNotes>
+
     <PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>
     <EscapedCurrentDirectory>$([System.Text.RegularExpressions.Regex]::Escape('$(MSBuildThisFileDirectory)'))</EscapedCurrentDirectory>
     <RelativeProjectPath>$([System.Text.RegularExpressions.Regex]::Replace('$(MSBuildProjectFullPath)', '$(EscapedCurrentDirectory)', ''))</RelativeProjectPath>
-
-    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 </Project>

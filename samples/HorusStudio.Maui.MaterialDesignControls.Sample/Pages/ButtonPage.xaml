@@ -316,6 +316,32 @@
             </Grid>
         </material:MaterialCard>
         <material:MaterialLabel Text="Use custom buttons if you need to combine properties from different button types." Type="BodySmall"/>
-
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Events" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialButton
+                    x:Name="ClickBtn"
+                    Type="Filled"
+                    Text="Click me"
+                    Clicked="OnCounterClicked" />
+                
+                <material:MaterialButton
+                    x:Name="PressBtn"
+                    Type="Outlined"
+                    Text="Press me"
+                    Animation="Scale"
+                    AnimationParameter=".9"
+                    Pressed="OnCounterPressed" />
+                
+                <material:MaterialButton
+                    x:Name="ReleaseBtn"
+                    Type="Tonal"
+                    Text="Release me"
+                    Released="OnCounterReleased" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="Use event handlers instead of command if needed." Type="BodySmall"/>
+        
     </VerticalStackLayout>
 </local:BaseContentPage>

@@ -197,7 +197,7 @@
         </material:MaterialCard>
         <material:MaterialLabel Text="We can set stroke color, text color, text size, font attributes, text transform, group name, characters spacing and other properties." Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using attachable properties" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using attached properties" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="0">
                 <VerticalStackLayout material:MaterialRadioButtonGroup.GroupName="testinggroup" material:MaterialRadioButtonGroup.SelectedValue="{Binding CheckedColor}" BindableLayout.ItemsSource="{Binding ItemsSourceColors}">

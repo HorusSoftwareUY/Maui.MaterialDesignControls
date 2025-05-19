@@ -39,11 +39,25 @@ public enum MaterialSnackbarPosition
 /// </example>
 /// <todoList>
 /// * Add FontFamily configuration
-/// * [iOS] When sizes are too big, last element on UI gets cropped
 /// </todoList>
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public class MaterialSnackbarConfig(string message)
 {
     #region Default values
+    
+    private static readonly Func<Color> DefaultBackgroundColorBuilder = () => new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly Func<Color> DefaultTextColorBuilder = () => new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+    private static readonly Func<double> DefaultFontSizeBuilder = () => MaterialFontSize.BodyMedium;
+    private static readonly Func<Color> DefaultActionColorBuilder = () => new AppThemeBindingExtension { Light = MaterialLightTheme.InversePrimary, Dark = MaterialDarkTheme.InversePrimary }.GetValueForCurrentTheme<Color>();
+    private static readonly Func<double> DefaultActionSizeBuilder = () => MaterialFontSize.BodyMedium;
+    private static readonly Func<Color> DefaultIconColorBuilder = () => new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+
+    private static Color? _defaultBackgroundColor;
+    private static Color? _defaultTextColor;
+    private static double? _defaultFontSize;
+    private static Color? _defaultActionColor;
+    private static double? _defaultActionSize;
+    private static Color? _defaultIconColor;
     
     /// <summary>
     /// Margin to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
@@ -74,14 +88,18 @@ public class MaterialSnackbarConfig(string message)
     /// </summary>
     /// <default>8</default>
     public static float DefaultCornerRadius { get; set; } = 8f;
-    
+
     /// <summary>
     /// Background <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.InverseSurface">MaterialLightTheme.InverseSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseSurface">MaterialDarkTheme.InverseSurface</see>
     /// </default>
-    public static Color DefaultBackgroundColor { get; set; } = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
+    public static Color DefaultBackgroundColor
+    {
+        get => _defaultBackgroundColor ?? DefaultBackgroundColorBuilder();
+        set => _defaultBackgroundColor = value;
+    }
     
     /// <summary>
     /// Text <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
@@ -89,7 +107,11 @@ public class MaterialSnackbarConfig(string message)
     /// <default>
     /// Light: <see cref="MaterialLightTheme.InverseOnSurface">MaterialLightTheme.InverseOnSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseOnSurface">MaterialDarkTheme.InverseOnSurface</see>
     /// </default>
-    public static Color DefaultTextColor { get; set; } = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+    public static Color DefaultTextColor
+    {
+        get => _defaultTextColor ?? DefaultTextColorBuilder();
+        set => _defaultTextColor = value;
+    }
     
     /// <summary>
     /// Text font size to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
@@ -97,7 +119,11 @@ public class MaterialSnackbarConfig(string message)
     /// <default>
     /// <see cref="MaterialFontSize.BodyMedium">MaterialFontSize.BodyMedium</see>
     /// </default>
-    public static double DefaultFontSize { get; set; } = MaterialFontSize.BodyMedium;
+    public static double DefaultFontSize 
+    {
+        get => _defaultFontSize ?? DefaultFontSizeBuilder();
+        set => _defaultFontSize = value;
+    }
     
     /// <summary>
     /// Action text <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
@@ -105,7 +131,11 @@ public class MaterialSnackbarConfig(string message)
     /// <default>
     /// Light: <see cref="MaterialLightTheme.InversePrimary">MaterialLightTheme.InversePrimary</see> - Dark: <see cref="MaterialDarkTheme.InversePrimary">MaterialDarkTheme.InversePrimary</see>
     /// </default>
-    public static Color DefaultActionColor { get; set; } = new AppThemeBindingExtension { Light = MaterialLightTheme.InversePrimary, Dark = MaterialDarkTheme.InversePrimary }.GetValueForCurrentTheme<Color>();
+    public static Color DefaultActionColor 
+    {
+        get => _defaultActionColor ?? DefaultActionColorBuilder();
+        set => _defaultActionColor = value;
+    }
     
     /// <summary>
     /// Action font size to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
@@ -113,7 +143,19 @@ public class MaterialSnackbarConfig(string message)
     /// <default>
     /// <see cref="MaterialFontSize.BodyMedium">MaterialFontSize.BodyMedium</see>
     /// </default>
-    public static double DefaultActionSize { get; set; } = MaterialFontSize.BodyMedium;
+    public static double DefaultActionSize 
+    {
+        get => _defaultActionSize ?? DefaultActionSizeBuilder();
+        set => _defaultActionSize = value;
+    }
+    
+    /// <summary>
+    /// Action text decorations to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// </summary>
+    /// <default>
+    /// <see cref="TextDecorations.None">TextDecorations.None</see>
+    /// </default>
+    public static TextDecorations DefaultActionTextDecorations { get; set; }
     
     /// <summary>
     /// Icon <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
@@ -121,7 +163,11 @@ public class MaterialSnackbarConfig(string message)
     /// <default>
     /// Light: <see cref="MaterialLightTheme.InverseOnSurface">MaterialLightTheme.InverseOnSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseOnSurface">MaterialDarkTheme.InverseOnSurface</see>
     /// </default>
-    public static Color DefaultIconColor { get; set; } = new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
+    public static Color DefaultIconColor 
+    {
+        get => _defaultIconColor ?? DefaultIconColorBuilder();
+        set => _defaultIconColor = value;
+    }
     
     /// <summary>
     /// Duration applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
@@ -294,6 +340,7 @@ public class MaterialSnackbarConfig(string message)
         if (options.DefaultPosition != null) DefaultPosition = options.DefaultPosition.Value;
         if (options.DefaultSpacing != null) DefaultSpacing = options.DefaultSpacing.Value;
         if (options.DefaultActionSize != null) DefaultActionSize = options.DefaultActionSize.Value;
+        if (options.DefaultActionTextDecorations != null) DefaultActionTextDecorations = options.DefaultActionTextDecorations.Value;
         if (options.DefaultCornerRadius != null) DefaultCornerRadius = options.DefaultCornerRadius.Value;
         if (options.DefaultFontSize != null) DefaultFontSize = options.DefaultFontSize.Value;
         if (options.DefaultIconSize != null) DefaultIconSize = options.DefaultIconSize.Value;
@@ -304,6 +351,7 @@ public class MaterialSnackbarConfig(string message)
     /// </summary>
     /// <param name="source">Icon <see cref="ImageSource"/></param>
     /// <param name="action">Action to be executed when icon is tapped</param>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public class IconConfig(ImageSource source, Action? action = null) : BaseActionConfig(action)
     {
         /// <summary>
@@ -329,6 +377,7 @@ public class MaterialSnackbarConfig(string message)
     /// </summary>
     /// <param name="text">Text for action button</param>
     /// <param name="action">Action to be executed when button is tapped</param>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public class ActionConfig(string text, Action action) : BaseActionConfig(action)
     {
         /// <summary>
@@ -349,11 +398,25 @@ public class MaterialSnackbarConfig(string message)
             get => _fontSize ?? DefaultActionSize; 
             set => _fontSize = value;
         }
+        
+        private TextDecorations? _textDecorations;
+        /// <summary>
+        /// Gets or sets <see cref="TextDecorations">TextDecorations</see> for action.
+        /// </summary>
+        /// <default>
+        /// <see cref="TextDecorations.None">TextDecorations.None</see>
+        /// </default>
+        public TextDecorations TextDecorations
+        {
+            get => _textDecorations ?? DefaultActionTextDecorations; 
+            set => _textDecorations = value;
+        }
     }
 
     /// <summary>
     /// User-defined base configuration for an actions on <see cref="MaterialSnackbar"/>
     /// </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public abstract class BaseActionConfig
     {
         private Color? _color;

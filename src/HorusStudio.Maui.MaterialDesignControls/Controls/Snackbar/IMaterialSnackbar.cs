@@ -1,8 +1,30 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// Abstraction to handle <see cref="MaterialSnackbar" /> component
+/// Abstraction to handle Material Snackbar component that follows <see href="https://m3.material.io/components/snackbar/overview">Material Design Guidelines</see>.
 /// </summary>
+/// <example>
+/// <h3>C# sample</h3>
+/// <code>
+/// private readonly IMaterialSnackbar _snackbar;
+/// 
+/// public SnackbarViewModel(IMaterialSnackbar snackbar)
+/// {
+///     _snackbar = snackbar;
+///     Subtitle = "Snackbars show short updates about app processes at the bottom of the screen";
+/// }
+///
+/// private async void DefaultSnackbar()
+/// {
+///     _snackbar.Show(new MaterialSnackbarConfig("Default snackbar with custom action")
+///     {
+///         Action = new MaterialSnackbarConfig.ActionConfig("Close action", SnackbarAction)
+///     });
+/// }
+/// </code>
+/// 
+/// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SnackbarPage.xaml)
+/// </example>
 public interface IMaterialSnackbar
 {
     /// <summary>

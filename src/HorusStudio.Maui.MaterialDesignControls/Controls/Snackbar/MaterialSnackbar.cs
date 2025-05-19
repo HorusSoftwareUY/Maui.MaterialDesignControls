@@ -9,7 +9,6 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 
 class MaterialSnackbar : IMaterialSnackbar, IDisposable
 {
-    private const string NoAction = "Action should not be set as async will not use it";
     private bool _isDisposed;
     
 #if ANDROID

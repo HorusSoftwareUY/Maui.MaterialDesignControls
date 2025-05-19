@@ -1,11 +1,11 @@
-﻿namespace HorusStudio.Maui.MaterialDesignControls.Sample
+﻿namespace HorusStudio.Maui.MaterialDesignControls.Sample;
+
+public partial class App
 {
-    public partial class App : Application
+    public App()
     {
-        public App()
-        {
-            InitializeComponent();
-            MainPage = new AppShell();
-        }
+        InitializeComponent();
+        MaterialDesignControls.InitializeComponents();
+        MainPage = new AppShell();
     }
 }

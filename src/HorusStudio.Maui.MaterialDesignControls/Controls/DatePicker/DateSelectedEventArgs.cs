@@ -1,5 +1,6 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public class DateSelectedEventArgs : EventArgs
 {
     public DateTime? OldValue { get; private set; }

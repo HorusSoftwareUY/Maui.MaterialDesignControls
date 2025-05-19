@@ -1,6 +1,5 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
-using Microsoft.Extensions.Logging;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample
 {
@@ -17,13 +16,19 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 .UseMauiApp<App>()
                 .UseMaterialDesignControls(options =>
                 {
+                    options.EnableDebug();
+                    /*
+                    options.OnException((sender, exception) =>
+                    {
+                        System.Diagnostics.Debug.WriteLine($"EXCEPTION ON LIBRARY: {sender} - {exception}");
+                    });
+                    */
                     options.ConfigureFonts(fonts =>
                     {
                         fonts.AddFont("Roboto-Regular.ttf", FontRegular);
                         fonts.AddFont("Roboto-Medium.ttf", FontMedium);
                         fonts.AddFont("Roboto-Bold.ttf", FontBold);
                     }, new(FontRegular, FontMedium, FontRegular));
-                    
                     /*
                     // Plugin configuration using C#
                     options.ConfigureThemes(
@@ -87,22 +92,21 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                         DefaultIconColor = Colors.Brown
                     });
                     */
-                    
+
                     /*
                     // Plugin configuration using App Resources (include MaterialCustomizations dictionary on App.xaml)
                     options
-                        .ConfigureThemesFromResources("Colors.xaml")
+                        .ConfigureThemesFromResources("MaterialCustomizations.xaml", "MaterialLight", "MaterialDark")
                         .ConfigureFontSizeFromResources("MaterialCustomizations.xaml","MaterialFont")
                         .ConfigureFontTrackingFromResources("MaterialCustomizations.xaml")
                         .ConfigureIconsFromResources("MaterialCustomizations.xaml","MaterialIcon")
                         .ConfigureStringFormatFromResources("MaterialCustomizations.xaml");
                     */
+                }, configureHandlers: handlers =>
+                {
+                    handlers.AddHandler(typeof(MaterialTextField), typeof(Handlers.CustomMaterialTextFieldHandler));
                 });
-
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
-            
+         
             builder.Services
                 .AutoConfigureViewModelsAndPages();
 
