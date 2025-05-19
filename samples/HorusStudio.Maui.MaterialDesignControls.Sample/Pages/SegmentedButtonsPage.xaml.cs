@@ -2,9 +2,9 @@
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 {
-    public partial class SegmentedPage : BaseContentPage<SegmentedViewModel>
+    public partial class SegmentedButtonsPage : BaseContentPage<SegmentedButtonsViewModel>
     {
-        public SegmentedPage(SegmentedViewModel viewModel) : base(viewModel)
+        public SegmentedButtonsPage(SegmentedButtonsViewModel viewModel) : base(viewModel)
         {
             InitializeComponent();
         }

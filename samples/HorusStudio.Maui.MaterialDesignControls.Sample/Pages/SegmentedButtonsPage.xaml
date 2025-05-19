@@ -5,9 +5,9 @@
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
-    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SegmentedPage"
-    x:TypeArguments="vm:SegmentedViewModel"
-    x:DataType="vm:SegmentedViewModel"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SegmentedButtonsPage"
+    x:TypeArguments="vm:SegmentedButtonsViewModel"
+    x:DataType="vm:SegmentedButtonsViewModel"
     ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
     
     <ContentPage.Resources>

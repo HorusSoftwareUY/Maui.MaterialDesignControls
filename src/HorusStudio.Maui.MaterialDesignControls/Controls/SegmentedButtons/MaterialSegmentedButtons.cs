@@ -5,20 +5,20 @@ using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public enum MaterialSegmentedType
+public enum MaterialSegmentedButtonsType
 {
     Outlined, 
     Filled
 }
 
-public class MaterialSegmented : ContentView, ITouchable
+public class MaterialSegmentedButtons : ContentView, ITouchable
 {
     
     #region Attributes
 
-    private readonly static MaterialSegmentedType DefautlSegmentedType = MaterialSegmentedType.Outlined;
-    private readonly static IEnumerable<MaterialSegmentedItem> DefaultItemsSource = null;
-    private readonly static MaterialSegmentedItem DefaultSelectedItem = null;
+    private readonly static MaterialSegmentedButtonsType DefautlSegmentedType = MaterialSegmentedButtonsType.Outlined;
+    private readonly static IEnumerable<MaterialSegmentedButton> DefaultItemsSource = null;
+    private readonly static MaterialSegmentedButton DefaultSelectedItem = null;
     private readonly static bool DefaultAllowMultiSelect = false;
     private readonly static bool DefaultIsEnabled = true;
     private readonly static Thickness DefaultPadding = new(12, 0);
@@ -37,12 +37,12 @@ public class MaterialSegmented : ContentView, ITouchable
     #region Bindable Properties
     
     /// <summary>
-    /// The backing store for the <see cref="MaterialSegmentedType" />
+    /// The backing store for the <see cref="MaterialSegmentedButtonsType" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialSegmentedType), typeof(MaterialSegmented), defaultValue: DefautlSegmentedType, propertyChanged: (bindable, oldValue, newValue) =>
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialSegmentedButtonsType), typeof(MaterialSegmentedButtons), defaultValue: DefautlSegmentedType, propertyChanged: (bindable, oldValue, newValue) =>
     {
-        if (bindable is MaterialSegmented self)
+        if (bindable is MaterialSegmentedButtons self)
         {
             self.UpdateAndInitControl();
         }
@@ -52,9 +52,9 @@ public class MaterialSegmented : ContentView, ITouchable
     /// The backing store for the <see cref="ItemsSource" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<MaterialSegmentedItem>), typeof(MaterialSegmented), defaultValue: DefaultItemsSource, propertyChanged: (bindable, oldValue, newValue) =>
+    public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<MaterialSegmentedButton>), typeof(MaterialSegmentedButtons), defaultValue: DefaultItemsSource, propertyChanged: (bindable, oldValue, newValue) =>
     {
-        if (bindable is MaterialSegmented self)
+        if (bindable is MaterialSegmentedButtons self)
         {
             self.UpdateItemsSource();
         }
@@ -64,23 +64,23 @@ public class MaterialSegmented : ContentView, ITouchable
     /// The backing store for the <see cref="SelectedItem" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(MaterialSegmentedItem), typeof(MaterialSegmented), defaultValue: DefaultSelectedItem, BindingMode.TwoWay);
+    public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(MaterialSegmentedButton), typeof(MaterialSegmentedButtons), defaultValue: DefaultSelectedItem, BindingMode.TwoWay);
     
     
     /// <summary>
     /// The backing store for the <see cref="SelectedItems" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IEnumerable<MaterialSegmentedItem>), typeof(MaterialSegmented), defaultValue: DefaultSelectedItem, BindingMode.OneWayToSource);
+    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IEnumerable<MaterialSegmentedButton>), typeof(MaterialSegmentedButtons), defaultValue: DefaultSelectedItem, BindingMode.OneWayToSource);
     
     /// <summary>
     /// Gets or sets the state when the Segmented permitted multiple selection
     /// The backing store for the <see cref="AllowMultiSelect" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AllowMultiSelectProperty = BindableProperty.Create(nameof(AllowMultiSelect), typeof(bool), typeof(MaterialSegmented), defaultValue: DefaultAllowMultiSelect, propertyChanged: (bindable, oldValue, newValue) =>
+    public static readonly BindableProperty AllowMultiSelectProperty = BindableProperty.Create(nameof(AllowMultiSelect), typeof(bool), typeof(MaterialSegmentedButtons), defaultValue: DefaultAllowMultiSelect, propertyChanged: (bindable, oldValue, newValue) =>
     {
-        if (bindable is MaterialSegmented self)
+        if (bindable is MaterialSegmentedButtons self)
         {
             self.UpdateItemsSource();
         }
@@ -90,9 +90,9 @@ public class MaterialSegmented : ContentView, ITouchable
     /// Gets or sets the state when the Segmented is enabled.
     /// bindable property.
     /// </summary>
-    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialSegmented), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialSegmentedButtons), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, oldValue, newValue) =>
     {
-        if (bindable is MaterialSegmented self)
+        if (bindable is MaterialSegmentedButtons self)
         {
             self.SetStateStyle();
         }
@@ -102,39 +102,39 @@ public class MaterialSegmented : ContentView, ITouchable
     /// The backing store for the <see cref="Padding" />
     /// bindable property.
     /// </summary>
-    public static new readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialSegmented), defaultValue: DefaultPadding);
+    public static new readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialSegmentedButtons), defaultValue: DefaultPadding);
     
     /// <summary>
     /// The backing store for the <see cref="CornerRadius" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialSegmented), defaultValue: DefaultCornerRadius);
+    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialSegmentedButtons), defaultValue: DefaultCornerRadius);
     
     /// <summary>
     /// The backing store for the <see cref="FontFamily" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSegmented), defaultValue: DefaultFontFamily);
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSegmentedButtons), defaultValue: DefaultFontFamily);
     
     /// <summary>
     /// The backing store for the <see cref="FontSize" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialSegmented), defaultValue: DefaultFontSize);
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialSegmentedButtons), defaultValue: DefaultFontSize);
     
     /// <summary>
     /// The backing store for the <see cref="BorderColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultBorderColor);
+    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialSegmentedButtons), defaultValue: DefaultBorderColor);
     
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" />
     /// bindable property.
     /// </summary>
-    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, oldValue, newValue) =>
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialSegmentedButtons), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, oldValue, newValue) =>
     {
-        if (bindable is MaterialSegmented self)
+        if (bindable is MaterialSegmentedButtons self)
         {
             self.SetBackgroundColor();
         }
@@ -144,43 +144,43 @@ public class MaterialSegmented : ContentView, ITouchable
     /// The backing store for the <see cref="ItemColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty ItemColorProperty = BindableProperty.Create(nameof(ItemColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultItemColor);
+    public static readonly BindableProperty ItemColorProperty = BindableProperty.Create(nameof(ItemColor), typeof(Color), typeof(MaterialSegmentedButtons), defaultValue: DefaultItemColor);
     
     /// <summary>
     /// The backing store for the <see cref="TextColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialSegmented), defaultValue: DefaultTextColor);
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialSegmentedButtons), defaultValue: DefaultTextColor);
     
     /// <summary>
     /// The backing store for the <see cref="Command" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialSegmented));
+    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialSegmentedButtons));
     
     /// <summary>
     /// The backing store for the <see cref="CommandParameter" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialSegmented));
+    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialSegmentedButtons));
 
     /// <summary>
     /// The backing store for the <see cref="Animation"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialSegmented), defaultValue: DefaultAnimationType);
+    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialSegmentedButtons), defaultValue: DefaultAnimationType);
 
     /// <summary>
     /// The backing store for the <see cref="AnimationParameter"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialSegmented), defaultValue: DefaultAnimationParameter);
+    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialSegmentedButtons), defaultValue: DefaultAnimationParameter);
     
     /// <summary>
     /// The backing store for the <see cref="CustomAnimation"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialSegmented));
+    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialSegmentedButtons));
 
     #endregion
     
@@ -191,15 +191,15 @@ public class MaterialSegmented : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialSegmentedType.Outlined">MaterialSegmentedType.Outlined</see>
+    /// <see cref="MaterialSegmentedButtonsType.Outlined">MaterialSegmentedType.Outlined</see>
     /// </default>
     /// <remarks>
     /// <para>Outlined:</para>
     /// <para>Filled:</para>
     /// </remarks>
-    public MaterialSegmentedType Type
+    public MaterialSegmentedButtonsType Type
     {
-        get => (MaterialSegmentedType)GetValue(TypeProperty);
+        get => (MaterialSegmentedButtonsType)GetValue(TypeProperty);
         set => SetValue(TypeProperty, value);
     }
     
@@ -210,9 +210,9 @@ public class MaterialSegmented : ContentView, ITouchable
     /// <default>
     /// <see langword="Null"/>
     /// </default>
-    public IEnumerable<MaterialSegmentedItem> ItemsSource
+    public IEnumerable<MaterialSegmentedButton> ItemsSource
     {
-        get => (IEnumerable<MaterialSegmentedItem>)GetValue(ItemsSourceProperty);
+        get => (IEnumerable<MaterialSegmentedButton>)GetValue(ItemsSourceProperty);
         set => SetValue(ItemsSourceProperty, value);
     }
     
@@ -223,9 +223,9 @@ public class MaterialSegmented : ContentView, ITouchable
     /// <default>
     /// <see langword="Array.Empty"/>
     /// </default>
-    public IEnumerable<MaterialSegmentedItem> SelectedItems
+    public IEnumerable<MaterialSegmentedButton> SelectedItems
     {
-        get { return ItemsSource != null ? ItemsSource.Where(w => w.IsSelected) : Array.Empty<MaterialSegmentedItem>(); }
+        get { return ItemsSource != null ? ItemsSource.Where(w => w.IsSelected) : Array.Empty<MaterialSegmentedButton>(); }
     }
     
     /// <summary>
@@ -235,9 +235,9 @@ public class MaterialSegmented : ContentView, ITouchable
     /// <default>
     /// <see langword="Null"/>
     /// </default>
-    public MaterialSegmentedItem SelectedItem
+    public MaterialSegmentedButton SelectedItem
     {
-        get => (MaterialSegmentedItem)GetValue(SelectedItemProperty);
+        get => (MaterialSegmentedButton)GetValue(SelectedItemProperty);
         set => SetValue(SelectedItemProperty, value);
     }
     
@@ -486,7 +486,7 @@ public class MaterialSegmented : ContentView, ITouchable
         }
     }
     
-    protected virtual void InternalPressedHandler(object sender, EventArgs e, MaterialSegmentedItem item)
+    protected virtual void InternalPressedHandler(object sender, EventArgs e, MaterialSegmentedButton item)
     {
         if (!AllowMultiSelect)
         {
@@ -515,7 +515,7 @@ public class MaterialSegmented : ContentView, ITouchable
 
     #region constructor
 
-    public MaterialSegmented()
+    public MaterialSegmentedButtons()
     {
         
         _itemsContainer = new Grid
@@ -556,7 +556,7 @@ public class MaterialSegmented : ContentView, ITouchable
     {
         _itemsContainer.Children.Clear();
         _itemsContainer.ColumnDefinitions = new ColumnDefinitionCollection();
-        _itemsContainer.ColumnSpacing = Type == MaterialSegmentedType.Outlined ? -2 : 0;
+        _itemsContainer.ColumnSpacing = Type == MaterialSegmentedButtonsType.Outlined ? -2 : 0;
         if(ItemsSource == null) return;
         int indexColum = 0;
         foreach (var item in ItemsSource)
@@ -575,7 +575,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 CornerRadius = CornerRadius
             };
 			
-            if (Type == MaterialSegmentedType.Outlined)
+            if (Type == MaterialSegmentedButtonsType.Outlined)
             {
                 card.Type = MaterialCardType.Custom;
                 card.BorderColor = BorderColor;
@@ -625,7 +625,7 @@ public class MaterialSegmented : ContentView, ITouchable
     private void SetBackgroundColor()
     {
         if (_itemsContainer == null)return;
-        if (Type == MaterialSegmentedType.Outlined)
+        if (Type == MaterialSegmentedButtonsType.Outlined)
         {
             _container.BackgroundColor = Colors.Transparent;
             _itemsContainer.BackgroundColor = Colors.Transparent;
@@ -642,7 +642,7 @@ public class MaterialSegmented : ContentView, ITouchable
     {
         if (!IsEnabled)
         {
-            VisualStateManager.GoToState(this, SegmentedCommonStates.Disabled);
+            VisualStateManager.GoToState(this, SegmentedButtonsCommonStates.Disabled);
         }
         UpdateItemsSource();
     }
@@ -651,7 +651,7 @@ public class MaterialSegmented : ContentView, ITouchable
 
     #region Methods
 
-    private void SetItemContentAndColors(MaterialCard card, MaterialLabel label, MaterialSegmentedItem item)
+    private void SetItemContentAndColors(MaterialCard card, MaterialLabel label, MaterialSegmentedButton item)
     {
         
         Grid container = null;
@@ -684,7 +684,7 @@ public class MaterialSegmented : ContentView, ITouchable
 
         if (item.IsSelected)
         {
-            VisualStateManager.GoToState(this, IsEnabled? SegmentedCommonStates.Selected : SegmentedCommonStates.SelectedDisabled);
+            VisualStateManager.GoToState(this, IsEnabled? SegmentedButtonsCommonStates.Selected : SegmentedButtonsCommonStates.SelectedDisabled);
             card.BorderColor = BorderColor;
             card.BackgroundColor = ItemColor;
             label.TextColor = TextColor;
@@ -721,7 +721,7 @@ public class MaterialSegmented : ContentView, ITouchable
         }
         else
         {
-            VisualStateManager.GoToState(this, IsEnabled? SegmentedCommonStates.Normal : SegmentedCommonStates.Disabled);
+            VisualStateManager.GoToState(this, IsEnabled? SegmentedButtonsCommonStates.Normal : SegmentedButtonsCommonStates.Disabled);
             card.BorderColor = BorderColor;
             card.BackgroundColor = ItemColor;
             label.TextColor = TextColor;
@@ -763,12 +763,12 @@ public class MaterialSegmented : ContentView, ITouchable
     
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(SegmentedCommonStates) };
+        var commonStatesGroup = new VisualStateGroup { Name = nameof(SegmentedButtonsCommonStates) };
         
-        var disabled = new VisualState { Name = SegmentedCommonStates.Disabled };
+        var disabled = new VisualState { Name = SegmentedButtonsCommonStates.Disabled };
         
         disabled.Setters.Add(
-            MaterialSegmented.BorderColorProperty,
+            MaterialSegmentedButtons.BorderColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.OnSurface,
@@ -778,7 +778,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 .WithAlpha(0.12f));
         
         disabled.Setters.Add(
-            MaterialSegmented.ItemColorProperty,
+            MaterialSegmentedButtons.ItemColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.OnSecondary,
@@ -788,7 +788,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 .WithAlpha(0.12f));
         
         disabled.Setters.Add(
-            MaterialSegmented.TextColorProperty,
+            MaterialSegmentedButtons.TextColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.OnSurface,
@@ -797,10 +797,10 @@ public class MaterialSegmented : ContentView, ITouchable
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.38f));
         
-        var selected = new VisualState { Name = SegmentedCommonStates.Selected };
+        var selected = new VisualState { Name = SegmentedButtonsCommonStates.Selected };
         
         selected.Setters.Add(
-            MaterialSegmented.BorderColorProperty,
+            MaterialSegmentedButtons.BorderColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.Outline,
@@ -809,7 +809,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 .GetValueForCurrentTheme<Color>());
         
         selected.Setters.Add(
-            MaterialSegmented.ItemColorProperty,
+            MaterialSegmentedButtons.ItemColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.SecondaryContainer,
@@ -818,7 +818,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 .GetValueForCurrentTheme<Color>());
 
         selected.Setters.Add(
-            MaterialSegmented.TextColorProperty,
+            MaterialSegmentedButtons.TextColorProperty,
             new AppThemeBindingExtension
                 {
                     Light = MaterialLightTheme.OnSecondaryContainer,
@@ -826,10 +826,10 @@ public class MaterialSegmented : ContentView, ITouchable
                 }
                 .GetValueForCurrentTheme<Color>());
         
-        var selectedDisabled = new VisualState { Name = SegmentedCommonStates.SelectedDisabled };
+        var selectedDisabled = new VisualState { Name = SegmentedButtonsCommonStates.SelectedDisabled };
                 
         selectedDisabled.Setters.Add(
-            MaterialSegmented.BorderColorProperty,
+            MaterialSegmentedButtons.BorderColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.OnSurface,
@@ -839,7 +839,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 .WithAlpha(0.12f));
         
         selectedDisabled.Setters.Add(
-            MaterialSegmented.ItemColorProperty,
+            MaterialSegmentedButtons.ItemColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.SecondaryContainer,
@@ -849,7 +849,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 .WithAlpha(0.12f));
         
         selectedDisabled.Setters.Add(
-            MaterialSegmented.TextColorProperty,
+            MaterialSegmentedButtons.TextColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.OnSurface,
@@ -858,10 +858,10 @@ public class MaterialSegmented : ContentView, ITouchable
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.38f));
         
-        var normal = new VisualState { Name = SegmentedCommonStates.Normal };
+        var normal = new VisualState { Name = SegmentedButtonsCommonStates.Normal };
 
         normal.Setters.Add(
-            MaterialSegmented.BorderColorProperty,
+            MaterialSegmentedButtons.BorderColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.Outline,
@@ -870,7 +870,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 .GetValueForCurrentTheme<Color>());
         
         normal.Setters.Add(
-            MaterialSegmented.ItemColorProperty,
+            MaterialSegmentedButtons.ItemColorProperty,
             new AppThemeBindingExtension 
                 { 
                     Light = MaterialLightTheme.OnSecondary,
@@ -879,7 +879,7 @@ public class MaterialSegmented : ContentView, ITouchable
                 .GetValueForCurrentTheme<Color>());
 
         normal.Setters.Add(
-            MaterialSegmented.TextColorProperty,
+            MaterialSegmentedButtons.TextColorProperty,
             new AppThemeBindingExtension
                 {
                     Light = MaterialLightTheme.OnSurface,
@@ -892,7 +892,7 @@ public class MaterialSegmented : ContentView, ITouchable
         commonStatesGroup.States.Add(selectedDisabled);
         commonStatesGroup.States.Add(normal);
         
-        var style = new Style(typeof(MaterialSegmented));
+        var style = new Style(typeof(MaterialSegmentedButtons));
         style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
         return new List<Style> { style };
     }
@@ -900,12 +900,12 @@ public class MaterialSegmented : ContentView, ITouchable
     #endregion
 }
 
-public class SegmentedCommonStates : VisualStateManager.CommonStates
+public class SegmentedButtonsCommonStates : VisualStateManager.CommonStates
 {
     public const string SelectedDisabled = "SelectedDisabled";
 }
 
-public class MaterialSegmentedItem
+public class MaterialSegmentedButton
 {
     public string Text { get; set; }
 
@@ -929,7 +929,7 @@ public class MaterialSegmentedItem
 
     public override bool Equals(object obj)
     {
-        if (obj is not MaterialSegmentedItem toCompare)
+        if (obj is not MaterialSegmentedButton toCompare)
             return false;
         else
             return toCompare.Text.Equals(this.Text, System.StringComparison.InvariantCultureIgnoreCase);

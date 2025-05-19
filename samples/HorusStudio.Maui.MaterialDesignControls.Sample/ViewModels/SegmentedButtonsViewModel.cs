@@ -1,41 +1,39 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
-    public partial class SegmentedViewModel : BaseViewModel
+    public partial class SegmentedButtonsViewModel : BaseViewModel
     {
         #region Attributes & Properties
 
-        public override string Title => Models.Pages.SegmentedButton;
+        public override string Title => Models.Pages.SegmentedButtons;
         protected override string ControlReferenceUrl => "components/segmented-buttons/overview";
 
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(TextButtonTypeSelected))]
-        private MaterialSegmentedType _segmentedType;
+        private MaterialSegmentedButtonsType _segmentedType;
 
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedItem> _items;
+        private ObservableCollection<MaterialSegmentedButton> _items;
         
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedItem> _items2;
+        private ObservableCollection<MaterialSegmentedButton> _items2;
         
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedItem> _items3;
+        private ObservableCollection<MaterialSegmentedButton> _items3;
         
         [ObservableProperty]
-        private MaterialSegmentedItem _selectedItem;
+        private MaterialSegmentedButton _selectedItem;
         
         [ObservableProperty]
-        private IEnumerable<MaterialSegmentedItem> _selectedItems;
+        private IEnumerable<MaterialSegmentedButton> _selectedItems;
 
         [ObservableProperty]
         private string _textItemsSelectedFilled;
         
-        public string TextButtonTypeSelected => SegmentedType == MaterialSegmentedType.Filled ? "Outlined" : "Filled";
+        public string TextButtonTypeSelected => SegmentedType == MaterialSegmentedButtonsType.Filled ? "Outlined" : "Filled";
 
         [ObservableProperty] 
         [AlsoNotifyChangeFor(nameof(ButtonDisableText))]
@@ -45,60 +43,60 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         #endregion
 
-        public SegmentedViewModel()
+        public SegmentedButtonsViewModel()
         {
             Subtitle = "Segmented buttons help people select options, switch views, or sort elements.";
             
-            SegmentedType = MaterialSegmentedType.Filled;
+            SegmentedType = MaterialSegmentedButtonsType.Filled;
             
-            Items = new ObservableCollection<MaterialSegmentedItem> 
+            Items = new ObservableCollection<MaterialSegmentedButton> 
             {
-                new MaterialSegmentedItem
+                new MaterialSegmentedButton
                 {
                     Text = "Opt1",
                     IsSelected = true,
                 },
-                new MaterialSegmentedItem
+                new MaterialSegmentedButton
                 {
                     Text = "Opt2",
                 },
-                new MaterialSegmentedItem
+                new MaterialSegmentedButton
                 {
                     Text = "Opt3",
                 }
             };
             
-            Items2 = new ObservableCollection<MaterialSegmentedItem>
+            Items2 = new ObservableCollection<MaterialSegmentedButton>
             {
-                new MaterialSegmentedItem
+                new MaterialSegmentedButton
                 {
                     IsSelected = true,
                     Text = "Opt1",
                 },
-                new MaterialSegmentedItem
+                new MaterialSegmentedButton
                 {
                     Text = "Opt2",
                 },
-                new MaterialSegmentedItem
+                new MaterialSegmentedButton
                 {
                     Text = "Opt3",
                 }
             };
             
-            Items3 = new ObservableCollection<MaterialSegmentedItem>
+            Items3 = new ObservableCollection<MaterialSegmentedButton>
             {
-                new MaterialSegmentedItem
+                new MaterialSegmentedButton
                 {
                     Text = "Opt1",
                     SelectedIcon = "ic_checkbox.png",
                     UnselectedIcon = "logo.png"
                 },
-                new MaterialSegmentedItem
+                new MaterialSegmentedButton
                 {
                     Text = "Opt2",
                     SelectedIcon = "ic_checkbox.png",
                 },
-                new MaterialSegmentedItem
+                new MaterialSegmentedButton
                 {
                     Text = "Opt3",
                     SelectedIcon = "ic_checkbox.png"
@@ -134,8 +132,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private void OnChangeTypeSegmented()
         {
-            SegmentedType = SegmentedType == MaterialSegmentedType.Filled ? MaterialSegmentedType.Outlined : MaterialSegmentedType.Filled;
+            SegmentedType = SegmentedType == MaterialSegmentedButtonsType.Filled ? MaterialSegmentedButtonsType.Outlined : MaterialSegmentedButtonsType.Filled;
         }
     }
 }
-
