@@ -17,13 +17,18 @@ public partial class IconTintColorBehavior
     /// <inheritdoc/>
     protected override void OnAttachedTo(View bindable, AView platformView)
     {
-        ApplyTintColor(bindable, platformView);
+        if (IsEnabled)
+            ApplyTintColor(bindable, platformView);
 
         this.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == TintColorProperty.PropertyName)
+            if (e.PropertyName == TintColorProperty.PropertyName && IsEnabled)
             {
                 ApplyTintColor(bindable, platformView);
+            }
+            else
+            {
+                ClearTintColor(bindable, platformView);
             }
         };
     }

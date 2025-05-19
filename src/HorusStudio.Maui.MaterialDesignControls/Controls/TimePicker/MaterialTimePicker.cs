@@ -72,19 +72,10 @@ public class MaterialTimePicker : MaterialInputBase
         _timePicker.SetBinding(TimePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _timePicker.SetBinding(CustomTimePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         
-        InputTapCommand = new Command(() =>
-        {
-            if (!IsEnabled) return;
-
-#if ANDROID
-            var handler = _timePicker.Handler as ITimePickerHandler;
-            handler?.PlatformView.PerformClick();
-#elif IOS || MACCATALYST
-            _timePicker.Focus();
-#endif
-        });
-
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
         TrailingIcon = MaterialIcon.TimePicker;
+        TrailingIconCommand = new Command(() => DoFocus());
         Content = _timePicker;
     }
 
@@ -128,10 +119,18 @@ public class MaterialTimePicker : MaterialInputBase
     /// The backing store for the <see cref="TimeSelectedCommand" /> bindable property.
     /// </summary>
     public static readonly BindableProperty TimeSelectedCommandProperty = BindableProperty.Create(nameof(TimeSelectedCommand), typeof(ICommand), typeof(MaterialTimePicker));
-    
+
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="TimePicker" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public TimePicker InternalTimePicker => _timePicker;
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input. This property cannot be changed by the user.
@@ -303,6 +302,18 @@ public class MaterialTimePicker : MaterialInputBase
             TimeSelectedCommand?.Execute(null);
         }                               
         TimeSelected?.Invoke(this, new TimeSelectedEventArgs(oldValue, newValue));
+    }
+
+    private void DoFocus()
+    {
+        if (!IsEnabled) return;
+
+#if ANDROID
+        var handler = _timePicker.Handler as ITimePickerHandler;
+        handler?.PlatformView.PerformClick();
+#elif IOS || MACCATALYST
+        _timePicker.Focus();
+#endif
     }
 
     #endregion Methods

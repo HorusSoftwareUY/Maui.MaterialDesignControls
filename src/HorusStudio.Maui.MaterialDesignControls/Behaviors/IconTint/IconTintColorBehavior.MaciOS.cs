@@ -11,14 +11,19 @@ public partial class IconTintColorBehavior
     /// <inheritdoc/>
     protected override void OnAttachedTo(View bindable, UIView platformView)
     {
-        ApplyTintColor(platformView, bindable, TintColor);
+        if (IsEnabled)
+            ApplyTintColor(platformView, bindable, TintColor);
 
         bindable.PropertyChanged += OnElementPropertyChanged;
         this.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == TintColorProperty.PropertyName)
+            if (e.PropertyName == TintColorProperty.PropertyName && IsEnabled)
             {
                 ApplyTintColor(platformView, bindable, TintColor);
+            }
+            else
+            {
+                ClearTintColor(platformView, bindable);
             }
         };
     }

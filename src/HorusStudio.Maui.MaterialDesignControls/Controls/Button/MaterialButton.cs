@@ -193,14 +193,20 @@ public class MaterialButton : ContentView, ITouchable
     {
         if (bindable is MaterialButton self)
         {
-            self.SetTintColor(self.Type);
+            self.SetIconTintColor(self.Type);
         }
     });
 
     /// <summary>
-    /// The backing store for the <see cref="TintColor" /> bindable property.
+    /// The backing store for the <see cref="InternalIconTintColor" /> bindable property.
     /// </summary>
-    internal static readonly BindableProperty TintColorProperty = BindableProperty.Create(nameof(TintColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTintColor);
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal static readonly BindableProperty InternalTintColorProperty = BindableProperty.Create(nameof(InternalIconTintColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTintColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="ApplyIconTintColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ApplyIconTintColorProperty = BindableProperty.Create(nameof(ApplyIconTintColor), typeof(bool), typeof(MaterialButton), defaultValue: true);
 
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
@@ -394,6 +400,14 @@ public class MaterialButton : ContentView, ITouchable
     #region Properties
 
     /// <summary>
+    /// Internal implementation of the <see cref="Button" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Button InternalButton => _button;
+
+    /// <summary>
     /// Gets or sets the button type according to <see cref="MaterialButtonType"/> enum.
     /// This is a bindable property.
     /// </summary>
@@ -552,7 +566,7 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// Gets or sets the <see cref="Color" /> for the icon of the button.
     /// This is a bindable property.
     /// </summary>
     public Color? IconTintColor
@@ -562,13 +576,26 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// This property is for internal use by the control. The <see cref="IconTintColor">IconTintColor</see> property should be used instead.
+    /// </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public Color? InternalIconTintColor
+    {
+        get => (Color?)GetValue(InternalTintColorProperty);
+        set => SetValue(InternalTintColorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the if the icon applies the tint color.
     /// This is a bindable property.
     /// </summary>
-    public Color? TintColor
+    /// <default>
+    /// <see langword="true"/>
+    /// </default>
+    public bool ApplyIconTintColor
     {
-        get => (Color?)GetValue(TintColorProperty);
-        set => SetValue(TintColorProperty, value);
+        get => (bool)GetValue(ApplyIconTintColorProperty);
+        set => SetValue(ApplyIconTintColorProperty, value);
     }
 
     /// <summary>
@@ -945,7 +972,8 @@ public class MaterialButton : ContentView, ITouchable
         _button.Unfocused += InternalFocusHandler;
 
         var iconTintColor = new IconTintColorBehavior();
-        iconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(TintColor), source: this));
+        iconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(InternalIconTintColor), source: this));
+        iconTintColor.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(ApplyIconTintColor), source: this));
         _button.Behaviors.Add(iconTintColor);
 
         // Busy indicator
@@ -982,7 +1010,7 @@ public class MaterialButton : ContentView, ITouchable
         SetBackground(type);
         SetBackgroundColor(type);
         SetTextColor(type);
-        SetTintColor(type);
+        SetIconTintColor(type);
         SetBorderColor(type);
         SetBorderWidth(type);
         SetShadow(type);
@@ -1063,7 +1091,7 @@ public class MaterialButton : ContentView, ITouchable
         }
     }
 
-    private void SetTintColor(MaterialButtonType type)
+    private void SetIconTintColor(MaterialButtonType type)
     {
         if (_textColors.TryGetValue(type, out object tint) && tint != null)
         {
@@ -1072,23 +1100,23 @@ public class MaterialButton : ContentView, ITouchable
                 // Default Material value according to Type
                 if (tint is Color tintColor)
                 {
-                    TintColor = tintColor;
+                    InternalIconTintColor = tintColor;
                 }
                 else if (tint is AppThemeBindingExtension theme)
                 {
-                    TintColor = theme.GetValueForCurrentTheme<Color>();
+                    InternalIconTintColor = theme.GetValueForCurrentTheme<Color>();
                 }
             }
             else
             {
                 // Set by user
-                TintColor = IconTintColor;
+                InternalIconTintColor = IconTintColor;
             }
         }
         else
         {
             // Unsupported for current button type, ignore
-            TintColor = DefaultTintColor;
+            InternalIconTintColor = DefaultTintColor;
         }
     }
 

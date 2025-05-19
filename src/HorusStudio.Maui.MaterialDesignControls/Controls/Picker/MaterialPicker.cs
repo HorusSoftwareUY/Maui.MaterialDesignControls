@@ -71,9 +71,11 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
-        
+
+        InputTapCommand = new Command(() => DoFocus());
+        LeadingIconCommand = new Command(() => DoFocus());
         TrailingIcon = MaterialIcon.Picker;
-        InputTapCommand = new Command(() => _picker.Focus());
+        TrailingIconCommand = new Command(() => DoFocus());
         Content = _picker;
     }
 
@@ -142,6 +144,14 @@ public class MaterialPicker : MaterialInputBase
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="Picker" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Picker InternalPicker => _picker;
 
     /// <summary>
     /// Gets or sets the vertical text alignment. This is a bindable property.
@@ -348,7 +358,14 @@ public class MaterialPicker : MaterialInputBase
         }
         SelectedIndexChanged?.Invoke(this, e);
     }
-    
+
+    private void DoFocus()
+    {
+        if (!IsEnabled) return;
+
+        _picker.Focus();
+    }
+
     #endregion Methods
 
     #region Styles
