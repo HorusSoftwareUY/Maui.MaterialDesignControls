@@ -41,7 +41,7 @@ public partial class IconTintColorBehavior
             return;
         }
 
-        if (!element.IsLoading)
+        if (!element.IsLoading && IsEnabled)
         {
             ApplyTintColor(platformView, (View)element, TintColor);
         }
