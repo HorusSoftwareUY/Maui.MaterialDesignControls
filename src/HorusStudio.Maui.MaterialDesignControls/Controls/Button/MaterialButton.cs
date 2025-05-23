@@ -72,6 +72,8 @@ public class MaterialButton : ContentView, ITouchable
     private static readonly ButtonContentLayout DefaultContentLayout = new(ButtonContentLayout.ImagePosition.Left, 8);
     private static readonly Color DefaultTextColor = Color.FromRgba(1,1,1,.01);
     private static readonly Color? DefaultTintColor = null;
+    private static readonly bool DefaultApplyIconTintColor = true;
+    private static readonly Size DefaultIconSize = Size.Zero;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Medium;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelLarge;
     private static readonly Brush? DefaultBackground = Button.BackgroundProperty.DefaultValue as Brush;
@@ -206,7 +208,12 @@ public class MaterialButton : ContentView, ITouchable
     /// <summary>
     /// The backing store for the <see cref="ApplyIconTintColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ApplyIconTintColorProperty = BindableProperty.Create(nameof(ApplyIconTintColor), typeof(bool), typeof(MaterialButton), defaultValue: true);
+    public static readonly BindableProperty ApplyIconTintColorProperty = BindableProperty.Create(nameof(ApplyIconTintColor), typeof(bool), typeof(MaterialButton), defaultValue: DefaultApplyIconTintColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="IconSize" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(Size), typeof(MaterialButton), defaultValue: DefaultIconSize);
 
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
@@ -599,6 +606,20 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
+    /// Gets or sets the icon size.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="Size.Zero"/>.
+    /// </default>
+    /// <remarks>With a default value of <see langword="Size.Zero"/>, the icon will be handled automatically by each platform's native behavior. If a size is specified, that size will be applied to the icon on all platforms.</remarks>
+    public Size IconSize
+    {
+        get => (Size)GetValue(IconSizeProperty);
+        set => SetValue(IconSizeProperty, value);
+    }
+
+    /// <summary>
     /// Gets or sets the spacing between each of the characters of <see cref="Text"/> when displayed on the button.
     /// This is a bindable property.
     /// </summary>
@@ -965,7 +986,9 @@ public class MaterialButton : ContentView, ITouchable
         _button.SetBinding(Button.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
         _button.SetBinding(Button.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         _button.SetBinding(CustomButton.TextDecorationsProperty, new Binding(nameof(TextDecorations), source: this));
-        
+        _button.SetBinding(CustomButton.ApplyIconTintColorProperty, new Binding(nameof(ApplyIconTintColor), source: this));
+        _button.SetBinding(CustomButton.IconSizeProperty, new Binding(nameof(IconSize), source: this));
+
         _button.Pressed += InternalPressedHandler;
         _button.Released += InternalReleasedHandler;
         _button.Focused += InternalFocusHandler;

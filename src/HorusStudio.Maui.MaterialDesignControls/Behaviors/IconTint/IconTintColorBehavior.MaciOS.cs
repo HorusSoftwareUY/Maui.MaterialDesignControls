@@ -2,6 +2,7 @@
 
 using System.ComponentModel;
 using CoreAnimation;
+using CoreGraphics;
 using Microsoft.Maui.Platform;
 using UIKit;
 
@@ -114,9 +115,6 @@ public partial class IconTintColorBehavior
             var platformColor = color.ToPlatform();
             button.TintColor = platformColor;
             button.ImageView.TintColor = platformColor;
-
-            button.SetNeedsLayout();
-            button.LayoutIfNeeded();
         };
         CATransaction.Commit();
     }
