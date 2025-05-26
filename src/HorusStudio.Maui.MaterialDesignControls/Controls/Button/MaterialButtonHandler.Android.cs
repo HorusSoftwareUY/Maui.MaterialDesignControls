@@ -67,22 +67,15 @@ public partial class MaterialButtonHandler
                 && layerDrawable.GetDrawable(0) is BitmapDrawable bitmapDrawable
                 && bitmapDrawable.Bitmap != null
                 && platformView.Context != null
-                && platformView.Context.Resources?.DisplayMetrics != null
                 && customButton.IconSize != Size.Zero)
             {
-                var targetWidth = ConvertDpToPx((int)customButton.IconSize.Width, platformView.Context.Resources.DisplayMetrics);
-                var targetHeight = ConvertDpToPx((int)customButton.IconSize.Height, platformView.Context.Resources.DisplayMetrics);
+                var targetWidth = ((int)customButton.IconSize.Width).DpToPixels();
+                var targetHeight = ((int)customButton.IconSize.Height).DpToPixels();
                 var scaledBitmap = Bitmap.CreateScaledBitmap(bitmapDrawable.Bitmap, targetWidth, targetHeight, true);
                 var scaledDrawable = new BitmapDrawable(platformView.Context.Resources, scaledBitmap);
                 platformView.Icon = scaledDrawable;
                 platformView.Invalidate();
             }
         });
-    }
-
-    private int ConvertDpToPx(int dpValue, Android.Util.DisplayMetrics displayMetrics)
-    {
-        float scale = displayMetrics.Density;
-        return (int)(dpValue * scale + 0.5f);
     }
 }
