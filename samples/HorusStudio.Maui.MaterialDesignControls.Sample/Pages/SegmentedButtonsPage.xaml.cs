@@ -8,5 +8,17 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         {
             InitializeComponent();
         }
+
+        void MaterialSegmentedButtons_SelectionChanged(System.Object sender, HorusStudio.Maui.MaterialDesignControls.SegmentedButtonsSelectedEventArgs e)
+        {
+            if (e.SelectedItem != null)
+            {
+                lblSelectedItems.Text = $"SelectedItem: {e.SelectedItem.Text}";
+            }
+            else
+            {
+                lblSelectedItems.Text = $"SelectedItem: -";
+            }
+        }
     }
 }

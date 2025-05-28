@@ -16,23 +16,26 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private MaterialSegmentedButtonsType _segmentedType;
 
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedButton> _items;
+        private ObservableCollection<MaterialSegmentedButtonsItem> _items;
         
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedButton> _items2;
+        private ObservableCollection<MaterialSegmentedButtonsItem> _items2;
         
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedButton> _items3;
-        
-        [ObservableProperty]
-        private MaterialSegmentedButton _selectedItem;
-        
-        [ObservableProperty]
-        private IEnumerable<MaterialSegmentedButton> _selectedItems;
+        private ObservableCollection<MaterialSegmentedButtonsItem> _items3;
 
         [ObservableProperty]
-        private string _textItemsSelectedFilled;
-        
+        private ObservableCollection<MaterialSegmentedButtonsItem> _items4;
+
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(SelectedItemText))]
+        private MaterialSegmentedButtonsItem _selectedItem;
+
+        [ObservableProperty]
+        private IEnumerable<MaterialSegmentedButtonsItem> _selectedItems;
+
+        public string? SelectedItemText => SelectedItem != null ? $"SelectedItem: {SelectedItem.Text}" : "-";
+
         public string TextButtonTypeSelected => SegmentedType == MaterialSegmentedButtonsType.Filled ? "Outlined" : "Filled";
 
         [ObservableProperty] 
@@ -47,80 +50,95 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             Subtitle = "Segmented buttons help people select options, switch views, or sort elements.";
             
-            SegmentedType = MaterialSegmentedButtonsType.Filled;
+            SegmentedType = MaterialSegmentedButtonsType.Outlined;
             
-            Items = new ObservableCollection<MaterialSegmentedButton> 
+            Items = new ObservableCollection<MaterialSegmentedButtonsItem> 
             {
-                new MaterialSegmentedButton
+                new MaterialSegmentedButtonsItem("Opt1")
                 {
-                    Text = "Opt1",
+                    SelectedIcon = "star_selected",
+                    UnselectedIcon = "star_unselected",
                     IsSelected = true,
                 },
-                new MaterialSegmentedButton
+                new MaterialSegmentedButtonsItem("Opt2")
                 {
-                    Text = "Opt2",
+                    SelectedIcon = "star_selected",
+                    UnselectedIcon = "star_unselected"
                 },
-                new MaterialSegmentedButton
+                new MaterialSegmentedButtonsItem("Opt3")
                 {
-                    Text = "Opt3",
+                    SelectedIcon = "star_selected",
+                    UnselectedIcon = "star_unselected"
                 }
             };
             
-            Items2 = new ObservableCollection<MaterialSegmentedButton>
+            Items2 = new ObservableCollection<MaterialSegmentedButtonsItem>
             {
-                new MaterialSegmentedButton
+                new MaterialSegmentedButtonsItem("Opt1")
                 {
+                    SelectedIcon = "ic_checkbox.png",
                     IsSelected = true,
-                    Text = "Opt1",
                 },
-                new MaterialSegmentedButton
+                new MaterialSegmentedButtonsItem("Opt2")
                 {
-                    Text = "Opt2",
+                    SelectedIcon = "ic_checkbox.png"
                 },
-                new MaterialSegmentedButton
+                new MaterialSegmentedButtonsItem("Opt3")
                 {
-                    Text = "Opt3",
-                }
-            };
-            
-            Items3 = new ObservableCollection<MaterialSegmentedButton>
-            {
-                new MaterialSegmentedButton
-                {
-                    Text = "Opt1",
-                    SelectedIcon = "ic_checkbox.png",
-                    UnselectedIcon = "logo.png"
-                },
-                new MaterialSegmentedButton
-                {
-                    Text = "Opt2",
-                    SelectedIcon = "ic_checkbox.png",
-                },
-                new MaterialSegmentedButton
-                {
-                    Text = "Opt3",
                     SelectedIcon = "ic_checkbox.png"
                 }
             };
+            
+            Items3 = new ObservableCollection<MaterialSegmentedButtonsItem>
+            {
+                new MaterialSegmentedButtonsItem("Opt1"),
+                new MaterialSegmentedButtonsItem("Opt2"),
+                new MaterialSegmentedButtonsItem("Opt3")
+            };
 
-            OnItemMultipleSelected();
+            Items4 = new ObservableCollection<MaterialSegmentedButtonsItem>
+            {
+                new MaterialSegmentedButtonsItem("Opt1")
+                {
+                    SelectedIcon = "horus_logo",
+                    ApplyIconTintColor = false,
+                    IsSelected = true,
+                },
+                new MaterialSegmentedButtonsItem("Opt2")
+                {
+                    SelectedIcon = "email"
+                },
+                new MaterialSegmentedButtonsItem("Opt3")
+                {
+                    SelectedIcon = "ic_date"
+                }
+            };
+
+            SelectedItem = Items.First();
         }
-        
+
         [ICommand]
-        private async Task OnItemSelectedOutlinedAsync()    
+        private async Task OnSingleItemSelection(MaterialSegmentedButtonsItem item)    
         {
-            await DisplayAlert(Title, $"Button selected: {SelectedItem.Text}", "OK");
+            await DisplayAlert(Title, $"Segmented button selected: {item.Text}", "OK");
         }
 
         [ICommand]
-        private void OnItemMultipleSelected()
+        private async Task OnMultipleItemSelection(IEnumerable<MaterialSegmentedButtonsItem> items)
         {
             var selectedText = "-";
-            if (_items2.Any(w => w.IsSelected))
+            if (items != null && items.Any())
             {
-                selectedText = string.Join(", ", Items2.Where(w => w.IsSelected).Select(s => s.Text));
+                selectedText = string.Join(", ", items.Select(x => x.Text));
             }
-            TextItemsSelectedFilled = $"Selected: {selectedText}";
+
+            await DisplayAlert(Title, $"Segmented buttons selected: {selectedText}", "OK");
+        }
+
+        [ICommand]
+        private void SelectLastItem()
+        {
+            SelectedItem = Items.Last();
         }
 
         [ICommand]
