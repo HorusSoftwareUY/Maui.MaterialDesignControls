@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
 
@@ -12,7 +12,17 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         /// The backing store for the <see cref="Subtitle" /> bindable property.
         /// </summary>
         public static readonly BindableProperty SubtitleProperty = BindableProperty.Create(nameof(Subtitle), typeof(string), typeof(BaseContentPage<>));
-        
+
+        /// <summary>
+        /// The backing store for the <see cref="TabItems" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TabItemsProperty = BindableProperty.Create(nameof(TabItems), typeof(ObservableCollection<MaterialSegmentedButtonsItem>), typeof(BaseContentPage<>));
+
+        /// <summary>
+        /// The backing store for the <see cref="TabItemsSelection" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TabItemsSelectionProperty = BindableProperty.Create(nameof(TabItemsSelection), typeof(ICommand), typeof(BaseContentPage<>));
+
         /// <summary>
         /// The backing store for the <see cref="CustomizationMode" /> bindable property.
         /// </summary>
@@ -45,7 +55,25 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             get => (string)GetValue(SubtitleProperty);
             set => SetValue(SubtitleProperty, value);
         }
-        
+
+        /// <summary>
+        /// Gets or sets a list of tab items. This is a bindable property.
+        /// </summary>
+        public ObservableCollection<MaterialSegmentedButtonsItem> TabItems
+        {
+            get => (ObservableCollection<MaterialSegmentedButtonsItem>)GetValue(TabItemsProperty);
+            set => SetValue(TabItemsProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a commando to be fired when the tab items selection change. This is a bindable property.
+        /// </summary>
+        public ICommand TabItemsSelection
+        {
+            get => (ICommand)GetValue(TabItemsSelectionProperty);
+            set => SetValue(TabItemsSelectionProperty, value);
+        }
+
         /// <summary>
         /// Gets or sets a flag to determine whether customization mode is active or not. This is a bindable property.
         /// </summary>
@@ -92,6 +120,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             
             SetBinding(TitleProperty, new Binding(nameof(BaseViewModel.Title)));
             SetBinding(SubtitleProperty, new Binding(nameof(BaseViewModel.Subtitle)));
+            SetBinding(TabItemsProperty, new Binding(nameof(BaseViewModel.TabItems)));
+            SetBinding(TabItemsSelectionProperty, new Binding(nameof(BaseViewModel.TabItemsSelectionCommand)));
             SetBinding(CustomizationModeProperty, new Binding(nameof(BaseViewModel.IsCustomize), mode: BindingMode.TwoWay));
             SetBinding(BackCommandProperty, new Binding(nameof(BaseViewModel.GoBackCommand)));
             SetBinding(TopBarIconsProperty, new Binding(nameof(BaseViewModel.ContextualActions)));
@@ -163,4 +193,3 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         }
     }
 }
-
