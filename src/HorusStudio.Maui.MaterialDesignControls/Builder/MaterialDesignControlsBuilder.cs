@@ -543,8 +543,9 @@ public static class MaterialDesignControlsBuilderExtensions
             .AddStyles(MaterialPicker.GetStyles())
             .AddStyles(MaterialMultilineTextField.GetStyles())
             .AddStyles(MaterialSlider.GetStyles())
-            .AddStyles(MaterialFloatingButton.GetStyles());
-        
+            .AddStyles(MaterialFloatingButton.GetStyles())
+            .AddStyles(MaterialSegmentedButtons.GetStyles());
+
         Logger.Debug("Components styles registration COMPLETED");
     }
     
