@@ -29,7 +29,7 @@
         <Style x:Key="OutlinedBorder" TargetType="material:BorderButton" BaseResourceKey="MainBorder">
             <Setter Property="Margin" Value="0,8,0,0" />
             <Setter Property="Stroke" Value="{Binding BorderColor, Source={x:Reference InputBase}}" />
-            <Setter Property="StrokeThickness" Value="{Binding BorderWidth, Source={x:Reference InputBase}}" />
+            <Setter Property="StrokeThickness" Value="{Binding InternalBorderWidth, Source={x:Reference InputBase}}" />
         </Style>
         
         <Style x:Key="MainContent" TargetType="StackLayout">
@@ -186,7 +186,7 @@
                             <material:MaterialIconButton Style="{StaticResource TrailingIcon}" />
                         </StackLayout>
 
-                        <BoxView HeightRequest="{Binding BorderWidth, Source={x:Reference InputBase}}" Color="{Binding BorderColor, Source={x:Reference InputBase}}" VerticalOptions="EndAndExpand" />
+                        <BoxView HeightRequest="{Binding InternalBorderWidth, Source={x:Reference InputBase}}" Color="{Binding BorderColor, Source={x:Reference InputBase}}" VerticalOptions="EndAndExpand" />
                     </Grid>
                 </material:BorderButton>
 

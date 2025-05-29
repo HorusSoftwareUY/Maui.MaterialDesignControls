@@ -109,6 +109,7 @@
                         TextColor="DarkGoldenrod"
                         LabelColor="DarkGreen"
                         BorderColor="DarkGray"
+                        BorderWidth="4"
                         PlaceholderColor="DarkBlue"
                         Placeholder="Enter text here" />
                 </VerticalStackLayout>
