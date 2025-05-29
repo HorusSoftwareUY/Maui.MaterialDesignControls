@@ -1,6 +1,8 @@
 ﻿#nullable enable
 
 using System.ComponentModel;
+using CoreAnimation;
+using CoreGraphics;
 using Microsoft.Maui.Platform;
 using UIKit;
 
@@ -39,7 +41,7 @@ public partial class IconTintColorBehavior
             return;
         }
 
-        if (!element.IsLoading)
+        if (!element.IsLoading && IsEnabled)
         {
             ApplyTintColor(platformView, (View)element, TintColor);
         }
@@ -98,18 +100,23 @@ public partial class IconTintColorBehavior
 
     static void SetUIButtonTintColor(UIButton button, View element, Color color)
     {
-        if (button.ImageView.Image is null)
+        // Runs after the current layout and render cycle
+        CATransaction.Begin();
+        CATransaction.CompletionBlock = () =>
         {
-            return;
-        }
+            if (button.ImageView.Image is null || button.CurrentImage is null)
+            {
+                return;
+            }
 
-        var templatedImage = button.CurrentImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+            var templatedImage = button.CurrentImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+            button.SetImage(templatedImage, UIControlState.Normal);
 
-        button.SetImage(null, UIControlState.Normal);
-        var platformColor = color.ToPlatform();
-        button.TintColor = platformColor;
-        button.ImageView.TintColor = platformColor;
-        button.SetImage(templatedImage, UIControlState.Normal);
+            var platformColor = color.ToPlatform();
+            button.TintColor = platformColor;
+            button.ImageView.TintColor = platformColor;
+        };
+        CATransaction.Commit();
     }
 
     static void SetUIImageViewTintColor(UIImageView imageView, View element, Color color)
@@ -122,5 +129,4 @@ public partial class IconTintColorBehavior
         imageView.Image = imageView.Image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
         imageView.TintColor = color.ToPlatform();
     }
-
 }

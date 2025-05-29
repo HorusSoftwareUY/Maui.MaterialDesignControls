@@ -114,7 +114,8 @@ public partial class IconTintColorBehavior
             return;
         }
 
-        ApplyTintColor(bindable, platformView);
+        if (IsEnabled)
+            ApplyTintColor(bindable, platformView);
     }
 
     void ClearTintColor(View element, AView control)
