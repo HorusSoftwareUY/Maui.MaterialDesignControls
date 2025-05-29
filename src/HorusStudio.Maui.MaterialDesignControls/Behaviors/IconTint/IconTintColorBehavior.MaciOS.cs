@@ -62,7 +62,7 @@ public partial class IconTintColorBehavior
 
                 break;
             case UIButton button:
-                if (button.ImageView?.Image is not null)
+                if (button.ImageView?.Image is not null && button.CurrentImage is not null)
                 {
                     var originalImage = button.CurrentImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
                     button.SetImage(originalImage, UIControlState.Normal);
