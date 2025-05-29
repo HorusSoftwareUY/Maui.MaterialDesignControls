@@ -2,7 +2,6 @@
 
 using System.ComponentModel;
 using CoreAnimation;
-using CoreGraphics;
 using Microsoft.Maui.Platform;
 using UIKit;
 
@@ -16,7 +15,6 @@ public partial class IconTintColorBehavior
         if (IsEnabled)
             ApplyTintColor(platformView, bindable, TintColor);
 
-        bindable.PropertyChanged += OnElementPropertyChanged;
         this.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == TintColorProperty.PropertyName && IsEnabled)
@@ -84,6 +82,8 @@ public partial class IconTintColorBehavior
             ClearTintColor(platformView, element);
             return;
         }
+
+        element.PropertyChanged += OnElementPropertyChanged;
 
         switch (platformView)
         {
