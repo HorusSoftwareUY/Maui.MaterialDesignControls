@@ -110,10 +110,13 @@
             <Setter Property="TextColor" Value="{Binding LabelColor, Source={x:Reference InputBase}}" />
             <Setter Property="FontFamily" Value="{Binding LabelFontFamily, Source={x:Reference InputBase}}" />
             <Setter Property="LineBreakMode" Value="{Binding LabelLineBreakMode, Source={x:Reference InputBase}}" />
-            <Setter Property="Margin" Value="{Binding LabelMargin, Source={x:Reference InputBase}}" />
-            <Setter Property="Padding" Value="{Binding LabelPadding, Source={x:Reference InputBase}}" />
             <Setter Property="FontSize" Value="{Binding LabelSize, Source={x:Reference InputBase}}" />
             <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
+        </Style>
+        
+        <Style x:Key="FilledHint" TargetType="Label" BaseResourceKey="Hint">
+            <Setter Property="Margin" Value="{Binding LabelMargin, Source={x:Reference InputBase}}" />
+            <Setter Property="Padding" Value="{Binding LabelPadding, Source={x:Reference InputBase}}" />
             <Setter Property="HorizontalOptions" Value="Start" />
             <Setter Property="VerticalOptions" Value="Start" />
             <Setter Property="IsVisible" Value="true" />
@@ -127,6 +130,34 @@
                     <Setter Property="IsVisible" Value="false" />
                 </MultiTrigger>
             </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="OutlinedHint" TargetType="Label"  BaseResourceKey="Hint">
+            <Setter Property="Grid.RowSpan" Value="2" />
+            <Setter Property="Margin" Value="4,0" />
+        </Style>
+        
+        <Style x:Key="OutlinedHintContainer" TargetType="Grid">
+            <Setter Property="RowDefinitions" Value="*,*" />
+            <Setter Property="Margin" Value="{Binding LabelMargin, Source={x:Reference InputBase}}" />
+            <Setter Property="Padding" Value="{Binding LabelPadding, Source={x:Reference InputBase}}" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="VerticalOptions" Value="Start" />
+            <Setter Property="IsVisible" Value="true" />
+            <Style.Triggers>
+                <MultiTrigger TargetType="Grid">
+                    <MultiTrigger.Conditions>
+                        <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
+                        <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="IsVisible" Value="false" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="OutlinedHintContainerBackground" TargetType="ContentView">
+            <Setter Property="Grid.Row" Value="1" />
+            <Setter Property="Margin" Value="{OnPlatform Android='0,-1,0,0', Default=0}" />
         </Style>
         
         <Style x:Key="BaseIcon" TargetType="material:MaterialIconButton">
@@ -180,7 +211,7 @@
                                     <ContentPresenter VerticalOptions="End" />
                                     <Label Style="{StaticResource Placeholder}" />
                                 </Grid>
-                                <Label Style="{StaticResource Hint}" />
+                                <Label Style="{StaticResource FilledHint}" />
                             </Grid>
 
                             <material:MaterialIconButton Style="{StaticResource TrailingIcon}" />
@@ -209,7 +240,12 @@
                             <material:MaterialIconButton Style="{StaticResource TrailingIcon}" />
                         </StackLayout>
                     </material:BorderButton>
-                    <Label x:Name="OutlinedHint" Style="{StaticResource Hint}" />
+                    
+                    <Grid
+                        Style="{StaticResource OutlinedHintContainer}">
+                        <ContentView x:Name="OutlinedHintContainerBackground" Style="{StaticResource OutlinedHintContainerBackground}" />
+                        <Label Style="{StaticResource OutlinedHint}" />
+                    </Grid>
                 </Grid>
 
                 <Label Style="{StaticResource SupportingText}" />
