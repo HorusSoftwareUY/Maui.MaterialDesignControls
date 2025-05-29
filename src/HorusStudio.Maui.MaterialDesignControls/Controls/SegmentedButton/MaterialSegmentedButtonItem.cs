@@ -5,9 +5,9 @@ using HorusStudio.Maui.MaterialDesignControls.Utils;
 namespace HorusStudio.Maui.MaterialDesignControls
 {
     /// <summary>
-    /// Represents the model for a segmented button to be rendered inside the MaterialSegmentedButtons control.
+    /// Represents the model for a segmented button to be rendered inside the MaterialSegmentedButton control.
     /// </summary>
-    public class MaterialSegmentedButtonsItem : INotifyPropertyChanged
+    public class MaterialSegmentedButtonItem : INotifyPropertyChanged
     {
         #region Attributes
 
@@ -83,12 +83,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #endregion Properties
 
-        public MaterialSegmentedButtonsItem(string text)
+        public MaterialSegmentedButtonItem(string text)
         {
             Text = text;
 
             if (string.IsNullOrEmpty(Text))
-                Logger.Debug($"The {nameof(MaterialSegmentedButtonsItem)} has no assigned text. It is recommended to set a non-null and non-empty value.");
+                Logger.Debug($"The {nameof(MaterialSegmentedButtonItem)} has no assigned text. It is recommended to set a non-null and non-empty value.");
         }
 
         private void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")

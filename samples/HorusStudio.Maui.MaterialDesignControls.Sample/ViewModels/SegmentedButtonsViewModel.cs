@@ -13,30 +13,30 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(TextButtonTypeSelected))]
-        private MaterialSegmentedButtonsType _segmentedType;
+        private MaterialSegmentedButtonType _segmentedType;
 
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedButtonsItem> _items;
+        private ObservableCollection<MaterialSegmentedButtonItem> _items;
         
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedButtonsItem> _items2;
+        private ObservableCollection<MaterialSegmentedButtonItem> _items2;
         
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedButtonsItem> _items3;
+        private ObservableCollection<MaterialSegmentedButtonItem> _items3;
 
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedButtonsItem> _items4;
+        private ObservableCollection<MaterialSegmentedButtonItem> _items4;
 
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(SelectedItemText))]
-        private MaterialSegmentedButtonsItem _selectedItem;
+        private MaterialSegmentedButtonItem _selectedItem;
 
         [ObservableProperty]
-        private IEnumerable<MaterialSegmentedButtonsItem> _selectedItems;
+        private IEnumerable<MaterialSegmentedButtonItem> _selectedItems;
 
         public string? SelectedItemText => SelectedItem != null ? $"SelectedItem: {SelectedItem.Text}" : "-";
 
-        public string TextButtonTypeSelected => SegmentedType == MaterialSegmentedButtonsType.Filled ? "Outlined" : "Filled";
+        public string TextButtonTypeSelected => SegmentedType == MaterialSegmentedButtonType.Filled ? "Outlined" : "Filled";
 
         [ObservableProperty] 
         [AlsoNotifyChangeFor(nameof(ButtonDisableText))]
@@ -50,65 +50,65 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             Subtitle = "Segmented buttons help people select options, switch views, or sort elements.";
             
-            SegmentedType = MaterialSegmentedButtonsType.Outlined;
+            SegmentedType = MaterialSegmentedButtonType.Outlined;
             
-            Items = new ObservableCollection<MaterialSegmentedButtonsItem> 
+            Items = new ObservableCollection<MaterialSegmentedButtonItem> 
             {
-                new MaterialSegmentedButtonsItem("Opt1")
+                new MaterialSegmentedButtonItem("Opt1")
                 {
                     SelectedIcon = "star_selected",
                     UnselectedIcon = "star_unselected",
                     IsSelected = true,
                 },
-                new MaterialSegmentedButtonsItem("Opt2")
+                new MaterialSegmentedButtonItem("Opt2")
                 {
                     SelectedIcon = "star_selected",
                     UnselectedIcon = "star_unselected"
                 },
-                new MaterialSegmentedButtonsItem("Opt3")
+                new MaterialSegmentedButtonItem("Opt3")
                 {
                     SelectedIcon = "star_selected",
                     UnselectedIcon = "star_unselected"
                 }
             };
             
-            Items2 = new ObservableCollection<MaterialSegmentedButtonsItem>
+            Items2 = new ObservableCollection<MaterialSegmentedButtonItem>
             {
-                new MaterialSegmentedButtonsItem("Opt1")
+                new MaterialSegmentedButtonItem("Opt1")
                 {
                     SelectedIcon = "ic_checkbox.png",
                     IsSelected = true,
                 },
-                new MaterialSegmentedButtonsItem("Opt2")
+                new MaterialSegmentedButtonItem("Opt2")
                 {
                     SelectedIcon = "ic_checkbox.png"
                 },
-                new MaterialSegmentedButtonsItem("Opt3")
+                new MaterialSegmentedButtonItem("Opt3")
                 {
                     SelectedIcon = "ic_checkbox.png"
                 }
             };
             
-            Items3 = new ObservableCollection<MaterialSegmentedButtonsItem>
+            Items3 = new ObservableCollection<MaterialSegmentedButtonItem>
             {
-                new MaterialSegmentedButtonsItem("Opt1"),
-                new MaterialSegmentedButtonsItem("Opt2"),
-                new MaterialSegmentedButtonsItem("Opt3")
+                new MaterialSegmentedButtonItem("Opt1"),
+                new MaterialSegmentedButtonItem("Opt2"),
+                new MaterialSegmentedButtonItem("Opt3")
             };
 
-            Items4 = new ObservableCollection<MaterialSegmentedButtonsItem>
+            Items4 = new ObservableCollection<MaterialSegmentedButtonItem>
             {
-                new MaterialSegmentedButtonsItem("Opt1")
+                new MaterialSegmentedButtonItem("Opt1")
                 {
                     SelectedIcon = "horus_logo",
                     ApplyIconTintColor = false,
                     IsSelected = true,
                 },
-                new MaterialSegmentedButtonsItem("Opt2")
+                new MaterialSegmentedButtonItem("Opt2")
                 {
                     SelectedIcon = "email"
                 },
-                new MaterialSegmentedButtonsItem("Opt3")
+                new MaterialSegmentedButtonItem("Opt3")
                 {
                     SelectedIcon = "ic_date"
                 }
@@ -118,13 +118,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async Task OnSingleItemSelection(MaterialSegmentedButtonsItem item)    
+        private async Task OnSingleItemSelection(MaterialSegmentedButtonItem item)    
         {
             await DisplayAlert(Title, $"Segmented button selected: {item.Text}", "OK");
         }
 
         [ICommand]
-        private async Task OnMultipleItemSelection(IEnumerable<MaterialSegmentedButtonsItem> items)
+        private async Task OnMultipleItemSelection(IEnumerable<MaterialSegmentedButtonItem> items)
         {
             var selectedText = "-";
             if (items != null && items.Any())
@@ -150,7 +150,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private void OnChangeTypeSegmented()
         {
-            SegmentedType = SegmentedType == MaterialSegmentedButtonsType.Filled ? MaterialSegmentedButtonsType.Outlined : MaterialSegmentedButtonsType.Filled;
+            SegmentedType = SegmentedType == MaterialSegmentedButtonType.Filled ? MaterialSegmentedButtonType.Outlined : MaterialSegmentedButtonType.Filled;
         }
     }
 }

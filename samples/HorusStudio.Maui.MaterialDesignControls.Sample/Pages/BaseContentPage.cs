@@ -16,7 +16,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         /// <summary>
         /// The backing store for the <see cref="TabItems" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty TabItemsProperty = BindableProperty.Create(nameof(TabItems), typeof(ObservableCollection<MaterialSegmentedButtonsItem>), typeof(BaseContentPage<>));
+        public static readonly BindableProperty TabItemsProperty = BindableProperty.Create(nameof(TabItems), typeof(ObservableCollection<MaterialSegmentedButtonItem>), typeof(BaseContentPage<>));
 
         /// <summary>
         /// The backing store for the <see cref="TabItemsSelection" /> bindable property.
@@ -59,9 +59,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         /// <summary>
         /// Gets or sets a list of tab items. This is a bindable property.
         /// </summary>
-        public ObservableCollection<MaterialSegmentedButtonsItem> TabItems
+        public ObservableCollection<MaterialSegmentedButtonItem> TabItems
         {
-            get => (ObservableCollection<MaterialSegmentedButtonsItem>)GetValue(TabItemsProperty);
+            get => (ObservableCollection<MaterialSegmentedButtonItem>)GetValue(TabItemsProperty);
             set => SetValue(TabItemsProperty, value);
         }
 

@@ -13,7 +13,7 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined multiple-selection button" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
-                <material:MaterialSegmentedButtons
+                <material:MaterialSegmentedButton
                     ItemsSource="{Binding Items2}"
                     SelectionCommand="{Binding OnMultipleItemSelectionCommand}"
                     Type="Outlined"
@@ -27,7 +27,7 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled single-selection button" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
-                <material:MaterialSegmentedButtons 
+                <material:MaterialSegmentedButton
                     ItemsSource="{Binding Items}"
                     SelectionCommand="{Binding OnSingleItemSelectionCommand}"
                     Type="Filled" />
@@ -40,7 +40,7 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="SelectionChanged event" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
-                <material:MaterialSegmentedButtons 
+                <material:MaterialSegmentedButton
                     ItemsSource="{Binding Items3}"
                     SelectionChanged="MaterialSegmentedButtons_SelectionChanged" />
                 <material:MaterialLabel
@@ -57,7 +57,7 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="SelectedItem property" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
-                <material:MaterialSegmentedButtons 
+                <material:MaterialSegmentedButton
                     ItemsSource="{Binding Items}"
                     SelectedItem="{Binding SelectedItem}" />
                 <material:MaterialLabel
@@ -76,7 +76,7 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full Segmented API" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
-                <material:MaterialSegmentedButtons 
+                <material:MaterialSegmentedButton
                     ItemsSource="{Binding Items4}"
                     SelectionCommand="{Binding OnSingleItemSelectionCommand}"
                     IsEnabled="{Binding FullApiIsEnabled}"

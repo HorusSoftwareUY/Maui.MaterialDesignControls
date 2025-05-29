@@ -57,7 +57,7 @@
                     </material:MaterialTopAppBar>
                     <ScrollView Grid.Row="1" x:Name="MdcControlPageScroll">
                         <VerticalStackLayout Style="{StaticResource MainLayout}">
-                            <material:MaterialSegmentedButtons
+                            <material:MaterialSegmentedButton
                                 ItemsSource="{TemplateBinding TabItems}"
                                 SelectionCommand="{TemplateBinding TabItemsSelection}"
                                 HeightRequest="40"

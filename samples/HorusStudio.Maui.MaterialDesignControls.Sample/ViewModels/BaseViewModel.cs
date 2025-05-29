@@ -25,7 +25,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private bool _isCustomize;
 
         [ObservableProperty]
-        private ObservableCollection<MaterialSegmentedButtonsItem> _tabItems;
+        private ObservableCollection<MaterialSegmentedButtonItem> _tabItems;
 
         [ObservableProperty]
         private bool _isEnabled = true;
@@ -59,13 +59,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 };
             }
 
-            TabItems = new ObservableCollection<MaterialSegmentedButtonsItem>
+            TabItems = new ObservableCollection<MaterialSegmentedButtonItem>
             {
-                new MaterialSegmentedButtonsItem("Overview")
+                new MaterialSegmentedButtonItem("Overview")
                 {
                     IsSelected = true
                 },
-                new MaterialSegmentedButtonsItem("Customize")
+                new MaterialSegmentedButtonItem("Customize")
             };
         }
         
