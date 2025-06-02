@@ -17,6 +17,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private bool _applyIconTintColor = true;
         private bool _isSelected = false;
 
+        internal Action SetVisualStateToItems { get; set; }
+
         #endregion Attributes
 
         #region Properties
@@ -91,6 +93,24 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 Logger.Debug($"The {nameof(MaterialSegmentedButtonItem)} has no assigned text. It is recommended to set a non-null and non-empty value.");
         }
 
+        public override bool Equals(object? obj)
+        {
+            if (obj is not MaterialSegmentedButtonItem toCompare)
+                return false;
+
+            var key = Text != null ? Text : string.Empty;
+            var keyToCompare = toCompare.Text;
+            return key.Equals(keyToCompare, System.StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Text);
+        }
+
+        public override string ToString() =>
+            string.IsNullOrWhiteSpace(Text) ? "No defined text" : Text;
+
         private void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
         {
             if (EqualityComparer<T>.Default.Equals(backingStore, value))
@@ -103,6 +123,30 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// Perform the item selection
+        /// </summary>
+        public void Select()
+        {
+            if (!IsSelected)
+            {
+                IsSelected = true;
+                SetVisualStateToItems?.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Perform the item unselection
+        /// </summary>
+        public void Unselect()
+        {
+            if (IsSelected)
+            {
+                IsSelected = false;
+                SetVisualStateToItems?.Invoke();
+            }
         }
     }
 }

@@ -110,7 +110,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 },
                 new MaterialSegmentedButtonItem("Opt3")
                 {
-                    SelectedIcon = "ic_date"
+                    SelectedIcon = "star_selected",
+                    UnselectedIcon = "star_unselected"
                 }
             };
 
@@ -138,7 +139,17 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private void SelectLastItem()
         {
-            SelectedItem = Items.Last();
+            foreach (var item in Items4)
+            {
+                if (item == Items4.Last())
+                {
+                    item.Select();
+                }
+                else
+                {
+                    item.Unselect();
+                }    
+            }
         }
 
         [ICommand]

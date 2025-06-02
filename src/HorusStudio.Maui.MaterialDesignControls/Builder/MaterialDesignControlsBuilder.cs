@@ -526,7 +526,7 @@ public static class MaterialDesignControlsBuilderExtensions
             Logger.Debug("Error initializing Material Design Controls: MAUI Application is null.");
             return;
         }
-        
+
         Application.Current.Resources
             .AddStyles(MaterialButton.GetStyles())
             .AddStyles(MaterialIconButton.GetStyles())
@@ -543,7 +543,8 @@ public static class MaterialDesignControlsBuilderExtensions
             .AddStyles(MaterialPicker.GetStyles())
             .AddStyles(MaterialMultilineTextField.GetStyles())
             .AddStyles(MaterialSlider.GetStyles())
-            .AddStyles(MaterialFloatingButton.GetStyles());
+            .AddStyles(MaterialFloatingButton.GetStyles())
+            .AddStyles(MaterialSegmentedButton.GetStyles());
 
         Logger.Debug("Components styles registration COMPLETED");
     }
