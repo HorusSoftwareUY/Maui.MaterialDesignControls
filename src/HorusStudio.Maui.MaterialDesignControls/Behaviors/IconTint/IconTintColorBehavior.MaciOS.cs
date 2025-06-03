@@ -13,7 +13,9 @@ public partial class IconTintColorBehavior
     protected override void OnAttachedTo(View bindable, UIView platformView)
     {
         if (IsEnabled)
+        {
             ApplyTintColor(platformView, bindable, TintColor);
+        }
 
         this.PropertyChanged += (s, e) =>
         {
@@ -83,6 +85,7 @@ public partial class IconTintColorBehavior
             return;
         }
 
+        element.PropertyChanged -= OnElementPropertyChanged;
         element.PropertyChanged += OnElementPropertyChanged;
 
         switch (platformView)
