@@ -67,7 +67,8 @@
                     BorderColor="DarkGreen"
                     BorderWidth="2"
                     Animation="Scale"
-                    AnimationParameter="0.9">
+                    AnimationParameter="0.9"
+                    HeightRequest="60">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroupList> 
                             <VisualStateGroup x:Name="CommonStates"> 

@@ -65,11 +65,12 @@ public class MaterialSegmentedButton : ContentView
     private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Surface, Dark = MaterialDarkTheme.Surface }.GetValueForCurrentTheme<Color>();
     private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
     private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
-    
+    private readonly static double DefaultHeightRequest = 40;
+
     #endregion
-    
+
     #region Bindable Properties
-    
+
     /// <summary>
     /// The backing store for the <see cref="MaterialSegmentedButtonType" /> bindable property.
     /// </summary>
@@ -171,6 +172,11 @@ public class MaterialSegmentedButton : ContentView
     /// The backing store for the <see cref="ItemTemplate" /> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), typeof(MaterialSegmentedButton), defaultValue: null);
+
+    /// <summary>
+    /// The backing store for the <see cref="HeightRequest" /> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialSegmentedButton), defaultValue: DefaultHeightRequest);
 
     #endregion
 
@@ -355,6 +361,19 @@ public class MaterialSegmentedButton : ContentView
     }
 
     /// <summary>
+    /// Gets or sets the desired height override of this element.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// 40
+    /// </default>
+    public new double HeightRequest
+    {
+        get => (double)GetValue(HeightRequestProperty);
+        set => SetValue(HeightRequestProperty, value);
+    }
+
+    /// <summary>
     /// Gets the selected buttons.
     /// This is a bindable property.
     /// </summary>
@@ -458,12 +477,12 @@ public class MaterialSegmentedButton : ContentView
             BorderWidth = 0,
             BorderColor = Colors.Transparent,
             BackgroundColor = Colors.Transparent,
-            HeightRequest = 40,
-            MinimumHeightRequest = 40,
             Padding = 0,
             Content = _itemsContainer
         };
 
+        _container.SetBinding(MaterialCard.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
+        _container.SetBinding(MaterialCard.MinimumHeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
         _container.SetBinding(MaterialCard.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
 
         Content = _container;
