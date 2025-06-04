@@ -254,6 +254,8 @@
                         LeadingIconIsBusy="{Binding LeadingIconTapCommand.IsRunning}"
                         DescriptionMarginAdjustment="0,20,0,0"
                         HeadlineMarginAdjustment="0,10,0,0"
+                        IconSize="30"
+                        IconPadding="0"
                         Type="Small">
                         <material:MaterialTopAppBar.TrailingIcons>
                             <material:TrailingIcon
