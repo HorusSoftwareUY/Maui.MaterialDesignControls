@@ -88,6 +88,16 @@ class FloatingButton : UIView
             this.SetRoundedBackground(fab.BackgroundColor, fab.CornerRadius);
             this.SetMargin(window, fab.Margin, fab.Position);
 
+            var tapGesture = new UITapGestureRecognizer(() =>
+            {
+                if (fab.IsEnabled && (fab.Command?.CanExecute(fab.CommandParameter) ?? false))
+                {
+                    fab.Command?.Execute(fab.CommandParameter);
+                }
+            });
+            this.UserInteractionEnabled = true;
+            this.AddGestureRecognizer(tapGesture);
+
             var content = CreateLayout(fab);
             AddSubview(content);
             SetSize(content, fab.IconSize + fab.Padding.VerticalThickness,
@@ -110,30 +120,20 @@ class FloatingButton : UIView
             TranslatesAutoresizingMaskIntoConstraints = false
         };
 
-        var button = GetButtonImage(fab.Icon.Source(), fab.IconSize, fab.IconColor, () =>
-        {
-            if (fab.IsEnabled && (fab.Command?.CanExecute(fab.CommandParameter) ?? false))
-            {
-                fab.Command?.Execute(fab.CommandParameter);
-            }
-        });
+        var button = GetButtonImage(fab.Icon.Source(), fab.IconSize, fab.IconColor);
         container.AddArrangedSubview(button);
 
         return container;
     }
     
-    private UIButton GetButtonImage(string? iconSource, double iconSize, Color tintColor, Action? action)
+    private UIButton GetButtonImage(string? iconSource, double iconSize, Color tintColor)
     {
         var button = new UIButton
         {
             TranslatesAutoresizingMaskIntoConstraints = false,
             BackgroundColor = UIColor.Clear,
-            TintColor = tintColor.ToPlatform()
-        };
-        
-        button.TouchUpInside += (s, a) =>
-        {
-            action?.Invoke();
+            TintColor = tintColor.ToPlatform(),
+            UserInteractionEnabled = false
         };
         
         var imageView = GetIcon(iconSource, iconSize);
@@ -170,7 +170,7 @@ class FloatingButton : UIView
             view.LeftAnchor.ConstraintEqualTo(this.LeftAnchor, (float)width/4),
             view.RightAnchor.ConstraintEqualTo(this.RightAnchor, -(float)width/4),
             view.TopAnchor.ConstraintEqualTo(this.TopAnchor, (float)height/4),
-            view.BottomAnchor.ConstraintEqualTo(this.BottomAnchor, -(float)height/4),
+            view.BottomAnchor.ConstraintEqualTo(this.BottomAnchor, -(float)height/4)
         ]);
     }
 }
