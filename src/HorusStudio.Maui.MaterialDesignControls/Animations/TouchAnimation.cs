@@ -25,14 +25,26 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             var touchableElement = view as ITouchable;
 
-            if (touchableElement.Animation != AnimationTypes.None && touchableElement.IsEnabled)
+            if (touchableElement != null
+                && touchableElement.Animation != AnimationTypes.None
+                && touchableElement.IsEnabled)
             {
                 if (touchableElement.Animation == AnimationTypes.Fade)
+                {
                     await view.FadeTo(touchableElement.AnimationParameter ?? 0.6, 100);
+                }
                 else if (touchableElement.Animation == AnimationTypes.Scale)
+                {
                     await view.ScaleTo(touchableElement.AnimationParameter ?? 0.95, 100);
+                }
+                else if (touchableElement.Animation == AnimationTypes.Bounce)
+                {
+                    await view.ScaleTo(touchableElement.AnimationParameter ?? 0.95, 100);
+                }
                 else if (touchableElement.Animation == AnimationTypes.Custom && touchableElement.CustomAnimation != null)
+                {
                     await touchableElement.CustomAnimation.SetAnimationAsync(view);
+                }
             }
         }
 
@@ -40,14 +52,25 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             var touchableElement = view as ITouchable;
 
-            if (touchableElement.Animation != AnimationTypes.None)
+            if (touchableElement != null
+                && touchableElement.Animation != AnimationTypes.None)
             {
                 if (touchableElement.Animation == AnimationTypes.Fade)
+                {
                     await view.FadeTo(1, 100);
+                }
                 else if (touchableElement.Animation == AnimationTypes.Scale)
+                {
                     await view.ScaleTo(1, 100);
+                }
+                else if (touchableElement.Animation == AnimationTypes.Bounce)
+                {
+                    await view.ScaleTo(1, 500, Easing.BounceOut);
+                }
                 else if (touchableElement.Animation == AnimationTypes.Custom && touchableElement.CustomAnimation != null)
+                {
                     await touchableElement.CustomAnimation.RestoreAnimationAsync(view);
+                }
             }
         }
     }

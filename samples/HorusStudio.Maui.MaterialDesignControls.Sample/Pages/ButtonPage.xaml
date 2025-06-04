@@ -324,6 +324,8 @@
                     x:Name="ClickBtn"
                     Type="Filled"
                     Text="Click me"
+                    Animation="Bounce"
+                    AnimationParameter=".9"
                     Clicked="OnCounterClicked" />
                 
                 <material:MaterialButton

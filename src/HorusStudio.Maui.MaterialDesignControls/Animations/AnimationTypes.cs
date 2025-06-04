@@ -7,7 +7,9 @@
         /// <summary> Fade </summary>
         Fade, 
         /// <summary> Scale </summary>
-        Scale, 
+        Scale,
+        /// <summary> Bounce </summary>
+        Bounce,
         /// <summary> Custom </summary>
         Custom
     }
