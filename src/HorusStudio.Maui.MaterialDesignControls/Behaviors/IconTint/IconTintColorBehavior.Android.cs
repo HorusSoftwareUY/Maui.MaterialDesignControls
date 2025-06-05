@@ -40,6 +40,14 @@ public partial class IconTintColorBehavior
     void ApplyTintColor(View element, AView control)
     {
         var color = TintColor;
+
+        if (color is null)
+        {
+            ClearTintColor(element, control);
+            return;
+        }
+
+        element.PropertyChanged -= OnElementPropertyChanged;
         element.PropertyChanged += OnElementPropertyChanged;
 
         switch (control)
@@ -54,7 +62,6 @@ public partial class IconTintColorBehavior
                 throw new NotSupportedException($"{nameof(IconTintColorBehavior)} only currently supports Android.Widget.Button and {nameof(ImageView)}.");
         }
 
-
         static void SetImageViewTintColor(ImageView image, Color? color)
         {
             if (color is null)
@@ -63,7 +70,14 @@ public partial class IconTintColorBehavior
                 color = Colors.Transparent;
             }
 
-            image.SetColorFilter(new PorterDuffColorFilter(color.ToPlatform(), PorterDuff.Mode.SrcIn ?? throw new InvalidOperationException("PorterDuff.Mode.SrcIn should not be null at runtime.")));
+            try
+            {
+                image.SetColorFilter(new PorterDuffColorFilter(color.ToPlatform(), PorterDuff.Mode.SrcIn ?? throw new InvalidOperationException("PorterDuff.Mode.SrcIn should not be null at runtime.")));
+            }
+            catch (ObjectDisposedException)
+            {
+                // Catching the exception to prevent crashes if the image object has already been disposed.
+            }
         }
 
         static void SetButtonTintColor(AButton button, Color? color)
@@ -124,7 +138,14 @@ public partial class IconTintColorBehavior
         switch (control)
         {
             case ImageView image:
-                image.ClearColorFilter();
+                try
+                {
+                    image.ClearColorFilter();
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Catching the exception to prevent crashes if the image object has already been disposed.
+                }
                 break;
             case AButton button:
                 foreach (var drawable in button.GetCompoundDrawables())
