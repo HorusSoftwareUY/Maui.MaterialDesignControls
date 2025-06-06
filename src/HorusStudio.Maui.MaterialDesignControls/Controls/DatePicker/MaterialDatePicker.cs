@@ -74,10 +74,10 @@ public class MaterialDatePicker : MaterialInputBase
         _datePicker.SetBinding(DatePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _datePicker.SetBinding(CustomDatePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         
-        InputTapCommand = new Command(() => DoFocus());
-        LeadingIconCommand = new Command(() => DoFocus());
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
         TrailingIcon = MaterialIcon.DatePicker;
-        TrailingIconCommand = new Command(() => DoFocus());
+        TrailingIconCommand = new Command(() => Focus());
         Content = _datePicker;
     }
 
@@ -336,16 +336,37 @@ public class MaterialDatePicker : MaterialInputBase
         DateSelected?.Invoke(this, new DateSelectedEventArgs(oldValue, newValue));
     }
 
-    private void DoFocus()
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
     {
-        if (!IsEnabled) return;
-
+        if (_datePicker != null && IsEnabled)
+        {
 #if ANDROID
-        var handler = _datePicker.Handler as IDatePickerHandler;
-        handler?.PlatformView.PerformClick();
+            var handler = _datePicker.Handler as IDatePickerHandler;
+            handler?.PlatformView.PerformClick();
+            return true;
 #elif IOS || MACCATALYST
-        _datePicker.Focus();
+            return _datePicker.Focus();
 #endif
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        if (_datePicker != null)
+        {
+            _datePicker.Unfocus();
+        }
     }
 
     #endregion Methods
