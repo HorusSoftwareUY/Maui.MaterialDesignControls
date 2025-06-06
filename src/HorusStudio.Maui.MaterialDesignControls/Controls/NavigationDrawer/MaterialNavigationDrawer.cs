@@ -260,10 +260,15 @@ public class MaterialNavigationDrawer : ContentView
     /// </summary>
     public static readonly BindableProperty DisabledLabelColorProperty = BindableProperty.Create(nameof(DisabledLabelColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultDisabledColor);
 
+    /// <summary>
+    /// The backing store for the <see cref="IconSize" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValue: DefaultIconSize);
+
     #endregion Bindable Properties
 
     #region Properties
-    
+
     /// <summary>
     /// Gets or sets the <see cref="HeadlineTextColor" /> for the text of the headline. This is a bindable property.
     /// </summary>
@@ -674,6 +679,19 @@ public class MaterialNavigationDrawer : ContentView
         set => SetValue(DisabledLabelColorProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the icon size for the leading and trailing icons.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// 24
+    /// </default>
+    public double IconSize
+    {
+        get => (double)GetValue(IconSizeProperty);
+        set => SetValue(IconSizeProperty, value);
+    }
+
     #endregion Properties
 
     #region Constructors
@@ -947,12 +965,13 @@ public class MaterialNavigationDrawer : ContentView
     {
         var icon = new Image
         {
-            HeightRequest = DefaultIconSize,
-            MinimumHeightRequest = DefaultIconSize,
-            WidthRequest = DefaultIconSize,
-            MinimumWidthRequest = DefaultIconSize,
             VerticalOptions = LayoutOptions.Center
         };
+
+        icon.SetBinding(Image.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
+        icon.SetBinding(Image.MinimumHeightRequestProperty, new Binding(nameof(IconSize), source: this));
+        icon.SetBinding(Image.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
+        icon.SetBinding(Image.MinimumWidthRequestProperty, new Binding(nameof(IconSize), source: this));
 
         var tintColorBehavior = new IconTintColorBehavior();
         tintColorBehavior.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(item.IsEnabled), source: item, converter: new ItemEnabledToColorConverter(this)));
