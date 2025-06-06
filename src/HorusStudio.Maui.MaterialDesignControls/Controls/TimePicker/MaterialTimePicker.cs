@@ -72,10 +72,10 @@ public class MaterialTimePicker : MaterialInputBase
         _timePicker.SetBinding(TimePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _timePicker.SetBinding(CustomTimePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         
-        InputTapCommand = new Command(() => DoFocus());
-        LeadingIconCommand = new Command(() => DoFocus());
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
         TrailingIcon = MaterialIcon.TimePicker;
-        TrailingIconCommand = new Command(() => DoFocus());
+        TrailingIconCommand = new Command(() => Focus());
         Content = _timePicker;
     }
 
@@ -304,16 +304,37 @@ public class MaterialTimePicker : MaterialInputBase
         TimeSelected?.Invoke(this, new TimeSelectedEventArgs(oldValue, newValue));
     }
 
-    private void DoFocus()
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
     {
-        if (!IsEnabled) return;
-
+        if (_timePicker != null && IsEnabled)
+        {
 #if ANDROID
-        var handler = _timePicker.Handler as ITimePickerHandler;
-        handler?.PlatformView.PerformClick();
+            var handler = _timePicker.Handler as ITimePickerHandler;
+            handler?.PlatformView.PerformClick();
+            return true;
 #elif IOS || MACCATALYST
-        _timePicker.Focus();
+            return _timePicker.Focus();
 #endif
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        if (_timePicker != null)
+        {
+            _timePicker.Unfocus();
+        }
     }
 
     #endregion Methods

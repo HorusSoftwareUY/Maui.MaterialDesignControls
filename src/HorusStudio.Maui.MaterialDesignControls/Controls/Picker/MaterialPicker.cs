@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Windows.Input;
+using Microsoft.Maui.Handlers;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -72,10 +73,10 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
 
-        InputTapCommand = new Command(() => DoFocus());
-        LeadingIconCommand = new Command(() => DoFocus());
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
         TrailingIcon = MaterialIcon.Picker;
-        TrailingIconCommand = new Command(() => DoFocus());
+        TrailingIconCommand = new Command(() => Focus());
         Content = _picker;
     }
 
@@ -359,11 +360,31 @@ public class MaterialPicker : MaterialInputBase
         SelectedIndexChanged?.Invoke(this, e);
     }
 
-    private void DoFocus()
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
     {
-        if (!IsEnabled) return;
+        if (_picker != null && IsEnabled)
+        {
+            return _picker.Focus();
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-        _picker.Focus();
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        if (_picker != null)
+        {
+            _picker.Unfocus();
+        }
     }
 
     #endregion Methods

@@ -1,5 +1,9 @@
 ﻿using System.Windows.Input;
 
+#if ANDROID
+using Android.App;
+#endif
+
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
@@ -80,9 +84,9 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
         _entry.SetBinding(CustomEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
 
-        InputTapCommand = new Command(() => DoFocus());
-        LeadingIconCommand = new Command(() => DoFocus());
-        TrailingIconCommand = new Command(() => DoFocus());
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
+        TrailingIconCommand = new Command(() => Focus());
 
 #if ANDROID
         _entry.ReturnCommand = new Command(() =>
@@ -522,9 +526,36 @@ public class MaterialTextField : MaterialInputBase
         _entry.TextChanged -= TxtEntry_TextChanged;
     }
 
-    private void DoFocus()
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
     {
-        if (!IsReadOnly) _entry.Focus();
+        if (_entry != null && !IsReadOnly)
+        {
+            return _entry.Focus();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        if (_entry != null)
+        {
+            _entry.Unfocus();
+
+#if ANDROID
+            var view = _entry?.Handler?.PlatformView as Android.Views.View;
+            Platform.CurrentActivity?.HideKeyboard(view);
+#endif
+        }
     }
 
     #endregion Methods

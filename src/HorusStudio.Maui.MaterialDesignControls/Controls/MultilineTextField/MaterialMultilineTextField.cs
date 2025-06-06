@@ -1,5 +1,9 @@
 ﻿using System.Windows.Input;
 
+#if ANDROID
+using Android.App;
+#endif
+
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
@@ -79,9 +83,9 @@ public class MaterialMultilineTextField : MaterialInputBase
         _editor.SetBinding(CustomEditor.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
         _editor.SetBinding(Editor.AutoSizeProperty, new Binding(nameof(AutoSize), source: this));
 
-        InputTapCommand = new Command(() => DoFocus());
-        LeadingIconCommand = new Command(() => DoFocus());
-        TrailingIconCommand = new Command(() => DoFocus());
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
+        TrailingIconCommand = new Command(() => Focus());
 
         Content = _editor;
     }
@@ -443,9 +447,36 @@ public class MaterialMultilineTextField : MaterialInputBase
         }
     }
 
-    private void DoFocus()
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
     {
-        if (!IsReadOnly) _editor.Focus();
+        if (_editor != null && !IsReadOnly)
+        {
+            return _editor.Focus();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        if (_editor != null)
+        {
+            _editor.Unfocus();
+
+#if ANDROID
+            var view = _editor?.Handler?.PlatformView as Android.Views.View;
+            Platform.CurrentActivity?.HideKeyboard(view);
+#endif
+        }
     }
 
     #endregion Methods
