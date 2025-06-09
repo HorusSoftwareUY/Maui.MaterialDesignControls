@@ -97,5 +97,23 @@
         </material:MaterialCard>
         <material:MaterialLabel
              Text="You can customize the icons for each rating. You can set label properties too." Type="BodySmall" />
+
+        <material:MaterialLabel
+            Style="{StaticResource SectionTitle}"
+            Text="Events" />
+        <material:MaterialCard
+            Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialRating
+                    x:Name="ratingWithEvent"
+                    Label="ValueChanged event"
+                    ValueChanged="MaterialRating_ValueChanged" />
+                <material:MaterialRating
+                    Label="ValueChangedCommand"
+                    ValueChangedCommand="{Binding ValueChangedCommand}"/>
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel
+            Text="The ValueChangedCommand and ValueChanged event allow you to detect when the user changes the selected value in the Rating control." Type="BodySmall" />
     </VerticalStackLayout>
 </local:BaseContentPage>

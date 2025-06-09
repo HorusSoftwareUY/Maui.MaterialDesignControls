@@ -50,5 +50,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             await DisplayAlert(Title, $"The value is {Value}", "OK");
         }
+
+        [ICommand]
+        private async Task ValueChanged(int newValue)
+        {
+            await DisplayAlert(Title, $"The new value is {newValue}", "OK");
+        }
     }
 }
