@@ -2,6 +2,7 @@
 using HorusStudio.Maui.MaterialDesignControls.Converters;
 using Microsoft.Maui.Layouts;
 using System.Collections;
+using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -133,13 +134,30 @@ public class MaterialChipsGroup : ContentView
     /// The backing store for the <see cref="SelectedItem" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedItem, defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedItem, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, newValue) =>
+    {
+        if (bindable is MaterialChipsGroup self)
+        {
+            self.UpdateItemSelection();
+        }
+    });
 
     /// <summary>
     /// The backing store for the <see cref="SelectedItems" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedItems, defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(MaterialChipsGroup), defaultValue: DefaultSelectedItems, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, newValue) =>
+    {
+        if (bindable is MaterialChipsGroup self)
+        {
+            self.UpdateItemSelection();
+        }
+    });
+
+    /// <summary>
+    /// The backing store for the <see cref="SelectionChangedCommand" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SelectionChangedCommandProperty = BindableProperty.Create(nameof(SelectionChangedCommand), typeof(ICommand), typeof(MaterialChipsGroup));
 
     /// <summary>
     /// The backing store for the <see cref="SupportingText" />
@@ -393,8 +411,24 @@ public class MaterialChipsGroup : ContentView
     /// </default>
     public IList SelectedItems
     {
-        get => (IList)GetValue(SelectedItemsProperty);
+        get => (IList) GetValue(SelectedItemsProperty);
         set => SetValue(SelectedItemsProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the command to invoke when the selection changes.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
+    /// <remarks>
+    /// The command parameter type varies based on <see cref="IsMultipleSelection"/>: when <see langword="True"/>, it is <see cref="IList<object>"/>; when <see langword="False"/>, it is <see cref="object"/>.
+    /// </remarks>
+    public ICommand SelectionChangedCommand
+    {
+        get => (ICommand)GetValue(SelectionChangedCommandProperty);
+        set => SetValue(SelectionChangedCommandProperty, value);
     }
 
     /// <summary>
@@ -649,6 +683,15 @@ public class MaterialChipsGroup : ContentView
 
     #endregion Properties
 
+    #region Events
+
+    /// <summary>
+    /// Occurs when the selection changes.
+    /// </summary>
+    public event EventHandler<MaterialChipsGroupSelectionEventArgs>? SelectionChanged;
+
+    #endregion
+
     #region Layout
 
     private FlexLayout _flexContainer = null!;
@@ -859,6 +902,8 @@ public class MaterialChipsGroup : ContentView
             }
 
             SelectedItems = selectedItems;
+
+            UpdateItemSelection();
         }
         else
         {
@@ -872,16 +917,56 @@ public class MaterialChipsGroup : ContentView
                     break;
                 }
             }
+        }
+    }
 
+    private void UpdateItemSelection()
+    {
+        if (IsMultipleSelection)
+        {
+            var selectedItemsText = string.Empty;
+            if (SelectedItems != null)
+            {
+                foreach (var item in SelectedItems)
+                {
+                    var propertyPathValue = string.IsNullOrWhiteSpace(PropertyPath) ? item.ToString() : GetPropertyValue(item, PropertyPath);
+                    selectedItemsText += $"{propertyPathValue},";
+                }
+            }
+
+            foreach (var item in _flexContainer.Children)
+            {
+                if (item is MaterialChips itemMC)
+                {
+                    itemMC.IsSelected = selectedItemsText.Contains(itemMC.Text);
+                }
+            }
+
+            if (SelectionChangedCommand != null && SelectionChangedCommand.CanExecute(SelectedItems))
+            {
+                SelectionChangedCommand.Execute(SelectedItems);
+            }
+
+            SelectionChanged?.Invoke(this, new MaterialChipsGroupSelectionEventArgs(SelectedItems));
+        }
+        else
+        {
             var selectedPathValue = GetSelectedPathValue();
 
             foreach (var item in _flexContainer.Children)
             {
-                if (item is MaterialChips itemMC && itemMC.Text != selectedPathValue)
+                if (item is MaterialChips itemMC)
                 {
-                    itemMC.IsSelected = false;
+                    itemMC.IsSelected = itemMC.Text == selectedPathValue;
                 }
             }
+
+            if (SelectionChangedCommand != null && SelectionChangedCommand.CanExecute(SelectedItem))
+            {
+                SelectionChangedCommand.Execute(SelectedItem);
+            }
+
+            SelectionChanged?.Invoke(this, new MaterialChipsGroupSelectionEventArgs(SelectedItem));
         }
     }
 
