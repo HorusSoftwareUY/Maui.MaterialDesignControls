@@ -1,4 +1,5 @@
 ﻿
+using HorusStudio.Maui.MaterialDesignControls.Animations;
 using HorusStudio.Maui.MaterialDesignControls.Converters;
 using Microsoft.Maui.Layouts;
 using System.Collections;
@@ -68,7 +69,7 @@ public class MaterialChipsGroup : ContentView
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
     private const double DefaultCornerRadius = 8.0;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimateError = _ => MaterialAnimation.AnimateOnError;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultErrorAnimationType = _ => MaterialAnimation.ErrorAnimationType;
     private const bool DefaultIsMultipleSelection = false;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimation = _ => MaterialAnimation.Type;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
@@ -214,10 +215,10 @@ public class MaterialChipsGroup : ContentView
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultCornerRadius);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimateError" />
+    /// The backing store for the <see cref="ErrorAnimationType" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimateErrorProperty = BindableProperty.Create(nameof(AnimateError), typeof(bool), typeof(MaterialChipsGroup), defaultValueCreator: DefaultAnimateError);
+    public static readonly BindableProperty ErrorAnimationTypeProperty = BindableProperty.Create(nameof(ErrorAnimationType), typeof(ErrorAnimationTypes), typeof(MaterialChipsGroup), defaultValueCreator: DefaultErrorAnimationType);
 
     /// <summary>
     /// The backing store for the <see cref="IsMultipleSelection" />
@@ -541,16 +542,16 @@ public class MaterialChipsGroup : ContentView
     }
 
     /// <summary>
-    /// Gets or sets if the error animation is enabled for the ChipsGroup.
+    /// Gets or sets an animation to be executed when the control has an error.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="True"/>
+    /// <see cref="ErrorAnimationTypes.Shake">ErrorAnimationTypes.Shake</see>
     /// </default>
-    public bool AnimateError
+    public ErrorAnimationTypes ErrorAnimationType
     {
-        get => (bool)GetValue(AnimateErrorProperty);
-        set => SetValue(AnimateErrorProperty, value);
+        get => (ErrorAnimationTypes)GetValue(ErrorAnimationTypeProperty);
+        set => SetValue(ErrorAnimationTypeProperty, value);
     }
 
     /// <summary>
@@ -668,9 +669,9 @@ public class MaterialChipsGroup : ContentView
 
     private async Task<bool> ValidateText(object value)
     {
-        if (AnimateError && !string.IsNullOrEmpty(SupportingText) && SupportingText == (string)value)
+        if (ErrorAnimationType != ErrorAnimationTypes.None && !string.IsNullOrEmpty(SupportingText) && SupportingText == (string)value)
         {
-            await ShakeAnimation.AnimateAsync(Content);
+            _ = ErrorAnimation.AnimateAsync(this, ErrorAnimationType);
         }
 
         return true;

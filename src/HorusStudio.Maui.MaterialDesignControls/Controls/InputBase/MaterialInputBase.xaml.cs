@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Animations;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -68,6 +69,7 @@ public abstract partial class MaterialInputBase
     protected const double DefaultHeightRequest = 48.0;
     protected const bool DefaultAlwaysShowLabel = false;
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultErrorIcon = _ => MaterialIcon.Error;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultErrorAnimationType = _ => MaterialAnimation.ErrorAnimationType;
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
@@ -383,10 +385,16 @@ public abstract partial class MaterialInputBase
     {
         if (bindableObject is MaterialInputBase self)
         {
-            self.UpdateLayoutAfterTypeChanged(self.Type);
+            self.SetHasError(self.Type);
         }
     });
-    
+
+    /// <summary>
+    /// The backing store for the <see cref="ErrorAnimationType" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty ErrorAnimationTypeProperty = BindableProperty.Create(nameof(ErrorAnimationType), typeof(ErrorAnimationTypes), typeof(MaterialInputBase), defaultValueCreator: DefaultErrorAnimationType);
+
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
     /// </summary>
@@ -956,6 +964,19 @@ public abstract partial class MaterialInputBase
     }
 
     /// <summary>
+    /// Gets or sets an animation to be executed when the control has an error.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="ErrorAnimationTypes.Shake">ErrorAnimationTypes.Shake</see>
+    /// </default>
+    public ErrorAnimationTypes ErrorAnimationType
+    {
+        get => (ErrorAnimationTypes)GetValue(ErrorAnimationTypeProperty);
+        set => SetValue(ErrorAnimationTypeProperty, value);
+    }
+
+    /// <summary>
     /// Gets or sets the height request
     /// </summary>
     public new double HeightRequest
@@ -1057,6 +1078,16 @@ public abstract partial class MaterialInputBase
         SetBorderWidth(type);
 
         UpdateLayoutAfterStatusChanged(type);
+    }
+
+    private void SetHasError(MaterialInputType type)
+    {
+        UpdateLayoutAfterTypeChanged(type);
+
+        if (HasError && ErrorAnimationType != ErrorAnimationTypes.None)
+        {
+            _ = ErrorAnimation.AnimateAsync(this, ErrorAnimationType);
+        }
     }
 
     private void SetBorderWidth(MaterialInputType type)
