@@ -44,7 +44,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// <todoList>
 /// * For the SelectedItems to be updated correctly they must be initialized. Finding a way to make it work even when the list starts out null
 /// </todoList>
-public class MaterialChipsGroup : ContentView
+public class MaterialChipsGroup : ContentView, IValidableView
 {
     #region Attributes
 
@@ -691,7 +691,7 @@ public class MaterialChipsGroup : ContentView
         if (!string.IsNullOrEmpty(SupportingText) && SupportingText == (string)value
             && (ErrorAnimationType != ErrorAnimationTypes.None || ErrorAnimation != null))
         {
-            _ = ErrorAnimationManager.AnimateAsync(this, ErrorAnimationType, ErrorAnimation);
+            _ = ErrorAnimationManager.AnimateAsync(this);
         }
 
         return true;

@@ -38,7 +38,7 @@ public enum MaterialInputTypeStates
 }
 
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-public abstract partial class MaterialInputBase
+public abstract partial class MaterialInputBase : IValidableView
 {
     #region Attributes
 
@@ -394,6 +394,12 @@ public abstract partial class MaterialInputBase
     /// bindable property.
     /// </summary>
     public static readonly BindableProperty ErrorAnimationTypeProperty = BindableProperty.Create(nameof(ErrorAnimationType), typeof(ErrorAnimationTypes), typeof(MaterialInputBase), defaultValueCreator: DefaultErrorAnimationType);
+
+    /// <summary>
+    /// The backing store for the <see cref="ErrorAnimation" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty ErrorAnimationProperty = BindableProperty.Create(nameof(ErrorAnimation), typeof(IErrorAnimation), typeof(MaterialInputBase));
 
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
@@ -964,16 +970,32 @@ public abstract partial class MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets an animation to be executed when the control has an error.
+    /// Gets or sets the animation type to be executed when the control has an error.
     /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="ErrorAnimationTypes.Shake">ErrorAnimationTypes.Shake</see>
     /// </default>
+    /// <remarks>
+    /// This property will only be considered if the <see cref="ErrorAnimation"/> property is NULL.
+    /// </remarks>
     public ErrorAnimationTypes ErrorAnimationType
     {
         get => (ErrorAnimationTypes)GetValue(ErrorAnimationTypeProperty);
         set => SetValue(ErrorAnimationTypeProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a custom animation to be executed when the control has an error.
+    /// This is a bindable property.
+    /// </summary>
+    /// <remarks>
+    /// When this property is set, the <see cref="ErrorAnimationType"/> property is ignored.
+    /// </remarks>
+    public IErrorAnimation ErrorAnimation
+    {
+        get => (IErrorAnimation)GetValue(ErrorAnimationProperty);
+        set => SetValue(ErrorAnimationProperty, value);
     }
 
     /// <summary>
@@ -1084,9 +1106,10 @@ public abstract partial class MaterialInputBase
     {
         UpdateLayoutAfterTypeChanged(type);
 
-        if (HasError && ErrorAnimationType != ErrorAnimationTypes.None)
+        if (HasError
+            && (ErrorAnimationType != ErrorAnimationTypes.None || ErrorAnimation != null))
         {
-            _ = ErrorAnimation.AnimateAsync(this, ErrorAnimationType);
+            _ = ErrorAnimationManager.AnimateAsync(this);
         }
     }
 
