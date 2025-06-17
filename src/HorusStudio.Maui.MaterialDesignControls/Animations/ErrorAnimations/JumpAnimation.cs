@@ -3,9 +3,6 @@
     /// <summary>
     /// Represents an animation that creates a "jump" effect by translating the target element along the Y-axis.
     /// </summary>
-    /// <todoList>
-    /// * [iOS] Jump animation doesn't work
-    /// </todoList>
     public class JumpAnimation : IErrorAnimation
     {
         /// <summary>
@@ -46,20 +43,18 @@
         {
             var animation = new Animation();
 
-            animation.WithConcurrent(
-              (f) => view.TranslationY = f,
-              view.TranslationY, view.TranslationX,
-              Easing.Linear, 0, 0.2);
+            var originalTranslationY = view.TranslationY;
+            var targetTranslationY = view.TranslationY + Movement;
 
             animation.WithConcurrent(
               (f) => view.TranslationY = f,
-              view.TranslationY + Movement, view.TranslationX,
-              Easing.Linear, 0.2, 0.4);
+              view.TranslationY, targetTranslationY,
+              Easing.Linear, 0, 0.6);
 
             animation.WithConcurrent(
              (f) => view.TranslationY = f,
-             view.TranslationY, view.TranslationX,
-             Easing.Linear, 0.5, 1.0);
+             targetTranslationY, originalTranslationY,
+             Easing.Linear, 0.6, 1.0);
 
             return animation;
         }

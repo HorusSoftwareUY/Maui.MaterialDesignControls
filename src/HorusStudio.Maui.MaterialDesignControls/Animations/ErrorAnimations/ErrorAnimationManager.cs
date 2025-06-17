@@ -26,7 +26,7 @@
                         await heartAnimation.BeginAnimation(validableView);
                         break;
                     case ErrorAnimationTypes.Jump:
-                        var jumpAnimation = new JumpAnimation() { Duration = 500 };
+                        var jumpAnimation = new JumpAnimation() { Duration = 1200 };
                         await jumpAnimation.BeginAnimation(validableView);
                         break;
                 }
