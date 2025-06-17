@@ -4,6 +4,6 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 public sealed class MaterialAnimationOptions
 {
     public double? Parameter { get; set; }
-    public AnimationTypes? Type { get; set; }
+    public TouchAnimationTypes? TouchAnimationType { get; set; }
     public ErrorAnimationTypes? ErrorAnimationType { get; set; }
 }

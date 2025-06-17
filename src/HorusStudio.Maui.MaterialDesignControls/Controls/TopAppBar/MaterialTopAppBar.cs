@@ -80,9 +80,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const bool DefaultLeadingIconIsBusy = false;
         private static readonly IList? DefaultTrailingIcons = null;
         private const double DefaultIconSize = 48.0;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconButtonAnimationType = _ => MaterialAnimation.Type;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconButtonAnimationParameter = _ => MaterialAnimation.Parameter;
-        private static readonly ICustomAnimation? DefaultIconButtonCustomAnimation = null;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconButtonTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
         private const double DefaultBusyIndicatorSize = 24.0;
         private static readonly string? DefaultScrollViewName = null;
@@ -234,19 +232,14 @@ namespace HorusStudio.Maui.MaterialDesignControls
         public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(double), typeof(MaterialTopAppBar), defaultValue: DefaultIconSize);
 
         /// <summary>
-        /// The backing store for the <see cref="IconButtonAnimation" /> bindable property.
+        /// The backing store for the <see cref="IconButtonTouchAnimationType" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty IconButtonAnimationProperty = BindableProperty.Create(nameof(IconButtonAnimation), typeof(AnimationTypes), typeof(MaterialTopAppBar), defaultValueCreator: DefaultIconButtonAnimationType);
+        public static readonly BindableProperty IconButtonTouchAnimationTypeProperty = BindableProperty.Create(nameof(IconButtonTouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialTopAppBar), defaultValueCreator: DefaultIconButtonTouchAnimationType);
 
         /// <summary>
-        /// The backing store for the <see cref="IconButtonAnimationParameter" /> bindable property.
+        /// The backing store for the <see cref="IconButtonTouchAnimation" /> bindable property.
         /// </summary>
-        public static readonly BindableProperty IconButtonAnimationParameterProperty = BindableProperty.Create(nameof(IconButtonAnimationParameter), typeof(double?), typeof(MaterialTopAppBar), defaultValueCreator: DefaultIconButtonAnimationParameter);
-
-        /// <summary>
-        /// The backing store for the <see cref="IconButtonCustomAnimation" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty IconButtonCustomAnimationProperty = BindableProperty.Create(nameof(IconButtonCustomAnimation), typeof(ICustomAnimation), typeof(MaterialTopAppBar), defaultValue: DefaultIconButtonCustomAnimation);
+        public static readonly BindableProperty IconButtonTouchAnimationProperty = BindableProperty.Create(nameof(IconButtonTouchAnimation), typeof(ITouchAnimation), typeof(MaterialTopAppBar));
 
         /// <summary>
         /// The backing store for the <see cref="BusyIndicatorColor" /> bindable property.
@@ -534,25 +527,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>
+        /// <see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see>
         /// </default>
-        public AnimationTypes IconButtonAnimation
+        public TouchAnimationTypes IconButtonTouchAnimationType
         {
-            get => (AnimationTypes)GetValue(IconButtonAnimationProperty);
-            set => SetValue(IconButtonAnimationProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-        /// This is a bindable property.
-        /// </summary>
-        /// <default>
-        /// 0.7
-        /// </default>
-        public double? IconButtonAnimationParameter
-        {
-            get => (double?)GetValue(IconButtonAnimationParameterProperty);
-            set => SetValue(IconButtonAnimationParameterProperty, value);
+            get => (TouchAnimationTypes)GetValue(IconButtonTouchAnimationTypeProperty);
+            set => SetValue(IconButtonTouchAnimationTypeProperty, value);
         }
 
         /// <summary>
@@ -562,10 +542,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <default>
         /// <see langword="null"/>
         /// </default>
-        public ICustomAnimation IconButtonCustomAnimation
+        public ITouchAnimation IconButtonTouchAnimation
         {
-            get => (ICustomAnimation)GetValue(IconButtonCustomAnimationProperty);
-            set => SetValue(IconButtonCustomAnimationProperty, value);
+            get => (ITouchAnimation)GetValue(IconButtonTouchAnimationProperty);
+            set => SetValue(IconButtonTouchAnimationProperty, value);
         }
 
         /// <summary>
@@ -710,9 +690,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             };
             _leadingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
             _leadingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
-            _leadingIconButton.SetBinding(MaterialIconButton.AnimationProperty, new Binding(nameof(IconButtonAnimation), source: this));
-            _leadingIconButton.SetBinding(MaterialIconButton.AnimationParameterProperty, new Binding(nameof(IconButtonAnimationParameter), source: this));
-            _leadingIconButton.SetBinding(MaterialIconButton.CustomAnimationProperty, new Binding(nameof(IconButtonCustomAnimation), source: this));
+            _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimationType), source: this));
+            _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
             this.Add(_leadingIconButton, 0);
 
             var busyIndicatorMargin = GetBusyIndicatorMargin();
@@ -1012,9 +991,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             };
             trailingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
             trailingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
-            trailingIconButton.SetBinding(MaterialIconButton.AnimationProperty, new Binding(nameof(IconButtonAnimation), source: this));
-            trailingIconButton.SetBinding(MaterialIconButton.AnimationParameterProperty, new Binding(nameof(IconButtonAnimationParameter), source: this));
-            trailingIconButton.SetBinding(MaterialIconButton.CustomAnimationProperty, new Binding(nameof(IconButtonCustomAnimation), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimationType), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
             _trailingIconButtons.Add(trailingIconButton);
             this.Add(trailingIconButton, trailingIconIndex + 2);
 
