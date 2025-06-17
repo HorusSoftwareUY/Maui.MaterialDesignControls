@@ -49,7 +49,7 @@
                     CommandParameter="User selection"
                     TrailingIcon="ic_floating.png"
                     HasError="{Binding HasAnError}"
-                    ErrorAnimationType="Breath"
+                    ErrorAnimationType="Heart"
                     Placeholder="Select user" />
                 
                 <material:MaterialSelection 

@@ -139,11 +139,14 @@
 
                     <material:MaterialTextField 
                         Text="{Binding Text}"
-                        SupportingText="(*) required"
+                        SupportingText="With custom animation"
                         Type="Outlined"
                         HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here" 
-                        ErrorAnimationType="None" />
+                        Placeholder="Enter text here">
+                        <material:MaterialTextField.ErrorAnimation>
+                            <material:HeartAnimation Duration="2000" Scale="0.8" />
+                        </material:MaterialTextField.ErrorAnimation>
+                    </material:MaterialTextField>
                     
                     <material:MaterialTextField 
                         Text="{Binding Text}"
@@ -157,13 +160,13 @@
                     
                     <material:MaterialTextField 
                         Text="{Binding Text}"
-                        SupportingText="With custom error icon and Breath animation"
+                        SupportingText="With custom error icon and Heart animation"
                         Type="Filled"
                         Label="Custom error"
                         ErrorIcon="info.png"
                         HasError="{Binding HasAnError}"
                         Placeholder="Enter text here" 
-                        ErrorAnimationType="Breath" />
+                        ErrorAnimationType="Heart" />
                     
                     <material:MaterialTextField 
                         Text="{Binding Text}"
