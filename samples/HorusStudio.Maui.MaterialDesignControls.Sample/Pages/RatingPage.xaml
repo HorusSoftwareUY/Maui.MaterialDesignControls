@@ -103,11 +103,28 @@
             Text="Events" />
         <material:MaterialCard
             Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
+            <VerticalStackLayout
+                Spacing="0">
                 <material:MaterialRating
                     x:Name="ratingWithEvent"
                     Label="ValueChanged event"
+                    Value="{Binding Value}"
                     ValueChanged="MaterialRating_ValueChanged" />
+                <Grid
+                    ColumnDefinitions="*,*"
+                    Margin="0,0,0,24">
+                    <material:MaterialButton
+                        Type="Text"
+                        TextDecorations="Underline"
+                        Text="Change value to 3"
+                        Command="{Binding ChangeValueTo3Command}" />
+                    <material:MaterialButton
+                        Grid.Column="1"
+                        Type="Text"
+                        TextDecorations="Underline"
+                        Command="{Binding CheckValueCommand}"
+                        Text="Check Value" />
+                </Grid>
                 <material:MaterialRating
                     Label="ValueChangedCommand"
                     ValueChangedCommand="{Binding ValueChangedCommand}"/>

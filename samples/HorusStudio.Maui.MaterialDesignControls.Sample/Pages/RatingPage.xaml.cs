@@ -11,7 +11,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 
         void MaterialRating_ValueChanged(System.Object sender, HorusStudio.Maui.MaterialDesignControls.MaterialRatingSelectedEventArgs e)
         {
-            ratingWithEvent.Label = $"ValueChanged event - Value: {e.NewValue}";
+            if (ratingWithEvent != null)
+                ratingWithEvent.Label = $"ValueChanged event - Value: {e.NewValue}";
         }
     }
 }

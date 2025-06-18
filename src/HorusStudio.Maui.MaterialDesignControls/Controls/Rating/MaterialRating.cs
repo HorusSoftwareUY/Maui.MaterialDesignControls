@@ -550,12 +550,19 @@ public class MaterialRating : ContentView
     {
         if (newValue is not null && int.TryParse(newValue.ToString(), out int value))
         {
-            for(int position = 0; position < control._containerLayout.Children.Count; position++)
+            for (int position = 0; position < control._containerLayout.Children.Count; position++)
             {
                 var item = control._containerLayout.Children[position];
                 SetIconsRatingControl(item, value, position);
             }
         }
+
+        if (ValueChangedCommand != null && ValueChangedCommand.CanExecute(Value))
+        {
+            ValueChangedCommand.Execute(Value);
+        }
+
+        ValueChanged?.Invoke(this, new MaterialRatingSelectedEventArgs(Value));
     }
 
     // Set the content of the container of the ratings
@@ -729,13 +736,6 @@ public class MaterialRating : ContentView
             {
                 Value = value;
             }
-
-            if (ValueChangedCommand != null && ValueChangedCommand.CanExecute(Value))
-            {
-                ValueChangedCommand.Execute(Value);
-            }
-
-            ValueChanged?.Invoke(this, new MaterialRatingSelectedEventArgs(Value));
         }
     }
 
