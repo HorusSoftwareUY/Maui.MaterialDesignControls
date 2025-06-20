@@ -178,6 +178,28 @@ public class MaterialSegmentedButton : ContentView
     /// </summary>
     public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialSegmentedButton), defaultValue: DefaultHeightRequest);
 
+    /// <summary>
+    /// The backing store for the <see cref="SelectedItems" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IEnumerable<MaterialSegmentedButtonItem>), typeof(MaterialSegmentedButton), defaultValue: Array.Empty<MaterialSegmentedButtonItem>(), defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialSegmentedButton self)
+        {
+            self.SetSelectedItems();
+        }
+    });
+
+    /// <summary>
+    /// The backing store for the <see cref="SelectedItem" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(MaterialSegmentedButtonItem), typeof(MaterialSegmentedButton), defaultValue: null, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is MaterialSegmentedButton self)
+        {
+            self.SetSelectedItem();
+        }
+    });
+
     #endregion
 
     #region Properties
@@ -374,7 +396,7 @@ public class MaterialSegmentedButton : ContentView
     }
 
     /// <summary>
-    /// Gets the selected buttons.
+    /// Gets or sets the selected buttons.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -383,11 +405,12 @@ public class MaterialSegmentedButton : ContentView
     /// <remarks>Useful when you set <see cref="AllowMultiSelect"/> to <see langword="True"/></remarks>
     public IEnumerable<MaterialSegmentedButtonItem> SelectedItems
     {
-        get { return ItemsSource != null ? ItemsSource.Where(w => w.IsSelected) : Array.Empty<MaterialSegmentedButtonItem>(); }
+        get => (IEnumerable<MaterialSegmentedButtonItem>)GetValue(SelectedItemsProperty);
+        set => SetValue(SelectedItemsProperty, value);
     }
 
     /// <summary>
-    /// Gets the selected button.
+    /// Gets or sets the selected button.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -396,7 +419,8 @@ public class MaterialSegmentedButton : ContentView
     /// <remarks>Useful when you set <see cref="AllowMultiSelect"/> to <see langword="False"/></remarks>
     public MaterialSegmentedButtonItem? SelectedItem
     {
-        get { return ItemsSource != null ? ItemsSource.FirstOrDefault(w => w.IsSelected) : null; }
+        get => (MaterialSegmentedButtonItem?)GetValue(SelectedItemProperty);
+        set => SetValue(SelectedItemProperty, value);
     }
 
     #endregion
@@ -418,6 +442,8 @@ public class MaterialSegmentedButton : ContentView
         if (AllowMultiSelect)
         {
             segmentedButton.IsSelected = !segmentedButton.IsSelected;
+
+            SelectedItems = ItemsSource.Where(x => x.IsSelected);
         }
         else
         {
@@ -432,11 +458,16 @@ public class MaterialSegmentedButton : ContentView
                     itemCollection.IsSelected = false;
                 }
             }
+
+            SelectedItem = ItemsSource.FirstOrDefault(x => x.IsSelected);
         }
 
         SetVisualStateToItems();
+    }
 
-        object commandParameter = AllowMultiSelect ? SelectedItems : SelectedItem;
+    private void InvokeSelectionChanged()
+    {
+        object? commandParameter = AllowMultiSelect ? SelectedItems : SelectedItem;
         if (SelectionCommand != null && SelectionCommand.CanExecute(commandParameter))
         {
             SelectionCommand.Execute(commandParameter);
@@ -453,7 +484,7 @@ public class MaterialSegmentedButton : ContentView
     }
 
     #endregion
-    
+
     #region Layout
 
     private MaterialCard _container;
@@ -494,6 +525,36 @@ public class MaterialSegmentedButton : ContentView
 
     #region Setters
 
+    private void SetSelectedItems()
+    {
+        if (ItemsSource != null)
+        {
+            foreach (var item in ItemsSource)
+            {
+                item.IsSelected = SelectedItems != null && SelectedItems.Contains(item);
+            }
+        }
+
+        SetVisualStateToItems();
+
+        InvokeSelectionChanged();
+    }
+
+    private void SetSelectedItem()
+    {
+        if (ItemsSource != null)
+        {
+            foreach (var item in ItemsSource)
+            {
+                item.IsSelected = SelectedItem != null && SelectedItem == item;
+            }
+        }
+
+        SetVisualStateToItems();
+
+        InvokeSelectionChanged();
+    }
+
     private void UpdateItemsSource()
     {
         _itemsContainer.Children.Clear();
@@ -508,8 +569,6 @@ public class MaterialSegmentedButton : ContentView
         var indexColum = 0;
         foreach (var item in ItemsSource)
         {
-            item.SetVisualStateToItems = SetVisualStateToItems;
-
             var result = AddItem(item, indexColum);
             if (result)
             {

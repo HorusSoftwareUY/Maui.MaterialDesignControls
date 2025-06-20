@@ -17,10 +17,16 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<MaterialSegmentedButtonItem> _items;
-        
+
+        [ObservableProperty]
+        private MaterialSegmentedButtonItem _selectedItem;
+
         [ObservableProperty]
         private ObservableCollection<MaterialSegmentedButtonItem> _items2;
-        
+
+        [ObservableProperty]
+        private ObservableCollection<MaterialSegmentedButtonItem> _selectedItems2;
+
         [ObservableProperty]
         private ObservableCollection<MaterialSegmentedButtonItem> _items3;
 
@@ -29,12 +35,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(SelectedItemText))]
-        private MaterialSegmentedButtonItem _selectedItem;
+        private MaterialSegmentedButtonItem _selectedItem4;
 
         [ObservableProperty]
         private IEnumerable<MaterialSegmentedButtonItem> _selectedItems;
 
-        public string? SelectedItemText => SelectedItem != null ? $"SelectedItem: {SelectedItem.Text}" : "-";
+        public string? SelectedItemText => SelectedItem4 != null ? $"SelectedItem: {SelectedItem4.Text}" : "-";
 
         public string TextButtonTypeSelected => SegmentedType == MaterialSegmentedButtonType.Filled ? "Outlined" : "Filled";
 
@@ -57,8 +63,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new MaterialSegmentedButtonItem("Opt1")
                 {
                     SelectedIcon = "star_selected",
-                    UnselectedIcon = "star_unselected",
-                    IsSelected = true,
+                    UnselectedIcon = "star_unselected"
                 },
                 new MaterialSegmentedButtonItem("Opt2")
                 {
@@ -71,13 +76,14 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     UnselectedIcon = "star_unselected"
                 }
             };
+
+            SelectedItem = Items[0];
             
             Items2 = new ObservableCollection<MaterialSegmentedButtonItem>
             {
                 new MaterialSegmentedButtonItem("Opt1")
                 {
-                    SelectedIcon = "ic_checkbox.png",
-                    IsSelected = true,
+                    SelectedIcon = "ic_checkbox.png"
                 },
                 new MaterialSegmentedButtonItem("Opt2")
                 {
@@ -88,7 +94,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     SelectedIcon = "ic_checkbox.png"
                 }
             };
-            
+
+            SelectedItems2 = new ObservableCollection<MaterialSegmentedButtonItem> { Items2[0] };
+
             Items3 = new ObservableCollection<MaterialSegmentedButtonItem>
             {
                 new MaterialSegmentedButtonItem("Opt1"),
@@ -101,8 +109,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new MaterialSegmentedButtonItem("Opt1")
                 {
                     SelectedIcon = "horus_logo",
-                    ApplyIconTintColor = false,
-                    IsSelected = true,
+                    ApplyIconTintColor = false
                 },
                 new MaterialSegmentedButtonItem("Opt2")
                 {
@@ -115,7 +122,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 }
             };
 
-            SelectedItem = Items.First();
+            SelectedItem4 = Items4[0];
         }
 
         [ICommand]
@@ -139,17 +146,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private void SelectLastItem()
         {
-            foreach (var item in Items4)
-            {
-                if (item == Items4.Last())
-                {
-                    item.Select();
-                }
-                else
-                {
-                    item.Unselect();
-                }    
-            }
+            SelectedItem4 = Items4.Last();
         }
 
         [ICommand]

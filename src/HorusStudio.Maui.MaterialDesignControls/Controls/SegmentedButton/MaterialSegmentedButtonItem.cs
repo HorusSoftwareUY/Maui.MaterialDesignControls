@@ -17,8 +17,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private bool _applyIconTintColor = true;
         private bool _isSelected = false;
 
-        internal Action SetVisualStateToItems { get; set; }
-
         #endregion Attributes
 
         #region Properties
@@ -69,7 +67,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets if segmented button is selected.
+        /// Gets if segmented button is selected.
         /// </summary>
         /// <default>
         /// <see langword="False"/>
@@ -77,7 +75,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         public bool IsSelected
         {
             get => _isSelected;
-            set => SetProperty(ref _isSelected, value);
+            internal set => SetProperty(ref _isSelected, value);
         }
 
         /// <inheritdoc />
@@ -123,30 +121,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        /// Perform the item selection
-        /// </summary>
-        public void Select()
-        {
-            if (!IsSelected)
-            {
-                IsSelected = true;
-                SetVisualStateToItems?.Invoke();
-            }
-        }
-
-        /// <summary>
-        /// Perform the item unselection
-        /// </summary>
-        public void Unselect()
-        {
-            if (IsSelected)
-            {
-                IsSelected = false;
-                SetVisualStateToItems?.Invoke();
-            }
         }
     }
 }

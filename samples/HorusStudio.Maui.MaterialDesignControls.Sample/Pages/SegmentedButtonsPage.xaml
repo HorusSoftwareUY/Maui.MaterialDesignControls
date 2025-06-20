@@ -15,6 +15,7 @@
             <VerticalStackLayout>
                 <material:MaterialSegmentedButton
                     ItemsSource="{Binding Items2}"
+                    SelectedItems="{Binding SelectedItems2}"
                     SelectionCommand="{Binding OnMultipleItemSelectionCommand}"
                     Type="Outlined"
                     AllowMultiSelect="True" />
@@ -29,6 +30,7 @@
             <VerticalStackLayout>
                 <material:MaterialSegmentedButton
                     ItemsSource="{Binding Items}"
+                    SelectedItem="{Binding SelectedItem}"
                     SelectionCommand="{Binding OnSingleItemSelectionCommand}"
                     Type="Filled" />
             </VerticalStackLayout>
@@ -59,6 +61,7 @@
             <VerticalStackLayout>
                 <material:MaterialSegmentedButton
                     ItemsSource="{Binding Items4}"
+                    SelectedItem="{Binding SelectedItem4}"
                     SelectionCommand="{Binding OnSingleItemSelectionCommand}"
                     IsEnabled="{Binding FullApiIsEnabled}"
                     Type="{Binding SegmentedType}"
