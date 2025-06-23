@@ -28,6 +28,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private ObservableCollection<MaterialSegmentedButtonItem> _tabItems;
 
         [ObservableProperty]
+        private MaterialSegmentedButtonItem _selectedTabItem;
+
+        [ObservableProperty]
         private bool _isEnabled = true;
 
         [ObservableProperty]
@@ -61,12 +64,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
             TabItems = new ObservableCollection<MaterialSegmentedButtonItem>
             {
-                new MaterialSegmentedButtonItem("Overview")
-                {
-                    IsSelected = true
-                },
+                new MaterialSegmentedButtonItem("Overview"),
                 new MaterialSegmentedButtonItem("Customize")
             };
+
+            SelectedTabItem = TabItems.First();
         }
         
         public delegate Task DisplayAlertType(string title, string message, string cancel);

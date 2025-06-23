@@ -59,6 +59,7 @@
                         <VerticalStackLayout Style="{StaticResource MainLayout}">
                             <material:MaterialSegmentedButton
                                 ItemsSource="{TemplateBinding TabItems}"
+                                SelectedItem="{TemplateBinding SelectedTabItem}"
                                 SelectionCommand="{TemplateBinding TabItemsSelection}"
                                 HeightRequest="40"
                                 CornerRadius="20" />

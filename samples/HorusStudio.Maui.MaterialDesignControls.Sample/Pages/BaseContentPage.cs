@@ -19,6 +19,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         public static readonly BindableProperty TabItemsProperty = BindableProperty.Create(nameof(TabItems), typeof(ObservableCollection<MaterialSegmentedButtonItem>), typeof(BaseContentPage<>));
 
         /// <summary>
+        /// The backing store for the <see cref="SelectedTabItem" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty SelectedTabItemProperty = BindableProperty.Create(nameof(SelectedTabItem), typeof(MaterialSegmentedButtonItem), typeof(BaseContentPage<>));
+
+        /// <summary>
         /// The backing store for the <see cref="TabItemsSelection" /> bindable property.
         /// </summary>
         public static readonly BindableProperty TabItemsSelectionProperty = BindableProperty.Create(nameof(TabItemsSelection), typeof(ICommand), typeof(BaseContentPage<>));
@@ -63,6 +68,15 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         {
             get => (ObservableCollection<MaterialSegmentedButtonItem>)GetValue(TabItemsProperty);
             set => SetValue(TabItemsProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the selected tab item. This is a bindable property.
+        /// </summary>
+        public MaterialSegmentedButtonItem SelectedTabItem
+        {
+            get => (MaterialSegmentedButtonItem)GetValue(SelectedTabItemProperty);
+            set => SetValue(SelectedTabItemProperty, value);
         }
 
         /// <summary>
@@ -121,6 +135,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             SetBinding(TitleProperty, new Binding(nameof(BaseViewModel.Title)));
             SetBinding(SubtitleProperty, new Binding(nameof(BaseViewModel.Subtitle)));
             SetBinding(TabItemsProperty, new Binding(nameof(BaseViewModel.TabItems)));
+            SetBinding(SelectedTabItemProperty, new Binding(nameof(BaseViewModel.SelectedTabItem)));
             SetBinding(TabItemsSelectionProperty, new Binding(nameof(BaseViewModel.TabItemsSelectionCommand)));
             SetBinding(CustomizationModeProperty, new Binding(nameof(BaseViewModel.IsCustomize), mode: BindingMode.TwoWay));
             SetBinding(BackCommandProperty, new Binding(nameof(BaseViewModel.GoBackCommand)));
