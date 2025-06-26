@@ -149,6 +149,7 @@
                     <MultiTrigger.Conditions>
                         <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
                         <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                        <BindingCondition Binding="{Binding AlwaysShowLabel, Source={x:Reference InputBase}}" Value="false" />
                     </MultiTrigger.Conditions>
                     <Setter Property="IsVisible" Value="false" />
                 </MultiTrigger>
