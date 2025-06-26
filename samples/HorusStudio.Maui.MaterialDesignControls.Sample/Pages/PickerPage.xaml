@@ -52,6 +52,7 @@
                 <material:MaterialPicker 
                     x:Name="picker"
                     Type="Outlined"
+                    HorizontalTextAlignment="Center"
                     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     ItemsSource="{Binding ItemsSource}"
                     SelectedIndexChanged="MaterialPicker_SelectedIndexChanged"
