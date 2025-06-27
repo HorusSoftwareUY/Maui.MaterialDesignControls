@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Android.App;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Microsoft.Maui.Handlers;
@@ -60,7 +61,8 @@ public partial class MaterialButtonHandler
 
     private void SetIconSize(Google.Android.Material.Button.MaterialButton platformView, CustomButton customButton)
     {
-        MainThread.InvokeOnMainThreadAsync(async () =>
+        var activity = Platform.CurrentActivity;
+        activity?.SafeRunOnUiThreadAsync(async () =>
         {
             if (platformView.Icon != null
                 && platformView.Icon is LayerDrawable layerDrawable
