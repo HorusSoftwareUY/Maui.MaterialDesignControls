@@ -14,10 +14,11 @@
         <material:MaterialFloatingButton
             Icon="horus_logo"
             Type="FAB"
-            Margin="0,64,150,0"
+            Margin="0,0,16,120"
             BackgroundColor="Red"
             IconColor="Yellow"
-            Position="TopRight" />
+            Position="BottomRight"
+            Command="{Binding FloatingButtonActionCommand}" />
         
         <material:MaterialFloatingButton
             Icon="horus_logo"
