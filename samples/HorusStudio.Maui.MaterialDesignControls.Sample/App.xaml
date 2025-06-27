@@ -57,7 +57,12 @@
                     </material:MaterialTopAppBar>
                     <ScrollView Grid.Row="1" x:Name="MdcControlPageScroll">
                         <VerticalStackLayout Style="{StaticResource MainLayout}">
-                            <views:ControlsTabsView IsCustomize="{TemplateBinding CustomizationMode, Mode=TwoWay}" />
+                            <material:MaterialSegmentedButton
+                                ItemsSource="{TemplateBinding TabItems}"
+                                SelectedItem="{TemplateBinding SelectedTabItem}"
+                                SelectionCommand="{TemplateBinding TabItemsSelection}"
+                                HeightRequest="40"
+                                CornerRadius="20" />
                             
                             <Grid>
                                 <ContentPresenter IsVisible="{TemplateBinding CustomizationMode, Converter={StaticResource ReverseBoolConverter}}" />
