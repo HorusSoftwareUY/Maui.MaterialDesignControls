@@ -30,7 +30,8 @@
                         LeadingIcon="settings.png"
                         TrailingIcon="star_unselected.png"
                         Placeholder="Enter text here"
-                        Label="Custom label" />
+                        Label="Custom label"
+                        AlwaysShowLabel="{Binding FixedLabel}" />
                 </VerticalStackLayout>
             </material:MaterialCard>
             <material:MaterialLabel Text="An input control with a filled background, featuring a movable label, placeholder text, and optional icons." Type="BodySmall" />

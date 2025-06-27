@@ -1,4 +1,4 @@
-﻿using System;
+﻿using HorusStudio.Maui.MaterialDesignControls;
 
 namespace Microsoft.Maui.Controls.Xaml;
 
@@ -10,13 +10,13 @@ static class AppThemeBindingExtensions
         
         if (Application.Current is { } app)
         {
-            if (MainThread.IsMainThread)
+            if (MainThreadExtensions.IsMainThread)
             {
                 currentTheme = app.RequestedTheme;
             }
             else
             {
-                MainThread.BeginInvokeOnMainThread(() => currentTheme = app.RequestedTheme);
+                MainThreadExtensions.SafeRunOnUiThread(() => currentTheme = app.RequestedTheme);
             }    
         }
 
@@ -30,4 +30,3 @@ static class AppThemeBindingExtensions
 
     public static T GetValueForCurrentTheme<T>(this AppThemeBindingExtension instance) => (T)GetValueForCurrentTheme(instance);
 }
-

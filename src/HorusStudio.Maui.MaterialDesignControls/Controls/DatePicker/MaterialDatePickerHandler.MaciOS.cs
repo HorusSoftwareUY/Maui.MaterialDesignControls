@@ -52,10 +52,14 @@ public partial class MaterialDatePickerHandler
 
     public static void MapHorizontalTextAlignment(IDatePickerHandler handler, IDatePicker datePicker)
     {
-        if (datePicker is CustomDatePicker customPicker && handler is UITextField control)
+#if IOS
+        if (datePicker is CustomDatePicker customPicker
+            && handler != null
+            && handler.PlatformView is UITextField control)
         {
             control.TextAlignment = customPicker.HorizontalTextAlignment.ToUIKit();
         }
+#endif
     }
 
     public static void MapIsFocused(IDatePickerHandler handler, IDatePicker datePicker)

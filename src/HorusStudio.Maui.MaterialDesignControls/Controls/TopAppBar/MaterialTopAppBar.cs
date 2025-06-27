@@ -81,6 +81,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static readonly IList? DefaultTrailingIcons = null;
         private const double DefaultIconSize = 48.0;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconButtonTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
+        private static readonly Thickness DefaultIconPadding = new(12);
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
         private const double DefaultBusyIndicatorSize = 24.0;
         private static readonly string? DefaultScrollViewName = null;
@@ -92,8 +93,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const int SmallLabelLateralMargin = 48;
         private const int MediumLabelLateralMargin = 10;
         private const int LargeLabelLateralMargin = 10;
-        private static readonly Thickness DefaultIconPadding = new(12);
-
+        
         private IList? _trailingIcons;
 
         #endregion Attributes
@@ -230,6 +230,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// The backing store for the <see cref="IconSize" /> bindable property.
         /// </summary>
         public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(double), typeof(MaterialTopAppBar), defaultValue: DefaultIconSize);
+
+        /// <summary>
+        /// The backing store for the <see cref="IconPadding" /> bindable property.
+        /// </summary>
+        public static readonly BindableProperty IconPaddingProperty = BindableProperty.Create(nameof(IconPadding), typeof(Thickness), typeof(MaterialTopAppBar), defaultValue: DefaultIconPadding);
 
         /// <summary>
         /// The backing store for the <see cref="IconButtonTouchAnimationType" /> bindable property.
@@ -523,6 +528,19 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
+        /// Gets or sets the padding of the <see cref="MaterialTopAppBar.LeadingIcon"/> and <see cref="MaterialTopAppBar.TrailingIcons"/> of this top app bar.
+        /// This is a bindable property.
+        /// </summary>
+        /// <default>
+        /// 12
+        /// </default>
+        public Thickness IconPadding
+        {
+            get => (Thickness)GetValue(IconPaddingProperty);
+            set => SetValue(IconPaddingProperty, value);
+        }
+
+        /// <summary>
         /// Gets or sets an animation to be executed when leading and trailing icon button are clicked.
         /// This is a bindable property.
         /// </summary>
@@ -685,13 +703,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Center,
-                IsVisible = false,
-                Padding = DefaultIconPadding
+                IsVisible = false
             };
             _leadingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
             _leadingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
             _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimationType), source: this));
-            _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
+            _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
+            _leadingIconButton.SetBinding(MaterialIconButton.PaddingProperty, new Binding(nameof(IconPadding), source: this));
             this.Add(_leadingIconButton, 0);
 
             var busyIndicatorMargin = GetBusyIndicatorMargin();
@@ -986,13 +1004,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 IsBusy = trailingIcon.IsBusy,
                 VerticalOptions = trailingIconButtonsVerticalOptions,
                 HorizontalOptions = LayoutOptions.Center,
-                IsVisible = true,
-                Padding = DefaultIconPadding
+                IsVisible = true
             };
             trailingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
             trailingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
             trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimationType), source: this));
-            trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.PaddingProperty, new Binding(nameof(IconPadding), source: this));
             _trailingIconButtons.Add(trailingIconButton);
             this.Add(trailingIconButton, trailingIconIndex + 2);
 

@@ -52,10 +52,14 @@ public partial class MaterialTimePickerHandler
 
     public static void MapHorizontalTextAlignment(ITimePickerHandler handler, ITimePicker timePicker)
     {
-        if (timePicker is CustomTimePicker customPicker && handler is UITextField control)
+#if IOS
+        if (timePicker is CustomTimePicker customPicker
+            && handler != null
+            && handler.PlatformView is UITextField control)
         {
             control.TextAlignment = customPicker.HorizontalTextAlignment.ToUIKit();
         }
+#endif
     }
 
     public static void MapIsFocused(ITimePickerHandler handler, ITimePicker timePicker)

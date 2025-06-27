@@ -36,6 +36,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private string _selectedChip;
 
+        [ObservableProperty]
+        private string _selectionWithCommandText = "SelectionChangedCommand";
+
         #endregion
 
         public ChipsViewModel()
@@ -72,8 +75,38 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     await DisplayAlert(Title, $"Chips D {((ChipsFilterD) ? "selected" : "not selected")}", "OK");
                     break;
             }
+        }
 
+        [ICommand]
+        private async Task SelectChipC()
+        {
+            SelectedChip = "Chip C";
+        }
+
+        [ICommand]
+        private async Task ShowSelectedChip()
+        {
+            await DisplayAlert(Title, $"SelectedChip: {SelectedChip}", "OK");
+        }
+
+        [ICommand]
+        private async Task SelectChipAAndB()
+        {
+            SelectedChips = new List<string> { "Chip A", "Chip B" };
+        }
+
+        [ICommand]
+        private async Task ShowSelectedChips()
+        {
+            var result = SelectedChips != null && SelectedChips.Any() ? string.Join(", ", SelectedChips) : "-";
+            await DisplayAlert(Title, $"SelectedChips: {result}", "OK");
+        }
+
+        [ICommand]
+        private async Task SelectionChanged(List<string> selectedItems)
+        {
+            var result = selectedItems != null && selectedItems.Any() ? string.Join(", ", selectedItems) : "-";
+            SelectionWithCommandText = $"Selection: {result}";
         }
     }
 }
-

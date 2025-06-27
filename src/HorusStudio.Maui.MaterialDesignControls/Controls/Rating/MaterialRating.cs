@@ -1,6 +1,7 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Converters;
 using Microsoft.Maui.Controls.Shapes;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -174,6 +175,11 @@ public class MaterialRating : ContentView
             self.OnValuePropertyChanged(self, newValue);
         }
     });
+
+    /// <summary>
+    /// The backing store for the <see cref="ValueChangedCommand" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ValueChangedCommandProperty = BindableProperty.Create(nameof(ValueChangedCommand), typeof(ICommand), typeof(MaterialRating));
 
     #endregion Bindable Properties
 
@@ -420,7 +426,29 @@ public class MaterialRating : ContentView
         set => SetValue(ValueProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the command to invoke when the value changes.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
+    public ICommand ValueChangedCommand
+    {
+        get => (ICommand)GetValue(ValueChangedCommandProperty);
+        set => SetValue(ValueChangedCommandProperty, value);
+    }
+
     #endregion Properties
+
+    #region Events
+
+    /// <summary>
+    /// Occurs when the value changes.
+    /// </summary>
+    public event EventHandler<MaterialRatingSelectedEventArgs>? ValueChanged;
+
+    #endregion
 
     #region Constructors
 
@@ -501,12 +529,19 @@ public class MaterialRating : ContentView
     {
         if (newValue is not null && int.TryParse(newValue.ToString(), out int value))
         {
-            for(int position = 0; position < control._containerLayout.Children.Count; position++)
+            for (int position = 0; position < control._containerLayout.Children.Count; position++)
             {
                 var item = control._containerLayout.Children[position];
                 SetIconsRatingControl(item, value, position);
             }
         }
+
+        if (ValueChangedCommand != null && ValueChangedCommand.CanExecute(Value))
+        {
+            ValueChangedCommand.Execute(Value);
+        }
+
+        ValueChanged?.Invoke(this, new MaterialRatingSelectedEventArgs(Value));
     }
 
     // Set the content of the container of the ratings
@@ -669,9 +704,13 @@ public class MaterialRating : ContentView
         if (IsEnabled)
         {
             if (Value == 1 && value == 1)
+            {
                 Value = 0;
+            }
             else
+            {
                 Value = value;
+            }
         }
     }
 
@@ -832,5 +871,6 @@ public class MaterialRating : ContentView
 
         return new List<Style> { style };
     }
+
     #endregion Styles
 }
