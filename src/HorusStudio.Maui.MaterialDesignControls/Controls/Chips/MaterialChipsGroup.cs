@@ -162,13 +162,7 @@ public class MaterialChipsGroup : ContentView, IValidableView
     /// The backing store for the <see cref="SupportingText" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultSupportingText, propertyChanged: async (bindable, _, newValue) =>
-    {
-        if (bindable is MaterialChipsGroup self)
-        {
-            await self.ValidateText(newValue);
-        }
-    });
+    public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultSupportingText);
 
     /// <summary>
     /// The backing store for the <see cref="LabelTextColor" />
@@ -230,6 +224,17 @@ public class MaterialChipsGroup : ContentView, IValidableView
     /// </summary>
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultCornerRadius);
 
+    /// <summary>
+    /// The backing store for the <see cref="HasError"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty HasErrorProperty = BindableProperty.Create(nameof(HasError), typeof(bool), typeof(MaterialChipsGroup), defaultValue: false, propertyChanged: (bindableObject, _, _) =>
+    {
+        if (bindableObject is MaterialChipsGroup self)
+        {
+            self.SetHasError();
+        }
+    });
+    
     /// <summary>
     /// The backing store for the <see cref="ErrorAnimationType" />
     /// bindable property.
@@ -577,6 +582,18 @@ public class MaterialChipsGroup : ContentView, IValidableView
         get => (double)GetValue(CornerRadiusProperty);
         set => SetValue(CornerRadiusProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets if the input has an error. This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// False
+    /// </default>
+    public bool HasError
+    {
+        get => (bool)GetValue(HasErrorProperty);
+        set => SetValue(HasErrorProperty, value);
+    }
 
     /// <summary>
     /// Gets or sets the animation type to be executed when the control has an error.
@@ -729,17 +746,15 @@ public class MaterialChipsGroup : ContentView, IValidableView
 
     #region Validations
 
-    private async Task<bool> ValidateText(object value)
+    private void SetHasError()
     {
-        if (!string.IsNullOrEmpty(SupportingText) && SupportingText == (string)value
+        if (HasError
             && (ErrorAnimationType != ErrorAnimationTypes.None || ErrorAnimation != null))
         {
             _ = ErrorAnimationManager.AnimateAsync(this);
         }
-
-        return true;
     }
-
+    
     #endregion Validations
 
     #region Methods

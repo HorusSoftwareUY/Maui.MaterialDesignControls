@@ -241,6 +241,8 @@
                     x:Name="eventChipsGroup"
                     LabelText="ValueChanged event"
                     IsMultipleSelection="False"
+                    HasError="{Binding HasAnError}"
+                    SupportingText="{Binding SupportingTextValue}"
                     SelectedItem="{Binding SelectedChip}"
                     ItemsSource="{Binding Chips}"
                     SelectionChanged="MaterialChipsGroup_SelectionChanged"/>
