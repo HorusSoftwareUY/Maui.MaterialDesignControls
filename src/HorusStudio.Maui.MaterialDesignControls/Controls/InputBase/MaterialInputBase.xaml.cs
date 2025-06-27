@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Animations;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -37,7 +38,7 @@ public enum MaterialInputTypeStates
 }
 
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-public abstract partial class MaterialInputBase
+public abstract partial class MaterialInputBase : IValidableView
 {
     #region Attributes
 
@@ -68,6 +69,7 @@ public abstract partial class MaterialInputBase
     protected const double DefaultHeightRequest = 48.0;
     protected const bool DefaultAlwaysShowLabel = false;
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultErrorIcon = _ => MaterialIcon.Error;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultErrorAnimationType = _ => MaterialAnimation.ErrorAnimationType;
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
@@ -383,10 +385,22 @@ public abstract partial class MaterialInputBase
     {
         if (bindableObject is MaterialInputBase self)
         {
-            self.UpdateLayoutAfterTypeChanged(self.Type);
+            self.SetHasError(self.Type);
         }
     });
-    
+
+    /// <summary>
+    /// The backing store for the <see cref="ErrorAnimationType" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty ErrorAnimationTypeProperty = BindableProperty.Create(nameof(ErrorAnimationType), typeof(ErrorAnimationTypes), typeof(MaterialInputBase), defaultValueCreator: DefaultErrorAnimationType);
+
+    /// <summary>
+    /// The backing store for the <see cref="ErrorAnimation" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty ErrorAnimationProperty = BindableProperty.Create(nameof(ErrorAnimation), typeof(IErrorAnimation), typeof(MaterialInputBase));
+
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
     /// </summary>
@@ -956,6 +970,35 @@ public abstract partial class MaterialInputBase
     }
 
     /// <summary>
+    /// Gets or sets the animation type to be executed when the control has an error.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="ErrorAnimationTypes.Shake">ErrorAnimationTypes.Shake</see>
+    /// </default>
+    /// <remarks>
+    /// This property will only be considered if the <see cref="ErrorAnimation"/> property is NULL.
+    /// </remarks>
+    public ErrorAnimationTypes ErrorAnimationType
+    {
+        get => (ErrorAnimationTypes)GetValue(ErrorAnimationTypeProperty);
+        set => SetValue(ErrorAnimationTypeProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a custom animation to be executed when the control has an error.
+    /// This is a bindable property.
+    /// </summary>
+    /// <remarks>
+    /// When this property is set, the <see cref="ErrorAnimationType"/> property is ignored.
+    /// </remarks>
+    public IErrorAnimation ErrorAnimation
+    {
+        get => (IErrorAnimation)GetValue(ErrorAnimationProperty);
+        set => SetValue(ErrorAnimationProperty, value);
+    }
+
+    /// <summary>
     /// Gets or sets the height request
     /// </summary>
     public new double HeightRequest
@@ -1057,6 +1100,17 @@ public abstract partial class MaterialInputBase
         SetBorderWidth(type);
 
         UpdateLayoutAfterStatusChanged(type);
+    }
+
+    private void SetHasError(MaterialInputType type)
+    {
+        UpdateLayoutAfterTypeChanged(type);
+
+        if (HasError
+            && (ErrorAnimationType != ErrorAnimationTypes.None || ErrorAnimation != null))
+        {
+            _ = ErrorAnimationManager.AnimateAsync(this);
+        }
     }
 
     private void SetBorderWidth(MaterialInputType type)

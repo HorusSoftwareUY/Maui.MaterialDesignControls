@@ -64,7 +64,7 @@ public enum MaterialButtonType
 /// * Add default Material behavior for pressed state on default styles (v2).
 /// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
 /// </todoList>
-public class MaterialButton : ContentView, ITouchable
+public class MaterialButton : ContentView, ITouchableView
 {
     #region Attributes
 
@@ -85,8 +85,7 @@ public class MaterialButton : ContentView, ITouchable
     private static readonly Thickness DefaultPadding = new(24, 0);
     private static readonly Thickness DefaultLeftIconPadding = new(16, 0, 24, 0);
     private static readonly Thickness DefaultRightIconPadding = new(24, 0, 16, 0);
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private const double DefaultBusyIndicatorSize = 24;
     private static readonly Shadow DefaultShadow = null!;
@@ -326,18 +325,14 @@ public class MaterialButton : ContentView, ITouchable
     public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode), typeof(LineBreakMode), typeof(MaterialButton), defaultValue: Button.LineBreakModeProperty.DefaultValue);
 
     /// <summary>
-    /// The backing store for the <see cref="Animation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialButton), defaultValueCreator: DefaultAnimationType);
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialButton), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimationParameter"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialButton), defaultValueCreator: DefaultAnimationParameter);
-    /// <summary>
-    /// The backing store for the <see cref="CustomAnimation"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialButton));
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialButton));
 
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
@@ -689,38 +684,25 @@ public class MaterialButton : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>.
+    /// <see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see>.
     /// </default>
-    public AnimationTypes Animation
+    public TouchAnimationTypes TouchAnimationType
     {
-        get => (AnimationTypes)GetValue(AnimationProperty);
-        set => SetValue(AnimationProperty, value);
+        get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+        set => SetValue(TouchAnimationTypeProperty, value);
     }
 
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
+    /// Gets or sets a custom touch animation to be executed when button is clicked.
     /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see langword="null"/>
     /// </default>
-    public double? AnimationParameter
+    public ITouchAnimation TouchAnimation
     {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets a custom animation to be executed when button is clicked.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>
-    /// </default>
-    public ICustomAnimation CustomAnimation
-    {
-        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-        set => SetValue(CustomAnimationProperty, value);
+        get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+        set => SetValue(TouchAnimationProperty, value);
     }
 
     /// <summary>
@@ -926,13 +908,13 @@ public class MaterialButton : ContentView, ITouchable
     protected virtual void InternalPressedHandler(object? sender, EventArgs e)
     {
         VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
-        OnTouch(TouchType.Pressed);
+        OnTouch(TouchEventType.Pressed);
     }
 
     protected virtual void InternalReleasedHandler(object? sender, EventArgs e)
     {
         VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
-        OnTouch(TouchType.Released);
+        OnTouch(TouchEventType.Released);
     }
 
     #endregion Events
@@ -1246,14 +1228,18 @@ public class MaterialButton : ContentView, ITouchable
 
     #region ITouchable
     
-    public async void OnTouch(TouchType gestureType)
+    public async void OnTouch(TouchEventType gestureType)
     {
         Utils.Logger.Debug($"Gesture: {gestureType}");
 
-        if (!IsEnabled || (Command == null && _pressed == null && _released == null && _clicked == null)) return;
-        await TouchAnimation.AnimateAsync(this, gestureType);
+        if (!IsEnabled || (Command == null && _pressed == null && _released == null && _clicked == null))
+        {
+            return;
+        }
 
-        if (gestureType == TouchType.Released)
+        await TouchAnimationManager.AnimateAsync(this, gestureType);
+
+        if (gestureType == TouchEventType.Released)
         {
             if (Command != null && Command.CanExecute(CommandParameter))
             {
@@ -1268,7 +1254,7 @@ public class MaterialButton : ContentView, ITouchable
                 _clicked.Invoke(this, EventArgs.Empty);
             }
         }
-        else if (gestureType == TouchType.Pressed)
+        else if (gestureType == TouchEventType.Pressed)
         {
             _pressed?.Invoke(this, EventArgs.Empty);
         }

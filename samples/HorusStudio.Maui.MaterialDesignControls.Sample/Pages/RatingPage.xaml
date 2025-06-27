@@ -38,7 +38,7 @@
                     Label="How do you rate....?"
                     Value="{Binding Value}"
                     StrokeColor="Gold" 
-                    Animation="Scale"
+                    TouchAnimationType="Scale"
                     StrokeThickness="4"/>
 
                 <material:MaterialButton
@@ -88,7 +88,7 @@
                     UnselectedIconsSource="{Binding UnselectedIcons}"
                     LabelColor="DarkGreen"
                     LabelTransform="Uppercase"
-                    Animation="Scale"
+                    TouchAnimationType="Scale"
                     FontSize="16"
                     Value="2"
                     IsEnabled="False"

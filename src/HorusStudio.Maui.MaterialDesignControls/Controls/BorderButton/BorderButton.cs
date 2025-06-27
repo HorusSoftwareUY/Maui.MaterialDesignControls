@@ -6,12 +6,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// <summary>
     /// It is a touchable border view.
     /// </summary>
-    internal class BorderButton : Border, ITouchable
+    internal class BorderButton : Border, ITouchableView
     {
         #region Attributes
 
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
 
         #endregion Attributes
 
@@ -32,21 +31,15 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(BorderButton));
 
+        /// <summary>
+        /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(BorderButton), defaultValueCreator: DefaultTouchAnimationType);
 
         /// <summary>
-        /// The backing store for the <see cref="Animation"/> bindable property.
+        /// The backing store for the <see cref="TouchAnimation"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(BorderButton), defaultValueCreator: DefaultAnimationType);
-
-        /// <summary>
-        /// The backing store for the <see cref="AnimationParameter"/> bindable property.
-        /// </summary>
-        public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(BorderButton), defaultValueCreator: DefaultAnimationParameter);
-
-        /// <summary>
-        /// The backing store for the <see cref="CustomAnimation"/> bindable property.
-        /// </summary>
-        public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(BorderButton));
+        public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(BorderButton));
 
         #endregion Bindable properties
 
@@ -84,25 +77,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>
+        /// <see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see>
         /// </default>
-        public AnimationTypes Animation
+        public TouchAnimationTypes TouchAnimationType
         {
-            get => (AnimationTypes)GetValue(AnimationProperty);
-            set => SetValue(AnimationProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-        /// This is a bindable property.
-        /// </summary>
-        /// <default>
-        /// <see langword="null"/>.
-        /// </default>
-        public double? AnimationParameter
-        {
-            get => (double?)GetValue(AnimationParameterProperty);
-            set => SetValue(AnimationParameterProperty, value);
+            get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+            set => SetValue(TouchAnimationTypeProperty, value);
         }
 
         /// <summary>
@@ -112,10 +92,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <default>
         /// <see langword="null"/>.
         /// </default>
-        public ICustomAnimation CustomAnimation
+        public ITouchAnimation TouchAnimation
         {
-            get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-            set => SetValue(CustomAnimationProperty, value);
+            get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+            set => SetValue(TouchAnimationProperty, value);
         }
 
         #endregion Properties
@@ -200,20 +180,20 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region ITouchable
 
-        public async void OnTouch(TouchType gestureType)
+        public async void OnTouch(TouchEventType gestureType)
         {
             Utils.Logger.Debug($"Gesture: {gestureType}");
 
             if (!IsEnabled) return;
-            await TouchAnimation.AnimateAsync(this, gestureType);
+            await TouchAnimationManager.AnimateAsync(this, gestureType);
 
             switch (gestureType)
             {
-                case TouchType.Pressed:
+                case TouchEventType.Pressed:
                     _pressed?.Invoke(this, EventArgs.Empty);
                     break;
 
-                case TouchType.Released:
+                case TouchEventType.Released:
                     if (Command != null && Command.CanExecute(CommandParameter))
                     {
                         Command.Execute(CommandParameter);

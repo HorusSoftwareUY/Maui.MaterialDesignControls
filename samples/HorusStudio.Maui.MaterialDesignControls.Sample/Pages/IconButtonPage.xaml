@@ -171,7 +171,7 @@
                     HeightRequest="60"
                     WidthRequest="60"
                     CornerRadius="30"
-                    Animation="Scale">
+                    TouchAnimationType="Scale">
                     <material:MaterialIconButton.Shadow>
                         <Shadow Brush="Black" 
                             Offset="4,4"
@@ -217,8 +217,7 @@
                 <material:MaterialIconButton
                     Type="Outlined"
                     ImageSource="settings.png"
-                    Animation="Scale"
-                    AnimationParameter=".9"
+                    TouchAnimationType="Scale"
                     Pressed="OnCounterPressed" />
                 
                 <material:MaterialIconButton

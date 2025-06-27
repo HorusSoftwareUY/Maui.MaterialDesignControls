@@ -1,4 +1,4 @@
-﻿
+﻿using HorusStudio.Maui.MaterialDesignControls.Animations;
 using HorusStudio.Maui.MaterialDesignControls.Converters;
 using Microsoft.Maui.Layouts;
 using System.Collections;
@@ -45,7 +45,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// <todoList>
 /// * For the SelectedItems to be updated correctly they must be initialized. Finding a way to make it work even when the list starts out null
 /// </todoList>
-public class MaterialChipsGroup : ContentView
+public class MaterialChipsGroup : ContentView, IValidableView
 {
     #region Attributes
 
@@ -69,10 +69,9 @@ public class MaterialChipsGroup : ContentView
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
     private const double DefaultCornerRadius = 8.0;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimateError = _ => MaterialAnimation.AnimateOnError;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultErrorAnimationType = _ => MaterialAnimation.ErrorAnimationType;
     private const bool DefaultIsMultipleSelection = false;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimation = _ => MaterialAnimation.Type;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
     private const Align DefaultAlign = Align.Start;
     private const int DefaultVerticalSpacing = 4;
     private const int DefaultHorizontalSpacing = 4;
@@ -163,13 +162,7 @@ public class MaterialChipsGroup : ContentView
     /// The backing store for the <see cref="SupportingText" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultSupportingText, propertyChanged: async (bindable, _, newValue) =>
-    {
-        if (bindable is MaterialChipsGroup self)
-        {
-            await self.ValidateText(newValue);
-        }
-    });
+    public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialChipsGroup), defaultValue: DefaultSupportingText);
 
     /// <summary>
     /// The backing store for the <see cref="LabelTextColor" />
@@ -232,10 +225,27 @@ public class MaterialChipsGroup : ContentView
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(MaterialChipsGroup), defaultValue: DefaultCornerRadius);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimateError" />
+    /// The backing store for the <see cref="HasError"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty HasErrorProperty = BindableProperty.Create(nameof(HasError), typeof(bool), typeof(MaterialChipsGroup), defaultValue: false, propertyChanged: (bindableObject, _, _) =>
+    {
+        if (bindableObject is MaterialChipsGroup self)
+        {
+            self.SetHasError();
+        }
+    });
+    
+    /// <summary>
+    /// The backing store for the <see cref="ErrorAnimationType" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimateErrorProperty = BindableProperty.Create(nameof(AnimateError), typeof(bool), typeof(MaterialChipsGroup), defaultValueCreator: DefaultAnimateError);
+    public static readonly BindableProperty ErrorAnimationTypeProperty = BindableProperty.Create(nameof(ErrorAnimationType), typeof(ErrorAnimationTypes), typeof(MaterialChipsGroup), defaultValueCreator: DefaultErrorAnimationType);
+
+    /// <summary>
+    /// The backing store for the <see cref="ErrorAnimation" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty ErrorAnimationProperty = BindableProperty.Create(nameof(ErrorAnimation), typeof(IErrorAnimation), typeof(MaterialChipsGroup));
 
     /// <summary>
     /// The backing store for the <see cref="IsMultipleSelection" />
@@ -244,16 +254,15 @@ public class MaterialChipsGroup : ContentView
     public static readonly BindableProperty IsMultipleSelectionProperty = BindableProperty.Create(nameof(IsMultipleSelection), typeof(bool), typeof(MaterialChipsGroup), defaultValue: DefaultIsMultipleSelection);
 
     /// <summary>
-    /// The backing store for the <see cref="Animation" />
+    /// The backing store for the <see cref="TouchAnimationType" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialChipsGroup), defaultValueCreator: DefaultAnimation);
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialChipsGroup), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimationParameter" />
-    /// bindable property.
+    /// The backing store for the <see cref="TouchAnimation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialChipsGroup), defaultValueCreator: DefaultAnimationParameter);
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialChipsGroup));
 
     /// <summary>
     /// The backing store for the <see cref="Align" />
@@ -573,18 +582,46 @@ public class MaterialChipsGroup : ContentView
         get => (double)GetValue(CornerRadiusProperty);
         set => SetValue(CornerRadiusProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets if the input has an error. This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// False
+    /// </default>
+    public bool HasError
+    {
+        get => (bool)GetValue(HasErrorProperty);
+        set => SetValue(HasErrorProperty, value);
+    }
 
     /// <summary>
-    /// Gets or sets if the error animation is enabled for the ChipsGroup.
+    /// Gets or sets the animation type to be executed when the control has an error.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="True"/>
+    /// <see cref="ErrorAnimationTypes.Shake">ErrorAnimationTypes.Shake</see>
     /// </default>
-    public bool AnimateError
+    /// <remarks>
+    /// This property will only be considered if the <see cref="ErrorAnimation"/> property is NULL.
+    /// </remarks>
+    public ErrorAnimationTypes ErrorAnimationType
     {
-        get => (bool)GetValue(AnimateErrorProperty);
-        set => SetValue(AnimateErrorProperty, value);
+        get => (ErrorAnimationTypes)GetValue(ErrorAnimationTypeProperty);
+        set => SetValue(ErrorAnimationTypeProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a custom animation to be executed when the control has an error.
+    /// This is a bindable property.
+    /// </summary>
+    /// <remarks>
+    /// When this property is set, the <see cref="ErrorAnimationType"/> property is ignored.
+    /// </remarks>
+    public IErrorAnimation ErrorAnimation
+    {
+        get => (IErrorAnimation)GetValue(ErrorAnimationProperty);
+        set => SetValue(ErrorAnimationProperty, value);
     }
 
     /// <summary>
@@ -605,25 +642,25 @@ public class MaterialChipsGroup : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="AnimationTypes.Fade"> AnimationTypes.Fade </see>
+    /// <see cref="TouchAnimationTypes.Fade"> TouchAnimationTypes.Fade </see>
     /// </default>
-    public AnimationTypes Animation
+    public TouchAnimationTypes TouchAnimationType
     {
-        get => (AnimationTypes)GetValue(AnimationProperty);
-        set => SetValue(AnimationProperty, value);
+        get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+        set => SetValue(TouchAnimationTypeProperty, value);
     }
 
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
+    /// Gets or sets a custom animation to be executed when a icon is clicked.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null"/>.
     /// </default>
-    public double? AnimationParameter
+    public ITouchAnimation TouchAnimation
     {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
+        get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+        set => SetValue(TouchAnimationProperty, value);
     }
 
     /// <summary>
@@ -709,16 +746,15 @@ public class MaterialChipsGroup : ContentView
 
     #region Validations
 
-    private async Task<bool> ValidateText(object value)
+    private void SetHasError()
     {
-        if (AnimateError && !string.IsNullOrEmpty(SupportingText) && SupportingText == (string)value)
+        if (HasError
+            && (ErrorAnimationType != ErrorAnimationTypes.None || ErrorAnimation != null))
         {
-            await ShakeAnimation.AnimateAsync(Content);
+            _ = ErrorAnimationManager.AnimateAsync(this);
         }
-
-        return true;
     }
-
+    
     #endregion Validations
 
     #region Methods
@@ -821,8 +857,8 @@ public class MaterialChipsGroup : ContentView
             materialChips.SetBinding(MaterialChips.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
             materialChips.SetBinding(MaterialChips.PaddingProperty, new Binding(nameof(ChipsPadding), source: this));
             materialChips.SetBinding(MaterialChips.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
-            materialChips.SetBinding(MaterialChips.AnimationProperty, new Binding(nameof(Animation), source: this));
-            materialChips.SetBinding(MaterialChips.AnimationParameterProperty, new Binding(nameof(AnimationParameter), source: this));
+            materialChips.SetBinding(MaterialChips.TouchAnimationTypeProperty, new Binding(nameof(TouchAnimationType), source: this));
+            materialChips.SetBinding(MaterialChips.TouchAnimationProperty, new Binding(nameof(TouchAnimation), source: this));
             materialChips.SetBinding(MaterialChips.HeightRequestProperty, new Binding(nameof(ChipsHeightRequest), source: this));
             materialChips.SetBinding(MaterialChips.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
             materialChips.SetBinding(MaterialChips.TextColorProperty, new Binding(nameof(TextColor), source: this));

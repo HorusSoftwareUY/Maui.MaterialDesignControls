@@ -7,11 +7,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
     {
         #region Attributes
 
-        private readonly ITouchable _touchableElement;
+        private readonly ITouchableView _touchableElement;
 
         #endregion
 
-        public TouchGestureRecognizer(ITouchable touchableElement)
+        public TouchGestureRecognizer(ITouchableView touchableElement)
         {
             _touchableElement = touchableElement;
         }
@@ -19,43 +19,43 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
         public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
         {
             base.PressesBegan(presses, evt);
-            _touchableElement.OnTouch(TouchType.Pressed);
+            _touchableElement.OnTouch(TouchEventType.Pressed);
         }
 
         public override void TouchesBegan(NSSet touches, UIEvent evt)
         {
             base.TouchesBegan(touches, evt);
-            _touchableElement.OnTouch(TouchType.Pressed);
+            _touchableElement.OnTouch(TouchEventType.Pressed);
         }
 
         public override void PressesEnded(NSSet<UIPress> presses, UIPressesEvent evt)
         {
             base.PressesEnded(presses, evt);
-            _touchableElement.OnTouch(TouchType.Released);
+            _touchableElement.OnTouch(TouchEventType.Released);
         }
 
         public override void TouchesEnded(NSSet touches, UIEvent evt)
         {
             base.TouchesEnded(touches, evt);
-            _touchableElement.OnTouch(TouchType.Released);
+            _touchableElement.OnTouch(TouchEventType.Released);
         }
 
         public override void PressesCancelled(NSSet<UIPress> presses, UIPressesEvent evt)
         {
             base.PressesCancelled(presses, evt);
-            _touchableElement.OnTouch(TouchType.Cancelled);
+            _touchableElement.OnTouch(TouchEventType.Cancelled);
         }
 
         public override void TouchesCancelled(NSSet touches, UIEvent evt)
         {
             base.TouchesCancelled(touches, evt);
-            _touchableElement.OnTouch(TouchType.Cancelled);
+            _touchableElement.OnTouch(TouchEventType.Cancelled);
         }
 
         public override void IgnoreTouch(UITouch touch, UIEvent forEvent)
         {
             base.IgnoreTouch(touch, forEvent);
-            _touchableElement.OnTouch(TouchType.Ignored);
+            _touchableElement.OnTouch(TouchEventType.Ignored);
         }
     }
 }

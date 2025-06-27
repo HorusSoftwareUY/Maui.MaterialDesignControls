@@ -18,7 +18,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
             base.OnAttachedTo(bindable, platformView);
 
             _view = platformView as UIView;
-            if (_view != null && bindable is ITouchable touchableElement)
+            if (_view != null && bindable is ITouchableView touchableElement)
             {
                 _view.UserInteractionEnabled = true;
                 _touchGestureRecognizer = new TouchGestureRecognizer(touchableElement);

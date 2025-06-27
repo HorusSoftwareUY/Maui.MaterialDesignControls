@@ -58,7 +58,7 @@
         </material:MaterialCard>
         <material:MaterialLabel Text="You can set colors for background, placeholder, label and/or text, and also set minimum/maximum date." Type="BodySmall" />
         
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text, checking errors and animation in case of error" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
                 <material:MaterialDatePicker 
@@ -66,6 +66,7 @@
                     SupportingText="{Binding SupportingTextValue}"
                     Type="Filled"
                     HasError="{Binding HasAnError}"
+                    ErrorAnimationType="Heart"
                     Placeholder="Select the moving date" />
                 <HorizontalStackLayout>
                     <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />

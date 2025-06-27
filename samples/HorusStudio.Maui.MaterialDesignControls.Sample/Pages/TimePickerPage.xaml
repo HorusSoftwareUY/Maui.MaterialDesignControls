@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <local:BaseContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -60,13 +60,14 @@
         </material:MaterialCard>
         <material:MaterialLabel Text="You can set background color, place holder color, label color and text color." Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text, checking errors and animation in case of error" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
                 <material:MaterialTimePicker Time="{Binding Time}"
                                              SupportingText="{Binding SupportingTextValue}"
                                              Type="Filled"
                                              HasError="{Binding HasAnError}"
+                                             ErrorAnimationType="Shake"
                                              Placeholder="Select the moving time" />
                 <HorizontalStackLayout>
                     <material:MaterialButton Command="{Binding CheckTextFieldCommand}"

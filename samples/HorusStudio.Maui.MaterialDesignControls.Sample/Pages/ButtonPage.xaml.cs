@@ -48,5 +48,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             
             System.Diagnostics.Debug.WriteLine(ReleaseBtn.Text);
         }
+
+        void MaterialButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+        }
     }
 }

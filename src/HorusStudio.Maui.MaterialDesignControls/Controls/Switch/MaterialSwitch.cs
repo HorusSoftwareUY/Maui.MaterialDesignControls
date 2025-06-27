@@ -37,7 +37,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// * Track color animation: change from on-track color to off-track color within the toggle animation.
     /// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
     /// </todoList>
-    public class MaterialSwitch : ContentView, ITouchable
+    public class MaterialSwitch : ContentView, ITouchableView
     {
         #region Attributes
 
@@ -66,8 +66,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingFontSize = _ => MaterialFontSize.BodySmall;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingFontFamily = _ => MaterialFontFamily.Default;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
         private const FontAttributes DefaultSupportingFontAttributes = FontAttributes.None;
         private const double DefaultSpacing = 16.0;
         private const double DefaultTextSpacing = 4.0;
@@ -272,19 +271,14 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         // <summary>
-        /// The backing store for the <see cref="Animation"/> bindable property.
+        /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialSwitch), defaultValueCreator: DefaultAnimationType);
+        public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialSwitch), defaultValueCreator: DefaultTouchAnimationType);
 
         /// <summary>
-        /// The backing store for the <see cref="AnimationParameter"/> bindable property.
+        /// The backing store for the <see cref="TouchAnimation"/> bindable property.
         /// </summary>
-        public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialSwitch), defaultValueCreator: DefaultAnimationParameter);
-
-        /// <summary>
-        /// The backing store for the <see cref="CustomAnimation"/> bindable property.
-        /// </summary>
-        public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialSwitch));
+        public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialSwitch));
 
         #endregion Bindable Properties
 
@@ -539,25 +533,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see cref="AnimationTypes.Fade"/>
+        /// <see cref="TouchAnimationTypes.Fade"/>
         /// </default>
-        public AnimationTypes Animation
+        public TouchAnimationTypes TouchAnimationType
         {
-            get => (AnimationTypes)GetValue(AnimationProperty);
-            set => SetValue(AnimationProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the parameter to pass to the <see cref="Animation">Animation</see> property.
-        /// This is a bindable property.
-        /// </summary>
-        /// <default>
-        /// Null
-        /// </default>
-        public double? AnimationParameter
-        {
-            get => (double?)GetValue(AnimationParameterProperty);
-            set => SetValue(AnimationParameterProperty, value);
+            get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+            set => SetValue(TouchAnimationTypeProperty, value);
         }
 
         /// <summary>
@@ -567,10 +548,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <default>
         /// Null
         /// </default>
-        public ICustomAnimation CustomAnimation
+        public ITouchAnimation TouchAnimation
         {
-            get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-            set => SetValue(CustomAnimationProperty, value);
+            get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+            set => SetValue(TouchAnimationProperty, value);
         }
 
         #endregion Properties
@@ -1024,19 +1005,19 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region ITouchable
 
-        public async void OnTouch(TouchType gestureType)
+        public async void OnTouch(TouchEventType gestureType)
         {
             Utils.Logger.Debug($"Gesture: {gestureType}");
 
             if (!IsEnabled) return;
-            await TouchAnimation.AnimateAsync(this, gestureType);
+            await TouchAnimationManager.AnimateAsync(this, gestureType);
 
             switch (gestureType)
             {
-                case TouchType.Pressed:
+                case TouchEventType.Pressed:
                     VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
                     break;
-                case TouchType.Released:
+                case TouchEventType.Released:
                     IsToggled = !IsToggled;
                     Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
                     if (ToggledCommand?.CanExecute(IsToggled) == true)

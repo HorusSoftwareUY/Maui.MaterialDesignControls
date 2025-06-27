@@ -66,7 +66,6 @@
                      Type="Elevated"
                      Text="Enabled"
                      ImageSource="plus.png"
-                     Animation="Scale"
                      Command="{Binding MaterialButton2Command}"
                      CommandParameter="Elevated button with icon clicked!"
                      IsBusy="{Binding MaterialButton2Command.IsRunning}" />
@@ -324,14 +323,14 @@
                     x:Name="ClickBtn"
                     Type="Filled"
                     Text="Click me"
+                    TouchAnimationType="Bounce"
                     Clicked="OnCounterClicked" />
                 
                 <material:MaterialButton
                     x:Name="PressBtn"
                     Type="Outlined"
                     Text="Press me"
-                    Animation="Scale"
-                    AnimationParameter=".9"
+                    TouchAnimationType="Scale"
                     Pressed="OnCounterPressed" />
                 
                 <material:MaterialButton
@@ -342,6 +341,41 @@
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel Text="Use event handlers instead of command if needed." Type="BodySmall"/>
+
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Touch animations" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialButton
+                    Type="Filled"
+                    Text="Fade animation"
+                    TouchAnimationType="Fade"
+                    Clicked="MaterialButton_Clicked" />
+                
+                <material:MaterialButton
+                    Type="Outlined"
+                    Text="Bounce animation"
+                    TouchAnimationType="Bounce"
+                    Clicked="MaterialButton_Clicked" />
+                
+                <material:MaterialButton
+                    Type="Tonal"
+                    Text="Scale animation"
+                    TouchAnimationType="Scale"
+                    Clicked="MaterialButton_Clicked" />
+
+                <material:MaterialButton
+                    Type="Elevated"
+                    Text="Custom animation"
+                    Clicked="MaterialButton_Clicked">
+                    <material:MaterialButton.TouchAnimation>
+                        <material:ScaleAnimation
+                            Scale="1.2"
+                            Duration="300" />
+                    </material:MaterialButton.TouchAnimation>
+                </material:MaterialButton>
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="You can set None to disable any touch animation, use one of the built-in animations with the TouchAnimationType property, or define a custom animation using the TouchAnimation property by implementing the ITouchAnimation interface." Type="BodySmall"/>
         
     </VerticalStackLayout>
 </local:BaseContentPage>

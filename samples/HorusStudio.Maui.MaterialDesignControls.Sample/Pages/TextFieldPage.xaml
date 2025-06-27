@@ -125,7 +125,8 @@
                         SupportingText="(*) required"
                         Type="Filled"
                         HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here" />
+                        Placeholder="Enter text here"
+                        ErrorAnimationType="None" />
                     
                     <material:MaterialTextField 
                         Text="{Binding Text}"
@@ -134,41 +135,49 @@
                         Label="With trailing icon"
                         TrailingIcon="settings.png"
                         HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here" />
+                        Placeholder="Enter text here" 
+                        ErrorAnimationType="None" />
 
                     <material:MaterialTextField 
                         Text="{Binding Text}"
-                        SupportingText="(*) required"
+                        SupportingText="With custom animation"
                         Type="Outlined"
                         HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here" />
+                        Placeholder="Enter text here">
+                        <material:MaterialTextField.ErrorAnimation>
+                            <material:HeartAnimation Duration="2000" Scale="0.8" />
+                        </material:MaterialTextField.ErrorAnimation>
+                    </material:MaterialTextField>
                     
                     <material:MaterialTextField 
                         Text="{Binding Text}"
                         SupportingText="{Binding SupportingTextValue}"
                         Type="Outlined"
-                        Label="With trailing icon"
+                        Label="With trailing icon and Shake animation"
                         TrailingIcon="settings.png"
                         HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here" />
+                        Placeholder="Enter text here"
+                        ErrorAnimationType="Shake" />
                     
                     <material:MaterialTextField 
                         Text="{Binding Text}"
-                        SupportingText="With custom error icon"
+                        SupportingText="With custom error icon and Heart animation"
                         Type="Filled"
                         Label="Custom error"
                         ErrorIcon="info.png"
                         HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here" />
+                        Placeholder="Enter text here" 
+                        ErrorAnimationType="Heart" />
                     
                     <material:MaterialTextField 
                         Text="{Binding Text}"
-                        SupportingText="With custom error icon"
+                        SupportingText="With custom error icon Jump animation"
                         Type="Outlined"
                         Label="Custom error"
                         ErrorIcon="info.png"
                         HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here" />
+                        Placeholder="Enter text here"
+                        ErrorAnimationType="Jump" />
                     
                     <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Validate required" />
                 </VerticalStackLayout>
