@@ -201,7 +201,7 @@
         
         <ControlTemplate x:Key="FilledControlTemplate">
             <VerticalStackLayout Spacing="0" x:Name="ContainerFilled">
-                <material:BorderButton x:Name="InputBorder" Style="{StaticResource FilledBorder}">
+                <material:BorderButton x:Name="InputBorder" IsEnabled="{Binding IsEnabled, Source={x:Reference InputBase}}" Style="{StaticResource FilledBorder}">
                     <Grid>
                         <StackLayout Style="{StaticResource FilledMainContent}">
                             <material:MaterialIconButton Style="{StaticResource LeadingIcon}" />
@@ -228,7 +228,7 @@
         <ControlTemplate x:Key="OutlinedControlTemplate">
             <VerticalStackLayout Spacing="0" x:Name="ContainerOutlined">
                 <Grid>
-                    <material:BorderButton x:Name="InputBorder" Style="{StaticResource OutlinedBorder}">
+                    <material:BorderButton x:Name="InputBorder" IsEnabled="{Binding IsEnabled, Source={x:Reference InputBase}}" Style="{StaticResource OutlinedBorder}">
                         <StackLayout Style="{StaticResource MainContent}">
                             <material:MaterialIconButton Style="{StaticResource LeadingIcon}" />
                             
