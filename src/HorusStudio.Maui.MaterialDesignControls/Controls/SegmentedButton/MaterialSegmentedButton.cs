@@ -513,7 +513,7 @@ public class MaterialSegmentedButton : ContentView
         };
 
         _container.SetBinding(MaterialCard.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
-        _container.SetBinding(MaterialCard.MinimumHeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
+        _container.SetBinding(MaterialCard.MinimumHeightRequestProperty, new Binding(nameof(MinimumHeightRequest), source: this));
         _container.SetBinding(MaterialCard.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
 
         Content = _container;
