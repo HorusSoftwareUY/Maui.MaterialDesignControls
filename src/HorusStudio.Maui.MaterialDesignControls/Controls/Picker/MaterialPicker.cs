@@ -348,6 +348,13 @@ public class MaterialPicker : MaterialInputBase
         else
         {
             Text = string.Empty;
+
+#if IOS || MACCATALYST
+            if (_picker.Handler is MaterialPickerHandler handler)
+            {
+                handler.ClearText();
+            }
+#endif
         }
     }
     
