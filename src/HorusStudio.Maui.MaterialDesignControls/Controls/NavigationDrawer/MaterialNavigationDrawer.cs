@@ -62,10 +62,7 @@ public class MaterialNavigationDrawer : ContentView
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeFontSize = _ => MaterialFontSize.LabelLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDisabledColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialDarkTheme.Disable }.GetValueForCurrentTheme<Color>();
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-#nullable enable
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
-#nullable disable
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
     private const double DefaultIconSize = 24.0;
     private const double DefaultItemHeightRequest = 56.0;
     private const double DefaultItemContentSpacing = 12.0;
@@ -239,21 +236,14 @@ public class MaterialNavigationDrawer : ContentView
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialNavigationDrawer), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="Animation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultAnimationType);
-
-#nullable enable
-    /// <summary>
-    /// The backing store for the <see cref="AnimationParameter"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultAnimationParameter);
-#nullable disable
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="CustomAnimation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialNavigationDrawer));
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialNavigationDrawer));
 
     /// <summary>
     /// The backing store for the <see cref="DisabledLabelColor" /> bindable property.
@@ -627,44 +617,27 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets an animation to be executed when an icon is clicked
-    /// The default value is <see cref="AnimationTypes.Fade"/>.
+    /// Gets or sets an animation to be executed when an icon is clicked.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialAnimation.Type">MaterialAnimation.Type</see>
+    /// <see cref="TouchAnimationTypes.Fade"/>
     /// </default>
-    public AnimationTypes Animation
+    public TouchAnimationTypes TouchAnimationType
     {
-        get => (AnimationTypes)GetValue(AnimationProperty);
-        set => SetValue(AnimationProperty, value);
+        get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+        set => SetValue(TouchAnimationTypeProperty, value);
     }
-
-#nullable enable
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-    /// The default value is <see langword="null"/>.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see cref="MaterialAnimation.Parameter">MaterialAnimation.Parameter</see>
-    /// </default>
-    public double? AnimationParameter
-    {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
-    }
-#nullable disable
 
     /// <summary>
     /// Gets or sets a custom animation to be executed when a icon is clicked.
     /// The default value is <see langword="null"/>.
     /// This is a bindable property.
     /// </summary>
-    public ICustomAnimation CustomAnimation
+    public ITouchAnimation TouchAnimation
     {
-        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-        set => SetValue(CustomAnimationProperty, value);
+        get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+        set => SetValue(TouchAnimationProperty, value);
     }
 
     /// <summary>
@@ -865,9 +838,8 @@ public class MaterialNavigationDrawer : ContentView
             materialCard.SetBinding(MinimumHeightRequestProperty, new Binding(nameof(ItemHeightRequest), source: this));
             materialCard.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(item.IsSelected), source: item, converter: new IsSelectedToFrameBackgroundConverter(this)));
             materialCard.SetBinding(MaterialCard.CornerRadiusProperty, new Binding(nameof(ActiveIndicatorCornerRadius), source: this));
-            materialCard.SetBinding(MaterialCard.AnimationProperty, new Binding(nameof(Animation), source: this));
-            materialCard.SetBinding(MaterialCard.AnimationParameterProperty, new Binding(nameof(AnimationParameter), source: this));
-            materialCard.SetBinding(MaterialCard.CustomAnimationProperty, new Binding(nameof(CustomAnimation), source: this));
+            materialCard.SetBinding(MaterialCard.TouchAnimationTypeProperty, new Binding(nameof(TouchAnimationType), source: this));
+            materialCard.SetBinding(MaterialCard.TouchAnimationProperty, new Binding(nameof(TouchAnimation), source: this));
 
             materialCard.Command = new Command(() =>
             {

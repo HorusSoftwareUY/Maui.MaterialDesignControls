@@ -42,7 +42,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// * [iOS] FontAttributes doesn't work.
 /// * Using a control template doesn't work when define a custom style for disabled state.
 /// </todoList>
-public class MaterialRadioButton : ContentView, ITouchable
+public class MaterialRadioButton : ContentView, ITouchableView
 {
     #region Attributes
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
@@ -50,8 +50,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.BodyLarge;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
     private const string DefaultGroupName = "MaterialRadioButton.GroupName";
     internal const string GroupNameChangedMessage = "MaterialRadioButtonGroupNameChanged";
     internal const string ValueChangedMessage = "MaterialRadioButtonValueChanged";
@@ -67,6 +66,7 @@ public class MaterialRadioButton : ContentView, ITouchable
     #endregion Layout
 
     #region Bindable Properties
+
     /// <summary>
     /// The backing store for the <see cref="Content" />
     /// bindable property.
@@ -209,22 +209,16 @@ public class MaterialRadioButton : ContentView, ITouchable
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Animation"/>
+    /// The backing store for the <see cref="TouchAnimationType"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialRadioButton), defaultValueCreator: DefaultAnimationType);
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialRadioButton), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimationParameter"/>
+    /// The backing store for the <see cref="TouchAnimation"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialRadioButton), defaultValueCreator: DefaultAnimationParameter);
-
-    /// <summary>
-    /// The backing store for the <see cref="CustomAnimation"/>
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialRadioButton));
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialRadioButton));
 
     /// <summary>
     /// The backing store for the <see cref="CommandCheckedChanged" />
@@ -436,25 +430,12 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="AnimationTypes.Fade"/>
+    /// <see cref="TouchAnimationTypes.Fade"/>
     /// </default>
-    public AnimationTypes Animation
+    public TouchAnimationTypes TouchAnimationType
     {
-        get => (AnimationTypes)GetValue(AnimationProperty);
-        set => SetValue(AnimationProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>
-    /// </default>
-    public double? AnimationParameter
-    {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
+        get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+        set => SetValue(TouchAnimationTypeProperty, value);
     }
 
     /// <summary>
@@ -464,10 +445,10 @@ public class MaterialRadioButton : ContentView, ITouchable
     /// <default>
     /// <see langword="null"/>
     /// </default>
-    public ICustomAnimation CustomAnimation
+    public ITouchAnimation TouchAnimation
     {
-        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-        set => SetValue(CustomAnimationProperty, value);
+        get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+        set => SetValue(TouchAnimationProperty, value);
     }
 
     /// <summary>
@@ -573,12 +554,12 @@ public class MaterialRadioButton : ContentView, ITouchable
 
     #region ITouchable
 
-    public async void OnTouch(TouchType gestureType)
+    public async void OnTouch(TouchEventType gestureType)
     {
         if (!IsEnabled) return;
-        await TouchAnimation.AnimateAsync(this, gestureType);
+        await TouchAnimationManager.AnimateAsync(this, gestureType);
 
-        if (gestureType == TouchType.Released && !IsChecked)
+        if (gestureType == TouchEventType.Released && !IsChecked)
         {
             IsChecked = !IsChecked;
         }

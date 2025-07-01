@@ -60,7 +60,7 @@ public enum IconStateType
 /// <todoList>
 /// * .NET 7 not work LineBreakMode.
 /// </todoList>
-public class MaterialChips : ContentView, ITouchable
+public class MaterialChips : ContentView, ITouchableView
 {
     #region Attributes
 
@@ -70,8 +70,7 @@ public class MaterialChips : ContentView, ITouchable
     private const bool DefaultIsEnabled = true;
     private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(8);
     private static readonly Thickness DefaultPadding = new Thickness(16, 0);
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
     private static readonly ImageSource DefaultLeadingIcon = null!;
     private static readonly ImageSource DefaultTrailingIcon = null!;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconTintColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
@@ -227,22 +226,16 @@ public class MaterialChips : ContentView, ITouchable
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialChips), defaultValueCreator: DefaultBorderColor);
 
     /// <summary>
-    /// The backing store for the <see cref="Animation"/>
+    /// The backing store for the <see cref="TouchAnimationType"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialChips), defaultValueCreator: DefaultAnimationType);
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialChips), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimationParameter"/>
+    /// The backing store for the <see cref="TouchAnimation"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialChips), defaultValueCreator: DefaultAnimationParameter);
-
-    /// <summary>
-    /// The backing store for the <see cref="CustomAnimation"/>
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialChips));
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialChips));
 
     /// <summary>
     /// The backing store for the <see cref="LeadingIconTintColor" />
@@ -599,25 +592,12 @@ public class MaterialChips : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="AnimationTypes.Fade"> AnimationTypes.Fade </see>
+    /// <see cref="TouchAnimationTypes.Fade"> TouchAnimationTypes.Fade </see>
     /// </default>
-    public AnimationTypes Animation
+    public TouchAnimationTypes TouchAnimationType
     {
-        get => (AnimationTypes)GetValue(AnimationProperty);
-        set => SetValue(AnimationProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>
-    /// </default>
-    public double? AnimationParameter
-    {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
+        get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+        set => SetValue(TouchAnimationTypeProperty, value);
     }
 
     /// <summary>
@@ -627,10 +607,10 @@ public class MaterialChips : ContentView, ITouchable
     /// <default>
     /// <see langword="null"/>
     /// </default>
-    public ICustomAnimation CustomAnimation
+    public ITouchAnimation TouchAnimation
     {
-        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-        set => SetValue(CustomAnimationProperty, value);
+        get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+        set => SetValue(TouchAnimationProperty, value);
     }
 
     #endregion Properties
@@ -663,11 +643,11 @@ public class MaterialChips : ContentView, ITouchable
         }
     }
 
-    public async void OnTouch(TouchType gestureType)
+    public async void OnTouch(TouchEventType gestureType)
     {
-        await TouchAnimation.AnimateAsync(this, gestureType);
+        await TouchAnimationManager.AnimateAsync(this, gestureType);
 
-        if (gestureType == TouchType.Released)
+        if (gestureType == TouchEventType.Released)
         {
             if (Command != null && Command.CanExecute(CommandParameter))
             {
@@ -684,7 +664,7 @@ public class MaterialChips : ContentView, ITouchable
     {
         if (IsEnabled)
         {
-            OnTouch(TouchType.Pressed);
+            OnTouch(TouchEventType.Pressed);
         }
     }
 
@@ -703,7 +683,7 @@ public class MaterialChips : ContentView, ITouchable
                 VisualStateManager.GoToState(this, (IsSelected) ? ChipsCommonStates.Selected : ChipsCommonStates.Unselected);
             }
 
-            OnTouch(TouchType.Released);
+            OnTouch(TouchEventType.Released);
         }
     }
 

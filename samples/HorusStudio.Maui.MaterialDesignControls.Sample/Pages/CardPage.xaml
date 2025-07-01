@@ -225,8 +225,7 @@
             ShadowColor="DarkBlue"
             HorizontalOptions="FillAndExpand"
             Command="{Binding TapCommand}"
-            Animation="Scale"
-            AnimationParameter="0.8">
+            TouchAnimationType="Scale">
             <material:MaterialLabel
                 Text="Custom type with customizations and command" />
         </material:MaterialCard>
