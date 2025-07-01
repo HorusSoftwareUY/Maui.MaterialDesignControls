@@ -824,9 +824,9 @@ public class MaterialChipsGroup : ContentView
             materialChips.SetBinding(MaterialChips.AnimationProperty, new Binding(nameof(Animation), source: this));
             materialChips.SetBinding(MaterialChips.AnimationParameterProperty, new Binding(nameof(AnimationParameter), source: this));
             materialChips.SetBinding(MaterialChips.HeightRequestProperty, new Binding(nameof(ChipsHeightRequest), source: this));
-            materialChips.SetBinding(MaterialChips.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
-            materialChips.SetBinding(MaterialChips.TextColorProperty, new Binding(nameof(TextColor), source: this));
-            materialChips.SetBinding(MaterialChips.BorderColorProperty, new Binding(nameof(BorderColor), source: this));
+            // materialChips.SetBinding(MaterialChips.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
+            // materialChips.SetBinding(MaterialChips.TextColorProperty, new Binding(nameof(TextColor), source: this));
+            // materialChips.SetBinding(MaterialChips.BorderColorProperty, new Binding(nameof(BorderColor), source: this));
 
             materialChips.Command = new Command(() => SelectionCommand(materialChips));
 
