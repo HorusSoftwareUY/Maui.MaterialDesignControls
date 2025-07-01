@@ -39,6 +39,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private string _selectionWithCommandText = "SelectionChangedCommand";
 
+        [ObservableProperty]
+        private bool _hasAnError;
+        
+        [ObservableProperty]
+        private string _supportingTextValue;
+        
         #endregion
 
         public ChipsViewModel()
@@ -86,7 +92,18 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async Task ShowSelectedChip()
         {
-            await DisplayAlert(Title, $"SelectedChip: {SelectedChip}", "OK");
+            SupportingTextValue = null;
+            HasAnError = false;
+
+            if (string.IsNullOrWhiteSpace(SelectedChip))
+            {
+                SupportingTextValue = "You must select one option.";
+                HasAnError = true;
+            }
+            else
+            {
+                await DisplayAlert(Title, $"SelectedChip: {SelectedChip}", "OK");
+            }
         }
 
         [ICommand]
