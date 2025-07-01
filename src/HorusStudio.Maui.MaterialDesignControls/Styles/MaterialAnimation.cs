@@ -8,8 +8,8 @@
         /// <default><see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see></default>
         public static TouchAnimationTypes TouchAnimationType { get; set; } = TouchAnimationTypes.Fade;
 
-        /// <default><see cref="ErrorAnimationTypes.Shake">ErrorAnimationTypes.Shake</see></default>
-        public static ErrorAnimationTypes ErrorAnimationType { get; set; } = ErrorAnimationTypes.Shake;
+        /// <default><see cref="ErrorAnimationTypes.None">ErrorAnimationTypes.None</see></default>
+        public static ErrorAnimationTypes ErrorAnimationType { get; set; } = ErrorAnimationTypes.None;
 
         internal static void Configure(MaterialAnimationOptions options)
         {

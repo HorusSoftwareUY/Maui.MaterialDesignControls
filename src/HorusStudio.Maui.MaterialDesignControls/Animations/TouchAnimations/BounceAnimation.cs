@@ -33,8 +33,7 @@
 
             return Task.Run(() =>
             {
-                // TODO: Use the new MainThread extension
-                MainThread.InvokeOnMainThreadAsync(async () =>
+                MainThreadExtensions.SafeRunOnUiThreadAsync(async () =>
                 {
                     await view.ScaleTo(Scale, (uint)PressAnimationDuration);
                 });
@@ -54,8 +53,7 @@
 
             return Task.Run(() =>
             {
-                // TODO: Use the new MainThread extension
-                MainThread.InvokeOnMainThreadAsync(async () =>
+                MainThreadExtensions.SafeRunOnUiThreadAsync(async () =>
                 {
                     await view.ScaleTo(1, (uint)ReleaseAnimationDuration, Easing.BounceOut);
                 });

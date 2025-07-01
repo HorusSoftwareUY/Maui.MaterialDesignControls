@@ -28,8 +28,7 @@
 
             return Task.Run(() =>
             {
-                // TODO: Use the new MainThread extension
-                MainThread.BeginInvokeOnMainThread(async () =>
+                MainThreadExtensions.SafeRunOnUiThreadAsync(async () =>
                 {
                     if (validableView is View view)
                     {

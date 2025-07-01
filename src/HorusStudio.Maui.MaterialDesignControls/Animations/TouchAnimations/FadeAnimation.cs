@@ -28,8 +28,7 @@
 
             return Task.Run(() =>
             {
-                // TODO: Use the new MainThread extension
-                MainThread.InvokeOnMainThreadAsync(async () =>
+                MainThreadExtensions.SafeRunOnUiThreadAsync(async () =>
                 {
                     await view.FadeTo(Opacity, (uint)Duration);
                 });
@@ -49,8 +48,7 @@
 
             return Task.Run(() =>
             {
-                // TODO: Use the new MainThread extension
-                MainThread.InvokeOnMainThreadAsync(async () =>
+                MainThreadExtensions.SafeRunOnUiThreadAsync(async () =>
                 {
                     await view.FadeTo(1, (uint)Duration);
                 });
