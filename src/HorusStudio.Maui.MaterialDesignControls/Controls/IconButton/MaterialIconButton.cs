@@ -56,7 +56,7 @@ public enum MaterialIconButtonType
 /// * Shadow doesn't react to VisualStateManager changes.
 /// * Add default Material behavior for pressed state on default styles (v2).
 /// </todoList>
-public class MaterialIconButton : ContentView, ITouchable
+public class MaterialIconButton : ContentView, ITouchableView
 {
     #region Attributes
 
@@ -70,8 +70,7 @@ public class MaterialIconButton : ContentView, ITouchable
     private const double DefaultHeightRequest = 40;
     private const double DefaultWidthRequest = 40;
     private static readonly Thickness DefaultPadding = new(8);
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private const double DefaultBusyIndicatorSize = 24;
     private static readonly Shadow DefaultShadow = null!;
@@ -222,19 +221,14 @@ public class MaterialIconButton : ContentView, ITouchable
     public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialIconButton), defaultValue: DefaultPadding);
 
     /// <summary>
-    /// The backing store for the <see cref="Animation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialIconButton), defaultValueCreator: DefaultAnimationType);
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialIconButton), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimationParameter"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialIconButton), defaultValueCreator: DefaultAnimationParameter);
-
-    /// <summary>
-    /// The backing store for the <see cref="CustomAnimation"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialIconButton));
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialIconButton));
 
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
@@ -463,25 +457,12 @@ public class MaterialIconButton : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="AnimationTypes.Fade"/>
+    /// <see cref="TouchAnimationTypes.Fade"/>
     /// </default>
-    public AnimationTypes Animation
+    public TouchAnimationTypes TouchAnimationType
     {
-        get => (AnimationTypes)GetValue(AnimationProperty);
-        set => SetValue(AnimationProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation">Animation</see> property.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// Null
-    /// </default>
-    public double? AnimationParameter
-    {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
+        get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+        set => SetValue(TouchAnimationTypeProperty, value);
     }
 
     /// <summary>
@@ -491,10 +472,10 @@ public class MaterialIconButton : ContentView, ITouchable
     /// <default>
     /// Null
     /// </default>
-    public ICustomAnimation CustomAnimation
+    public ITouchAnimation TouchAnimation
     {
-        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-        set => SetValue(CustomAnimationProperty, value);
+        get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+        set => SetValue(TouchAnimationProperty, value);
     }
 
     /// <summary>
@@ -939,21 +920,21 @@ public class MaterialIconButton : ContentView, ITouchable
 
     #region ITouchable
 
-    public async void OnTouch(TouchType gestureType)
+    public async void OnTouch(TouchEventType gestureType)
     {
         Utils.Logger.Debug($"Gesture: {gestureType}");
         
         if (!IsEnabled) return;
-        await TouchAnimation.AnimateAsync(this, gestureType);
+        await TouchAnimationManager.AnimateAsync(this, gestureType);
 
         switch (gestureType)
         {
-            case TouchType.Pressed:
+            case TouchEventType.Pressed:
                 _pressed?.Invoke(this, EventArgs.Empty);
                 VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
                 break;
 
-            case TouchType.Released: 
+            case TouchEventType.Released: 
                 if (Command != null && Command.CanExecute(CommandParameter))
                 {
                     Command.Execute(CommandParameter);

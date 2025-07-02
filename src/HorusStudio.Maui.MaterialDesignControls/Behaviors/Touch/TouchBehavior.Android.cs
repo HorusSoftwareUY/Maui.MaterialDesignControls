@@ -7,7 +7,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
         #region Attributes
 
         private Android.Views.View? _view;
-        private ITouchable? _touchableElement;
+        private ITouchableView? _touchableElement;
         private float? _firstX;
         private float? _firstY;
         private bool _ignored;
@@ -20,7 +20,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
             base.OnAttachedTo(bindable, platformView);
 
             _view = platformView as Android.Views.View;
-            if (_view != null && bindable is ITouchable touchAndPressBehaviorConsumer)
+            if (_view != null && bindable is ITouchableView touchAndPressBehaviorConsumer)
             {
                 _view.Touch += OnViewOnTouch;
                 _touchableElement = touchAndPressBehaviorConsumer;
@@ -43,10 +43,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
                 case MotionEventActions.ButtonPress:
                 case MotionEventActions.Down:
                 case MotionEventActions.Pointer1Down:
-                    _touchableElement?.OnTouch(TouchType.Pressed);
+                    _touchableElement?.OnTouch(TouchEventType.Pressed);
                     break;
                 case MotionEventActions.Cancel:
-                    _touchableElement?.OnTouch(TouchType.Cancelled);
+                    _touchableElement?.OnTouch(TouchEventType.Cancelled);
                     break;
                 case MotionEventActions.Move:
                     var motionEvent = e.Event;
@@ -67,14 +67,14 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
                         if (!_ignored && (deltaX > maxDelta || deltaY > maxDelta))
                         {
                             _ignored = true;
-                            _touchableElement?.OnTouch(TouchType.Ignored);
+                            _touchableElement?.OnTouch(TouchEventType.Ignored);
                         }
                     }
                     break;
                 case MotionEventActions.ButtonRelease:
                 case MotionEventActions.Pointer1Up:
                 case MotionEventActions.Up:
-                    _touchableElement?.OnTouch(TouchType.Released);
+                    _touchableElement?.OnTouch(TouchEventType.Released);
                     break;
                 case MotionEventActions.HoverEnter:
                 case MotionEventActions.HoverExit:
