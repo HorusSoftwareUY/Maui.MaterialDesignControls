@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -49,7 +50,7 @@ public enum MaterialSegmentedButtonType
 /// * [iOS] FontAttributes doesn't work (MAUI issue)
 /// * [iOS] TextDecorations doesn't work correctly when different values are set for different VisualStates
 /// </todoList>
-public class MaterialSegmentedButton : ContentView
+public class MaterialSegmentedButton : ContentView, ITouchableView
 {   
     #region Attributes
 
@@ -63,8 +64,7 @@ public class MaterialSegmentedButton : ContentView
     private readonly static Color DefaultBorderColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
     private readonly static double DefaultBorderWidth = 1;
     private readonly static Color DefaultBackgroundColor = new AppThemeBindingExtension { Light = MaterialLightTheme.Surface, Dark = MaterialDarkTheme.Surface }.GetValueForCurrentTheme<Color>();
-    private readonly static AnimationTypes DefaultAnimationType = MaterialAnimation.Type;
-    private readonly static double? DefaultAnimationParameter = MaterialAnimation.Parameter;
+    private readonly static BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
     private readonly static double DefaultHeightRequest = 40;
 
     #endregion
@@ -154,19 +154,14 @@ public class MaterialSegmentedButton : ContentView
     public static readonly BindableProperty SelectionCommandProperty = BindableProperty.Create(nameof(SelectionCommand), typeof(ICommand), typeof(MaterialSegmentedButton));
     
     /// <summary>
-    /// The backing store for the <see cref="Animation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialSegmentedButton), defaultValue: DefaultAnimationType);
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialSegmentedButton), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimationParameter"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialSegmentedButton), defaultValue: DefaultAnimationParameter);
-    
-    /// <summary>
-    /// The backing store for the <see cref="CustomAnimation"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialSegmentedButton));
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialSegmentedButton));
 
     /// <summary>
     /// The backing store for the <see cref="ItemTemplate" /> bindable property.
@@ -335,27 +330,14 @@ public class MaterialSegmentedButton : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="AnimationTypes.Fade"> AnimationTypes.Fade </see>
+    /// <see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see>
     /// </default>
-    public AnimationTypes Animation
+    public TouchAnimationTypes TouchAnimationType
     {
-        get => (AnimationTypes)GetValue(AnimationProperty);
-        set => SetValue(AnimationProperty, value);
+        get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+        set => SetValue(TouchAnimationTypeProperty, value);
     }
     
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>
-    /// </default>
-    public double? AnimationParameter
-    {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
-    }
-
     /// <summary>
     /// Gets or sets a custom animation to be executed when is clicked.
     /// This is a bindable property.
@@ -363,10 +345,10 @@ public class MaterialSegmentedButton : ContentView
     /// <default>
     /// <see langword="null"/>
     /// </default>
-    public ICustomAnimation CustomAnimation
+    public ITouchAnimation TouchAnimation
     {
-        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-        set => SetValue(CustomAnimationProperty, value);
+        get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+        set => SetValue(TouchAnimationProperty, value);
     }
 
     /// <summary>
@@ -653,9 +635,8 @@ public class MaterialSegmentedButton : ContentView
             materialCard.Style = GetItemLayoutStyle();
 
             materialCard.SetBinding(MaterialCard.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
-            materialCard.SetBinding(MaterialCard.AnimationProperty, new Binding(nameof(Animation), source: this));
-            materialCard.SetBinding(MaterialCard.AnimationParameterProperty, new Binding(nameof(AnimationParameter), source: this));
-            materialCard.SetBinding(MaterialCard.CustomAnimationProperty, new Binding(nameof(CustomAnimation), source: this));
+            materialCard.SetBinding(MaterialCard.TouchAnimationTypeProperty, new Binding(nameof(TouchAnimationType), source: this));
+            materialCard.SetBinding(MaterialCard.TouchAnimationProperty, new Binding(nameof(TouchAnimation), source: this));
 
             if (Type == MaterialSegmentedButtonType.Outlined)
             {
@@ -764,8 +745,13 @@ public class MaterialSegmentedButton : ContentView
         }
     }
 
+    public async void OnTouch(TouchEventType gestureType)
+    {
+        // Nothing is done since the touch events are handled by each item, and the animation properties were bound to each of them individually.
+    }
+    
     #endregion
-
+    
     #region Styles
 
     private Style GetItemViewStyle()

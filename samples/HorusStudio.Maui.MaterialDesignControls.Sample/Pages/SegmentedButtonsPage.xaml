@@ -69,8 +69,7 @@
                     CornerRadius="4"
                     BorderColor="DarkGreen"
                     BorderWidth="2"
-                    Animation="Scale"
-                    AnimationParameter="0.9"
+                    TouchAnimationType="Scale"
                     HeightRequest="60">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroupList> 
