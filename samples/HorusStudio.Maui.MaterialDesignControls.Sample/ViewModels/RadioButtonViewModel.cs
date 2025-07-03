@@ -57,7 +57,7 @@ public partial class RadioButtonViewModel : BaseViewModel
     [ICommand]
     private async Task CheckedChanged(object message)
     {
-        await DisplayAlert(Title + " from Command", message.ToString(), "OK");
+        await DisplayAlert("CheckedChangedCommand", $"Value: {message.ToString()}", "OK");
     }
 }
 

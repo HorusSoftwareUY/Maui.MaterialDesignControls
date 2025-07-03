@@ -251,8 +251,7 @@
                     TextSide="Left"
                     IsEnabled="{Binding IsRadioButtonEnabled}"
                     Style="{StaticResource VisualStateManagerStyle}"
-                    CommandCheckedChanged="{Binding CheckedChangedCommand}"
-                    CommandCheckedChangedParameter="Selected or Unselected" />
+                    CheckedChangedCommand="{Binding CheckedChangedCommand}" />
                 <material:MaterialRadioButton 
                     Text="Radio button 3"
                     GroupName="Events"
