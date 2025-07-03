@@ -8,13 +8,13 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 public static class MaterialRadioButtonGroup
 {
     static readonly BindableProperty MaterialRadioButtonGroupControllerProperty =
-		BindableProperty.CreateAttached("MaterialRadioButtonGroupController", typeof(MaterialRadioButtonGroupController), typeof(Element), default(MaterialRadioButtonGroupController),
-		defaultValueCreator: (b) => new MaterialRadioButtonGroupController(b as Element),
-		propertyChanged: (b, o, n) => OnControllerChanged(b, (MaterialRadioButtonGroupController)o, (MaterialRadioButtonGroupController)n));
+		BindableProperty.CreateAttached("MaterialRadioButtonGroupController", typeof(MaterialViewGroupController), typeof(Element), default(MaterialViewGroupController),
+		defaultValueCreator: (b) => new MaterialViewGroupController(b as Element, MaterialRadioButton.IsCheckedProperty, SelectedValueProperty),
+		propertyChanged: (b, o, n) => OnControllerChanged(b, (MaterialViewGroupController)o, (MaterialViewGroupController)n));
 	
-	static MaterialRadioButtonGroupController GetMaterialRadioButtonGroupController(BindableObject b)
+	static MaterialViewGroupController GetMaterialRadioButtonGroupController(BindableObject b)
 	{
-		return (MaterialRadioButtonGroupController)b.GetValue(MaterialRadioButtonGroupControllerProperty);
+		return (MaterialViewGroupController)b.GetValue(MaterialRadioButtonGroupControllerProperty);
 	}
 
 	/// <summary>
@@ -74,7 +74,7 @@ public static class MaterialRadioButtonGroup
 	{
 		if (!string.IsNullOrEmpty(radioButton.GroupName))
 		{
-			var root = GetVisualRoot(radioButton) ?? radioButton.Parent;
+			var root = radioButton.GetVisualRoot() ?? radioButton.Parent;
 			if (root is not IElementController rootController)
 			{
 				return;
@@ -126,8 +126,8 @@ public static class MaterialRadioButtonGroup
 		}
 	}
 
-	static void OnControllerChanged(BindableObject bindableObject, MaterialRadioButtonGroupController oldController,
-		MaterialRadioButtonGroupController? newController)
+	static void OnControllerChanged(BindableObject bindableObject, MaterialViewGroupController oldController,
+		MaterialViewGroupController? newController)
 	{
 		if (newController == null)
 		{
@@ -136,15 +136,5 @@ public static class MaterialRadioButtonGroup
 
 		newController.GroupName = GetGroupName(bindableObject);
 		newController.SelectedValue = GetSelectedValue(bindableObject);
-	}
-
-	internal static Element? GetVisualRoot(Element element)
-	{
-		Element parent = element.Parent;
-		while (parent != null && !(parent is Page))
-		{
-			parent = parent.Parent;
-		}
-		return parent;
 	}
 }

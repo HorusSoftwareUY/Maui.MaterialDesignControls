@@ -82,4 +82,14 @@ static class VisualElementExtensions
             }
         }
     }
+    
+    public static Element? GetVisualRoot(this Element element)
+    {
+        Element parent = element.Parent;
+        while (parent != null && !(parent is Page))
+        {
+            parent = parent.Parent;
+        }
+        return parent;
+    }
 }

@@ -40,7 +40,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// * [iOS] FontAttributes doesn't work.
 /// * Using a control template doesn't work when define a custom style for disabled state.
 /// </todoList>
-public class MaterialRadioButton : ContentView, ITouchableView
+public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
 {
     #region Attributes
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
@@ -301,7 +301,7 @@ public class MaterialRadioButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets <see cref="IsChecked" /> for the radio button. 
+    /// Gets or sets the <see cref="IsChecked" /> for the radio button. 
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -312,6 +312,11 @@ public class MaterialRadioButton : ContentView, ITouchableView
         get => (bool)GetValue(IsCheckedProperty);
         set => SetValue(IsCheckedProperty, value);
     }
+    
+    /// <summary>
+    /// Gets the <see cref="IsChecked" /> for the radio button. 
+    /// </summary>
+    public bool IsSelected => IsChecked;
 
     /// <summary>
     /// Gets or sets <see cref="IsEnabled" />  for the radio button.
@@ -651,23 +656,23 @@ public class MaterialRadioButton : ContentView, ITouchableView
             return;
         }
 
-        var controller = MaterialRadioButtonGroupController.GetGroupController(this);
-        controller?.HandleMaterialRadioButtonValueChanged(this);
+        var controller = MaterialViewGroupController.GetGroupController(this);
+        controller?.HandleMaterialViewValueChanged(this);
     }
 
     void OnGroupNamePropertyChanged(string oldGroupName, string newGroupName)
     {
         if (!string.IsNullOrEmpty(oldGroupName) && !string.IsNullOrEmpty(newGroupName) && newGroupName != oldGroupName)
         {
-            var controller = MaterialRadioButtonGroupController.GetGroupController(this);
-            controller?.HandleMaterialRadioButtonGroupNameChanged(oldGroupName);
+            var controller = MaterialViewGroupController.GetGroupController(this);
+            controller?.HandleMaterialViewGroupNameChanged(oldGroupName);
         }
     }
     
     internal void OnGroupSelectionChanged(MaterialRadioButton radioButton)
     {
-        var controller = MaterialRadioButtonGroupController.GetGroupController(this);
-        controller?.HandleMaterialRadioButtonGroupSelectionChanged(radioButton);
+        var controller = MaterialViewGroupController.GetGroupController(this);
+        controller?.HandleMaterialViewGroupSelectionChanged(radioButton);
     }
     
     #endregion Methods
