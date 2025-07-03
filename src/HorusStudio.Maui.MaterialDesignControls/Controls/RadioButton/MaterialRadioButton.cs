@@ -18,8 +18,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// &lt;material:MaterialRadioButton
 ///         TextSide="Left"
-///         CommandCheckedChanged="{Binding CheckedChangedCommand}"
-///         CommandCheckedChangedParameter="Selected or Unselected"
+///         CheckedChangedCommand="{Binding CheckedChangedCommand}"
 ///         Text="Radio button 1"/&gt;
 /// </xaml>
 /// </code>
@@ -30,8 +29,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// {
 ///     Text = "Radio button 1",
 ///     TextSide = TextSide.Left,
-///     CommandCheckedChanged = viewModel.CheckChangedCommand,
-///     CommandCheckedChangedParameter = "Selected or Unselected"
+///     CheckedChangedCommand = viewModel.CheckChangedCommand
 /// };
 ///</code>
 ///
@@ -51,9 +49,6 @@ public class MaterialRadioButton : ContentView, ITouchableView
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.BodyLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
-    private const string DefaultGroupName = "MaterialRadioButton.GroupName";
-    internal const string GroupNameChangedMessage = "MaterialRadioButtonGroupNameChanged";
-    internal const string ValueChangedMessage = "MaterialRadioButtonValueChanged";
 
     #endregion Attributes
 
@@ -107,7 +102,7 @@ public class MaterialRadioButton : ContentView, ITouchableView
     /// The backing store for the <see cref="GroupName" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty GroupNameProperty = BindableProperty.Create(nameof(GroupName), typeof(string), typeof(MaterialRadioButton), defaultValue: DefaultGroupName, propertyChanged: (bindableObject, oldValue, newValue) =>
+    public static readonly BindableProperty GroupNameProperty = BindableProperty.Create(nameof(GroupName), typeof(string), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
     {
         if (bindableObject is MaterialRadioButton self && oldValue is string oldGroupName && newValue is string newGroupName)
         {
@@ -126,12 +121,12 @@ public class MaterialRadioButton : ContentView, ITouchableView
             self.ChangeVisualState();
 
             if (value)
-                MaterialRadioButtonGroup.UpdateRadioButtonGroup(self);
+                MaterialRadioButtonGroup.UpdateMaterialRadioButtonGroup(self);
 
             self.CheckedChanged?.Invoke(self, new CheckedChangedEventArgs(value));
-            if (self.CommandCheckedChanged != null && self.CommandCheckedChanged.CanExecute(self.CommandCheckedChangedParameter))
+            if (self.CheckedChangedCommand != null && self.CheckedChangedCommand.CanExecute(value))
             {
-                self.CommandCheckedChanged.Execute(self.CommandCheckedChangedParameter);
+                self.CheckedChangedCommand.Execute(value);
             }
         }
     });
@@ -221,17 +216,11 @@ public class MaterialRadioButton : ContentView, ITouchableView
     public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialRadioButton));
 
     /// <summary>
-    /// The backing store for the <see cref="CommandCheckedChanged" />
+    /// The backing store for the <see cref="CheckedChangedCommand" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandCheckedChangedProperty = BindableProperty.Create(nameof(CommandCheckedChanged), typeof(ICommand), typeof(MaterialRadioButton));
-
-    /// <summary>
-    /// The backing store for the <see cref="CommandCheckedChangedParameter" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty CommandCheckedChangedParameterProperty = BindableProperty.Create(nameof(CommandCheckedChangedParameter), typeof(object), typeof(MaterialRadioButton));
-
+    public static readonly BindableProperty CheckedChangedCommandProperty = BindableProperty.Create(nameof(CheckedChangedCommand), typeof(ICommand), typeof(MaterialRadioButton));
+    
     #endregion Bindable Properties
 
     #region Properties
@@ -455,26 +444,18 @@ public class MaterialRadioButton : ContentView, ITouchableView
     /// Gets or sets the command to invoke when the radio button changes its status.
     /// This is a bindable property.
     /// </summary>
-    /// <remarks>This property is used to associate a command with an instance of a radio button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
-    public ICommand CommandCheckedChanged
+    /// <remarks>
+    /// This property is used to associate a command with an instance of a radio button.
+    /// This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
+    /// <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.
+    /// The command parameter is of type <see cref="bool"/> and corresponds to the value of the <see cref="IsChecked"/> property.
+    /// </remarks>
+    public ICommand CheckedChangedCommand
     {
-        get => (ICommand)GetValue(CommandCheckedChangedProperty);
-        set => SetValue(CommandCheckedChangedProperty, value);
+        get => (ICommand)GetValue(CheckedChangedCommandProperty);
+        set => SetValue(CheckedChangedCommandProperty, value);
     }
-
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="CommandCheckedChangedParameter"/> property.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>
-    /// </default>
-    public object CommandCheckedChangedParameter
-    {
-        get => GetValue(CommandCheckedChangedParameterProperty);
-        set => SetValue(CommandCheckedChangedParameterProperty, value);
-    }
-
+    
     #endregion Properties
 
     #region Constructors
@@ -665,68 +646,30 @@ public class MaterialRadioButton : ContentView, ITouchableView
 
     void OnValuePropertyChanged()
     {
-        if (string.IsNullOrEmpty(GroupName))
+        if (!IsChecked || string.IsNullOrEmpty(GroupName))
         {
             return;
         }
-#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
-        MessagingCenter.Send(this, ValueChangedMessage,
-                    new MaterialRadioButtonValueChanged(MaterialRadioButtonGroup.GetVisualRoot(this)));
-#pragma warning restore CS0618 // Type or member is obsolete
+
+        var controller = MaterialRadioButtonGroupController.GetGroupController(this);
+        controller?.HandleMaterialRadioButtonValueChanged(this);
     }
 
     void OnGroupNamePropertyChanged(string oldGroupName, string newGroupName)
     {
-#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
-        if (!string.IsNullOrEmpty(newGroupName))
+        if (!string.IsNullOrEmpty(oldGroupName) && !string.IsNullOrEmpty(newGroupName) && newGroupName != oldGroupName)
         {
-            if (string.IsNullOrEmpty(oldGroupName))
-            {
-                MessagingCenter.Subscribe<MaterialRadioButton, MaterialRadioButtonGroupSelectionChanged>(this,
-                    MaterialRadioButtonGroup.GroupSelectionChangedMessage, HandleRadioButtonGroupSelectionChanged);
-                MessagingCenter.Subscribe<Element, MaterialRadioButtonGroupValueChanged>(this,
-                    MaterialRadioButtonGroup.GroupValueChangedMessage, HandleRadioButtonGroupValueChanged);
-            }
-
-            MessagingCenter.Send(this, GroupNameChangedMessage,
-                new MaterialRadioButtonGroupNameChanged(MaterialRadioButtonGroup.GetVisualRoot(this), oldGroupName));
+            var controller = MaterialRadioButtonGroupController.GetGroupController(this);
+            controller?.HandleMaterialRadioButtonGroupNameChanged(oldGroupName);
         }
-        else
-        {
-            if (!string.IsNullOrEmpty(oldGroupName))
-            {
-                MessagingCenter.Unsubscribe<MaterialRadioButton, MaterialRadioButtonGroupSelectionChanged>(this, MaterialRadioButtonGroup.GroupSelectionChangedMessage);
-                MessagingCenter.Unsubscribe<Element, MaterialRadioButtonGroupValueChanged>(this, MaterialRadioButtonGroup.GroupValueChangedMessage);
-            }
-        }
-#pragma warning restore CS0618 // Type or member is obsolete
     }
-
-    void HandleRadioButtonGroupValueChanged(Element layout, MaterialRadioButtonGroupValueChanged args)
+    
+    internal void OnGroupSelectionChanged(MaterialRadioButton radioButton)
     {
-        if (IsChecked || string.IsNullOrEmpty(GroupName) || GroupName != args.GroupName || !Equals(Value, args.Value) || !Equals(Value, args.Value) || !MatchesScope(args))
-        {
-            return;
-        }
-
-        SetValue(IsCheckedProperty, true);
+        var controller = MaterialRadioButtonGroupController.GetGroupController(this);
+        controller?.HandleMaterialRadioButtonGroupSelectionChanged(radioButton);
     }
-
-    bool MatchesScope(MaterialRadioButtonScopeMessage message)
-    {
-        return MaterialRadioButtonGroup.GetVisualRoot(this) == message.Scope;
-    }
-
-    void HandleRadioButtonGroupSelectionChanged(MaterialRadioButton selected, MaterialRadioButtonGroupSelectionChanged args)
-    {
-        if (!IsChecked || selected == this || string.IsNullOrEmpty(GroupName) || GroupName != selected.GroupName || !MatchesScope(args))
-        {
-            return;
-        }
-
-        SetValue(IsCheckedProperty, false);
-    }
-
+    
     #endregion Methods
 
     #region Styles

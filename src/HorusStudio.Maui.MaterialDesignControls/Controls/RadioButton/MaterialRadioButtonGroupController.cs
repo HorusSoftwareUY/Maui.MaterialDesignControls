@@ -1,177 +1,189 @@
-﻿namespace HorusStudio.Maui.MaterialDesignControls;
+﻿using Microsoft.Maui.Controls;
+
+namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButtonGroupController.cs">See here.</see>
+/// We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/10.0.0-preview.5.25306.5/src/Controls/src/Core/RadioButton/RadioButtonGroupController.cs">See here.</see>
 /// This class acts like a controller to set group name and selected value.
 /// This help to use as attachable properties that properties.
 /// </summary>
 internal class MaterialRadioButtonGroupController
 {
-    #region Attributes
+    static readonly Dictionary<MaterialRadioButton, MaterialRadioButtonGroupController> groupControllers = new();
+	readonly Element _layout;
+	string _groupName;
+	private object? _selectedValue;
 
-    private readonly Element _layout;
-    private string _groupName = null!;
-    private object _selectedValue = null!;
+	public string GroupName { get => _groupName; set => SetGroupName(value); }
+	public object? SelectedValue { get => _selectedValue; set => SetSelectedValue(value); }
 
-    public string GroupName
-    {
-        get => _groupName; 
-        set => SetGroupName(value);
-    }
+	public MaterialRadioButtonGroupController(Element layout)
+	{
+		if (layout is null)
+		{
+			throw new ArgumentNullException(nameof(layout));
+		}
 
-    public object SelectedValue
-    {
-        get => _selectedValue; 
-        set => SetSelectedValue(value);
-    }
+		_layout = layout;
+		_layout.ChildAdded += ChildAdded;
+		_layout.ChildRemoved += ChildRemoved;
 
-    #endregion Attributes
+		if (!string.IsNullOrEmpty(_groupName))
+		{
+			UpdateGroupNames(_layout, _groupName);
+		}
+	}
 
-    #region Constructor
-    public MaterialRadioButtonGroupController(Microsoft.Maui.ILayout layout)
-    {
-        if (layout is null)
-        {
-            throw new ArgumentNullException(nameof(layout));
-        }
+	internal static MaterialRadioButtonGroupController? GetGroupController(MaterialRadioButton? radioButton)
+	{
+		if (radioButton is not null && groupControllers.TryGetValue(radioButton, out var controller))
+		{
+			return controller;
+		}
+		
+		return null;
+	}
 
-        _layout = (Element)layout;
-        _layout.ChildAdded += ChildAdded;
+	internal void HandleMaterialRadioButtonGroupSelectionChanged(MaterialRadioButton radioButton)
+	{
+		if (radioButton.GroupName != _groupName)
+		{
+			return;
+		}
 
-        if (!string.IsNullOrEmpty(_groupName))
-        {
-            UpdateGroupNames(_layout, _groupName);
-        }
+		_layout.SetValue(MaterialRadioButtonGroup.SelectedValueProperty, radioButton.Value);
+	}
 
-#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
-        MessagingCenter.Subscribe<MaterialRadioButton, MaterialRadioButtonGroupSelectionChanged>(this,
-            MaterialRadioButtonGroup.GroupSelectionChangedMessage, HandleRadioButtonGroupSelectionChanged);
-        MessagingCenter.Subscribe<MaterialRadioButton, MaterialRadioButtonGroupNameChanged>(this, MaterialRadioButton.GroupNameChangedMessage,
-            HandleRadioButtonGroupNameChanged);
-        MessagingCenter.Subscribe<MaterialRadioButton, MaterialRadioButtonValueChanged>(this, MaterialRadioButton.ValueChangedMessage,
-            HandleRadioButtonValueChanged);
-#pragma warning restore CS0618 // Type or member is obsolete
-    }
+	void ChildAdded(object sender, ElementEventArgs e)
+	{
+		if (string.IsNullOrEmpty(_groupName))
+		{
+			return;
+		}
 
-    #endregion Constructor
+		if (e.Element is MaterialRadioButton radioButton)
+		{
+			AddMaterialRadioButton(radioButton);
+		}
+		else
+		{
+			foreach (var element in e.Element.GetDescendants())
+			{
+				if (element is MaterialRadioButton childMaterialRadioButton)
+				{
+					AddMaterialRadioButton(childMaterialRadioButton);
+				}
+			}
+		}
+	}
 
-    #region Methods
+	void ChildRemoved(object sender, ElementEventArgs e)
+	{
+		if (e.Element is MaterialRadioButton radioButton)
+		{
+			if (groupControllers.TryGetValue(radioButton, out _))
+			{
+				groupControllers.Remove(radioButton);
+			}
+		}
+		else
+		{
+			foreach (var element in e.Element.GetDescendants())
+			{
+				if (element is MaterialRadioButton radioButton1)
+				{
+					if (groupControllers.TryGetValue(radioButton1, out _))
+					{
+						groupControllers.Remove(radioButton1);
+					}
+				}
+			}
+		}
+	}
 
-    bool MatchesScope(MaterialRadioButtonScopeMessage message)
-    {
-        return MaterialRadioButtonGroup.GetVisualRoot(_layout) == message.Scope;
-    }
+	internal void HandleMaterialRadioButtonValueChanged(MaterialRadioButton radioButton)
+	{
+		if (radioButton?.GroupName != _groupName)
+		{
+			return;
+		}
 
-    void HandleRadioButtonGroupSelectionChanged(MaterialRadioButton selected, MaterialRadioButtonGroupSelectionChanged args)
-    {
-        if (selected.GroupName != _groupName || !MatchesScope(args))
-        {
-            return;
-        }
+		_layout.SetValue(MaterialRadioButtonGroup.SelectedValueProperty, radioButton.Value);
+	}
 
-        _layout.SetValue(MaterialRadioButtonGroup.SelectedValueProperty, selected.Value);
-    }
+	internal void HandleMaterialRadioButtonGroupNameChanged(string oldGroupName)
+	{
+		if (oldGroupName != _groupName)
+		{
+			return;
+		}
 
-    void HandleRadioButtonGroupNameChanged(MaterialRadioButton radioButton, MaterialRadioButtonGroupNameChanged args)
-    {
-        if (args.OldName != _groupName || !MatchesScope(args))
-        {
-            return;
-        }
+		_layout.ClearValue(MaterialRadioButtonGroup.SelectedValueProperty);
+	}
 
-        _layout.ClearValue(MaterialRadioButtonGroup.SelectedValueProperty);
-    }
+	void AddMaterialRadioButton(MaterialRadioButton radioButton)
+	{
+		UpdateGroupName(radioButton, _groupName);
 
-    void HandleRadioButtonValueChanged(MaterialRadioButton radioButton, MaterialRadioButtonValueChanged args)
-    {
-        if (radioButton.GroupName != _groupName || !MatchesScope(args) || radioButton.Value is null || SelectedValue is null)
-        {
-            return;
-        }
+		if (radioButton.IsChecked)
+		{
+			_layout.SetValue(MaterialRadioButtonGroup.SelectedValueProperty, radioButton.Value);
+		}
 
-        if (Equals(radioButton.Value, SelectedValue))
-        {
-            radioButton.SetValue(MaterialRadioButton.IsCheckedProperty, true);
-            _layout.SetValue(MaterialRadioButtonGroup.SelectedValueProperty, radioButton.Value);
-        }
-    }
+		if (object.Equals(radioButton.Value, this.SelectedValue))
+		{
+			radioButton.SetValue(MaterialRadioButton.IsCheckedProperty, true);
+		}
+	}
 
-    void ChildAdded(object? sender, ElementEventArgs e)
-    {
-        if (string.IsNullOrEmpty(_groupName))
-        {
-            return;
-        }
+	void UpdateGroupName(Element element, string name, string? oldName = null)
+	{
+		if (!(element is MaterialRadioButton radioButton))
+		{
+			return;
+		}
 
-        if (e.Element is MaterialRadioButton radioButton)
-        {
-            AddRadioButton(radioButton);
-        }
-        else
-        {
-            foreach (var element in e.Element.GetVisualTreeDescendants())
-            {
-                if (element is MaterialRadioButton radioButton1)
-                {
-                    AddRadioButton(radioButton1);
-                }
-            }
-        }
-    }
+		var currentName = radioButton.GroupName;
 
-    void AddRadioButton(MaterialRadioButton radioButton)
-    {
-        UpdateGroupName(radioButton, _groupName);
+		if (string.IsNullOrEmpty(currentName) || currentName == oldName)
+		{
+			radioButton.GroupName = name;
+		}
 
-        if (radioButton.IsChecked && radioButton.Value is not null)
-        {
-            _layout.SetValue(MaterialRadioButtonGroup.SelectedValueProperty, radioButton.Value);
-        }
+		if (!groupControllers.TryGetValue(radioButton, out _))
+		{
+			groupControllers.Add(radioButton, this);
+		}
+	}
 
-        if (radioButton.Value != null && SelectedValue != null && Equals(radioButton.Value, SelectedValue))
-        {
-            radioButton.SetValue(MaterialRadioButton.IsCheckedProperty, true);
-        }
-    }
+	void UpdateGroupNames(Element element, string name, string? oldName = null)
+	{
+		foreach (Element descendant in element.GetDescendants())
+		{
+			UpdateGroupName(descendant, name, oldName);
+		}
+	}
 
-    void UpdateGroupName(MaterialRadioButton radioButton, string name, string? oldName = null)
-    {
-        var currentName = radioButton.GroupName;
+	void SetSelectedValue(object? radioButtonValue)
+	{
+		_selectedValue = radioButtonValue;
 
-        if (string.IsNullOrEmpty(currentName) || currentName == oldName || oldName is null)
-        {
-            radioButton.GroupName = name;
-        }
-    }
-
-    void UpdateGroupNames(Element element, string name, string? oldName = null)
-    {
-        foreach (var descendant in element.GetVisualTreeDescendants())
-        {
-            if (descendant is MaterialRadioButton radioButton) UpdateGroupName(radioButton, name, oldName);
-        }
-    }
-
-    void SetSelectedValue(object radioButtonValue)
-    {
-        _selectedValue = radioButtonValue;
-
-        if (radioButtonValue != null)
-        {
-
-#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
-            MessagingCenter.Send(_layout, MaterialRadioButtonGroup.GroupValueChangedMessage,
-                new MaterialRadioButtonGroupValueChanged(_groupName, MaterialRadioButtonGroup.GetVisualRoot(_layout), radioButtonValue));
-#pragma warning restore CS0618 // Type or member is obsolete
-        }
-    }
-
-    void SetGroupName(string groupName)
-    {
-        var oldName = _groupName;
-        _groupName = groupName;
-        UpdateGroupNames(_layout, _groupName, oldName);
-    }
-
-    #endregion Methods
+		if (radioButtonValue != null)
+		{
+			foreach (var child in _layout.GetDescendants())
+			{
+				if (child is MaterialRadioButton radioButton && radioButton.GroupName == _groupName && radioButton.Value is not null && radioButton.Value.Equals(radioButtonValue))
+				{
+					radioButton.SetValue(MaterialRadioButton.IsCheckedProperty, true);
+				}
+			}
+		}
+	}
+	
+	void SetGroupName(string groupName)
+	{
+		var oldName = _groupName;
+		_groupName = groupName;
+		UpdateGroupNames(_layout, _groupName, oldName);
+	}
 }
