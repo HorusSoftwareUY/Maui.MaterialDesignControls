@@ -17,8 +17,8 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// &lt;material:MaterialCheckBox
 ///         TextSide="Left"
-///         CommandCheckedChanged="{Binding CheckedChangedCommand}"
-///         CommandCheckedChangedParameter="Selected or Unselected"
+///         CheckedChangedCommand="{Binding CheckedChangedCommand}"
+///         CheckedChangedCommandParameter="Selected or Unselected"
 ///         Text="Checkbox 1"/&gt;
 /// </xaml>
 /// </code>
@@ -29,8 +29,8 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// {
 ///     Text = "Checkbox 1"
 ///     TextSide = TextSide.Left,
-///     CommandCheckedChanged = viewModel.CheckChangedCommand,
-///     CommandCheckedChangedParameter = "Selected or Unselected"
+///     CheckedChangedCommand = viewModel.CheckChangedCommand,
+///     CheckedChangedCommandParameter = "Selected or Unselected"
 /// };
 ///</code>
 ///
@@ -102,9 +102,9 @@ public class MaterialCheckBox : ContentView, ITouchableView
             self.ChangeVisualState();
 
             self.CheckedChanged?.Invoke(self, new CheckedChangedEventArgs(value));
-            if (self.CommandCheckedChanged != null && self.CommandCheckedChanged.CanExecute(self.CommandCheckedChangedParameter))
+            if (self.CheckedChangedCommand != null && self.CheckedChangedCommand.CanExecute(self.CheckedChangedCommandParameter))
             {
-                self.CommandCheckedChanged.Execute(self.CommandCheckedChangedParameter);
+                self.CheckedChangedCommand.Execute(self.CheckedChangedCommandParameter);
             }
         }
     });
@@ -172,14 +172,14 @@ public class MaterialCheckBox : ContentView, ITouchableView
     public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialCheckBox));
 
     /// <summary>
-    /// The backing store for the <see cref="CommandCheckedChanged" /> bindable property.
+    /// The backing store for the <see cref="CheckedChangedCommand" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandCheckedChangedProperty = BindableProperty.Create(nameof(CommandCheckedChanged), typeof(ICommand), typeof(MaterialCheckBox));
+    public static readonly BindableProperty CheckedChangedCommandProperty = BindableProperty.Create(nameof(CheckedChangedCommand), typeof(ICommand), typeof(MaterialCheckBox));
 
     /// <summary>
-    /// The backing store for the <see cref="CommandCheckedChangedParameter" /> bindable property.
+    /// The backing store for the <see cref="CheckedChangedCommandParameter" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandCheckedChangedParameterProperty = BindableProperty.Create(nameof(CommandCheckedChangedParameter), typeof(object), typeof(MaterialCheckBox));
+    public static readonly BindableProperty CheckedChangedCommandParameterProperty = BindableProperty.Create(nameof(CheckedChangedCommandParameter), typeof(object), typeof(MaterialCheckBox));
 
     #endregion Bindable Properties
 
@@ -382,22 +382,22 @@ public class MaterialCheckBox : ContentView, ITouchableView
     /// Gets or sets the command to invoke when the checkbox changes its status. This is a bindable property.
     /// </summary>
     /// <remarks>This property is used to associate a command with an instance of a checkbox. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
-    public ICommand CommandCheckedChanged
+    public ICommand CheckedChangedCommand
     {
-        get => (ICommand)GetValue(CommandCheckedChangedProperty);
-        set => SetValue(CommandCheckedChangedProperty, value);
+        get => (ICommand)GetValue(CheckedChangedCommandProperty);
+        set => SetValue(CheckedChangedCommandProperty, value);
     }
 
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="CommandCheckedChangedParameter"/> property. This is a bindable property.
+    /// Gets or sets the parameter to pass to the <see cref="CheckedChangedCommandParameter"/> property. This is a bindable property.
     /// </summary>
     /// <default>
     /// <see langword="null"/>.
     /// </default>
-    public object CommandCheckedChangedParameter
+    public object CheckedChangedCommandParameter
     {
-        get => GetValue(CommandCheckedChangedParameterProperty);
-        set => SetValue(CommandCheckedChangedParameterProperty, value);
+        get => GetValue(CheckedChangedCommandParameterProperty);
+        set => SetValue(CheckedChangedCommandParameterProperty, value);
     }
 
     #endregion Properties
