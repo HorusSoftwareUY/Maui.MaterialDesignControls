@@ -18,7 +18,6 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// &lt;material:MaterialCheckBox
 ///         TextSide="Left"
 ///         CheckedChangedCommand="{Binding CheckedChangedCommand}"
-///         CheckedChangedCommandParameter="Selected or Unselected"
 ///         Text="Checkbox 1"/&gt;
 /// </xaml>
 /// </code>
@@ -29,8 +28,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// {
 ///     Text = "Checkbox 1"
 ///     TextSide = TextSide.Left,
-///     CheckedChangedCommand = viewModel.CheckChangedCommand,
-///     CheckedChangedCommandParameter = "Selected or Unselected"
+///     CheckedChangedCommand = viewModel.CheckChangedCommand
 /// };
 ///</code>
 ///
