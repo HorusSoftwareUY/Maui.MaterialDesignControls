@@ -102,9 +102,9 @@ public class MaterialCheckBox : ContentView, ITouchableView
             self.ChangeVisualState();
 
             self.CheckedChanged?.Invoke(self, new CheckedChangedEventArgs(value));
-            if (self.CheckedChangedCommand != null && self.CheckedChangedCommand.CanExecute(self.CheckedChangedCommandParameter))
+            if (self.CheckedChangedCommand != null && self.CheckedChangedCommand.CanExecute(value))
             {
-                self.CheckedChangedCommand.Execute(self.CheckedChangedCommandParameter);
+                self.CheckedChangedCommand.Execute(value);
             }
         }
     });
@@ -175,12 +175,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
     /// The backing store for the <see cref="CheckedChangedCommand" /> bindable property.
     /// </summary>
     public static readonly BindableProperty CheckedChangedCommandProperty = BindableProperty.Create(nameof(CheckedChangedCommand), typeof(ICommand), typeof(MaterialCheckBox));
-
-    /// <summary>
-    /// The backing store for the <see cref="CheckedChangedCommandParameter" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty CheckedChangedCommandParameterProperty = BindableProperty.Create(nameof(CheckedChangedCommandParameter), typeof(object), typeof(MaterialCheckBox));
-
+    
     #endregion Bindable Properties
 
     #region Properties
@@ -381,25 +376,18 @@ public class MaterialCheckBox : ContentView, ITouchableView
     /// <summary>
     /// Gets or sets the command to invoke when the checkbox changes its status. This is a bindable property.
     /// </summary>
-    /// <remarks>This property is used to associate a command with an instance of a checkbox. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
+    /// <remarks>
+    /// This property is used to associate a command with an instance of a checkbox.
+    /// This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
+    /// <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.
+    /// The command parameter is of type <see cref="bool"/> and corresponds to the value of the <see cref="IsChecked"/> property.
+    /// </remarks>
     public ICommand CheckedChangedCommand
     {
         get => (ICommand)GetValue(CheckedChangedCommandProperty);
         set => SetValue(CheckedChangedCommandProperty, value);
     }
-
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="CheckedChangedCommandParameter"/> property. This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>.
-    /// </default>
-    public object CheckedChangedCommandParameter
-    {
-        get => GetValue(CheckedChangedCommandParameterProperty);
-        set => SetValue(CheckedChangedCommandParameterProperty, value);
-    }
-
+    
     #endregion Properties
 
     #region Constructors

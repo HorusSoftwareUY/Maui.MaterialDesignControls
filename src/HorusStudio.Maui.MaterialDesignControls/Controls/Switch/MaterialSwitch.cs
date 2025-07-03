@@ -347,7 +347,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// Gets or sets the command to invoke when the switch's IsToggled property changes. This is a bindable property.
         /// </summary>
-        /// <remarks>This property is used to associate a command with an instance of a switch. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.</remarks>
+        /// <remarks>
+        /// This property is used to associate a command with an instance of a switch.
+        /// This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
+        /// The command parameter is of type <see cref="bool"/> and corresponds to the value of the <see cref="IsToggled"/> property.
+        /// </remarks>
         public ICommand ToggledCommand
         {
             get => (ICommand)GetValue(ToggledCommandProperty);

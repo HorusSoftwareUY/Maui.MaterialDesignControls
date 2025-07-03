@@ -127,8 +127,7 @@
                     TextSide="Left"
                     IsEnabled="{Binding IsCheckboxEnabled}"
                     Style="{StaticResource VisualStateManagerStyle}"
-                    CheckedChangedCommand="{Binding CheckedChangedCommand}"
-                    CheckedChangedCommandParameter="Selected or Unselected" />
+                    CheckedChangedCommand="{Binding CheckedChangedCommand}" />
 
                 <material:MaterialCheckBox 
                     Text="CheckBox 3"
