@@ -162,7 +162,7 @@
                     Text="Radio button 4" />
             </VerticalStackLayout>
         </material:MaterialCard>
-        <material:MaterialLabel Text="Normal Material Radio Buttons with default properties" Type="BodySmall" />
+        <material:MaterialLabel Text="Normal MaterialRadioButton with default properties. MaterialRadioButtons are automatically grouped by sharing the same parent, without the need to use the GroupName property." Type="BodySmall" />
 
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing some properties" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
@@ -195,18 +195,21 @@
                     TextColor="DarkGreen"/>
             </VerticalStackLayout>
         </material:MaterialCard>
-        <material:MaterialLabel Text="We can set stroke color, text color, text size, font attributes, text transform, group name, characters spacing and other properties." Type="BodySmall" />
+        <material:MaterialLabel Text="We can set stroke color, text color, text size, font attributes, text transform, characters spacing and other properties. MaterialRadioButtons are grouped using the GroupName property." Type="BodySmall" />
 
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using attached properties" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="0">
-                <VerticalStackLayout material:MaterialRadioButtonGroup.GroupName="testinggroup" material:MaterialRadioButtonGroup.SelectedValue="{Binding CheckedColor}" BindableLayout.ItemsSource="{Binding ItemsSourceColors}">
+                <VerticalStackLayout 
+                    material:MaterialRadioButtonGroup.GroupName="TestingGroup" 
+                    material:MaterialRadioButtonGroup.SelectedValue="{Binding CheckedColor}" 
+                    BindableLayout.ItemsSource="{Binding ItemsSourceColors}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="vm:CustomColor">
                             <StackLayout>
                                 <material:MaterialRadioButton 
-                    Text="{Binding Color}"
-                    Value="{Binding .}" />
+                                    Text="{Binding Color}"
+                                    Value="{Binding .}" />
                             </StackLayout>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
@@ -222,11 +225,9 @@
                 <material:MaterialRadioButton 
                     GroupName="ControlTemplate"
                     Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
-
                 <material:MaterialRadioButton 
                     GroupName="ControlTemplate"
                     Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
-
                 <material:MaterialRadioButton 
                     GroupName="ControlTemplate"
                     Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
@@ -235,7 +236,6 @@
         <material:MaterialLabel Text="Using Control Template to change the appearance of the Material Radio Button" Type="BodySmall" />
 
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom events, new style and text side changing" />
-
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="0">
                 <material:MaterialRadioButton 
@@ -258,11 +258,7 @@
                     TextSide="Left"
                     IsEnabled="{Binding IsRadioButtonEnabled}"
                     Style="{StaticResource VisualStateManagerStyle}" />
-
-                <HorizontalStackLayout HorizontalOptions="Center">
-                    <material:MaterialSwitch Text="Is enabled" IsToggled="{Binding IsRadioButtonEnabled}" />    
-                </HorizontalStackLayout>
-                
+                <material:MaterialSwitch Text="Is enabled" IsToggled="{Binding IsRadioButtonEnabled}" /> 
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel Text="Setting events, new style using visual state manager and text side" Type="BodySmall" />
