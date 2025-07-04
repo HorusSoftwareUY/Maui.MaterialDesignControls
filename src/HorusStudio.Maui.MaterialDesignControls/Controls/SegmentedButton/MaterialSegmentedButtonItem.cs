@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using HorusStudio.Maui.MaterialDesignControls.Models;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -7,7 +7,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// <summary>
     /// Represents the model for a segmented button to be rendered inside the MaterialSegmentedButton control.
     /// </summary>
-    public class MaterialSegmentedButtonItem : INotifyPropertyChanged
+    public class MaterialSegmentedButtonItem : BindableObjectBase
     {
         #region Attributes
 
@@ -108,19 +108,5 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         public override string ToString() =>
             string.IsNullOrWhiteSpace(Text) ? "No defined text" : Text;
-
-        private void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
-        {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return;
-
-            backingStore = value;
-            OnPropertyChanged(propertyName);
-        }
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }
