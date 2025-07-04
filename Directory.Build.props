@@ -2,7 +2,7 @@
   <Import Project="nuget.props" />
 
   <PropertyGroup>
-    <NetVersion>net8.0</NetVersion>
+    <NetVersion>net9.0</NetVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
@@ -13,7 +13,7 @@
 
   <PropertyGroup Condition=" $(MSBuildProjectName.Contains('Maui')) ">
     <UseMaui>true</UseMaui>
-    <MauiVersion>8.0.100</MauiVersion>
+    <MauiVersion>9.0.80</MauiVersion>
     <XamlCompilationOptions>Compile</XamlCompilationOptions>
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
   </PropertyGroup>
@@ -31,7 +31,7 @@
     </When>
     <When Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">
       <PropertyGroup>
-        <SupportedOSPlatformVersion>14.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
         <RuntimeIdentifier Condition="'$(RuntimeIdentifier)'==''">maccatalyst-x64</RuntimeIdentifier>
       </PropertyGroup>
     </When>
