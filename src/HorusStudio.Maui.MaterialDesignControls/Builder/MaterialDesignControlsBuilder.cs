@@ -10,22 +10,42 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// Material Design Controls builder.
 /// </summary>
 /// <param name="AppBuilder">MAUI application builder.</param>
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public sealed record MaterialDesignControlsBuilder(MauiAppBuilder AppBuilder);
 
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public static class MaterialDesignControlsBuilderExtensions
 {
+    private static Action<MaterialHandlerOptions>? _configureHandlers;
+
+    private static List<(Type, Type, Type)> _controlHandlerMappings = new List<(Type, Type, Type)>
+    {
+        (typeof(MaterialButton), typeof(CustomButton), typeof(MaterialButtonHandler )),
+        (typeof(MaterialRadioButton), typeof(CustomRadioButton), typeof(MaterialRadioButtonHandler)),
+        (typeof(MaterialTextField), typeof(CustomEntry), typeof(MaterialTextFieldHandler)),
+        (typeof(MaterialTimePicker), typeof(CustomTimePicker), typeof(MaterialTimePickerHandler)),
+        (typeof(MaterialDatePicker), typeof(CustomDatePicker), typeof(MaterialDatePickerHandler)),
+        (typeof(MaterialPicker), typeof(CustomPicker), typeof(MaterialPickerHandler)),
+        (typeof(MaterialMultilineTextField), typeof(CustomEditor), typeof(MaterialMultilineTextFieldHandler)),
+        (typeof(MaterialCheckBox), typeof(CustomCheckBox), typeof(MaterialCheckBoxHandler)),
+        (typeof(MaterialSlider), typeof(CustomSlider), typeof(MaterialSliderHandler)),
+    };
+
     /// <summary>
     /// Register Material Design Controls on application builder.
     /// </summary>
     /// <param name="appBuilder">MAUI application builder.</param>
     /// <param name="configureDelegate">Configuration delegate. Optional.</param>
+    /// <param name="configureHandlers">Configuration handlers. Optional.</param>
     /// <returns>Updated MAUI application builder</returns>
     public static MauiAppBuilder UseMaterialDesignControls(this MauiAppBuilder appBuilder,
-        Action<MaterialDesignControlsBuilder>? configureDelegate = null)
+        Action<MaterialDesignControlsBuilder>? configureDelegate = null, Action<MaterialHandlerOptions>? configureHandlers = null)
     {   
         Logger.Debug("Configuring Material Design Controls");
         try
         {
+            _configureHandlers = configureHandlers;
+
             appBuilder
                 .ConfigureMauiHandlers(ConfigureHandlers)
                 .ConfigureLifecycleEvents(ConfigureLifeCycleEvents);
@@ -404,9 +424,9 @@ public static class MaterialDesignControlsBuilderExtensions
         
         return builder;
     }
- 
+
     #region MauiAppBuilder
-    
+
     private static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
         ConfigurationWithLogger(() =>
@@ -421,17 +441,54 @@ public static class MaterialDesignControlsBuilderExtensions
         ConfigurationWithLogger(() =>
         {
             handlers
-                .AddHandler(typeof(CustomButton), typeof(CustomButtonHandler))
-                .AddHandler(typeof(CustomRadioButton), typeof(CustomRadioButtonHandler))
-                .AddHandler(typeof(BorderlessEntry), typeof(BorderlessEntryHandler))
-                .AddHandler(typeof(CustomTimePicker), typeof(CustomTimePickerHandler))
-                .AddHandler(typeof(CustomDatePicker), typeof(CustomDatePickerHandler))
-                .AddHandler(typeof(CustomPicker), typeof(CustomPickerHandler))
-                .AddHandler(typeof(CustomEditor), typeof(CustomEditorHandler))
-                .AddHandler(typeof(CustomCheckBox), typeof(CustomCheckboxHandler))
+                .AddHandler(typeof(CustomButton), typeof(MaterialButtonHandler ))
+                .AddHandler(typeof(CustomRadioButton), typeof(MaterialRadioButtonHandler))
+                .AddHandler(typeof(CustomEntry), typeof(MaterialTextFieldHandler))
+                .AddHandler(typeof(CustomTimePicker), typeof(MaterialTimePickerHandler))
+                .AddHandler(typeof(CustomDatePicker), typeof(MaterialDatePickerHandler))
+                .AddHandler(typeof(CustomPicker), typeof(MaterialPickerHandler))
+                .AddHandler(typeof(CustomEditor), typeof(MaterialMultilineTextFieldHandler))
+                .AddHandler(typeof(CustomCheckBox), typeof(MaterialCheckBoxHandler))
                 .AddHandler(typeof(CustomSlider), typeof(CustomSliderHandler))
                 .AddHandler(typeof(MaterialBottomSheet), typeof(BottomSheetHandler));
-        });
+
+            if (_configureHandlers is not null)
+            {
+                var customHandlers = new MaterialHandlerOptions();
+                _configureHandlers.Invoke(customHandlers);
+
+                if (customHandlers is not null && customHandlers.Any())
+                {
+                    foreach (var customHandler in customHandlers)
+                    {
+                        if (!_controlHandlerMappings.Any(x => x.Item1 == customHandler.Key))
+                        {
+                            throw new ArgumentException("One of the configured handlers uses a ViewType that is not recognized as a customizable control in Material Design");
+                        }
+
+                        var controlHandlerMapping = _controlHandlerMappings.FirstOrDefault(x => x.Item1 == customHandler.Key);
+                        if (customHandler.Value != null && customHandler.Value.IsSubclassOf(controlHandlerMapping.Item3))
+                        {
+                            handlers.AddHandler(controlHandlerMapping.Item2, customHandler.Value);
+                            Logger.Debug($"The {customHandler.Value.Name} handler has been configured for the {controlHandlerMapping.Item1.Name} control");
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"The handler configured for the {controlHandlerMapping.Item1.Name} control must inherit from {controlHandlerMapping.Item3.Name}");
+                        }
+                    }
+                }
+                else
+                {
+                    Logger.Debug("No custom handlers have been set for configuration");
+                }
+            }
+            else
+            {
+                Logger.Debug("No custom handlers have been set for configuration");
+            }
+
+        }, @throw: true);
     }
 
     private static void ConfigureLifeCycleEvents(ILifecycleBuilder appLifeCycle)

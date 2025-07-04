@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>$(NetVersion)-android;$(NetVersion)-ios;$(NetVersion)-maccatalyst;$(NetVersion)-ios17.0;$(NetVersion)-maccatalyst17.0</TargetFrameworks>
+		<TargetFrameworks>$(NetVersion)-android;$(NetVersion)-ios;$(NetVersion)-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) or '$(EnableWindowsTargeting)' == 'true'">$(TargetFrameworks);$(NetVersion)-windows10.0.19041;$(NetVersion)-windows10.0.20348</TargetFrameworks>
 		<RootNamespace>HorusStudio.Maui.MaterialDesignControls</RootNamespace>
 	</PropertyGroup>

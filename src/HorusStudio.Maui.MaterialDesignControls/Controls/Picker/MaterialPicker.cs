@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Windows.Input;
+using Microsoft.Maui.Handlers;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -71,9 +72,11 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
-        
+
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
         TrailingIcon = MaterialIcon.Picker;
-        InputTapCommand = new Command(() => _picker.Focus());
+        TrailingIconCommand = new Command(() => Focus());
         Content = _picker;
     }
 
@@ -142,6 +145,14 @@ public class MaterialPicker : MaterialInputBase
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="Picker" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Picker InternalPicker => _picker;
 
     /// <summary>
     /// Gets or sets the vertical text alignment. This is a bindable property.
@@ -337,6 +348,13 @@ public class MaterialPicker : MaterialInputBase
         else
         {
             Text = string.Empty;
+
+#if IOS || MACCATALYST
+            if (_picker.Handler is MaterialPickerHandler handler)
+            {
+                handler.ClearText();
+            }
+#endif
         }
     }
     
@@ -348,7 +366,34 @@ public class MaterialPicker : MaterialInputBase
         }
         SelectedIndexChanged?.Invoke(this, e);
     }
-    
+
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
+    {
+        if (_picker != null && IsEnabled)
+        {
+            return _picker.Focus();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        if (_picker != null)
+        {
+            _picker.Unfocus();
+        }
+    }
+
     #endregion Methods
 
     #region Styles

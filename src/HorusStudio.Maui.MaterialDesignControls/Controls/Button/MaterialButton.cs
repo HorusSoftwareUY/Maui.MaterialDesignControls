@@ -64,7 +64,7 @@ public enum MaterialButtonType
 /// * Add default Material behavior for pressed state on default styles (v2).
 /// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
 /// </todoList>
-public class MaterialButton : ContentView, ITouchable
+public class MaterialButton : ContentView, ITouchableView
 {
     #region Attributes
 
@@ -72,6 +72,8 @@ public class MaterialButton : ContentView, ITouchable
     private static readonly ButtonContentLayout DefaultContentLayout = new(ButtonContentLayout.ImagePosition.Left, 8);
     private static readonly Color DefaultTextColor = Color.FromRgba(1,1,1,.01);
     private static readonly Color? DefaultTintColor = null;
+    private static readonly bool DefaultApplyIconTintColor = true;
+    private static readonly Size DefaultIconSize = Size.Zero;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Medium;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelLarge;
     private static readonly Brush? DefaultBackground = Button.BackgroundProperty.DefaultValue as Brush;
@@ -83,8 +85,7 @@ public class MaterialButton : ContentView, ITouchable
     private static readonly Thickness DefaultPadding = new(24, 0);
     private static readonly Thickness DefaultLeftIconPadding = new(16, 0, 24, 0);
     private static readonly Thickness DefaultRightIconPadding = new(24, 0, 16, 0);
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private const double DefaultBusyIndicatorSize = 24;
     private static readonly Shadow DefaultShadow = null!;
@@ -193,14 +194,25 @@ public class MaterialButton : ContentView, ITouchable
     {
         if (bindable is MaterialButton self)
         {
-            self.SetTintColor(self.Type);
+            self.SetIconTintColor(self.Type);
         }
     });
 
     /// <summary>
-    /// The backing store for the <see cref="TintColor" /> bindable property.
+    /// The backing store for the <see cref="InternalIconTintColor" /> bindable property.
     /// </summary>
-    internal static readonly BindableProperty TintColorProperty = BindableProperty.Create(nameof(TintColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTintColor);
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal static readonly BindableProperty InternalTintColorProperty = BindableProperty.Create(nameof(InternalIconTintColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTintColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="ApplyIconTintColor" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty ApplyIconTintColorProperty = BindableProperty.Create(nameof(ApplyIconTintColor), typeof(bool), typeof(MaterialButton), defaultValue: DefaultApplyIconTintColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="IconSize" /> bindable property.
+    /// </summary>
+    public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(Size), typeof(MaterialButton), defaultValue: DefaultIconSize);
 
     /// <summary>
     /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
@@ -313,18 +325,14 @@ public class MaterialButton : ContentView, ITouchable
     public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode), typeof(LineBreakMode), typeof(MaterialButton), defaultValue: Button.LineBreakModeProperty.DefaultValue);
 
     /// <summary>
-    /// The backing store for the <see cref="Animation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialButton), defaultValueCreator: DefaultAnimationType);
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialButton), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimationParameter"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialButton), defaultValueCreator: DefaultAnimationParameter);
-    /// <summary>
-    /// The backing store for the <see cref="CustomAnimation"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialButton));
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialButton));
 
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
@@ -392,6 +400,14 @@ public class MaterialButton : ContentView, ITouchable
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="Button" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Button InternalButton => _button;
 
     /// <summary>
     /// Gets or sets the button type according to <see cref="MaterialButtonType"/> enum.
@@ -552,7 +568,7 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// Gets or sets the <see cref="Color" /> for the icon of the button.
     /// This is a bindable property.
     /// </summary>
     public Color? IconTintColor
@@ -562,13 +578,40 @@ public class MaterialButton : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// This property is for internal use by the control. The <see cref="IconTintColor">IconTintColor</see> property should be used instead.
+    /// </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public Color? InternalIconTintColor
+    {
+        get => (Color?)GetValue(InternalTintColorProperty);
+        set => SetValue(InternalTintColorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the if the icon applies the tint color.
     /// This is a bindable property.
     /// </summary>
-    public Color? TintColor
+    /// <default>
+    /// <see langword="true"/>
+    /// </default>
+    public bool ApplyIconTintColor
     {
-        get => (Color?)GetValue(TintColorProperty);
-        set => SetValue(TintColorProperty, value);
+        get => (bool)GetValue(ApplyIconTintColorProperty);
+        set => SetValue(ApplyIconTintColorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the icon size.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="Size.Zero"/>.
+    /// </default>
+    /// <remarks>With a default value of <see langword="Size.Zero"/>, the icon will be handled automatically by each platform's native behavior. If a size is specified, that size will be applied to the icon on all platforms.</remarks>
+    public Size IconSize
+    {
+        get => (Size)GetValue(IconSizeProperty);
+        set => SetValue(IconSizeProperty, value);
     }
 
     /// <summary>
@@ -641,38 +684,25 @@ public class MaterialButton : ContentView, ITouchable
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>.
+    /// <see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see>.
     /// </default>
-    public AnimationTypes Animation
+    public TouchAnimationTypes TouchAnimationType
     {
-        get => (AnimationTypes)GetValue(AnimationProperty);
-        set => SetValue(AnimationProperty, value);
+        get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+        set => SetValue(TouchAnimationTypeProperty, value);
     }
 
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
+    /// Gets or sets a custom touch animation to be executed when button is clicked.
     /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see langword="null"/>
     /// </default>
-    public double? AnimationParameter
+    public ITouchAnimation TouchAnimation
     {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets a custom animation to be executed when button is clicked.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>
-    /// </default>
-    public ICustomAnimation CustomAnimation
-    {
-        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-        set => SetValue(CustomAnimationProperty, value);
+        get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+        set => SetValue(TouchAnimationProperty, value);
     }
 
     /// <summary>
@@ -878,13 +908,13 @@ public class MaterialButton : ContentView, ITouchable
     protected virtual void InternalPressedHandler(object? sender, EventArgs e)
     {
         VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
-        OnTouch(TouchType.Pressed);
+        OnTouch(TouchEventType.Pressed);
     }
 
     protected virtual void InternalReleasedHandler(object? sender, EventArgs e)
     {
         VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
-        OnTouch(TouchType.Released);
+        OnTouch(TouchEventType.Released);
     }
 
     #endregion Events
@@ -938,14 +968,17 @@ public class MaterialButton : ContentView, ITouchable
         _button.SetBinding(Button.HeightRequestProperty, new Binding(nameof(HeightRequest), source: this));
         _button.SetBinding(Button.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         _button.SetBinding(CustomButton.TextDecorationsProperty, new Binding(nameof(TextDecorations), source: this));
-        
+        _button.SetBinding(CustomButton.ApplyIconTintColorProperty, new Binding(nameof(ApplyIconTintColor), source: this));
+        _button.SetBinding(CustomButton.IconSizeProperty, new Binding(nameof(IconSize), source: this));
+
         _button.Pressed += InternalPressedHandler;
         _button.Released += InternalReleasedHandler;
         _button.Focused += InternalFocusHandler;
         _button.Unfocused += InternalFocusHandler;
 
         var iconTintColor = new IconTintColorBehavior();
-        iconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(TintColor), source: this));
+        iconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(InternalIconTintColor), source: this));
+        iconTintColor.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(ApplyIconTintColor), source: this));
         _button.Behaviors.Add(iconTintColor);
 
         // Busy indicator
@@ -982,7 +1015,7 @@ public class MaterialButton : ContentView, ITouchable
         SetBackground(type);
         SetBackgroundColor(type);
         SetTextColor(type);
-        SetTintColor(type);
+        SetIconTintColor(type);
         SetBorderColor(type);
         SetBorderWidth(type);
         SetShadow(type);
@@ -1063,7 +1096,7 @@ public class MaterialButton : ContentView, ITouchable
         }
     }
 
-    private void SetTintColor(MaterialButtonType type)
+    private void SetIconTintColor(MaterialButtonType type)
     {
         if (_textColors.TryGetValue(type, out object tint) && tint != null)
         {
@@ -1072,23 +1105,23 @@ public class MaterialButton : ContentView, ITouchable
                 // Default Material value according to Type
                 if (tint is Color tintColor)
                 {
-                    TintColor = tintColor;
+                    InternalIconTintColor = tintColor;
                 }
                 else if (tint is AppThemeBindingExtension theme)
                 {
-                    TintColor = theme.GetValueForCurrentTheme<Color>();
+                    InternalIconTintColor = theme.GetValueForCurrentTheme<Color>();
                 }
             }
             else
             {
                 // Set by user
-                TintColor = IconTintColor;
+                InternalIconTintColor = IconTintColor;
             }
         }
         else
         {
             // Unsupported for current button type, ignore
-            TintColor = DefaultTintColor;
+            InternalIconTintColor = DefaultTintColor;
         }
     }
 
@@ -1195,14 +1228,18 @@ public class MaterialButton : ContentView, ITouchable
 
     #region ITouchable
     
-    public async void OnTouch(TouchType gestureType)
+    public async void OnTouch(TouchEventType gestureType)
     {
         Utils.Logger.Debug($"Gesture: {gestureType}");
 
-        if (!IsEnabled || (Command == null && _pressed == null && _released == null && _clicked == null)) return;
-        await TouchAnimation.AnimateAsync(this, gestureType);
+        if (!IsEnabled || (Command == null && _pressed == null && _released == null && _clicked == null))
+        {
+            return;
+        }
 
-        if (gestureType == TouchType.Released)
+        await TouchAnimationManager.AnimateAsync(this, gestureType);
+
+        if (gestureType == TouchEventType.Released)
         {
             if (Command != null && Command.CanExecute(CommandParameter))
             {
@@ -1217,7 +1254,7 @@ public class MaterialButton : ContentView, ITouchable
                 _clicked.Invoke(this, EventArgs.Empty);
             }
         }
-        else if (gestureType == TouchType.Pressed)
+        else if (gestureType == TouchEventType.Pressed)
         {
             _pressed?.Invoke(this, EventArgs.Empty);
         }

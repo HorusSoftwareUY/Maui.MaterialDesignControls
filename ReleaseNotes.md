@@ -2,12 +2,34 @@
 
 ## Content table <!-- omit from toc -->
 - [Versions](#versions)
+  - [1.1.0](#110)
+  - [1.0.0-preview.6](#100-preview6)
+  - [1.0.0-preview.5](#100-preview5)
   - [1.0.0-preview.4](#100-preview4)
   - [1.0.0-preview.3](#100-preview3)
   - [1.0.0-preview.2](#100-preview2)
   - [1.0.0-preview.1](#100-preview1)
 
 ## Versions
+### [1.1.0](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/1.1.0)
+* Configure if icon tint color should be automatically set to TextColor or not on: MaterialButton, MaterialChips, MaterialIconButton and MaterialNavigationDrawerItem
+* Fix TextChanged and TextChangedCommand not being fired on MaterialTextField and MaterialMultilineTextField
+* Expose internal MAUI control used on: MaterialButton, MaterialCheckBox, MaterialDatePicker, MaterialMultilineTextField, MaterialPicker, MaterialRadioButton, MaterialSlider, MaterialTextField and MaterialTimePicker
+* Fix spacing on MaterialRating when label is empty
+* Fix touch bubbling on iOS for: MaterialButton, MaterialDatePicker, MaterialIconButton, MaterialMultilineTextField, MaterialPicker, MaterialSwitch, MaterialTextField and MaterialTimePicker
+* Ability to override custom handlers for: MaterialButton, MaterialRadioButton, MaterialTextField, MaterialTimePicker, MaterialDatePicker, MaterialPicker, MaterialMultilineTextField, MaterialCheckbox and MaterialSlider
+  
+### [1.0.0-preview.6](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/1.0.0-preview.6)
+* Add LineBreakMode to inputs placeholder
+* Add TextDecorations to Snackbar action
+* [iOS] Bug: Fix Snackbar background color
+  
+### [1.0.0-preview.5](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/1.0.0-preview.5)
+* Bug: Outlined inputs not rendered when overriding global style
+* Bug: Tint color fixed on MaterialIconButton
+* Bug: ConfigureSnackbar throw NullReferenceException if BackgroundColor was not set
+* [iOS] Bug: Leading and trailing icons width on Snackbar
+ 
 ### [1.0.0-preview.4](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/1.0.0-preview.4)
 * [Android] Bug #49: MaterialFloatingButton does not appear.
 

@@ -15,8 +15,10 @@ public class MaterialNavigationDrawerItem : BindableObjectBase
     private string? _headline;
     private ImageSource? _selectedLeadingIcon;
     private ImageSource? _leadingIcon;
+    private bool _applyLeadingIconTintColor = true;
     private ImageSource? _selectedTrailingIcon;
     private ImageSource? _trailingIcon;
+    private bool _applyTrailingIconTintColor = true;
     private bool _isSelected;
     private bool _isEnabled = true;
     
@@ -70,6 +72,15 @@ public class MaterialNavigationDrawerItem : BindableObjectBase
     }
 
     /// <summary>
+    /// Gets or sets if the leading icon applies the tint color. The default value is True.
+    /// </summary>
+    public bool ApplyLeadingIconTintColor
+    {
+        get => _applyLeadingIconTintColor;
+        set => SetProperty(ref _applyLeadingIconTintColor, value);
+    }
+
+    /// <summary>
     /// Gets or sets an icon source for trailing icon when item is selected. Optional.
     /// </summary>
     public ImageSource? SelectedTrailingIcon
@@ -86,7 +97,16 @@ public class MaterialNavigationDrawerItem : BindableObjectBase
         get => _trailingIcon;
         set => SetProperty(ref _trailingIcon, value);
     }
-    
+
+    /// <summary>
+    /// Gets or sets if the trailing icon applies the tint color. The default value is True.
+    /// </summary>
+    public bool ApplyTrailingIconTintColor
+    {
+        get => _applyTrailingIconTintColor;
+        set => SetProperty(ref _applyTrailingIconTintColor, value);
+    }
+
     /// <summary>
     /// Gets or sets if item is selected or not.
     /// </summary>

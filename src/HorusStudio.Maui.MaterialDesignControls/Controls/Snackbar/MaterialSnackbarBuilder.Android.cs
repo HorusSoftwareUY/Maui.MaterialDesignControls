@@ -11,7 +11,7 @@ using Color = Microsoft.Maui.Graphics.Color;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class MaterialSnackbarBuilder : Snackbar.Callback
+class MaterialSnackbarBuilder : Snackbar.Callback
 {
     #region Constants
     
@@ -137,7 +137,14 @@ public class MaterialSnackbarBuilder : Snackbar.Callback
     private static Button? ConfigureAction(Activity activity, Snackbar snackbar, SnackbarContentLayout contentLayout, MaterialSnackbarConfig.ActionConfig config)
     {
         var text = new SpannableString(config.Text);
-        text.SetSpan(new LetterSpacingSpan(0), 0, config.Text.Length, SpanTypes.ExclusiveExclusive);
+
+        CharacterStyle textStyle = config.TextDecorations switch
+        {
+            TextDecorations.Underline => new UnderlineSpan(),
+            TextDecorations.Strikethrough => new StrikethroughSpan(),
+            _ => new LetterSpacingSpan(0)
+        };
+        text.SetSpan(textStyle, 0, config.Text.Length, SpanTypes.ExclusiveExclusive);
 
         snackbar.SetActionTextColor(config.Color.ToInt());
         snackbar.SetAction(text, v => config.Action.Invoke());

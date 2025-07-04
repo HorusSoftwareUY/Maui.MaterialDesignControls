@@ -64,13 +64,9 @@ public class MaterialSelection : MaterialInputBase
         _label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
         _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
 
-        InputTapCommand = new Command(() => {
-            IsFocused = false;
-            if (IsEnabled && (Command?.CanExecute(CommandParameter) ?? false))
-            {
-                Command.Execute(CommandParameter);
-            }
-        });
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
+        TrailingIconCommand = new Command(() => Focus());
 
         Content = _label;
     }
@@ -155,6 +151,32 @@ public class MaterialSelection : MaterialInputBase
                 break;
         }
 #endif
+    }
+
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
+    {
+        IsFocused = false;
+        if (IsEnabled && (Command?.CanExecute(CommandParameter) ?? false))
+        {
+            Command.Execute(CommandParameter);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        IsFocused = false;
     }
 
     #endregion Methods

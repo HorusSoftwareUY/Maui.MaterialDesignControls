@@ -1,5 +1,6 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public sealed class MaterialSnackbarOptions
 {
     public Thickness? DefaultMargin { get; set; }
@@ -12,6 +13,7 @@ public sealed class MaterialSnackbarOptions
     public double? DefaultFontSize { get; set; }
     public Color? DefaultActionColor { get; set; }
     public double? DefaultActionSize { get; set; }
+    public TextDecorations? DefaultActionTextDecorations { get; set; }
     public Color? DefaultIconColor { get; set; }
     public TimeSpan? DefaultDuration { get; set; }
     public int? DefaultSpacing { get; set; }

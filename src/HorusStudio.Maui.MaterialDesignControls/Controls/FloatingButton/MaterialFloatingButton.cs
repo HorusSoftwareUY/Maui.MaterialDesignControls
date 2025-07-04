@@ -357,16 +357,16 @@ public class MaterialFloatingButton : ContentView
         get => (Thickness)GetValue(PaddingProperty);
         set => SetValue(PaddingProperty, value);
     }
-    
+
     #endregion
 
     /*
     public MaterialFloatingButton()
     {
-        System.Diagnostics.Debug.WriteLine($"GC TotalMemory: {GC.GetTotalMemory(true)}");
+        Logger.Debug($"GC TotalMemory: {GC.GetTotalMemory(true)}");
     }
     */
-    
+
     ~MaterialFloatingButton()
     {
         if (_parentPage is null) return;

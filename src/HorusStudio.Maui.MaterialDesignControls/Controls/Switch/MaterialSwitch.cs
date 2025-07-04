@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -7,11 +8,37 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// <summary>
     /// A switch <see cref="View" /> that allows the selection of an item on or off, and follows Material Design Guidelines <see href="https://m3.material.io/components/switch/overview" />.
     /// </summary>
-    public class MaterialSwitch : ContentView
+    /// <example>
+    ///
+    /// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialSwitch.jpg</img>
+    ///
+    /// <h3>XAML sample</h3>
+    /// <code>
+    /// <xaml>
+    /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    /// 
+    /// &lt;material:MaterialSwitch
+    ///         IsToggled="True"/&gt;
+    /// </xaml>
+    /// </code>
+    /// 
+    /// <h3>C# sample</h3>
+    /// <code>
+    /// var switch = new MaterialSwitch()
+    /// {
+    ///     IsToggled = True
+    /// };
+    ///</code>
+    ///
+    /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SwitchPage.xaml)
+    /// 
+    /// </example>
+    /// <todoList>
+    /// * Track color animation: change from on-track color to off-track color within the toggle animation.
+    /// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
+    /// </todoList>
+    public class MaterialSwitch : ContentView, ITouchableView
     {
-        // TODO: Track color animation: change from on-track color to off-track color within the toggle animation
-        // TODO: [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
-
         #region Attributes
 
         private const bool DefaultIsToggled = false;
@@ -39,6 +66,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingFontSize = _ => MaterialFontSize.BodySmall;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingFontFamily = _ => MaterialFontFamily.Default;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
         private const FontAttributes DefaultSupportingFontAttributes = FontAttributes.None;
         private const double DefaultSpacing = 16.0;
         private const double DefaultTextSpacing = 4.0;
@@ -50,7 +78,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private bool _isOnToggledState;
         private double _xReference;
         private bool ReduceThumbSize => UnselectedIcon == null;
-        private TapGestureRecognizer _onTapped = null!;
 
         #endregion Attributes
 
@@ -242,6 +269,16 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 self.SetVisualState();
             }
         });
+
+        // <summary>
+        /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialSwitch), defaultValueCreator: DefaultTouchAnimationType);
+
+        /// <summary>
+        /// The backing store for the <see cref="TouchAnimation"/> bindable property.
+        /// </summary>
+        public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialSwitch));
 
         #endregion Bindable Properties
 
@@ -491,6 +528,32 @@ namespace HorusStudio.Maui.MaterialDesignControls
             set => SetValue(IsEnabledProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets an animation to be executed when button is clicked.
+        /// This is a bindable property.
+        /// </summary>
+        /// <default>
+        /// <see cref="TouchAnimationTypes.Fade"/>
+        /// </default>
+        public TouchAnimationTypes TouchAnimationType
+        {
+            get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+            set => SetValue(TouchAnimationTypeProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a custom animation to be executed when button is clicked.
+        /// This is a bindable property.
+        /// </summary>
+        /// <default>
+        /// Null
+        /// </default>
+        public ITouchAnimation TouchAnimation
+        {
+            get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+            set => SetValue(TouchAnimationProperty, value);
+        }
+
         #endregion Properties
 
         #region Events
@@ -603,21 +666,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             _switch.Children.Add(_track);
             _switch.Children.Add(_thumb);
-            
-            _onTapped = new TapGestureRecognizer();
-            _onTapped.Tapped += (_, _) =>
-            {
-                if (!IsEnabled) return;
-                
-                IsToggled = !IsToggled;
-                Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
-                if (ToggledCommand?.CanExecute(IsToggled) == true)
-                {
-                    ToggledCommand?.Execute(IsToggled);
-                }
-            };
-            _switch.GestureRecognizers.Add(_onTapped);
-            
+
+            Behaviors.Add(new TouchBehavior());
+
             Content = _switch;
         }
 
@@ -673,7 +724,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             UpdateLayoutAfterTextSideChanged(TextSide);
 
-            _mainContainer.GestureRecognizers.Add(_onTapped);
             Content = _mainContainer;
         }
 
@@ -952,6 +1002,38 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         #endregion Methods
+
+        #region ITouchable
+
+        public async void OnTouch(TouchEventType gestureType)
+        {
+            Utils.Logger.Debug($"Gesture: {gestureType}");
+
+            if (!IsEnabled) return;
+            await TouchAnimationManager.AnimateAsync(this, gestureType);
+
+            switch (gestureType)
+            {
+                case TouchEventType.Pressed:
+                    VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
+                    break;
+                case TouchEventType.Released:
+                    IsToggled = !IsToggled;
+                    Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
+                    if (ToggledCommand?.CanExecute(IsToggled) == true)
+                    {
+                        ToggledCommand?.Execute(IsToggled);
+                    }
+
+                    VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
+                    break;
+                default:
+                    VisualStateManager.GoToState(this, ButtonCommonStates.Normal);
+                    break;
+            }
+        }
+
+        #endregion ITouchable
 
         #region Styles
 

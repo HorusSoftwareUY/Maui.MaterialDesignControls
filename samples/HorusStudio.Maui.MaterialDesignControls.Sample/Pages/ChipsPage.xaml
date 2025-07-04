@@ -220,9 +220,7 @@
                 LabelText="Chips"
                 SupportingText="You must select one"
                 IsMultipleSelection="False"
-                IsEnabled="{Binding IsEnabledState}"
                 HorizontalSpacing="4"
-                SelectedItem="{Binding SelectedChip}"
                 ItemsSource="{Binding Chips}"/>
         </material:MaterialCard>
         <material:MaterialLabel Text="You can easily group chips together to give the user a list of single-select options, even offering a way to display animated validation text." Type="BodySmall" />
@@ -232,11 +230,51 @@
             <material:MaterialChipsGroup 
                 LabelText="Chips"
                 IsMultipleSelection="True"
-                ChipsFlexLayoutPercentageBasis="0.5"
-                Align="Center"
-                SelectedItems="{Binding SelectedChips}"
                 ItemsSource="{Binding Chips}"/>
         </material:MaterialCard>
         <material:MaterialLabel Text="You can also provide a group to select multiple options. The chips group allows for chips alignment, spacing, percentage size, and more." Type="BodySmall" />
+
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="ValueChanged event (single-selection)" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialChipsGroup
+                    x:Name="eventChipsGroup"
+                    LabelText="ValueChanged event"
+                    IsMultipleSelection="False"
+                    HasError="{Binding HasAnError}"
+                    SupportingText="{Binding SupportingTextValue}"
+                    SelectedItem="{Binding SelectedChip}"
+                    ItemsSource="{Binding Chips}"
+                    SelectionChanged="MaterialChipsGroup_SelectionChanged"/>
+                <material:MaterialButton
+                    Text="Select Chip C"
+                    Command="{Binding SelectChipCCommand}" />
+                <material:MaterialButton
+                    Text="Show selection"
+                    Command="{Binding ShowSelectedChipCommand}" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="The ValueChanged event allows you to detect when the user changes the selected value in the MaterialChipsGroup control." Type="BodySmall" />
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="ValueChangedCommand (multi-selection)" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout>
+                <material:MaterialChipsGroup 
+                    LabelText="{Binding SelectionWithCommandText}"
+                    IsMultipleSelection="True"
+                    ChipsFlexLayoutPercentageBasis="0.5"
+                    Align="Center"
+                    SelectedItems="{Binding SelectedChips}"
+                    ItemsSource="{Binding Chips}"
+                    SelectionChangedCommand="{Binding SelectionChangedCommand}"/>
+                <material:MaterialButton
+                    Text="Select Chip A and Chip B"
+                    Command="{Binding SelectChipAAndBCommand}" />
+                <material:MaterialButton
+                    Text="Show selection"
+                    Command="{Binding ShowSelectedChipsCommand}" />
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="The ValueChangedCommand allows you to detect when the user changes the selected value in the MaterialChipsGroup control." Type="BodySmall" />
     </VerticalStackLayout>
 </local:BaseContentPage>

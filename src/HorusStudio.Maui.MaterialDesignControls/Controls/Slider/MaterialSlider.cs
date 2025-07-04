@@ -417,6 +417,14 @@ public class MaterialSlider : ContentView
 
     #region Properties
 
+    /// <summary>
+    /// Internal implementation of the <see cref="Slider" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public Slider InternalSlider => _slider;
+
     #region Label
 
     /// <summary>

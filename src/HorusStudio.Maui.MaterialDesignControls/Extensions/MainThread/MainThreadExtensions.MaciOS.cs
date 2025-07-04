@@ -1,22 +1,26 @@
+using System.Runtime.CompilerServices;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace UIKit;
 
 static class MainThreadExtensions
 {
-    public static void SafeInvokeOnMainThread(this UIApplication app, Action action) => app.InvokeOnMainThread(() =>
+    public static void SafeInvokeOnMainThread(this UIApplication app, Action action, [CallerFilePath] string? callerFilePath = null, [CallerMemberName] string? callerMemberName = null)
     {
-        try
+        app.InvokeOnMainThread(() =>
         {
-            action();
-        }
-        catch (Exception ex)
-        {
-            Logger.Debug(ex.ToString());
-        }
-    });
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex, callerFilePath: callerFilePath, callerMemberName: callerMemberName);
+            }
+        });
+    }
     
-    public static Task SafeInvokeOnMainThreadAsync(this UIApplication app, Func<Task> func)
+    public static Task SafeInvokeOnMainThreadAsync(this UIApplication app, Func<Task> func, [CallerFilePath] string? callerFilePath = null, [CallerMemberName] string? callerMemberName = null)
     {
         TaskCompletionSource result = new();
         
@@ -29,7 +33,7 @@ static class MainThreadExtensions
             }
             catch (Exception ex)
             {
-                Logger.Debug(ex.ToString());
+                Logger.LogException(ex, callerFilePath: callerFilePath, callerMemberName: callerMemberName);
             }
         });
         

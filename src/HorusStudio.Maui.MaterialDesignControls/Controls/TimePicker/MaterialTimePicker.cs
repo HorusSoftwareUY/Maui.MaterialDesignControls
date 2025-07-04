@@ -72,19 +72,10 @@ public class MaterialTimePicker : MaterialInputBase
         _timePicker.SetBinding(TimePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _timePicker.SetBinding(CustomTimePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         
-        InputTapCommand = new Command(() =>
-        {
-            if (!IsEnabled) return;
-
-#if ANDROID
-            var handler = _timePicker.Handler as ITimePickerHandler;
-            handler?.PlatformView.PerformClick();
-#elif IOS || MACCATALYST
-            _timePicker.Focus();
-#endif
-        });
-
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
         TrailingIcon = MaterialIcon.TimePicker;
+        TrailingIconCommand = new Command(() => Focus());
         Content = _timePicker;
     }
 
@@ -128,10 +119,18 @@ public class MaterialTimePicker : MaterialInputBase
     /// The backing store for the <see cref="TimeSelectedCommand" /> bindable property.
     /// </summary>
     public static readonly BindableProperty TimeSelectedCommandProperty = BindableProperty.Create(nameof(TimeSelectedCommand), typeof(ICommand), typeof(MaterialTimePicker));
-    
+
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="TimePicker" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public TimePicker InternalTimePicker => _timePicker;
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input. This property cannot be changed by the user.
@@ -303,6 +302,39 @@ public class MaterialTimePicker : MaterialInputBase
             TimeSelectedCommand?.Execute(null);
         }                               
         TimeSelected?.Invoke(this, new TimeSelectedEventArgs(oldValue, newValue));
+    }
+
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
+    {
+        if (_timePicker != null && IsEnabled)
+        {
+#if ANDROID
+            var handler = _timePicker.Handler as ITimePickerHandler;
+            handler?.PlatformView.PerformClick();
+            return true;
+#elif IOS || MACCATALYST
+            return _timePicker.Focus();
+#endif
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        if (_timePicker != null)
+        {
+            _timePicker.Unfocus();
+        }
     }
 
     #endregion Methods

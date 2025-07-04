@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Animations;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -36,7 +37,8 @@ public enum MaterialInputTypeStates
     OutlinedErrorFocused
 }
 
-public abstract partial class MaterialInputBase
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+public abstract partial class MaterialInputBase : IValidableView
 {
     #region Attributes
 
@@ -67,6 +69,7 @@ public abstract partial class MaterialInputBase
     protected const double DefaultHeightRequest = 48.0;
     protected const bool DefaultAlwaysShowLabel = false;
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultErrorIcon = _ => MaterialIcon.Error;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultErrorAnimationType = _ => MaterialAnimation.ErrorAnimationType;
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
@@ -200,7 +203,19 @@ public abstract partial class MaterialInputBase
     /// <summary>
     /// The backing store for the <see cref="BorderWidth"/> bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultBorderWidth);
+    public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
+    {
+        if (bindable is MaterialInputBase self)
+        {
+            self.SetBorderWidth(self.Type);
+        }
+    });
+
+    /// <summary>
+    /// The backing store for the <see cref="BorderWidth"/> bindable property.
+    /// </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal static readonly BindableProperty InternalBorderWidthProperty = BindableProperty.Create(nameof(InternalBorderWidth), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultBorderWidth);
 
     /// <summary>
     /// The backing store for the <see cref="BorderColor" /> bindable property.
@@ -272,6 +287,11 @@ public abstract partial class MaterialInputBase
     /// The backing store for the <see cref="PlaceholderColor"/> bindable property.
     /// </summary>
     public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultPlaceholderColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="PlaceholderLineBreakMode"/> bindable property.
+    /// </summary>
+    public static readonly BindableProperty PlaceholderLineBreakModeProperty = BindableProperty.Create(nameof(PlaceholderLineBreakMode), typeof(LineBreakMode), typeof(MaterialInputBase), defaultValue: LineBreakMode.NoWrap);
 
     /// <summary>
     /// The backing store for the <see cref="LabelColor"/> bindable property.
@@ -365,10 +385,22 @@ public abstract partial class MaterialInputBase
     {
         if (bindableObject is MaterialInputBase self)
         {
-            self.UpdateLayoutAfterTypeChanged(self.Type);
+            self.SetHasError(self.Type);
         }
     });
-    
+
+    /// <summary>
+    /// The backing store for the <see cref="ErrorAnimationType" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty ErrorAnimationTypeProperty = BindableProperty.Create(nameof(ErrorAnimationType), typeof(ErrorAnimationTypes), typeof(MaterialInputBase), defaultValueCreator: DefaultErrorAnimationType);
+
+    /// <summary>
+    /// The backing store for the <see cref="ErrorAnimation" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty ErrorAnimationProperty = BindableProperty.Create(nameof(ErrorAnimation), typeof(IErrorAnimation), typeof(MaterialInputBase));
+
     /// <summary>
     /// The backing store for the <see cref="HeightRequest" /> bindable property.
     /// </summary>
@@ -463,6 +495,16 @@ public abstract partial class MaterialInputBase
     {
         get => (double)GetValue(BorderWidthProperty);
         set => SetValue(BorderWidthProperty, value);
+    }
+
+    /// <summary>
+    /// This property is for internal use by the control. The <see cref="BorderWidth">BorderWidth</see> property should be used instead.
+    /// </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public double InternalBorderWidth
+    {
+        get => (double)GetValue(InternalBorderWidthProperty);
+        set => SetValue(InternalBorderWidthProperty, value);
     }
 
     /// <summary>
@@ -698,6 +740,18 @@ public abstract partial class MaterialInputBase
     }
 
     /// <summary>
+    /// Gets or sets line break mode for placeholder. This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="LineBreakMode.NoWrap">LineBreakMode.NoWrap</see>
+    /// </default>
+    public LineBreakMode PlaceholderLineBreakMode
+    {
+        get => (LineBreakMode)GetValue(PlaceholderLineBreakModeProperty);
+        set => SetValue(PlaceholderLineBreakModeProperty, value);
+    }
+
+    /// <summary>
     /// Gets or sets text color for label. This is a bindable property.
     /// </summary>
     /// <default>
@@ -916,6 +970,35 @@ public abstract partial class MaterialInputBase
     }
 
     /// <summary>
+    /// Gets or sets the animation type to be executed when the control has an error.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see cref="ErrorAnimationTypes.Shake">ErrorAnimationTypes.Shake</see>
+    /// </default>
+    /// <remarks>
+    /// This property will only be considered if the <see cref="ErrorAnimation"/> property is NULL.
+    /// </remarks>
+    public ErrorAnimationTypes ErrorAnimationType
+    {
+        get => (ErrorAnimationTypes)GetValue(ErrorAnimationTypeProperty);
+        set => SetValue(ErrorAnimationTypeProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets a custom animation to be executed when the control has an error.
+    /// This is a bindable property.
+    /// </summary>
+    /// <remarks>
+    /// When this property is set, the <see cref="ErrorAnimationType"/> property is ignored.
+    /// </remarks>
+    public IErrorAnimation ErrorAnimation
+    {
+        get => (IErrorAnimation)GetValue(ErrorAnimationProperty);
+        set => SetValue(ErrorAnimationProperty, value);
+    }
+
+    /// <summary>
     /// Gets or sets the height request
     /// </summary>
     public new double HeightRequest
@@ -939,10 +1022,7 @@ public abstract partial class MaterialInputBase
     {
         InitializeComponent();
 
-        if (Type == DefaultInputType)
-        {
-            UpdateLayoutAfterTypeChanged(Type);
-        }
+        UpdateLayoutAfterTypeChanged(Type);
     }
 
     #endregion Constructor
@@ -991,14 +1071,10 @@ public abstract partial class MaterialInputBase
     private void OnAppearing()
     {
         // Add tap gesture to the input control to do focus
-        var border = (Border)GetTemplateChild("InputBorder");
+        var border = (BorderButton)GetTemplateChild("InputBorder");
         if (border != null)
         {
-            var tapGestureRecognizer = new TapGestureRecognizer
-            {
-                Command = InputTapCommand
-            };
-            border.GestureRecognizers.Add(tapGestureRecognizer);
+            border.Command = InputTapCommand;
         }
 
         OnControlAppearing();
@@ -1026,11 +1102,28 @@ public abstract partial class MaterialInputBase
         UpdateLayoutAfterStatusChanged(type);
     }
 
+    private void SetHasError(MaterialInputType type)
+    {
+        UpdateLayoutAfterTypeChanged(type);
+
+        if (HasError
+            && (ErrorAnimationType != ErrorAnimationTypes.None || ErrorAnimation != null))
+        {
+            _ = ErrorAnimationManager.AnimateAsync(this);
+        }
+    }
+
     private void SetBorderWidth(MaterialInputType type)
     {
-        if (_borderWidths.TryGetValue(GetCurrentTypeState(type), out double borderWidth))
+        if (!BorderWidth.Equals(DefaultBorderWidth))
         {
-            this.BorderWidth = borderWidth;
+            // Set by user
+            this.InternalBorderWidth = this.BorderWidth;
+        }
+        else if (_borderWidths.TryGetValue(GetCurrentTypeState(type), out double borderWidth))
+        {
+            // Default Material value according to Type
+            this.InternalBorderWidth = borderWidth;
         }
     }
 
@@ -1125,7 +1218,7 @@ public abstract partial class MaterialInputBase
 
     private void SetBackground(MaterialInputType type)
     {
-        var inputBorder = (Border)GetTemplateChild("InputBorder");
+        var inputBorder = (BorderButton)GetTemplateChild("InputBorder");
         if (inputBorder != null)
         {
             SetBackgroundToView(type, inputBorder);
@@ -1151,7 +1244,7 @@ public abstract partial class MaterialInputBase
 
     private void SetBackgroundColor(MaterialInputType type)
     {
-        var inputBorder = (Border)GetTemplateChild("InputBorder");
+        var inputBorder = (BorderButton)GetTemplateChild("InputBorder");
         if (inputBorder != null)
         {
             SetBackgroundColorToView(type, inputBorder);
@@ -1159,10 +1252,10 @@ public abstract partial class MaterialInputBase
 
         if (type == MaterialInputType.Outlined)
         {
-            var outlinedHint = (Label)GetTemplateChild("OutlinedHint");
-            if (outlinedHint != null)
+            var outlinedHintContainerBackground = (ContentView)GetTemplateChild("OutlinedHintContainerBackground");
+            if (outlinedHintContainerBackground != null)
             {
-                SetBackgroundColorToView(type, outlinedHint);
+                SetBackgroundColorToView(type, outlinedHintContainerBackground);
             }
         }
     }
@@ -1198,7 +1291,7 @@ public abstract partial class MaterialInputBase
 
     private void SetCornerRadius(MaterialInputType type)
     {
-        var inputBorder = (Border)GetTemplateChild("InputBorder");
+        var inputBorder = (BorderButton)GetTemplateChild("InputBorder");
         if (inputBorder != null)
         {
             if (_cornerRadius.TryGetValue(type, out CornerRadius cornerRadius))

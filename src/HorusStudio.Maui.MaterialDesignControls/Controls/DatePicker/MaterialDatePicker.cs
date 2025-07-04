@@ -74,18 +74,10 @@ public class MaterialDatePicker : MaterialInputBase
         _datePicker.SetBinding(DatePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _datePicker.SetBinding(CustomDatePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         
-        InputTapCommand = new Command(() =>
-        {
-            if (!IsEnabled) return;
-#if ANDROID
-            var handler = _datePicker.Handler as IDatePickerHandler;
-            handler?.PlatformView.PerformClick();
-#elif IOS || MACCATALYST
-            _datePicker.Focus();
-#endif
-        });
-
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
         TrailingIcon = MaterialIcon.DatePicker;
+        TrailingIconCommand = new Command(() => Focus());
         Content = _datePicker;
     }
 
@@ -143,6 +135,14 @@ public class MaterialDatePicker : MaterialInputBase
     #endregion Bindable Properties
 
     #region Properties
+
+    /// <summary>
+    /// Internal implementation of the <see cref="DatePicker" /> control.
+    /// </summary>
+    /// <remarks>
+    /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+    /// </remarks>
+    public DatePicker InternalDatePicker => _datePicker;
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input. This property cannot be changed by the user.
@@ -335,7 +335,40 @@ public class MaterialDatePicker : MaterialInputBase
         }                               
         DateSelected?.Invoke(this, new DateSelectedEventArgs(oldValue, newValue));
     }
-    
+
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
+    {
+        if (_datePicker != null && IsEnabled)
+        {
+#if ANDROID
+            var handler = _datePicker.Handler as IDatePickerHandler;
+            handler?.PlatformView.PerformClick();
+            return true;
+#elif IOS || MACCATALYST
+            return _datePicker.Focus();
+#endif
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        if (_datePicker != null)
+        {
+            _datePicker.Unfocus();
+        }
+    }
+
     #endregion Methods
 
     #region Styles

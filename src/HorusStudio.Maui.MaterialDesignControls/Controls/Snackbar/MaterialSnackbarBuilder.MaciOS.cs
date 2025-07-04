@@ -1,17 +1,14 @@
-using CoreGraphics;
 using Foundation;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Platform;
 using UIKit;
-using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public class MaterialSnackbarBuilder : UIView
+class MaterialSnackbarBuilder : UIView
 {
     #region Constants
     
-    private const bool UseBlur = true;
+    private const bool UseBlur = false;
     private const bool UseAnimation = true;
     private const UIBlurEffectStyle BlurEffectStyle = UIBlurEffectStyle.Dark;
     private static TimeSpan AnimationDuration { get; set; } = TimeSpan.FromMilliseconds(300);
@@ -198,6 +195,11 @@ public class MaterialSnackbarBuilder : UIView
         }
 
         button.SetSize(iconSize, iconSize);
+
+        var widthConstraint = NSLayoutConstraint.Create(button, NSLayoutAttribute.Width, NSLayoutRelation.Equal, null, NSLayoutAttribute.NoAttribute, 1f, button.IntrinsicContentSize.Width);
+        widthConstraint.Priority = (int)UILayoutPriority.Required;
+        button.AddConstraint(widthConstraint);
+
         return button;
     }
 
@@ -221,20 +223,28 @@ public class MaterialSnackbarBuilder : UIView
 
     private static UIView ConfigureAction(MaterialSnackbarConfig materialSnackbarConfig, Action dismiss)
     {
-        var actionConfig = materialSnackbarConfig.Action;
+        var actionConfig = materialSnackbarConfig.Action!;
         var button = new UIButton
         {
             TranslatesAutoresizingMaskIntoConstraints = false
         };
         button.TouchUpInside += (s, a) =>
         {
-            actionConfig.Action.Invoke();
+            actionConfig.Action!.Invoke();
             dismiss();
         };
 
-        UIFont font = null;
+        UIFont? font = null;
         font ??= UIFont.SystemFontOfSize((nfloat)actionConfig.FontSize, UIFontWeight.Semibold);
-        button.SetAttributedTitle(new NSMutableAttributedString(actionConfig.Text, font, actionConfig.Color.ToPlatform()), UIControlState.Normal);
+        
+        var attributes = new UIStringAttributes
+        {
+            UnderlineStyle = actionConfig.TextDecorations == TextDecorations.Underline ? NSUnderlineStyle.Single : NSUnderlineStyle.None,
+            StrikethroughStyle = actionConfig.TextDecorations == TextDecorations.Strikethrough ? NSUnderlineStyle.Single : NSUnderlineStyle.None,
+            Font = font,
+            ForegroundColor = actionConfig.Color.ToPlatform()
+        };
+        button.SetAttributedTitle(new NSMutableAttributedString(actionConfig.Text, attributes), UIControlState.Normal);
 
         if (OperatingSystem.IsMacCatalystVersionAtLeast(15) || OperatingSystem.IsIOSVersionAtLeast(15))
         {

@@ -17,19 +17,19 @@
         <converters:TrailingIconIsVisibleConverter x:Key="IsTrailingIconVisible" />
         <converters:TrailingIconSourceConverter x:Key="TrailingIconSource" />
         
-        <Style x:Key="MainBorder" TargetType="Border">
+        <Style x:Key="MainBorder" TargetType="material:BorderButton">
             <Setter Property="HeightRequest" Value="{Binding HeightRequest, Source={x:Reference InputBase}}" />
             <Setter Property="Background" Value="{Binding Background, Source={x:Reference InputBase}}" />
         </Style>
         
-        <Style x:Key="FilledBorder" TargetType="Border" BaseResourceKey="MainBorder">
+        <Style x:Key="FilledBorder" TargetType="material:BorderButton" BaseResourceKey="MainBorder">
             <Setter Property="StrokeThickness" Value="0" />
         </Style>
         
-        <Style x:Key="OutlinedBorder" TargetType="Border" BaseResourceKey="MainBorder">
+        <Style x:Key="OutlinedBorder" TargetType="material:BorderButton" BaseResourceKey="MainBorder">
             <Setter Property="Margin" Value="0,8,0,0" />
             <Setter Property="Stroke" Value="{Binding BorderColor, Source={x:Reference InputBase}}" />
-            <Setter Property="StrokeThickness" Value="{Binding BorderWidth, Source={x:Reference InputBase}}" />
+            <Setter Property="StrokeThickness" Value="{Binding InternalBorderWidth, Source={x:Reference InputBase}}" />
         </Style>
         
         <Style x:Key="MainContent" TargetType="StackLayout">
@@ -70,6 +70,7 @@
             <Setter Property="TextColor" Value="{Binding PlaceholderColor, Source={x:Reference InputBase}}" />
             <Setter Property="FontFamily" Value="{Binding PlaceholderFontFamily, Source={x:Reference InputBase}}" />
             <Setter Property="FontSize" Value="{Binding PlaceholderSize, Source={x:Reference InputBase}}" />
+            <Setter Property="LineBreakMode" Value="{Binding PlaceholderLineBreakMode, Source={x:Reference InputBase}}" />
             <Setter Property="Text" Value="{Binding Placeholder, Source={x:Reference InputBase}}" />
             <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -109,10 +110,13 @@
             <Setter Property="TextColor" Value="{Binding LabelColor, Source={x:Reference InputBase}}" />
             <Setter Property="FontFamily" Value="{Binding LabelFontFamily, Source={x:Reference InputBase}}" />
             <Setter Property="LineBreakMode" Value="{Binding LabelLineBreakMode, Source={x:Reference InputBase}}" />
-            <Setter Property="Margin" Value="{Binding LabelMargin, Source={x:Reference InputBase}}" />
-            <Setter Property="Padding" Value="{Binding LabelPadding, Source={x:Reference InputBase}}" />
             <Setter Property="FontSize" Value="{Binding LabelSize, Source={x:Reference InputBase}}" />
             <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
+        </Style>
+        
+        <Style x:Key="FilledHint" TargetType="Label" BaseResourceKey="Hint">
+            <Setter Property="Margin" Value="{Binding LabelMargin, Source={x:Reference InputBase}}" />
+            <Setter Property="Padding" Value="{Binding LabelPadding, Source={x:Reference InputBase}}" />
             <Setter Property="HorizontalOptions" Value="Start" />
             <Setter Property="VerticalOptions" Value="Start" />
             <Setter Property="IsVisible" Value="true" />
@@ -126,6 +130,35 @@
                     <Setter Property="IsVisible" Value="false" />
                 </MultiTrigger>
             </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="OutlinedHint" TargetType="Label"  BaseResourceKey="Hint">
+            <Setter Property="Grid.RowSpan" Value="2" />
+            <Setter Property="Margin" Value="4,0" />
+        </Style>
+        
+        <Style x:Key="OutlinedHintContainer" TargetType="Grid">
+            <Setter Property="RowDefinitions" Value="*,*" />
+            <Setter Property="Margin" Value="{Binding LabelMargin, Source={x:Reference InputBase}}" />
+            <Setter Property="Padding" Value="{Binding LabelPadding, Source={x:Reference InputBase}}" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="VerticalOptions" Value="Start" />
+            <Setter Property="IsVisible" Value="true" />
+            <Style.Triggers>
+                <MultiTrigger TargetType="Grid">
+                    <MultiTrigger.Conditions>
+                        <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
+                        <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                        <BindingCondition Binding="{Binding AlwaysShowLabel, Source={x:Reference InputBase}}" Value="false" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="IsVisible" Value="false" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="OutlinedHintContainerBackground" TargetType="ContentView">
+            <Setter Property="Grid.Row" Value="1" />
+            <Setter Property="Margin" Value="{OnPlatform Android='0,-1,0,0', Default=0}" />
         </Style>
         
         <Style x:Key="BaseIcon" TargetType="material:MaterialIconButton">
@@ -169,7 +202,7 @@
         
         <ControlTemplate x:Key="FilledControlTemplate">
             <VerticalStackLayout Spacing="0" x:Name="ContainerFilled">
-                <Border x:Name="InputBorder" Style="{StaticResource FilledBorder}">
+                <material:BorderButton x:Name="InputBorder" IsEnabled="{Binding IsEnabled, Source={x:Reference InputBase}}" Style="{StaticResource FilledBorder}">
                     <Grid>
                         <StackLayout Style="{StaticResource FilledMainContent}">
                             <material:MaterialIconButton Style="{StaticResource LeadingIcon}" />
@@ -179,15 +212,15 @@
                                     <ContentPresenter VerticalOptions="End" />
                                     <Label Style="{StaticResource Placeholder}" />
                                 </Grid>
-                                <Label Style="{StaticResource Hint}" />
+                                <Label Style="{StaticResource FilledHint}" />
                             </Grid>
 
                             <material:MaterialIconButton Style="{StaticResource TrailingIcon}" />
                         </StackLayout>
 
-                        <BoxView HeightRequest="{Binding BorderWidth, Source={x:Reference InputBase}}" Color="{Binding BorderColor, Source={x:Reference InputBase}}" VerticalOptions="EndAndExpand" />
+                        <BoxView HeightRequest="{Binding InternalBorderWidth, Source={x:Reference InputBase}}" Color="{Binding BorderColor, Source={x:Reference InputBase}}" VerticalOptions="EndAndExpand" />
                     </Grid>
-                </Border>
+                </material:BorderButton>
 
                 <Label Style="{StaticResource SupportingText}" />
             </VerticalStackLayout>
@@ -196,7 +229,7 @@
         <ControlTemplate x:Key="OutlinedControlTemplate">
             <VerticalStackLayout Spacing="0" x:Name="ContainerOutlined">
                 <Grid>
-                    <Border x:Name="InputBorder" Style="{StaticResource OutlinedBorder}">
+                    <material:BorderButton x:Name="InputBorder" IsEnabled="{Binding IsEnabled, Source={x:Reference InputBase}}" Style="{StaticResource OutlinedBorder}">
                         <StackLayout Style="{StaticResource MainContent}">
                             <material:MaterialIconButton Style="{StaticResource LeadingIcon}" />
                             
@@ -207,8 +240,13 @@
 
                             <material:MaterialIconButton Style="{StaticResource TrailingIcon}" />
                         </StackLayout>
-                    </Border>
-                    <Label x:Name="OutlinedHint" Style="{StaticResource Hint}" />
+                    </material:BorderButton>
+                    
+                    <Grid
+                        Style="{StaticResource OutlinedHintContainer}">
+                        <ContentView x:Name="OutlinedHintContainerBackground" Style="{StaticResource OutlinedHintContainerBackground}" />
+                        <Label Style="{StaticResource OutlinedHint}" />
+                    </Grid>
                 </Grid>
 
                 <Label Style="{StaticResource SupportingText}" />
