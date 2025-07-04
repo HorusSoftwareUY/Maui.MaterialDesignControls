@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -22,7 +23,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         [ObservableProperty]
         private bool _isCustomize;
-        
+
+        [ObservableProperty]
+        private ObservableCollection<MaterialSegmentedButtonItem> _tabItems;
+
+        [ObservableProperty]
+        private MaterialSegmentedButtonItem _selectedTabItem;
+
         [ObservableProperty]
         private bool _isEnabled = true;
 
@@ -54,6 +61,14 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     }*/
                 };
             }
+
+            TabItems = new ObservableCollection<MaterialSegmentedButtonItem>
+            {
+                new MaterialSegmentedButtonItem("Overview"),
+                new MaterialSegmentedButtonItem("Customize")
+            };
+
+            SelectedTabItem = TabItems.First();
         }
         
         public delegate Task DisplayAlertType(string title, string message, string cancel);
@@ -73,7 +88,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
             }
         }
-        
+
+        [ICommand]
+        private async Task TabItemsSelection()
+        {
+            IsCustomize = !IsCustomize;
+        }
+
         #region Navigation
 
         public virtual void NavigatedFrom() { }
