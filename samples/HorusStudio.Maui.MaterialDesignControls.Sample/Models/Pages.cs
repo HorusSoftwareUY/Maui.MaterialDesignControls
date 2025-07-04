@@ -5,7 +5,7 @@ public class Pages
     public const string Button = "Buttons";
     public const string FloatingButton = "Floating action buttons";
     public const string IconButton = "Icon buttons";
-    public const string SegmentedButton = "Segmented button";
+    public const string SegmentedButtons = "Segmented buttons";
     public const string Badge = "Badges";
     public const string ProgressIndicator = "Progress indicators";
     public const string Snackbar = "Snackbar";
