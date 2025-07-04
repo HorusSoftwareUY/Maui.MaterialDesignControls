@@ -16,7 +16,7 @@ internal class BottomSheetController : UIViewController
     MaterialBottomSheet _sheet;
     NSObject? _keyboardDidHideObserver;
 
-    public BottomSheetController(IMauiContext windowMauiContext, MaterialBottomSheet sheet) : base()
+    public BottomSheetController(IMauiContext windowMauiContext, MaterialBottomSheet sheet)
     {
         _windowMauiContext = windowMauiContext;
         _sheet = sheet;
@@ -154,7 +154,7 @@ internal class BottomSheetController : UIViewController
     {
         MaterialBottomSheet _sheet;
 
-        public BottomSheetControllerDelegate(MaterialBottomSheet sheet) : base()
+        public BottomSheetControllerDelegate(MaterialBottomSheet sheet)
         {
             _sheet = sheet;
         }
@@ -202,6 +202,8 @@ internal class BottomSheetController : UIViewController
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
+            if (_sheet?.Window == null) return;
+            
             var h = CalculateTallestDetent(_sheet.Window.Height - BottomSheetManager.KeyboardHeight);
             _view.Frame = new CGRect(0, 0, Bounds.Width, h);
             _sheet.Arrange(_view.Frame.ToRectangle());

@@ -27,8 +27,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|top"
-                app:layout_behavior="@string/bottom_sheet_behavior" />
-
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+<!--
+                removed, this fails to resolve to the correct string on net9 api35
+                app:layout_behavior="@string/bottom_sheet_behavior" /> 
+ -->
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>
