@@ -59,7 +59,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new() { Headline = Sections.Actions, Text = Models.Pages.Button, LeadingIcon = "ic_button.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.FloatingButton, LeadingIcon = "ic_floating.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.IconButton, LeadingIcon = "ic_icon_button.png" },
-                new() { Headline = Sections.Actions, Text = Models.Pages.SegmentedButtons, LeadingIcon = "ic_segmented.png" },
+                new() { Headline = Sections.Actions, Text = Models.Pages.SegmentedButtons, LeadingIcon = "ic_segmented.png", BadgeText = "NEW" },
                 new() { Headline = Sections.Communications, Text = Models.Pages.Badge, LeadingIcon = "ic_badge.png" },
                 new() { Headline = Sections.Communications, Text = Models.Pages.ProgressIndicator, LeadingIcon = "ic_progress_indicator.png" },
                 new() { Headline = Sections.Communications, Text = Models.Pages.Snackbar, LeadingIcon = "ic_snackbar.png" },

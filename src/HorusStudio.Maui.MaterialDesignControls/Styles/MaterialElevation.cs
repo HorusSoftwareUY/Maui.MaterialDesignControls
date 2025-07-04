@@ -6,6 +6,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// </summary>
 	public static class MaterialElevation
     {
+        /// <default>
+        /// No shadow
+        /// </default>
         public static Shadow Level0 { get; set; } = null!;
 
         /// <default>

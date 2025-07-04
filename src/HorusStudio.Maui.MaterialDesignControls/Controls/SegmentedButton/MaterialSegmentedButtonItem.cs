@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using HorusStudio.Maui.MaterialDesignControls.Models;
+﻿using HorusStudio.Maui.MaterialDesignControls.Models;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -77,9 +76,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
             get => _isSelected;
             internal set => SetProperty(ref _isSelected, value);
         }
-
-        /// <inheritdoc />
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         #endregion Properties
 
