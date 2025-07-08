@@ -58,26 +58,34 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async void ShowFilterSelection()
         {
+            var message = string.Empty;
+            
             if (ChipsFilterA)
             {
-                await DisplayAlert(Title, "Chip A selected", "OK");
+                message += "Filter A,";
             }
-            else if (ChipsFilterB)
+            
+            if (ChipsFilterB)
             {
-                await DisplayAlert(Title, "Chip B selected", "OK");
+                message += "Filter B,";
             }
-            else if (ChipsFilterC)
+            
+            if (ChipsFilterC)
             {
-                await DisplayAlert(Title, "Chip C selected", "OK");
+                message += "Filter C,";
             }
-            else if (ChipsFilterD)
+            
+            if (ChipsFilterD)
             {
-                await DisplayAlert(Title, "Chip D selected", "OK");
+                message += "Filter D,";
             }
-            else
+
+            if (string.IsNullOrEmpty(message))
             {
-                await DisplayAlert(Title, "No chip selected", "OK");
+                message = "No chip selected";
             }
+            
+            await DisplayAlert(Title, message, "OK");
         }
 
         [ICommand]

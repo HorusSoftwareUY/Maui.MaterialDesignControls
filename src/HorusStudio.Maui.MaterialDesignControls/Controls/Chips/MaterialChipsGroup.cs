@@ -90,7 +90,11 @@ public static class MaterialChipsGroup
 	
 	internal static void UpdateMaterialChipsGroup(MaterialChips chip)
 	{
-		MaterialViewGroup.UncheckOtherMaterialGroupableViewInScope(chip, MaterialChips.IsSelectedProperty);
+		if (!string.IsNullOrEmpty(chip.GroupName))
+		{
+			MaterialViewGroup.UncheckOtherMaterialGroupableViewInScope(chip, MaterialChips.IsSelectedProperty);
+		}
+		
 		chip.OnGroupSelectionChanged(chip);
 	}
 }

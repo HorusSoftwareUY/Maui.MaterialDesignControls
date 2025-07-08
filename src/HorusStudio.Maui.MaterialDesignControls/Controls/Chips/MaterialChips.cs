@@ -121,7 +121,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// Gets or sets the state when the Chips is selected.
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(MaterialChips), defaultValue: DefaultIsSelected, propertyChanged: (bindable, _, _) =>
+    public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(MaterialChips), defaultValue: DefaultIsSelected, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialChips self)
         {
