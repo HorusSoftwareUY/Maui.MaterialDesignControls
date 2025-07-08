@@ -116,13 +116,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// bindable property.
     /// </summary>
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialChips));
-
-    /// <summary>
-    /// The backing store for the <see cref="CommandParameter" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialChips));
-
+    
     /// <summary>
     /// Gets or sets the state when the Chips is selected.
     /// bindable property.
@@ -344,20 +338,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
         get => (ICommand)GetValue(CommandProperty);
         set => SetValue(CommandProperty, value);
     }
-
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>
-    /// </default>
-    public object CommandParameter
-    {
-        get => GetValue(CommandParameterProperty);
-        set => SetValue(CommandParameterProperty, value);
-    }
-
+    
     /// <summary>
     /// Gets or sets the state when the Chips is selected.
     /// This is a bindable property.
@@ -698,9 +679,9 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
         {
             MaterialChipsGroup.UpdateMaterialChipsGroup(this);
             
-            if (Command != null && Command.CanExecute(CommandParameter))
+            if (Command != null && Command.CanExecute(IsSelected))
             {
-                Command.Execute(CommandParameter);
+                Command.Execute(IsSelected);
             }
             else if (_clicked != null)
             {
