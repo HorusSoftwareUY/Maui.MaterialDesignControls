@@ -106,46 +106,52 @@
 
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filter Chips" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid Style="{StaticResource GridChipsContainer}">
+            <StackLayout
+                Spacing="8">
+                <Grid Style="{StaticResource GridChipsContainer}">
 
-                <material:MaterialChips
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    IsEnabled="{Binding IsEnabledState}"
-                    Type="Filter"
-                    Text="Filter A"
-                    HorizontalOptions="End"
-                    IsSelected="{Binding ChipsFilterA}"/>
+                    <material:MaterialChips
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        IsEnabled="{Binding IsEnabledState}"
+                        Type="Filter"
+                        Text="Filter A"
+                        HorizontalOptions="End"
+                        IsSelected="{Binding ChipsFilterA}"/>
 
-                <material:MaterialChips
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    Type="Filter"
-                    TrailingIcon="horus_logo.png"
-                    Text="Filter B"
-                    HorizontalOptions="Start"
-                    IsSelected="{Binding ChipsFilterB}"/>
+                    <material:MaterialChips
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Type="Filter"
+                        TrailingIcon="horus_logo.png"
+                        Text="Filter B"
+                        HorizontalOptions="Start"
+                        IsSelected="{Binding ChipsFilterB}"/>
 
-                <material:MaterialChips
-                    Grid.Column="0"
-                    Grid.Row="1"
-                    Type="Filter"
-                    LeadingIcon="plus.png"
-                    Text="Filter C"
-                    HorizontalOptions="End"
-                    IsSelected="{Binding ChipsFilterC}"/>
+                    <material:MaterialChips
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Type="Filter"
+                        LeadingIcon="plus.png"
+                        Text="Filter C"
+                        HorizontalOptions="End"
+                        IsSelected="{Binding ChipsFilterC}"/>
 
-                <material:MaterialChips
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    Type="Filter"
-                    LeadingIcon="plus.png"
-                    Text="Filter D"
-                    HorizontalOptions="Start"
-                    TrailingIcon="horus_logo.png"
-                    IsSelected="{Binding ChipsFilterD}"/>
+                    <material:MaterialChips
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Type="Filter"
+                        LeadingIcon="plus.png"
+                        Text="Filter D"
+                        HorizontalOptions="Start"
+                        TrailingIcon="horus_logo.png"
+                        IsSelected="{Binding ChipsFilterD}"/>
 
-            </Grid>
+                </Grid>
+                <material:MaterialButton
+                    Text="Show filter selection"
+                    Command="{Binding ShowFilterSelectionCommand}"/>
+            </StackLayout>
         </material:MaterialCard>
         <material:MaterialLabel 
             Text="Tapping on a filter chip activates it and appends a leading checkmark icon to the starting edge of the chip label."  Type="BodySmall" />
@@ -213,68 +219,64 @@
         <material:MaterialLabel 
             Text="You can modify the chip as you require, this is useful when you need to add it to specific spaces or follow the required layout throughout your app." Type="BodySmall" />
         
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Chips Group (single-selection)" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using attached properties" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <material:MaterialChipsGroup 
-                LabelText="Chips"
-                SupportingText="You must select one"
-                IsMultipleSelection="False"
-                HorizontalSpacing="4"
-                ItemsSource="{Binding Chips}"/>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can easily group chips together to give the user a list of single-select options, even offering a way to display animated validation text." Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Chips Group (multi-selection)" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <material:MaterialChipsGroup 
-                LabelText="Chips"
-                IsMultipleSelection="True"
-                ItemsSource="{Binding Chips}"/>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can also provide a group to select multiple options. The chips group allows for chips alignment, spacing, percentage size, and more." Type="BodySmall" />
-
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="ValueChanged event (single-selection)" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialChipsGroup
-                    x:Name="eventChipsGroup"
-                    LabelText="ValueChanged event"
-                    IsMultipleSelection="False"
-                    HasError="{Binding HasAnError}"
-                    SupportingText="{Binding SupportingTextValue}"
-                    SelectedItem="{Binding SelectedChip}"
-                    ItemsSource="{Binding Chips}"
-                    SelectionChanged="MaterialChipsGroup_SelectionChanged"/>
+            <StackLayout
+                Spacing="8">
+                <StackLayout
+                    material:MaterialChipsGroup.GroupName="MyChipsGroup"
+                    material:MaterialChipsGroup.SelectedValue="{Binding SelectedChipValue}"
+                    material:MaterialChipsGroup.SelectedValueChangedCommand="{Binding SelectedValueChangedCommand}"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <material:MaterialChips
+                        Type="Filter"
+                        Text="Option A"
+                        Value="Option A" />
+                    <material:MaterialChips
+                        Type="Filter"
+                        Text="Option B"
+                        Value="Option B" />
+                    <material:MaterialChips
+                        Type="Filter"
+                        Text="Option C"
+                        Value="Option C" />
+                </StackLayout>
+                <material:MaterialLabel
+                    Text="{Binding SelectedChipText}"
+                    HorizontalTextAlignment="Center" />
                 <material:MaterialButton
                     Text="Select Chip C"
                     Command="{Binding SelectChipCCommand}" />
-                <material:MaterialButton
-                    Text="Show selection"
-                    Command="{Binding ShowSelectedChipCommand}" />
-            </VerticalStackLayout>
+            </StackLayout>
         </material:MaterialCard>
-        <material:MaterialLabel Text="The ValueChanged event allows you to detect when the user changes the selected value in the MaterialChipsGroup control." Type="BodySmall" />
+        <material:MaterialLabel 
+            Text="We are creating chips using MaterialChipsGroup's attachable properties: GroupName, SelectedValue and SelectedValueChangedCommand." Type="BodySmall" />
         
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="ValueChangedCommand (multi-selection)" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Grouping MaterialChips" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialChipsGroup 
-                    LabelText="{Binding SelectionWithCommandText}"
-                    IsMultipleSelection="True"
-                    ChipsFlexLayoutPercentageBasis="0.5"
-                    Align="Center"
-                    SelectedItems="{Binding SelectedChips}"
-                    ItemsSource="{Binding Chips}"
-                    SelectionChangedCommand="{Binding SelectionChangedCommand}"/>
-                <material:MaterialButton
-                    Text="Select Chip A and Chip B"
-                    Command="{Binding SelectChipAAndBCommand}" />
+            <StackLayout
+                Spacing="8">
+                <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
+                            material:MaterialChipsGroup.GroupName="TestingChipsGroup"
+                            material:MaterialChipsGroup.SelectedValue="{Binding SelectedChipItem}"
+                            BindableLayout.ItemsSource="{Binding Chips}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <material:MaterialChips
+                                Type="Filter"
+                                Text="{Binding .}"
+                                Value="{Binding .}"
+                                Margin="4" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
                 <material:MaterialButton
                     Text="Show selection"
-                    Command="{Binding ShowSelectedChipsCommand}" />
-            </VerticalStackLayout>
+                    Command="{Binding ShowSelectedItemCommand}" />
+            </StackLayout>
         </material:MaterialCard>
-        <material:MaterialLabel Text="The ValueChangedCommand allows you to detect when the user changes the selected value in the MaterialChipsGroup control." Type="BodySmall" />
+        <material:MaterialLabel Text="We are creating chips using a BindableLayout and attachable properties" Type="BodySmall" />
+        
     </VerticalStackLayout>
 </local:BaseContentPage>

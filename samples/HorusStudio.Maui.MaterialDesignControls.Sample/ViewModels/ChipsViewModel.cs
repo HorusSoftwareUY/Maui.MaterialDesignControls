@@ -28,22 +28,16 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private bool _chipsFilterD;
 
         [ObservableProperty]
-        private ObservableCollection<string> _chips;
-
-        [ObservableProperty]
-        private List<string> _selectedChips = new();
-
-        [ObservableProperty]
-        private string _selectedChip;
-
-        [ObservableProperty]
-        private string _selectionWithCommandText = "SelectionChangedCommand";
-
-        [ObservableProperty]
-        private bool _hasAnError;
+        private string _selectedChipValue;
         
         [ObservableProperty]
-        private string _supportingTextValue;
+        private string _selectedChipText;
+        
+        [ObservableProperty]
+        private ObservableCollection<string> _chips;
+        
+        [ObservableProperty]
+        private string _selectedChipItem;
         
         #endregion
 
@@ -51,6 +45,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             Chips = new ObservableCollection<string> { "Chip A", "Chip B", "Chip C", "Chip D", "Chip E" };
             Subtitle = "Chips help people enter information, make selections, filter content, or trigger actions";
+            
+            SelectedChipText = "Selected value: -";
         }
 
         [ICommand]
@@ -60,70 +56,54 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async void TappedChipsFilter(string chip)
+        private async void ShowFilterSelection()
         {
-            switch (chip)
+            if (ChipsFilterA)
             {
-                case "A":
-                    ChipsFilterA = !ChipsFilterA;
-                    await DisplayAlert(Title, $"Chips A {((ChipsFilterA) ? "selected" : "not selected")}", "OK");
-                    break;
-                case "B":
-                    ChipsFilterB = !ChipsFilterB;
-                    await DisplayAlert(Title, $"Chips B {((ChipsFilterB) ? "selected" : "not selected")}", "OK");
-                    break;
-                case "C":
-                    ChipsFilterC = !ChipsFilterC;
-                    await DisplayAlert(Title, $"Chips C {((ChipsFilterC) ? "selected" : "not selected")}", "OK");
-                    break;
-                case "D":
-                    ChipsFilterD = !ChipsFilterD;
-                    await DisplayAlert(Title, $"Chips D {((ChipsFilterD) ? "selected" : "not selected")}", "OK");
-                    break;
+                await DisplayAlert(Title, "Chip A selected", "OK");
+            }
+            else if (ChipsFilterB)
+            {
+                await DisplayAlert(Title, "Chip B selected", "OK");
+            }
+            else if (ChipsFilterC)
+            {
+                await DisplayAlert(Title, "Chip C selected", "OK");
+            }
+            else if (ChipsFilterD)
+            {
+                await DisplayAlert(Title, "Chip D selected", "OK");
+            }
+            else
+            {
+                await DisplayAlert(Title, "No chip selected", "OK");
             }
         }
 
         [ICommand]
         private async Task SelectChipC()
         {
-            SelectedChip = "Chip C";
+            SelectedChipValue = "Option C";
         }
-
+        
         [ICommand]
-        private async Task ShowSelectedChip()
+        private async Task SelectedValueChanged()
         {
-            SupportingTextValue = null;
-            HasAnError = false;
-
-            if (string.IsNullOrWhiteSpace(SelectedChip))
+            if (!string.IsNullOrEmpty(SelectedChipValue))
             {
-                SupportingTextValue = "You must select one option.";
-                HasAnError = true;
+                SelectedChipText = $"Selected value: {SelectedChipValue}";
             }
             else
             {
-                await DisplayAlert(Title, $"SelectedChip: {SelectedChip}", "OK");
+                SelectedChipText = "Selected value: -";
             }
         }
-
+        
         [ICommand]
-        private async Task SelectChipAAndB()
+        private async Task ShowSelectedItem()
         {
-            SelectedChips = new List<string> { "Chip A", "Chip B" };
-        }
-
-        [ICommand]
-        private async Task ShowSelectedChips()
-        {
-            var result = SelectedChips != null && SelectedChips.Any() ? string.Join(", ", SelectedChips) : "-";
-            await DisplayAlert(Title, $"SelectedChips: {result}", "OK");
-        }
-
-        [ICommand]
-        private async Task SelectionChanged(List<string> selectedItems)
-        {
-            var result = selectedItems != null && selectedItems.Any() ? string.Join(", ", selectedItems) : "-";
-            SelectionWithCommandText = $"Selection: {result}";
+            var message = !string.IsNullOrEmpty(SelectedChipItem) ? $"Selected item: {SelectedChipItem}" : "No item selected";
+            await DisplayAlert(Title, message, "OK");
         }
     }
 }
