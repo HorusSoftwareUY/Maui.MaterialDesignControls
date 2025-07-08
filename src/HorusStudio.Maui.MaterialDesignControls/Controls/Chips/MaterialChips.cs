@@ -60,7 +60,7 @@ public enum IconStateType
 /// <todoList>
 /// * .NET 7 not work LineBreakMode.
 /// </todoList>
-public class MaterialChips : ContentView, ITouchableView
+public class MaterialChips : ContentView, ITouchableView, IGroupableView
 {
     #region Attributes
 
@@ -271,6 +271,30 @@ public class MaterialChips : ContentView, ITouchableView
     /// </summary>
     public static readonly new BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialChips), defaultValueCreator: DefaultShadow);
 
+    /// <summary>
+    /// The backing store for the <see cref="GroupName" />
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty GroupNameProperty = BindableProperty.Create(nameof(GroupName), typeof(string), typeof(MaterialChips), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
+    {
+        if (bindableObject is MaterialChips self && oldValue is string oldGroupName && newValue is string newGroupName)
+        {
+            self.OnGroupNamePropertyChanged(oldGroupName, newGroupName);
+        }
+    });
+    
+    /// <summary>
+    /// The backing store for the <see cref="Value"/>
+    /// bindable property.
+    /// </summary>
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialChips), defaultValue: null, propertyChanged: (bindableObject, _, _) => 
+    { 
+        if(bindableObject is MaterialChips self)
+        {
+            self.OnValuePropertyChanged();
+        }
+    });
+    
     #endregion Bindable Properties
 
     #region Properties
@@ -612,6 +636,29 @@ public class MaterialChips : ContentView, ITouchableView
         get => (ITouchAnimation)GetValue(TouchAnimationProperty);
         set => SetValue(TouchAnimationProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets the <see cref="string" /> GroupName for the chips. 
+    /// This is a bindable property.
+    /// </summary>
+    public string GroupName
+    {
+        get => (string)GetValue(GroupNameProperty);
+        set => SetValue(GroupNameProperty, value);
+    }
+    
+    /// <summary>
+    /// Defines the value of radio button selected
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
+    public object Value
+    {
+        get => GetValue(ValueProperty);
+        set => SetValue(ValueProperty, value);
+    }
 
     #endregion Properties
 
@@ -649,6 +696,11 @@ public class MaterialChips : ContentView, ITouchableView
 
         if (gestureType == TouchEventType.Released)
         {
+            // if (IsSelected)
+            //     MaterialChipsGroup.UpdateMaterialChipsGroup(this);
+            
+            MaterialChipsGroup.UpdateMaterialChipsGroup(this);
+            
             if (Command != null && Command.CanExecute(CommandParameter))
             {
                 Command.Execute(CommandParameter);
@@ -805,6 +857,32 @@ public class MaterialChips : ContentView, ITouchableView
         Content = _container;
     }
 
+    void OnValuePropertyChanged()
+    {
+        if (!IsSelected || string.IsNullOrEmpty(GroupName))
+        {
+            return;
+        }
+
+        var controller = MaterialViewGroupController.GetGroupController(this);
+        controller?.HandleMaterialViewValueChanged(this);
+    }
+
+    void OnGroupNamePropertyChanged(string oldGroupName, string newGroupName)
+    {
+        if (!string.IsNullOrEmpty(oldGroupName) && !string.IsNullOrEmpty(newGroupName) && newGroupName != oldGroupName)
+        {
+            var controller = MaterialViewGroupController.GetGroupController(this);
+            controller?.HandleMaterialViewGroupNameChanged(oldGroupName);
+        }
+    }
+    
+    internal void OnGroupSelectionChanged(MaterialChips chip)
+    {
+        var controller = MaterialViewGroupController.GetGroupController(this);
+        controller?.HandleMaterialViewGroupSelectionChanged(chip);
+    }
+    
     #endregion Methods
 
     #region Setters

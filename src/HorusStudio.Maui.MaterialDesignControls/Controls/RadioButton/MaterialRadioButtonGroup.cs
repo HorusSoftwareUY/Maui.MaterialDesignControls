@@ -7,14 +7,14 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// </summary>
 public static class MaterialRadioButtonGroup
 {
-    static readonly BindableProperty MaterialRadioButtonGroupControllerProperty =
-		BindableProperty.CreateAttached("MaterialRadioButtonGroupController", typeof(MaterialViewGroupController), typeof(Element), default(MaterialViewGroupController),
+    static readonly BindableProperty GroupControllerProperty =
+		BindableProperty.CreateAttached("GroupController", typeof(MaterialViewGroupController), typeof(Element), default(MaterialViewGroupController),
 		defaultValueCreator: (b) => new MaterialViewGroupController(b as Element, MaterialRadioButton.IsCheckedProperty, SelectedValueProperty),
-		propertyChanged: (b, o, n) => OnControllerChanged(b, (MaterialViewGroupController)o, (MaterialViewGroupController)n));
+		propertyChanged: (b, o, n) => MaterialViewGroup.OnControllerChanged(b, GetGroupName, GetSelectedValue, (MaterialViewGroupController)n));
 	
-	static MaterialViewGroupController GetMaterialRadioButtonGroupController(BindableObject b)
+	static MaterialViewGroupController GetGroupController(BindableObject b)
 	{
-		return (MaterialViewGroupController)b.GetValue(MaterialRadioButtonGroupControllerProperty);
+		return (MaterialViewGroupController)b.GetValue(GroupControllerProperty);
 	}
 
 	/// <summary>
@@ -22,7 +22,7 @@ public static class MaterialRadioButtonGroup
 	/// </summary>
 	public static readonly BindableProperty GroupNameProperty =
 		BindableProperty.Create("GroupName", typeof(string), typeof(Element), null,
-		propertyChanged: (b, o, n) => { GetMaterialRadioButtonGroupController(b).GroupName = (string)n; });
+		propertyChanged: (b, o, n) => { GetGroupController(b).GroupName = (string)n; });
 
 	/// <summary>
 	/// Returns the bindableObject's group name
@@ -46,7 +46,7 @@ public static class MaterialRadioButtonGroup
 	public static readonly BindableProperty SelectedValueProperty =
 		BindableProperty.Create("SelectedValue", typeof(object), typeof(Element), null,
 		defaultBindingMode: BindingMode.TwoWay,
-		propertyChanged: (b, o, n) => { GetMaterialRadioButtonGroupController(b).SelectedValue = n; });
+		propertyChanged: (b, o, n) => { GetGroupController(b).SelectedValue = n; });
 
 	/// <summary>
 	/// Returns the bindableObject's selected value
@@ -66,75 +66,7 @@ public static class MaterialRadioButtonGroup
 
 	internal static void UpdateMaterialRadioButtonGroup(MaterialRadioButton radioButton)
 	{
-		UncheckOtherMaterialRadioButtonsInScope(radioButton);
+		MaterialViewGroup.UncheckOtherMaterialGroupableViewInScope(radioButton, MaterialRadioButton.IsCheckedProperty);
 		radioButton.OnGroupSelectionChanged(radioButton);
-	}
-
-	internal static void UncheckOtherMaterialRadioButtonsInScope(MaterialRadioButton radioButton)
-	{
-		if (!string.IsNullOrEmpty(radioButton.GroupName))
-		{
-			var root = radioButton.GetVisualRoot() ?? radioButton.Parent;
-			if (root is not IElementController rootController)
-			{
-				return;
-			}
-
-			foreach (var child in rootController.LogicalChildren)
-			{
-				UncheckMatchingDescendants(child, radioButton.GroupName, radioButton);
-			}
-		}
-		else
-		{
-			if (radioButton.Parent is not IElementController parentController)
-			{
-				return;
-			}
-
-			foreach (var child in parentController.LogicalChildren)
-			{
-				if (child is MaterialRadioButton rb && string.IsNullOrEmpty(rb.GroupName))
-				{
-					UncheckMaterialRadioButtonIfChecked(rb, radioButton);
-				}
-			}
-		}
-	}
-
-	static void UncheckMaterialRadioButtonIfChecked(MaterialRadioButton child, MaterialRadioButton radioButton)
-	{
-		if (child != radioButton && child.IsChecked)
-		{
-			child.SetValue(MaterialRadioButton.IsCheckedProperty, false);
-		}
-	}
-
-	static void UncheckMatchingDescendants(Element element, string groupName, MaterialRadioButton radioButton)
-	{
-		if (element is MaterialRadioButton rb && rb.GroupName == groupName)
-		{
-			UncheckMaterialRadioButtonIfChecked(rb, radioButton);
-		}
-
-		if (element is IElementController controller)
-		{
-			foreach (var child in controller.LogicalChildren)
-			{
-				UncheckMatchingDescendants(child, groupName, radioButton);
-			}
-		}
-	}
-
-	static void OnControllerChanged(BindableObject bindableObject, MaterialViewGroupController oldController,
-		MaterialViewGroupController? newController)
-	{
-		if (newController == null)
-		{
-			return;
-		}
-
-		newController.GroupName = GetGroupName(bindableObject);
-		newController.SelectedValue = GetSelectedValue(bindableObject);
 	}
 }

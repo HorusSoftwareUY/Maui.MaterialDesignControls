@@ -68,7 +68,14 @@ internal class MaterialViewGroupController
 			return;
 		}
 
-		_layout.SetValue(_groupSelectedValueBindableProperty, groupableView.Value);
+		if (groupableView.IsSelected)
+		{
+			_layout.SetValue(_groupSelectedValueBindableProperty, groupableView.Value);
+		}
+		else
+		{
+			_layout.SetValue(_groupSelectedValueBindableProperty, null);
+		}
 	}
 
 	void ChildAdded(object sender, ElementEventArgs e)

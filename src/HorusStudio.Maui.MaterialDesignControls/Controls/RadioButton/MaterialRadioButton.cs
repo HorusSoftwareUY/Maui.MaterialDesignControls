@@ -291,9 +291,6 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     /// Gets or sets the <see cref="string" /> GroupName for the radio button. 
     /// This is a bindable property.
     /// </summary>
-    /// <default>
-    /// <see cref="DefaultGroupName">MaterialRadioButton.GroupName</see>
-    /// </default>
     public string GroupName
     {
         get => (string)GetValue(GroupNameProperty);
