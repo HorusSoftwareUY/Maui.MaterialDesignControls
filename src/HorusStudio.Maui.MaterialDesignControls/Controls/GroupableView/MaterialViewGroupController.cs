@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using System.Windows.Input;
+using Microsoft.Maui.Controls;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -15,11 +16,13 @@ internal class MaterialViewGroupController
 	private readonly Element _layout;
 	private string _groupName;
 	private object? _selectedValue;
+	private ICommand? _selectedValueChangedCommand;
 	private readonly BindableProperty _isControlSelectedBindableProperty;
 	private readonly BindableProperty _groupSelectedValueBindableProperty;
 
 	public string GroupName { get => _groupName; set => SetGroupName(value); }
 	public object? SelectedValue { get => _selectedValue; set => SetSelectedValue(value); }
+	public ICommand? SelectedValueChangedCommand { get => _selectedValueChangedCommand; set => _selectedValueChangedCommand = value; }
 
 	public MaterialViewGroupController(Element layout, BindableProperty isControlSelectedBindableProperty, BindableProperty groupSelectedValueBindableProperty)
 	{
@@ -75,6 +78,12 @@ internal class MaterialViewGroupController
 		else
 		{
 			_layout.SetValue(_groupSelectedValueBindableProperty, null);
+		}
+		
+		var commandParameter = groupableView.IsSelected ? groupableView.Value : null;
+		if (SelectedValueChangedCommand != null && SelectedValueChangedCommand.CanExecute(commandParameter))
+		{
+			SelectedValueChangedCommand.Execute(commandParameter);
 		}
 	}
 

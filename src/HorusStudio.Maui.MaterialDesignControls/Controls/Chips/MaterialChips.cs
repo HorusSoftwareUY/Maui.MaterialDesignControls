@@ -696,9 +696,6 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
 
         if (gestureType == TouchEventType.Released)
         {
-            // if (IsSelected)
-            //     MaterialChipsGroup.UpdateMaterialChipsGroup(this);
-            
             MaterialChipsGroup.UpdateMaterialChipsGroup(this);
             
             if (Command != null && Command.CanExecute(CommandParameter))

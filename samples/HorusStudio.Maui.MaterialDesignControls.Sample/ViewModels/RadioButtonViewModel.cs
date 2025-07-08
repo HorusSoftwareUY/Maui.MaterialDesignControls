@@ -16,6 +16,9 @@ public partial class RadioButtonViewModel : BaseViewModel
 
     [ObservableProperty]
     private CustomColor _checkedColor;
+    
+    [ObservableProperty]
+    private string _checkedColorText;
 
     [ObservableProperty]
     private bool _isRadioButtonEnabled;
@@ -46,12 +49,21 @@ public partial class RadioButtonViewModel : BaseViewModel
             };
 
         CheckedColor = ItemsSourceColors.FirstOrDefault();
+
+        CheckedColorText = $"Selected value: {CheckedColor.Color}";
     }
 
     [ICommand]
     private async Task CheckChanged()
     {
-        await DisplayAlert(Title, CheckedColor.Color ?? "none", "OK");
+        if (CheckedColor != null)
+        {
+            CheckedColorText = $"Selected value: {CheckedColor.Color}";
+        }
+        else
+        {
+            CheckedColorText = $"Selected value: -";
+        }
     }
 
     [ICommand]

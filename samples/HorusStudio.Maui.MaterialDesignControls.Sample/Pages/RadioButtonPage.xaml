@@ -199,10 +199,12 @@
 
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using attached properties" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="0">
+            <VerticalStackLayout
+                Spacing="8">
                 <VerticalStackLayout 
                     material:MaterialRadioButtonGroup.GroupName="TestingGroup" 
-                    material:MaterialRadioButtonGroup.SelectedValue="{Binding CheckedColor}" 
+                    material:MaterialRadioButtonGroup.SelectedValue="{Binding CheckedColor}"
+                    material:MaterialRadioButtonGroup.SelectedValueChangedCommand="{Binding CheckChangedCommand}"
                     BindableLayout.ItemsSource="{Binding ItemsSourceColors}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="vm:CustomColor">
@@ -214,7 +216,9 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
-                <material:MaterialButton Command="{Binding CheckChangedCommand}" Text="Check selected" />
+                <material:MaterialLabel
+                    Text="{Binding CheckedColorText}"
+                    HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel Text="We are creating radio buttons using an ItemsSource to check attachable properties and selected value" Type="BodySmall" />

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -62,6 +63,29 @@ public static class MaterialRadioButtonGroup
 	public static void SetSelectedValue(BindableObject bindable, object selectedValue)
 	{
 		bindable.SetValue(SelectedValueProperty, selectedValue);
+	}
+	
+	/// <summary>
+	/// The backing store for the <see cref="SelectedValueChangedCommand" /> bindable property.
+	/// </summary>
+	public static readonly BindableProperty SelectedValueChangedCommandProperty =
+		BindableProperty.Create("SelectedValueChangedCommand", typeof(ICommand), typeof(Element), null,
+			propertyChanged: (b, o, n) => { GetGroupController(b).SelectedValueChangedCommand = (ICommand)n; });
+	
+	/// <summary>
+	/// Returns the bindableObject's selected value changed command
+	/// </summary>
+	public static ICommand GetSelectedValueChangedCommand(BindableObject b)
+	{
+		return (ICommand)b.GetValue(SelectedValueChangedCommandProperty);
+	}
+
+	/// <summary>
+	/// Sets the bindableObject's selected value changed command
+	/// </summary>
+	public static void SetSelectedValueChangedCommand(BindableObject bindable, ICommand groupName)
+	{
+		bindable.SetValue(SelectedValueChangedCommandProperty, groupName);
 	}
 
 	internal static void UpdateMaterialRadioButtonGroup(MaterialRadioButton radioButton)
