@@ -685,7 +685,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             }
             else if (_clicked != null)
             {
-                _clicked.Invoke(this, EventArgs.Empty);
+                _clicked.Invoke(this, new IsSelectedEventArgs(IsSelected));
             }
         }
     }
