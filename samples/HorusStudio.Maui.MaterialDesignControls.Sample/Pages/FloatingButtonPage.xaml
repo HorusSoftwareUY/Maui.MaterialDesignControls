@@ -31,8 +31,8 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Type" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
-                        material:MaterialChipsGroup.GroupName="Types"
-                        material:MaterialChipsGroup.SelectedValue="{Binding ButtonType}"
+                        material:MaterialViewGroup.GroupName="Types"
+                        material:MaterialViewGroup.SelectedValue="{Binding ButtonType}"
                         BindableLayout.ItemsSource="{Binding Types}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="x:String">
@@ -50,8 +50,8 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Position" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
-                        material:MaterialChipsGroup.GroupName="Positions"
-                        material:MaterialChipsGroup.SelectedValue="{Binding PositionButton}"
+                        material:MaterialViewGroup.GroupName="Positions"
+                        material:MaterialViewGroup.SelectedValue="{Binding PositionButton}"
                         BindableLayout.ItemsSource="{Binding Positions}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="x:String">

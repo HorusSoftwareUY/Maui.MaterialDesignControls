@@ -202,9 +202,9 @@
             <VerticalStackLayout
                 Spacing="8">
                 <VerticalStackLayout 
-                    material:MaterialRadioButtonGroup.GroupName="TestingGroup" 
-                    material:MaterialRadioButtonGroup.SelectedValue="{Binding CheckedColor}"
-                    material:MaterialRadioButtonGroup.SelectedValueChangedCommand="{Binding CheckChangedCommand}"
+                    material:MaterialViewGroup.GroupName="TestingGroup" 
+                    material:MaterialViewGroup.SelectedValue="{Binding CheckedColor}"
+                    material:MaterialViewGroup.SelectedValueChangedCommand="{Binding CheckChangedCommand}"
                     BindableLayout.ItemsSource="{Binding ItemsSourceColors}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="vm:CustomColor">

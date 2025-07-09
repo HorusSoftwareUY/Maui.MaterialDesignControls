@@ -677,7 +677,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
 
         if (gestureType == TouchEventType.Released)
         {
-            MaterialChipsGroup.UpdateMaterialChipsGroup(this);
+            MaterialViewGroup.UpdateGroupSelection(this);
             
             if (Command != null && Command.CanExecute(IsSelected))
             {
@@ -834,7 +834,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
         _container.Content = _hStack;
         Content = _container;
     }
-
+    
     void OnValuePropertyChanged()
     {
         if (!IsSelected || string.IsNullOrEmpty(GroupName))
@@ -855,10 +855,10 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
         }
     }
     
-    internal void OnGroupSelectionChanged(MaterialChips chip)
+    public void OnGroupSelectionChanged(IGroupableView groupableView)
     {
         var controller = MaterialViewGroupController.GetGroupController(this);
-        controller?.HandleMaterialViewGroupSelectionChanged(chip);
+        controller?.HandleMaterialViewGroupSelectionChanged(groupableView);
     }
     
     #endregion Methods

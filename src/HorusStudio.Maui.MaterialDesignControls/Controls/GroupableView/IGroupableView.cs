@@ -16,14 +16,10 @@ public interface IGroupableView
     object? Value { get; }
     
     /// <summary>
-    /// Gets if the view is selected or not.
+    /// Gets or sets if the view is selected or not.
     /// </summary>
-    bool IsSelected { get; }
-    
-    /// <summary>
-    /// Sets the value of the specified bindable property.
-    /// </summary>
-    /// <param name="property">The bindable property on which to assign a value.</param>
-    /// <param name="value">The value to set.</param>
-    void SetValue(BindableProperty property, object value);
+    bool IsSelected { get; set; }
+
+    // TODO: REVIEW IF WE CAN AVOID HAVE THIS METHOD IN THE INTERFACE
+    void OnGroupSelectionChanged(IGroupableView groupableView);
 }

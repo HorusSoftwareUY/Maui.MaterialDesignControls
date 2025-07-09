@@ -224,9 +224,9 @@
             <StackLayout
                 Spacing="8">
                 <StackLayout
-                    material:MaterialChipsGroup.GroupName="MyChipsGroup"
-                    material:MaterialChipsGroup.SelectedValue="{Binding SelectedChipValue}"
-                    material:MaterialChipsGroup.SelectedValueChangedCommand="{Binding SelectedValueChangedCommand}"
+                    material:MaterialViewGroup.GroupName="MyChipsGroup"
+                    material:MaterialViewGroup.SelectedValue="{Binding SelectedChipValue}"
+                    material:MaterialViewGroup.SelectedValueChangedCommand="{Binding SelectedValueChangedCommand}"
                     Orientation="Horizontal"
                     Spacing="8">
                     <material:MaterialChips
@@ -258,8 +258,8 @@
             <StackLayout
                 Spacing="8">
                 <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
-                            material:MaterialChipsGroup.GroupName="TestingChipsGroup"
-                            material:MaterialChipsGroup.SelectedValue="{Binding SelectedChipItem}"
+                            material:MaterialViewGroup.GroupName="TestingChipsGroup"
+                            material:MaterialViewGroup.SelectedValue="{Binding SelectedChipItem}"
                             BindableLayout.ItemsSource="{Binding Chips}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="x:String">

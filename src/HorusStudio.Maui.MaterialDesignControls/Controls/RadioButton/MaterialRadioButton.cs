@@ -121,7 +121,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
             self.ChangeVisualState();
 
             if (value)
-                MaterialRadioButtonGroup.UpdateMaterialRadioButtonGroup(self);
+                MaterialViewGroup.UpdateGroupSelection(self);
 
             self.CheckedChanged?.Invoke(self, new CheckedChangedEventArgs(value));
             if (self.CheckedChangedCommand != null && self.CheckedChangedCommand.CanExecute(value))
@@ -130,7 +130,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
             }
         }
     });
-
+    
     /// <summary>
     /// The backing store for the <see cref="IsEnabled" />
     /// bindable property.
@@ -311,9 +311,13 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     }
     
     /// <summary>
-    /// Gets the <see cref="IsChecked" /> for the radio button. 
+    /// Gets or sets the <see cref="IsSelected" /> for the radio button. 
     /// </summary>
-    public bool IsSelected => IsChecked;
+    public bool IsSelected
+    {
+        get => IsChecked;
+        set => IsChecked = value;
+    }
 
     /// <summary>
     /// Gets or sets <see cref="IsEnabled" />  for the radio button.
@@ -560,7 +564,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     #endregion Events
 
     #region Methods
-
+    
     private void RadioButton_CheckedChanged(object? sender, CheckedChangedEventArgs e)
     {
         IsChecked = e.Value;
@@ -666,10 +670,10 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         }
     }
     
-    internal void OnGroupSelectionChanged(MaterialRadioButton radioButton)
+    public void OnGroupSelectionChanged(IGroupableView groupableView)
     {
         var controller = MaterialViewGroupController.GetGroupController(this);
-        controller?.HandleMaterialViewGroupSelectionChanged(radioButton);
+        controller?.HandleMaterialViewGroupSelectionChanged(groupableView);
     }
     
     #endregion Methods

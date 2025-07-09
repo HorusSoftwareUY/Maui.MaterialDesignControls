@@ -17,32 +17,17 @@ internal class MaterialViewGroupController
 	private string _groupName;
 	private object? _selectedValue;
 	private ICommand? _selectedValueChangedCommand;
-	private readonly BindableProperty _isControlSelectedBindableProperty;
-	private readonly BindableProperty _groupSelectedValueBindableProperty;
 
 	public string GroupName { get => _groupName; set => SetGroupName(value); }
 	public object? SelectedValue { get => _selectedValue; set => SetSelectedValue(value); }
 	public ICommand? SelectedValueChangedCommand { get => _selectedValueChangedCommand; set => _selectedValueChangedCommand = value; }
 
-	public MaterialViewGroupController(Element layout, BindableProperty isControlSelectedBindableProperty, BindableProperty groupSelectedValueBindableProperty)
+	public MaterialViewGroupController(Element layout)
 	{
-		if (isControlSelectedBindableProperty is null)
-		{
-			throw new ArgumentNullException(nameof(isControlSelectedBindableProperty));
-		}
-		
-		if (groupSelectedValueBindableProperty is null)
-		{
-			throw new ArgumentNullException(nameof(groupSelectedValueBindableProperty));
-		}
-		
 		if (layout is null)
 		{
 			throw new ArgumentNullException(nameof(layout));
 		}
-		
-		_isControlSelectedBindableProperty = isControlSelectedBindableProperty;
-		_groupSelectedValueBindableProperty = groupSelectedValueBindableProperty;
 		
 		_layout = layout;
 		_layout.ChildAdded += ChildAdded;
@@ -73,11 +58,11 @@ internal class MaterialViewGroupController
 
 		if (groupableView.IsSelected)
 		{
-			_layout.SetValue(_groupSelectedValueBindableProperty, groupableView.Value);
+			_layout.SetValue(MaterialViewGroup.SelectedValueProperty, groupableView.Value);
 		}
 		else
 		{
-			_layout.SetValue(_groupSelectedValueBindableProperty, null);
+			_layout.SetValue(MaterialViewGroup.SelectedValueProperty, null);
 		}
 		
 		var commandParameter = groupableView.IsSelected ? groupableView.Value : null;
@@ -141,7 +126,7 @@ internal class MaterialViewGroupController
 			return;
 		}
 
-		_layout.SetValue(_groupSelectedValueBindableProperty, groupableView.Value);
+		_layout.SetValue(MaterialViewGroup.SelectedValueProperty, groupableView.Value);
 	}
 
 	internal void HandleMaterialViewGroupNameChanged(string oldGroupName)
@@ -151,7 +136,7 @@ internal class MaterialViewGroupController
 			return;
 		}
 
-		_layout.ClearValue(_groupSelectedValueBindableProperty);
+		_layout.ClearValue(MaterialViewGroup.SelectedValueProperty);
 	}
 
 	void AddGroupableView(IGroupableView groupableView)
@@ -160,12 +145,12 @@ internal class MaterialViewGroupController
 
 		if (groupableView.IsSelected)
 		{
-			_layout.SetValue(_groupSelectedValueBindableProperty, groupableView.Value);
+			_layout.SetValue(MaterialViewGroup.SelectedValueProperty, groupableView.Value);
 		}
 
 		if (object.Equals(groupableView.Value, this.SelectedValue))
 		{
-			groupableView.SetValue(_isControlSelectedBindableProperty, true);
+			groupableView.IsSelected = true;
 		}
 	}
 
@@ -205,7 +190,7 @@ internal class MaterialViewGroupController
 			{
 				if (child is IGroupableView groupableView && groupableView.GroupName == _groupName && groupableView.Value is not null && groupableView.Value.Equals(groupableViewValue))
 				{
-					groupableView.SetValue(_isControlSelectedBindableProperty, true);
+					groupableView.IsSelected = true;
 				}
 			}
 		}
