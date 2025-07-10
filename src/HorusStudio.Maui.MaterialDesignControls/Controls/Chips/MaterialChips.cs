@@ -679,7 +679,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
 
         if (gestureType == TouchEventType.Released)
         {
-            MaterialViewGroup.UpdateGroupSelection(this);
+            OnGroupSelectionChanged();
             
             if (Command != null && Command.CanExecute(IsSelected))
             {
@@ -857,10 +857,10 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
         }
     }
     
-    public void OnGroupSelectionChanged(IGroupableView groupableView)
+    public void OnGroupSelectionChanged()
     {
         var controller = MaterialViewGroupController.GetGroupController(this);
-        controller?.HandleMaterialViewGroupSelectionChanged(groupableView);
+        controller?.HandleMaterialViewGroupSelectionChanged(this);
     }
     
     #endregion Methods

@@ -65,12 +65,7 @@ internal class MaterialViewGroupController
 		else
 		{
 			_layout.SetValue(MaterialViewGroup.SelectedValueProperty, null);
-		}
-		
-		var commandParameter = groupableView.IsSelected ? groupableView.Value : null;
-		if (SelectedValueChangedCommand != null && SelectedValueChangedCommand.CanExecute(commandParameter))
-		{
-			SelectedValueChangedCommand.Execute(commandParameter);
+			HandleSelectedValueChangedCommand(groupableView);
 		}
 	}
 
@@ -195,8 +190,24 @@ internal class MaterialViewGroupController
 				if (child is IGroupableView groupableView && groupableView.GroupName == _groupName && groupableView.Value is not null && groupableView.Value.Equals(groupableViewValue))
 				{
 					groupableView.IsSelected = true;
+					
+					if (!string.IsNullOrEmpty(groupableView.GroupName))
+					{
+						MaterialViewGroup.UncheckOtherMaterialGroupableViewInScope(groupableView);
+					}
+					
+					HandleSelectedValueChangedCommand(groupableView);
 				}
 			}
+		}
+	}
+
+	void HandleSelectedValueChangedCommand(IGroupableView groupableView)
+	{
+		var commandParameter = groupableView.IsSelected ? groupableView.Value : null;
+		if (SelectedValueChangedCommand != null && SelectedValueChangedCommand.CanExecute(commandParameter))
+		{
+			SelectedValueChangedCommand.Execute(commandParameter);
 		}
 	}
 	

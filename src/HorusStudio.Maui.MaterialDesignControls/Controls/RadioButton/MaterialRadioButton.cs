@@ -121,7 +121,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
             self.ChangeVisualState();
 
             if (value)
-                MaterialViewGroup.UpdateGroupSelection(self);
+                self.OnGroupSelectionChanged();
 
             self.CheckedChanged?.Invoke(self, new CheckedChangedEventArgs(value));
             if (self.CheckedChangedCommand != null && self.CheckedChangedCommand.CanExecute(value))
@@ -672,10 +672,10 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         }
     }
     
-    public void OnGroupSelectionChanged(IGroupableView groupableView)
+    public void OnGroupSelectionChanged()
     {
         var controller = MaterialViewGroupController.GetGroupController(this);
-        controller?.HandleMaterialViewGroupSelectionChanged(groupableView);
+        controller?.HandleMaterialViewGroupSelectionChanged(this);
     }
     
     #endregion Methods

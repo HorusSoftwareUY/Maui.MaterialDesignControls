@@ -110,17 +110,7 @@ public static class MaterialViewGroup
 		bindable.SetValue(AllowEmptySelectionProperty, allowEmptySelection);
 	}
 	
-	internal static void UpdateGroupSelection(IGroupableView groupableView)
-	{
-		if (!string.IsNullOrEmpty(groupableView.GroupName))
-		{
-			UncheckOtherMaterialGroupableViewInScope(groupableView);
-		}
-		
-		groupableView.OnGroupSelectionChanged(groupableView);
-	}
-    
-    private static void UncheckOtherMaterialGroupableViewInScope<T>(T groupableView) 
+    internal static void UncheckOtherMaterialGroupableViewInScope<T>(T groupableView) 
         where T : IGroupableView
     {
         if (groupableView is not Element element)
