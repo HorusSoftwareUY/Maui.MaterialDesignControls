@@ -2,12 +2,15 @@ using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
+/// <summary>
+/// We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/10.0.0-preview.5.25306.5/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs">See here.</see>
+/// </summary>
 public static class MaterialViewGroup
 {
     static readonly BindableProperty GroupControllerProperty =
 		BindableProperty.CreateAttached("GroupController", typeof(MaterialViewGroupController), typeof(Element), default(MaterialViewGroupController),
 		defaultValueCreator: (b) => new MaterialViewGroupController(b as Element),
-		propertyChanged: (b, o, n) => MaterialViewGroup.OnControllerChanged(b, GetGroupName, GetSelectedValue, (MaterialViewGroupController)n));
+		propertyChanged: (b, o, n) => OnControllerChanged(b, (MaterialViewGroupController)n));
 	
 	static MaterialViewGroupController GetGroupController(BindableObject b)
 	{
@@ -84,19 +87,40 @@ public static class MaterialViewGroup
 		bindable.SetValue(SelectedValueChangedCommandProperty, groupName);
 	}
 	
+	/// <summary>
+	/// The backing store for the <see cref="AllowEmptySelection" /> bindable property.
+	/// </summary>
+	public static readonly BindableProperty AllowEmptySelectionProperty =
+		BindableProperty.Create("AllowEmptySelection", typeof(bool), typeof(Element), true,
+			propertyChanged: (b, o, n) => { GetGroupController(b).AllowEmptySelection = (bool)n; });
+
+	/// <summary>
+	/// Returns if the bindableObject's allow empty selection
+	/// </summary>
+	public static bool GetAllowEmptySelection(BindableObject b)
+	{
+		return (bool)b.GetValue(AllowEmptySelectionProperty);
+	}
+
+	/// <summary>
+	/// Sets if the bindableObject's allow empty selection
+	/// </summary>
+	public static void SetAllowEmptySelection(BindableObject bindable, bool allowEmptySelection)
+	{
+		bindable.SetValue(AllowEmptySelectionProperty, allowEmptySelection);
+	}
+	
 	internal static void UpdateGroupSelection(IGroupableView groupableView)
 	{
-		// TODO: REVIEW IF WE HAVE TO DO SOMETHING DIFFERENT BETWEEN CHIPS AND RADIO BUTTONS
-		// if (!string.IsNullOrEmpty(groupableView.GroupName))
-		// {
-		// 	MaterialViewGroup.UncheckOtherMaterialGroupableViewInScope(groupableView);
-		// }
-		MaterialViewGroup.UncheckOtherMaterialGroupableViewInScope(groupableView);
+		if (!string.IsNullOrEmpty(groupableView.GroupName))
+		{
+			UncheckOtherMaterialGroupableViewInScope(groupableView);
+		}
 		
 		groupableView.OnGroupSelectionChanged(groupableView);
 	}
     
-    internal static void UncheckOtherMaterialGroupableViewInScope<T>(T groupableView) 
+    private static void UncheckOtherMaterialGroupableViewInScope<T>(T groupableView) 
         where T : IGroupableView
     {
         if (groupableView is not Element element)
@@ -160,17 +184,14 @@ public static class MaterialViewGroup
         }
     }
     
-    internal static void OnControllerChanged(BindableObject bindableObject, 
-        Func<BindableObject, string> GetGroupName, 
-        Func<BindableObject, object?> GetSelectedValue,
-        MaterialViewGroupController? newController)
+    private static void OnControllerChanged(BindableObject bindableObject, MaterialViewGroupController? newController)
     {
         if (newController == null)
         {
             return;
         }
-
-        newController.GroupName = GetGroupName.Invoke(bindableObject);
-        newController.SelectedValue = GetSelectedValue.Invoke(bindableObject);
+        
+        newController.GroupName = GetGroupName(bindableObject);
+        newController.SelectedValue = GetSelectedValue(bindableObject);
     }
 }

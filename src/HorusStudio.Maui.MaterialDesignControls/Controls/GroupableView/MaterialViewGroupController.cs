@@ -17,10 +17,12 @@ internal class MaterialViewGroupController
 	private string _groupName;
 	private object? _selectedValue;
 	private ICommand? _selectedValueChangedCommand;
+	private bool _allowEmptySelection = true;
 
 	public string GroupName { get => _groupName; set => SetGroupName(value); }
 	public object? SelectedValue { get => _selectedValue; set => SetSelectedValue(value); }
 	public ICommand? SelectedValueChangedCommand { get => _selectedValueChangedCommand; set => _selectedValueChangedCommand = value; }
+	public bool AllowEmptySelection { get => _allowEmptySelection; set => SetAllowEmptySelection(value); }
 
 	public MaterialViewGroupController(Element layout)
 	{
@@ -152,6 +154,8 @@ internal class MaterialViewGroupController
 		{
 			groupableView.IsSelected = true;
 		}
+
+		groupableView.AllowEmptySelection = _allowEmptySelection;
 	}
 
 	void UpdateGroupName(IGroupableView groupableView, string name, string? oldName = null)
@@ -201,5 +205,18 @@ internal class MaterialViewGroupController
 		var oldName = _groupName;
 		_groupName = groupName;
 		UpdateGroupNames(_layout, _groupName, oldName);
+	}
+	
+	void SetAllowEmptySelection(bool allowEmptySelection)
+	{
+		_allowEmptySelection = allowEmptySelection;
+		
+		foreach (var child in _layout.GetDescendants())
+		{
+			if (child is IGroupableView groupableView && groupableView.GroupName == _groupName)
+			{
+				groupableView.AllowEmptySelection = _allowEmptySelection;
+			}
+		}
 	}
 }

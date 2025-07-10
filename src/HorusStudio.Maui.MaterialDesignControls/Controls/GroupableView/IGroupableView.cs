@@ -19,6 +19,11 @@ public interface IGroupableView
     /// Gets or sets if the view is selected or not.
     /// </summary>
     bool IsSelected { get; set; }
+    
+    /// <summary>
+    /// Gets or sets if the view allows empty selection.
+    /// </summary>
+    bool AllowEmptySelection { get; set; }
 
     // TODO: REVIEW IF WE CAN AVOID HAVE THIS METHOD IN THE INTERFACE
     void OnGroupSelectionChanged(IGroupableView groupableView);

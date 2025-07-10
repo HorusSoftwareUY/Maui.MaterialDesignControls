@@ -641,6 +641,8 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
         set => SetValue(ValueProperty, value);
     }
 
+    public bool AllowEmptySelection { get; set; } = true;
+
     #endregion Properties
 
     #region Events
@@ -706,7 +708,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             {
                 VisualStateManager.GoToState(this, ChipsCommonStates.Normal);
             }
-            else
+            else if (AllowEmptySelection || !IsSelected)
             {
                 IsSelected = !IsSelected;
                 UpdatePadding();
