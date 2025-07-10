@@ -17,12 +17,12 @@ internal class MaterialViewGroupController
 	private string _groupName;
 	private object? _selectedValue;
 	private ICommand? _selectedValueChangedCommand;
-	private bool _allowEmptySelection = true;
+	private SelectionType _selectionType = SelectionType.Single;
 
 	public string GroupName { get => _groupName; set => SetGroupName(value); }
 	public object? SelectedValue { get => _selectedValue; set => SetSelectedValue(value); }
 	public ICommand? SelectedValueChangedCommand { get => _selectedValueChangedCommand; set => _selectedValueChangedCommand = value; }
-	public bool AllowEmptySelection { get => _allowEmptySelection; set => SetAllowEmptySelection(value); }
+	public SelectionType SelectionType { get => _selectionType; set => SetSelectionType(value); }
 
 	public MaterialViewGroupController(Element layout)
 	{
@@ -149,8 +149,8 @@ internal class MaterialViewGroupController
 		{
 			groupableView.IsSelected = true;
 		}
-
-		groupableView.AllowEmptySelection = _allowEmptySelection;
+		
+		groupableView.SelectionType = _selectionType;
 	}
 
 	void UpdateGroupName(IGroupableView groupableView, string name, string? oldName = null)
@@ -191,7 +191,7 @@ internal class MaterialViewGroupController
 				{
 					groupableView.IsSelected = true;
 					
-					if (!string.IsNullOrEmpty(groupableView.GroupName))
+					if (!string.IsNullOrEmpty(groupableView.GroupName) && _selectionType == SelectionType.Single)
 					{
 						MaterialViewGroup.UncheckOtherMaterialGroupableViewInScope(groupableView);
 					}
@@ -218,15 +218,15 @@ internal class MaterialViewGroupController
 		UpdateGroupNames(_layout, _groupName, oldName);
 	}
 	
-	void SetAllowEmptySelection(bool allowEmptySelection)
+	void SetSelectionType(SelectionType selectionType)
 	{
-		_allowEmptySelection = allowEmptySelection;
+		_selectionType = selectionType;
 		
 		foreach (var child in _layout.GetDescendants())
 		{
 			if (child is IGroupableView groupableView && groupableView.GroupName == _groupName)
 			{
-				groupableView.AllowEmptySelection = _allowEmptySelection;
+				groupableView.SelectionType = _selectionType;
 			}
 		}
 	}

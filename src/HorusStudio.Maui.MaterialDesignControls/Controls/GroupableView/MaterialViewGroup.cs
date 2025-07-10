@@ -3,8 +3,21 @@ using System.Windows.Input;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/10.0.0-preview.5.25306.5/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs">See here.</see>
+/// Define <see cref="MaterialViewGroup" /> selection types
 /// </summary>
+public enum SelectionType
+{
+	/// <summary>Single selection</summary>
+	Single,
+	/// <summary>Multiple selection</summary>
+	Multiple
+}
+
+/// <summary>
+/// Manages a logical group of <see cref="IGroupableView"/> controls. 
+/// This class provides the core logic for handling views that share a common parent layout and are grouped together.
+/// </summary>
+/// <remarks>We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/10.0.0-preview.5.25306.5/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs">See here.</see></remarks>
 public static class MaterialViewGroup
 {
     static readonly BindableProperty GroupControllerProperty =
@@ -88,26 +101,26 @@ public static class MaterialViewGroup
 	}
 	
 	/// <summary>
-	/// The backing store for the <see cref="AllowEmptySelection" /> bindable property.
+	/// The backing store for the <see cref="SelectionType" /> bindable property.
 	/// </summary>
-	public static readonly BindableProperty AllowEmptySelectionProperty =
-		BindableProperty.Create("AllowEmptySelection", typeof(bool), typeof(Element), true,
-			propertyChanged: (b, o, n) => { GetGroupController(b).AllowEmptySelection = (bool)n; });
+	public static readonly BindableProperty SelectionTypeProperty =
+		BindableProperty.Create("SelectionType", typeof(SelectionType), typeof(Element), SelectionType.Single,
+			propertyChanged: (b, o, n) => { GetGroupController(b).SelectionType = (SelectionType)n; });
 
 	/// <summary>
-	/// Returns if the bindableObject's allow empty selection
+	/// Returns the bindableObject's selection type
 	/// </summary>
-	public static bool GetAllowEmptySelection(BindableObject b)
+	public static SelectionType GetSelectionType(BindableObject b)
 	{
-		return (bool)b.GetValue(AllowEmptySelectionProperty);
+		return (SelectionType)b.GetValue(SelectionTypeProperty);
 	}
 
 	/// <summary>
-	/// Sets if the bindableObject's allow empty selection
+	/// Sets the bindableObject's selection type
 	/// </summary>
-	public static void SetAllowEmptySelection(BindableObject bindable, bool allowEmptySelection)
+	public static void SetSelectionType(BindableObject bindable, SelectionType selectionType)
 	{
-		bindable.SetValue(AllowEmptySelectionProperty, allowEmptySelection);
+		bindable.SetValue(SelectionTypeProperty, selectionType);
 	}
 	
     internal static void UncheckOtherMaterialGroupableViewInScope<T>(T groupableView) 

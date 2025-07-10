@@ -32,7 +32,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
                         material:MaterialViewGroup.GroupName="Types"
-                        material:MaterialViewGroup.AllowEmptySelection="False"
+                        material:MaterialViewGroup.SelectionType="Single"
                         material:MaterialViewGroup.SelectedValue="{Binding ButtonType}"
                         BindableLayout.ItemsSource="{Binding Types}">
                 <BindableLayout.ItemTemplate>
@@ -52,7 +52,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
                         material:MaterialViewGroup.GroupName="Positions"
-                        material:MaterialViewGroup.AllowEmptySelection="False"
+                        material:MaterialViewGroup.SelectionType="Single"
                         material:MaterialViewGroup.SelectedValue="{Binding PositionButton}"
                         BindableLayout.ItemsSource="{Binding Positions}">
                 <BindableLayout.ItemTemplate>

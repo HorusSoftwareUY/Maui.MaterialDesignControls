@@ -21,7 +21,7 @@ public interface IGroupableView
     bool IsSelected { get; set; }
     
     /// <summary>
-    /// Gets or sets if the view allows empty selection.
+    /// Gets or sets the selection type of the view
     /// </summary>
-    bool AllowEmptySelection { get; set; }
+    SelectionType SelectionType { get; set; }
 }

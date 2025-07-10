@@ -462,7 +462,10 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         set => SetValue(CheckedChangedCommandProperty, value);
     }
     
-    public bool AllowEmptySelection { get; set; } = true;
+    /// <summary>
+    /// Gets or sets the selection type of the view
+    /// </summary>
+    public SelectionType SelectionType { get; set; } = SelectionType.Single;
     
     #endregion Properties
 
@@ -548,7 +551,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         if (!IsEnabled) return;
         await TouchAnimationManager.AnimateAsync(this, gestureType);
         
-        if (gestureType == TouchEventType.Released && (AllowEmptySelection || !IsChecked))
+        if (gestureType == TouchEventType.Released && (SelectionType == SelectionType.Multiple || !IsChecked))
         {
             IsChecked = !IsChecked;
         }
