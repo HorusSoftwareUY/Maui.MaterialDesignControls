@@ -18,6 +18,9 @@ public enum SelectionType
 /// This class provides the core logic for handling views that share a common parent layout and are grouped together.
 /// </summary>
 /// <remarks>We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/10.0.0-preview.5.25306.5/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs">See here.</see></remarks>
+/// <todoList>
+/// * The SelectedValues property only supports binding to properties of type <see cref="IList{object}"/> or to classes that inherit from it.
+/// </todoList>
 public static class MaterialViewGroup
 {
     static readonly BindableProperty GroupControllerProperty =
@@ -38,7 +41,7 @@ public static class MaterialViewGroup
 		propertyChanged: (b, o, n) => { GetGroupController(b).GroupName = (string)n; });
 
 	/// <summary>
-	/// Returns the bindableObject's group name
+	/// Returns the group name for the set of views that will be grouped together.
 	/// </summary>
 	public static string GetGroupName(BindableObject b)
 	{
@@ -46,7 +49,7 @@ public static class MaterialViewGroup
 	}
 
 	/// <summary>
-	/// Sets the bindableObject's group name
+	/// Sets the group name for the set of views that will be grouped together.
 	/// </summary>
 	public static void SetGroupName(BindableObject bindable, string groupName)
 	{
@@ -62,7 +65,7 @@ public static class MaterialViewGroup
 		propertyChanged: (b, o, n) => { GetGroupController(b).SelectedValue = n; });
 
 	/// <summary>
-	/// Returns the bindableObject's selected value
+	/// Returns the selected value for the group of views that have been grouped together.
 	/// </summary>
 	public static object GetSelectedValue(BindableObject bindableObject)
 	{
@@ -70,7 +73,7 @@ public static class MaterialViewGroup
 	}
 
 	/// <summary>
-	/// Sets the bindableObject's selected value
+	/// Sets the selected value for the group of views that have been grouped together.
 	/// </summary>
 	public static void SetSelectedValue(BindableObject bindable, object selectedValue)
 	{
@@ -86,7 +89,7 @@ public static class MaterialViewGroup
 			propertyChanged: (b, o, n) => { GetGroupController(b).SelectedValues = (IList<object>)n; });
 
 	/// <summary>
-	/// Returns the bindableObject's selected values
+	/// Returns the collection of selected values for the group of views that have been grouped together.
 	/// </summary>
 	public static IList<object> GetSelectedValues(BindableObject bindableObject)
 	{
@@ -94,7 +97,7 @@ public static class MaterialViewGroup
 	}
 
 	/// <summary>
-	/// Sets the bindableObject's selected values
+	/// Sets the collection of selected values for the group of views that have been grouped together.
 	/// </summary>
 	public static void SetSelectedValues(BindableObject bindable, IList<object> selectedValues)
 	{
@@ -109,7 +112,7 @@ public static class MaterialViewGroup
 			propertyChanged: (b, o, n) => { GetGroupController(b).SelectedValueChangedCommand = (ICommand)n; });
 	
 	/// <summary>
-	/// Returns the bindableObject's selected value changed command
+	/// Returns the command to be executed when the selected value changes for the group of views that are grouped together.
 	/// </summary>
 	public static ICommand GetSelectedValueChangedCommand(BindableObject b)
 	{
@@ -117,7 +120,7 @@ public static class MaterialViewGroup
 	}
 
 	/// <summary>
-	/// Sets the bindableObject's selected value changed command
+	/// Sets the command to be executed when the selected value changes for the group of views that are grouped together.
 	/// </summary>
 	public static void SetSelectedValueChangedCommand(BindableObject bindable, ICommand groupName)
 	{
@@ -132,7 +135,7 @@ public static class MaterialViewGroup
 			propertyChanged: (b, o, n) => { GetGroupController(b).SelectionType = (SelectionType)n; });
 
 	/// <summary>
-	/// Returns the bindableObject's selection type
+	/// Returns the selection type for the group of views that are grouped together.
 	/// </summary>
 	public static SelectionType GetSelectionType(BindableObject b)
 	{
@@ -140,7 +143,7 @@ public static class MaterialViewGroup
 	}
 
 	/// <summary>
-	/// Sets the bindableObject's selection type
+	/// Sets the selection type for the group of views that are grouped together.
 	/// </summary>
 	public static void SetSelectionType(BindableObject bindable, SelectionType selectionType)
 	{
