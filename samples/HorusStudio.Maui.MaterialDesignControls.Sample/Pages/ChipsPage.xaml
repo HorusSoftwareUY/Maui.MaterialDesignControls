@@ -224,7 +224,7 @@
             <StackLayout
                 Spacing="8">
                 <StackLayout
-                    material:MaterialViewGroup.GroupName="MyChipsGroup"
+                    material:MaterialViewGroup.GroupName="SingleGroupSample"
                     material:MaterialViewGroup.SelectionType="Single"
                     material:MaterialViewGroup.SelectedValue="{Binding SelectedChipValue}"
                     material:MaterialViewGroup.SelectedValueChangedCommand="{Binding SelectedValueChangedCommand}"
@@ -256,7 +256,7 @@
             <StackLayout
                 Spacing="8">
                 <StackLayout
-                    material:MaterialViewGroup.GroupName="Group2"
+                    material:MaterialViewGroup.GroupName="MultipleGroupSample"
                     material:MaterialViewGroup.SelectionType="Multiple"
                     material:MaterialViewGroup.SelectedValues="{Binding SelectedChips}"
                     material:MaterialViewGroup.SelectedValueChangedCommand="{Binding ShowSelectedChipsCommand}"
