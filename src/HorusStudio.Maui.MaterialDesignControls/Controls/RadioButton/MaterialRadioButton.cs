@@ -311,8 +311,9 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     }
     
     /// <summary>
-    /// Gets or sets the <see cref="IsSelected" /> for the radio button. 
+    /// Gets or sets the <see cref="IsChecked" /> property for the radio button. 
     /// </summary>
+    /// <remarks>This property is used internally, and it's recommended to avoid setting it directly.</remarks>
     public bool IsSelected
     {
         get => IsChecked;
@@ -408,15 +409,28 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Defines the value of radio button selected
+    /// Defines the value of the radio button
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see cref="MaterialRadioButton.Text" />
     /// </default>
+    /// <remarks>If a value is not explicitly set, the control will use the value of the <see cref="MaterialRadioButton.Text" /> property as its default.</remarks>
     public object Value
     {
-        get => GetValue(ValueProperty);
+        get
+        {
+            var value = GetValue(ValueProperty);
+            if (value != null)
+            {
+                return value;
+            }
+            else
+            {
+
+                return GetValue(TextProperty);
+            }
+        }
         set => SetValue(ValueProperty, value);
     }
 
@@ -463,8 +477,9 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     }
     
     /// <summary>
-    /// Gets or sets the selection type of the view
+    /// Gets or sets the selection type of the radio button.
     /// </summary>
+    /// <remarks>This property is used internally, and it's recommended to avoid setting it directly.</remarks>
     public SelectionType SelectionType { get; set; } = SelectionType.Single;
     
     #endregion Properties

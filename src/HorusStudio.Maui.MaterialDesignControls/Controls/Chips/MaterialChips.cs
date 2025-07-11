@@ -629,21 +629,35 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     }
     
     /// <summary>
-    /// Defines the value of radio button selected
+    /// Defines the value of the chips
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see cref="MaterialChips.Text" />
     /// </default>
+    /// <remarks>If a value is not explicitly set, the control will use the <see cref="MaterialChips.Text" /> of the Text property as its default.</remarks>
     public object Value
     {
-        get => GetValue(ValueProperty);
+        get
+        {
+            var value = GetValue(ValueProperty);
+            if (value != null)
+            {
+                return value;
+            }
+            else
+            {
+
+                return GetValue(TextProperty);
+            }
+        }
         set => SetValue(ValueProperty, value);
     }
     
     /// <summary>
-    /// Gets or sets the selection type of the view
+    /// Gets or sets the selection type of the chips
     /// </summary>
+    /// <remarks>This property is used internally, and it's recommended to avoid setting it directly.</remarks>
     public SelectionType SelectionType { get; set; } = SelectionType.Single;
 
     #endregion Properties

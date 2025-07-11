@@ -232,16 +232,13 @@
                     Spacing="8">
                     <material:MaterialChips
                         Type="Filter"
-                        Text="Option A"
-                        Value="Option A" />
+                        Text="Option A"/>
                     <material:MaterialChips
                         Type="Filter"
-                        Text="Option B"
-                        Value="Option B" />
+                        Text="Option B"/>
                     <material:MaterialChips
                         Type="Filter"
-                        Text="Option C"
-                        Value="Option C" />
+                        Text="Option C"/>
                 </StackLayout>
                 <material:MaterialLabel
                     Text="{Binding SelectedChipText}"
@@ -267,16 +264,13 @@
                     Spacing="8">
                     <material:MaterialChips
                         Type="Filter"
-                        Text="Option A"
-                        Value="Option A" />
+                        Text="Option A"/>
                     <material:MaterialChips
                         Type="Filter"
-                        Text="Option B"
-                        Value="Option B" />
+                        Text="Option B"/>
                     <material:MaterialChips
                         Type="Filter"
-                        Text="Option C"
-                        Value="Option C" />
+                        Text="Option C"/>
                 </StackLayout>
                 <material:MaterialLabel
                     Text="{Binding SelectedChipsText}"
@@ -299,7 +293,6 @@
                             <material:MaterialChips
                                 Type="Filter"
                                 Text="{Binding .}"
-                                Value="{Binding .}"
                                 Margin="4" />
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
