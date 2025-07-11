@@ -225,6 +225,7 @@
                 Spacing="8">
                 <StackLayout
                     material:MaterialViewGroup.GroupName="MyChipsGroup"
+                    material:MaterialViewGroup.SelectionType="Single"
                     material:MaterialViewGroup.SelectedValue="{Binding SelectedChipValue}"
                     material:MaterialViewGroup.SelectedValueChangedCommand="{Binding SelectedValueChangedCommand}"
                     Orientation="Horizontal"
@@ -251,7 +252,39 @@
             </StackLayout>
         </material:MaterialCard>
         <material:MaterialLabel 
-            Text="We are creating chips using MaterialChipsGroup's attachable properties: GroupName, SelectedValue and SelectedValueChangedCommand." Type="BodySmall" />
+            Text="We are creating chips using MaterialViewGroup's attachable properties: GroupName, SelectionType (Single), SelectedValue and SelectedValueChangedCommand." Type="BodySmall" />
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="SelectionType: Multiple" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <StackLayout
+                Spacing="8">
+                <StackLayout
+                    material:MaterialViewGroup.GroupName="Group2"
+                    material:MaterialViewGroup.SelectionType="Multiple"
+                    material:MaterialViewGroup.SelectedValues="{Binding SelectedChips}"
+                    material:MaterialViewGroup.SelectedValueChangedCommand="{Binding ShowSelectedChipsCommand}"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <material:MaterialChips
+                        Type="Filter"
+                        Text="Option A"
+                        Value="Option A" />
+                    <material:MaterialChips
+                        Type="Filter"
+                        Text="Option B"
+                        Value="Option B" />
+                    <material:MaterialChips
+                        Type="Filter"
+                        Text="Option C"
+                        Value="Option C" />
+                </StackLayout>
+                <material:MaterialLabel
+                    Text="{Binding SelectedChipsText}"
+                    HorizontalTextAlignment="Center" />
+            </StackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel 
+            Text="We are creating chips using MaterialViewGroup's attachable properties: GroupName, SelectionType (Multiple), SelectedValues and SelectedValueChangedCommand." Type="BodySmall" />
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Grouping MaterialChips" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
@@ -276,7 +309,7 @@
                     Command="{Binding ShowSelectedItemCommand}" />
             </StackLayout>
         </material:MaterialCard>
-        <material:MaterialLabel Text="We are creating chips using a BindableLayout and attachable properties" Type="BodySmall" />
+        <material:MaterialLabel Text="We are creating chips using a BindableLayout and MaterialViewGroup's attachable properties" Type="BodySmall" />
         
     </VerticalStackLayout>
 </local:BaseContentPage>

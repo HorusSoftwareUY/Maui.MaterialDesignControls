@@ -39,6 +39,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private string _selectedChipItem;
         
+        [ObservableProperty]
+        private ObservableCollection<object> _selectedChips;
+        
+        [ObservableProperty]
+        private string _selectedChipsText;
+        
         #endregion
 
         public ChipsViewModel()
@@ -47,6 +53,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             Subtitle = "Chips help people enter information, make selections, filter content, or trigger actions";
             
             SelectedChipText = "Selected value: -";
+
+            SelectedChips = new ObservableCollection<object>();
+            SelectedChipsText = "Selected values: -";
         }
 
         [ICommand]
@@ -112,6 +121,19 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             var message = !string.IsNullOrEmpty(SelectedChipItem) ? $"Selected item: {SelectedChipItem}" : "No item selected";
             await DisplayAlert(Title, message, "OK");
+        }
+        
+        [ICommand]
+        private async Task ShowSelectedChips()
+        {
+            if (SelectedChips != null && SelectedChips.Count > 0)
+            {
+                SelectedChipsText = $"Selected values: {string.Join(", ", SelectedChips)}";
+            }
+            else
+            {
+                SelectedChipsText = "Selected values: -";
+            }
         }
     }
 }

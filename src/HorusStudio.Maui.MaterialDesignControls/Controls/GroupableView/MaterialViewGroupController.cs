@@ -16,11 +16,13 @@ internal class MaterialViewGroupController
 	private readonly Element _layout;
 	private string _groupName;
 	private object? _selectedValue;
+	private IList<object>? _selectedValues;
 	private ICommand? _selectedValueChangedCommand;
 	private SelectionType _selectionType = SelectionType.Single;
 
 	public string GroupName { get => _groupName; set => SetGroupName(value); }
 	public object? SelectedValue { get => _selectedValue; set => SetSelectedValue(value); }
+	public IList<object>? SelectedValues { get => _selectedValues; set => SetSelectedValues(value); }
 	public ICommand? SelectedValueChangedCommand { get => _selectedValueChangedCommand; set => _selectedValueChangedCommand = value; }
 	public SelectionType SelectionType { get => _selectionType; set => SetSelectionType(value); }
 
@@ -57,14 +59,43 @@ internal class MaterialViewGroupController
 		{
 			return;
 		}
-
-		if (groupableView.IsSelected)
+		
+		if (_selectionType == SelectionType.Single)
 		{
-			_layout.SetValue(MaterialViewGroup.SelectedValueProperty, groupableView.Value);
+			if (groupableView.IsSelected)
+			{
+				_layout.SetValue(MaterialViewGroup.SelectedValueProperty, groupableView.Value);
+			}
+			else
+			{
+				_layout.SetValue(MaterialViewGroup.SelectedValueProperty, null);
+				HandleSelectedValueChangedCommand(groupableView);
+			}
 		}
 		else
 		{
-			_layout.SetValue(MaterialViewGroup.SelectedValueProperty, null);
+			if (_selectedValues is null)
+			{
+				_selectedValues = new List<object>();
+			}
+			
+			if (groupableView.IsSelected)
+			{
+				if (groupableView.Value is not null && !_selectedValues.Contains(groupableView.Value))
+				{
+					_selectedValues.Add(groupableView.Value);
+				}
+			}
+			else
+			{
+				if (groupableView.Value is not null && _selectedValues.Contains(groupableView.Value))
+				{
+					_selectedValues.Remove(groupableView.Value);
+				}
+			}
+			
+			_layout.SetValue(MaterialViewGroup.SelectedValuesProperty, _selectedValues);
+			
 			HandleSelectedValueChangedCommand(groupableView);
 		}
 	}
@@ -134,6 +165,7 @@ internal class MaterialViewGroupController
 		}
 
 		_layout.ClearValue(MaterialViewGroup.SelectedValueProperty);
+		_layout.ClearValue(MaterialViewGroup.SelectedValuesProperty);
 	}
 
 	void AddGroupableView(IGroupableView groupableView)
@@ -142,7 +174,24 @@ internal class MaterialViewGroupController
 
 		if (groupableView.IsSelected)
 		{
-			_layout.SetValue(MaterialViewGroup.SelectedValueProperty, groupableView.Value);
+			if (_selectionType == SelectionType.Single)
+			{
+				_layout.SetValue(MaterialViewGroup.SelectedValueProperty, groupableView.Value);
+			}
+			else
+			{
+				if (_selectedValues is null)
+				{
+					_selectedValues = new List<object>();
+				}
+
+				if (groupableView.Value is not null && !_selectedValues.Contains(groupableView.Value))
+				{
+					_selectedValues.Add(groupableView.Value);
+				}
+
+				_layout.SetValue(MaterialViewGroup.SelectedValuesProperty, _selectedValues);
+			}
 		}
 
 		if (object.Equals(groupableView.Value, this.SelectedValue))
@@ -183,11 +232,14 @@ internal class MaterialViewGroupController
 	{
 		_selectedValue = groupableViewValue;
 
-		if (groupableViewValue != null)
+		if (_selectedValue != null)
 		{
 			foreach (var child in _layout.GetDescendants())
 			{
-				if (child is IGroupableView groupableView && groupableView.GroupName == _groupName && groupableView.Value is not null && groupableView.Value.Equals(groupableViewValue))
+				if (child is IGroupableView groupableView 
+				    && groupableView.GroupName == _groupName 
+				    && groupableView.Value is not null 
+				    && groupableView.Value.Equals(_selectedValue))
 				{
 					groupableView.IsSelected = true;
 					
@@ -196,6 +248,27 @@ internal class MaterialViewGroupController
 						MaterialViewGroup.UncheckOtherMaterialGroupableViewInScope(groupableView);
 					}
 					
+					HandleSelectedValueChangedCommand(groupableView);
+				}
+			}
+		}
+	}
+	
+	void SetSelectedValues(IList<object>? groupableViewValues)
+	{
+		_selectedValues = groupableViewValues;
+
+		if (_selectedValues != null)
+		{
+			foreach (var child in _layout.GetDescendants())
+			{
+				if (child is IGroupableView groupableView 
+				    && groupableView.GroupName == _groupName 
+				    && groupableView.Value is not null 
+				    && _selectedValues is not null
+				    && _selectedValues.Contains(groupableView.Value))
+				{
+					groupableView.IsSelected = true;
 					HandleSelectedValueChangedCommand(groupableView);
 				}
 			}

@@ -78,6 +78,30 @@ public static class MaterialViewGroup
 	}
 	
 	/// <summary>
+	/// The backing store for the <see cref="SelectedValues" /> bindable property.
+	/// </summary>
+	public static readonly BindableProperty SelectedValuesProperty =
+		BindableProperty.Create("SelectedValues", typeof(IList<object>), typeof(Element), null,
+			defaultBindingMode: BindingMode.TwoWay,
+			propertyChanged: (b, o, n) => { GetGroupController(b).SelectedValues = (IList<object>)n; });
+
+	/// <summary>
+	/// Returns the bindableObject's selected values
+	/// </summary>
+	public static IList<object> GetSelectedValues(BindableObject bindableObject)
+	{
+		return (IList<object>)bindableObject.GetValue(SelectedValuesProperty);
+	}
+
+	/// <summary>
+	/// Sets the bindableObject's selected values
+	/// </summary>
+	public static void SetSelectedValues(BindableObject bindable, IList<object> selectedValues)
+	{
+		bindable.SetValue(SelectedValuesProperty, selectedValues);
+	}
+	
+	/// <summary>
 	/// The backing store for the <see cref="SelectedValueChangedCommand" /> bindable property.
 	/// </summary>
 	public static readonly BindableProperty SelectedValueChangedCommandProperty =
@@ -196,5 +220,8 @@ public static class MaterialViewGroup
         
         newController.GroupName = GetGroupName(bindableObject);
         newController.SelectedValue = GetSelectedValue(bindableObject);
+        newController.SelectedValues = GetSelectedValues(bindableObject);
+        newController.SelectedValueChangedCommand = GetSelectedValueChangedCommand(bindableObject);
+        newController.SelectionType = GetSelectionType(bindableObject);
     }
 }
