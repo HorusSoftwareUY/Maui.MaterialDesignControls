@@ -23,5 +23,6 @@ public interface IGroupableView
     /// <summary>
     /// Gets or sets the selection type of the view
     /// </summary>
+    /// <remarks>This property is used internally, and it's recommended to avoid setting it directly.</remarks>
     SelectionType SelectionType { get; set; }
 }
