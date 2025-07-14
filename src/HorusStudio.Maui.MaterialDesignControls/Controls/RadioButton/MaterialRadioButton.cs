@@ -119,9 +119,8 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         if(bindable is MaterialRadioButton self && newValue is bool value)
         {
             self.ChangeVisualState();
-
-            if (value)
-                self.OnGroupSelectionChanged();
+            
+            self.OnGroupSelectionChanged();
 
             self.CheckedChanged?.Invoke(self, new CheckedChangedEventArgs(value));
             if (self.CheckedChangedCommand != null && self.CheckedChangedCommand.CanExecute(value))
@@ -516,7 +515,8 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
             HorizontalOptions = LayoutOptions.Center,
             Padding = new Thickness(0),
             MinimumHeightRequest = 20,
-            MinimumWidthRequest = 20
+            MinimumWidthRequest = 20,
+            InputTransparent = true
         };
         _radioButton.CheckedChanged += RadioButton_CheckedChanged;
         _radioButton.SetValue(Grid.RowProperty, 0);
@@ -530,13 +530,13 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         _radioButton.SetBinding(RadioButton.ValueProperty, new Binding(nameof(Value), source: this));
         _radioButton.SetBinding(RadioButton.ControlTemplateProperty, new Binding(nameof(ControlTemplate), source: this));
         _radioButton.SetBinding(CustomRadioButton.StrokeColorProperty, new Binding(nameof(StrokeColor), source: this));
-
+        
         _label = new()
         {
             TextColor = TextColor,
             Text = Text,
             HorizontalOptions = LayoutOptions.Start,
-            VerticalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
         };
         _label.SetValue(Grid.RowProperty, 0);
         _label.SetValue(Grid.ColumnProperty, 1);

@@ -200,6 +200,11 @@ internal class MaterialViewGroupController
 		}
 		
 		groupableView.SelectionType = _selectionType;
+
+		if (groupableView is MaterialRadioButton materialRadioButton)
+		{
+			ApplyWorkaroundForInternalRadioButtonGroup(materialRadioButton);
+		}
 	}
 
 	void UpdateGroupName(IGroupableView groupableView, string name, string? oldName = null)
@@ -300,7 +305,24 @@ internal class MaterialViewGroupController
 			if (child is IGroupableView groupableView && groupableView.GroupName == _groupName)
 			{
 				groupableView.SelectionType = _selectionType;
+				
+				if (groupableView is MaterialRadioButton materialRadioButton)
+				{
+					ApplyWorkaroundForInternalRadioButtonGroup(materialRadioButton);
+				}
 			}
+		}
+	}
+
+	void ApplyWorkaroundForInternalRadioButtonGroup(MaterialRadioButton materialRadioButton)
+	{
+		if (_selectionType == SelectionType.Multiple)
+		{
+			materialRadioButton.InternalRadioButton.GroupName = Guid.NewGuid().ToString();
+		}
+		else
+		{
+			materialRadioButton.InternalRadioButton.GroupName = null;
 		}
 	}
 }

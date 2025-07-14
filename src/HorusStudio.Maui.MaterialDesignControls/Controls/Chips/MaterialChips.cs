@@ -725,7 +725,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             {
                 VisualStateManager.GoToState(this, ChipsCommonStates.Normal);
             }
-            else if (SelectionType == SelectionType.Multiple || !IsSelected)
+            else if (string.IsNullOrEmpty(GroupName) || SelectionType == SelectionType.Multiple || !IsSelected)
             {
                 IsSelected = !IsSelected;
                 UpdatePadding();

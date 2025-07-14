@@ -151,7 +151,9 @@
     <VerticalStackLayout Spacing="8">
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Normal" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="0">
+            <VerticalStackLayout 
+                Spacing="0"
+                material:MaterialViewGroup.GroupName="SampleGroup1">
                 <material:MaterialRadioButton 
                     Text="Radio button 1" />
                 <material:MaterialRadioButton 
@@ -202,7 +204,8 @@
             <VerticalStackLayout
                 Spacing="8">
                 <VerticalStackLayout 
-                    material:MaterialViewGroup.GroupName="TestingGroup" 
+                    material:MaterialViewGroup.GroupName="SingleGroupSample" 
+                    material:MaterialViewGroup.SelectionType="Single"
                     material:MaterialViewGroup.SelectedValue="{Binding CheckedColor}"
                     material:MaterialViewGroup.SelectedValueChangedCommand="{Binding CheckChangedCommand}"
                     BindableLayout.ItemsSource="{Binding ItemsSourceColors}">
@@ -221,8 +224,34 @@
                     HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
         </material:MaterialCard>
-        <material:MaterialLabel Text="We are creating radio buttons using an ItemsSource to check attachable properties and selected value" Type="BodySmall" />
+        <material:MaterialLabel 
+            Text="We are creating radio buttons using MaterialViewGroup's attachable properties: GroupName, SelectionType (Single), SelectedValue and SelectedValueChangedCommand." Type="BodySmall" />
 
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="SelectionType: Multiple" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <StackLayout
+                Spacing="8">
+                <VerticalStackLayout 
+                    Spacing="0"
+                    material:MaterialViewGroup.GroupName="MultipleGroupSample"
+                    material:MaterialViewGroup.SelectionType="Multiple"
+                    material:MaterialViewGroup.SelectedValues="{Binding SelectedRadioButtons}"
+                    material:MaterialViewGroup.SelectedValueChangedCommand="{Binding ShowSelectedRadioButtonsCommand}">
+                    <material:MaterialRadioButton 
+                        Text="Option 1" />
+                    <material:MaterialRadioButton 
+                        Text="Option 2" />
+                    <material:MaterialRadioButton 
+                        Text="Option 3" />
+                </VerticalStackLayout>
+                <material:MaterialLabel
+                    Text="{Binding SelectedRadioButtonsText}"
+                    HorizontalTextAlignment="Center" />
+            </StackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel 
+            Text="We are creating radio buttons using MaterialViewGroup's attachable properties: GroupName, SelectionType (Multiple), SelectedValue and SelectedValueChangedCommand." Type="BodySmall" />
+        
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using control template and define a group name" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
