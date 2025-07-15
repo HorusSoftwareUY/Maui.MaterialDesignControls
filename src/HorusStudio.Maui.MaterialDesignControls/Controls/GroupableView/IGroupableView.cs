@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
@@ -21,8 +23,8 @@ public interface IGroupableView
     bool IsSelected { get; set; }
     
     /// <summary>
-    /// Gets or sets the selection type of the view
+    /// Event used to notify the group that one of the properties of the groupable view has changed its value.
     /// </summary>
-    /// <remarks>This property is used internally, and it's recommended to avoid setting it directly.</remarks>
-    SelectionType SelectionType { get; set; }
+    /// <remarks>This event should be raised when the <see cref="GroupName" />, <see cref="Value" />, and/or <see cref="IsSelected" /> properties change.</remarks>
+    event EventHandler<GroupableViewPropertyChangedEventArgs>? GroupableViewPropertyChanged;
 }

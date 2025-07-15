@@ -1,4 +1,5 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+﻿using System.ComponentModel;
+using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -106,7 +107,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     {
         if (bindableObject is MaterialRadioButton self && oldValue is string oldGroupName && newValue is string newGroupName)
         {
-            self.OnGroupNamePropertyChanged(oldGroupName, newGroupName);
+            self.GroupableViewPropertyChanged?.Invoke(self, new GroupableViewPropertyChangedEventArgs(nameof(GroupName), oldValue, newValue));
         }
     });
 
@@ -120,8 +121,6 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         {
             self.ChangeVisualState();
             
-            self.OnGroupSelectionChanged();
-
             self.CheckedChanged?.Invoke(self, new CheckedChangedEventArgs(value));
             if (self.CheckedChangedCommand != null && self.CheckedChangedCommand.CanExecute(value))
             {
@@ -194,11 +193,11 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     /// The backing store for the <see cref="Value"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, _, _) => 
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) => 
     { 
         if(bindableObject is MaterialRadioButton self)
         {
-            self.OnValuePropertyChanged();
+            self.GroupableViewPropertyChanged?.Invoke(self, new GroupableViewPropertyChangedEventArgs(nameof(Value), oldValue, newValue));
         }
     });
 
@@ -475,12 +474,6 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         set => SetValue(CheckedChangedCommandProperty, value);
     }
     
-    /// <summary>
-    /// Gets or sets the selection type of the radio button.
-    /// </summary>
-    /// <remarks>This property is used internally, and it's recommended to avoid setting it directly.</remarks>
-    public SelectionType SelectionType { get; set; } = SelectionType.Single;
-    
     #endregion Properties
 
     #region Constructors
@@ -564,11 +557,19 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     public async void OnTouch(TouchEventType gestureType)
     {
         if (!IsEnabled) return;
+        
         await TouchAnimationManager.AnimateAsync(this, gestureType);
         
-        if (gestureType == TouchEventType.Released && (SelectionType == SelectionType.Multiple || !IsChecked))
+        if (gestureType == TouchEventType.Released)
         {
-            IsChecked = !IsChecked;
+            if (!string.IsNullOrEmpty(GroupName))
+            {
+                GroupableViewPropertyChanged?.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsChecked, !IsChecked));
+            }
+            else
+            {
+                IsChecked = !IsChecked;
+            }
         }
     }
 
@@ -576,6 +577,8 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
 
     #region Events
 
+    public event EventHandler<GroupableViewPropertyChangedEventArgs>? GroupableViewPropertyChanged;
+    
     /// <summary>
     /// Occurs when the radio button is switched 
     /// </summary>
@@ -668,32 +671,6 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         {
             VisualStateManager.GoToState(this, RadioButtonCommonStates.Unchecked);
         }
-    }
-
-    void OnValuePropertyChanged()
-    {
-        if (!IsChecked || string.IsNullOrEmpty(GroupName))
-        {
-            return;
-        }
-
-        var controller = MaterialViewGroupController.GetGroupController(this);
-        controller?.HandleMaterialViewValueChanged(this);
-    }
-
-    void OnGroupNamePropertyChanged(string oldGroupName, string newGroupName)
-    {
-        if (!string.IsNullOrEmpty(oldGroupName) && !string.IsNullOrEmpty(newGroupName) && newGroupName != oldGroupName)
-        {
-            var controller = MaterialViewGroupController.GetGroupController(this);
-            controller?.HandleMaterialViewGroupNameChanged(oldGroupName);
-        }
-    }
-    
-    public void OnGroupSelectionChanged()
-    {
-        var controller = MaterialViewGroupController.GetGroupController(this);
-        controller?.HandleMaterialViewGroupSelectionChanged(this);
     }
     
     #endregion Methods

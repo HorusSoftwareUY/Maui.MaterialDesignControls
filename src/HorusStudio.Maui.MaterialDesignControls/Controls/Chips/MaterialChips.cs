@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
@@ -125,6 +126,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     {
         if (bindable is MaterialChips self)
         {
+            self.UpdatePadding();
             self.SetState(self.Type);
         }
     });
@@ -271,9 +273,9 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// </summary>
     public static readonly BindableProperty GroupNameProperty = BindableProperty.Create(nameof(GroupName), typeof(string), typeof(MaterialChips), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
     {
-        if (bindableObject is MaterialChips self && oldValue is string oldGroupName && newValue is string newGroupName)
+        if (bindableObject is MaterialChips self)
         {
-            self.OnGroupNamePropertyChanged(oldGroupName, newGroupName);
+            self.GroupableViewPropertyChanged?.Invoke(self, new GroupableViewPropertyChangedEventArgs(nameof(GroupName), oldValue, newValue));
         }
     });
     
@@ -281,11 +283,11 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// The backing store for the <see cref="Value"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialChips), defaultValue: null, propertyChanged: (bindableObject, _, _) => 
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialChips), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) => 
     { 
         if(bindableObject is MaterialChips self)
         {
-            self.OnValuePropertyChanged();
+            self.GroupableViewPropertyChanged?.Invoke(self, new GroupableViewPropertyChangedEventArgs(nameof(Value), oldValue, newValue));
         }
     });
     
@@ -654,12 +656,6 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
         set => SetValue(ValueProperty, value);
     }
     
-    /// <summary>
-    /// Gets or sets the selection type of the chips
-    /// </summary>
-    /// <remarks>This property is used internally, and it's recommended to avoid setting it directly.</remarks>
-    public SelectionType SelectionType { get; set; } = SelectionType.Single;
-
     #endregion Properties
 
     #region Events
@@ -667,6 +663,8 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     private EventHandler? _clicked;
     private readonly object _objectLock = new();
 
+    public event EventHandler<GroupableViewPropertyChangedEventArgs>? GroupableViewPropertyChanged;
+    
     /// <summary>
     /// Occurs when the chips is clicked/tapped.
     /// </summary>
@@ -696,8 +694,6 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
 
         if (gestureType == TouchEventType.Released)
         {
-            OnGroupSelectionChanged();
-            
             if (Command != null && Command.CanExecute(IsSelected))
             {
                 Command.Execute(IsSelected);
@@ -725,11 +721,13 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             {
                 VisualStateManager.GoToState(this, ChipsCommonStates.Normal);
             }
-            else if (string.IsNullOrEmpty(GroupName) || SelectionType == SelectionType.Multiple || !IsSelected)
+            else if (!string.IsNullOrEmpty(GroupName))
+            {
+                GroupableViewPropertyChanged?.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsSelected, !IsSelected));
+            }
+            else
             {
                 IsSelected = !IsSelected;
-                UpdatePadding();
-                VisualStateManager.GoToState(this, (IsSelected) ? ChipsCommonStates.Selected : ChipsCommonStates.Unselected);
             }
 
             OnTouch(TouchEventType.Released);
@@ -852,32 +850,6 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
 
         _container.Content = _hStack;
         Content = _container;
-    }
-    
-    void OnValuePropertyChanged()
-    {
-        if (!IsSelected || string.IsNullOrEmpty(GroupName))
-        {
-            return;
-        }
-
-        var controller = MaterialViewGroupController.GetGroupController(this);
-        controller?.HandleMaterialViewValueChanged(this);
-    }
-
-    void OnGroupNamePropertyChanged(string oldGroupName, string newGroupName)
-    {
-        if (!string.IsNullOrEmpty(oldGroupName) && !string.IsNullOrEmpty(newGroupName) && newGroupName != oldGroupName)
-        {
-            var controller = MaterialViewGroupController.GetGroupController(this);
-            controller?.HandleMaterialViewGroupNameChanged(oldGroupName);
-        }
-    }
-    
-    public void OnGroupSelectionChanged()
-    {
-        var controller = MaterialViewGroupController.GetGroupController(this);
-        controller?.HandleMaterialViewGroupSelectionChanged(this);
     }
     
     #endregion Methods
