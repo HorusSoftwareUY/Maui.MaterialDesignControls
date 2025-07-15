@@ -98,19 +98,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     /// bindable property.
     /// </summary>
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialRadioButton), defaultValueCreator: DefaultTextColor);
-
-    /// <summary>
-    /// The backing store for the <see cref="GroupName" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty GroupNameProperty = BindableProperty.Create(nameof(GroupName), typeof(string), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
-    {
-        if (bindableObject is MaterialRadioButton self && oldValue is string oldGroupName && newValue is string newGroupName)
-        {
-            self.GroupableViewPropertyChanged?.Invoke(self, new GroupableViewPropertyChangedEventArgs(nameof(GroupName), oldValue, newValue));
-        }
-    });
-
+    
     /// <summary>
     /// The backing store for the <see cref="IsChecked" />
     /// bindable property.
@@ -284,17 +272,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         get => (Color)GetValue(TextColorProperty);
         set => SetValue(TextColorProperty, value);
     }
-
-    /// <summary>
-    /// Gets or sets the <see cref="string" /> GroupName for the radio button. 
-    /// This is a bindable property.
-    /// </summary>
-    public string GroupName
-    {
-        get => (string)GetValue(GroupNameProperty);
-        set => SetValue(GroupNameProperty, value);
-    }
-
+    
     /// <summary>
     /// Gets or sets the <see cref="IsChecked" /> for the radio button. 
     /// This is a bindable property.
@@ -503,7 +481,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         _radioButton = new()
         {
             Margin = new Thickness(0),
-            GroupName = GroupName,
+            GroupName = Guid.NewGuid().ToString(),
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Center,
             Padding = new Thickness(0),
@@ -516,8 +494,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         _radioButton.SetValue(Grid.ColumnProperty, 0);
 
         _mainLayout.Children.Add(_radioButton);
-
-        _radioButton.SetBinding(RadioButton.GroupNameProperty, new Binding(nameof(GroupName), source: this));
+        
         _radioButton.SetBinding(RadioButton.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         _radioButton.SetBinding(RadioButton.IsCheckedProperty, new Binding(nameof(IsChecked), source: this));
         _radioButton.SetBinding(RadioButton.ValueProperty, new Binding(nameof(Value), source: this));
@@ -562,9 +539,9 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         
         if (gestureType == TouchEventType.Released)
         {
-            if (!string.IsNullOrEmpty(GroupName))
+            if (GroupableViewPropertyChanged != null)
             {
-                GroupableViewPropertyChanged?.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsChecked, !IsChecked));
+                GroupableViewPropertyChanged.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsChecked, !IsChecked));
             }
             else
             {

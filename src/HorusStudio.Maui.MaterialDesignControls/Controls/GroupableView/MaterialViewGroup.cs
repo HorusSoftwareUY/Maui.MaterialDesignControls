@@ -26,8 +26,18 @@ public static class MaterialViewGroup
     static readonly BindableProperty GroupControllerProperty =
 		BindableProperty.CreateAttached("GroupController", typeof(MaterialViewGroupController), typeof(Element), default(MaterialViewGroupController),
 		defaultValueCreator: (b) => new MaterialViewGroupController(b as Element),
-		propertyChanged: (b, o, n) => OnControllerChanged(b, (MaterialViewGroupController)n));
-	
+		propertyChanged: (b, o, n) =>
+		{
+			if (n is MaterialViewGroupController newController)
+			{
+				newController.GroupName = GetGroupName(b);
+				newController.SelectedValue = GetSelectedValue(b);
+				newController.SelectedValues = GetSelectedValues(b);
+				newController.SelectedValueChangedCommand = GetSelectedValueChangedCommand(b);
+				newController.SelectionType = GetSelectionType(b);
+			}
+		});
+    
 	static MaterialViewGroupController GetGroupController(BindableObject b)
 	{
 		return (MaterialViewGroupController)b.GetValue(GroupControllerProperty);
@@ -38,7 +48,10 @@ public static class MaterialViewGroup
 	/// </summary>
 	public static readonly BindableProperty GroupNameProperty =
 		BindableProperty.Create("GroupName", typeof(string), typeof(Element), null,
-		propertyChanged: (b, o, n) => { GetGroupController(b).GroupName = (string)n; });
+		propertyChanged: (b, o, n) =>
+		{
+			GetGroupController(b).GroupName = (string)n;
+		});
 
 	/// <summary>
 	/// Returns the group name for the set of views that will be grouped together.
@@ -57,12 +70,41 @@ public static class MaterialViewGroup
 	}
 
 	/// <summary>
+	/// The backing store for the <see cref="InternalGroupName" /> bindable property.
+	/// </summary>
+	internal static readonly BindableProperty InternalGroupNameProperty =
+		BindableProperty.Create("InternalGroupName", typeof(string), typeof(Element), null,
+			propertyChanged: (b, o, n) =>
+			{
+				
+			});
+
+	/// <summary>
+	/// Returns the group name for the set of views that will be grouped together.
+	/// </summary>
+	internal static string GetInternalGroupName(BindableObject b)
+	{
+		return (string)b.GetValue(InternalGroupNameProperty);
+	}
+
+	/// <summary>
+	/// Sets the group name for the set of views that will be grouped together.
+	/// </summary>
+	internal static void SetInternalGroupName(BindableObject bindable, string groupName)
+	{
+		bindable.SetValue(InternalGroupNameProperty, groupName);
+	}
+
+	/// <summary>
 	/// The backing store for the <see cref="SelectedValue" /> bindable property.
 	/// </summary>
 	public static readonly BindableProperty SelectedValueProperty =
 		BindableProperty.Create("SelectedValue", typeof(object), typeof(Element), null,
 		defaultBindingMode: BindingMode.TwoWay,
-		propertyChanged: (b, o, n) => { GetGroupController(b).SelectedValue = n; });
+		propertyChanged: (b, o, n) =>
+		{
+			GetGroupController(b).SelectedValue = n;
+		});
 
 	/// <summary>
 	/// Returns the selected value for the group of views that have been grouped together.
@@ -86,7 +128,10 @@ public static class MaterialViewGroup
 	public static readonly BindableProperty SelectedValuesProperty =
 		BindableProperty.Create("SelectedValues", typeof(IList<object>), typeof(Element), null,
 			defaultBindingMode: BindingMode.TwoWay,
-			propertyChanged: (b, o, n) => { GetGroupController(b).SelectedValues = (IList<object>)n; });
+			propertyChanged: (b, o, n) =>
+			{
+				GetGroupController(b).SelectedValues = (IList<object>)n;
+			});
 
 	/// <summary>
 	/// Returns the collection of selected values for the group of views that have been grouped together.
@@ -109,7 +154,10 @@ public static class MaterialViewGroup
 	/// </summary>
 	public static readonly BindableProperty SelectedValueChangedCommandProperty =
 		BindableProperty.Create("SelectedValueChangedCommand", typeof(ICommand), typeof(Element), null,
-			propertyChanged: (b, o, n) => { GetGroupController(b).SelectedValueChangedCommand = (ICommand)n; });
+			propertyChanged: (b, o, n) =>
+			{
+				GetGroupController(b).SelectedValueChangedCommand = (ICommand)n;
+			});
 	
 	/// <summary>
 	/// Returns the command to be executed when the selected value changes for the group of views that are grouped together.
@@ -132,7 +180,10 @@ public static class MaterialViewGroup
 	/// </summary>
 	public static readonly BindableProperty SelectionTypeProperty =
 		BindableProperty.Create("SelectionType", typeof(SelectionType), typeof(Element), SelectionType.Single,
-			propertyChanged: (b, o, n) => { GetGroupController(b).SelectionType = (SelectionType)n; });
+			propertyChanged: (b, o, n) =>
+			{
+				GetGroupController(b).SelectionType = (SelectionType)n;
+			});
 
 	/// <summary>
 	/// Returns the selection type for the group of views that are grouped together.
@@ -149,82 +200,4 @@ public static class MaterialViewGroup
 	{
 		bindable.SetValue(SelectionTypeProperty, selectionType);
 	}
-	
-    internal static void UncheckOtherMaterialGroupableViewInScope<T>(T groupableView) 
-        where T : IGroupableView
-    {
-        if (groupableView is not Element element)
-        {
-            return;
-        }
-        
-        if (!string.IsNullOrEmpty(groupableView.GroupName))
-        {
-            var root = element.GetVisualRoot() ?? element.Parent;
-            if (root is not IElementController rootController)
-            {
-                return;
-            }
-
-            foreach (var child in rootController.LogicalChildren)
-            {
-                UncheckMatchingDescendants(child, groupableView.GroupName, groupableView);
-            }
-        }
-        else
-        {
-            if (element.Parent is not IElementController parentController)
-            {
-                return;
-            }
-
-            foreach (var child in parentController.LogicalChildren)
-            {
-                if (child is T groupableViewChild && string.IsNullOrEmpty(groupableViewChild.GroupName))
-                {
-                    UncheckMaterialGroupableViewIfChecked(groupableViewChild, groupableView);
-                }
-            }
-        }
-    }
-    
-    private static void UncheckMaterialGroupableViewIfChecked<T>(T child, T groupableView)
-        where T : IGroupableView
-    {
-        if (!child.Equals(groupableView) && child.IsSelected)
-        {
-            child.IsSelected = false;
-        }
-    }
-
-    private static void UncheckMatchingDescendants<T>(Element element, string groupName, T groupableView)
-        where T : IGroupableView
-    {
-        if (element is T groupableViewChild && groupableViewChild.GroupName == groupName)
-        {
-            UncheckMaterialGroupableViewIfChecked(groupableViewChild, groupableView);
-        }
-
-        if (element is IElementController controller)
-        {
-            foreach (var child in controller.LogicalChildren)
-            {
-                UncheckMatchingDescendants(child, groupName, groupableView);
-            }
-        }
-    }
-    
-    private static void OnControllerChanged(BindableObject bindableObject, MaterialViewGroupController? newController)
-    {
-        if (newController == null)
-        {
-            return;
-        }
-        
-        newController.GroupName = GetGroupName(bindableObject);
-        newController.SelectedValue = GetSelectedValue(bindableObject);
-        newController.SelectedValues = GetSelectedValues(bindableObject);
-        newController.SelectedValueChangedCommand = GetSelectedValueChangedCommand(bindableObject);
-        newController.SelectionType = GetSelectionType(bindableObject);
-    }
 }

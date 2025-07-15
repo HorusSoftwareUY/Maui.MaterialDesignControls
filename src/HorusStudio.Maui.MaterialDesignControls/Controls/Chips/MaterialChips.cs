@@ -266,18 +266,6 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// bindable property.
     /// </summary>
     public static readonly new BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialChips), defaultValueCreator: DefaultShadow);
-
-    /// <summary>
-    /// The backing store for the <see cref="GroupName" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty GroupNameProperty = BindableProperty.Create(nameof(GroupName), typeof(string), typeof(MaterialChips), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) =>
-    {
-        if (bindableObject is MaterialChips self)
-        {
-            self.GroupableViewPropertyChanged?.Invoke(self, new GroupableViewPropertyChangedEventArgs(nameof(GroupName), oldValue, newValue));
-        }
-    });
     
     /// <summary>
     /// The backing store for the <see cref="Value"/>
@@ -621,16 +609,6 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     }
     
     /// <summary>
-    /// Gets or sets the <see cref="string" /> GroupName for the chips. 
-    /// This is a bindable property.
-    /// </summary>
-    public string GroupName
-    {
-        get => (string)GetValue(GroupNameProperty);
-        set => SetValue(GroupNameProperty, value);
-    }
-    
-    /// <summary>
     /// Defines the value of the chips
     /// This is a bindable property.
     /// </summary>
@@ -721,9 +699,9 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             {
                 VisualStateManager.GoToState(this, ChipsCommonStates.Normal);
             }
-            else if (!string.IsNullOrEmpty(GroupName))
+            else if (GroupableViewPropertyChanged != null)
             {
-                GroupableViewPropertyChanged?.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsSelected, !IsSelected));
+                GroupableViewPropertyChanged.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsSelected, !IsSelected));
             }
             else
             {

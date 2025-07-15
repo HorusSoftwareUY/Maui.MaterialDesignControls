@@ -8,11 +8,6 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 public interface IGroupableView
 {
     /// <summary>
-    /// Gets or sets the name of the group.
-    /// </summary>
-    string GroupName { get; set; }
-    
-    /// <summary>
     /// Gets the selected value of the view.
     /// </summary>
     object? Value { get; }

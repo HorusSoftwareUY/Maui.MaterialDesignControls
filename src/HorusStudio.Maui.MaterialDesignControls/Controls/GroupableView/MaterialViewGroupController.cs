@@ -26,8 +26,8 @@ internal class MaterialViewGroupController
 	internal object? SelectedValue { get => _selectedValue; set => SetSelectedValue(value); }
 	internal IList<object>? SelectedValues { get => _selectedValues; set => SetSelectedValues(value); }
 	internal ICommand? SelectedValueChangedCommand { get => _selectedValueChangedCommand; set => _selectedValueChangedCommand = value; }
-	internal SelectionType SelectionType { get => _selectionType; set => SetSelectionType(value); }
-
+	internal SelectionType SelectionType { get => _selectionType; set => _selectionType = value; }
+	
 	internal MaterialViewGroupController(Element layout)
 	{
 		if (layout is null)
@@ -44,20 +44,10 @@ internal class MaterialViewGroupController
 			UpdateGroupNames(_layout, _groupName);
 		}
 	}
-
-	internal static MaterialViewGroupController? GetGroupController(IGroupableView? groupableView)
-	{
-		if (groupableView is not null && GroupControllers.TryGetValue(groupableView, out var controller))
-		{
-			return controller;
-		}
-		
-		return null;
-	}
-
+	
 	internal void HandleMaterialViewGroupSelectionChanged(IGroupableView groupableView)
 	{
-		if (groupableView.GroupName != _groupName)
+		if (MaterialViewGroup.GetInternalGroupName((Element)groupableView) != _groupName)
 		{
 			return;
 		}
@@ -182,20 +172,15 @@ internal class MaterialViewGroupController
 		
 		groupableView.GroupableViewPropertyChanged -= HandleMaterialViewGroupSelectionChanged;
 		groupableView.GroupableViewPropertyChanged += HandleMaterialViewGroupSelectionChanged;
-		
-		if (groupableView is MaterialRadioButton materialRadioButton)
-		{
-			ApplyWorkaroundForInternalRadioButtonGroup(materialRadioButton);
-		}
 	}
 
 	private void UpdateGroupName(IGroupableView groupableView, string name, string? oldName = null)
 	{
-		var currentName = groupableView.GroupName;
+		var currentName = MaterialViewGroup.GetInternalGroupName((Element)groupableView);
 
 		if (string.IsNullOrEmpty(currentName) || currentName == oldName)
 		{
-			groupableView.GroupName = name;
+			MaterialViewGroup.SetInternalGroupName((Element)groupableView, name);
 		}
 
 		if (!GroupControllers.TryGetValue(groupableView, out _))
@@ -223,16 +208,17 @@ internal class MaterialViewGroupController
 		{
 			foreach (var child in _layout.GetDescendants())
 			{
+				var groupableViewGroupName = MaterialViewGroup.GetInternalGroupName(child);
 				if (child is IGroupableView groupableView 
-				    && groupableView.GroupName == _groupName 
+				    && groupableViewGroupName == _groupName 
 				    && groupableView.Value is not null 
 				    && groupableView.Value.Equals(_selectedValue))
 				{
 					groupableView.IsSelected = true;
 					
-					if (!string.IsNullOrEmpty(groupableView.GroupName) && _selectionType == SelectionType.Single)
+					if (!string.IsNullOrEmpty(groupableViewGroupName) && _selectionType == SelectionType.Single)
 					{
-						MaterialViewGroup.UncheckOtherMaterialGroupableViewInScope(groupableView);
+						UncheckOtherMaterialGroupableViewInScope(groupableView);
 					}
 					
 					HandleSelectedValueChangedCommand(groupableView);
@@ -250,7 +236,7 @@ internal class MaterialViewGroupController
 			foreach (var child in _layout.GetDescendants())
 			{
 				if (child is IGroupableView groupableView 
-				    && groupableView.GroupName == _groupName 
+				    && MaterialViewGroup.GetInternalGroupName(child) == _groupName 
 				    && groupableView.Value is not null 
 				    && _selectedValues is not null
 				    && _selectedValues.Contains(groupableView.Value))
@@ -261,7 +247,74 @@ internal class MaterialViewGroupController
 			}
 		}
 	}
+	
+	private static void UncheckOtherMaterialGroupableViewInScope<T>(T groupableView) 
+        where T : IGroupableView
+    {
+        if (groupableView is not Element element)
+        {
+            return;
+        }
+        
+        var groupableViewGroupName = MaterialViewGroup.GetInternalGroupName(element);
+        if (!string.IsNullOrEmpty(groupableViewGroupName))
+        {
+            var root = element.GetVisualRoot() ?? element.Parent;
+            if (root is not IElementController rootController)
+            {
+                return;
+            }
 
+            foreach (var child in rootController.LogicalChildren)
+            {
+                UncheckMatchingDescendants(child, groupableViewGroupName, groupableView);
+            }
+        }
+        else
+        {
+            if (element.Parent is not IElementController parentController)
+            {
+                return;
+            }
+
+            foreach (var child in parentController.LogicalChildren)
+            {
+	            var groupableViewChildGroupName = MaterialViewGroup.GetInternalGroupName(child);
+                if (child is T groupableViewChild && string.IsNullOrEmpty(groupableViewChildGroupName))
+                {
+                    UncheckMaterialGroupableViewIfChecked(groupableViewChild, groupableView);
+                }
+            }
+        }
+    }
+    
+    private static void UncheckMaterialGroupableViewIfChecked<T>(T child, T groupableView)
+        where T : IGroupableView
+    {
+        if (!child.Equals(groupableView) && child.IsSelected)
+        {
+            child.IsSelected = false;
+        }
+    }
+
+    private static void UncheckMatchingDescendants<T>(Element element, string groupName, T groupableView)
+        where T : IGroupableView
+    {
+	    var groupableViewChildGroupName = MaterialViewGroup.GetInternalGroupName(element);
+        if (element is T groupableViewChild && groupableViewChildGroupName == groupName)
+        {
+            UncheckMaterialGroupableViewIfChecked(groupableViewChild, groupableView);
+        }
+
+        if (element is IElementController controller)
+        {
+            foreach (var child in controller.LogicalChildren)
+            {
+                UncheckMatchingDescendants(child, groupName, groupableView);
+            }
+        }
+    }
+ 
 	private void HandleSelectedValueChangedCommand(IGroupableView groupableView)
 	{
 		var commandParameter = groupableView.IsSelected ? groupableView.Value : null;
@@ -278,43 +331,11 @@ internal class MaterialViewGroupController
 		UpdateGroupNames(_layout, _groupName, oldName);
 	}
 	
-	private void SetSelectionType(SelectionType selectionType)
-	{
-		_selectionType = selectionType;
-		
-		foreach (var child in _layout.GetDescendants())
-		{
-			if (child is IGroupableView groupableView && groupableView.GroupName == _groupName)
-			{
-				if (groupableView is MaterialRadioButton materialRadioButton)
-				{
-					ApplyWorkaroundForInternalRadioButtonGroup(materialRadioButton);
-				}
-			}
-		}
-	}
-
-	private void ApplyWorkaroundForInternalRadioButtonGroup(MaterialRadioButton materialRadioButton)
-	{
-		if (_selectionType == SelectionType.Multiple)
-		{
-			materialRadioButton.InternalRadioButton.GroupName = Guid.NewGuid().ToString();
-		}
-		else
-		{
-			materialRadioButton.InternalRadioButton.GroupName = null;
-		}
-	}
-
 	private void HandleMaterialViewGroupSelectionChanged(object? sender, GroupableViewPropertyChangedEventArgs e)
 	{
 		if (sender is IGroupableView groupableView)
 		{
-			if (e.PropertyName == nameof(IGroupableView.GroupName))
-			{
-				HandleMaterialViewGroupNameChanged(e.OldValue, e.NewValue);
-			}
-			else if (e.PropertyName == nameof(IGroupableView.Value))
+			if (e.PropertyName == nameof(IGroupableView.Value))
 			{
 				HandleMaterialViewValueChanged(groupableView);
 			}
@@ -327,30 +348,17 @@ internal class MaterialViewGroupController
 	
 	private void HandleMaterialViewValueChanged(IGroupableView groupableView)
 	{
+		var groupName = MaterialViewGroup.GetInternalGroupName((Element)groupableView);
 		if (!groupableView.IsSelected 
-		    || string.IsNullOrEmpty(groupableView.GroupName)
-		    || groupableView?.GroupName != _groupName)
+		    || string.IsNullOrEmpty(groupName)
+		    || groupName != _groupName)
 		{
 			return;
 		}
 		
 		_layout.SetValue(MaterialViewGroup.SelectedValueProperty, groupableView.Value);
 	}
-
-	private void HandleMaterialViewGroupNameChanged(object oldValue, object newValue)
-	{
-		if (oldValue is string oldGroupName
-		    && newValue is string newGroupName
-		    && !string.IsNullOrEmpty(oldGroupName) 
-		    && !string.IsNullOrEmpty(newGroupName) 
-		    && newGroupName != oldGroupName
-		    && oldGroupName == _groupName)
-		{
-			_layout.ClearValue(MaterialViewGroup.SelectedValueProperty);
-			_layout.ClearValue(MaterialViewGroup.SelectedValuesProperty);
-		}
-	}
-
+	
 	private void HandleMaterialViewIsSelectedChanged(IGroupableView groupableView)
 	{
 		if (SelectionType == SelectionType.Multiple || !groupableView.IsSelected)
