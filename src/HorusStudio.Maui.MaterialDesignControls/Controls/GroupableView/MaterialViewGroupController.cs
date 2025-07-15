@@ -47,7 +47,7 @@ internal class MaterialViewGroupController
 	
 	internal void HandleMaterialViewGroupSelectionChanged(IGroupableView groupableView)
 	{
-		if (MaterialViewGroup.GetInternalGroupName((Element)groupableView) != _groupName)
+		if (MaterialViewGroup.GetGroupName((Element)groupableView) != _groupName)
 		{
 			return;
 		}
@@ -176,11 +176,11 @@ internal class MaterialViewGroupController
 
 	private void UpdateGroupName(IGroupableView groupableView, string name, string? oldName = null)
 	{
-		var currentName = MaterialViewGroup.GetInternalGroupName((Element)groupableView);
+		var currentName = MaterialViewGroup.GetGroupName((Element)groupableView);
 
 		if (string.IsNullOrEmpty(currentName) || currentName == oldName)
 		{
-			MaterialViewGroup.SetInternalGroupName((Element)groupableView, name);
+			MaterialViewGroup.SetGroupName((Element)groupableView, name);
 		}
 
 		if (!GroupControllers.TryGetValue(groupableView, out _))
@@ -208,7 +208,7 @@ internal class MaterialViewGroupController
 		{
 			foreach (var child in _layout.GetDescendants())
 			{
-				var groupableViewGroupName = MaterialViewGroup.GetInternalGroupName(child);
+				var groupableViewGroupName = MaterialViewGroup.GetGroupName(child);
 				if (child is IGroupableView groupableView 
 				    && groupableViewGroupName == _groupName 
 				    && groupableView.Value is not null 
@@ -236,7 +236,7 @@ internal class MaterialViewGroupController
 			foreach (var child in _layout.GetDescendants())
 			{
 				if (child is IGroupableView groupableView 
-				    && MaterialViewGroup.GetInternalGroupName(child) == _groupName 
+				    && MaterialViewGroup.GetGroupName(child) == _groupName 
 				    && groupableView.Value is not null 
 				    && _selectedValues is not null
 				    && _selectedValues.Contains(groupableView.Value))
@@ -256,7 +256,7 @@ internal class MaterialViewGroupController
             return;
         }
         
-        var groupableViewGroupName = MaterialViewGroup.GetInternalGroupName(element);
+        var groupableViewGroupName = MaterialViewGroup.GetGroupName(element);
         if (!string.IsNullOrEmpty(groupableViewGroupName))
         {
             var root = element.GetVisualRoot() ?? element.Parent;
@@ -279,7 +279,7 @@ internal class MaterialViewGroupController
 
             foreach (var child in parentController.LogicalChildren)
             {
-	            var groupableViewChildGroupName = MaterialViewGroup.GetInternalGroupName(child);
+	            var groupableViewChildGroupName = MaterialViewGroup.GetGroupName(child);
                 if (child is T groupableViewChild && string.IsNullOrEmpty(groupableViewChildGroupName))
                 {
                     UncheckMaterialGroupableViewIfChecked(groupableViewChild, groupableView);
@@ -300,7 +300,7 @@ internal class MaterialViewGroupController
     private static void UncheckMatchingDescendants<T>(Element element, string groupName, T groupableView)
         where T : IGroupableView
     {
-	    var groupableViewChildGroupName = MaterialViewGroup.GetInternalGroupName(element);
+	    var groupableViewChildGroupName = MaterialViewGroup.GetGroupName(element);
         if (element is T groupableViewChild && groupableViewChildGroupName == groupName)
         {
             UncheckMaterialGroupableViewIfChecked(groupableViewChild, groupableView);
@@ -348,7 +348,7 @@ internal class MaterialViewGroupController
 	
 	private void HandleMaterialViewValueChanged(IGroupableView groupableView)
 	{
-		var groupName = MaterialViewGroup.GetInternalGroupName((Element)groupableView);
+		var groupName = MaterialViewGroup.GetGroupName((Element)groupableView);
 		if (!groupableView.IsSelected 
 		    || string.IsNullOrEmpty(groupName)
 		    || groupName != _groupName)

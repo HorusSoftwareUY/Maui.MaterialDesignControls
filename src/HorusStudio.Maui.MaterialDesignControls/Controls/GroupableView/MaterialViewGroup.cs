@@ -50,7 +50,10 @@ public static class MaterialViewGroup
 		BindableProperty.Create("GroupName", typeof(string), typeof(Element), null,
 		propertyChanged: (b, o, n) =>
 		{
-			GetGroupController(b).GroupName = (string)n;
+			if (b is not IGroupableView)
+			{
+				GetGroupController(b).GroupName = (string)n;
+			}
 		});
 
 	/// <summary>
@@ -68,33 +71,7 @@ public static class MaterialViewGroup
 	{
 		bindable.SetValue(GroupNameProperty, groupName);
 	}
-
-	/// <summary>
-	/// The backing store for the <see cref="InternalGroupName" /> bindable property.
-	/// </summary>
-	internal static readonly BindableProperty InternalGroupNameProperty =
-		BindableProperty.Create("InternalGroupName", typeof(string), typeof(Element), null,
-			propertyChanged: (b, o, n) =>
-			{
-				
-			});
-
-	/// <summary>
-	/// Returns the group name for the set of views that will be grouped together.
-	/// </summary>
-	internal static string GetInternalGroupName(BindableObject b)
-	{
-		return (string)b.GetValue(InternalGroupNameProperty);
-	}
-
-	/// <summary>
-	/// Sets the group name for the set of views that will be grouped together.
-	/// </summary>
-	internal static void SetInternalGroupName(BindableObject bindable, string groupName)
-	{
-		bindable.SetValue(InternalGroupNameProperty, groupName);
-	}
-
+	
 	/// <summary>
 	/// The backing store for the <see cref="SelectedValue" /> bindable property.
 	/// </summary>
