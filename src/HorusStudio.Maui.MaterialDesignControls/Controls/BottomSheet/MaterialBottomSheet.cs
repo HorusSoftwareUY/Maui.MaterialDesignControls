@@ -49,7 +49,7 @@ public enum DismissOrigin
 /// * [Android] Scrim color gets lost after showing and closing sheet once.
 /// * [iOS] Corner radius gets lost after showing and closing sheet once.
 /// </todoList>
-public partial class MaterialBottomSheet : ContentView
+public partial class MaterialBottomSheet : ContentPage
 {
     #region Attributes
     
@@ -70,10 +70,15 @@ public partial class MaterialBottomSheet : ContentView
     
     #region Bindable Properties
     
-    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialBottomSheetType), typeof(MaterialBottomSheet), DefaultType);
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialBottomSheetType), typeof(MaterialBottomSheet), DefaultType, propertyChanged:
+        (bindable, _, _) =>
+        {
+            var self = (MaterialBottomSheet)bindable;
+            self.HasScrim = self.Type == MaterialBottomSheetType.Modal;
+        });
     public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialBottomSheet), defaultValue: null);
     public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialBottomSheet), defaultValueCreator: DefaultBackgroundColor);
-    public static readonly BindableProperty DetentsProperty = BindableProperty.Create(nameof(Detents), typeof(IList<Detent>), typeof(MaterialBottomSheet),defaultValue: DefaultDetents);
+    public static readonly BindableProperty DetentsProperty = BindableProperty.Create(nameof(Detents), typeof(IList<Detent>), typeof(MaterialBottomSheet), defaultValueCreator: _ => DefaultDetents);
     public static readonly BindableProperty ScrimColorProperty = BindableProperty.Create(nameof(ScrimColor), typeof(Color), typeof(MaterialBottomSheet), defaultValueCreator: DefaultScrimColor);
     public static readonly BindableProperty ScrimOpacityProperty = BindableProperty.Create(nameof(ScrimOpacity), typeof(float), typeof(MaterialBottomSheet), defaultValue: DefaultScrimOpacity);
     public static readonly BindableProperty HasHandleProperty = BindableProperty.Create(nameof(HasHandle), typeof(bool), typeof(MaterialBottomSheet), DefaultHasHandle);
@@ -139,7 +144,9 @@ public partial class MaterialBottomSheet : ContentView
         get => (float?)GetValue(ScrimOpacityProperty);
         set => SetValue(ScrimOpacityProperty, value);
     }
-    
+
+    public bool HasScrim { get; private set; } = false;
+
     public bool HasHandle
     {
         get => (bool)GetValue(HasHandleProperty);
@@ -190,18 +197,25 @@ public partial class MaterialBottomSheet : ContentView
     {
         Resources.Add(new Style(typeof(Label)));
     }
-
-    public Task ShowAsync(bool animated = true)
+    
+    /// <summary>
+    /// Shows the bottom sheet above everything using the default window
+    /// </summary>
+    /// <param name="animated">Indicates if sheet displays with or without animation.</param>
+    /// <param name="aboveEverything">Shows the bottom sheet "within" the page. The sheet will be obscured by flyout page and shows vertically above navigation bar/tab bar.</param>
+    public Task ShowAsync(bool animated = true, bool aboveEverything = true)
     {
-        var window = Application.Current?.Windows[0];
-        if (window is null)
-        {
-            return Task.CompletedTask;
-        }
-        return ShowAsync(window, animated);
+        var parent =  IPlatformApplication.Current!.Application.Windows[0];
+        return ShowAsync(parent, animated, aboveEverything);
     }
 
-    public Task ShowAsync(Window window, bool animated = true)
+    /// <summary>
+    /// Shows the bottom sheet above everything using the specified Window
+    /// </summary>
+    /// <param name="parent"><see cref="IWindow">Window</see> instance to display sheet at.</param>
+    /// <param name="animated">Indicates if sheet displays with or without animation.</param>
+    /// <param name="aboveEverything">Shows the bottom sheet "within" the page. The sheet will be obscured by flyout page and shows vertically above navigation bar/tab bar.</param>
+    public Task ShowAsync(IWindow parent, bool animated = true, bool aboveEverything = true)
     {
         if (_isShown) return Task.CompletedTask;
         
@@ -213,15 +227,24 @@ public partial class MaterialBottomSheet : ContentView
         }
         Shown += OnShown;
 
-        if (SelectedDetent is null)
-        {
-            SelectedDetent = GetDefaultDetent();
-        }
-        window.AddLogicalChild(this);
-        BottomSheetManager.Show(window, this, animated);
+        SelectedDetent ??= GetDefaultDetent();
+
+        var context = parent.Handler!.MauiContext!;
+#if ANDROID
+        BottomSheetManager.Create(context, this, aboveEverything);
+#endif
+        
+        (parent.Content as Element)!.AddLogicalChild(this);
+        Handler ??= BottomSheetHandler.CreateBottomSheetHandler(context);
+        BottomSheetManager.Show(this, animated);
+
         return completionSource.Task;
     }
-
+    
+    /// <summary>
+    /// Dismisses the displayed bottom sheet
+    /// </summary>
+    /// <param name="animated">Indicates if operation is performed with or without animation.</param>
     public Task DismissAsync(bool animated = true)
     {
         _dismissOrigin = DismissOrigin.Programmatic;
@@ -244,10 +267,8 @@ public partial class MaterialBottomSheet : ContentView
 
     internal Detent? GetDefaultDetent()
     {
-        if (SelectedDetent is not null) return SelectedDetent;
-        
-        var detents = GetEnabledDetents();
-        return detents.FirstOrDefault(d => d.IsDefault);
+        return SelectedDetent ?? 
+               GetEnabledDetents().FirstOrDefault(d => d.IsDefault);
     }
 
     internal void NotifyDismissed()
@@ -257,10 +278,8 @@ public partial class MaterialBottomSheet : ContentView
         _isShown = false;
     }
 
-    internal void NotifyShowing()
-    {
-        Showing?.Invoke(this, EventArgs.Empty);
-    }
+    internal void NotifyShowing() => Showing?.Invoke(this, EventArgs.Empty);
+    
     internal void NotifyShown()
     {
         Shown?.Invoke(this, EventArgs.Empty);

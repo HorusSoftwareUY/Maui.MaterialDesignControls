@@ -1,4 +1,3 @@
-using CoreGraphics;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using Foundation;
@@ -7,132 +6,173 @@ using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-/// <summary>
-/// From The49.Maui.BottomSheet
-/// </summary>
-internal class BottomSheetController : UIViewController
+internal sealed class BottomSheetController : UIViewController
 {
-    IMauiContext _windowMauiContext;
-    MaterialBottomSheet _sheet;
-    NSObject? _keyboardDidHideObserver;
+    #region Fields & Properties
+    
+    private readonly UIWindow _window;
+    private readonly IMauiContext _windowMauiContext;
+    private readonly MaterialBottomSheet _sheet;
+    private UISheetPresentationControllerDetentIdentifier _largestDetentIdentifier = UISheetPresentationControllerDetentIdentifier.Unknown;
 
-    public BottomSheetController(IMauiContext windowMauiContext, MaterialBottomSheet sheet)
+    //private NFloat _keyboardHeight = 0;
+    private NSObject? _keyboardDidHideObserver;
+    //private NSObject? _keyboardWillShowObserver;
+    
+    #endregion Fields & Properties
+    
+    public BottomSheetController(IMauiContext windowMauiContext, MaterialBottomSheet sheet, UIWindow window)
     {
         _windowMauiContext = windowMauiContext;
         _sheet = sheet;
-        if (OperatingSystem.IsIOSVersionAtLeast(15))
-        {
-            SheetPresentationController.Delegate = new BottomSheetControllerDelegate(_sheet);
-        }
+        _window = window;
+        
+        if (!OperatingSystem.IsIOSVersionAtLeast(15)) return;
+        SheetPresentationController!.Delegate = new BottomSheetControllerDelegate(_sheet);
     }
 
     public override void ViewDidLoad()
     {
         base.ViewDidLoad();
 
+        if (View is null) return;
         var container = _sheet.ToPlatform(_windowMauiContext);
-
-        var cv = new BottomSheetContainer(_sheet, container);
-
+        var cv = new BottomSheetContainerView(_sheet, container, _window);
         View.AddSubview(cv);
-
+        
         cv.TranslatesAutoresizingMaskIntoConstraints = false;
-
-        NSLayoutConstraint.ActivateConstraints(new[]
-        {
+        NSLayoutConstraint.ActivateConstraints(
+        [
             cv.TopAnchor.ConstraintEqualTo(View.TopAnchor),
             cv.LeadingAnchor.ConstraintEqualTo(View.LeadingAnchor),
             cv.BottomAnchor.ConstraintEqualTo(View.BottomAnchor),
             cv.TrailingAnchor.ConstraintEqualTo(View.TrailingAnchor)
-        });
+        ]);
 
         UpdateBackground();
         _sheet.NotifyShowing();
 
-        if (_keyboardDidHideObserver is null)
-        {
-            _keyboardDidHideObserver = UIKeyboard.Notifications.ObserveDidHide(KeyboardDidHide);
-        }
+        _keyboardDidHideObserver ??= UIKeyboard.Notifications.ObserveDidHide(KeyboardDidHide);
+        //_keyboardWillShowObserver ??= UIKeyboard.Notifications.ObserveWillShow(KeyboardWillShow);
     }
 
-    void KeyboardDidHide(object sender, UIKeyboardEventArgs e)
+    private void KeyboardDidHide(object? sender, UIKeyboardEventArgs e) => Layout();
+    
+    /*
+    private void KeyboardWillShow(object? sender, UIKeyboardEventArgs e) 
+        => _keyboardHeight = e.FrameEnd.Height;
+    */
+    internal void Layout()
     {
-        Layout();
-    }
-
-    public void Layout()
-    {
+        if (!OperatingSystem.IsIOSVersionAtLeast(15)) return;
         _sheet.CachedDetents.Clear();
-        if (OperatingSystem.IsIOSVersionAtLeast(16))
-        {
-            SheetPresentationController.InvalidateDetents();
-        }
+        SheetPresentationController!.InvalidateDetents();
     }
+    
     internal void UpdateBackground()
     {
-        if (_sheet?.BackgroundBrush != null)
+        var color = UIColor.SystemBackground;
+        
+        try
         {
             Paint paint = _sheet.BackgroundBrush;
-            View.BackgroundColor = paint.ToColor().ToPlatform();
+            color = paint.ToColor()!.ToPlatform();
         }
-        else
+        catch
         {
-            if (OperatingSystem.IsIOSVersionAtLeast(13))
-            {
-                View.BackgroundColor = UIColor.SystemBackground;
-            }
+            // ignored
         }
+
+        View!.BackgroundColor = color;
     }
+    
     public override void ViewDidLayoutSubviews()
     {
         base.ViewDidLayoutSubviews();
         Layout();
     }
 
-    [SupportedOSPlatform("ios15.0")]
-    internal static UISheetPresentationControllerDetentIdentifier GetIdentifierForDetent(Detent d)
+    internal void UpdateDetents()
     {
-        if (d is FullscreenDetent)
+        if (!OperatingSystem.IsIOSVersionAtLeast(15)) return;
+        _largestDetentIdentifier = UISheetPresentationControllerDetentIdentifier.Unknown;
+        
+        var pageDetents = _sheet.GetEnabledDetents().ToList();
+        var detents = pageDetents
+            .Select((d, index) =>
+            {
+                if (d is FullscreenDetent)
+                {
+                    _largestDetentIdentifier = UISheetPresentationControllerDetentIdentifier.Large;
+                    return UISheetPresentationControllerDetent.CreateLargeDetent();
+                }
+                
+                if (d is RatioDetent { Ratio: .5f })
+                {
+                    _largestDetentIdentifier = UISheetPresentationControllerDetentIdentifier.Medium;
+                    return UISheetPresentationControllerDetent.CreateMediumDetent();
+                }
+                
+                if (!OperatingSystem.IsIOSVersionAtLeast(16)) return null;
+                
+                return UISheetPresentationControllerDetent.Create($"detent{index}", context =>
+                {
+                    if (!_sheet.CachedDetents.TryGetValue(index, out var value))
+                    {
+                        value = (float)d.GetHeight(_sheet, context.MaximumDetentValue - BottomSheetManager.KeyboardHeight);
+                        _sheet.CachedDetents.Add(index, value);
+                    }
+                        
+                    return value;
+                });
+            })
+            .Where(d => d is not null)
+            .Select(d => d!)
+            .ToList();
+
+        if (detents.Count == 0)
         {
-            return UISheetPresentationControllerDetentIdentifier.Large;
+            _largestDetentIdentifier = UISheetPresentationControllerDetentIdentifier.Medium;
+            detents.Add(UISheetPresentationControllerDetent.CreateMediumDetent());
         }
-        else if (d is RatioDetent ratioDetent && ratioDetent.Ratio == .5)
+
+        SheetPresentationController!.Detents = detents?.ToArray() ?? [];
+        UpdateSelectedIdentifierFromDetent();
+    }
+    
+    internal static UISheetPresentationControllerDetentIdentifier GetIdentifierForDetent(Detent? d)
+    {
+        return d switch
         {
-            return UISheetPresentationControllerDetentIdentifier.Medium;
-        }
-        return UISheetPresentationControllerDetentIdentifier.Unknown;
+            FullscreenDetent => UISheetPresentationControllerDetentIdentifier.Large,
+            RatioDetent { Ratio: .5f } => UISheetPresentationControllerDetentIdentifier.Medium,
+            _ => UISheetPresentationControllerDetentIdentifier.Unknown
+        };
     }
 
-    [SupportedOSPlatform("ios15.0")]
     internal void UpdateSelectedIdentifierFromDetent()
     {
-        if (_sheet.SelectedDetent is null)
-        {
-            return;
-        }
-        SheetPresentationController.AnimateChanges(() =>
+        if (!OperatingSystem.IsIOSVersionAtLeast(15) || _sheet.SelectedDetent is null) return;
+        
+        SheetPresentationController!.AnimateChanges(() =>
         {
             SheetPresentationController.SelectedDetentIdentifier = GetIdentifierForDetent(_sheet.SelectedDetent);
         });
     }
 
-    [SupportedOSPlatform("ios15.0")]
-    internal Detent GetSelectedDetent()
+    internal Detent? GetSelectedDetent()
     {
-        if (!OperatingSystem.IsIOSVersionAtLeast(15))
-        {
-            return null;
-        }
+        if (!OperatingSystem.IsIOSVersionAtLeast(15)) return null;
+        
         var detents = _sheet.GetEnabledDetents();
-        return SheetPresentationController.SelectedDetentIdentifier switch
+        return SheetPresentationController!.SelectedDetentIdentifier switch
         {
-            UISheetPresentationControllerDetentIdentifier.Medium => detents.FirstOrDefault(d => d is RatioDetent ratioDetent && ratioDetent.Ratio == .5f),
+            UISheetPresentationControllerDetentIdentifier.Medium => detents.FirstOrDefault(d => d is RatioDetent { Ratio: .5f }),
             UISheetPresentationControllerDetentIdentifier.Large => detents.FirstOrDefault(d => d is FullscreenDetent),
-            UISheetPresentationControllerDetentIdentifier.Unknown or _ => null,
+            _ => null
         };
     }
 
-    [SupportedOSPlatform("ios15.0")]
     internal void UpdateSelectedDetent()
     {
         _sheet.SelectedDetent = GetSelectedDetent();
@@ -140,76 +180,44 @@ internal class BottomSheetController : UIViewController
 
     internal void UpdateCornerRadius(double cornerRadius)
     {
-        if (!OperatingSystem.IsIOSVersionAtLeast(15))
-        {
-            return;
-        }
-        SheetPresentationController.PreferredCornerRadius = (NFloat)cornerRadius;
+        if (!OperatingSystem.IsIOSVersionAtLeast(15)) return;
+        SheetPresentationController!.PreferredCornerRadius = (NFloat)cornerRadius;
     }
-    
-    #region Helper classes
-    
-    [SupportedOSPlatform("ios15.0")]
-    private class BottomSheetControllerDelegate : UISheetPresentationControllerDelegate
+
+    internal void UpdateHasHandle(bool hasHandle)
     {
-        MaterialBottomSheet _sheet;
-
-        public BottomSheetControllerDelegate(MaterialBottomSheet sheet)
-        {
-            _sheet = sheet;
-        }
-        public override void DidDismiss(UIPresentationController presentationController)
-        {
-            _sheet.CachedDetents.Clear();
-            _sheet.NotifyDismissed();
-        }
-
-        public override void DidChangeSelectedDetentIdentifier(UISheetPresentationController sheetPresentationController)
-        {
-            ((BottomSheetHandler)_sheet.Handler).UpdateSelectedDetent(_sheet);
-        }
+        if (!OperatingSystem.IsIOSVersionAtLeast(15)) return;
+        SheetPresentationController!.PrefersGrabberVisible = hasHandle;
     }
-    
-    private class BottomSheetContainer : UIView
+
+    internal void UpdateHasBackdrop(bool hasBackdrop)
     {
-        MaterialBottomSheet _sheet;
-        UIView _view;
-
-        // Can't get the sheet max height with large and medium detents
-        // custom detents are not supported on iOS 15
-        // can't use largestUndimmedIdentifier or selected detent with custom detents on iOS 16
-        // So I guess we'll just have to calculate the sheet height ourselves then
-        // This number was found by getting the full screen height, subtracting the sheet's UIView height and the top inset
-        // This seems to be the spacing iOS leaves at the top of the screen when a sheet is fullscreen
-        // TODO: Check if this is the same number for fullscreen sheets opened on top of another sheet
-        const int SheetTopSpacing = 10;
-
-        double CalculateTallestDetent(double heightConstraint)
+        if (!OperatingSystem.IsIOSVersionAtLeast(15)) return;
+        if (!hasBackdrop)
         {
-            var window = UIApplication.SharedApplication.KeyWindow;
-            var topPadding = window?.SafeAreaInsets.Top ?? 0;
-            var maximumDetentValue = heightConstraint - topPadding - SheetTopSpacing;
-        
-            return _sheet.GetEnabledDetents().Select(d => d.GetHeight(_sheet, maximumDetentValue)).Max();
-        }
-
-        internal BottomSheetContainer(MaterialBottomSheet sheet, UIView view)
-        {
-            _sheet = sheet;
-            _view = view;
-            AddSubview(_view);
-        }
-        public override void LayoutSubviews()
-        {
-            base.LayoutSubviews();
-            if (_sheet?.Window == null) return;
-            
-            var h = CalculateTallestDetent(_sheet.Window.Height - BottomSheetManager.KeyboardHeight);
-            _view.Frame = new CGRect(0, 0, Bounds.Width, h);
-            _sheet.Arrange(_view.Frame.ToRectangle());
-            _sheet.Controller.Layout();
+            SheetPresentationController!.LargestUndimmedDetentIdentifier = _largestDetentIdentifier;
         }
     }
     
-    #endregion Helper classes
+    internal void UpdatePresentationMode(bool isCancelable)
+    {
+        if (!OperatingSystem.IsIOSVersionAtLeast(13)) return;
+        ModalInPresentation = !isCancelable;
+    }
+}
+
+[SupportedOSPlatform("ios15.0")]
+internal class BottomSheetControllerDelegate(MaterialBottomSheet sheet) : UISheetPresentationControllerDelegate
+{
+    public override void DidDismiss(UIPresentationController presentationController)
+    {
+        sheet.CachedDetents.Clear();
+        sheet.NotifyDismissed();
+    }
+
+    public override void DidChangeSelectedDetentIdentifier(UISheetPresentationController sheetPresentationController)
+    {
+        if (sheet?.Handler is not BottomSheetHandler handler) return;
+        handler.UpdateSelectedDetent(sheet);
+    }
 }

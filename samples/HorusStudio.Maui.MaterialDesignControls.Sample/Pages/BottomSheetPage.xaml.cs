@@ -14,11 +14,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         
         private async Task OpenBottomSheet(string controlName)
         {
-            //if (!Resources.TryGetValue(controlName, out var control)) return;
             var control = this.FindByName(controlName);
             switch (control)
             {
                 case MaterialBottomSheet materialSheet:
+                    materialSheet.BindingContext = BindingContext;
                     await materialSheet.ShowAsync();
                     break;
             }

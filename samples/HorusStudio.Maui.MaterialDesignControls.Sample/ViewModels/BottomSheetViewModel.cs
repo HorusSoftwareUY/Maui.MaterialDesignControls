@@ -10,7 +10,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public override string Title => "Bottom Sheets";
 
         public Action<string> OpenBottomSheetControl { get; set; }
-
         public Action<string> CloseBottomSheetControl { get; set; }
 
         #endregion
@@ -27,7 +26,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async Task CloseBottomSheet(string controlName)
+        private async Task CloseBottomSheetAsync(string controlName)
         {
             CloseBottomSheetControl?.Invoke(controlName);
         }

@@ -10,10 +10,7 @@ using PlatformView = System.Object;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-/// <summary>
-/// From The49.Maui.BottomSheet
-/// </summary>
-internal partial class BottomSheetHandler : ContentViewHandler
+internal partial class BottomSheetHandler : PageHandler
 {
     #region Properties
     
@@ -23,16 +20,17 @@ internal partial class BottomSheetHandler : ContentViewHandler
     private static readonly IPropertyMapper<MaterialBottomSheet, BottomSheetHandler> PropertiesMapper =
         new PropertyMapper<MaterialBottomSheet, BottomSheetHandler>(ContentViewHandler.Mapper)
         {
-            [nameof(IContentView.Background)] = MapBackground,
+            [nameof(MaterialBottomSheet.Background)] = MapBackground,
+            [nameof(MaterialBottomSheet.HasHandle)] = MapHasHandle,
             [nameof(MaterialBottomSheet.HandleColor)] = MapHandleColor,
             [nameof(MaterialBottomSheet.HandleOpacity)] = MapHandleColor,
-            [nameof(MaterialBottomSheet.TypeProperty)] = MapHasScrim,
+            [nameof(MaterialBottomSheet.HasScrim)] = MapHasScrim,
             [nameof(MaterialBottomSheet.ScrimColor)] = MapScrimColor,
-            [nameof(MaterialBottomSheet.ScrimOpacity)] = MapScrimColor,
+            [nameof(MaterialBottomSheet.ScrimOpacity)] = MapScrimOpacity,
             [nameof(MaterialBottomSheet.SelectedDetent)] = MapSelectedDetent,
             [nameof(MaterialBottomSheet.CornerRadius)] = MapCornerRadius
         };
-
+    
     private static readonly CommandMapper<MaterialBottomSheet, BottomSheetHandler> CommandsMapper =
         new(ContentViewHandler.CommandMapper)
         {
@@ -41,36 +39,47 @@ internal partial class BottomSheetHandler : ContentViewHandler
     
     #endregion Properties
     
-    public BottomSheetHandler() : base(PropertiesMapper, CommandsMapper)
-    {
-    }
-
-    public BottomSheetHandler(IPropertyMapper? mapper)
-        : base(mapper ?? PropertiesMapper, CommandsMapper)
-    {
-    }
-
-    public BottomSheetHandler(IPropertyMapper? mapper, CommandMapper? commandMapper)
-        : base(mapper ?? PropertiesMapper, commandMapper ?? CommandsMapper)
-    {
-    }
+    public BottomSheetHandler(IPropertyMapper? mapper, CommandMapper? commandMapper) : base(mapper ?? PropertiesMapper, commandMapper ?? CommandsMapper) {}
+    public BottomSheetHandler(IPropertyMapper? mapper) : base(mapper ?? PropertiesMapper, CommandsMapper) {}
+    public BottomSheetHandler() : base(PropertiesMapper, CommandsMapper) {}
     
     #region Methods
     
-    private static void MapBackground(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformMapBackground(sheet);
+    public static BottomSheetHandler CreateBottomSheetHandler(IMauiContext context)
+    {
+        var sheet = new BottomSheetHandler();
+        sheet.SetMauiContext(context);
+        return sheet;
+    }
+
+    /*
+    public override void UpdateValue(string property)
+    {
+        base.UpdateValue(property);
+        if (property is nameof(IContentView.Background) or nameof(VisualElement.BackgroundColor))
+        {
+            MapBackground(this, VirtualView);
+            PlatformUpdateBackground(this, (BottomSheet)VirtualView);
+        }
+    }
+    */
+    
+    private static void MapBackground(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateBackground(sheet);
     private static void MapCornerRadius(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateCornerRadius(sheet);
     private static void MapHasScrim(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateHasScrim(sheet);
     private static void MapScrimColor(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateScrimColor(sheet);
+    private static void MapScrimOpacity(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateScrimOpacity(sheet);
+    private static void MapHasHandle(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateHasHandle(sheet);
     private static void MapHandleColor(BottomSheetHandler handler, MaterialBottomSheet sheet) => handler.PlatformUpdateHandleColor(sheet);
     private static void MapDismiss(BottomSheetHandler handler, MaterialBottomSheet view, object? request) => handler.Dismiss(view, request ?? false);
-    private static void MapSelectedDetent(BottomSheetHandler handler, MaterialBottomSheet view) => handler.PlatformMapSelectedDetent(view);
+    private static void MapSelectedDetent(BottomSheetHandler handler, MaterialBottomSheet view) => handler.PlatformUpdateSelectedDetent(view);
     internal void UpdateSelectedDetent(MaterialBottomSheet view) => PlatformUpdateSelectedDetent(view);
 
-    partial void PlatformMapBackground(MaterialBottomSheet view);
-    partial void PlatformMapSelectedDetent(MaterialBottomSheet view);
+    partial void PlatformUpdateBackground(MaterialBottomSheet view);
     partial void PlatformUpdateHandleColor(MaterialBottomSheet view);
     partial void PlatformUpdateHasScrim(MaterialBottomSheet view);
     partial void PlatformUpdateScrimColor(MaterialBottomSheet view);
+    partial void PlatformUpdateScrimOpacity(MaterialBottomSheet view);
     partial void PlatformUpdateSelectedDetent(MaterialBottomSheet view);
     partial void PlatformUpdateCornerRadius(MaterialBottomSheet view);
     partial void Dismiss(MaterialBottomSheet view, object request);
