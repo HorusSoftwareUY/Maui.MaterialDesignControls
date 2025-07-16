@@ -24,8 +24,7 @@ public enum SelectionType
 public static class MaterialViewGroup
 {
     static readonly BindableProperty GroupControllerProperty =
-		BindableProperty.CreateAttached("GroupController", typeof(MaterialViewGroupController), typeof(Element), default(MaterialViewGroupController),
-		defaultValueCreator: (b) => new MaterialViewGroupController(b as Element),
+		BindableProperty.CreateAttached("GroupController", typeof(MaterialViewGroupController), typeof(Element), null,
 		propertyChanged: (b, o, n) =>
 		{
 			if (n is MaterialViewGroupController newController)
@@ -38,9 +37,17 @@ public static class MaterialViewGroup
 			}
 		});
     
-	static MaterialViewGroupController GetGroupController(BindableObject b)
+	static MaterialViewGroupController? GetGroupController(BindableObject b)
 	{
-		return (MaterialViewGroupController)b.GetValue(GroupControllerProperty);
+		return (MaterialViewGroupController?)b.GetValue(GroupControllerProperty);
+	}
+	
+	/// <summary>
+	/// Sets the group controller for the set of views that will be grouped together.
+	/// </summary>
+	static void SetGroupController(BindableObject bindable, MaterialViewGroupController groupController)
+	{
+		bindable.SetValue(GroupControllerProperty, groupController);
 	}
 
 	/// <summary>
@@ -50,11 +57,69 @@ public static class MaterialViewGroup
 		BindableProperty.Create("GroupName", typeof(string), typeof(Element), null,
 		propertyChanged: (b, o, n) =>
 		{
-			if (b is not IGroupableView)
+			if (n is not string groupName || string.IsNullOrEmpty(groupName))
 			{
-				GetGroupController(b).GroupName = (string)n;
+				return;
+			}
+			
+			if (b is Layout layout)
+			{
+				var groupController = GetGroupController(layout);
+				
+				if (groupController == null)
+				{
+					groupController = new MaterialViewGroupController(layout);
+					groupController.SelectedValue = GetSelectedValue(layout);
+					groupController.SelectedValues = GetSelectedValues(layout);
+					groupController.SelectedValueChangedCommand = GetSelectedValueChangedCommand(layout);
+					groupController.SelectionType = GetSelectionType(layout);
+					SetGroupController(layout, groupController);
+				}
+				
+				groupController.GroupName = groupName;
+				groupController.Init();
+			}
+			else if (b is IGroupableView)
+			{
+				var groupController = MaterialViewGroupController.GetGroupController(groupName);
+				if (groupController == null)
+				{
+					var parentLayout = ((Element)b).GetParent<Layout>();
+					if (parentLayout == null)
+					{
+						((Element)b).ParentChanged += GroupableViewParentChanged;
+					}
+					else
+					{
+						SetPropagateGroupName(parentLayout, false);
+						SetGroupName(parentLayout, groupName);
+					}
+				}
 			}
 		});
+	
+	private static void GroupableViewParentChanged(object? sender, EventArgs e)
+	{
+		if (sender != null && sender is Element element)
+		{
+			element.ParentChanged -= GroupableViewParentChanged;
+			
+			if (sender is IGroupableView)
+			{
+				var parentLayout = element.GetParent<Layout>();
+				if (parentLayout != null)
+				{
+					var groupName = GetGroupName(element);
+					var groupController = MaterialViewGroupController.GetGroupController(groupName);
+					if (groupController == null)
+					{
+						SetPropagateGroupName(parentLayout, false);
+						SetGroupName(parentLayout, groupName);
+					}
+				}
+			}
+		}
+	}
 
 	/// <summary>
 	/// Returns the group name for the set of views that will be grouped together.
@@ -80,7 +145,11 @@ public static class MaterialViewGroup
 		defaultBindingMode: BindingMode.TwoWay,
 		propertyChanged: (b, o, n) =>
 		{
-			GetGroupController(b).SelectedValue = n;
+			var groupController = GetGroupController(b);
+			if (groupController != null)
+			{
+				groupController.SelectedValue = n;
+			}
 		});
 
 	/// <summary>
@@ -107,7 +176,11 @@ public static class MaterialViewGroup
 			defaultBindingMode: BindingMode.TwoWay,
 			propertyChanged: (b, o, n) =>
 			{
-				GetGroupController(b).SelectedValues = (IList<object>)n;
+				var groupController = GetGroupController(b);
+				if (groupController != null)
+				{
+					groupController.SelectedValues = (IList<object>)n;
+				}
 			});
 
 	/// <summary>
@@ -133,7 +206,11 @@ public static class MaterialViewGroup
 		BindableProperty.Create("SelectedValueChangedCommand", typeof(ICommand), typeof(Element), null,
 			propertyChanged: (b, o, n) =>
 			{
-				GetGroupController(b).SelectedValueChangedCommand = (ICommand)n;
+				var groupController = GetGroupController(b);
+				if (groupController != null)
+				{
+					groupController.SelectedValueChangedCommand = (ICommand)n;
+				}
 			});
 	
 	/// <summary>
@@ -159,7 +236,11 @@ public static class MaterialViewGroup
 		BindableProperty.Create("SelectionType", typeof(SelectionType), typeof(Element), SelectionType.Single,
 			propertyChanged: (b, o, n) =>
 			{
-				GetGroupController(b).SelectionType = (SelectionType)n;
+				var groupController = GetGroupController(b);
+				if (groupController != null)
+				{
+					groupController.SelectionType = (SelectionType)n;
+				}
 			});
 
 	/// <summary>
@@ -176,5 +257,27 @@ public static class MaterialViewGroup
 	public static void SetSelectionType(BindableObject bindable, SelectionType selectionType)
 	{
 		bindable.SetValue(SelectionTypeProperty, selectionType);
+	}
+	
+	/// <summary>
+	/// The backing store for the <see cref="PropagateGroupName" /> bindable property.
+	/// </summary>
+	internal static readonly BindableProperty PropagateGroupNameProperty =
+		BindableProperty.Create("PropagateGroupName", typeof(bool), typeof(Element), true);
+
+	/// <summary>
+	/// Returns if the group controller should propagate the group name to all child <see cref="IGroupableView" /> instances.
+	/// </summary>
+	internal static bool GetPropagateGroupName(BindableObject b)
+	{
+		return (bool)b.GetValue(PropagateGroupNameProperty);
+	}
+
+	/// <summary>
+	/// Sets if the group controller should propagate the group name to all child <see cref="IGroupableView" /> instances.
+	/// </summary>
+	internal static void SetPropagateGroupName(BindableObject bindable, bool propagateGroupName)
+	{
+		bindable.SetValue(PropagateGroupNameProperty, propagateGroupName);
 	}
 }

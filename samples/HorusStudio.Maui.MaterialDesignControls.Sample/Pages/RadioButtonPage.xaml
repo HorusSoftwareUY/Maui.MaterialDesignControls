@@ -168,32 +168,30 @@
 
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing some properties" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="0">
+            <VerticalStackLayout 
+                material:MaterialViewGroup.GroupName="SettingProperties"
+                Spacing="0">
                 <material:MaterialRadioButton 
                     Text="Radio button 1" 
                     StrokeColor="DarkOrange" 
-                    GroupName="SettingProperties"
                     TextColor="DarkGreen" 
                     FontAttributes="Bold" />
 
                 <material:MaterialRadioButton 
                     Text="Radio button 2"
                     StrokeColor="DarkOrange"
-                    GroupName="SettingProperties"
                     TextColor="DarkGreen"
                     CharacterSpacing="5" />
 
                 <material:MaterialRadioButton 
                     Text="Radio button 3"
                     StrokeColor="DarkOrange"
-                    GroupName="SettingProperties"
                     FontSize="25"
                     TextColor="DarkGreen" />
 
                 <material:MaterialRadioButton 
                     Text="Radio button 4"
                     StrokeColor="DarkOrange"
-                    GroupName="SettingProperties"
                     TextColor="DarkGreen"/>
             </VerticalStackLayout>
         </material:MaterialCard>
@@ -254,15 +252,15 @@
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using control template and define a group name" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
+            <HorizontalStackLayout 
+                material:MaterialViewGroup.GroupName="ControlTemplate"
+                HorizontalOptions="Center" 
+                Spacing="4">
                 <material:MaterialRadioButton 
-                    GroupName="ControlTemplate"
                     Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
                 <material:MaterialRadioButton 
-                    GroupName="ControlTemplate"
                     Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
                 <material:MaterialRadioButton 
-                    GroupName="ControlTemplate"
                     Style="{StaticResource MaterialRadioButtonWithControlTemplate}" />
             </HorizontalStackLayout>
         </material:MaterialCard>
@@ -270,24 +268,23 @@
 
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom events, new style and text side changing" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="0">
+            <VerticalStackLayout 
+                material:MaterialViewGroup.GroupName="Events"
+                Spacing="0">
                 <material:MaterialRadioButton 
                     Text="Radio button 1"
-                    GroupName="Events"
                     Style="{StaticResource VisualStateManagerStyle}"
                     TextSide="Left"
                     IsEnabled="{Binding IsRadioButtonEnabled}"
                     CheckedChanged="MaterialRadioButton_CheckedChanged" />
                 <material:MaterialRadioButton 
                     Text="Radio button 2"
-                    GroupName="Events"
                     TextSide="Left"
                     IsEnabled="{Binding IsRadioButtonEnabled}"
                     Style="{StaticResource VisualStateManagerStyle}"
                     CheckedChangedCommand="{Binding CheckedChangedCommand}" />
                 <material:MaterialRadioButton 
                     Text="Radio button 3"
-                    GroupName="Events"
                     TextSide="Left"
                     IsEnabled="{Binding IsRadioButtonEnabled}"
                     Style="{StaticResource VisualStateManagerStyle}" />
