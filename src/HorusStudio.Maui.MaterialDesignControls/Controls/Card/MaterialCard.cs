@@ -551,7 +551,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 {
                     Brush = ShadowColor,
                     Radius = base.Shadow.Radius,
-                    Opacity = base.Shadow.Opacity,
+                    Opacity = ShadowColor != Colors.Transparent ? base.Shadow.Opacity : 0,
                     Offset = base.Shadow.Offset
                 };
             }
