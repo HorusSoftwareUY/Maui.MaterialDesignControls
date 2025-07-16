@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Handlers;
+using UIKit;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -19,5 +20,17 @@ public partial class MaterialPickerHandler
         {
             handler.PlatformView.TextAlignment = customPicker.HorizontalTextAlignment.ToUIKit();
         }
+    }
+    
+    public void ClearText()
+    {
+        MainThreadExtensions.SafeRunOnUiThread(() => 
+        { 
+            if (VirtualView.Handler is PickerHandler handler 
+                && handler.PlatformView is UITextField textField)
+            {
+                textField.Text = string.Empty;
+            }
+        });
     }
 }
