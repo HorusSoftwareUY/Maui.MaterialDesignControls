@@ -234,7 +234,11 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     public string Text
     {
         get => (string)GetValue(TextProperty);
-        set => SetValue(TextProperty, value);
+        set
+        {
+            SetValue(TextProperty, value);
+            OnPropertyChanged(nameof(Value));
+        } 
     }
 
     /// <summary>
@@ -394,26 +398,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     /// <remarks>If a value is not explicitly set, the control will use the value of the <see cref="MaterialRadioButton.Text" /> property or the <see cref="MaterialRadioButton.Id" /> property as its default.</remarks>
     public object Value
     {
-        get
-        {
-            var value = GetValue(ValueProperty);
-            if (value != null)
-            {
-                return value;
-            }
-            else
-            {
-                var text = GetValue(TextProperty);
-                if (text is string textValue && !string.IsNullOrEmpty(textValue))
-                {
-                    return text;
-                }
-                else
-                {
-                    return Id.ToString();
-                }
-            }
-        }
+        get => GetValue(ValueProperty) ?? (!string.IsNullOrEmpty(Text) ? Text : Id);
         set => SetValue(ValueProperty, value);
     }
 
