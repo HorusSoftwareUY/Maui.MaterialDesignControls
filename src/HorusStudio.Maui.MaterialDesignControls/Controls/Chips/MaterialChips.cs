@@ -615,7 +615,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// <default>
     /// <see cref="MaterialChips.Text" />
     /// </default>
-    /// <remarks>If a value is not explicitly set, the control will use the <see cref="MaterialChips.Text" /> of the Text property as its default.</remarks>
+    /// <remarks>If a value is not explicitly set, the control will use the <see cref="MaterialChips.Text" /> of the Text property or the <see cref="MaterialChips.Id" /> property as its default.</remarks>
     public object Value
     {
         get
@@ -627,8 +627,15 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             }
             else
             {
-
-                return GetValue(TextProperty);
+                var text = GetValue(TextProperty);
+                if (text is string textValue && !string.IsNullOrEmpty(textValue))
+                {
+                    return text;
+                }
+                else
+                {
+                    return Id.ToString();
+                }
             }
         }
         set => SetValue(ValueProperty, value);
