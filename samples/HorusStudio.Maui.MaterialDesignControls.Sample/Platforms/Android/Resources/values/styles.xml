@@ -2,5 +2,9 @@
 <resources>
     <style name="Maui.MainTheme.Base" parent="Theme.MaterialComponents.DayNight">
         <item name="android:windowLightStatusBar">true</item>
+        <item name="bottomSheetDragHandleStyle">@style/MaterialBottomSheet.DragHandle</item>
+    </style>
+    <style name="MaterialBottomSheet.DragHandle" parent="Widget.Material3.BottomSheet.DragHandle">
+        <item name="tint">#000000</item>
     </style>
 </resources>

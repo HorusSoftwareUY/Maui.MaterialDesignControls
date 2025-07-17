@@ -90,6 +90,7 @@
                                       Style="{StaticResource BaseSheet}"
                                       BackgroundColor="DarkBlue"
                                       HandleColor="Goldenrod"
+                                      HandleOpacity="1"
                                       ScrimColor="BlueViolet"
                                       ScrimOpacity=".2"
                                       Shown="CustomSheet_OnShown"
