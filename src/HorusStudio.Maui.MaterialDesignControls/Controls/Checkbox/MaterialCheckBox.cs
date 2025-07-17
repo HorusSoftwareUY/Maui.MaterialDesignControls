@@ -425,7 +425,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
             }
         };
 
-#if IOS
+#if IOS || MACCATALYST
         _mainLayout.Padding = new Thickness(6);
 #endif
 
