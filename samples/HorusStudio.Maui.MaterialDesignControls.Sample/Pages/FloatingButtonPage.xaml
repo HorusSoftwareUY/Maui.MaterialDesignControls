@@ -37,7 +37,7 @@
                         BindableLayout.ItemsSource="{Binding Types}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="x:String">
-                        <material:MaterialChips
+                        <material:MaterialChip
                             Type="Filter"
                             Text="{Binding .}"
                             Value="{Binding .}"
@@ -57,7 +57,7 @@
                         BindableLayout.ItemsSource="{Binding Positions}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="x:String">
-                        <material:MaterialChips
+                        <material:MaterialChip
                             Type="Filter"
                             Text="{Binding .}"
                             Value="{Binding .}"

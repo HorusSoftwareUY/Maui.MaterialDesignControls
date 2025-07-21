@@ -535,7 +535,7 @@ public static class MaterialDesignControlsBuilderExtensions
             .AddStyles(MaterialRadioButton.GetStyles())
             .AddStyles(MaterialCheckBox.GetStyles())
             .AddStyles(MaterialTextField.GetStyles())
-            .AddStyles(MaterialChips.GetStyles())
+            .AddStyles(MaterialChip.GetStyles())
             .AddStyles(MaterialRating.GetStyles())
             .AddStyles(MaterialSelection.GetStyles())
             .AddStyles(MaterialTimePicker.GetStyles())

@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
@@ -12,31 +11,20 @@ public enum MaterialChipsType
     Normal
 }
 
-public enum IconStateType
-{
-    /// <summary>Visible both icon when selected</summary>
-    BothVisible,
-    /// <summary>Visible only Leading icon when selected</summary>
-    LeadingVisible,
-    /// <summary>Visible only Trailing icon when selected</summary>
-    TrailingVisible
-}
-
 /// <summary>
 /// A Chips help people enter information, make selections, filter content, or trigger actions <see href="https://m3.material.io/components/chips/overview">see here.</see>
 /// </summary>
 /// <example>
 ///
-/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialChips.gif</img>
+/// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialChip.gif</img>
 ///
 /// <h3>XAML sample</h3>
 /// <code>
 /// <xaml>
 /// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 /// 
-/// &lt;material:MaterialChips
+/// &lt;material:MaterialChip
 ///        Type="Normal"
-///        IconStateOnSelection="BothVisible"
 ///        LeadingIcon="plus.png"
 ///        Text="Suggestion both"
 ///        TrailingIcon="horus_logo.png"/&gt;
@@ -45,10 +33,9 @@ public enum IconStateType
 /// 
 /// <h3>C# sample</h3>
 /// <code>
-/// var chips = new MaterialChips
+/// var chip = new MaterialChip
 /// {
 ///     Type = MaterialChipsType.Normal,
-///     IconStateOnSelection = IconStateType.BothVisible,
 ///     LeadingIcon = "plus.png",
 ///     Text = "Suggestion both",
 ///     TrailingIcon="horus_logo.png"
@@ -58,15 +45,11 @@ public enum IconStateType
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ChipsPage.xaml)
 /// 
 /// </example>
-/// <todoList>
-/// * .NET 7 not work LineBreakMode.
-/// </todoList>
-public class MaterialChips : ContentView, ITouchableView, IGroupableView
+public class MaterialChip : ContentView, ITouchableView, IGroupableView
 {
     #region Attributes
 
     private const MaterialChipsType DefaultChipsType = MaterialChipsType.Normal;
-    private const IconStateType DefaultIconStateOnSelection = IconStateType.BothVisible;
     private const bool DefaultIsSelected = false;
     private const bool DefaultIsEnabled = true;
     private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(8);
@@ -93,41 +76,24 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// The backing store for the <see cref="MaterialChipsType" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialChipsType), typeof(MaterialChips), defaultValue: DefaultChipsType, propertyChanged: (bindable, _, _) =>
-    {
-        if (bindable is MaterialChips self)
-        {
-            self.SetState(self.Type);
-        }
-    });
-
-    /// <summary>
-    /// The backing store for the <see cref="IconStateOnSelection" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty IconStateOnSelectionProperty = BindableProperty.Create(nameof(IconStateOnSelection), typeof(IconStateType), typeof(MaterialChips), defaultValue: DefaultIconStateOnSelection, propertyChanged: (bindable, _, _) =>
-    {
-        if (bindable is MaterialChips self)
-        {
-            self.UpdatePadding();
-        }
-    });
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialChipsType), typeof(MaterialChip), defaultValue: DefaultChipsType);
 
     /// <summary>
     /// The backing store for the <see cref="Command" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialChips));
+    public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialChip));
     
     /// <summary>
     /// Gets or sets the state when the Chips is selected.
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(MaterialChips), defaultValue: DefaultIsSelected, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, _) =>
+    public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(MaterialChip), defaultValue: DefaultIsSelected, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, _) =>
     {
-        if (bindable is MaterialChips self)
+        if (bindable is MaterialChip self)
         {
             self.UpdatePadding();
-            self.SetState(self.Type);
+            self.SetState();
         }
     });
 
@@ -135,11 +101,11 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// Gets or sets the state when the Chips is selected.
     /// bindable property.
     /// </summary>
-    public static readonly new BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialChips), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, _, _) =>
+    public static readonly new BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialChip), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, _, _) =>
     {
-        if (bindable is MaterialChips self)
+        if (bindable is MaterialChip self)
         {
-            self.SetState(self.Type);
+            self.SetState();
         }
     });
 
@@ -147,21 +113,21 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// The backing store for the <see cref="Padding" />
     /// bindable property.
     /// </summary>
-    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialChips), defaultValue: DefaultPadding);
+    public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialChip), defaultValue: DefaultPadding);
 
     /// <summary>
     /// The backing store for the <see cref="CornerRadius" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialChips), defaultValue: DefaultCornerRadius);
+    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialChip), defaultValue: DefaultCornerRadius);
 
     /// <summary>
     /// The backing store for the <see cref="LeadingIcon" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty LeadingIconProperty = BindableProperty.Create(nameof(LeadingIcon), typeof(ImageSource), typeof(MaterialChips), defaultValue: DefaultLeadingIcon, propertyChanged: (bindable, _, _) =>
+    public static readonly BindableProperty LeadingIconProperty = BindableProperty.Create(nameof(LeadingIcon), typeof(ImageSource), typeof(MaterialChip), defaultValue: DefaultLeadingIcon, propertyChanged: (bindable, _, _) =>
     {
-        if (bindable is MaterialChips self)
+        if (bindable is MaterialChip self)
         {
             self.UpdatePadding();
         }
@@ -171,9 +137,9 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// The backing store for the <see cref="TrailingIcon" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TrailingIconProperty = BindableProperty.Create(nameof(TrailingIcon), typeof(ImageSource), typeof(MaterialChips), defaultValue: DefaultTrailingIcon, propertyChanged: (bindable, _, _) =>
+    public static readonly BindableProperty TrailingIconProperty = BindableProperty.Create(nameof(TrailingIcon), typeof(ImageSource), typeof(MaterialChip), defaultValue: DefaultTrailingIcon, propertyChanged: (bindable, _, _) =>
     {
-        if (bindable is MaterialChips self)
+        if (bindable is MaterialChip self)
         {
             self.UpdatePadding();
         }
@@ -183,97 +149,97 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// The backing store for the <see cref="Text" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialChips), defaultValue: DefaultText);
+    public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialChip), defaultValue: DefaultText);
 
     /// <summary>
     /// The backing store for the text color
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialChips), defaultValueCreator: DefaultTextColor);
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
     /// The backing store for the <see cref="FontFamily" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialChips), defaultValueCreator: DefaultFontFamily);
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialChip), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
     /// The backing store for the <see cref="FontSize" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialChips), defaultValueCreator: DefaultFontSize);
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialChip), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor" />
     /// bindable property.
     /// </summary>
-    public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialChips), defaultValueCreator: DefaultBackgroundColor);
+    public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultBackgroundColor);
 
     /// <summary>
     /// The backing store for the <see cref="BorderWidth"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialChips), defaultValue: DefaultBorderWidth);
+    public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialChip), defaultValue: DefaultBorderWidth);
 
     /// <summary>
     /// The backing store for the <see cref="BorderColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialChips), defaultValueCreator: DefaultBorderColor);
+    public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultBorderColor);
 
     /// <summary>
     /// The backing store for the <see cref="TouchAnimationType"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialChips), defaultValueCreator: DefaultTouchAnimationType);
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialChip), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
     /// The backing store for the <see cref="TouchAnimation"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialChips));
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialChip));
 
     /// <summary>
     /// The backing store for the <see cref="LeadingIconTintColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty LeadingIconTintColorProperty = BindableProperty.Create(nameof(LeadingIconTintColor), typeof(Color), typeof(MaterialChips), defaultValueCreator: DefaultIconTintColor);
+    public static readonly BindableProperty LeadingIconTintColorProperty = BindableProperty.Create(nameof(LeadingIconTintColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultIconTintColor);
 
     /// <summary>
     /// The backing store for the <see cref="ApplyLeadingIconTintColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ApplyLeadingIconTintColorProperty = BindableProperty.Create(nameof(ApplyLeadingIconTintColor), typeof(bool), typeof(MaterialChips), defaultValue: true);
+    public static readonly BindableProperty ApplyLeadingIconTintColorProperty = BindableProperty.Create(nameof(ApplyLeadingIconTintColor), typeof(bool), typeof(MaterialChip), defaultValue: true);
 
     /// <summary>
     /// The backing store for the <see cref="TrailingIconTintColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty TrailingIconTintColorProperty = BindableProperty.Create(nameof(TrailingIconTintColor), typeof(Color), typeof(MaterialChips), defaultValueCreator: DefaultIconTintColor);
+    public static readonly BindableProperty TrailingIconTintColorProperty = BindableProperty.Create(nameof(TrailingIconTintColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultIconTintColor);
 
     /// <summary>
     /// The backing store for the <see cref="ApplyTrailingIconTintColor" /> bindable property.
     /// </summary>
-    public static readonly BindableProperty ApplyTrailingIconTintColorProperty = BindableProperty.Create(nameof(ApplyTrailingIconTintColor), typeof(bool), typeof(MaterialChips), defaultValue: true);
+    public static readonly BindableProperty ApplyTrailingIconTintColorProperty = BindableProperty.Create(nameof(ApplyTrailingIconTintColor), typeof(bool), typeof(MaterialChip), defaultValue: true);
 
     /// <summary>
     /// The backing store for the <see cref="ShadowColor" />
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(nameof(ShadowColor), typeof(Color), typeof(MaterialChips), defaultValueCreator: DefaultShadowColor);
+    public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(nameof(ShadowColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultShadowColor);
 
     /// <summary>
     /// The backing store for the <see cref="Shadow" />
     /// bindable property.
     /// </summary>
-    public static readonly new BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialChips), defaultValueCreator: DefaultShadow);
+    public static readonly new BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialChip), defaultValueCreator: DefaultShadow);
     
     /// <summary>
     /// The backing store for the <see cref="Value"/>
     /// bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialChips), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) => 
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialChip), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) => 
     { 
-        if(bindableObject is MaterialChips self)
+        if(bindableObject is MaterialChip self)
         {
             self.GroupableViewPropertyChanged?.Invoke(self, new GroupableViewPropertyChangedEventArgs(nameof(Value), oldValue, newValue));
         }
@@ -284,33 +250,20 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     #region Properties
 
     /// <summary>
-    /// Gets or sets type Chips.
+    /// Gets or sets Chip type.
     /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialChipsType.Normal">MaterialChipsType.Normal</see>
     /// </default>
     /// <remarks>
-    /// <para>Normal: They are for the types assist, input amd suggestion, chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters.</para>
+    /// <para>Normal: They are for the types assist, input and suggestion, chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters.</para>
     /// <para>Filter: chips use tags or descriptive words to filter content. They can be a good alternative to segmented buttons or checkboxes when viewing a list or search results.</para>
     /// </remarks>
     public MaterialChipsType Type
     {
         get => (MaterialChipsType)GetValue(TypeProperty);
         set => SetValue(TypeProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the badge type according to <see cref="IconStateType"/> enum.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see cref="IconStateType.BothVisible">IconStateType.BothVisible</see>
-    /// </default>
-    public IconStateType IconStateOnSelection
-    {
-        get => (IconStateType)GetValue(IconStateOnSelectionProperty);
-        set => SetValue(IconStateOnSelectionProperty, value);
     }
 
     /// <summary>
@@ -617,9 +570,9 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialChips.Text" />
+    /// <see cref="MaterialChip.Text" />
     /// </default>
-    /// <remarks>If a value is not explicitly set, the control will use the <see cref="MaterialChips.Text" /> of the Text property or the <see cref="MaterialChips.Id" /> property as its default.</remarks>
+    /// <remarks>If a value is not explicitly set, the control will use the <see cref="MaterialChip.Text" /> of the Text property or the <see cref="MaterialChip.Id" /> property as its default.</remarks>
     public object Value
     {
         get => GetValue(ValueProperty) ?? (!string.IsNullOrEmpty(Text) ? Text : Id);
@@ -631,7 +584,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     #region Events
 
     private EventHandler? _clicked;
-    private readonly object _objectLock = new();
+    private readonly Lock _objectLock = new();
 
     public event EventHandler<GroupableViewPropertyChangedEventArgs>? GroupableViewPropertyChanged;
     
@@ -668,40 +621,34 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             {
                 Command.Execute(IsSelected);
             }
-            else if (_clicked != null)
-            {
-                _clicked.Invoke(this, new IsSelectedEventArgs(IsSelected));
-            }
+            _clicked?.Invoke(this, new IsSelectedEventArgs(IsSelected));
         }
     }
 
     protected virtual void InternalPressedHandler(object? sender, EventArgs e)
     {
-        if (IsEnabled)
-        {
-            OnTouch(TouchEventType.Pressed);
-        }
+        if (!IsEnabled) return;
+        OnTouch(TouchEventType.Pressed);
     }
 
     protected virtual void InternalReleasedHandler(object? sender, EventArgs e)
     {
-        if (IsEnabled)
+        if (!IsEnabled) return;
+        
+        if (Type == MaterialChipsType.Normal)
         {
-            if (Type == MaterialChipsType.Normal)
-            {
-                VisualStateManager.GoToState(this, ChipsCommonStates.Normal);
-            }
-            else if (GroupableViewPropertyChanged != null)
-            {
-                GroupableViewPropertyChanged.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsSelected, !IsSelected));
-            }
-            else
-            {
-                IsSelected = !IsSelected;
-            }
-
-            OnTouch(TouchEventType.Released);
+            VisualStateManager.GoToState(this, VisualStateManager.CommonStates.Normal);
         }
+        else if (GroupableViewPropertyChanged != null)
+        {
+            GroupableViewPropertyChanged.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsSelected, !IsSelected));
+        }
+        else
+        {
+            IsSelected = !IsSelected;
+        }
+
+        OnTouch(TouchEventType.Released);
     }
 
     #endregion Events
@@ -718,12 +665,12 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
 
     #region Constructors
 
-    public MaterialChips(bool toGroup)
+    public MaterialChip(bool toGroup)
     {
         CreateLayout(toGroup);
     }
 
-    public MaterialChips()
+    public MaterialChip()
     {
         CreateLayout();
     }
@@ -826,67 +773,25 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
 
     #region Setters
 
-    private void SetState(MaterialChipsType type)
+    private void SetState()
     {
-        if (type == MaterialChipsType.Normal)
-        {
-            VisualStateManager.GoToState(this, ChipsCommonStates.Normal);
-        }
-        else
-        {
-            if (IsSelected)
-            {
-                VisualStateManager.GoToState(this, ChipsCommonStates.Selected);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, ChipsCommonStates.Unselected);
-            }
-        }
-
         if (!IsEnabled)
         {
-            VisualStateManager.GoToState(this, ChipsCommonStates.Disabled);
+            VisualStateManager.GoToState(this, VisualStateManager.CommonStates.Disabled);
+            return;
         }
+        
+        VisualStateManager.GoToState(this, IsSelected ? VisualStateManager.CommonStates.Selected : VisualStateManager.CommonStates.Normal);
     }
 
     private void UpdatePadding()
     {
-        bool containLeadingIcon = (LeadingIcon != null && !LeadingIcon.IsEmpty);
-        bool containTrailingIcon = (TrailingIcon != null && !TrailingIcon.IsEmpty);
+        var hasLeadingIcon = LeadingIcon is { IsEmpty: false };
+        var hasTrailingIcon = TrailingIcon is { IsEmpty: false };
 
-        if (Type == MaterialChipsType.Normal)
-        {
-            _container.Padding = new Thickness(containLeadingIcon ? 8 : 16, 0, containTrailingIcon ? 8 : 16, 0);
-            _leadingIcon.IsVisible = containLeadingIcon;
-            _trailingIcon.IsVisible = containTrailingIcon;
-        }
-        else
-        {
-            switch (IconStateOnSelection)
-            {
-                case IconStateType.BothVisible:
-                    _container.Padding = new Thickness((containLeadingIcon && IsSelected) ? 8 : 16, 0, (containTrailingIcon && IsSelected) ? 8 : 16, 0);
-                    _leadingIcon.IsVisible = containLeadingIcon && IsSelected;
-                    _trailingIcon.IsVisible = containTrailingIcon && IsSelected;
-                    break;
-                case IconStateType.LeadingVisible:
-                    _container.Padding = new Thickness((containLeadingIcon && IsSelected) ? 8 : 16, 0, 16, 0);
-                    _leadingIcon.IsVisible = containLeadingIcon && IsSelected;
-                    _trailingIcon.IsVisible = false;
-                    break;
-                case IconStateType.TrailingVisible:
-                    _container.Padding = new Thickness(16, 0, (containTrailingIcon && IsSelected) ? 8 : 16, 0);
-                    _leadingIcon.IsVisible = false;
-                    _trailingIcon.IsVisible = containTrailingIcon && IsSelected;
-                    break;
-                default:
-                    _container.Padding = new Thickness((containLeadingIcon && IsSelected) ? 8 : 16, 0, (containTrailingIcon && IsSelected) ? 8 : 16, 0);
-                    _leadingIcon.IsVisible = containLeadingIcon && IsSelected;
-                    _trailingIcon.IsVisible = containTrailingIcon && IsSelected;
-                    break;
-            }
-        }
+        _container.Padding = new Thickness(hasLeadingIcon ? 8 : 16, 0, hasTrailingIcon ? 8 : 16, 0);
+        _leadingIcon.IsVisible = hasLeadingIcon;
+        _trailingIcon.IsVisible = hasTrailingIcon;
     }
 
     #endregion Setters
@@ -897,10 +802,10 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
     {
         var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
 
-        var disabled = new VisualState { Name = ChipsCommonStates.Disabled };
+        var disabled = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
 
         disabled.Setters.Add(
-            MaterialChips.BorderColorProperty,
+            MaterialChip.BorderColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSurface,
@@ -910,7 +815,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             .WithAlpha(0.12f));
 
         disabled.Setters.Add(
-            MaterialChips.BackgroundColorProperty,
+            MaterialChip.BackgroundColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSurface,
@@ -920,7 +825,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             .WithAlpha(0.12f));
 
         disabled.Setters.Add(
-            MaterialChips.TextColorProperty,
+            MaterialChip.TextColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSurface,
@@ -930,7 +835,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             .WithAlpha(0.38f));
 
         disabled.Setters.Add(
-            MaterialChips.LeadingIconTintColorProperty,
+            MaterialChip.LeadingIconTintColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSurface,
@@ -940,7 +845,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             .WithAlpha(0.38f));
 
         disabled.Setters.Add(
-            MaterialChips.TrailingIconTintColorProperty,
+            MaterialChip.TrailingIconTintColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSurface,
@@ -950,7 +855,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             .WithAlpha(0.38f));
 
         disabled.Setters.Add(
-            MaterialChips.ShadowColorProperty,
+            MaterialChip.ShadowColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.Shadow,
@@ -959,10 +864,10 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
                 .GetValueForCurrentTheme<Color>()
                 .WithAlpha(0.38f));
 
-        var normal = new VisualState { Name = ChipsCommonStates.Normal };
+        var normal = new VisualState { Name = VisualStateManager.CommonStates.Normal };
 
         normal.Setters.Add(
-            MaterialChips.BorderColorProperty,
+            MaterialChip.BorderColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.Outline,
@@ -971,7 +876,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             .GetValueForCurrentTheme<Color>());
 
         normal.Setters.Add(
-            MaterialChips.BackgroundColorProperty,
+            MaterialChip.BackgroundColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.SurfaceContainerLow,
@@ -980,7 +885,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             .GetValueForCurrentTheme<Color>());
 
         normal.Setters.Add(
-            MaterialChips.TextColorProperty,
+            MaterialChip.TextColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSurfaceVariant,
@@ -989,7 +894,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             .GetValueForCurrentTheme<Color>());
 
         normal.Setters.Add(
-            MaterialChips.LeadingIconTintColorProperty,
+            MaterialChip.LeadingIconTintColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.Primary,
@@ -998,7 +903,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             .GetValueForCurrentTheme<Color>());
 
         normal.Setters.Add(
-            MaterialChips.TrailingIconTintColorProperty,
+            MaterialChip.TrailingIconTintColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.Primary,
@@ -1007,7 +912,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             .GetValueForCurrentTheme<Color>());
 
         normal.Setters.Add(
-            MaterialChips.ShadowColorProperty,
+            MaterialChip.ShadowColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.Shadow,
@@ -1015,66 +920,10 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
             }
                 .GetValueForCurrentTheme<Color>());
 
-        var unselected = new VisualState { Name = ChipsCommonStates.Unselected };
-
-        unselected.Setters.Add(
-            MaterialChips.BorderColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Outline,
-                Dark = MaterialDarkTheme.Outline
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        unselected.Setters.Add(
-            MaterialChips.BackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.SurfaceContainerLow,
-                Dark = MaterialDarkTheme.SurfaceContainerLow
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        unselected.Setters.Add(
-            MaterialChips.TextColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurfaceVariant,
-                Dark = MaterialDarkTheme.OnSurfaceVariant
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        unselected.Setters.Add(
-            MaterialChips.LeadingIconTintColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Primary,
-                Dark = MaterialDarkTheme.Primary
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        unselected.Setters.Add(
-            MaterialChips.TrailingIconTintColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurfaceVariant,
-                Dark = MaterialDarkTheme.OnSurfaceVariant
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        unselected.Setters.Add(
-            MaterialChips.ShadowColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Shadow,
-                Dark = MaterialDarkTheme.Shadow
-            }
-                .GetValueForCurrentTheme<Color>());
-
-        var selected = new VisualState { Name = ChipsCommonStates.Selected };
+        var selected = new VisualState { Name = VisualStateManager.CommonStates.Selected };
 
         selected.Setters.Add(
-            MaterialChips.BorderColorProperty,
+            MaterialChip.BorderColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.SecondaryContainer,
@@ -1083,7 +932,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
                 .GetValueForCurrentTheme<Color>());
 
         selected.Setters.Add(
-            MaterialChips.BackgroundColorProperty,
+            MaterialChip.BackgroundColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.SecondaryContainer,
@@ -1092,7 +941,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
                 .GetValueForCurrentTheme<Color>());
 
         selected.Setters.Add(
-            MaterialChips.TextColorProperty,
+            MaterialChip.TextColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSecondaryContainer,
@@ -1101,7 +950,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
                 .GetValueForCurrentTheme<Color>());
 
         selected.Setters.Add(
-            MaterialChips.LeadingIconTintColorProperty,
+            MaterialChip.LeadingIconTintColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSecondaryContainer,
@@ -1110,7 +959,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
                 .GetValueForCurrentTheme<Color>());
 
         selected.Setters.Add(
-            MaterialChips.TrailingIconTintColorProperty,
+            MaterialChip.TrailingIconTintColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.OnSecondaryContainer,
@@ -1119,7 +968,7 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
                 .GetValueForCurrentTheme<Color>());
 
         selected.Setters.Add(
-            MaterialChips.ShadowColorProperty,
+            MaterialChip.ShadowColorProperty,
             new AppThemeBindingExtension
             {
                 Light = MaterialLightTheme.Shadow,
@@ -1129,19 +978,13 @@ public class MaterialChips : ContentView, ITouchableView, IGroupableView
 
         commonStatesGroup.States.Add(disabled);
         commonStatesGroup.States.Add(normal);
-        commonStatesGroup.States.Add(unselected);
         commonStatesGroup.States.Add(selected);
 
-        var style = new Style(typeof(MaterialChips));
+        var style = new Style(typeof(MaterialChip));
         style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
 
         return new List<Style> { style };
     }
 
     #endregion Styles
-}
-
-public class ChipsCommonStates : VisualStateManager.CommonStates
-{
-    public const string Unselected = "Unselected";
 }
