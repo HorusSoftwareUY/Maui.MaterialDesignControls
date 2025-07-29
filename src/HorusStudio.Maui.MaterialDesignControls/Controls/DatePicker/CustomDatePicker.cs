@@ -2,7 +2,7 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// An <see cref="DatePicker" /> without border on every platform.
+/// An extended <see cref="DatePicker">DatePicker</see> without border on every platform.
 /// </summary>
 internal class CustomDatePicker : DatePicker
 {
@@ -30,7 +30,7 @@ internal class CustomDatePicker : DatePicker
     #region Bindable Properties
     
     /// <summary>
-    /// The backing store for the <see cref="HorizontalTextAlignment" /> bindable property.
+    /// The backing store for the <see cref="HorizontalTextAlignment">HorizontalTextAlignment</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(CustomDatePicker), defaultValue: null);
 

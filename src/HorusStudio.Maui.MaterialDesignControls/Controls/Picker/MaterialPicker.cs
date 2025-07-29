@@ -5,7 +5,7 @@ using Microsoft.Maui.Handlers;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A picker <see cref="View" /> let users select an option. 
+/// Pickers let users select an option. They typically appear in forms and dialogs. 
 /// </summary>
 /// <example>
 ///
@@ -85,27 +85,27 @@ public class MaterialPicker : MaterialInputBase
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="VerticalTextAlignment" /> bindable property.
+    /// The backing store for the <see cref="VerticalTextAlignment">VerticalTextAlignment</see> bindable property.
     /// </summary>
     public static readonly BindableProperty VerticalTextAlignmentProperty = BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(MaterialPicker), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialPicker), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialPicker), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="ItemsSource" /> bindable property.
+    /// The backing store for the <see cref="ItemsSource">ItemsSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(MaterialPicker), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="SelectedItem" /> bindable property.
+    /// The backing store for the <see cref="SelectedItem">SelectedItem</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(MaterialPicker), defaultValue: null, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindableObject, _, _) => 
     {
@@ -116,17 +116,17 @@ public class MaterialPicker : MaterialInputBase
     });
 
     /// <summary>
-    /// The backing store for the <see cref="SelectedIndex" /> bindable property.
+    /// The backing store for the <see cref="SelectedIndex">SelectedIndex</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(MaterialPicker), defaultValue: -1);
     
     /// <summary>
-    /// The backing store for the <see cref="SelectedIndexChangedCommand" /> bindable property.
+    /// The backing store for the <see cref="SelectedIndexChangedCommand">SelectedIndexChangedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedIndexChangedCommandProperty = BindableProperty.Create(nameof(SelectedIndexChangedCommand), typeof(ICommand), typeof(MaterialPicker), defaultValue: null);
     
     /// <summary>
-    /// The backing store for the <see cref="ItemDisplayPath" /> bindable property.
+    /// The backing store for the <see cref="ItemDisplayPath">ItemDisplayPath</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemDisplayPathProperty = BindableProperty.Create(nameof(ItemDisplayPath), typeof(string), typeof(MaterialPicker), defaultValue: null, propertyChanged:
         (bindableObject, _, newValue) =>
@@ -138,7 +138,7 @@ public class MaterialPicker : MaterialInputBase
         });
     
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialPicker), defaultValue: null);
 
@@ -147,7 +147,7 @@ public class MaterialPicker : MaterialInputBase
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="Picker" /> control.
+    /// Internal implementation of the <see cref="Picker">Picker</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
@@ -189,7 +189,7 @@ public class MaterialPicker : MaterialInputBase
     /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
     /// <default>
-    ///  <see cref="MaterialFontTracking.BodyLarge"/> 0.5
+    ///  <see cref="MaterialFontTracking.BodyLarge">MaterialFontTracking.BodyLarge</see>
     /// </default>
     /// <remarks>
     /// To be added.

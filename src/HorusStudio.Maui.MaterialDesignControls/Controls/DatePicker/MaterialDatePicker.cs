@@ -6,7 +6,7 @@ using Microsoft.Maui.Handlers;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A date picker <see cref="View" /> Date picker let users to select a date. They typically appear in forms and dialogs.
+/// Date Pickers let users select a date. They typically appear in forms and dialogs and, partially, follow Material Design Guidelines. <see href="https://m3.material.io/components/date-pickers/overview">See more.</see>
 /// </summary>
 /// <example>
 ///
@@ -86,13 +86,13 @@ public class MaterialDatePicker : MaterialInputBase
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialDatePicker), defaultValue: null);
 
 #nullable enable
     /// <summary>
-    /// The backing store for the <see cref="Date" /> bindable property.
+    /// The backing store for the <see cref="Date">Date</see> bindable property.
     /// </summary>
     public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime?), typeof(MaterialDatePicker), defaultValue: null, defaultBindingMode: BindingMode.TwoWay, propertyChanged:
         (bindable, oldValue, newValue) =>
@@ -103,32 +103,32 @@ public class MaterialDatePicker : MaterialInputBase
 #nullable disable
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumDate" /> bindable property.
+    /// The backing store for the <see cref="MinimumDate">MinimumDate</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumDateProperty = BindableProperty.Create(nameof(MinimumDate), typeof(DateTime), typeof(MaterialDatePicker), defaultValue: DateTime.MinValue);
 
     /// <summary>
-    /// The backing store for the <see cref="MaximumDate" /> bindable property.
+    /// The backing store for the <see cref="MaximumDate">MaximumDate</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumDateProperty = BindableProperty.Create(nameof(MaximumDate), typeof(DateTime), typeof(MaterialDatePicker), defaultValue: DateTime.MaxValue);
 
     /// <summary>
-    /// The backing store for the <see cref="Format" /> bindable property.
+    /// The backing store for the <see cref="Format">Format</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(MaterialDatePicker), defaultValue: MaterialFormat.DateFormat);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialDatePicker), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialDatePicker), defaultValueCreator: DefaultCharacterSpacing);
     
     /// <summary>
-    /// The backing store for the <see cref="DateSelectedCommand" /> bindable property.
+    /// The backing store for the <see cref="DateSelectedCommand">DateSelectedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty DateSelectedCommandProperty = BindableProperty.Create(nameof(DateSelectedCommand), typeof(ICommand), typeof(MaterialDatePicker));
 
@@ -137,7 +137,7 @@ public class MaterialDatePicker : MaterialInputBase
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="DatePicker" /> control.
+    /// Internal implementation of the <see cref="DatePicker">DatePicker</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
@@ -159,10 +159,11 @@ public class MaterialDatePicker : MaterialInputBase
 
 #nullable enable
     /// <summary>
-    /// Gets or sets selected Date. This is a bindable property.
+    /// Gets or sets the selected date.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="DateTime.Now"/>
+    /// <see cref="DateTime.Now">DateTime.Now</see>
     /// </default>
     public DateTime? Date
     {
@@ -172,10 +173,11 @@ public class MaterialDatePicker : MaterialInputBase
 #nullable disable
 
     /// <summary>
-    /// Gets or sets the Minimum Date. This is a bindable property.
+    /// Gets or sets the Minimum Date.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="DateTime.MinValue"/>
+    /// <see cref="DateTime.MinValue">DateTime.MinValue</see>
     /// </default>
     public DateTime MinimumDate
     {
@@ -184,10 +186,11 @@ public class MaterialDatePicker : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets the Maximum Date. This is a bindable property.
+    /// Gets or sets the Maximum Date.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="DateTime.MaxValue"/>
+    /// <see cref="DateTime.MaxValue">DateTime.MaxValue</see>
     /// </default>
     public DateTime MaximumDate
     {
@@ -196,13 +199,14 @@ public class MaterialDatePicker : MaterialInputBase
     }
 
     /// <summary>
-    /// The format of the date to display to the user. This is a bindable property.
+    /// The format of the date to display to the user.
+    /// This is a bindable property.
     /// </summary>
     /// <value>
     /// A valid date format.
     /// </value>
     /// <default>
-    /// <see cref="MaterialFormat.DateFormat"/> dd/MM/yyyy
+    /// <see cref="MaterialFormat.DateFormat">MaterialFormat.DateFormat</see>: dd/MM/yyyy
     /// </default>
     /// <remarks>
     /// Format string is the same is passed to DateTime.ToString (string format).
@@ -215,7 +219,8 @@ public class MaterialDatePicker : MaterialInputBase
     
     /// <summary>
     /// Determines whether font of this entry should scale automatically according
-    /// to the operating system settings. Default value is true. This is a bindable property.
+    /// to the operating system settings. Default value is true.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// True
@@ -236,7 +241,7 @@ public class MaterialDatePicker : MaterialInputBase
     /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontTracking.BodyLarge"/> 0.5
+    /// <see cref="MaterialFontTracking.BodyLarge">MaterialFontTracking.BodyLarge</see>: 0.5
     /// </default>
     /// <remarks>
     /// To be added.

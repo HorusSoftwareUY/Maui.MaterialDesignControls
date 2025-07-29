@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// Wrapper for items defined within a <see cref="MaterialNavigationDrawer"/>.
+/// Wrapper for items defined within a <see cref="MaterialNavigationDrawer">material navigation drawer</see>.
 /// </summary>
 public class MaterialNavigationDrawerItem : INotifyPropertyChanged
 {

@@ -8,7 +8,7 @@ internal class CustomCheckBox : CheckBox
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="TickColor" /> bindable property.
+    /// The backing store for the <see cref="TickColor">TickColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TickColorProperty = BindableProperty.Create(nameof(TickColor), typeof(Color), typeof(CustomCheckBox), defaultValue: null);
 
@@ -17,7 +17,8 @@ internal class CustomCheckBox : CheckBox
     #region Properties
 
     /// <summary>
-    /// Gets or sets <see cref="Color" /> for the tick of checkbox. This is a bindable property.
+    /// Gets or sets <see cref="Color">color</see> for the tick of checkbox.
+    /// This is a bindable property.
     /// </summary>
     /// <remarks>Only is supported on iOS</remarks>
     public Color TickColor

@@ -12,7 +12,7 @@ public enum MaterialChipsType
 }
 
 /// <summary>
-/// Chips help people enter information, make selections, filter content, or trigger actions <see href="https://m3.material.io/components/chips/overview">see here.</see>
+/// Chips help people enter information, make selections, filter content, or trigger actions and follow Material Design Guidelines. <see href="https://m3.material.io/components/chips/overview">See more.</see>
 /// </summary>
 /// <example>
 ///
@@ -252,7 +252,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     /// <remarks>This property is used to associate a command with an instance of Chips. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
     /// <para><see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.</para>
@@ -269,7 +269,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="False"/>
+    /// <see langword="false">False</see>
     /// </default>
     public bool IsSelected
     {
@@ -282,7 +282,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="True"/>
+    /// <see langword="true">True</see>
     /// </default>
     public new bool IsEnabled
     {
@@ -321,7 +321,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public ImageSource LeadingIcon
     {
@@ -334,7 +334,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public ImageSource TrailingIcon
     {
@@ -347,7 +347,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="string.Empty"/>
+    /// <see cref="string.Empty">string.Empty</see>
     /// </default>
     public string Text
     {
@@ -461,7 +461,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="true"/>
+    /// <see langword="true">True</see>
     /// </default>
     public bool ApplyLeadingIconTintColor
     {
@@ -487,7 +487,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="true"/>
+    /// <see langword="true">True</see>
     /// </default>
     public bool ApplyTrailingIconTintColor
     {
@@ -541,7 +541,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public ITouchAnimation TouchAnimation
     {

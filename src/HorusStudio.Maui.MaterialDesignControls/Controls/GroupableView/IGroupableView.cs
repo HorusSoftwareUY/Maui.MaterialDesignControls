@@ -20,6 +20,6 @@ public interface IGroupableView
     /// <summary>
     /// Event used to notify the group that one of the properties of the groupable view has changed its value.
     /// </summary>
-    /// <remarks>This event should be raised when the <see cref="Value" />, and/or <see cref="IsSelected" /> properties change.</remarks>
+    /// <remarks>This event should be raised when any <see cref="IGroupableView">IGroupableView</see> property changes.</remarks>
     event EventHandler<GroupableViewPropertyChangedEventArgs>? GroupableViewPropertyChanged;
 }

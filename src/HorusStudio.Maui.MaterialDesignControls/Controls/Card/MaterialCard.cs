@@ -17,7 +17,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     }
 
     /// <summary>
-    /// A card <see cref="View" /> that display content and actions about a single subject, and follows Material Design Guidelines <see href="https://m3.material.io/components/cards/overview">See here</see>.
+    /// Cards display content and actions about a single subject, and follow Material Design Guidelines. <see href="https://m3.material.io/components/cards/overview">See more</see>.
     /// </summary>
     /// <example>
     ///
@@ -112,7 +112,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Bindable Properties
 
         /// <summary>
-        /// The backing store for the <see cref="Type" /> bindable property.
+        /// The backing store for the <see cref="Type">Type</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialCardType), typeof(MaterialCard), defaultValue: DefaultCardType, propertyChanged: (bindable, oldValue, newValue) =>
         {
@@ -128,7 +128,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="Command" /> bindable property.
+        /// The backing store for the <see cref="Command">Command</see> bindable property.
         /// </summary>
         public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialCard), defaultValue: null, propertyChanged:
             (bindable, _, _) =>
@@ -138,22 +138,22 @@ namespace HorusStudio.Maui.MaterialDesignControls
             });
 
         /// <summary>
-        /// The backing store for the <see cref="CommandParameter" /> bindable property.
+        /// The backing store for the <see cref="CommandParameter">CommandParameter</see> bindable property.
         /// </summary>
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialCard), defaultValue: null);
 
         /// <summary>
-        /// The backing store for the <see cref="TouchAnimationType" /> bindable property.
+        /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialCard), defaultValueCreator: DefaultTouchAnimationType);
 
         /// <summary>
-        /// The backing store for the <see cref="TouchAnimation" /> bindable property.
+        /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialCard), defaultValue: null);
 
         /// <summary>
-        /// The backing store for the <see cref="ShadowColor" /> bindable property.
+        /// The backing store for the <see cref="ShadowColor">ShadowColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(nameof(ShadowColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultShadowColor, propertyChanged: (bindable, _, _) =>
         {
@@ -164,7 +164,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="BackgroundColor" /> bindable property.
+        /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
         {
@@ -175,7 +175,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="BorderColor" /> bindable property.
+        /// The backing store for the <see cref="BorderColor">BorderColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultBorderColor, propertyChanged: (bindable, _, _) =>
         {
@@ -186,7 +186,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="CornerRadius" /> bindable property.
+        /// The backing store for the <see cref="CornerRadius">CornerRadius</see> bindable property.
         /// </summary>
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialCard), defaultValue: DefaultCornerRadius, propertyChanged: (bindable, _, _) =>
         {
@@ -197,7 +197,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="BorderWidth" /> bindable property.
+        /// The backing store for the <see cref="BorderWidth">BorderWidth</see> bindable property.
         /// </summary>
         public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(float), typeof(MaterialCard), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
         {
@@ -208,7 +208,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="Shadow" /> bindable property.
+        /// The backing store for the <see cref="Shadow">Shadow</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialCard), defaultValue: DefaultShadow, propertyChanged: (bindable, _, _) =>
         {
@@ -223,7 +223,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Properties
 
         /// <summary>
-        /// Gets or sets the card type according to <see cref="MaterialCardType"/> enum.
+        /// Gets or sets the card <see cref="MaterialCardType">type</see>.
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -238,7 +238,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// Gets or sets the command to invoke when the card is clicked. This is a bindable property.
         /// </summary>
-        /// <remarks>This property is used to associate a command with an instance of a card. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
+        /// <remarks>This property is used to associate a command with an instance of a card. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.</remarks>
         public ICommand Command
         {
             get => (ICommand)GetValue(CommandProperty);
@@ -246,11 +246,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
+        /// Gets or sets the parameter to pass to the <see cref="Command">Command</see> property.
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>.
+        /// <see langword="null">Null</see>
         /// </default>
         public object CommandParameter
         {
@@ -276,7 +276,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>
+        /// <see langword="null">Null</see>
         /// </default>
         public ITouchAnimation TouchAnimation
         {
@@ -311,7 +311,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Gets or sets a color that describes the border stroke color of the card.
         /// This is a bindable property.
         /// </summary>
-        /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0.</remarks>
+        /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth">IBorderElement.BorderWidth</see> is set to 0.</remarks>
         public Color BorderColor
         {
             get => (Color)GetValue(BorderColorProperty);

@@ -17,7 +17,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Bindable properties
 
         /// <summary>
-        /// The backing store for the <see cref="Command" /> bindable property.
+        /// The backing store for the <see cref="Command">Command</see> bindable property.
         /// </summary>
         public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(BorderButton), propertyChanged:
             (bindable, _, _) =>
@@ -27,17 +27,17 @@ namespace HorusStudio.Maui.MaterialDesignControls
             });
 
         /// <summary>
-        /// The backing store for the <see cref="CommandParameter" /> bindable property.
+        /// The backing store for the <see cref="CommandParameter">CommandParameter</see> bindable property.
         /// </summary>
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(BorderButton));
 
         /// <summary>
-        /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
+        /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(BorderButton), defaultValueCreator: DefaultTouchAnimationType);
 
         /// <summary>
-        /// The backing store for the <see cref="TouchAnimation"/> bindable property.
+        /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(BorderButton));
 
@@ -51,7 +51,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         /// <remarks>
         /// This property is used to associate a command with an instance of a button.
-        /// <para>This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</para>
+        /// <para>This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.</para>
         /// </remarks>
         public ICommand Command
         {
@@ -60,11 +60,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
+        /// Gets or sets the parameter to pass to the <see cref="Command">Command</see> property.
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>.
+        /// <see langword="null">Null</see>.
         /// </default>
         public object CommandParameter
         {
@@ -90,7 +90,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>.
+        /// <see langword="null">Null</see>.
         /// </default>
         public ITouchAnimation TouchAnimation
         {

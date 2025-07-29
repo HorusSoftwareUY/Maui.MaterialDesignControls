@@ -1,19 +1,19 @@
 ﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// An extended <see cref="RadioButton" /> that adds new features to native one.
+/// An extended <see cref="RadioButton">RadioButton</see> that adds new features to native one.
 /// </summary>
 class CustomRadioButton : RadioButton
 {
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="StrokeColor" /> bindable property.
+    /// The backing store for the <see cref="StrokeColor">StrokeColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create(nameof(StrokeColor), typeof(Color), typeof(CustomRadioButton), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="IsControlTemplateByDefault" /> bindable property.
+    /// The backing store for the <see cref="IsControlTemplateByDefault">IsControlTemplateByDefault</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsControlTemplateByDefaultProperty = BindableProperty.Create(nameof(IsControlTemplateByDefault), typeof(bool), typeof(CustomRadioButton), defaultValue: true);
 
@@ -22,7 +22,7 @@ class CustomRadioButton : RadioButton
     #region Properties
 
     /// <summary>
-    /// Gets or sets <see cref="Color" /> for the stroke of the radio button.
+    /// Gets or sets <see cref="Color">color</see> for the stroke of the radio button.
     /// This is a bindable property.
     /// </summary>
     public Color StrokeColor
@@ -32,7 +32,7 @@ class CustomRadioButton : RadioButton
     }
 
     /// <summary>
-    /// Gets or sets <see cref="bool" /> to check if the user changes control template of the radio button.
+    /// Gets or sets if radio button has default control template.
     /// This is a bindable property.
     /// </summary>
     public bool IsControlTemplateByDefault

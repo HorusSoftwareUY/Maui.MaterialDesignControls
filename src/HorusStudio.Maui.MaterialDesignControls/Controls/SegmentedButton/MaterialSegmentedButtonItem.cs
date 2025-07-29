@@ -34,7 +34,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Gets or sets selected icon in segmented button.
         /// </summary>
         /// <default>
-        /// <see langword="Null"/>
+        /// <see langword="null">Null</see>
         /// </default>
         public ImageSource? SelectedIcon
         {
@@ -46,7 +46,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Gets or sets unselected icon in segmented button.
         /// </summary>
         /// <default>
-        /// <see langword="Null"/>
+        /// <see langword="null">Null</see>
         /// </default>
         public ImageSource? UnselectedIcon
         {
@@ -58,7 +58,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Gets or sets if the icon applies the tint color.
         /// </summary>
         /// <default>
-        /// <see langword="True"/>
+        /// <see langword="true">True</see>
         /// </default>
         public bool ApplyIconTintColor
         {
@@ -70,7 +70,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Gets if segmented button is selected.
         /// </summary>
         /// <default>
-        /// <see langword="False"/>
+        /// <see langword="false">False</see>
         /// </default>
         public bool IsSelected
         {

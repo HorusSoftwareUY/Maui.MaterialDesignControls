@@ -3,7 +3,7 @@ using System.Windows.Input;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// Define <see cref="MaterialViewGroup" /> selection types
+/// Define <see cref="MaterialViewGroup">view group</see> selection types.
 /// </summary>
 public enum SelectionType
 {
@@ -14,12 +14,12 @@ public enum SelectionType
 }
 
 /// <summary>
-/// Manages a logical group of <see cref="IGroupableView"/> controls. 
+/// View groups are logical groups of <see cref="IGroupableView">IGroupableView</see> views. 
 /// This class provides the core logic for handling views that share a common parent layout and are grouped together.
 /// </summary>
 /// <remarks>We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/10.0.0-preview.5.25306.5/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs">See here.</see></remarks>
 /// <todoList>
-/// * The SelectedValues property only supports binding to properties of type <see cref="IList{object}"/> or to classes that inherit from it.
+/// * The SelectedValues property only supports binding to properties of type <see cref="IList{object}">IList{object}</see> or to classes that inherit from it.
 /// </todoList>
 public static class MaterialViewGroup
 {
@@ -51,7 +51,7 @@ public static class MaterialViewGroup
 	}
 
 	/// <summary>
-	/// The backing store for the <see cref="GroupName" /> bindable property.
+	/// The backing store for the <see cref="GroupName">GroupName</see> bindable property.
 	/// </summary>
 	public static readonly BindableProperty GroupNameProperty =
 		BindableProperty.Create("GroupName", typeof(string), typeof(Element), null,
@@ -138,7 +138,7 @@ public static class MaterialViewGroup
 	}
 	
 	/// <summary>
-	/// The backing store for the <see cref="SelectedValue" /> bindable property.
+	/// The backing store for the <see cref="SelectedValue">SelectedValue</see> bindable property.
 	/// </summary>
 	public static readonly BindableProperty SelectedValueProperty =
 		BindableProperty.Create("SelectedValue", typeof(object), typeof(Element), null,
@@ -169,7 +169,7 @@ public static class MaterialViewGroup
 	}
 	
 	/// <summary>
-	/// The backing store for the <see cref="SelectedValues" /> bindable property.
+	/// The backing store for the <see cref="SelectedValues">SelectedValues</see> bindable property.
 	/// </summary>
 	public static readonly BindableProperty SelectedValuesProperty =
 		BindableProperty.Create("SelectedValues", typeof(IList<object>), typeof(Element), null,
@@ -200,7 +200,7 @@ public static class MaterialViewGroup
 	}
 	
 	/// <summary>
-	/// The backing store for the <see cref="SelectedValueChangedCommand" /> bindable property.
+	/// The backing store for the <see cref="SelectedValueChangedCommand">SelectedValueChangedCommand</see> bindable property.
 	/// </summary>
 	public static readonly BindableProperty SelectedValueChangedCommandProperty =
 		BindableProperty.Create("SelectedValueChangedCommand", typeof(ICommand), typeof(Element), null,
@@ -230,7 +230,7 @@ public static class MaterialViewGroup
 	}
 	
 	/// <summary>
-	/// The backing store for the <see cref="SelectionType" /> bindable property.
+	/// The backing store for the <see cref="SelectionType">SelectionType</see> bindable property.
 	/// </summary>
 	public static readonly BindableProperty SelectionTypeProperty =
 		BindableProperty.Create("SelectionType", typeof(SelectionType), typeof(Element), SelectionType.Single,
@@ -260,13 +260,13 @@ public static class MaterialViewGroup
 	}
 	
 	/// <summary>
-	/// The backing store for the <see cref="PropagateGroupName" /> bindable property.
+	/// The backing store for the <see cref="PropagateGroupName">PropagateGroupName</see> bindable property.
 	/// </summary>
 	internal static readonly BindableProperty PropagateGroupNameProperty =
 		BindableProperty.Create("PropagateGroupName", typeof(bool), typeof(Element), true);
 
 	/// <summary>
-	/// Returns if the group controller should propagate the group name to all child <see cref="IGroupableView" /> instances.
+	/// Returns if the group controller should propagate the group name to all <see cref="IGroupableView">child</see> instances.
 	/// </summary>
 	internal static bool GetPropagateGroupName(BindableObject b)
 	{
@@ -274,7 +274,7 @@ public static class MaterialViewGroup
 	}
 
 	/// <summary>
-	/// Sets if the group controller should propagate the group name to all child <see cref="IGroupableView" /> instances.
+	/// Sets if the group controller should propagate the group name to all <see cref="IGroupableView">child</see> instances.
 	/// </summary>
 	internal static void SetPropagateGroupName(BindableObject bindable, bool propagateGroupName)
 	{

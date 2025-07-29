@@ -1,7 +1,7 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// Define <see cref="MaterialSnackbar" /> position on screen
+/// Define <see cref="IMaterialSnackbar">Snackbar</see> position on screen
 /// </summary>
 public enum MaterialSnackbarPosition
 {
@@ -16,7 +16,7 @@ public enum MaterialSnackbarPosition
 }
 
 /// <summary>
-/// User-defined configuration to display a <see cref="MaterialSnackbar" />
+/// User-defined configuration to display a <see cref="IMaterialSnackbar">Snackbar</see>.
 /// </summary>
 /// <param name="message">Message to be displayed on snackbar</param>
 /// <example>
@@ -60,37 +60,37 @@ public class MaterialSnackbarConfig(string message)
     private static Color? _defaultIconColor;
     
     /// <summary>
-    /// Margin to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Margin to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>24</default>
     public static Thickness DefaultMargin { get; set; } = new(24);
     
     /// <summary>
-    /// Padding to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Padding to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>16</default>
     public static Thickness DefaultPadding { get; set; } = new(16);
     
     /// <summary>
-    /// Position to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Position to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default><see cref="MaterialSnackbarPosition.Bottom">MaterialSnackbarPosition.Bottom</see></default>
     public static MaterialSnackbarPosition DefaultPosition { get; set; } = MaterialSnackbarPosition.Bottom;
     
     /// <summary>
-    /// Icon size to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Icon size to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>24</default>
     public static int DefaultIconSize { get; set; } = 24;
     
     /// <summary>
-    /// Corner radius to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Corner radius to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>8</default>
     public static float DefaultCornerRadius { get; set; } = 8f;
 
     /// <summary>
-    /// Background <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Background <see cref="Color">color</see> to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.InverseSurface">MaterialLightTheme.InverseSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseSurface">MaterialDarkTheme.InverseSurface</see>
@@ -102,7 +102,7 @@ public class MaterialSnackbarConfig(string message)
     }
     
     /// <summary>
-    /// Text <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Text <see cref="Color">color</see> to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.InverseOnSurface">MaterialLightTheme.InverseOnSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseOnSurface">MaterialDarkTheme.InverseOnSurface</see>
@@ -114,7 +114,7 @@ public class MaterialSnackbarConfig(string message)
     }
     
     /// <summary>
-    /// Text font size to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Text font size to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontSize.BodyMedium">MaterialFontSize.BodyMedium</see>
@@ -126,7 +126,7 @@ public class MaterialSnackbarConfig(string message)
     }
     
     /// <summary>
-    /// Action text <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Action text <see cref="Color">color</see> to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.InversePrimary">MaterialLightTheme.InversePrimary</see> - Dark: <see cref="MaterialDarkTheme.InversePrimary">MaterialDarkTheme.InversePrimary</see>
@@ -138,7 +138,7 @@ public class MaterialSnackbarConfig(string message)
     }
     
     /// <summary>
-    /// Action font size to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Action font size to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontSize.BodyMedium">MaterialFontSize.BodyMedium</see>
@@ -150,7 +150,7 @@ public class MaterialSnackbarConfig(string message)
     }
     
     /// <summary>
-    /// Action text decorations to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Action text <see cref="TextDecorations">decorations</see> to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>
     /// <see cref="TextDecorations.None">TextDecorations.None</see>
@@ -158,7 +158,7 @@ public class MaterialSnackbarConfig(string message)
     public static TextDecorations DefaultActionTextDecorations { get; set; }
     
     /// <summary>
-    /// Icon <see cref="Color"/> to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Icon <see cref="Color">color</see> to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.InverseOnSurface">MaterialLightTheme.InverseOnSurface</see> - Dark: <see cref="MaterialDarkTheme.InverseOnSurface">MaterialDarkTheme.InverseOnSurface</see>
@@ -170,13 +170,13 @@ public class MaterialSnackbarConfig(string message)
     }
     
     /// <summary>
-    /// Duration applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Duration applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>3 seconds</default>
     public static TimeSpan DefaultDuration { get; set; } = TimeSpan.FromSeconds(3);
     
     /// <summary>
-    /// Spacing between components to be applied by default to every <see cref="MaterialSnackbar"/> that doesn't set one
+    /// Spacing between components to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>16</default>
     public static int DefaultSpacing { get; set; } = 16;
@@ -295,25 +295,33 @@ public class MaterialSnackbarConfig(string message)
     /// <summary>
     /// Gets or sets configuration for leading icon, if available.
     /// </summary>
-    /// <default><see langword="null"/></default>
+    /// <default>
+    /// <see langword="null">Null</see>
+    /// </default>
     public IconConfig? LeadingIcon { get; set; }
     
     /// <summary>
     /// Gets or sets configuration for trailing icon, if available.
     /// </summary>
-    /// <default><see langword="null"/></default>
+    /// <default>
+    /// <see langword="null">Null</see>
+    /// </default>
     public IconConfig? TrailingIcon { get; set; }
     
     /// <summary>
     /// Gets or sets configuration for custom action, if available.
     /// </summary>
-    /// <default><see langword="null"/></default>
+    /// <default>
+    /// <see langword="null">Null</see>
+    /// </default>
     public ActionConfig? Action { get; set; }
     
     /// <summary>
     /// Action to be executed when snackbar is dismissed.
     /// </summary>
-    /// <default><see langword="null"/></default>
+    /// <default>
+    /// <see langword="null">Null</see>
+    /// </default>
     public Action? OnDismissed { get; set; }
     
     /// <summary>
@@ -347,9 +355,9 @@ public class MaterialSnackbarConfig(string message)
     }
     
     /// <summary>
-    /// User-defined configuration for an icon button on <see cref="MaterialSnackbar"/>
+    /// User-defined configuration for an icon button on <see cref="IMaterialSnackbar">Snackbar</see>.
     /// </summary>
-    /// <param name="source">Icon <see cref="ImageSource"/></param>
+    /// <param name="source">Icon <see cref="ImageSource">source</see></param>
     /// <param name="action">Action to be executed when icon is tapped</param>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public class IconConfig(ImageSource source, Action? action = null) : BaseActionConfig(action)
@@ -362,7 +370,7 @@ public class MaterialSnackbarConfig(string message)
 
         private int? _size;
         /// <summary>
-        /// Gets or sets icon size for snackbar.
+        /// Gets or sets icon size for Snackbar.
         /// </summary>
         /// <default>24</default>
         public int Size
@@ -373,7 +381,7 @@ public class MaterialSnackbarConfig(string message)
     }
 
     /// <summary>
-    /// User-defined configuration for an action button on <see cref="MaterialSnackbar"/>
+    /// User-defined configuration for an action button on <see cref="IMaterialSnackbar">Snackbar</see>
     /// </summary>
     /// <param name="text">Text for action button</param>
     /// <param name="action">Action to be executed when button is tapped</param>
@@ -414,7 +422,7 @@ public class MaterialSnackbarConfig(string message)
     }
 
     /// <summary>
-    /// User-defined base configuration for an actions on <see cref="MaterialSnackbar"/>
+    /// User-defined base configuration for actions on <see cref="IMaterialSnackbar">Snackbar</see>
     /// </summary>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public abstract class BaseActionConfig
@@ -439,7 +447,7 @@ public class MaterialSnackbarConfig(string message)
         /// Gets or sets an action to be executed when action/icon is tapped.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>
+        /// <see langword="null">Null</see>
         /// </default>
         /// <remarks>Required for action button</remarks>
         public Action? Action

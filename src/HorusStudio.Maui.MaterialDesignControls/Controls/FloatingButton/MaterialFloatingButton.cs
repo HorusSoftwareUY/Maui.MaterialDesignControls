@@ -27,7 +27,7 @@ public enum MaterialFloatingButtonPosition
 }
 
 /// <summary>
-/// Floating action buttons (FABs) help people take primary actions <see href="https://m3.material.io/components/floating-action-button/overview">see here.</see>
+/// Floating action buttons (FABs) help people take primary actions and follow Material Design Guidelines. <see href="https://m3.material.io/components/floating-action-button/overview">See more.</see>
 /// </summary>
 /// <example>
 ///
@@ -104,76 +104,67 @@ public class MaterialFloatingButton : ContentView
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Type" />
-    /// bindable property.
+    /// The backing store for the <see cref="Type">Type</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialFloatingButtonType), typeof(MaterialFloatingButton), defaultValue: DefaultFloatingButtonType);
     
     /// <summary>
-    /// The backing store for the <see cref="Position" />
-    /// bindable property.
+    /// The backing store for the <see cref="Position">Position</see> bindable property.
     /// </summary>
     public static readonly BindableProperty PositionProperty = BindableProperty.Create(nameof(Position), typeof(MaterialFloatingButtonPosition), typeof(MaterialFloatingButton), defaultValue: DefaultFloatingButtonPosition);
     
     /// <summary>
-    /// The backing store for the <see cref="BackgroundColor" />
-    /// bindable property.
+    /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialFloatingButton), defaultValueCreator: DefaultBackgroundColor);
     
     /// <summary>
-    /// The backing store for the <see cref="IconColor" />
-    /// bindable property.
+    /// The backing store for the <see cref="IconColor">IconColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(MaterialFloatingButton), defaultValueCreator: DefaultIconColor);
     
     /// <summary>
-    /// The backing store for the <see cref="Icon" />
-    /// bindable property.
+    /// The backing store for the <see cref="Icon">Icon</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IconProperty = BindableProperty.Create(nameof(Icon), typeof(ImageSource), typeof(MaterialFloatingButton), defaultValue: DefaultIcon);
     
     /// <summary>
-    /// The backing store for the <see cref="IconSize" />
-    /// bindable property.
+    /// The backing store for the <see cref="IconSize">IconSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(double), typeof(MaterialFloatingButton), defaultValue: DefaultIconSize);
     
     /// <summary>
-    /// The backing store for the <see cref="CornerRadius" />
-    /// bindable property.
+    /// The backing store for the <see cref="CornerRadius">CornerRadius</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(MaterialFloatingButton), defaultValue: DefaultCornerRadius);
 
     /// <summary>
-    /// The backing store for the <see cref="Command" />
-    /// bindable property.
+    /// The backing store for the <see cref="Command">Command</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialFloatingButton));
     
     /// <summary>
-    /// The backing store for the <see cref="CommandParameter" />
-    /// bindable property.
+    /// The backing store for the <see cref="CommandParameter">CommandParameter</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialFloatingButton));
     
     /// <summary>
-    /// The backing store for the <see cref="HeightRequest" /> bindable property.
+    /// The backing store for the <see cref="HeightRequest">HeightRequest</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialFloatingButton), defaultValue: -1d);
 
     /// <summary>
-    /// The backing store for the <see cref="WidthRequest" /> bindable property.
+    /// The backing store for the <see cref="WidthRequest">WidthRequest</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialFloatingButton), defaultValue: -1d);
     
     /// <summary>
-    /// The backing store for the <see cref="Margin" /> bindable property.
+    /// The backing store for the <see cref="Margin">Margin</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty MarginProperty = BindableProperty.Create(nameof(Margin), typeof(Thickness), typeof(MaterialFloatingButton), defaultValue: DefaultMargin);
     
     /// <summary>
-    /// The backing store for the <see cref="Padding" /> bindable property.
+    /// The backing store for the <see cref="Padding">Padding</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialFloatingButton), defaultValue: DefaultPadding);
 
@@ -240,7 +231,7 @@ public class MaterialFloatingButton : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="Null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public ImageSource Icon
     {
@@ -279,7 +270,7 @@ public class MaterialFloatingButton : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="Null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     /// <remarks>This property is used to associate a command with an instance of FAB. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
     /// <para><see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.</para>
@@ -292,11 +283,11 @@ public class MaterialFloatingButton : ContentView
     
     
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
+    /// Gets or sets the parameter to pass to the <see cref="Command">Command</see> property.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="Null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public object CommandParameter
     {
@@ -313,7 +304,7 @@ public class MaterialFloatingButton : ContentView
     /// </default>
     /// <remarks>
     /// <para>which means the value is unset; the effective minimum height will be zero.</para>
-    /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
+    /// <para><see cref="HeightRequest">HeightRequest</see> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest">HeightRequest</see> will change the resulting height of the element during the next layout pass.</para>
     /// </remarks>
     public new double HeightRequest
     {
@@ -330,7 +321,7 @@ public class MaterialFloatingButton : ContentView
     /// </default>
     /// <remarks>
     /// <para>which means the value is unset; the effective minimum width will be zero.</para>
-    /// <para><see cref="WidthRequest"/> does not immediately change the Bounds of an element; setting the <see cref="WidthRequest"/> will change the resulting width of the element during the next layout pass.</para>
+    /// <para><see cref="WidthRequest">WidthRequest</see> does not immediately change the Bounds of an element; setting the <see cref="WidthRequest">WidthRequest</see> will change the resulting width of the element during the next layout pass.</para>
     /// </remarks>
     public new double WidthRequest
     {
@@ -360,20 +351,12 @@ public class MaterialFloatingButton : ContentView
 
     #endregion
 
-    /*
-    public MaterialFloatingButton()
-    {
-        Logger.Debug($"GC TotalMemory: {GC.GetTotalMemory(true)}");
-    }
-    */
-
     ~MaterialFloatingButton()
     {
         if (_parentPage is null) return;
         
         _parentPage.Appearing -= Appearing;
         _parentPage.Disappearing -= Disappearing;
-        //GC.SuppressFinalize(this);
     }
 
     #region Methods

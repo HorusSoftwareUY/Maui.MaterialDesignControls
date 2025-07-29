@@ -5,7 +5,7 @@ using static Microsoft.Maui.Controls.Button;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// Define <see cref="MaterialButton" /> types
+/// Define <see cref="MaterialButton">MaterialButton</see> types.
 /// </summary>
 public enum MaterialButtonType
 {
@@ -24,7 +24,7 @@ public enum MaterialButtonType
 }
 
 /// <summary>
-/// A button <see cref="View" /> that reacts to touch events and follows Material Design Guidelines <see href="https://m3.material.io/components/buttons/overview" />.
+/// Buttons react to touch events and follow Material Design Guidelines. <see href="https://m3.material.io/components/buttons/overview">See more</see>.
 /// </summary>
 /// <example>
 ///
@@ -131,7 +131,7 @@ public class MaterialButton : ContentView, ITouchableView
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Type" /> bindable property.
+    /// The backing store for the <see cref="Type">Type</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialButtonType), typeof(MaterialButton), defaultValue: DefaultButtonType, propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -147,17 +147,17 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Command" /> bindable property.
+    /// The backing store for the <see cref="Command">Command</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialButton));
 
     /// <summary>
-    /// The backing store for the <see cref="CommandParameter" /> bindable property.
+    /// The backing store for the <see cref="CommandParameter">CommandParameter</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialButton));
 
     /// <summary>
-    /// The backing store for the <see cref="ContentLayout" /> bindable property.
+    /// The backing store for the <see cref="ContentLayout">ContentLayout</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ContentLayoutProperty = BindableProperty.Create(nameof(ContentLayout), typeof(ButtonContentLayout), typeof(MaterialButton), defaultValue: DefaultContentLayout, propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -172,12 +172,12 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialButton));
 
     /// <summary>
-    /// The backing store for the <see cref="TextColor" /> bindable property.
+    /// The backing store for the <see cref="TextColor">TextColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTextColor, propertyChanged: (bindable, _, _) =>
     {
@@ -188,7 +188,7 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="IconTintColor" /> bindable property.
+    /// The backing store for the <see cref="IconTintColor">IconTintColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IconTintColorProperty = BindableProperty.Create(nameof(IconTintColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTintColor, propertyChanged: (bindable, _, _) =>
     {
@@ -199,53 +199,53 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="InternalIconTintColor" /> bindable property.
+    /// The backing store for the <see cref="InternalIconTintColor">InternalIconTintColor</see> bindable property.
     /// </summary>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     internal static readonly BindableProperty InternalTintColorProperty = BindableProperty.Create(nameof(InternalIconTintColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultTintColor);
 
     /// <summary>
-    /// The backing store for the <see cref="ApplyIconTintColor" /> bindable property.
+    /// The backing store for the <see cref="ApplyIconTintColor">ApplyIconTintColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ApplyIconTintColorProperty = BindableProperty.Create(nameof(ApplyIconTintColor), typeof(bool), typeof(MaterialButton), defaultValue: DefaultApplyIconTintColor);
 
     /// <summary>
-    /// The backing store for the <see cref="IconSize" /> bindable property.
+    /// The backing store for the <see cref="IconSize">IconSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(Size), typeof(MaterialButton), defaultValue: DefaultIconSize);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialButton), Button.CharacterSpacingProperty.DefaultValue);
 
     /// <summary>
-    /// The backing store for the <see cref="FontFamily" /> bindable property.
+    /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialButton), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="FontSize" /> bindable property.
+    /// The backing store for the <see cref="FontSize">FontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialButton), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="TextTransform" /> bindable property.
+    /// The backing store for the <see cref="TextTransform">TextTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextTransformProperty = BindableProperty.Create(nameof(TextTransform), typeof(TextTransform), typeof(MaterialButton), defaultValue: Button.TextTransformProperty.DefaultValue);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAttributes" /> bindable property.
+    /// The backing store for the <see cref="FontAttributes">FontAttributes</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialButton), defaultValue: Button.FontAttributesProperty.DefaultValue);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialButton), defaultValue: Button.FontAutoScalingEnabledProperty.DefaultValue);
 
     /// <summary>
-    /// The backing store for the <see cref="Background" /> bindable property.
+    /// The backing store for the <see cref="Background">Background</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialButton), defaultValue: DefaultBackground, propertyChanged: (bindable, _, _) =>
     {
@@ -256,7 +256,7 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="BackgroundColor" /> bindable property.
+    /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
     {
@@ -267,7 +267,7 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="BorderWidth"/> bindable property.
+    /// The backing store for the <see cref="BorderWidth">BorderWidth</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialButton), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
     {
@@ -278,7 +278,7 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="BorderColor" /> bindable property.
+    /// The backing store for the <see cref="BorderColor">BorderColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialButton), defaultValue: DefaultBorderColor, propertyChanged: (bindable, _, _) =>
     {
@@ -289,12 +289,12 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="CornerRadius"/> bindable property.
+    /// The backing store for the <see cref="CornerRadius">CornerRadius</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(int), typeof(MaterialButton), defaultValue: DefaultCornerRadius);
 
     /// <summary>
-    /// The backing store for the <see cref="ImageSource" /> bindable property.
+    /// The backing store for the <see cref="ImageSource">ImageSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ImageSourceProperty = BindableProperty.Create(nameof(ImageSource), typeof(ImageSource), typeof(MaterialButton), propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -309,7 +309,7 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Padding" /> bindable property.
+    /// The backing store for the <see cref="Padding">Padding</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialButton), defaultValue: DefaultPadding, propertyChanged: (bindable, _, _) =>
     {
@@ -320,27 +320,27 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="LineBreakMode"/> bindable property.
+    /// The backing store for the <see cref="LineBreakMode">LineBreakMode</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode), typeof(LineBreakMode), typeof(MaterialButton), defaultValue: Button.LineBreakModeProperty.DefaultValue);
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialButton), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialButton));
 
     /// <summary>
-    /// The backing store for the <see cref="HeightRequest" /> bindable property.
+    /// The backing store for the <see cref="HeightRequest">HeightRequest</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialButton), defaultValue: DefaultHeightRequest);
 
     /// <summary>
-    /// The backing store for the <see cref="IsBusy"/> bindable property.
+    /// The backing store for the <see cref="IsBusy">IsBusy</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsBusyProperty = BindableProperty.Create(nameof(IsBusy), typeof(bool), typeof(MaterialButton), defaultValue: false, propertyChanged: (bindable, _, newValue) =>
     {
@@ -352,17 +352,17 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="BusyIndicatorColor"/> bindable property.
+    /// The backing store for the <see cref="BusyIndicatorColor">BusyIndicatorColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BusyIndicatorColorProperty = BindableProperty.Create(nameof(BusyIndicatorColor), typeof(Color), typeof(MaterialButton), defaultValueCreator: DefaultBusyIndicatorColor);
 
     /// <summary>
-    /// The backing store for the <see cref="BusyIndicatorSize"/> bindable property.
+    /// The backing store for the <see cref="BusyIndicatorSize">BusyIndicatorSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BusyIndicatorSizeProperty = BindableProperty.Create(nameof(BusyIndicatorSize), typeof(double), typeof(MaterialButton), defaultValue: DefaultBusyIndicatorSize);
 
     /// <summary>
-    /// The backing store for the <see cref="CustomBusyIndicator"/> bindable property.
+    /// The backing store for the <see cref="CustomBusyIndicator">CustomBusyIndicator</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CustomBusyIndicatorProperty = BindableProperty.Create(nameof(CustomBusyIndicator), typeof(View), typeof(MaterialButton), propertyChanged: (bindable, _, newValue) =>
     {
@@ -382,7 +382,7 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Shadow" /> bindable property.
+    /// The backing store for the <see cref="Shadow">Shadow</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialButton), defaultValue: DefaultShadow, propertyChanged: (bindable, _, _) =>
     {
@@ -393,7 +393,7 @@ public class MaterialButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="TextDecorations" /> bindable property.
+    /// The backing store for the <see cref="TextDecorations">TextDecorations</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextDecorationsProperty = BindableProperty.Create(nameof(TextDecorations), typeof(TextDecorations), typeof(MaterialButton), defaultValue: TextDecorations.None);
 
@@ -402,7 +402,7 @@ public class MaterialButton : ContentView, ITouchableView
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="Button" /> control.
+    /// Internal implementation of the <see cref="Button">Button</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
@@ -410,11 +410,11 @@ public class MaterialButton : ContentView, ITouchableView
     public Button InternalButton => _button;
 
     /// <summary>
-    /// Gets or sets the button type according to <see cref="MaterialButtonType"/> enum.
+    /// Gets or sets the button type according to <see cref="MaterialButtonType">MaterialButtonType</see>.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialButtonType.Filled"/>
+    /// <see cref="MaterialButtonType.Filled">MaterialButtonType.Filled</see>
     /// </default>
     public MaterialButtonType Type
     {
@@ -426,7 +426,7 @@ public class MaterialButton : ContentView, ITouchableView
     /// Gets or sets the command to invoke when the button is activated.
     /// This is a bindable property.
     /// </summary>
-    /// <remarks>This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
+    /// <remarks>This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.</remarks>
     public ICommand Command
     {
         get => (ICommand)GetValue(CommandProperty);
@@ -434,10 +434,10 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
+    /// Gets or sets the parameter to pass to the <see cref="Command">Command</see> property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public object CommandParameter
     {
@@ -466,7 +466,7 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Determines how <see cref="Text"/> is shown when the length is overflowing the size of this button.
+    /// Determines how <see cref="Text">Text</see> is shown when the length is overflowing the size of this button.
     /// This is a bindable property.
     /// </summary>
     public LineBreakMode LineBreakMode
@@ -476,7 +476,7 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets a <see cref="Brush"/> that describes the background of the button.
+    /// Gets or sets a <see cref="Brush">Brush</see> that describes the background of the button.
     /// This is a bindable property.
     /// </summary>
     public new Brush Background
@@ -502,7 +502,7 @@ public class MaterialButton : ContentView, ITouchableView
     /// Gets or sets a color that describes the border stroke color of the button.
     /// This is a bindable property.
     /// </summary>
-    /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0. On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor" /> is set to a non-default color.</remarks>
+    /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth">IBorderElement.BorderWidth</see> is set to 0. On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor">VisualElement.BackgroundColor</see> is set to a non-default color.</remarks>
     public Color BorderColor
     {
         get => (Color)GetValue(BorderColorProperty);
@@ -534,7 +534,7 @@ public class MaterialButton : ContentView, ITouchableView
     /// Allows you to display a bitmap image on the Button.
     /// This is a bindable property.
     /// </summary>
-    /// <remarks>For more options have a look at <see cref="ImageButton"/>.</remarks>
+    /// <remarks>For more options have a look at <see cref="ImageButton">ImageButton</see>.</remarks>
     public ImageSource ImageSource
     {
         get => (ImageSource)GetValue(ImageSourceProperty);
@@ -545,7 +545,7 @@ public class MaterialButton : ContentView, ITouchableView
     /// Gets or sets the text displayed as the content of the button.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     /// <remarks>Changing the text of a button will trigger a layout cycle.</remarks>
     public string Text
@@ -555,7 +555,7 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the button.
+    /// Gets or sets the <see cref="Color">color</see> for the text of the button.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -568,7 +568,7 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the icon of the button.
+    /// Gets or sets the <see cref="Color">color</see> for the icon of the button.
     /// This is a bindable property.
     /// </summary>
     public Color? IconTintColor
@@ -592,7 +592,7 @@ public class MaterialButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="true"/>
+    /// <see langword="true">True</see>
     /// </default>
     public bool ApplyIconTintColor
     {
@@ -605,9 +605,9 @@ public class MaterialButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="Size.Zero"/>.
+    /// <see langword="Size.Zero">Size.Zero</see>.
     /// </default>
-    /// <remarks>With a default value of <see langword="Size.Zero"/>, the icon will be handled automatically by each platform's native behavior. If a size is specified, that size will be applied to the icon on all platforms.</remarks>
+    /// <remarks>With a default value of <see langword="Size.Zero">Size.Zero</see>, the icon will be handled automatically by each platform's native behavior. If a size is specified, that size will be applied to the icon on all platforms.</remarks>
     public Size IconSize
     {
         get => (Size)GetValue(IconSizeProperty);
@@ -615,7 +615,7 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the spacing between each of the characters of <see cref="Text"/> when displayed on the button.
+    /// Gets or sets the spacing between each of the characters of <see cref="Text">Text</see> when displayed on the button.
     /// This is a bindable property.
     /// </summary>
     public double CharacterSpacing
@@ -670,7 +670,7 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Applies text transformation to the <see cref="Text"/> displayed on this button.
+    /// Applies text transformation to the <see cref="Text">Text</see> displayed on this button.
     /// This is a bindable property.
     /// </summary>
     public TextTransform TextTransform
@@ -680,7 +680,7 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets an animation to be executed when button is clicked.
+    /// Gets or sets an animation to be executed when Button is clicked.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -693,11 +693,11 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets a custom touch animation to be executed when button is clicked.
+    /// Gets or sets a custom touch animation to be executed when Button is clicked.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public ITouchAnimation TouchAnimation
     {
@@ -714,7 +714,7 @@ public class MaterialButton : ContentView, ITouchableView
     /// </default>
     /// <remarks>
     /// <para>which means the value is unset; the effective minimum height will be zero.</para>
-    /// <para><see cref="HeightRequest"/> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest"/> will change the resulting height of the element during the next layout pass.</para>
+    /// <para><see cref="HeightRequest">HeightRequest</see> does not immediately change the Bounds of an element; setting the <see cref="HeightRequest">HeightRequest</see> will change the resulting height of the element during the next layout pass.</para>
     /// </remarks>
     public new double HeightRequest
     {
@@ -727,7 +727,7 @@ public class MaterialButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="False"/>
+    /// <see langword="false">False</see>
     /// </default>
     public bool IsBusy
     {
@@ -736,7 +736,7 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the busy indicator.
+    /// Gets or sets the <see cref="Color">color</see> for the busy indicator.
     /// This is a bindable property.
     /// </summary>
     public Color BusyIndicatorColor
@@ -756,7 +756,7 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets a custom <see cref="View" /> for busy indicator.
+    /// Gets or sets a custom <see cref="View">View</see> for busy indicator.
     /// This is a bindable property.
     /// </summary>
     public View? CustomBusyIndicator
@@ -776,7 +776,7 @@ public class MaterialButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets <see cref="TextDecorations" /> for the text of the button.
+    /// Gets or sets <see cref="TextDecorations">decorations</see> for Button text.
     /// This is a bindable property.
     /// </summary>
     public TextDecorations TextDecorations
@@ -1228,6 +1228,7 @@ public class MaterialButton : ContentView, ITouchableView
 
     #region ITouchable
     
+    /// <inheritdoc />
     public async void OnTouch(TouchEventType gestureType)
     {
         Utils.Logger.Debug($"Gesture: {gestureType}");
