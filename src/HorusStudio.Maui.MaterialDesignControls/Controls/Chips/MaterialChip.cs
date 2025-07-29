@@ -12,7 +12,7 @@ public enum MaterialChipsType
 }
 
 /// <summary>
-/// A Chips help people enter information, make selections, filter content, or trigger actions <see href="https://m3.material.io/components/chips/overview">see here.</see>
+/// Chips help people enter information, make selections, filter content, or trigger actions <see href="https://m3.material.io/components/chips/overview">see here.</see>
 /// </summary>
 /// <example>
 ///
@@ -73,14 +73,12 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="MaterialChipsType" />
-    /// bindable property.
+    /// The backing store for the <see cref="MaterialChipsType">MaterialChipsType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialChipsType), typeof(MaterialChip), defaultValue: DefaultChipsType);
 
     /// <summary>
-    /// The backing store for the <see cref="Command" />
-    /// bindable property.
+    /// The backing store for the <see cref="Command">Command</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialChip));
     
@@ -110,20 +108,17 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Padding" />
-    /// bindable property.
+    /// The backing store for the <see cref="Padding">Padding</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialChip), defaultValue: DefaultPadding);
 
     /// <summary>
-    /// The backing store for the <see cref="CornerRadius" />
-    /// bindable property.
+    /// The backing store for the <see cref="CornerRadius">CornerRadius</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialChip), defaultValue: DefaultCornerRadius);
 
     /// <summary>
-    /// The backing store for the <see cref="LeadingIcon" />
-    /// bindable property.
+    /// The backing store for the <see cref="LeadingIcon">LeadingIcon</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LeadingIconProperty = BindableProperty.Create(nameof(LeadingIcon), typeof(ImageSource), typeof(MaterialChip), defaultValue: DefaultLeadingIcon, propertyChanged: (bindable, _, _) =>
     {
@@ -134,8 +129,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="TrailingIcon" />
-    /// bindable property.
+    /// The backing store for the <see cref="TrailingIcon">TrailingIcon</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrailingIconProperty = BindableProperty.Create(nameof(TrailingIcon), typeof(ImageSource), typeof(MaterialChip), defaultValue: DefaultTrailingIcon, propertyChanged: (bindable, _, _) =>
     {
@@ -146,8 +140,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Text" />
-    /// bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialChip), defaultValue: DefaultText);
 
@@ -158,84 +151,72 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="FontFamily" />
-    /// bindable property.
+    /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialChip), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="FontSize" />
-    /// bindable property.
+    /// The backing store for the <see cref="FontSize">FontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialChip), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="BackgroundColor" />
-    /// bindable property.
+    /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
     /// </summary>
     public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultBackgroundColor);
 
     /// <summary>
-    /// The backing store for the <see cref="BorderWidth"/>
-    /// bindable property.
+    /// The backing store for the <see cref="BorderWidth">BorderWidth</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialChip), defaultValue: DefaultBorderWidth);
 
     /// <summary>
-    /// The backing store for the <see cref="BorderColor" />
-    /// bindable property.
+    /// The backing store for the <see cref="BorderColor">BorderColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultBorderColor);
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimationType"/>
-    /// bindable property.
+    /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialChip), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimation"/>
-    /// bindable property.
+    /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialChip));
 
     /// <summary>
-    /// The backing store for the <see cref="LeadingIconTintColor" />
-    /// bindable property.
+    /// The backing store for the <see cref="LeadingIconTintColor">LeadingIconTintColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LeadingIconTintColorProperty = BindableProperty.Create(nameof(LeadingIconTintColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultIconTintColor);
 
     /// <summary>
-    /// The backing store for the <see cref="ApplyLeadingIconTintColor" /> bindable property.
+    /// The backing store for the <see cref="ApplyLeadingIconTintColor">ApplyLeadingIconTintColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ApplyLeadingIconTintColorProperty = BindableProperty.Create(nameof(ApplyLeadingIconTintColor), typeof(bool), typeof(MaterialChip), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="TrailingIconTintColor" />
-    /// bindable property.
+    /// The backing store for the <see cref="TrailingIconTintColor">TrailingIconTintColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrailingIconTintColorProperty = BindableProperty.Create(nameof(TrailingIconTintColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultIconTintColor);
 
     /// <summary>
-    /// The backing store for the <see cref="ApplyTrailingIconTintColor" /> bindable property.
+    /// The backing store for the <see cref="ApplyTrailingIconTintColor">ApplyTrailingIconTintColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ApplyTrailingIconTintColorProperty = BindableProperty.Create(nameof(ApplyTrailingIconTintColor), typeof(bool), typeof(MaterialChip), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="ShadowColor" />
-    /// bindable property.
+    /// The backing store for the <see cref="ShadowColor">ShadowColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(nameof(ShadowColor), typeof(Color), typeof(MaterialChip), defaultValueCreator: DefaultShadowColor);
 
     /// <summary>
-    /// The backing store for the <see cref="Shadow" />
-    /// bindable property.
+    /// The backing store for the <see cref="Shadow">Shadow</see> bindable property.
     /// </summary>
     public static readonly new BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialChip), defaultValueCreator: DefaultShadow);
     
     /// <summary>
-    /// The backing store for the <see cref="Value"/>
-    /// bindable property.
+    /// The backing store for the <see cref="Value">Value</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialChip), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) => 
     { 
@@ -257,8 +238,8 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// <see cref="MaterialChipsType.Normal">MaterialChipsType.Normal</see>
     /// </default>
     /// <remarks>
-    /// <para>Normal: They are for the types assist, input and suggestion, chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters.</para>
-    /// <para>Filter: chips use tags or descriptive words to filter content. They can be a good alternative to segmented buttons or checkboxes when viewing a list or search results.</para>
+    /// <para>Normal: Help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses.</para>
+    /// <para>Filter: Use tags or descriptive words to filter content. They can be a good alternative to segmented buttons or checkboxes when viewing a list or search results.</para>
     /// </remarks>
     public MaterialChipsType Type
     {
@@ -267,7 +248,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets the command to invoke when the Chips is activated.
+    /// Gets or sets the <see cref="ICommand">command</see> to invoke when Chip is activated.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -283,7 +264,8 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
     
     /// <summary>
-    /// Gets or sets the state when the Chips is selected.
+    /// Gets or sets if Chip is selected (Filter type only).
+    /// Inherited from <see cref="IGroupableView.IsSelected">IGroupableView.IsSelected</see>.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -296,7 +278,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets the state when the Chips is enabled.
+    /// Gets or sets if Chip is enabled.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -309,7 +291,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets the padding for the Chips.
+    /// Gets or sets the <see cref="Thickness">padding</see> for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -322,7 +304,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets the corner radius for the Chips.
+    /// Gets or sets the <see cref="CornerRadius">corner radius</see> for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -335,7 +317,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets image leading for the Chips.
+    /// Gets or sets a leading icon for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -348,7 +330,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets image trailing for the Chips.
+    /// Gets or sets a trailing icon for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -361,7 +343,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets text the Chips.
+    /// Gets or sets text for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -378,7 +360,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets text color the Chips.
+    /// Gets or sets text <see cref="Color">color</see> for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -391,7 +373,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets the font family for the text of this chips.
+    /// Gets or sets a font family for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -404,7 +386,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets the size of the font for the text of this chips.
+    /// Gets or sets font size for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -418,7 +400,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the background color of the chips.
+    /// Gets or sets a background <see cref="Color">color</see> for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -431,7 +413,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets the width of the border, in device-independent units.
+    /// Gets or sets border width for Chip in device-independent units.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -445,7 +427,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the border stroke color of the chips.
+    /// Gets or sets stroke <see cref="Color">color</see> for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -453,7 +435,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// </default>
     /// <remarks>
     /// <para>This property has no effect if <see cref="IBorderElement.BorderWidth">IBorderElement.BorderWidth</see> is set to 0.</para>
-    /// <para>On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor" />is set to a non-default color.</para>
+    /// <para>On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor">VisualElement.BackgroundColor</see> is set to a non-default color.</para>
     /// </remarks>
     public Color BorderColor
     {
@@ -462,7 +444,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the leading icon color of the chips.
+    /// Gets or sets tint <see cref="Color">color</see> for Chip's leading icon.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -475,7 +457,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets the if the leading icon applies the tint color.
+    /// Gets or sets if leading icon should use <see cref="LeadingIconTintColor">tint color</see> or not.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -488,7 +470,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the trailing icon color of the chips.
+    /// Gets or sets tint <see cref="Color">color</see> for Chip's trailing icon.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -501,7 +483,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets the if the trailing icon applies the tint color.
+    /// Gets or sets if trailing icon should use <see cref="TrailingIconTintColor">tint color</see> or not.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -514,7 +496,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets a color that describes the shadow color of the chips.
+    /// Gets or sets shadow <see cref="Color">color</see> for Chip.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -540,7 +522,8 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets an animation to be executed when is clicked.
+    /// Gets or sets an animation to be executed when Chip is activated.
+    /// Inherited from <see cref="ITouchableView.TouchAnimationType">ITouchableView.TouchAnimationType</see>.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -553,7 +536,8 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
 
     /// <summary>
-    /// Gets or sets a custom animation to be executed when is clicked.
+    /// Gets or sets a custom animation to be executed when Chip is activated.
+    /// Inherited from <see cref="ITouchableView.TouchAnimation">ITouchableView.TouchAnimation</see>.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -566,13 +550,14 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     }
     
     /// <summary>
-    /// Defines the value of the chips
+    /// Gets or sets a value for Chip.
+    /// Inherited from <see cref="IGroupableView.Value">IGroupableView.Value</see>.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialChip.Text" />
+    /// <see cref="MaterialChip.Text">MaterialChip.Text</see>
     /// </default>
-    /// <remarks>If a value is not explicitly set, the control will use the <see cref="MaterialChip.Text" /> of the Text property or the <see cref="MaterialChip.Id" /> property as its default.</remarks>
+    /// <remarks>If a value is not explicitly set, the control will use the <see cref="MaterialChip.Text">Text</see> property if set or the <see cref="MaterialChip.Id">Id</see> property as its default.</remarks>
     public object Value
     {
         get => GetValue(ValueProperty) ?? (!string.IsNullOrEmpty(Text) ? Text : Id);
@@ -586,6 +571,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     private EventHandler? _clicked;
     private readonly Lock _objectLock = new();
 
+    /// <inheritdoc />
     public event EventHandler<GroupableViewPropertyChangedEventArgs>? GroupableViewPropertyChanged;
     
     /// <summary>
@@ -611,6 +597,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
         }
     }
 
+    /// <inheritdoc />
     public async void OnTouch(TouchEventType gestureType)
     {
         await TouchAnimationManager.AnimateAsync(this, gestureType);
@@ -664,11 +651,6 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     #endregion Layout
 
     #region Constructors
-
-    public MaterialChip(bool toGroup)
-    {
-        CreateLayout(toGroup);
-    }
 
     public MaterialChip()
     {
