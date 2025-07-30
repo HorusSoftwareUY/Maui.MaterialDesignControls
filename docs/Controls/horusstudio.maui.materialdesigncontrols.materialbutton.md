@@ -38,32 +38,14 @@ var button = new MaterialButton
 
 ## Properties
 
-### <a id="properties-animation"/>**Animation**
+### <a id="properties-applyicontintcolor"/>**ApplyIconTintColor**
 
-Gets or sets an animation to be executed when button is clicked.
+Gets or sets the if the icon applies the tint color.
  This is a bindable property.
 
-Property type: AnimationTypes<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade.
-
-<br>
-
-### <a id="properties-animationparameter"/>**AnimationParameter**
-
-Gets or sets the parameter to pass to the MaterialButton.Animation property.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: null
+Default value: true
 
 <br>
 
@@ -175,17 +157,6 @@ Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32
 
 <br>
 
-### <a id="properties-customanimation"/>**CustomAnimation**
-
-Gets or sets a custom animation to be executed when button is clicked.
- This is a bindable property.
-
-Property type: ICustomAnimation<br>
-
-Default value: null
-
-<br>
-
 ### <a id="properties-custombusyindicator"/>**CustomBusyIndicator**
 
 Gets or sets a custom  for busy indicator.
@@ -253,9 +224,22 @@ Remarks:
 
 <br>
 
+### <a id="properties-iconsize"/>**IconSize**
+
+Gets or sets the icon size.
+ This is a bindable property.
+
+Property type: [Size](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.size)<br>
+
+Default value: Size.Zero.
+
+Remarks: With a default value of Size.Zero, the icon will be handled automatically by each platform's native behavior. If a size is specified, that size will be applied to the icon on all platforms.
+
+<br>
+
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
-Gets or sets the  for the text of the button.
+Gets or sets the  for the icon of the button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -270,6 +254,24 @@ Allows you to display a bitmap image on the Button.
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
 Remarks: For more options have a look at .
+
+<br>
+
+### <a id="properties-internalbutton"/>**InternalButton**
+
+Internal implementation of the  control.
+
+Property type: [Button](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.button)<br>
+
+Remarks: This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+
+<br>
+
+### <a id="properties-internalicontintcolor"/>**InternalIconTintColor**
+
+This property is for internal use by the control. The IconTintColor property should be used instead.
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
 <br>
 
@@ -352,12 +354,32 @@ Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/micr
 
 <br>
 
-### <a id="properties-tintcolor"/>**TintColor**
+### <a id="properties-touchanimation"/>**TouchAnimation**
 
-Gets or sets the  for the text of the button.
+Gets or sets a custom touch animation to be executed when button is clicked.
  This is a bindable property.
 
-Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+Property type: ITouchAnimation<br>
+
+Default value: null
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when button is clicked.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade.
 
 <br>
 

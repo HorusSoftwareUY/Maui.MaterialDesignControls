@@ -17,8 +17,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 
 <material:MaterialCheckBox
         TextSide="Left"
-        CommandCheckedChanged="{Binding CheckedChangedCommand}"
-        CommandCheckedChangedParameter="Selected or Unselected"
+        CheckedChangedCommand="{Binding CheckedChangedCommand}"
         Text="Checkbox 1"/>
 ```
 
@@ -29,45 +28,30 @@ var checkBox = new MaterialCheckBox()
 {
     Text = "Checkbox 1"
     TextSide = TextSide.Left,
-    CommandCheckedChanged = viewModel.CheckChangedCommand,
-    CommandCheckedChangedParameter = "Selected or Unselected"
+    CheckedChangedCommand = viewModel.CheckChangedCommand
 };
 ```
 
 ## Properties
-
-### <a id="properties-animation"/>**Animation**
-
-Gets or sets an animation to be executed when checkbox is clicked. This is a bindable property.
-
-Property type: AnimationTypes<br>
-
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade
-
-<br>
-
-### <a id="properties-animationparameter"/>**AnimationParameter**
-
-Gets or sets the parameter to pass to the MaterialCheckBox.Animation property. This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: null.
-
-<br>
 
 ### <a id="properties-characterspacing"/>**CharacterSpacing**
 
 Gets or sets the spacing between characters of the label. This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+<br>
+
+### <a id="properties-checkedchangedcommand"/>**CheckedChangedCommand**
+
+Gets or sets the command to invoke when the checkbox changes its status. This is a bindable property.
+
+Property type: ICommand<br>
+
+Remarks: This property is used to associate a command with an instance of a checkbox.
+ This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
+  is controlled by the  if set.
+ The command parameter is of type [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean) and corresponds to the value of the MaterialCheckBox.IsChecked property.
 
 <br>
 
@@ -82,26 +66,6 @@ Default value: Theme: Light: MaterialLightTheme.Primary - Dark: MaterialDarkThem
 
 <br>
 
-### <a id="properties-commandcheckedchanged"/>**CommandCheckedChanged**
-
-Gets or sets the command to invoke when the checkbox changes its status. This is a bindable property.
-
-Property type: ICommand<br>
-
-Remarks: This property is used to associate a command with an instance of a checkbox. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
-
-<br>
-
-### <a id="properties-commandcheckedchangedparameter"/>**CommandCheckedChangedParameter**
-
-Gets or sets the parameter to pass to the MaterialCheckBox.CommandCheckedChangedParameter property. This is a bindable property.
-
-Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
-
-Default value: null.
-
-<br>
-
 ### <a id="properties-content"/>**Content**
 
 Gets the MaterialCheckBox.Content for the RadioButton.
@@ -110,16 +74,6 @@ Gets the MaterialCheckBox.Content for the RadioButton.
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 Remarks: We disabled the set for this property because doesn't have sense set the content because we are setting with the checkbox and label.
-
-<br>
-
-### <a id="properties-customanimation"/>**CustomAnimation**
-
-Gets or sets a custom animation to be executed when checkbox is clicked. This is a bindable property.
-
-Property type: ICustomAnimation<br>
-
-Default value: null.
 
 <br>
 
@@ -159,6 +113,16 @@ Defines the font size of the label. This is a bindable property.
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 Default value: MaterialFontSize.BodyLarge
+
+<br>
+
+### <a id="properties-internalcheckbox"/>**InternalCheckBox**
+
+Internal implementation of the  control.
+
+Property type: [CheckBox](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.checkbox)<br>
+
+Remarks: This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
 
 <br>
 
@@ -238,6 +202,33 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 Default value: Theme: Light: MaterialLightTheme.OnPrimary - Dark: MaterialDarkTheme.OnPrimary
 
 Remarks: Only is supported on iOS.
+
+<br>
+
+### <a id="properties-touchanimation"/>**TouchAnimation**
+
+Gets or sets a custom animation to be executed when checkbox is clicked. This is a bindable property.
+
+Property type: ITouchAnimation<br>
+
+Default value: null.
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when checkbox is clicked. This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
 
 <br>
 

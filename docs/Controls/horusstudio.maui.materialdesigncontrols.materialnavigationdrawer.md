@@ -66,37 +66,6 @@ Default value: Light: MaterialLightTheme.OnPrimaryContainer - Dark: MaterialDark
 
 <br>
 
-### <a id="properties-animation"/>**Animation**
-
-Gets or sets an animation to be executed when an icon is clicked
- The default value is AnimationTypes.Fade.
- This is a bindable property.
-
-Property type: AnimationTypes<br>
-
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: MaterialAnimation.Type
-
-<br>
-
-### <a id="properties-animationparameter"/>**AnimationParameter**
-
-Gets or sets the parameter to pass to the MaterialNavigationDrawer.Animation property.
- The default value is null.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: MaterialAnimation.Parameter
-
-<br>
-
 ### <a id="properties-badgebackgroundcolor"/>**BadgeBackgroundColor**
 
 Gets or sets the text  for the badge background. This is a bindable property.
@@ -157,16 +126,6 @@ Gets or sets the command for each item. This is a bindable property.
 Property type: ICommand<br>
 
 Default value: null
-
-<br>
-
-### <a id="properties-customanimation"/>**CustomAnimation**
-
-Gets or sets a custom animation to be executed when a icon is clicked.
- The default value is null.
- This is a bindable property.
-
-Property type: ICustomAnimation<br>
 
 <br>
 
@@ -280,6 +239,17 @@ Default value: TextTransform.Defaultl
 
 <br>
 
+### <a id="properties-iconsize"/>**IconSize**
+
+Gets or sets the icon size for the leading and trailing icons.
+ This is a bindable property.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: 24
+
+<br>
+
 ### <a id="properties-itemheightrequest"/>**ItemHeightRequest**
 
 Gets or sets the height for each item. This is a bindable property.
@@ -387,5 +357,33 @@ Gets or sets the section template.
 Property type: [DataTemplate](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.datatemplate)<br>
 
 Default value: null
+
+<br>
+
+### <a id="properties-touchanimation"/>**TouchAnimation**
+
+Gets or sets a custom animation to be executed when a icon is clicked.
+ The default value is null.
+ This is a bindable property.
+
+Property type: ITouchAnimation<br>
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when an icon is clicked.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
 
 <br>

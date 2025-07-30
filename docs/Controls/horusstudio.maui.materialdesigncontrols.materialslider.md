@@ -125,6 +125,16 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 
 <br>
 
+### <a id="properties-internalslider"/>**InternalSlider**
+
+Internal implementation of the  control.
+
+Property type: [Slider](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.slider)<br>
+
+Remarks: This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
+
+<br>
+
 ### <a id="properties-isenabled"/>**IsEnabled**
 
 Gets or sets the MaterialSlider.IsEnabled property for the slider control. This is a bindable property.

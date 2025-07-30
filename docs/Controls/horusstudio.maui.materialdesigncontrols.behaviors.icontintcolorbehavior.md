@@ -10,6 +10,14 @@ Inherits from: IconTintColorBehavior → [PlatformBehavior&lt;View&gt;](https://
 
 ## Properties
 
+### <a id="properties-isenabled"/>**IsEnabled**
+
+Property that represents if the Icon will be tinted with the IconTintColorBehavior.TintColor. The default value is True.
+
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+<br>
+
 ### <a id="properties-tintcolor"/>**TintColor**
 
 Property that represents the  that Icon will be tinted.
