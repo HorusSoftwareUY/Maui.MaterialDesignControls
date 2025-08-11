@@ -3,7 +3,7 @@ using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
-public enum MaterialChipsType
+public enum MaterialChipType
 {
     /// <summary>Filter chips</summary>
     Filter,
@@ -14,6 +14,7 @@ public enum MaterialChipsType
 /// <summary>
 /// Chips help people enter information, make selections, filter content, or trigger actions and follow Material Design Guidelines. <see href="https://m3.material.io/components/chips/overview">See more.</see>
 /// </summary>
+/// <remarks>The <see href="docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewgroup.md">MaterialViewGroup</see> class allows grouping chips, providing control over the selection type (Single or Multiple), item selection through bindings, and commands that trigger when the selection changes.</remarks>
 /// <example>
 ///
 /// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialChip.gif</img>
@@ -35,7 +36,7 @@ public enum MaterialChipsType
 /// <code>
 /// var chip = new MaterialChip
 /// {
-///     Type = MaterialChipsType.Normal,
+///     Type = MaterialChipType.Normal,
 ///     LeadingIcon = "plus.png",
 ///     Text = "Suggestion both",
 ///     TrailingIcon="horus_logo.png"
@@ -49,7 +50,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
 {
     #region Attributes
 
-    private const MaterialChipsType DefaultChipsType = MaterialChipsType.Normal;
+    private const MaterialChipType DefaultChipType = MaterialChipType.Normal;
     private const bool DefaultIsSelected = false;
     private const bool DefaultIsEnabled = true;
     private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(8);
@@ -73,9 +74,9 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="MaterialChipsType">MaterialChipsType</see> bindable property.
+    /// The backing store for the <see cref="MaterialChipType">MaterialChipType</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialChipsType), typeof(MaterialChip), defaultValue: DefaultChipsType);
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialChipType), typeof(MaterialChip), defaultValue: DefaultChipType);
 
     /// <summary>
     /// The backing store for the <see cref="Command">Command</see> bindable property.
@@ -235,15 +236,15 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialChipsType.Normal">MaterialChipsType.Normal</see>
+    /// <see cref="MaterialChipType.Normal">MaterialChipType.Normal</see>
     /// </default>
     /// <remarks>
     /// <para>Normal: Help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses.</para>
     /// <para>Filter: Use tags or descriptive words to filter content. They can be a good alternative to segmented buttons or checkboxes when viewing a list or search results.</para>
     /// </remarks>
-    public MaterialChipsType Type
+    public MaterialChipType Type
     {
-        get => (MaterialChipsType)GetValue(TypeProperty);
+        get => (MaterialChipType)GetValue(TypeProperty);
         set => SetValue(TypeProperty, value);
     }
 
@@ -622,7 +623,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     {
         if (!IsEnabled) return;
         
-        if (Type == MaterialChipsType.Normal)
+        if (Type == MaterialChipType.Normal)
         {
             VisualStateManager.GoToState(this, VisualStateManager.CommonStates.Normal);
         }

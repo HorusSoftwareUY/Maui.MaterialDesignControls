@@ -18,6 +18,58 @@ public enum SelectionType
 /// This class provides the core logic for handling views that share a common parent layout and are grouped together.
 /// </summary>
 /// <remarks>We reuse some code from MAUI official repository: <see href="https://github.com/dotnet/maui/blob/10.0.0-preview.5.25306.5/src/Controls/src/Core/RadioButton/RadioButtonGroup.cs">See here.</see></remarks>
+/// <example>
+///
+/// <h3>Chip XAML samples</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
+///		material:MaterialViewGroup.GroupName="TestingChipsGroup"
+///		material:MaterialViewGroup.SelectionType="Single"
+///		material:MaterialViewGroup.SelectedValue="{Binding SelectedChipItem}"
+///		BindableLayout.ItemsSource="{Binding Chips}"&gt;
+///		&lt;BindableLayout.ItemTemplate&gt;
+///			&lt;DataTemplate x:DataType="x:String">
+///				&lt;material:MaterialChip
+///					Type="Filter"
+///					Text="{Binding .}" /&gt;
+///			&lt;/DataTemplate&gt;
+///		&lt;/BindableLayout.ItemTemplate&gt;
+///	&lt;/FlexLayout&gt;
+///
+/// </xaml>
+/// </code>
+/// 
+/// [See more chip examples](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ChipsPage.xaml)
+///
+/// <h3>Radio button XAML samples</h3>
+/// <code>
+/// <xaml>
+/// xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+/// 
+/// &lt;VerticalStackLayout 
+///		material:MaterialViewGroup.GroupName="SingleGroupSample" 
+///		material:MaterialViewGroup.SelectionType="Single"
+///		material:MaterialViewGroup.SelectedValue="{Binding CheckedColor}"
+///		material:MaterialViewGroup.SelectedValueChangedCommand="{Binding CheckChangedCommand}"
+///		BindableLayout.ItemsSource="{Binding ItemsSourceColors}"&gt;
+///		&lt;BindableLayout.ItemTemplate&gt;
+///			&lt;DataTemplate x:DataType="vm:CustomColor"&gt;
+///				&lt;material:MaterialRadioButton 
+///					Text="{Binding Color}"
+///					Value="{Binding .}" /&gt;
+///			&lt;/DataTemplate&gt;
+///		&lt;/BindableLayout.ItemTemplate&gt;
+///	&lt;/VerticalStackLayout&gt;
+/// 
+/// </xaml>
+/// </code>
+/// 
+/// [See more radio button examples](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/RadioButtonPage.xaml)
+/// 
+/// </example>
 /// <todoList>
 /// * The SelectedValues property only supports binding to properties of type <see cref="IList{object}">IList{object}</see> or to classes that inherit from it.
 /// </todoList>

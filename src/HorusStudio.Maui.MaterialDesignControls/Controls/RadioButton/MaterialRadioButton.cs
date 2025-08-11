@@ -8,6 +8,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// Radio buttons let people select one option from a set of options and follow Material Design Guidelines. <see href="https://m3.material.io/components/radio-button/overview">See more</see>.
 /// We reuse some code from MAUI official repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButton.cs
 /// </summary>
+/// <remarks>The <see href="docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewgroup.md">MaterialViewGroup</see> class allows grouping radio buttons, providing control over the selection type (Single or Multiple), item selection through bindings, and commands that trigger when the selection changes.</remarks>
 /// <example>
 ///
 /// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialRadioButton.gif</img>
