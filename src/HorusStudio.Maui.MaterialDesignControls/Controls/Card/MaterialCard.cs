@@ -551,7 +551,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 {
                     Brush = ShadowColor,
                     Radius = base.Shadow.Radius,
-                    Opacity = base.Shadow.Opacity,
+                    Opacity = ShadowColor != Colors.Transparent ? base.Shadow.Opacity : 0,
                     Offset = base.Shadow.Offset
                 };
             }
@@ -561,7 +561,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             if (_shadows.TryGetValue(type, out Shadow shadow))
             {
-                if ((Shadow == null && DefaultShadow == null) || Shadow.Equals(DefaultShadow))
+                if (base.Shadow == null && ((Shadow == null && DefaultShadow == null) || Shadow.Equals(DefaultShadow)))
                 {
                     if (!ShadowColor.Equals(DefaultShadowColor))
                     {
