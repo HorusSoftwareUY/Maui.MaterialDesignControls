@@ -1,7 +1,7 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// Abstraction to handle Material Snackbar component that follows <see href="https://m3.material.io/components/snackbar/overview">Material Design Guidelines</see>.
+/// Abstraction to handle Snackbars that follow Material Design Guidelines. <see href="https://m3.material.io/components/snackbar/overview">See more</see>.
 /// </summary>
 /// <example>
 /// <h3>C# sample</h3>

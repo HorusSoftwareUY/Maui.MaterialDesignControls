@@ -6,7 +6,7 @@ using Microsoft.Maui.Controls.Shapes;
 namespace HorusStudio.Maui.MaterialDesignControls
 {
     /// <summary>
-    /// A switch <see cref="View" /> that allows the selection of an item on or off, and follows Material Design Guidelines <see href="https://m3.material.io/components/switch/overview" />.
+    /// Switches allow the selection of an item on or off, and follow Material Design Guidelines. <see href="https://m3.material.io/components/switch/overview">See more</see>.
     /// </summary>
     /// <example>
     ///
@@ -84,12 +84,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Bindable Properties
 
         /// <summary>
-        /// The backing store for the <see cref="TrackColor"/> bindable property.
+        /// The backing store for the <see cref="TrackColor">TrackColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TrackColorProperty = BindableProperty.Create(nameof(TrackColor), typeof(Color), typeof(MaterialSwitch), defaultValueCreator: DefaultTrackColor);
 
         /// <summary>
-        /// The backing store for the <see cref="TrackWidthRequest" /> bindable property.
+        /// The backing store for the <see cref="TrackWidthRequest">TrackWidthRequest</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TrackWidthRequestProperty = BindableProperty.Create(nameof(TrackWidthRequest), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultTrackWidthRequest, propertyChanged: (bindable, _, _) =>
         {
@@ -100,7 +100,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="TrackHeightRequest" /> bindable property.
+        /// The backing store for the <see cref="TrackHeightRequest">TrackHeightRequest</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TrackHeightRequestProperty = BindableProperty.Create(nameof(TrackHeightRequest), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultTrackHeightRequest, propertyChanged: (bindable, _, _) =>
         {
@@ -111,12 +111,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="BorderColor"/> bindable property.
+        /// The backing store for the <see cref="BorderColor">BorderColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialSwitch), defaultValueCreator: DefaultBorderColor);
 
         /// <summary>
-        /// The backing store for the <see cref="BorderWidth"/> bindable property.
+        /// The backing store for the <see cref="BorderWidth">BorderWidth</see> bindable property.
         /// </summary>
         public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialSwitch), DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
         {
@@ -127,7 +127,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="IsToggled"/> bindable property.
+        /// The backing store for the <see cref="IsToggled">IsToggled</see> bindable property.
         /// </summary>
         public static readonly BindableProperty IsToggledProperty = BindableProperty.Create(nameof(IsToggled), typeof(bool), typeof(MaterialSwitch), DefaultIsToggled, BindingMode.TwoWay, propertyChanged: (bindable, _, n) =>
         {
@@ -138,17 +138,17 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="ToggledCommand"/> bindable property.
+        /// The backing store for the <see cref="ToggledCommand">ToggledCommand</see> bindable property.
         /// </summary>
         public static readonly BindableProperty ToggledCommandProperty = BindableProperty.Create(nameof(ToggledCommand), typeof(ICommand), typeof(MaterialSwitch));
 
         /// <summary>
-        /// The backing store for the <see cref="ThumbColor"/> bindable property.
+        /// The backing store for the <see cref="ThumbColor">ThumbColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(nameof(ThumbColor), typeof(Color), typeof(MaterialSwitch), defaultValueCreator: DefaultThumbColor);
 
         /// <summary>
-        /// The backing store for the <see cref="SelectedIcon"/> bindable property.
+        /// The backing store for the <see cref="SelectedIcon">SelectedIcon</see> bindable property.
         /// </summary>
         public static readonly BindableProperty SelectedIconProperty = BindableProperty.Create(nameof(SelectedIcon), typeof(ImageSource), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, _, _) =>
         {
@@ -160,7 +160,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="UnselectedIcon"/> bindable property.
+        /// The backing store for the <see cref="UnselectedIcon">UnselectedIcon</see> bindable property.
         /// </summary>
         public static readonly BindableProperty UnselectedIconProperty = BindableProperty.Create(nameof(UnselectedIcon), typeof(ImageSource), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, _, _) =>
         {
@@ -172,7 +172,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="Text"/> bindable property.
+        /// The backing store for the <see cref="Text">Text</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, _, _) =>
         {
@@ -183,32 +183,32 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="TextColor"/> bindable property.
+        /// The backing store for the <see cref="TextColor">TextColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialSwitch), defaultValueCreator: DefaultTextColor);
 
         /// <summary>
-        /// The backing store for the <see cref="FontSize"/> bindable property.
+        /// The backing store for the <see cref="FontSize">FontSize</see> bindable property.
         /// </summary>
         public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialSwitch), defaultValueCreator: DefaultFontSize);
 
         /// <summary>
-        /// The backing store for the <see cref="FontFamily"/> bindable property.
+        /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
         /// </summary>
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSwitch), defaultValueCreator: DefaultFontFamily);
 
         /// <summary>
-        /// The backing store for the <see cref="FontAttributes" /> bindable property.
+        /// The backing store for the <see cref="FontAttributes">FontAttributes</see> bindable property.
         /// </summary>
         public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialSwitch), defaultValue: DefaultFontAttributes);
 
         /// <summary>
-        /// The backing store for the <see cref="HorizontalTextAlignment" /> bindable property.
+        /// The backing store for the <see cref="HorizontalTextAlignment">HorizontalTextAlignment</see> bindable property.
         /// </summary>
         public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(MaterialSwitch), defaultValue: DefaultHorizontalTextAlignment);
 
         /// <summary>
-        /// The backing store for the <see cref="TextSide"/> bindable property.
+        /// The backing store for the <see cref="TextSide">TextSide</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TextSideProperty = BindableProperty.Create(nameof(TextSide), typeof(TextSide), typeof(MaterialSwitch), defaultValue: DefaultTextSide, propertyChanged: (bindable, _, n) =>
         {
@@ -219,7 +219,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="SupportingText"/> bindable property.
+        /// The backing store for the <see cref="SupportingText">SupportingText</see> bindable property.
         /// </summary>
         public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialSwitch), defaultValue: null, propertyChanged: (bindable, _, _) =>
         {
@@ -230,37 +230,37 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="SupportingTextColor"/> bindable property.
+        /// The backing store for the <see cref="SupportingTextColor">SupportingTextColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty SupportingTextColorProperty = BindableProperty.Create(nameof(SupportingTextColor), typeof(Color), typeof(MaterialSwitch), defaultValueCreator: DefaultSupportingTextColor);
 
         /// <summary>
-        /// The backing store for the <see cref="SupportingFontSize"/> bindable property.
+        /// The backing store for the <see cref="SupportingFontSize">SupportingFontSize</see> bindable property.
         /// </summary>
         public static readonly BindableProperty SupportingFontSizeProperty = BindableProperty.Create(nameof(SupportingFontSize), typeof(double), typeof(MaterialSwitch), defaultValueCreator: DefaultSupportingFontSize);
 
         /// <summary>
-        /// The backing store for the <see cref="SupportingFontFamily"/> bindable property.
+        /// The backing store for the <see cref="SupportingFontFamily">SupportingFontFamily</see> bindable property.
         /// </summary>
         public static readonly BindableProperty SupportingFontFamilyProperty = BindableProperty.Create(nameof(SupportingFontFamily), typeof(string), typeof(MaterialSwitch), defaultValueCreator: DefaultSupportingFontFamily);
 
         /// <summary>
-        /// The backing store for the <see cref="SupportingFontAttributes" /> bindable property.
+        /// The backing store for the <see cref="SupportingFontAttributes">SupportingFontAttributes</see> bindable property.
         /// </summary>
         public static readonly BindableProperty SupportingFontAttributesProperty = BindableProperty.Create(nameof(SupportingFontAttributes), typeof(FontAttributes), typeof(MaterialSwitch), defaultValue: DefaultSupportingFontAttributes);
 
         /// <summary>
-        /// The backing store for the <see cref="Spacing"/> bindable property.
+        /// The backing store for the <see cref="Spacing">Spacing</see> bindable property.
         /// </summary>
         public static readonly BindableProperty SpacingProperty = BindableProperty.Create(nameof(Spacing), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultSpacing);
 
         /// <summary>
-        /// The backing store for the <see cref="TextSpacing"/> bindable property.
+        /// The backing store for the <see cref="TextSpacing">TextSpacing</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TextSpacingProperty = BindableProperty.Create(nameof(TextSpacing), typeof(double), typeof(MaterialSwitch), defaultValue: DefaultTextSpacing);
 
         /// <summary>
-        /// The backing store for the <see cref="IsEnabled"/> bindable property.
+        /// The backing store for the <see cref="IsEnabled">IsEnabled</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(VisualElement), defaultValue: DefaultIsEnabled, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, _) =>
         {
@@ -271,12 +271,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         // <summary>
-        /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
+        /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialSwitch), defaultValueCreator: DefaultTouchAnimationType);
 
         /// <summary>
-        /// The backing store for the <see cref="TouchAnimation"/> bindable property.
+        /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialSwitch));
 
@@ -285,7 +285,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Properties
 
         /// <summary>
-        /// Gets or sets a color that describes the track color of the switch. This is a bindable property.
+        /// Gets or sets a color that describes the track color of the switch.
+        /// This is a bindable property.
         /// </summary>
         public Color TrackColor
         {
@@ -294,7 +295,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the desired width of the track. This is a bindable property.
+        /// Gets or sets the desired width of the track.
+        /// This is a bindable property.
         /// </summary>
         /// <remarks>The default and minimum value is 52.</remarks>
         public double TrackWidthRequest
@@ -304,7 +306,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the desired height of the track. This is a bindable property.
+        /// Gets or sets the desired height of the track.
+        /// This is a bindable property.
         /// </summary>
         /// <remarks>The default and minimum value is 32.</remarks>
         public double TrackHeightRequest
@@ -314,9 +317,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets a color that describes the border stroke color of the switch. This is a bindable property.
+        /// Gets or sets a color that describes the border stroke color of the switch.
+        /// This is a bindable property.
         /// </summary>
-        /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0.</remarks>
+        /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth">IBorderElement.BorderWidth</see> is set to 0.</remarks>
         public Color BorderColor
         {
             get => (Color)GetValue(BorderColorProperty);
@@ -324,7 +328,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the width of the border. This is a bindable property.
+        /// Gets or sets the width of the border.
+        /// This is a bindable property.
         /// </summary>
         /// <remarks>Set this value to a non-zero value in order to have a visible border.</remarks>
         public double BorderWidth
@@ -335,7 +340,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets if switch is on 'On' state or on 'Off'.
-        /// The default value is <see langword="false"/>.
+        /// The default value is <see langword="false">false</see>.
         /// This is a bindable property.
         /// </summary>
         public bool IsToggled
@@ -345,9 +350,14 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the command to invoke when the switch's IsToggled property changes. This is a bindable property.
+        /// Gets or sets the command to invoke when the switch's IsToggled property changes.
+        /// This is a bindable property.
         /// </summary>
-        /// <remarks>This property is used to associate a command with an instance of a switch. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.</remarks>
+        /// <remarks>
+        /// This property is used to associate a command with an instance of a switch.
+        /// This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
+        /// The command parameter is of type <see cref="bool">bool</see> and corresponds to the value of the <see cref="IsToggled">IsToggled</see> property.
+        /// </remarks>
         public ICommand ToggledCommand
         {
             get => (ICommand)GetValue(ToggledCommandProperty);
@@ -355,7 +365,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets a color that describes the thumb color of the switch. This is a bindable property.
+        /// Gets or sets a color that describes the thumb color of the switch.
+        /// This is a bindable property.
         /// </summary>
         public Color ThumbColor
         {
@@ -364,7 +375,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Allows you to display a image on the switch's thumb when it is on the ON state. This is a bindable property.
+        /// Allows you to display a image on the switch's thumb when it is on the ON state.
+        /// This is a bindable property.
         /// </summary>
         public ImageSource SelectedIcon
         {
@@ -373,7 +385,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Allows you to display a image on the switch's thumb when it is on the OFF state. This is a bindable property.
+        /// Allows you to display a image on the switch's thumb when it is on the OFF state.
+        /// This is a bindable property.
         /// </summary>
         public ImageSource UnselectedIcon
         {
@@ -383,8 +396,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets the text displayed next to the switch.
-        /// The default value is <see langword="null"/>. This is a bindable property.
+        /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see langword="null">Null</see>
+        /// </default>
         public string Text
         {
             get => (string)GetValue(TextProperty);
@@ -392,7 +408,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the text of the switch. This is a bindable property.
+        /// Gets or sets the <see cref="Color">color</see> for the text of the switch.
+        /// This is a bindable property.
         /// </summary>
         public Color TextColor
         {
@@ -401,7 +418,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the size of the font for the text of this switch. This is a bindable property.
+        /// Gets or sets the size of the font for the text of this switch.
+        /// This is a bindable property.
         /// </summary>
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double FontSize
@@ -411,7 +429,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the font family for the text of this switch. This is a bindable property.
+        /// Gets or sets the font family for the text of this switch.
+        /// This is a bindable property.
         /// </summary>
         public string FontFamily
         {
@@ -451,8 +470,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets the supporting text displayed next to the switch and under the Text.
-        /// The default value is <see langword="null"/>. This is a bindable property.
+        /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see langword="null">Null</see>
+        /// </default>
         public string SupportingText
         {
             get => (string)GetValue(SupportingTextProperty);
@@ -460,7 +482,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the supporting text of the switch. This is a bindable property.
+        /// Gets or sets the <see cref="Color">color</see> for the supporting text of the switch.
+        /// This is a bindable property.
         /// </summary>
         public Color SupportingTextColor
         {
@@ -469,7 +492,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the size of the font for the supporting text of this switch. This is a bindable property.
+        /// Gets or sets the size of the font for the supporting text of this switch.
+        /// This is a bindable property.
         /// </summary>
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double SupportingFontSize
@@ -479,7 +503,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the font family for the supporting text of this switch. This is a bindable property.
+        /// Gets or sets the font family for the supporting text of this switch.
+        /// This is a bindable property.
         /// </summary>
         public string SupportingFontFamily
         {
@@ -519,9 +544,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets if switch is on 'OnDisabled' state or 'OffDisabled'.
-        /// The default value is <see langword="true"/>.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see langword="true">True</see>
+        /// </default>
         public new bool IsEnabled
         {
             get => (bool)GetValue(IsEnabledProperty);
@@ -529,11 +556,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets an animation to be executed when button is clicked.
+        /// Gets or sets an animation to be executed when element is clicked.
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see cref="TouchAnimationTypes.Fade"/>
+        /// <see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see>
         /// </default>
         public TouchAnimationTypes TouchAnimationType
         {
@@ -542,7 +569,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets a custom animation to be executed when button is clicked.
+        /// Gets or sets a custom animation to be executed when element is clicked.
         /// This is a bindable property.
         /// </summary>
         /// <default>

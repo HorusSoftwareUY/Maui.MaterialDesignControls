@@ -68,4 +68,28 @@ static class VisualElementExtensions
         parentElements.Add(element.Parent);
         element.Parent.GetParentElements(parentElements);
     }
+    
+    public static IEnumerable<Element> GetDescendants(this Element root)
+    {
+        if (root is IElementController controller)
+        {
+            foreach (var child in controller.LogicalChildren)
+            {
+                yield return child;
+
+                foreach (var descendant in GetDescendants(child))
+                    yield return descendant;
+            }
+        }
+    }
+    
+    public static Element? GetVisualRoot(this Element element)
+    {
+        Element parent = element.Parent;
+        while (parent != null && !(parent is Page))
+        {
+            parent = parent.Parent;
+        }
+        return parent;
+    }
 }

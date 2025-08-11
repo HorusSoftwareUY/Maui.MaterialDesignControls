@@ -7,7 +7,7 @@ using Android.App;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A text field <see cref="View" /> let users enter text into a UI and follows Material Design Guidelines <see href="https://m3.material.io/components/text-fields/overview" />.
+/// Text fields let users enter text into a UI and follow Material Design Guidelines. <see href="https://m3.material.io/components/text-fields/overview">See more</see>.
 /// </summary>
 /// <example>
 ///
@@ -108,92 +108,92 @@ public class MaterialTextField : MaterialInputBase
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialTextField), defaultBindingMode: BindingMode.TwoWay);
 
     /// <summary>
-    /// The backing store for the <see cref="IsPassword" /> bindable property.
+    /// The backing store for the <see cref="IsPassword">IsPassword</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(nameof(IsPassword), typeof(bool), typeof(MaterialTextField), defaultValue: false);
 
     /// <summary>
-    /// The backing store for the <see cref="Keyboard" /> bindable property.
+    /// The backing store for the <see cref="Keyboard">Keyboard</see> bindable property.
     /// </summary>
     public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(MaterialTextField), defaultValue: Keyboard.Text);
 
     /// <summary>
-    /// The backing store for the <see cref="TextTransform" /> bindable property.
+    /// The backing store for the <see cref="TextTransform">TextTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextTransformProperty = BindableProperty.Create(nameof(TextTransform), typeof(TextTransform), typeof(MaterialTextField), defaultValue: TextTransform.Default);
 
     /// <summary>
-    /// The backing store for the <see cref="ReturnType" /> bindable property.
+    /// The backing store for the <see cref="ReturnType">ReturnType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ReturnTypeProperty = BindableProperty.Create(nameof(ReturnType), typeof(ReturnType), typeof(MaterialTextField), defaultValue: ReturnType.Default);
 
     /// <summary>
-    /// The backing store for the <see cref="ReturnCommand" /> bindable property.
+    /// The backing store for the <see cref="ReturnCommand">ReturnCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ReturnCommandProperty = BindableProperty.Create(nameof(ReturnCommand), typeof(ICommand), typeof(MaterialTextField), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="ReturnCommandParameter" /> bindable property.
+    /// The backing store for the <see cref="ReturnCommandParameter">ReturnCommandParameter</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ReturnCommandParameterProperty = BindableProperty.Create(nameof(ReturnCommandParameter), typeof(object), typeof(MaterialTextField), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="MaxLength" /> bindable property.
+    /// The backing store for the <see cref="MaxLength">MaxLength</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(nameof(MaxLength), typeof(int), typeof(MaterialTextField), defaultValue: Int32.MaxValue);
 
     /// <summary>
-    /// The backing store for the <see cref="CursorPosition" /> bindable property.
+    /// The backing store for the <see cref="CursorPosition">CursorPosition</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CursorPositionProperty = BindableProperty.Create(nameof(CursorPosition), typeof(int), typeof(MaterialTextField), defaultValue: 0);
 
     /// <summary>
-    /// The backing store for the <see cref="TextChangedCommand" /> bindable property.
+    /// The backing store for the <see cref="TextChangedCommand">TextChangedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextChangedCommandProperty = BindableProperty.Create(nameof(TextChangedCommand), typeof(ICommand), typeof(MaterialTextField), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="VerticalTextAlignment" /> bindable property.
+    /// The backing store for the <see cref="VerticalTextAlignment">VerticalTextAlignment</see> bindable property.
     /// </summary>
     public static readonly BindableProperty VerticalTextAlignmentProperty = BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(MaterialTextField), defaultValue: null); 
     
     /// <summary>
-    /// The backing store for the <see cref="ClearButtonVisibility" /> bindable property.
+    /// The backing store for the <see cref="ClearButtonVisibility">ClearButtonVisibility</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ClearButtonVisibilityProperty = BindableProperty.Create(nameof(ClearButtonVisibility), typeof(ClearButtonVisibility), typeof(MaterialTextField), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialTextField), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="IsTextPredictionEnabled" /> bindable property.
+    /// The backing store for the <see cref="IsTextPredictionEnabled">IsTextPredictionEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsTextPredictionEnabledProperty = BindableProperty.Create(nameof(IsTextPredictionEnabled), typeof(bool), typeof(MaterialTextField), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="IsSpellCheckEnabled" /> bindable property.
+    /// The backing store for the <see cref="IsSpellCheckEnabled">IsSpellCheckEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsSpellCheckEnabledProperty = BindableProperty.Create(nameof(IsSpellCheckEnabled), typeof(bool), typeof(MaterialTextField), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTextField), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="IsReadOnly" /> bindable property.
+    /// The backing store for the <see cref="IsReadOnly">IsReadOnly</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsReadOnlyProperty = BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(MaterialTextField), defaultValue: false);
 
     /// <summary>
-    /// The backing store for the <see cref="CursorColor" /> bindable property.
+    /// The backing store for the <see cref="CursorColor">CursorColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialTextField), defaultValueCreator: DefaultCursorColor);
 
@@ -202,7 +202,7 @@ public class MaterialTextField : MaterialInputBase
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="Entry" /> control.
+    /// Internal implementation of the <see cref="Entry">Entry</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
@@ -223,7 +223,8 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets if the input is password. This is a bindable property.
+    /// Gets or sets if the input is password.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// False
@@ -235,10 +236,11 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets input's keyboard. This is a bindable property.
+    /// Gets or sets input's keyboard.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="Keyboard.Text"/>
+    /// <see cref="Keyboard.Text">Keyboard.Text</see>
     /// </default>
     public Keyboard Keyboard
     {
@@ -247,10 +249,11 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    /// Gets or sets input's texttransform. This is a bindable property.
+    /// Gets or sets input's text transform.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="TextTransform.Default"/>
+    /// <see cref="TextTransform.Default">TextTransform.Default</see>
     /// </default>
     public TextTransform TextTransform
     {
@@ -259,10 +262,11 @@ public class MaterialTextField : MaterialInputBase
     }
 
     /// <summary>
-    ///  Determines what the return key on the on-screen keyboard should look like. This is a bindable property.
+    ///  Determines what the return key on the on-screen keyboard should look like.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="ReturnType.Default"/>
+    /// <see cref="ReturnType.Default">ReturnType.Default</see>
     /// </default>
     public ReturnType ReturnType
     {
@@ -272,7 +276,8 @@ public class MaterialTextField : MaterialInputBase
 
     /// <summary>
     /// Gets or sets the command to run when the user presses the return key, either
-    /// physically or on the on-screen keyboard. This is a bindable property.
+    /// physically or on the on-screen keyboard.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     ///  null
@@ -300,7 +305,7 @@ public class MaterialTextField : MaterialInputBase
     /// Gets or sets input's max length. This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="Int32.MaxValue"/>
+    /// <see cref="Int32.MaxValue">Int32.MaxValue</see>
     /// </default>
     public int MaxLength
     {
@@ -408,7 +413,7 @@ public class MaterialTextField : MaterialInputBase
     /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontTracking.BodyLarge"/> 0.5
+    /// <see cref="MaterialFontTracking.BodyLarge">MaterialFontTracking.BodyLarge</see>: 0.5
     /// </default>
     /// <remarks>
     /// To be added.

@@ -200,43 +200,43 @@ Remarks: This property does not take into account the Left and Right of the set 
 
 <br>
 
-### <a id="properties-iconbuttonanimation"/>**IconButtonAnimation**
-
-Gets or sets an animation to be executed when leading and trailing icon button are clicked.
- This is a bindable property.
-
-Property type: AnimationTypes<br>
-
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade
-
-<br>
-
-### <a id="properties-iconbuttonanimationparameter"/>**IconButtonAnimationParameter**
-
-Gets or sets the parameter to pass to the  property.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: 0.7
-
-<br>
-
-### <a id="properties-iconbuttoncustomanimation"/>**IconButtonCustomAnimation**
+### <a id="properties-iconbuttontouchanimation"/>**IconButtonTouchAnimation**
 
 Gets or sets a custom animation to be executed when leading and trailing icon button are clicked. 
  This is a bindable property.
 
-Property type: ICustomAnimation<br>
+Property type: ITouchAnimation<br>
 
 Default value: null
+
+<br>
+
+### <a id="properties-iconbuttontouchanimationtype"/>**IconButtonTouchAnimationType**
+
+Gets or sets an animation to be executed when leading and trailing icon button are clicked.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
+
+<br>
+
+### <a id="properties-iconpadding"/>**IconPadding**
+
+Gets or sets the padding of the MaterialTopAppBar.LeadingIcon and MaterialTopAppBar.TrailingIcons of this top app bar.
+ This is a bindable property.
+
+Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
+
+Default value: 12
 
 <br>
 

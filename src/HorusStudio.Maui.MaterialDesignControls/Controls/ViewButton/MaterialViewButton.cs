@@ -5,7 +5,7 @@ using System.Windows.Input;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// It is a touchable view.
+/// View buttons are <see cref="View">Views</see> that react to touch events.
 /// </summary>
 public class MaterialViewButton : ContentView, ITouchableView
 {
@@ -18,7 +18,7 @@ public class MaterialViewButton : ContentView, ITouchableView
     #region Bindable properties
 
     /// <summary>
-    /// The backing store for the <see cref="Command" /> bindable property.
+    /// The backing store for the <see cref="Command">Command</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialViewButton), propertyChanged:
         (bindable, _, _) =>
@@ -28,18 +28,18 @@ public class MaterialViewButton : ContentView, ITouchableView
         });
 
     /// <summary>
-    /// The backing store for the <see cref="CommandParameter" /> bindable property.
+    /// The backing store for the <see cref="CommandParameter">CommandParameter</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialViewButton));
 
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialViewButton), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialViewButton));
 
@@ -53,7 +53,7 @@ public class MaterialViewButton : ContentView, ITouchableView
     /// </summary>
     /// <remarks>
     /// This property is used to associate a command with an instance of a button.
-    /// <para>This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</para>
+    /// <para>This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.</para>
     /// </remarks>
     public ICommand Command
     {
@@ -62,11 +62,11 @@ public class MaterialViewButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
+    /// Gets or sets the parameter to pass to the <see cref="Command">Command</see> property.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>.
+    /// <see langword="null">Null</see>.
     /// </default>
     public object CommandParameter
     {
@@ -92,7 +92,7 @@ public class MaterialViewButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>.
+    /// <see langword="null">Null</see>.
     /// </default>
     public ITouchAnimation TouchAnimation
     {

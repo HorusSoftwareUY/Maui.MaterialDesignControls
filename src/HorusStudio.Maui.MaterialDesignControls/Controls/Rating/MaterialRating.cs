@@ -61,47 +61,47 @@ public class MaterialRating : ContentView
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Label" /> bindable property.
+    /// The backing store for the <see cref="Label">Label</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelProperty = BindableProperty.Create(nameof(Label), typeof(string), typeof(MaterialRating), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelColor" /> bindable property.
+    /// The backing store for the <see cref="LabelColor">LabelColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialRating), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="FontFamily" /> bindable property.
+    /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialRating), defaultValueCreator: DefaultFontFamily);
     
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialRating), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAttributes" /> bindable property.
+    /// The backing store for the <see cref="FontAttributes">FontAttributes</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialRating), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialRating), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="FontSize" /> bindable property.
+    /// The backing store for the <see cref="FontSize">FontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialRating), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelTransform" /> bindable property.
+    /// The backing store for the <see cref="LabelTransform">LabelTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelTransformProperty = BindableProperty.Create(nameof(LabelTransform), typeof(TextTransform), typeof(MaterialRating), defaultValue: TextTransform.Default);
 
     /// <summary>
-    /// The backing store for the <see cref="IsEnabled" /> bindable property.
+    /// The backing store for the <see cref="IsEnabled">IsEnabled</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialRating), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, newValue) =>
     {
@@ -116,57 +116,57 @@ public class MaterialRating : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialRating), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialRating));
 
     /// <summary>
-    /// The backing store for the <see cref="StrokeColor" /> bindable property.
+    /// The backing store for the <see cref="StrokeColor">StrokeColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create(nameof(StrokeColor), typeof(Color), typeof(MaterialRating), defaultValueCreator: DefaultStrokeColor);
 
     /// <summary>
-    /// The backing store for the <see cref="StrokeThickness" /> bindable property.
+    /// The backing store for the <see cref="StrokeThickness">StrokeThickness</see> bindable property.
     /// </summary>
     public static readonly BindableProperty StrokeThicknessProperty = BindableProperty.Create(nameof(StrokeThickness), typeof(double), typeof(MaterialRating), defaultValue: DefaultStrokeThickness);
 
     /// <summary>
-    /// The backing store for the <see cref="SelectedIconSource" /> bindable property.
+    /// The backing store for the <see cref="SelectedIconSource">SelectedIconSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedIconSourceProperty = BindableProperty.Create(nameof(SelectedIconSource), typeof(ImageSource), typeof(MaterialRating), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="UnselectedIconSource" /> bindable property.
+    /// The backing store for the <see cref="UnselectedIconSource">UnselectedIconSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty UnselectedIconSourceProperty = BindableProperty.Create(nameof(UnselectedIconSource), typeof(ImageSource), typeof(MaterialRating), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="SelectedIconsSource" /> bindable property.
+    /// The backing store for the <see cref="SelectedIconsSource">SelectedIconsSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedIconsSourceProperty = BindableProperty.Create(nameof(SelectedIconsSource), typeof(IEnumerable<ImageSource>), typeof(MaterialRating), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="UnselectedIconsSource" /> bindable property.
+    /// The backing store for the <see cref="UnselectedIconsSource">UnselectedIconsSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty UnselectedIconsSourceProperty = BindableProperty.Create(nameof(UnselectedIconsSource), typeof(IEnumerable<ImageSource>), typeof(MaterialRating), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="ItemsSize" /> bindable property.
+    /// The backing store for the <see cref="ItemsSize">ItemsSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemsSizeProperty = BindableProperty.Create(nameof(ItemsSize), typeof(int), typeof(MaterialRating), defaultValue: DefaultItemsSize);
 
     /// <summary>
-    /// The backing store for the <see cref="ItemsPerRow" /> bindable property.
+    /// The backing store for the <see cref="ItemsPerRow">ItemsPerRow</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemsPerRowProperty = BindableProperty.Create(nameof(ItemsPerRow), typeof(int), typeof(MaterialRating), defaultValue: DefaultItemsPerRow);
 
     /// <summary>
-    /// The backing store for the <see cref="Value"/> bindable property.
+    /// The backing store for the <see cref="Value">Value</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(int), typeof(MaterialRating), defaultBindingMode: BindingMode.TwoWay, defaultValue: 0, propertyChanged: (bindableObject, _, newValue) =>
     {
@@ -177,7 +177,7 @@ public class MaterialRating : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="ValueChangedCommand" /> bindable property.
+    /// The backing store for the <see cref="ValueChangedCommand">ValueChangedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueChangedCommandProperty = BindableProperty.Create(nameof(ValueChangedCommand), typeof(ICommand), typeof(MaterialRating));
 
@@ -186,11 +186,11 @@ public class MaterialRating : ContentView
     #region Properties
 
     /// <summary>
-    /// Gets or sets the <see cref="Label" /> for the label.
+    /// Gets or sets label text.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="Null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public string Label
     {
@@ -199,7 +199,7 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="LabelColor" /> for the text of the label.
+    /// Gets or sets the <see cref="Color">color</see> for label.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -249,7 +249,7 @@ public class MaterialRating : ContentView
     /// The default value of this property is true
     /// </summary>
     /// <default>
-    /// <see langword="True"/>
+    /// <see langword="true">True</see>
     /// </default>
     public bool FontAutoScalingEnabled
     {
@@ -280,7 +280,7 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets <see cref="IsEnabled" /> for the rating control.
+    /// Gets or sets if rating control is enabled.
     /// This is a bindable property.
     /// </summary>
     public new bool IsEnabled
@@ -307,7 +307,7 @@ public class MaterialRating : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public ITouchAnimation TouchAnimation
     {
@@ -316,7 +316,7 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the stroke of default start.
+    /// Gets or sets stroke <see cref="Color">color</see>.
     /// This is a bindable property.
     /// </summary>
     public Color StrokeColor
@@ -326,7 +326,7 @@ public class MaterialRating : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="StrokeThickness" /> for the default start.
+    /// Gets or sets the stroke thickness.
     /// This is a bindable property.
     /// </summary>
     public double StrokeThickness
@@ -431,7 +431,7 @@ public class MaterialRating : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public ICommand ValueChangedCommand
     {

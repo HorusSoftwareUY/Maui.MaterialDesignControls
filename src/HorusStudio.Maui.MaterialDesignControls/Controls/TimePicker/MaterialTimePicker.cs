@@ -6,7 +6,7 @@ using Microsoft.Maui.Handlers;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A time picker <see cref="View" /> Time pickers let users select a time. They typically appear in forms and dialogs.
+/// Time pickers let users select a time. They typically appear in forms and dialogs and, partially, follow Material Design Guidelines. <see href="https://m3.material.io/components/time-pickers/overview">See more.</see>
 /// </summary>
 /// <example>
 ///
@@ -84,13 +84,13 @@ public class MaterialTimePicker : MaterialInputBase
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialTimePicker), defaultValue: null);
 
 #nullable enable
     /// <summary>
-    /// The backing store for the <see cref="Time" /> bindable property.
+    /// The backing store for the <see cref="Time">Time</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan?), typeof(MaterialTimePicker), defaultBindingMode: BindingMode.TwoWay, defaultValue: null, propertyChanged:
     (bindable, oldValue, newValue) =>
@@ -101,22 +101,22 @@ public class MaterialTimePicker : MaterialInputBase
 #nullable disable
 
     /// <summary>
-    /// The backing store for the <see cref="Format" /> bindable property.
+    /// The backing store for the <see cref="Format">Format</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(MaterialTimePicker), defaultValue: MaterialFormat.TimeFormat);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialTimePicker), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTimePicker), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="TimeSelectedCommand" /> bindable property.
+    /// The backing store for the <see cref="TimeSelectedCommand">TimeSelectedCommand<see/> bindable property.
     /// </summary>
     public static readonly BindableProperty TimeSelectedCommandProperty = BindableProperty.Create(nameof(TimeSelectedCommand), typeof(ICommand), typeof(MaterialTimePicker));
 
@@ -125,7 +125,7 @@ public class MaterialTimePicker : MaterialInputBase
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="TimePicker" /> control.
+    /// Internal implementation of the <see cref="TimePicker">TimePicker</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
@@ -149,7 +149,7 @@ public class MaterialTimePicker : MaterialInputBase
     /// <summary>
     /// Gets or sets the displayed time. This is a bindable property.
     /// <value>
-    /// The <see cref="System.TimeSpan"/> displayed in the TimePicker.
+    /// The <see cref="System.TimeSpan">TimeSpan</see> displayed in the TimePicker.
     /// </value>
     /// </summary>
     /// <default>
@@ -206,7 +206,7 @@ public class MaterialTimePicker : MaterialInputBase
     /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontTracking.BodyLarge"/> 0.5
+    /// <see cref="MaterialFontTracking.BodyLarge">MaterialFontTracking.BodyLarge</see>: 0.5
     /// </default>
     /// <remarks>
     /// To be added.

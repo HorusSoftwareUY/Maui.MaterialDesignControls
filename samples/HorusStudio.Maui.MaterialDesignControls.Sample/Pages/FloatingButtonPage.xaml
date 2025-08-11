@@ -30,23 +30,41 @@
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Type" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <material:MaterialChipsGroup
-                IsMultipleSelection="False"
-                HorizontalSpacing="8"
-                VerticalSpacing="8"
-                ItemsSource="{Binding Types}"
-                SelectedItem="{Binding ButtonType, Mode=TwoWay}" />
+            <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
+                        material:MaterialViewGroup.GroupName="Types"
+                        material:MaterialViewGroup.SelectionType="Single"
+                        material:MaterialViewGroup.SelectedValue="{Binding ButtonType}"
+                        BindableLayout.ItemsSource="{Binding Types}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <material:MaterialChip
+                            Type="Filter"
+                            Text="{Binding .}"
+                            Value="{Binding .}"
+                            Margin="4" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
         </material:MaterialCard>
         <material:MaterialLabel Text="You can choose between FAB, small FAB and large FAB types." Type="BodySmall" />
         
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Position" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <material:MaterialChipsGroup
-                IsMultipleSelection="False"
-                HorizontalSpacing="8"
-                VerticalSpacing="8"
-                ItemsSource="{Binding Positions}"
-                SelectedItem="{Binding PositionButton, Mode=TwoWay}" />
+            <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
+                        material:MaterialViewGroup.GroupName="Positions"
+                        material:MaterialViewGroup.SelectionType="Single"
+                        material:MaterialViewGroup.SelectedValue="{Binding PositionButton}"
+                        BindableLayout.ItemsSource="{Binding Positions}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <material:MaterialChip
+                            Type="Filter"
+                            Text="{Binding .}"
+                            Value="{Binding .}"
+                            Margin="4" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
         </material:MaterialCard>
         <material:MaterialLabel Text="You can set FAB position on 4 different corners." Type="BodySmall" />
 

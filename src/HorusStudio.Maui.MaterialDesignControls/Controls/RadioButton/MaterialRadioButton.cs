@@ -1,12 +1,14 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+﻿using System.ComponentModel;
+using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A RadioButton <see cref="View" /> let people select one option from a set of options and follows Material Design Guidelines <see href="https://m3.material.io/components/radio-button/overview">See here. </see>
+/// Radio buttons let people select one option from a set of options and follow Material Design Guidelines. <see href="https://m3.material.io/components/radio-button/overview">See more</see>.
 /// We reuse some code from MAUI official repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButton.cs
 /// </summary>
+/// <remarks>The <see href="docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewgroup.md">MaterialViewGroup</see> class allows grouping radio buttons, providing control over the selection type (Single or Multiple), item selection through bindings, and commands that trigger when the selection changes.</remarks>
 /// <example>
 ///
 /// <img>https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialRadioButton.gif</img>
@@ -18,8 +20,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// &lt;material:MaterialRadioButton
 ///         TextSide="Left"
-///         CommandCheckedChanged="{Binding CheckedChangedCommand}"
-///         CommandCheckedChangedParameter="Selected or Unselected"
+///         CheckedChangedCommand="{Binding CheckedChangedCommand}"
 ///         Text="Radio button 1"/&gt;
 /// </xaml>
 /// </code>
@@ -30,8 +31,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// {
 ///     Text = "Radio button 1",
 ///     TextSide = TextSide.Left,
-///     CommandCheckedChanged = viewModel.CheckChangedCommand,
-///     CommandCheckedChangedParameter = "Selected or Unselected"
+///     CheckedChangedCommand = viewModel.CheckChangedCommand
 /// };
 ///</code>
 ///
@@ -42,7 +42,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// * [iOS] FontAttributes doesn't work.
 /// * Using a control template doesn't work when define a custom style for disabled state.
 /// </todoList>
-public class MaterialRadioButton : ContentView, ITouchableView
+public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
 {
     #region Attributes
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
@@ -51,9 +51,6 @@ public class MaterialRadioButton : ContentView, ITouchableView
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.BodyLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
-    private const string DefaultGroupName = "MaterialRadioButton.GroupName";
-    internal const string GroupNameChangedMessage = "MaterialRadioButtonGroupNameChanged";
-    internal const string ValueChangedMessage = "MaterialRadioButtonValueChanged";
 
     #endregion Attributes
 
@@ -68,26 +65,22 @@ public class MaterialRadioButton : ContentView, ITouchableView
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Content" />
-    /// bindable property.
+    /// The backing store for the <see cref="Content">Content</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(string), typeof(MaterialRadioButton), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="StrokeColor" />
-    /// bindable property.
+    /// The backing store for the <see cref="StrokeColor">StrokeColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create(nameof(StrokeColor), typeof(Color), typeof(MaterialRadioButton), defaultValueCreator: DefaultStrokeColor);
 
     /// <summary>
-    /// The backing store for the <see cref="Text" />
-    /// bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialRadioButton), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="ControlTemplate" />
-    /// bindable property.
+    /// The backing store for the <see cref="ControlTemplate">ControlTemplate</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty ControlTemplateProperty = BindableProperty.Create(nameof(ControlTemplate), typeof(ControlTemplate), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, _, newValue) =>
     {
@@ -98,47 +91,29 @@ public class MaterialRadioButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="TextColor" />
-    /// bindable property.
+    /// The backing store for the <see cref="TextColor">TextColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialRadioButton), defaultValueCreator: DefaultTextColor);
-
+    
     /// <summary>
-    /// The backing store for the <see cref="GroupName" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty GroupNameProperty = BindableProperty.Create(nameof(GroupName), typeof(string), typeof(MaterialRadioButton), defaultValue: DefaultGroupName, propertyChanged: (bindableObject, oldValue, newValue) =>
-    {
-        if (bindableObject is MaterialRadioButton self && oldValue is string oldGroupName && newValue is string newGroupName)
-        {
-            self.OnGroupNamePropertyChanged(oldGroupName, newGroupName);
-        }
-    });
-
-    /// <summary>
-    /// The backing store for the <see cref="IsChecked" />
-    /// bindable property.
+    /// The backing store for the <see cref="IsChecked">IsChecked</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(MaterialRadioButton), defaultValue: false, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, newValue) =>
     { 
         if(bindable is MaterialRadioButton self && newValue is bool value)
         {
             self.ChangeVisualState();
-
-            if (value)
-                MaterialRadioButtonGroup.UpdateRadioButtonGroup(self);
-
+            
             self.CheckedChanged?.Invoke(self, new CheckedChangedEventArgs(value));
-            if (self.CommandCheckedChanged != null && self.CommandCheckedChanged.CanExecute(self.CommandCheckedChangedParameter))
+            if (self.CheckedChangedCommand != null && self.CheckedChangedCommand.CanExecute(value))
             {
-                self.CommandCheckedChanged.Execute(self.CommandCheckedChangedParameter);
+                self.CheckedChangedCommand.Execute(value);
             }
         }
     });
-
+    
     /// <summary>
-    /// The backing store for the <see cref="IsEnabled" />
-    /// bindable property.
+    /// The backing store for the <see cref="IsEnabled">IsEnabled</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialRadioButton), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, newValue) =>
     {
@@ -149,44 +124,37 @@ public class MaterialRadioButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="FontFamily" />
-    /// bindable property.
+    /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialRadioButton), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" />
-    /// bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialRadioButton), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAttributes" />
-    /// bindable property.
+    /// The backing store for the <see cref="FontAttributes">FontAttributes</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialRadioButton), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" />
-    /// bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialRadioButton), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="FontSize" />
-    /// bindable property.
+    /// The backing store for the <see cref="FontSize">FontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialRadioButton), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="TextTransform" />
-    /// bindable property.
+    /// The backing store for the <see cref="TextTransform">TextTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextTransformProperty = BindableProperty.Create(nameof(TextTransform), typeof(TextTransform), typeof(MaterialRadioButton), defaultValue: TextTransform.Default);
 
     /// <summary>
-    /// The backing store for the <see cref="TextSide"/>
-    /// bindable property.
+    /// The backing store for the <see cref="TextSide">TextSide</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextSideProperty = BindableProperty.Create(nameof(TextSide), typeof(TextSide), typeof(MaterialRadioButton), defaultValue: TextSide.Right, propertyChanged: (bindable, _, newValue) => 
     { 
@@ -197,47 +165,37 @@ public class MaterialRadioButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Value"/>
-    /// bindable property.
+    /// The backing store for the <see cref="Value">Value</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, _, _) => 
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(MaterialRadioButton), defaultValue: null, propertyChanged: (bindableObject, oldValue, newValue) => 
     { 
         if(bindableObject is MaterialRadioButton self)
         {
-            self.OnValuePropertyChanged();
+            self.GroupableViewPropertyChanged?.Invoke(self, new GroupableViewPropertyChangedEventArgs(nameof(Value), oldValue, newValue));
         }
     });
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimationType"/>
-    /// bindable property.
+    /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialRadioButton), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimation"/>
-    /// bindable property.
+    /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialRadioButton));
 
     /// <summary>
-    /// The backing store for the <see cref="CommandCheckedChanged" />
-    /// bindable property.
+    /// The backing store for the <see cref="CheckedChangedCommand">CheckedChangedCommand</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty CommandCheckedChangedProperty = BindableProperty.Create(nameof(CommandCheckedChanged), typeof(ICommand), typeof(MaterialRadioButton));
-
-    /// <summary>
-    /// The backing store for the <see cref="CommandCheckedChangedParameter" />
-    /// bindable property.
-    /// </summary>
-    public static readonly BindableProperty CommandCheckedChangedParameterProperty = BindableProperty.Create(nameof(CommandCheckedChangedParameter), typeof(object), typeof(MaterialRadioButton));
-
+    public static readonly BindableProperty CheckedChangedCommandProperty = BindableProperty.Create(nameof(CheckedChangedCommand), typeof(ICommand), typeof(MaterialRadioButton));
+    
     #endregion Bindable Properties
 
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="RadioButton" /> control.
+    /// Internal implementation of the <see cref="RadioButton">RadioButton</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
@@ -245,25 +203,27 @@ public class MaterialRadioButton : ContentView, ITouchableView
     public RadioButton InternalRadioButton => _radioButton;
 
     /// <summary>
-    /// Gets the <see cref="Content" /> for the RadioButton.
+    /// Gets the <see cref="Content">Content</see> of the radio button.
     /// This is a bindable property.
-    /// We disabled the set for this property because doesn't have sense set the content because we are setting with the
-    /// radio button and label.
     /// </summary>
     public new string Content => (string)GetValue(ContentProperty);
 
     /// <summary>
-    /// Gets or sets the <see cref="Text" /> for the label.
+    /// Gets or sets a text for the radio button.
     /// This is a bindable property.
     /// </summary>
     public string Text
     {
         get => (string)GetValue(TextProperty);
-        set => SetValue(TextProperty, value);
+        set
+        {
+            SetValue(TextProperty, value);
+            OnPropertyChanged(nameof(Value));
+        } 
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="ControlTemplate" /> for the radio button.
+    /// Gets or sets the <see cref="ControlTemplate">template</see> for the radio button.
     /// This is a bindable property.
     /// </summary>
     public new ControlTemplate ControlTemplate
@@ -273,7 +233,7 @@ public class MaterialRadioButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the stroke of the radio button.
+    /// Gets or sets the stroke <see cref="Color">color</see> for the radio button.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -286,7 +246,7 @@ public class MaterialRadioButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="TextColor" /> for the text of the label.
+    /// Gets or sets the text <see cref="Color">color</see> for the radio button.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -297,39 +257,34 @@ public class MaterialRadioButton : ContentView, ITouchableView
         get => (Color)GetValue(TextColorProperty);
         set => SetValue(TextColorProperty, value);
     }
-
+    
     /// <summary>
-    /// Gets or sets the <see cref="string" /> GroupName for the radio button. 
+    /// Gets or sets if the radio button is checked. 
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="DefaultGroupName">MaterialRadioButton.GroupName</see>
-    /// </default>
-    public string GroupName
-    {
-        get => (string)GetValue(GroupNameProperty);
-        set => SetValue(GroupNameProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets <see cref="IsChecked" /> for the radio button. 
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="False"/>
+    /// <see langword="false">False</see>
     /// </default>
     public bool IsChecked
     {
         get => (bool)GetValue(IsCheckedProperty);
         set => SetValue(IsCheckedProperty, value);
     }
+    
+    /// <inheritdoc />
+    /// <remarks>This property is used internally, and it's recommended to avoid setting it directly.</remarks>
+    public bool IsSelected
+    {
+        get => IsChecked;
+        set => IsChecked = value;
+    }
 
     /// <summary>
-    /// Gets or sets <see cref="IsEnabled" />  for the radio button.
+    /// Gets or sets the radio button is enabled.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="False"/>
+    /// <see langword="false">False</see>
     /// </default>
     public new bool IsEnabled
     {
@@ -371,7 +326,7 @@ public class MaterialRadioButton : ContentView, ITouchableView
     /// Defines whether an app's UI reflects text scaling preferences set in the operating system.
     /// </summary>
     /// <default>
-    /// <see langword="True"/>
+    /// <see langword="true">True</see>
     /// </default>
     public bool FontAutoScalingEnabled
     {
@@ -404,7 +359,7 @@ public class MaterialRadioButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="TextSide.Left"/>
+    /// <see cref="TextSide.Left">TextSide.Left</see>
     /// </default>
     public TextSide TextSide
     {
@@ -413,15 +368,16 @@ public class MaterialRadioButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Defines the value of radio button selected
+    /// Defines the value of the radio button
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see cref="MaterialRadioButton.Text">MaterialRadioButton.Text</see>
     /// </default>
+    /// <remarks>If a value is not explicitly set, the control will use the value of the <see cref="MaterialRadioButton.Text">Text</see> property if set or the <see cref="MaterialRadioButton.Id">Id</see> property as its default.</remarks>
     public object Value
     {
-        get => GetValue(ValueProperty);
+        get => GetValue(ValueProperty) ?? (!string.IsNullOrEmpty(Text) ? Text : Id);
         set => SetValue(ValueProperty, value);
     }
 
@@ -430,7 +386,7 @@ public class MaterialRadioButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="TouchAnimationTypes.Fade"/>
+    /// <see cref="TouchAnimationTypes.Fade">ouchAnimationTypes.Fade</see>
     /// </default>
     public TouchAnimationTypes TouchAnimationType
     {
@@ -443,7 +399,7 @@ public class MaterialRadioButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public ITouchAnimation TouchAnimation
     {
@@ -455,26 +411,18 @@ public class MaterialRadioButton : ContentView, ITouchableView
     /// Gets or sets the command to invoke when the radio button changes its status.
     /// This is a bindable property.
     /// </summary>
-    /// <remarks>This property is used to associate a command with an instance of a radio button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
-    public ICommand CommandCheckedChanged
+    /// <remarks>
+    /// This property is used to associate a command with an instance of a radio button.
+    /// This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
+    /// <see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.
+    /// The command parameter is of type <see cref="bool">bool</see> and corresponds to the value of the <see cref="IsChecked">IsChecked</see> property.
+    /// </remarks>
+    public ICommand CheckedChangedCommand
     {
-        get => (ICommand)GetValue(CommandCheckedChangedProperty);
-        set => SetValue(CommandCheckedChangedProperty, value);
+        get => (ICommand)GetValue(CheckedChangedCommandProperty);
+        set => SetValue(CheckedChangedCommandProperty, value);
     }
-
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="CommandCheckedChangedParameter"/> property.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>
-    /// </default>
-    public object CommandCheckedChangedParameter
-    {
-        get => GetValue(CommandCheckedChangedParameterProperty);
-        set => SetValue(CommandCheckedChangedParameterProperty, value);
-    }
-
+    
     #endregion Properties
 
     #region Constructors
@@ -504,32 +452,32 @@ public class MaterialRadioButton : ContentView, ITouchableView
         _radioButton = new()
         {
             Margin = new Thickness(0),
-            GroupName = GroupName,
+            GroupName = Guid.NewGuid().ToString(),
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Center,
             Padding = new Thickness(0),
             MinimumHeightRequest = 20,
-            MinimumWidthRequest = 20
+            MinimumWidthRequest = 20,
+            InputTransparent = true
         };
         _radioButton.CheckedChanged += RadioButton_CheckedChanged;
         _radioButton.SetValue(Grid.RowProperty, 0);
         _radioButton.SetValue(Grid.ColumnProperty, 0);
 
         _mainLayout.Children.Add(_radioButton);
-
-        _radioButton.SetBinding(RadioButton.GroupNameProperty, new Binding(nameof(GroupName), source: this));
+        
         _radioButton.SetBinding(RadioButton.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         _radioButton.SetBinding(RadioButton.IsCheckedProperty, new Binding(nameof(IsChecked), source: this));
         _radioButton.SetBinding(RadioButton.ValueProperty, new Binding(nameof(Value), source: this));
         _radioButton.SetBinding(RadioButton.ControlTemplateProperty, new Binding(nameof(ControlTemplate), source: this));
         _radioButton.SetBinding(CustomRadioButton.StrokeColorProperty, new Binding(nameof(StrokeColor), source: this));
-
+        
         _label = new()
         {
             TextColor = TextColor,
             Text = Text,
             HorizontalOptions = LayoutOptions.Start,
-            VerticalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
         };
         _label.SetValue(Grid.RowProperty, 0);
         _label.SetValue(Grid.ColumnProperty, 1);
@@ -557,11 +505,19 @@ public class MaterialRadioButton : ContentView, ITouchableView
     public async void OnTouch(TouchEventType gestureType)
     {
         if (!IsEnabled) return;
+        
         await TouchAnimationManager.AnimateAsync(this, gestureType);
-
-        if (gestureType == TouchEventType.Released && !IsChecked)
+        
+        if (gestureType == TouchEventType.Released)
         {
-            IsChecked = !IsChecked;
+            if (GroupableViewPropertyChanged != null)
+            {
+                GroupableViewPropertyChanged.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsChecked, !IsChecked));
+            }
+            else
+            {
+                IsChecked = !IsChecked;
+            }
         }
     }
 
@@ -569,6 +525,8 @@ public class MaterialRadioButton : ContentView, ITouchableView
 
     #region Events
 
+    public event EventHandler<GroupableViewPropertyChangedEventArgs>? GroupableViewPropertyChanged;
+    
     /// <summary>
     /// Occurs when the radio button is switched 
     /// </summary>
@@ -577,7 +535,7 @@ public class MaterialRadioButton : ContentView, ITouchableView
     #endregion Events
 
     #region Methods
-
+    
     private void RadioButton_CheckedChanged(object? sender, CheckedChangedEventArgs e)
     {
         IsChecked = e.Value;
@@ -662,71 +620,7 @@ public class MaterialRadioButton : ContentView, ITouchableView
             VisualStateManager.GoToState(this, RadioButtonCommonStates.Unchecked);
         }
     }
-
-    void OnValuePropertyChanged()
-    {
-        if (string.IsNullOrEmpty(GroupName))
-        {
-            return;
-        }
-#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
-        MessagingCenter.Send(this, ValueChangedMessage,
-                    new MaterialRadioButtonValueChanged(MaterialRadioButtonGroup.GetVisualRoot(this)));
-#pragma warning restore CS0618 // Type or member is obsolete
-    }
-
-    void OnGroupNamePropertyChanged(string oldGroupName, string newGroupName)
-    {
-#pragma warning disable CS0618 // TODO: Remove when we internalize/replace MessagingCenter
-        if (!string.IsNullOrEmpty(newGroupName))
-        {
-            if (string.IsNullOrEmpty(oldGroupName))
-            {
-                MessagingCenter.Subscribe<MaterialRadioButton, MaterialRadioButtonGroupSelectionChanged>(this,
-                    MaterialRadioButtonGroup.GroupSelectionChangedMessage, HandleRadioButtonGroupSelectionChanged);
-                MessagingCenter.Subscribe<Element, MaterialRadioButtonGroupValueChanged>(this,
-                    MaterialRadioButtonGroup.GroupValueChangedMessage, HandleRadioButtonGroupValueChanged);
-            }
-
-            MessagingCenter.Send(this, GroupNameChangedMessage,
-                new MaterialRadioButtonGroupNameChanged(MaterialRadioButtonGroup.GetVisualRoot(this), oldGroupName));
-        }
-        else
-        {
-            if (!string.IsNullOrEmpty(oldGroupName))
-            {
-                MessagingCenter.Unsubscribe<MaterialRadioButton, MaterialRadioButtonGroupSelectionChanged>(this, MaterialRadioButtonGroup.GroupSelectionChangedMessage);
-                MessagingCenter.Unsubscribe<Element, MaterialRadioButtonGroupValueChanged>(this, MaterialRadioButtonGroup.GroupValueChangedMessage);
-            }
-        }
-#pragma warning restore CS0618 // Type or member is obsolete
-    }
-
-    void HandleRadioButtonGroupValueChanged(Element layout, MaterialRadioButtonGroupValueChanged args)
-    {
-        if (IsChecked || string.IsNullOrEmpty(GroupName) || GroupName != args.GroupName || !Equals(Value, args.Value) || !Equals(Value, args.Value) || !MatchesScope(args))
-        {
-            return;
-        }
-
-        SetValue(IsCheckedProperty, true);
-    }
-
-    bool MatchesScope(MaterialRadioButtonScopeMessage message)
-    {
-        return MaterialRadioButtonGroup.GetVisualRoot(this) == message.Scope;
-    }
-
-    void HandleRadioButtonGroupSelectionChanged(MaterialRadioButton selected, MaterialRadioButtonGroupSelectionChanged args)
-    {
-        if (!IsChecked || selected == this || string.IsNullOrEmpty(GroupName) || GroupName != selected.GroupName || !MatchesScope(args))
-        {
-            return;
-        }
-
-        SetValue(IsCheckedProperty, false);
-    }
-
+    
     #endregion Methods
 
     #region Styles

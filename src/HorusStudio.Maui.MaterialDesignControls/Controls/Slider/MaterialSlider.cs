@@ -7,7 +7,7 @@ using Slider = Microsoft.Maui.Controls.Slider;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A slider <see cref="View" /> that lets users make selections from a range of values and follows Material Design Guidelines <see href="https://m3.material.io/components/sliders/overview" />.
+/// Sliders let users make selections from a range of values and follow Material Design Guidelines. <see href="https://m3.material.io/components/sliders/overview">See more</see>.
 /// </summary>
 /// <example>
 ///
@@ -81,42 +81,42 @@ public class MaterialSlider : ContentView
     #region Label
 
     /// <summary>
-    /// The backing store for the <see cref="Label" /> bindable property.
+    /// The backing store for the <see cref="Label">Label</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelProperty = BindableProperty.Create(nameof(Label), typeof(string), typeof(MaterialSlider), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelColor" /> bindable property.
+    /// The backing store for the <see cref="LabelColor">LabelColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="FontFamily" /> bindable property.
+    /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSlider), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAttributes" /> bindable property.
+    /// The backing store for the <see cref="FontAttributes">FontAttributes</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialSlider), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialSlider), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="FontSize" /> bindable property.
+    /// The backing store for the <see cref="FontSize">FontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelTransform" /> bindable property.
+    /// The backing store for the <see cref="LabelTransform">LabelTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelTransformProperty = BindableProperty.Create(nameof(LabelTransform), typeof(TextTransform), typeof(MaterialSlider), defaultValue: TextTransform.Default);
 
@@ -125,7 +125,7 @@ public class MaterialSlider : ContentView
     #region Minimum
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumLabel" /> bindable property.
+    /// The backing store for the <see cref="MinimumLabel">MinimumLabel</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumLabelProperty = BindableProperty.Create(nameof(MinimumLabel), typeof(string), typeof(MaterialSlider), defaultValue: null, propertyChanged: (bindable, _, _) =>
     {
@@ -136,42 +136,42 @@ public class MaterialSlider : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumLabelColor" /> bindable property.
+    /// The backing store for the <see cref="MinimumLabelColor">MinimumLabelColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumLabelColorProperty = BindableProperty.Create(nameof(MinimumLabelColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumFontFamily" /> bindable property.
+    /// The backing store for the <see cref="MinimumFontFamily">MinimumFontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumFontFamilyProperty = BindableProperty.Create(nameof(MinimumFontFamily), typeof(string), typeof(MaterialSlider), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumCharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="MinimumCharacterSpacing">MinimumCharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumCharacterSpacingProperty = BindableProperty.Create(nameof(MinimumCharacterSpacing), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumFontAttributes" /> bindable property.
+    /// The backing store for the <see cref="MinimumFontAttributes">MinimumFontAttributes</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumFontAttributesProperty = BindableProperty.Create(nameof(MinimumFontAttributes), typeof(FontAttributes), typeof(MaterialSlider), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumFontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="MinimumFontAutoScalingEnabled">MinimumFontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumFontAutoScalingEnabledProperty = BindableProperty.Create(nameof(MinimumFontAutoScalingEnabled), typeof(bool), typeof(MaterialSlider), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumFontSize" /> bindable property.
+    /// The backing store for the <see cref="MinimumFontSize">MinimumFontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumFontSizeProperty = BindableProperty.Create(nameof(MinimumFontSize), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumLabelTransform" /> bindable property.
+    /// The backing store for the <see cref="MinimumLabelTransform">MinimumLabelTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumLabelTransformProperty = BindableProperty.Create(nameof(MinimumLabelTransform), typeof(TextTransform), typeof(MaterialSlider), defaultValue: TextTransform.Default);
 
     /// <summary>
-    /// The backing store for the <see cref="MinimumImageSource" /> bindable property.
+    /// The backing store for the <see cref="MinimumImageSource">MinimumImageSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumImageSourceProperty = BindableProperty.Create(nameof(MinimumImageSource), typeof(ImageSource), typeof(MaterialSlider), defaultValue: null, propertyChanged: (bindable, _, _) =>
     {
@@ -182,12 +182,12 @@ public class MaterialSlider : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Minimum"/> bindable property.
+    /// The backing store for the <see cref="Minimum">Minimum</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MinimumProperty = BindableProperty.Create(nameof(Minimum), typeof(double), typeof(MaterialSlider), defaultValue: 0.0);
 
     /// <summary>
-    /// The backing store for the <see cref="ActiveTrackColor" /> bindable property.
+    /// The backing store for the <see cref="ActiveTrackColor">ActiveTrackColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ActiveTrackColorProperty = BindableProperty.Create(nameof(ActiveTrackColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultActiveTrackColor);
 
@@ -196,7 +196,7 @@ public class MaterialSlider : ContentView
     #region Maximum
 
     /// <summary>
-    /// The backing store for the <see cref="MaximumLabel" /> bindable property.
+    /// The backing store for the <see cref="MaximumLabel">MaximumLabel</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumLabelProperty = BindableProperty.Create(nameof(MaximumLabel), typeof(string), typeof(MaterialSlider), defaultValue: null, propertyChanged: (bindable, _, _) =>
     {
@@ -207,42 +207,42 @@ public class MaterialSlider : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="MaximumLabelColor" /> bindable property.
+    /// The backing store for the <see cref="MaximumLabelColor">MaximumLabelColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumLabelColorProperty = BindableProperty.Create(nameof(MaximumLabelColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="MaximumFontFamily" /> bindable property.
+    /// The backing store for the <see cref="MaximumFontFamily">MaximumFontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumFontFamilyProperty = BindableProperty.Create(nameof(MaximumFontFamily), typeof(string), typeof(MaterialSlider), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumCharacterSpacingProperty = BindableProperty.Create(nameof(MaximumCharacterSpacing), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="MaximumFontAttributes" /> bindable property.
+    /// The backing store for the <see cref="MaximumFontAttributes">MaximumFontAttributes</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumFontAttributesProperty = BindableProperty.Create(nameof(MaximumFontAttributes), typeof(FontAttributes), typeof(MaterialSlider), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="MaximumFontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="MaximumFontAutoScalingEnabled">MaximumFontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumFontAutoScalingEnabledProperty = BindableProperty.Create(nameof(MaximumFontAutoScalingEnabled), typeof(bool), typeof(MaterialSlider), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="MaximumFontSize" /> bindable property.
+    /// The backing store for the <see cref="MaximumFontSize">MaximumFontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumFontSizeProperty = BindableProperty.Create(nameof(MaximumFontSize), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelTransform" /> bindable property.
+    /// The backing store for the <see cref="LabelTransform">LabelTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumLabelTransformProperty = BindableProperty.Create(nameof(MaximumLabelTransform), typeof(TextTransform), typeof(MaterialSlider), defaultValue: TextTransform.Default);
 
     /// <summary>
-    /// The backing store for the <see cref="MaximumImageSource" /> bindable property.
+    /// The backing store for the <see cref="MaximumImageSource">MaximumImageSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumImageSourceProperty = BindableProperty.Create(nameof(MaximumImageSource), typeof(ImageSource), typeof(MaterialSlider), defaultValue: null, propertyChanged: (bindable, _, _) =>
     {
@@ -253,12 +253,12 @@ public class MaterialSlider : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Maximum"/> bindable property.
+    /// The backing store for the <see cref="Maximum">Maximum</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaximumProperty = BindableProperty.Create(nameof(Maximum), typeof(double), typeof(MaterialSlider), defaultValue: 1.0);
 
     /// <summary>
-    /// The backing store for the <see cref="InactiveTrackColor" /> bindable property.
+    /// The backing store for the <see cref="InactiveTrackColor">InactiveTrackColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty InactiveTrackColorProperty = BindableProperty.Create(nameof(InactiveTrackColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultInactiveTrackColor);
 
@@ -267,17 +267,17 @@ public class MaterialSlider : ContentView
     #region Track
 
     /// <summary>
-    /// The backing store for the <see cref="TrackHeight" /> bindable property.
+    /// The backing store for the <see cref="TrackHeight">TrackHeight</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrackHeightProperty =  BindableProperty.Create(nameof(TrackHeight), typeof(int), typeof(MaterialSlider), defaultValue: 16);
 
     /// <summary>
-    /// The backing store for the <see cref="TrackCornerRadius" /> bindable property.
+    /// The backing store for the <see cref="TrackCornerRadius">TrackCornerRadius</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrackCornerRadiusProperty = BindableProperty.Create(nameof(TrackCornerRadius), typeof(int), typeof(MaterialSlider), defaultValue: 10);
 
     /// <summary>
-    /// The backing store for the <see cref="TrackImageSource" /> bindable property.
+    /// The backing store for the <see cref="TrackImageSource">TrackImageSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrackImageSourceProperty = BindableProperty.Create(nameof(TrackImageSource), typeof(ImageSource), typeof(MaterialSlider), defaultValue: null, propertyChanged: (bindableObject, _, _) => 
     { 
@@ -292,27 +292,27 @@ public class MaterialSlider : ContentView
     #region Thumb
 
     /// <summary>
-    /// The backing store for the <see cref="ThumbColor" /> bindable property.
+    /// The backing store for the <see cref="ThumbColor">ThumbColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(nameof(ThumbColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultThumbColor);
 
     /// <summary>
-    /// The backing store for the <see cref="ThumbImageSource" /> bindable property.
+    /// The backing store for the <see cref="ThumbImageSource">ThumbImageSource</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty ThumbImageSourceeProperty = BindableProperty.Create(nameof(ThumbImageSource), typeof(ImageSource), typeof(MaterialSlider), defaultValue: null);
+    public static readonly BindableProperty ThumbImageSourceProperty = BindableProperty.Create(nameof(ThumbImageSource), typeof(ImageSource), typeof(MaterialSlider), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="BackgroundColor" /> bindable property.
+    /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialSlider), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="ThumbWidth" /> bindable property.
+    /// The backing store for the <see cref="ThumbWidth">ThumbWidth</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ThumbWidthProperty = BindableProperty.Create(nameof(ThumbWidth), typeof(int), typeof(MaterialSlider), defaultValue: DefaultThumbWidth);
 
     /// <summary>
-    /// The backing store for the <see cref="ThumbHeight" /> bindable property.
+    /// The backing store for the <see cref="ThumbHeight">ThumbHeight</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ThumbHeightProperty = BindableProperty.Create(nameof(ThumbHeight), typeof(int), typeof(MaterialSlider), defaultValue: DefaultThumbHeight);
 
@@ -321,7 +321,7 @@ public class MaterialSlider : ContentView
     #region ValueIndicator
 
     /// <summary>
-    /// The backing store for the <see cref="ValueIndicatorBackgroundColor" /> bindable property.
+    /// The backing store for the <see cref="ValueIndicatorBackgroundColor">ValueIndicatorBackgroundColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueIndicatorBackgroundColorProperty = BindableProperty.Create(nameof(ValueIndicatorBackgroundColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultValueIndicatorBackgroundColor, propertyChanged: (bindableObject, _, newValue) =>
     {
@@ -333,12 +333,12 @@ public class MaterialSlider : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="ValueIndicatorSize" /> bindable property.
+    /// The backing store for the <see cref="ValueIndicatorSize">ValueIndicatorSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueIndicatorSizeProperty = BindableProperty.Create(nameof(ValueIndicatorSize), typeof(int), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorSize);
 
     /// <summary>
-    /// The backing store for the <see cref="ShowValueIndicator" /> bindable property.
+    /// The backing store for the <see cref="ShowValueIndicator">ShowValueIndicator</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ShowValueIndicatorProperty = BindableProperty.Create(nameof(ShowValueIndicator), typeof(bool), typeof(MaterialSlider), defaultValue: true, propertyChanged: (bindableObject, _, newValue) => 
     {
@@ -349,24 +349,24 @@ public class MaterialSlider : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="ValueIndicatorTextColor" /> bindable property.
+    /// The backing store for the <see cref="ValueIndicatorTextColor">ValueIndicatorTextColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueIndicatorTextColorProperty = BindableProperty.Create(nameof(ValueIndicatorTextColor), typeof(Color), typeof(MaterialSlider), defaultValueCreator: DefaultValueIndicatorTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="ValueIndicatorFontSize" /> bindable property.
+    /// The backing store for the <see cref="ValueIndicatorFontSize">ValueIndicatorFontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueIndicatorFontSizeProperty = BindableProperty.Create(nameof(ValueIndicatorFontSize), typeof(double), typeof(MaterialSlider), defaultValueCreator: DefaultValueIndicatorFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="ValueIndicatorFormat" /> bindable property.
+    /// The backing store for the <see cref="ValueIndicatorFormat">ValueIndicatorFormat</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueIndicatorFormatProperty = BindableProperty.Create(nameof(ValueIndicatorFormat), typeof(string), typeof(MaterialSlider), defaultValue: DefaultValueIndicatorFormat);
 
     #endregion ValueIndicator
 
     /// <summary>
-    /// The backing store for the <see cref="IsEnabled" /> bindable property.
+    /// The backing store for the <see cref="IsEnabled">IsEnabled</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialSlider), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, newValue) =>
     {
@@ -377,12 +377,12 @@ public class MaterialSlider : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="UserInteractionEnabled" /> bindable property.
+    /// The backing store for the <see cref="UserInteractionEnabled">UserInteractionEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty UserInteractionEnabledProperty = BindableProperty.Create(nameof(UserInteractionEnabled), typeof(bool), typeof(MaterialSlider), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="ShowIcons" /> bindable property.
+    /// The backing store for the <see cref="ShowIcons">ShowIcons</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ShowIconsProperty = BindableProperty.Create(nameof(ShowIcons), typeof(bool), typeof(MaterialSlider), defaultValue: false, propertyChanged: (bindable, _, _) => 
     { 
@@ -394,22 +394,22 @@ public class MaterialSlider : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Value"/> bindable property.
+    /// The backing store for the <see cref="Value">Value</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(MaterialSlider), defaultBindingMode: BindingMode.TwoWay, defaultValue: 0.0);
 
     /// <summary>
-    /// The backing store for the <see cref="DragStartedCommand" /> bindable property.
+    /// The backing store for the <see cref="DragStartedCommand">DragStartedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty DragStartedCommandProperty = BindableProperty.Create(nameof(DragStartedCommand), typeof(ICommand), typeof(MaterialSlider));
 
     /// <summary>
-    /// The backing store for the <see cref="DragCompletedCommand" /> bindable property.
+    /// The backing store for the <see cref="DragCompletedCommand">DragCompletedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty DragCompletedCommandProperty = BindableProperty.Create(nameof(DragCompletedCommand), typeof(ICommand), typeof(MaterialSlider));
 
     /// <summary>
-    /// The backing store for the <see cref="ValueChangedCommand" /> bindable property.
+    /// The backing store for the <see cref="ValueChangedCommand">ValueChangedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ValueChangedCommandProperty = BindableProperty.Create(nameof(ValueChangedCommand), typeof(ICommand), typeof(MaterialSlider));
 
@@ -418,7 +418,7 @@ public class MaterialSlider : ContentView
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="Slider" /> control.
+    /// Internal implementation of the <see cref="Slider">Slider</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
@@ -428,7 +428,8 @@ public class MaterialSlider : ContentView
     #region Label
 
     /// <summary>
-    /// Gets or sets the text for the label. This is a bindable property.
+    /// Gets or sets the text for the label.
+    /// This is a bindable property.
     /// </summary>
     public string Label
     {
@@ -437,7 +438,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="LabelColor" /> for the text of the label. This is a bindable property.
+    /// Gets or sets the <see cref="Color">color</see> for the text of the label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Text</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Text</see>
@@ -449,7 +451,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font family for the label. This is a bindable property.
+    /// Gets or sets the font family for the label.
+    /// This is a bindable property.
     /// </summary>
     public string FontFamily
     {
@@ -458,7 +461,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the spacing between characters of the label. This is a bindable property.
+    /// Gets or sets the spacing between characters of the label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontTracking.BodyMedium">MaterialFontTracking.BodyMedium</see>
@@ -493,7 +497,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines the font size of the label. This is a bindable property.
+    /// Defines the font size of the label.
+    /// This is a bindable property.
     /// </summary>
     [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
     public double FontSize
@@ -503,7 +508,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines the casing of the <see cref="Label" />. This is a bindable property.
+    /// Defines the casing of the <see cref="Label">label</see>.
+    /// This is a bindable property.
     /// </summary>
     public TextTransform LabelTransform
     {
@@ -516,7 +522,8 @@ public class MaterialSlider : ContentView
     #region Minimum
 
     /// <summary>
-    /// Gets or sets the text for the minimum label. This is a bindable property.
+    /// Gets or sets the text for the minimum label.
+    /// This is a bindable property.
     /// </summary>
     public string MinimumLabel
     {
@@ -525,7 +532,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="MinimumLabelColor" /> for the text of the minimum label. This is a bindable property.
+    /// Gets or sets the <see cref="Color">color</see> for the text of the minimum label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Text</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Text</see>
@@ -537,7 +545,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font family for the minimum label. This is a bindable property.
+    /// Gets or sets the font family for the minimum label.
+    /// This is a bindable property.
     /// </summary>
     public string MinimumFontFamily
     {
@@ -546,7 +555,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the spacing between characters of the minimum label. This is a bindable property.
+    /// Gets or sets the spacing between characters of the minimum label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontTracking.BodyMedium">MaterialFontTracking.BodyMedium</see>
@@ -558,7 +568,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text style of the minimum label. This is a bindable property.
+    /// Gets or sets the text style of the minimum label.
+    /// This is a bindable property.
     /// </summary>
     public FontAttributes MinimumFontAttributes
     {
@@ -567,10 +578,11 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true.
+    /// Defines whether an app's UI reflects text scaling preferences set in the operating system.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// True
+    /// <see langword="true">True</see>
     /// </default>
     /// <remarks>Typically this should always be enabled for accessibility reasons.</remarks>
     public bool MinimumFontAutoScalingEnabled
@@ -580,7 +592,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines the font size of the minimum label. This is a bindable property.
+    /// Defines the font size of the minimum label.
+    /// This is a bindable property.
     /// </summary>
     public double MinimumFontSize
     {
@@ -589,7 +602,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines the casing of the minimum label. This is a bindable property.
+    /// Defines the casing of the minimum label.
+    /// This is a bindable property.
     /// </summary>
     public TextTransform MinimumLabelTransform
     {
@@ -598,7 +612,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image instead of a label on the minimum side. This is a bindable property.
+    /// Allows you to display a bitmap image instead of a label on the minimum side.
+    /// This is a bindable property.
     /// </summary>
     public ImageSource MinimumImageSource
     {
@@ -620,7 +635,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the minimum track color. This is a bindable property.
+    /// Gets or sets the <see cref="Color">color</see> for the active track.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
@@ -636,7 +652,8 @@ public class MaterialSlider : ContentView
     #region Maximum
 
     /// <summary>
-    /// Gets or sets the text for the maximum label. This is a bindable property.
+    /// Gets or sets the text for the maximum label.
+    /// This is a bindable property.
     /// </summary>
     public string MaximumLabel
     {
@@ -645,7 +662,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="MaximumLabelColor" /> for the text of the maximum label. This is a bindable property.
+    /// Gets or sets the <see cref="Color">color</see> for the text of the maximum label.
+    /// This is a bindable property.
     /// </summary>
     public Color MaximumLabelColor
     {
@@ -654,7 +672,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font family for the maximum label. This is a bindable property.
+    /// Gets or sets the font family for the maximum label.
+    /// This is a bindable property.
     /// </summary>
     public string MaximumFontFamily
     {
@@ -663,7 +682,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the spacing between characters of the maximum label. This is a bindable property.
+    /// Gets or sets the spacing between characters of the maximum label.
+    /// This is a bindable property.
     /// </summary>
     public double MaximumCharacterSpacing
     {
@@ -672,7 +692,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text style of the maximum label. This is a bindable property.
+    /// Gets or sets the text style of the maximum label.
+    /// This is a bindable property.
     /// </summary>
     public FontAttributes MaximumFontAttributes
     {
@@ -681,8 +702,12 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true.
+    /// Defines whether an app's UI reflects text scaling preferences set in the operating system.
+    /// The default value of this property is true.
     /// </summary>
+    /// <default>
+    /// <see langword="true">True</see>
+    /// </default>
     public bool MaximumFontAutoScalingEnabled
     {
         get => (bool)GetValue(MaximumFontAutoScalingEnabledProperty);
@@ -690,7 +715,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines the font size of the maximum label. This is a bindable property.
+    /// Defines the font size of the maximum label.
+    /// This is a bindable property.
     /// </summary>
     public double MaximumFontSize
     {
@@ -699,7 +725,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Defines the casing of the maximum label. This is a bindable property.
+    /// Defines the casing of the maximum label.
+    /// This is a bindable property.
     /// </summary>
     public TextTransform MaximumLabelTransform
     {
@@ -708,7 +735,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image instead of a label on the maximum side. This is a bindable property.
+    /// Allows you to display a bitmap image instead of a label on the maximum side.
+    /// This is a bindable property.
     /// </summary>
     public ImageSource MaximumImageSource
     {
@@ -718,9 +746,11 @@ public class MaterialSlider : ContentView
 
     /// <summary>
     /// Defines the maximum value of the slider.
-    /// The default value is <value>1</value>.
     /// This is a bindable property.
     /// </summary>
+    /// <default>
+    /// 1
+    /// </default>
     public double Maximum
     {
         get => (double)GetValue(MaximumProperty);
@@ -728,7 +758,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the maximum track color. This is a bindable property.
+    /// Gets or sets the <see cref="Color">color</see> for the inactive track.
+    /// This is a bindable property.
     /// </summary>
     public Color InactiveTrackColor
     {
@@ -741,7 +772,8 @@ public class MaterialSlider : ContentView
     #region Track
 
     /// <summary>
-    /// Gets or sets the <see cref="TrackHeight" /> for the slider control. This is a bindable property.
+    /// Gets or sets the track height for the slider control.
+    /// This is a bindable property.
     /// </summary>
     public int TrackHeight
     {
@@ -750,7 +782,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="TrackCornerRadius" /> for the slider control. This is a bindable property.
+    /// Gets or sets the track corner radius for the slider control.
+    /// This is a bindable property.
     /// </summary>
     public int TrackCornerRadius
     {
@@ -759,7 +792,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="TrackImageSource" /> for the slider control. This is a bindable property.
+    /// Gets or sets the track <see cref="ImageSource">image</see> for the slider control.
+    /// This is a bindable property.
     /// </summary>
     public ImageSource TrackImageSource
     {
@@ -772,7 +806,8 @@ public class MaterialSlider : ContentView
     #region Thumb
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the thumb. This is a bindable property.
+    /// Gets or sets the thumb <see cref="Color">color</see>.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
@@ -784,14 +819,15 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Allows you to display a bitmap image on the thumb. This is a bindable property.
+    /// Allows you to display an <see cref="ImageSource">image</see> on thumb.
+    /// This is a bindable property.
     /// As a recommendation, on iOS you should set the thumb background color.
     /// </summary>
-    /// <remarks>For more options, see <see cref="ImageButton"/>.</remarks>
+    /// <remarks>For more options, see <see cref="ImageButton">ImageButton</see>.</remarks>
     public ImageSource ThumbImageSource
     {
-        get => (ImageSource)GetValue(ThumbImageSourceeProperty);
-        set => SetValue(ThumbImageSourceeProperty, value);
+        get => (ImageSource)GetValue(ThumbImageSourceProperty);
+        set => SetValue(ThumbImageSourceProperty, value);
     }
 
     /// <summary>
@@ -819,7 +855,6 @@ public class MaterialSlider : ContentView
 
     /// <summary>
     /// Allows you to set the thumb height.
-    /// The default value is <value>44</value>.
     /// </summary>
     /// <default>
     /// 44
@@ -845,8 +880,10 @@ public class MaterialSlider : ContentView
 
     /// <summary>
     /// Allows you to set the value indicator size.
-    /// The default value is <value>44</value>.
     /// </summary>
+    /// <default>
+    /// 44
+    /// </default>
     public int ValueIndicatorSize
     {
         get => (int)GetValue(ValueIndicatorSizeProperty);
@@ -881,10 +918,12 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Sets the value indicator's format. This uses the format from <see cref="string.Format(string, object?)"/> 
+    /// Sets the value indicator's format. This uses the format from <see cref="string.Format(string, object?)">string.Format(string, object?)</see> 
     /// to show the value in the specified format. 
-    /// The default value is <value>{0:0.00}</value>.
     /// </summary>
+    /// <default>
+    /// {0:0.00}
+    /// </default>
     public string ValueIndicatorFormat
     {
         get => (string)GetValue(ValueIndicatorFormatProperty);
@@ -894,13 +933,12 @@ public class MaterialSlider : ContentView
     #endregion ValueIndicator
 
     /// <summary>
-    /// Gets or sets the <see cref="ShowIcons" /> property for the slider control. This is a bindable property.
+    /// Gets or sets if icons are shown.
+    /// This is a bindable property.
     /// This property is used to show the icons even when the minimum/maximum label is set. 
-    /// If the value is true, icons are shown. Otherwise, icons are not shown even when they are set.
-    /// The default value is <value>false</value>.
     /// </summary>
     /// <default>
-    /// false
+    /// <see langword="false">False</see>
     /// </default>
     public bool ShowIcons
     {
@@ -909,10 +947,11 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="UserInteractionEnabled" /> property for the slider control. This is a bindable property.
+    /// Gets or sets if user interactions are enabled.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// true
+    /// <see langword="true">True</see>
     /// </default>
     public bool UserInteractionEnabled
     {
@@ -921,10 +960,11 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="IsEnabled" /> property for the slider control. This is a bindable property.
+    /// Gets or sets if slider is enabled.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// true
+    /// <see langword="true">True</see>
     /// </default>
     public new bool IsEnabled
     {
@@ -946,7 +986,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the command that is executed at the beginning of a drag action. This is a bindable property.
+    /// Gets or sets the command executed at the beginning of a drag action.
+    /// This is a bindable property.
     /// </summary>
     public ICommand DragStartedCommand
     {
@@ -955,7 +996,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the command that is executed at the end of a drag action. This is a bindable property.
+    /// Gets or sets the command executed at the end of a drag action.
+    /// This is a bindable property.
     /// </summary>
     public ICommand DragCompletedCommand
     {
@@ -964,7 +1006,8 @@ public class MaterialSlider : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the command when <see cref="Value"/> changed. This is a bindable property.
+    /// Gets or sets the command executed when <see cref="Value">value</see> changed.
+    /// This is a bindable property.
     /// </summary>
     public ICommand ValueChangedCommand
     {

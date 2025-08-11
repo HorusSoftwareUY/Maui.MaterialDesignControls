@@ -35,7 +35,7 @@
     }
 
     /// <summary>
-    /// A label <see cref="View" /> that helps make writing legible and beautiful, and follows Material Design Guidelines <see href="https://m3.material.io/styles/typography/overview">See here. </see>
+    /// Labels help make writing legible and beautiful, and follow Material Design Guidelines. <see href="https://m3.material.io/styles/typography/overview">See more</see>.
     /// </summary>
     /// <example>
     ///
@@ -82,8 +82,7 @@
         #region Bindable Properties
 
         /// <summary>
-        /// The backing store for the <see cref="Type" />
-        /// bindable property.
+        /// The backing store for the <see cref="Type">Type</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(LabelTypes), typeof(MaterialLabel), defaultValue: DefaultType, propertyChanged: (bindable, oldValue, newValue) =>
         {
@@ -99,8 +98,7 @@
         });
 
         /// <summary>
-        /// The backing store for the <see cref="FontFamily" />
-        /// bindable property.
+        /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialLabel), defaultValueCreator: DefaultFontFamily, propertyChanged: (bindable, _, _) =>
         {
@@ -111,20 +109,17 @@
         });
 
         /// <summary>
-        /// The backing store for the <see cref="FontFamilyRegular" />
-        /// bindable property.
+        /// The backing store for the <see cref="FontFamilyRegular">FontFamilyRegular</see> bindable property.
         /// </summary>
         public static readonly BindableProperty FontFamilyRegularProperty = BindableProperty.Create(nameof(FontFamilyRegular), typeof(string), typeof(MaterialLabel), defaultValueCreator: DefaultFontFamilyRegular);
 
         /// <summary>
-        /// The backing store for the <see cref="FontFamilyMedium" />
-        /// bindable property.
+        /// The backing store for the <see cref="FontFamilyMedium">FontFamilyMedium</see> bindable property.
         /// </summary>
         public static readonly BindableProperty FontFamilyMediumProperty = BindableProperty.Create(nameof(FontFamilyMedium), typeof(string), typeof(MaterialLabel), defaultValueCreator: DefaultFontFamilyMedium);
 
         /// <summary>
-        /// The backing store for the <see cref="TextColor" />
-        /// bindable property.
+        /// The backing store for the <see cref="TextColor">TextColor</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialLabel), defaultValueCreator: DefaultTextColor);
 
@@ -133,11 +128,11 @@
         #region Properties
 
         /// <summary>
-        /// Gets or sets the label type according to <see cref="LabelTypes"/> enum.
-        /// This property handle internally the FontFamily, CharacterSpacing and FontSize properties.
+        /// Gets or sets the label type according to <see cref="LabelTypes">LabelTypes</see>.
+        /// This property internally handles FontFamily, CharacterSpacing and FontSize properties.
         /// </summary>
         /// <default>
-        /// <see cref="LabelTypes.BodyMedium"/>
+        /// <see cref="LabelTypes.BodyMedium">LabelTypes.BodyMedium</see>
         /// </default>
         public LabelTypes Type
         {
@@ -176,7 +171,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the text of the label.
+        /// Gets or sets the <see cref="Color">color</see> for the text of the label.
         /// This is a bindable property.
         /// </summary>
         public new Color TextColor

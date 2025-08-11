@@ -4,7 +4,7 @@ using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// Define <see cref="MaterialSegmentedButton" /> types
+/// Define <see cref="MaterialSegmentedButton">material segmented button</see> types.
 /// </summary>
 public enum MaterialSegmentedButtonType
 {
@@ -15,7 +15,7 @@ public enum MaterialSegmentedButtonType
 }
 
 /// <summary>
-/// Segmented buttons <see cref="View" /> help people select options, switch views, or sort elements, and follows Material Design Guidelines <see href="https://m3.material.io/components/segmented-buttons/overview" />.
+/// Segmented buttons help people select options, switch views, or sort elements, and follow Material Design Guidelines. <see href="https://m3.material.io/components/segmented-buttons/overview">See more</see>.
 /// </summary>
 /// <example>
 ///
@@ -72,7 +72,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="MaterialSegmentedButtonType" /> bindable property.
+    /// The backing store for the <see cref="MaterialSegmentedButtonType">MaterialSegmentedButtonType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialSegmentedButtonType), typeof(MaterialSegmentedButton), defaultValue: DefautlSegmentedType, propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -84,7 +84,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     });
     
     /// <summary>
-    /// The backing store for the <see cref="ItemsSource" /> bindable property.
+    /// The backing store for the <see cref="ItemsSource">ItemsSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<MaterialSegmentedButtonItem>), typeof(MaterialSegmentedButton), defaultValue: DefaultItemsSource, propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -95,7 +95,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     });
     
     /// <summary>
-    /// The backing store for the <see cref="AllowMultiSelect" /> bindable property.
+    /// The backing store for the <see cref="AllowMultiSelect">AllowMultiSelect</see> bindable property.
     /// </summary>
     public static readonly BindableProperty AllowMultiSelectProperty = BindableProperty.Create(nameof(AllowMultiSelect), typeof(bool), typeof(MaterialSegmentedButton), defaultValue: DefaultAllowMultiSelect, propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -118,27 +118,27 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Padding" /> bindable property.
+    /// The backing store for the <see cref="MaterialSegmentedButton.Padding">Padding</see> bindable property.
     /// </summary>
     public static new readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialSegmentedButton), defaultValue: DefaultPadding);
     
     /// <summary>
-    /// The backing store for the <see cref="CornerRadius" /> bindable property.
+    /// The backing store for the <see cref="CornerRadius">CornerRadius</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialSegmentedButton), defaultValue: DefaultCornerRadius);
     
     /// <summary>
-    /// The backing store for the <see cref="BorderColor" /> bindable property.
+    /// The backing store for the <see cref="BorderColor">BorderColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialSegmentedButton), defaultValue: DefaultBorderColor);
 
     /// <summary>
-    /// The backing store for the <see cref="BorderWidth"/> bindable property.
+    /// The backing store for the <see cref="BorderWidth">BorderWidth</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialSegmentedButton), defaultValue: DefaultBorderWidth);
 
     /// <summary>
-    /// The backing store for the <see cref="BackgroundColor" /> bindable property.
+    /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialSegmentedButton), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -149,32 +149,32 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Command" /> bindable property.
+    /// The backing store for the <see cref="Command">Command</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectionCommandProperty = BindableProperty.Create(nameof(SelectionCommand), typeof(ICommand), typeof(MaterialSegmentedButton));
     
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimationType"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialSegmentedButton), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="TouchAnimation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialSegmentedButton));
 
     /// <summary>
-    /// The backing store for the <see cref="ItemTemplate" /> bindable property.
+    /// The backing store for the <see cref="ItemTemplate">ItemTemplate</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), typeof(MaterialSegmentedButton), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="HeightRequest" /> bindable property.
+    /// The backing store for the <see cref="HeightRequest">HeightRequest</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialSegmentedButton), defaultValue: DefaultHeightRequest);
 
     /// <summary>
-    /// The backing store for the <see cref="SelectedItems" /> bindable property.
+    /// The backing store for the <see cref="SelectedItems">SelectedItems</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IEnumerable<MaterialSegmentedButtonItem>), typeof(MaterialSegmentedButton), defaultValue: Array.Empty<MaterialSegmentedButtonItem>(), defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -185,7 +185,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="SelectedItem" /> bindable property.
+    /// The backing store for the <see cref="SelectedItem">SelectedItem</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(MaterialSegmentedButtonItem), typeof(MaterialSegmentedButton), defaultValue: null, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -200,11 +200,11 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     #region Properties
 
     /// <summary>
-    /// Gets or sets the segmented buttons type according to <see cref="MaterialSegmentedButtonType"/> enum.
+    /// Gets or sets the segmented button <see cref="MaterialSegmentedButtonType">type</see>.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialButtonType.Outlined"/>
+    /// <see cref="MaterialButtonType.Outlined">MaterialButtonType.Outlined</see>
     /// </default>
     public MaterialSegmentedButtonType Type
     {
@@ -213,11 +213,11 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets items source mapped to segmented buttons.
+    /// Gets or sets items' source to define segments.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="Null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public IEnumerable<MaterialSegmentedButtonItem> ItemsSource
     {
@@ -226,11 +226,11 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the if the control allows multiple selection.
+    /// Gets or sets if the segmented button allows multiple selection.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="False"/>
+    /// <see langword="false">False</see>
     /// </default>
     public bool AllowMultiSelect
     {
@@ -239,11 +239,11 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the state when the Segmented is enabled.
+    /// Gets or sets if the segmented button is enabled.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="True"/>
+    /// <see langword="true">True</see>
     /// </default>
     public new bool IsEnabled
     {
@@ -252,7 +252,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the corner radius for the control.
+    /// Gets or sets the corner radius for the segmented button.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -265,7 +265,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     }
     
     /// <summary>
-    /// Gets or sets the border color for the control.
+    /// Gets or sets the border <see cref="Color">color</see> for the segmented button.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -273,7 +273,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     /// </default>
     /// <remarks>
     /// <para>This property has no effect if <see cref="IBorderElement.BorderWidth">IBorderElement.BorderWidth</see> is set to 0.</para>
-    /// <para>On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor" />is set to a non-default color.</para>
+    /// <para>On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor">background color</see> is set to a non-default color.</para>
     /// </remarks>
     public Color BorderColor
     {
@@ -288,7 +288,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     /// <default>
     /// 1
     /// </default>
-    /// <remarks>This property has no effect if <see cref="MaterialSegmentedButton.Type"> is set to <see cref="MaterialSegmentedButtonType.Filled">.</remarks>
+    /// <remarks>This property has no effect if <see cref="MaterialSegmentedButton.Type">type</see> is set to <see cref="MaterialSegmentedButtonType.Filled">Filled</see>.</remarks>
     public double BorderWidth
     {
         get => (double)GetValue(BorderWidthProperty);
@@ -296,13 +296,13 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the Background color for the control.
+    /// Gets or sets the Background <see cref="Color">color</see> for the segmented button.
     /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Theme: Light = <see cref="MaterialLightTheme.Surface">MaterialLightTheme.Surface</see> - Dark = <see cref="MaterialDarkTheme.Surface">MaterialDarkTheme.Surface</see>
     /// </default>
-    /// <remarks>This property has no effect if <see cref="MaterialSegmentedButton.Type"> is set to <see cref="MaterialSegmentedButtonType.Outlined">.</remarks>
+    /// <remarks>This property has no effect if <see cref="MaterialSegmentedButton.Type">type</see> is set to <see cref="MaterialSegmentedButtonType.Filled">Outlined</see>.</remarks>
     public new Color BackgroundColor
     {
         get => (Color)GetValue(BackgroundColorProperty);
@@ -310,14 +310,14 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the command to invoke when the selection of one of the segmented buttons changes.
+    /// Gets or sets the command invoked when the selection of segmented button changes.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     /// <remarks>
-    /// The command parameter type varies based on <see cref="AllowMultiSelect"/>: when <see langword="True"/>, it is <see cref="IEnumerable<MaterialSegmentedButton>"/>; when <see langword="False"/>, it is <see cref="MaterialSegmentedButtonItem"/>.
+    /// If <see cref="AllowMultiSelect">AllowMultiSelect</see>=<see langword="true">True</see>, then <see cref="IEnumerable{MaterialSegmentedButton}">IEnumerable{MaterialSegmentedButton}</see>; <see cref="MaterialSegmentedButtonItem">MaterialSegmentedButtonItem</see> otherwise.
     /// </remarks>
     public ICommand SelectionCommand
     {
@@ -343,7 +343,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public ITouchAnimation TouchAnimation
     {
@@ -356,7 +356,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null" />
+    /// <see langword="null">Null</see>
     /// </default>
     public DataTemplate ItemTemplate
     {
@@ -382,9 +382,9 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="Array.Empty"/>
+    /// <see langword="Array.Empty">Array.Empty</see>
     /// </default>
-    /// <remarks>Useful when you set <see cref="AllowMultiSelect"/> to <see langword="True"/></remarks>
+    /// <remarks>Used only when <see cref="AllowMultiSelect">AllowMultiSelect</see>=<see langword="true">True</see>.</remarks>
     public IEnumerable<MaterialSegmentedButtonItem> SelectedItems
     {
         get => (IEnumerable<MaterialSegmentedButtonItem>)GetValue(SelectedItemsProperty);
@@ -396,9 +396,9 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="Null"/>
+    /// <see langword="null">Null</see>
     /// </default>
-    /// <remarks>Useful when you set <see cref="AllowMultiSelect"/> to <see langword="False"/></remarks>
+    /// <remarks>Used only when <see cref="AllowMultiSelect">AllowMultiSelect</see>=<see langword="false">False</see>.</remarks>
     public MaterialSegmentedButtonItem? SelectedItem
     {
         get => (MaterialSegmentedButtonItem?)GetValue(SelectedItemProperty);

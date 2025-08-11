@@ -121,8 +121,8 @@ public static class MaterialDesignControlsBuilderExtensions
     /// Overrides, partially or fully, default color palettes for one or both Light and Dark themes.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="lightTheme"><see cref="MaterialTheme" /> configuration for Light theme. Optional.</param>
-    /// <param name="darkTheme"><see cref="MaterialTheme" /> configuration for Dark theme. Optional.</param>
+    /// <param name="lightTheme"><see cref="MaterialTheme">MaterialTheme</see> configuration for Light theme. Optional.</param>
+    /// <param name="darkTheme"><see cref="MaterialTheme">MaterialTheme</see> configuration for Dark theme. Optional.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureThemes(this MaterialDesignControlsBuilder builder, MaterialTheme? lightTheme, MaterialTheme? darkTheme)
     {
@@ -144,10 +144,10 @@ public static class MaterialDesignControlsBuilderExtensions
     
     /// <summary>
     /// Overrides, partially or fully, default color palettes for one or both Light and Dark themes from Resources.
-    /// MDC will match resource keys with <see cref="MaterialTheme" /> property names.
+    /// MDC will match resource keys with <see cref="MaterialTheme">MaterialTheme</see> property names.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary">ResourceDictionary</see> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
     /// <param name="lightThemeResourcePrefix">Prefix for Light theme colors. Optional.</param>
     /// <param name="darkThemeResourcePrefix">Prefix for Dark theme colors. Optional.</param>
     /// <returns></returns>
@@ -178,7 +178,7 @@ public static class MaterialDesignControlsBuilderExtensions
     /// Overrides, partially or fully, default font sizes for texts.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="options"><see cref="MaterialSizeOptions" /> configuration for font sizes.</param>
+    /// <param name="options"><see cref="MaterialSizeOptions">Configuration</see> for font sizes.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureFontSize(this MaterialDesignControlsBuilder builder, MaterialSizeOptions options)
     {
@@ -189,10 +189,10 @@ public static class MaterialDesignControlsBuilderExtensions
 
     /// <summary>
     /// Overrides, partially or fully, default font sizes for texts from Resources.
-    /// MDC will match resource keys with <see cref="MaterialSizeOptions" /> property names.
+    /// MDC will match resource keys with <see cref="MaterialSizeOptions">MaterialSizeOptions</see> property names.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary">ResourceDictionary</see> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
     /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureFontSizeFromResources(
@@ -214,7 +214,7 @@ public static class MaterialDesignControlsBuilderExtensions
     /// Overrides, partially or fully, default font tracking sizes for texts.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="options"><see cref="MaterialSizeOptions" /> configuration for font tracking sizes.</param>
+    /// <param name="options"><see cref="MaterialSizeOptions">Configuration</see> for font tracking sizes.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureFontTracking(this MaterialDesignControlsBuilder builder, MaterialSizeOptions options)
     {
@@ -225,10 +225,10 @@ public static class MaterialDesignControlsBuilderExtensions
 
     /// <summary>
     /// Overrides, partially or fully, default font tracking sizes for texts from Resources.
-    /// MDC will match resource keys with <see cref="MaterialSizeOptions" /> property names.
+    /// MDC will match resource keys with <see cref="MaterialSizeOptions">MaterialSizeOptions</see> property names.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary">ResourceDictionary</see> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
     /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureFontTrackingFromResources(
@@ -247,10 +247,10 @@ public static class MaterialDesignControlsBuilderExtensions
     }
 
     /// <summary>
-    /// Overrides, partially or fully, default <see cref="Shadow"/> configuration for elevation levels.
+    /// Overrides, partially or fully, default <see cref="Shadow">Shadow</see> configuration for elevation levels.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="options"><see cref="MaterialElevationOptions" /> configuration for elevation levels.</param>
+    /// <param name="options"><see cref="MaterialElevationOptions">Configuration</see> for elevation levels.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureElevation(this MaterialDesignControlsBuilder builder, MaterialElevationOptions options)
     {
@@ -260,11 +260,11 @@ public static class MaterialDesignControlsBuilderExtensions
     }
 
     /// <summary>
-    /// Overrides, partially or fully, default <see cref="Shadow"/> configuration for elevation levels from Resources.
-    /// MDC will match resource keys with <see cref="MaterialElevationOptions" /> property names.
+    /// Overrides, partially or fully, default <see cref="Shadow">shadow</see> configuration for elevation levels from Resources.
+    /// MDC will match resource keys with <see cref="MaterialElevationOptions">MaterialElevationOptions</see> property names.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary">ResourceDictionary</see> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
     /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureElevationFromResources(this MaterialDesignControlsBuilder builder,
@@ -285,7 +285,7 @@ public static class MaterialDesignControlsBuilderExtensions
     /// Overrides, partially or fully, default string formats used by Material Design Controls.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="options"><see cref="MaterialFormatOptions" /> configuration for string formats.</param>
+    /// <param name="options"><see cref="MaterialFormatOptions">Configuration</see> for string formats.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureStringFormat(this MaterialDesignControlsBuilder builder, MaterialFormatOptions options)
     {
@@ -296,10 +296,10 @@ public static class MaterialDesignControlsBuilderExtensions
 
     /// <summary>
     /// Overrides, partially or fully, default string formats from Resources.
-    /// MDC will match resource keys with <see cref="MaterialFormatOptions" /> property names.
+    /// MDC will match resource keys with <see cref="MaterialFormatOptions">MaterialFormatOptions</see> property names.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary">ResourceDictionary</see> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
     /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureStringFormatFromResources(
@@ -321,7 +321,7 @@ public static class MaterialDesignControlsBuilderExtensions
     /// Overrides, partially or fully, default icons used by Material Design Controls.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="options"><see cref="MaterialIconOptions" /> configuration for icons.</param>
+    /// <param name="options"><see cref="MaterialIconOptions">Configuration</see> for icons.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureIcons(this MaterialDesignControlsBuilder builder, MaterialIconOptions options)
     {
@@ -332,10 +332,10 @@ public static class MaterialDesignControlsBuilderExtensions
 
     /// <summary>
     /// Overrides, partially or fully, default icons used by Material Design Controls from Resources.
-    /// MDC will match resource keys with <see cref="MaterialIconOptions" /> property names.
+    /// MDC will match resource keys with <see cref="MaterialIconOptions">MaterialIconOptions</see> property names.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary">ResourceDictionary</see> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
     /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureIconsFromResources(this MaterialDesignControlsBuilder builder,
@@ -356,7 +356,7 @@ public static class MaterialDesignControlsBuilderExtensions
     /// Overrides, partially or fully, default animations used by Material Design Controls.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="options"><see cref="MaterialAnimationOptions" /> configuration for animations.</param>
+    /// <param name="options"><see cref="MaterialAnimationOptions">Configuration</see> for animations.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureAnimations(this MaterialDesignControlsBuilder builder, MaterialAnimationOptions options)
     {
@@ -367,10 +367,10 @@ public static class MaterialDesignControlsBuilderExtensions
 
     /// <summary>
     /// Overrides, partially or fully, default animations used by Material Design Controls from Resources.
-    /// MDC will match resource keys with <see cref="MaterialAnimationOptions" /> property names.
+    /// MDC will match resource keys with <see cref="MaterialAnimationOptions">MaterialAnimationOptions</see> property names.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary"/> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
+    /// <param name="resourceDictionaryName"><see cref="ResourceDictionary">ResourceDictionary</see> name. Optional. If not provided, MDC will scan for every Resource registered on Application.</param>
     /// <param name="resourcePrefix">Prefix for resources. Optional.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureAnimationsFromResources(
@@ -389,10 +389,10 @@ public static class MaterialDesignControlsBuilderExtensions
     }
 
     /// <summary>
-    /// Overrides, partially or fully, default <see cref="MaterialSnackbar"/> configuration globally.
+    /// Overrides, partially or fully, default <see cref="IMaterialSnackbar">Material Snackbar</see> configuration globally.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="options"><see cref="MaterialSnackbarOptions" /> configuration for <see cref="MaterialSnackbar"/>.</param>
+    /// <param name="options"><see cref="MaterialSnackbarOptions">Configuration</see> for <see cref="IMaterialSnackbar">Material Snackbar</see>.</param>
     /// <returns>Updated Material Design Controls builder.</returns>
     public static MaterialDesignControlsBuilder ConfigureSnackbar(this MaterialDesignControlsBuilder builder, MaterialSnackbarOptions options)
     {
@@ -402,11 +402,11 @@ public static class MaterialDesignControlsBuilderExtensions
     } 
     
     /// <summary>
-    /// Registers a custom defined implementation for <see cref="IMaterialSnackbar"/> and set global default configuration.
+    /// Registers a user-defined implementation for <see cref="IMaterialSnackbar">IMaterialSnackbar</see> and set global default configuration.
     /// </summary>
     /// <param name="builder">Material Design Controls builder.</param>
-    /// <param name="options"><see cref="MaterialSnackbarOptions" /> configuration for <see cref="MaterialSnackbar"/>.</param>
-    /// <typeparam name="T">User-defined implementation for <see cref="IMaterialSnackbar"/>.</typeparam>
+    /// <param name="options"><see cref="MaterialSnackbarOptions">Configuration</see> for <see cref="IMaterialSnackbar">Material Snackbar</see>.</param>
+    /// <typeparam name="T">User-defined implementation for <see cref="IMaterialSnackbar">IMaterialSnackbar</see>.</typeparam>
     /// <returns></returns>
     public static MaterialDesignControlsBuilder ConfigureSnackbar<T>(this MaterialDesignControlsBuilder builder, MaterialSnackbarOptions? options = null) where T : IMaterialSnackbar
     {
@@ -535,7 +535,7 @@ public static class MaterialDesignControlsBuilderExtensions
             .AddStyles(MaterialRadioButton.GetStyles())
             .AddStyles(MaterialCheckBox.GetStyles())
             .AddStyles(MaterialTextField.GetStyles())
-            .AddStyles(MaterialChips.GetStyles())
+            .AddStyles(MaterialChip.GetStyles())
             .AddStyles(MaterialRating.GetStyles())
             .AddStyles(MaterialSelection.GetStyles())
             .AddStyles(MaterialTimePicker.GetStyles())

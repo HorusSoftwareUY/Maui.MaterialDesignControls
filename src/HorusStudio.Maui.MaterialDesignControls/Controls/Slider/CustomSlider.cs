@@ -8,32 +8,32 @@ internal class CustomSlider : Slider
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="TrackHeight" /> bindable property.
+    /// The backing store for the <see cref="TrackHeight">TrackHeight</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrackHeightProperty = BindableProperty.Create(nameof(TrackHeight), typeof(int), typeof(CustomSlider), defaultValue: 16);
 
     /// <summary>
-    /// The backing store for the <see cref="TrackCornerRadius" /> bindable property.
+    /// The backing store for the <see cref="TrackCornerRadius">TrackCornerRadius</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrackCornerRadiusProperty = BindableProperty.Create(nameof(TrackCornerRadius), typeof(int), typeof(CustomSlider), defaultValue: 10);
 
     /// <summary>
-    /// The backing store for the <see cref="UserInteractionEnabled" /> bindable property.
+    /// The backing store for the <see cref="UserInteractionEnabled">UserInteractionEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty UserInteractionEnabledProperty = BindableProperty.Create(nameof(UserInteractionEnabled), typeof(bool), typeof(CustomSlider), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="ThumbBackgroundColor" /> bindable property.
+    /// The backing store for the <see cref="ThumbBackgroundColor">ThumbBackgroundColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ThumbBackgroundColorProperty = BindableProperty.Create(nameof(ThumbBackgroundColor), typeof(Color), typeof(CustomSlider), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="ThumbWidth" /> bindable property.
+    /// The backing store for the <see cref="ThumbWidth">ThumbWidth</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ThumbWidthProperty = BindableProperty.Create(nameof(ThumbWidth), typeof(int), typeof(MaterialSlider), defaultValue: 4);
 
     /// <summary>
-    /// The backing store for the <see cref="ThumbHeight" /> bindable property.
+    /// The backing store for the <see cref="ThumbHeight">ThumbHeight</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ThumbHeightProperty = BindableProperty.Create(nameof(ThumbHeight), typeof(int), typeof(MaterialSlider), defaultValue: 44);
 
@@ -42,7 +42,7 @@ internal class CustomSlider : Slider
     #region Properties
 
     /// <summary>
-    /// Gets or sets <see cref="UserInteractionEnabled" /> for the slider.
+    /// Gets or sets if user interaction is enabled.
     /// This is a bindable property.
     /// </summary>
     public bool UserInteractionEnabled
@@ -52,7 +52,7 @@ internal class CustomSlider : Slider
     }
 
     /// <summary>
-    /// Gets or sets <see cref="TrackHeight" /> for the slider.
+    /// Gets or sets track height for the slider.
     /// This is a bindable property.
     /// </summary>
     public int TrackHeight
@@ -62,7 +62,7 @@ internal class CustomSlider : Slider
     }
 
     /// <summary>
-    /// Gets or sets <see cref="TrackCornerRadius" /> for the slider.
+    /// Gets or sets track corner radius for the slider.
     /// This is a bindable property.
     /// </summary>
     public int TrackCornerRadius
@@ -83,8 +83,10 @@ internal class CustomSlider : Slider
 
     /// <summary>
     /// Allows you to set the thumb width
-    /// The default value is <value>4</value>
     /// </summary>
+    /// <default>
+    /// 4
+    /// </default>
     public int ThumbWidth
     {
         get => (int)GetValue(ThumbWidthProperty);
@@ -93,8 +95,10 @@ internal class CustomSlider : Slider
 
     /// <summary>
     /// Allows you to set the thumb height
-    /// The default value is <value>44</value>
     /// </summary>
+    /// <default>
+    /// 44
+    /// </default>
     public int ThumbHeight
     {
         get => (int)GetValue(ThumbHeightProperty);

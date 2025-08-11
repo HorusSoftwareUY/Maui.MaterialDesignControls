@@ -37,32 +37,14 @@ var iconButton = new MaterialIconButton()
 
 ## Properties
 
-### <a id="properties-animation"/>**Animation**
+### <a id="properties-applyicontintcolor"/>**ApplyIconTintColor**
 
-Gets or sets an animation to be executed when button is clicked.
+Gets or sets the if the icon applies the tint color.
  This is a bindable property.
 
-Property type: AnimationTypes<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade
-
-<br>
-
-### <a id="properties-animationparameter"/>**AnimationParameter**
-
-Gets or sets the parameter to pass to the Animation property.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: Null
+Default value: true
 
 <br>
 
@@ -155,17 +137,6 @@ Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32
 
 <br>
 
-### <a id="properties-customanimation"/>**CustomAnimation**
-
-Gets or sets a custom animation to be executed when button is clicked.
- This is a bindable property.
-
-Property type: ICustomAnimation<br>
-
-Default value: Null
-
-<br>
-
 ### <a id="properties-custombusyindicator"/>**CustomBusyIndicator**
 
 Gets or sets a custom  for busy indicator.
@@ -247,6 +218,35 @@ Gets or sets the shadow effect cast by the element.
  This is a bindable property.
 
 Property type: [Shadow](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.shadow)<br>
+
+<br>
+
+### <a id="properties-touchanimation"/>**TouchAnimation**
+
+Gets or sets a custom animation to be executed when button is clicked.
+ This is a bindable property.
+
+Property type: ITouchAnimation<br>
+
+Default value: Null
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when button is clicked.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
 
 <br>
 

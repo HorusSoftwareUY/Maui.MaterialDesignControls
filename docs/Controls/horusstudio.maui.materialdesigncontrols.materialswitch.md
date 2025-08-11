@@ -8,6 +8,28 @@ Inherits from: MaterialSwitch → [ContentView](https://learn.microsoft.com/en-u
 
 <br>
 
+![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialSwitch.jpg)
+
+### XAML sample
+
+```csharp
+xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+
+<material:MaterialSwitch
+        IsToggled="True"/>
+```
+
+### C# sample
+
+```csharp
+var switch = new MaterialSwitch()
+{
+    IsToggled = True
+};
+```
+
+[See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SwitchPage.xaml)
+
 ## Properties
 
 ### <a id="properties-bordercolor"/>**BorderColor**
@@ -197,7 +219,38 @@ Gets or sets the command to invoke when the switch's IsToggled property changes.
 
 Property type: ICommand<br>
 
-Remarks: This property is used to associate a command with an instance of a switch. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
+Remarks: This property is used to associate a command with an instance of a switch.
+ This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
+ The command parameter is of type [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean) and corresponds to the value of the MaterialSwitch.IsToggled property.
+
+<br>
+
+### <a id="properties-touchanimation"/>**TouchAnimation**
+
+Gets or sets a custom animation to be executed when button is clicked.
+ This is a bindable property.
+
+Property type: ITouchAnimation<br>
+
+Default value: Null
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when button is clicked.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
 
 <br>
 
@@ -236,3 +289,8 @@ Allows you to display a image on the switch's thumb when it is on the OFF state.
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
 <br>
+
+## Known issues and pending features
+
+* Track color animation: change from on-track color to off-track color within the toggle animation.
+ * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)

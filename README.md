@@ -83,8 +83,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * [MaterialButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialbutton.md)
 * [MaterialCard](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcard.md)
 * [MaterialCheckbox](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcheckbox.md)
-* [MaterialChips](docs/Controls/horusstudio.maui.materialdesigncontrols.materialchips.md)
-* [MaterialChipsGroup](docs/Controls/horusstudio.maui.materialdesigncontrols.materialchipsgroup.md)
+* [MaterialChip](docs/Controls/horusstudio.maui.materialdesigncontrols.materialchip.md)
 * [MaterialDatePicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialdatepicker.md)
 * [MaterialDivider](docs/Controls/horusstudio.maui.materialdesigncontrols.materialdivider.md)
 * [MaterialFloatingButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialfloatingbutton.md)
@@ -104,6 +103,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * [MaterialTimePicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtimepicker.md)
 * [MaterialTopAppBar](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtopappbar.md)
 * [MaterialViewButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewbutton.md)
+* [MaterialViewGroup](docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewgroup.md)
 
 ### Coming soon
 

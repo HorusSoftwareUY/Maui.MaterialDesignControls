@@ -132,6 +132,37 @@ Remarks: To be added.
 
 <br>
 
+### <a id="properties-erroranimation"/>**ErrorAnimation**
+
+Gets or sets a custom animation to be executed when the control has an error.
+ This is a bindable property.
+
+Property type: IErrorAnimation<br>
+
+Remarks: When this property is set, the MaterialInputBase.ErrorAnimationType property is ignored.
+
+<br>
+
+### <a id="properties-erroranimationtype"/>**ErrorAnimationType**
+
+Gets or sets the animation type to be executed when the control has an error.
+ This is a bindable property.
+
+Property type: ErrorAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Shake | 1 | Shake: Represents an animation that simulates a "shake" effect by moving the target element back and forth along the X-axis. |
+| Heart | 2 | Breath: represents an animation that performs a "heartbeat" effect by scaling the target element in a pulsating manner. |
+| Jump | 3 | Jump: represents an animation that creates a "jump" effect by translating the target element along the Y-axis. |
+
+Default value: ErrorAnimationTypes.Shake
+
+Remarks: This property will only be considered if the MaterialInputBase.ErrorAnimation property is NULL.
+
+<br>
+
 ### <a id="properties-erroricon"/>**ErrorIcon**
 
 Allows you to display a trailing icon when input has error. This is a bindable property.
@@ -246,6 +277,24 @@ Property type: ICommand<br>
 Default value: null
 
 Remarks: This property is used internally, and it's recommended to avoid setting it directly.
+
+<br>
+
+### <a id="properties-internalborderwidth"/>**InternalBorderWidth**
+
+This property is for internal use by the control. The BorderWidth property should be used instead.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+<br>
+
+### <a id="properties-internaldatepicker"/>**InternalDatePicker**
+
+Internal implementation of the  control.
+
+Property type: [DatePicker](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.datepicker)<br>
+
+Remarks: This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
 
 <br>
 

@@ -18,47 +18,47 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Bindable Properties
 
         /// <summary>
-        /// The backing store for the <see cref="FontFamily" /> bindable property.
+        /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
         /// </summary>
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialSegmentedButton), defaultValue: DefaultFontFamily);
 
         /// <summary>
-        /// The backing store for the <see cref="FontSize" /> bindable property.
+        /// The backing store for the <see cref="FontSize">FontSize</see> bindable property.
         /// </summary>
         public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialSegmentedButton), defaultValue: DefaultFontSize);
 
         /// <summary>
-        /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+        /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
         /// </summary>
         public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialSegmentedButton), Button.CharacterSpacingProperty.DefaultValue);
 
         /// <summary>
-        /// The backing store for the <see cref="FontAttributes" /> bindable property.
+        /// The backing store for the <see cref="FontAttributes">FontAttributes</see> bindable property.
         /// </summary>
         public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialSegmentedButton), defaultValue: Button.FontAttributesProperty.DefaultValue);
 
         /// <summary>
-        /// The backing store for the <see cref="TextTransform" /> bindable property.
+        /// The backing store for the <see cref="TextTransform">TextTransform</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TextTransformProperty = BindableProperty.Create(nameof(TextTransform), typeof(TextTransform), typeof(MaterialSegmentedButton), defaultValue: Button.TextTransformProperty.DefaultValue);
 
         /// <summary>
-        /// The backing store for the <see cref="TextDecorations" /> bindable property.
+        /// The backing store for the <see cref="TextDecorations">TextDecorations</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TextDecorationsProperty = BindableProperty.Create(nameof(TextDecorations), typeof(TextDecorations), typeof(MaterialSegmentedButton), defaultValue: TextDecorations.None);
 
         /// <summary>
-        /// The backing store for the <see cref="BackgroundColor" /> bindable property.
+        /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialSegmentedButton), defaultValue: DefaultBackgroundColor);
 
         /// <summary>
-        /// The backing store for the <see cref="TextColor" /> bindable property.
+        /// The backing store for the <see cref="TextColor">TextColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialSegmentedButton), defaultValue: DefaultTextColor);
 
         /// <summary>
-        /// The backing store for the <see cref="IconSize" /> bindable property.
+        /// The backing store for the <see cref="IconSize">IconSize</see> bindable property.
         /// </summary>
         public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(double), typeof(MaterialSegmentedButton), defaultValue: DefaultIconSize);
 
@@ -67,7 +67,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Properties
 
         /// <summary>
-        /// Gets or sets the font family for segmented button text.
+        /// Gets or sets the font family for the segment text.
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -80,7 +80,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the font size for segmented button text.
+        /// Gets or sets the font size for the segment text.
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -94,7 +94,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the spacing between each of the characters of <see cref="Text"/> when displayed on the segmented buttons.
+        /// Gets or sets the spacing between characters for the segment text.
         /// This is a bindable property.
         /// </summary>
         public double CharacterSpacing
@@ -104,7 +104,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether the font for the text of segmented buttons is bold, italic, or neither.
+        /// Gets or sets <see cref="Microsoft.Maui.Controls.FontAttributes">attributes</see> for the segment text.
         /// This is a bindable property.
         /// </summary>
         public FontAttributes FontAttributes
@@ -114,7 +114,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Applies text transformation to the <see cref="Text"/> displayed on segmented buttons.
+        /// Gets or sets <see cref="Microsoft.Maui.TextTransform">transformation</see> for the segment text.
         /// This is a bindable property.
         /// </summary>
         public TextTransform TextTransform
@@ -124,7 +124,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets <see cref="TextDecorations" /> for the text of segmented buttons.
+        /// Gets or sets <see cref="Microsoft.Maui.TextDecorations">decorations</see> for the segment text.
         /// This is a bindable property.
         /// </summary>
         public TextDecorations TextDecorations
@@ -134,13 +134,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the Background color for the control.
+        /// Gets or sets the background <see cref="Color">color</see> for the segment.
         /// This is a bindable property.
         /// </summary>
         /// <default>
         /// Theme: Light = <see cref="MaterialLightTheme.Surface">MaterialLightTheme.Surface</see> - Dark = <see cref="MaterialDarkTheme.Surface">MaterialDarkTheme.Surface</see>
         /// </default>
-        /// <remarks>This property has no effect if <see cref="MaterialSegmentedButton.Type"> is set to <see cref="MaterialSegmentedButtonType.Outlined">.</remarks>
+        /// <remarks>This property has no effect if <see cref="MaterialSegmentedButton.Type">type</see> is set to <see cref="MaterialSegmentedButtonType.Outlined">Outlined</see>.</remarks>
         public new Color BackgroundColor
         {
             get => (Color)GetValue(BackgroundColorProperty);
@@ -148,7 +148,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the text color for segmented buttons.
+        /// Gets or sets the text <see cref="Color">color</see> for the segment.
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -161,7 +161,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the icon size for segmented button.
+        /// Gets or sets the icon size for the segment.
         /// This is a bindable property.
         /// </summary>
         /// <default>

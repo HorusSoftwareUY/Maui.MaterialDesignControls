@@ -116,7 +116,7 @@ public abstract partial class MaterialInputBase : IValidableView
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Type" /> bindable property.
+    /// The backing store for the <see cref="Type">Type</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialInputType), typeof(MaterialInputBase), defaultValue: DefaultInputType, defaultBindingMode: BindingMode.OneTime, propertyChanged: (bindable, _, _) =>
     {
@@ -127,7 +127,7 @@ public abstract partial class MaterialInputBase : IValidableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="IsEnabled" /> bindable property.
+    /// The backing store for the <see cref="IsEnabled">IsEnabled</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialInputBase), defaultValue: DefaultIsEnabled, propertyChanged: (bindable, _, _) =>
     {
@@ -138,12 +138,12 @@ public abstract partial class MaterialInputBase : IValidableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Label" /> bindable property.
+    /// The backing store for the <see cref="Label">Label</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelProperty = BindableProperty.Create(nameof(Label), typeof(string), typeof(MaterialInputBase));
 
     /// <summary>
-    /// The backing store for the <see cref="Placeholder" /> bindable property.
+    /// The backing store for the <see cref="Placeholder">Placeholder</see> bindable property.
     /// </summary>
     public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(MaterialInputBase), propertyChanged: (bindableObject, _, newValue) =>
     {
@@ -154,32 +154,32 @@ public abstract partial class MaterialInputBase : IValidableView
     });
     
     /// <summary>
-    /// The backing store for the <see cref="AlwaysShowLabel" /> bindable property.
+    /// The backing store for the <see cref="AlwaysShowLabel">AlwaysShowLabel</see> bindable property.
     /// </summary>
     public static readonly BindableProperty AlwaysShowLabelProperty = BindableProperty.Create(nameof(AlwaysShowLabel), typeof(bool), typeof(MaterialInputBase), defaultValue: DefaultAlwaysShowLabel);
 
     /// <summary>
-    /// The backing store for the <see cref="SupportingText" /> bindable property.
+    /// The backing store for the <see cref="SupportingText">SupportingText</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SupportingTextProperty = BindableProperty.Create(nameof(SupportingText), typeof(string), typeof(MaterialInputBase));
 
     /// <summary>
-    /// The backing store for the <see cref="TextColor" /> bindable property.
+    /// The backing store for the <see cref="TextColor">TextColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="LeadingIconTintColor" /> bindable property.
+    /// The backing store for the <see cref="LeadingIconTintColor">LeadingIconTintColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LeadingIconTintColorProperty = BindableProperty.Create(nameof(LeadingIconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultIconTintColor);
 
     /// <summary>
-    /// The backing store for the <see cref="TrailingIconTintColor" /> bindable property.
+    /// The backing store for the <see cref="TrailingIconTintColor">TrailingIconTintColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrailingIconTintColorProperty = BindableProperty.Create(nameof(TrailingIconTintColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultIconTintColor);
 
     /// <summary>
-    /// The backing store for the <see cref="Background" /> bindable property.
+    /// The backing store for the <see cref="Background">Background</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty BackgroundProperty = BindableProperty.Create(nameof(Background), typeof(Brush), typeof(MaterialInputBase), defaultValue: DefaultBackground, propertyChanged: (bindable, _, _) =>
     {
@@ -190,7 +190,7 @@ public abstract partial class MaterialInputBase : IValidableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="BackgroundColor" /> bindable property.
+    /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
     {
@@ -201,7 +201,7 @@ public abstract partial class MaterialInputBase : IValidableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="BorderWidth"/> bindable property.
+    /// The backing store for the <see cref="BorderWidth">BorderWidth</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
     {
@@ -212,18 +212,18 @@ public abstract partial class MaterialInputBase : IValidableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="BorderWidth"/> bindable property.
+    /// The backing store for the <see cref="BorderWidth">BorderWidth</see> bindable property.
     /// </summary>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     internal static readonly BindableProperty InternalBorderWidthProperty = BindableProperty.Create(nameof(InternalBorderWidth), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultBorderWidth);
 
     /// <summary>
-    /// The backing store for the <see cref="BorderColor" /> bindable property.
+    /// The backing store for the <see cref="BorderColor">BorderColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultBorderColor);
 
     /// <summary>
-    /// The backing store for the <see cref="CornerRadius"/> bindable property.
+    /// The backing store for the <see cref="CornerRadius">CornerRadius</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialInputBase), defaultValue: DefaultCornerRadius, propertyChanged: (bindable, _, _) =>
     {
@@ -234,152 +234,152 @@ public abstract partial class MaterialInputBase : IValidableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="LeadingIcon" /> bindable property.
+    /// The backing store for the <see cref="LeadingIcon">LeadingIcon</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LeadingIconProperty = BindableProperty.Create(nameof(LeadingIcon), typeof(ImageSource), typeof(MaterialInputBase));
 
     /// <summary>
-    /// The backing store for the <see cref="TrailingIcon" /> bindable property.
+    /// The backing store for the <see cref="TrailingIcon">TrailingIcon</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrailingIconProperty = BindableProperty.Create(nameof(TrailingIcon), typeof(ImageSource), typeof(MaterialInputBase));
     
     /// <summary>
-    /// The backing store for the <see cref="ErrorIcon" /> bindable property.
+    /// The backing store for the <see cref="ErrorIcon">ErrorIcon</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ErrorIconProperty = BindableProperty.Create(nameof(ErrorIcon), typeof(ImageSource), typeof(MaterialInputBase), defaultValueCreator: DefaultErrorIcon);
 
     /// <summary>
-    /// The backing store for the <see cref="IsFocused"/> bindable property.
+    /// The backing store for the <see cref="IsFocused">IsFocused</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty IsFocusedProperty = BindableProperty.Create(nameof(IsFocused), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
 
     /// <summary>
-    /// The backing store for the <see cref="HorizontalTextAlignment"/> bindable property.
+    /// The backing store for the <see cref="HorizontalTextAlignment">HorizontalTextAlignment</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(MaterialInputBase), defaultValue: DefaultHorizontalTextAlignment);
 
     /// <summary>
-    /// The backing store for the <see cref="FontFamily"/> bindable property.
+    /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialInputBase), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="FontSize"/> bindable property.
+    /// The backing store for the <see cref="FontSize">FontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialInputBase), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAttributes" /> bindable property.
+    /// The backing store for the <see cref="FontAttributes">FontAttributes</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialInputBase), defaultValue: null);
     
     /// <summary>
-    /// The backing store for the <see cref="PlaceholderFontFamily"/> bindable property.
+    /// The backing store for the <see cref="PlaceholderFontFamily">PlaceholderFontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty PlaceholderFontFamilyProperty = BindableProperty.Create(nameof(PlaceholderFontFamily), typeof(string), typeof(MaterialInputBase), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="PlaceholderSize"/> bindable property.
+    /// The backing store for the <see cref="PlaceholderSize">PlaceholderSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty PlaceholderSizeProperty = BindableProperty.Create(nameof(PlaceholderSize), typeof(double), typeof(MaterialInputBase), defaultValueCreator: DefaultFontSize);
     
     /// <summary>
-    /// The backing store for the <see cref="PlaceholderColor"/> bindable property.
+    /// The backing store for the <see cref="PlaceholderColor">PlaceholderColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultPlaceholderColor);
 
     /// <summary>
-    /// The backing store for the <see cref="PlaceholderLineBreakMode"/> bindable property.
+    /// The backing store for the <see cref="PlaceholderLineBreakMode">PlaceholderLineBreakMode</see> bindable property.
     /// </summary>
     public static readonly BindableProperty PlaceholderLineBreakModeProperty = BindableProperty.Create(nameof(PlaceholderLineBreakMode), typeof(LineBreakMode), typeof(MaterialInputBase), defaultValue: LineBreakMode.NoWrap);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelColor"/> bindable property.
+    /// The backing store for the <see cref="LabelColor">LabelColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultLabelColor);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelSize"/> bindable property.
+    /// The backing store for the <see cref="LabelSize">LabelSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelSizeProperty = BindableProperty.Create(nameof(LabelSize), typeof(double), typeof(MaterialInputBase), defaultValueCreator: DefaultLabelSize);
     
     /// <summary>
-    /// The backing store for the <see cref="LabelFontFamily"/> bindable property.
+    /// The backing store for the <see cref="LabelFontFamily">LabelFontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelFontFamilyProperty = BindableProperty.Create(nameof(LabelFontFamily), typeof(string), typeof(MaterialInputBase), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelMargin"/> bindable property.
+    /// The backing store for the <see cref="LabelMargin">LabelMargin</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelMarginProperty = BindableProperty.Create(nameof(LabelMargin), typeof(Thickness), typeof(MaterialInputBase), defaultValue: DefaultLabelMargin);
     
     /// <summary>
-    /// The backing store for the <see cref="LabelPadding"/> bindable property.
+    /// The backing store for the <see cref="LabelPadding">LabelPadding</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelPaddingProperty = BindableProperty.Create(nameof(LabelPadding), typeof(Thickness), typeof(MaterialInputBase), defaultValue: DefaultLabelPadding);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelLineBreakMode"/> bindable property.
+    /// The backing store for the <see cref="LabelLineBreakMode">LabelLineBreakMode</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelLineBreakModeProperty = BindableProperty.Create(nameof(LabelLineBreakMode), typeof(LineBreakMode), typeof(MaterialInputBase), defaultValue: LineBreakMode.NoWrap);
 
     /// <summary>
-    /// The backing store for the <see cref="SupportingColor"/> bindable property.
+    /// The backing store for the <see cref="SupportingColor">SupportingColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SupportingColorProperty = BindableProperty.Create(nameof(SupportingColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultSupportingTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="SupportingSize"/> bindable property.
+    /// The backing store for the <see cref="SupportingSize">SupportingSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SupportingSizeProperty = BindableProperty.Create(nameof(SupportingSize), typeof(double), typeof(MaterialInputBase), defaultValueCreator: DefaultSupportingSize);
 
     /// <summary>
-    /// The backing store for the <see cref="SupportingFontFamily"/> bindable property.
+    /// The backing store for the <see cref="SupportingFontFamily">SupportingFontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SupportingFontFamilyProperty = BindableProperty.Create(nameof(SupportingFontFamily), typeof(string), typeof(MaterialInputBase), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="SupportingMargin"/> bindable property.
+    /// The backing store for the <see cref="SupportingMargin">SupportingMargin</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SupportingMarginProperty = BindableProperty.Create(nameof(SupportingMargin), typeof(Thickness), typeof(MaterialInputBase), defaultValue: DefaultSupportingMargin);
 
     /// <summary>
-    /// The backing store for the <see cref="SupportingLineBreakMode"/> bindable property.
+    /// The backing store for the <see cref="SupportingLineBreakMode">SupportingLineBreakMode</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SupportingLineBreakModeProperty = BindableProperty.Create(nameof(SupportingLineBreakMode), typeof(LineBreakMode), typeof(MaterialInputBase), defaultValue: LineBreakMode.NoWrap);
 
     /// <summary>
-    /// The backing store for the <see cref="LeadingIconCommand"/> bindable property.
+    /// The backing store for the <see cref="LeadingIconCommand">LeadingIconCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LeadingIconCommandProperty = BindableProperty.Create(nameof(LeadingIconCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="LeadingIconCommandParameter"/> bindable property.
+    /// The backing store for the <see cref="LeadingIconCommandParameter">LeadingIconCommandParameter</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LeadingIconCommandParameterProperty = BindableProperty.Create(nameof(LeadingIconCommandParameter), typeof(object), typeof(MaterialInputBase), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="TrailingIconCommand"/> bindable property.
+    /// The backing store for the <see cref="TrailingIconCommand">TrailingIconCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrailingIconCommandProperty = BindableProperty.Create(nameof(TrailingIconCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="TrailingIconCommandParameter"/> bindable property.
+    /// The backing store for the <see cref="TrailingIconCommandParameter">TrailingIconCommandParameter</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TrailingIconCommandParameterProperty = BindableProperty.Create(nameof(LeadingIconCommandParameter), typeof(object), typeof(MaterialInputBase), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="FocusedCommand"/> bindable property.
+    /// The backing store for the <see cref="FocusedCommand">FocusedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FocusedCommandProperty = BindableProperty.Create(nameof(FocusedCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="UnfocusedCommand"/> bindable property.
+    /// The backing store for the <see cref="UnfocusedCommand">UnfocusedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty UnfocusedCommandProperty = BindableProperty.Create(nameof(UnfocusedCommand), typeof(ICommand), typeof(MaterialInputBase), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="HasError"/> bindable property.
+    /// The backing store for the <see cref="HasError">HasError</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HasErrorProperty = BindableProperty.Create(nameof(HasError), typeof(bool), typeof(MaterialInputBase), defaultValue: false, propertyChanged: (bindableObject, _, _) =>
     {
@@ -390,19 +390,17 @@ public abstract partial class MaterialInputBase : IValidableView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="ErrorAnimationType" />
-    /// bindable property.
+    /// The backing store for the <see cref="ErrorAnimationType">ErrorAnimationType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ErrorAnimationTypeProperty = BindableProperty.Create(nameof(ErrorAnimationType), typeof(ErrorAnimationTypes), typeof(MaterialInputBase), defaultValueCreator: DefaultErrorAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="ErrorAnimation" />
-    /// bindable property.
+    /// The backing store for the <see cref="ErrorAnimation">ErrorAnimation</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ErrorAnimationProperty = BindableProperty.Create(nameof(ErrorAnimation), typeof(IErrorAnimation), typeof(MaterialInputBase));
 
     /// <summary>
-    /// The backing store for the <see cref="HeightRequest" /> bindable property.
+    /// The backing store for the <see cref="HeightRequest">HeightRequest</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultHeightRequest);
 
@@ -411,11 +409,11 @@ public abstract partial class MaterialInputBase : IValidableView
     #region Properties
 
     /// <summary>
-    /// Gets or sets the input type according to <see cref="MaterialInputType"/> enum.
+    /// Gets or sets the input type according to <see cref="MaterialInputType">MaterialInputType</see>.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialInputType.Filled"/>
+    /// <see cref="MaterialInputType.Filled">MaterialInputType.Filled</see>
     /// </default>
     public MaterialInputType Type
     {
@@ -436,7 +434,7 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets a <see cref="Brush"/> that describes the background of the input. This is a bindable property.
+    /// Gets or sets a <see cref="Brush">Brush</see> that describes the background of the input. This is a bindable property.
     /// </summary>
     /// <default>
     /// Brush
@@ -465,7 +463,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// <default>
     ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
     /// </default>
-    /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0. On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor" /> is set to a non-default color.</remarks>
+    /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth">IBorderElement.BorderWidth</see> is set to 0. On Android this property will not have an effect unless <see cref="VisualElement.BackgroundColor">VisualElement.BackgroundColor</see> is set to a non-default color.</remarks>
     public Color BorderColor
     {
         get => (Color)GetValue(BorderColorProperty);
@@ -498,7 +496,7 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// This property is for internal use by the control. The <see cref="BorderWidth">BorderWidth</see> property should be used instead.
+    /// This property is for internal use by the control. <see cref="BorderWidth">BorderWidth</see> property should be used instead.
     /// </summary>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public double InternalBorderWidth
@@ -513,7 +511,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// <default>
     /// null
     /// </default>
-    /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
+    /// <remarks>For more options see <see cref="MaterialIconButton">MaterialIconButton</see>.</remarks>
     public ImageSource LeadingIcon
     {
         get => (ImageSource)GetValue(LeadingIconProperty);
@@ -526,7 +524,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// <default>
     /// null
     /// </default>
-    /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
+    /// <remarks>For more options see <see cref="MaterialIconButton">MaterialIconButton</see>.</remarks>
     public ImageSource TrailingIcon
     {
         get => (ImageSource)GetValue(TrailingIconProperty);
@@ -539,7 +537,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// <default>
     /// null
     /// </default>
-    /// <remarks>For more options have a look at <see cref="MaterialIconButton"/>.</remarks>
+    /// <remarks>For more options see <see cref="MaterialIconButton">MaterialIconButton</see>.</remarks>
     public ImageSource ErrorIcon
     {
         get => (ImageSource)GetValue(ErrorIconProperty);
@@ -599,7 +597,9 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the input. This is a bindable property.
+    /// Gets or sets the <see cref="Color">color</see> for the text of the input.
+    /// This is a bindable property.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     ///  Light: <see cref="MaterialLightTheme.OnSurface">MaterialLightTheme.OnSurface</see> - Dark: <see cref="MaterialDarkTheme.OnSurface">MaterialDarkTheme.OnSurface</see>
@@ -612,7 +612,8 @@ public abstract partial class MaterialInputBase : IValidableView
 
 #nullable enable
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the leading button icon of the input. This is a bindable property.
+    /// Gets or sets the <see cref="Color">color</see> for the leading button icon of the input.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
@@ -624,7 +625,8 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the trailing button icon of the input. This is a bindable property.
+    /// Gets or sets the <see cref="Color">color</see> for the trailing button icon of the input.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
@@ -649,10 +651,11 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets the horizontal text alignment for the input. This is a bindable property.
+    /// Gets or sets the horizontal text alignment for the input.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="TextAlignment.Start"/>
+    /// <see cref="TextAlignment.Start">TextAlignment.Start</see>
     /// </default>
     public TextAlignment HorizontalTextAlignment
     {
@@ -670,10 +673,11 @@ public abstract partial class MaterialInputBase : IValidableView
     public ICommand InputTapCommand { get; set; }
 
     /// <summary>
-    /// Gets or sets font family for input. This is a bindable property.
+    /// Gets or sets font family for input.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontFamily.Default"/>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
     /// </default>
     public string FontFamily
     {
@@ -682,10 +686,11 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets font size for input. This is a bindable property.
+    /// Gets or sets font size for input.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontSize.BodyLarge"/> Tablet = 19 / Phone = 16
+    /// <see cref="MaterialFontSize.BodyLarge">MaterialFontSize.BodyLarge</see>: Tablet = 19 / Phone = 16
     /// </default>
     public double FontSize
     {
@@ -694,8 +699,8 @@ public abstract partial class MaterialInputBase : IValidableView
     }
     
     /// <summary>
-    /// Gets or sets a value that indicates whether the font for the text of this input
-    /// is bold, italic, or neither. This is a bindable property.
+    /// Gets or sets a value that indicates whether the font for the text of this input is bold, italic, or neither.
+    /// This is a bindable property.
     /// </summary>
     public FontAttributes FontAttributes
     {
@@ -704,10 +709,11 @@ public abstract partial class MaterialInputBase : IValidableView
     }
     
     /// <summary>
-    /// Gets or sets font family for placeholder. This is a bindable property.
+    /// Gets or sets font family for placeholder.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontFamily.Default"/>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
     /// </default>
     public string PlaceholderFontFamily
     {
@@ -716,10 +722,11 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets font size for placeholder. This is a bindable property.
+    /// Gets or sets font size for placeholder.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontSize.BodyLarge"/> Tablet = 19 / Phone = 16
+    /// <see cref="MaterialFontSize.BodyLarge">MaterialFontSize.BodyLarge</see>: Tablet = 19 / Phone = 16
     /// </default>
     public double PlaceholderSize
     {
@@ -728,7 +735,8 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets text color for placeholder. This is a bindable property.
+    /// Gets or sets text color for placeholder.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
@@ -740,7 +748,8 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets line break mode for placeholder. This is a bindable property.
+    /// Gets or sets line break mode for placeholder.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="LineBreakMode.NoWrap">LineBreakMode.NoWrap</see>
@@ -752,7 +761,8 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets text color for label. This is a bindable property.
+    /// Gets or sets text color for label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
@@ -764,10 +774,11 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets font size for label. This is a bindable property.
+    /// Gets or sets font size for label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontSize.BodySmall"/> Tablet = 15 / Phone = 12
+    /// <see cref="MaterialFontSize.BodySmall">MaterialFontSize.BodySmall</see>: Tablet = 15 / Phone = 12
     /// </default>
     public double LabelSize
     {
@@ -776,10 +787,11 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets font family for label. This is a bindable property.
+    /// Gets or sets font family for label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontFamily.Default"/>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
     /// </default>
     public string LabelFontFamily
     {
@@ -788,8 +800,8 @@ public abstract partial class MaterialInputBase : IValidableView
     }
 
     /// <summary>
-    /// Gets or sets margin for label. This is a bindable property.
-    /// The default value is <value>0</value>
+    /// Gets or sets margin for label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Thickness(0)
@@ -801,8 +813,8 @@ public abstract partial class MaterialInputBase : IValidableView
     }
     
     /// <summary>
-    /// Gets or sets padding for label. This is a bindable property.
-    /// The default value is <value>0</value>
+    /// Gets or sets padding for label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Filled: Thickness(0). Outlined: Thickness(4,1)
@@ -817,7 +829,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// Gets or sets line break mode for label. This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="LineBreakMode.NoWrap"/>
+    /// <see cref="LineBreakMode.NoWrap">LineBreakMode.NoWrap</see>
     /// </default>
     public LineBreakMode LabelLineBreakMode
     {
@@ -841,7 +853,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// Gets or sets font family for supporting text. This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontFamily.Default"/>
+    /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
     /// </default>
     public string SupportingFontFamily
     {
@@ -853,7 +865,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// Gets or sets font size for supporting text. This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontSize.BodySmall"/> Tablet = 15 / Phone = 12
+    /// <see cref="MaterialFontSize.BodySmall">MaterialFontSize.BodySmall</see>: Tablet = 15 / Phone = 12
     /// </default>
     public double SupportingSize
     {
@@ -877,7 +889,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// Gets or sets line break mode for supporting text. This is a bindable property.
     /// </summary>    
     /// <default>
-    /// <see cref="LineBreakMode.NoWrap"/>
+    /// <see cref="LineBreakMode.NoWrap">LineBreakMode.NoWrap</see>
     /// </default>
     public LineBreakMode SupportingLineBreakMode
     {
@@ -977,7 +989,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// <see cref="ErrorAnimationTypes.Shake">ErrorAnimationTypes.Shake</see>
     /// </default>
     /// <remarks>
-    /// This property will only be considered if the <see cref="ErrorAnimation"/> property is NULL.
+    /// This property will only be considered if the <see cref="ErrorAnimation">ErrorAnimation</see> property is <see langword="null">null</see>.
     /// </remarks>
     public ErrorAnimationTypes ErrorAnimationType
     {
@@ -990,7 +1002,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// This is a bindable property.
     /// </summary>
     /// <remarks>
-    /// When this property is set, the <see cref="ErrorAnimationType"/> property is ignored.
+    /// When this property is set, the <see cref="ErrorAnimationType">ErrorAnimationType</see> property is ignored.
     /// </remarks>
     public IErrorAnimation ErrorAnimation
     {

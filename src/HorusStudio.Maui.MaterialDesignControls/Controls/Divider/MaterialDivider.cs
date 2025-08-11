@@ -1,7 +1,7 @@
 ﻿namespace HorusStudio.Maui.MaterialDesignControls
 {
     /// <summary>
-    /// A divider <see cref="View" /> that group content in lists or other containers and follows Material Design Guidelines <see href="https://m3.material.io/components/divider/overview" />.
+    /// Dividers group content in lists or other containers and follow Material Design Guidelines. <see href="https://m3.material.io/components/divider/overview">See more</see>.
     /// </summary>
     /// <example>
     ///
@@ -40,12 +40,12 @@
         #region Bindable Properties
 
         /// <summary>
-        /// The backing store for the <see cref="Color" /> bindable property.
+        /// The backing store for the <see cref="Color">Color</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialDivider), defaultValueCreator: DefaultColor);
 
         /// <summary>
-        /// The backing store for the <see cref="HeightRequest" /> bindable property.
+        /// The backing store for the <see cref="HeightRequest">HeightRequest</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialDivider), defaultValue: DefaultHeightRequest);
 
@@ -54,7 +54,7 @@
         #region Properties
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> of the divider.
+        /// Gets or sets the <see cref="Color">color</see> of the divider.
         /// This is a bindable property.
         /// </summary>
         /// <default>

@@ -1,7 +1,7 @@
 ﻿namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// An <see cref="TimePicker" /> without border on every platform.
+/// A <see cref="TimePicker">TimePicker</see> without border on every platform.
 /// </summary>
 internal class CustomTimePicker : TimePicker
 {
@@ -29,7 +29,7 @@ internal class CustomTimePicker : TimePicker
     #region Bindable Properties
     
     /// <summary>
-    /// The backing store for the <see cref="HorizontalTextAlignment" /> bindable property.
+    /// The backing store for the <see cref="HorizontalTextAlignment">HorizontalTextAlignment</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(CustomTimePicker), defaultValue: null);
 

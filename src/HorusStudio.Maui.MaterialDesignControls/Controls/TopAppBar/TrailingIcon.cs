@@ -7,27 +7,27 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Bindable Properties
 
         /// <summary>
-        /// The backing store for the <see cref="Icon" /> bindable property.
+        /// The backing store for the <see cref="Icon">Icon</see> bindable property.
         /// </summary>
         public static readonly BindableProperty IconProperty = BindableProperty.Create(nameof(Icon), typeof(ImageSource), typeof(TrailingIcon), null);
 
         /// <summary>
-        /// The backing store for the <see cref="Command" /> bindable property.
+        /// The backing store for the <see cref="Command">Command</see> bindable property.
         /// </summary>
         public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(TrailingIcon), null);
 
         /// <summary>
-        /// The backing store for the <see cref="IsBusy" /> bindable property.
+        /// The backing store for the <see cref="IsBusy">IsBusy</see> bindable property.
         /// </summary>
         public static readonly BindableProperty IsBusyProperty = BindableProperty.Create(nameof(IsBusy), typeof(bool), typeof(TrailingIcon), false);
 
         /// <summary>
-        /// The backing store for the <see cref="IsVisible" /> bindable property.
+        /// The backing store for the <see cref="IsVisible">IsVisible</see> bindable property.
         /// </summary>
         public static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(TrailingIcon), true);
 
         /// <summary>
-        /// The backing store for the <see cref="IsEnabled" /> bindable property.
+        /// The backing store for the <see cref="IsEnabled">IsEnabled</see> bindable property.
         /// </summary>
         public static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(TrailingIcon), true);
 
@@ -56,9 +56,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets if the trailing icon button is on busy state (executing Command).
-        /// The default value is <see langword="false"/>.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see langword="false">False</see>
+        /// </default>
         public bool IsBusy
         {
             get => (bool)GetValue(IsBusyProperty);
@@ -67,9 +69,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets if the trailing icon button is visible or hidden.
-        /// The default value is <see langword="true"/>.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see langword="true">True</see>
+        /// </default>
         public bool IsVisible
         {
             get => (bool)GetValue(IsVisibleProperty);
@@ -78,9 +82,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         /// <summary>
         /// Gets or sets if the trailing icon button is in an enabled or disabled state.
-        /// The default value is <see langword="true"/>.
         /// This is a bindable property.
         /// </summary>
+        /// <default>
+        /// <see langword="true">True</see>
+        /// </default>
         public bool IsEnabled
         {
             get => (bool)GetValue(IsEnabledProperty);

@@ -52,35 +52,6 @@ var card = new MaterialCard()
 
 ## Properties
 
-### <a id="properties-animation"/>**Animation**
-
-Gets or sets an animation to be executed when card is clicked.
- This is a bindable property.
-
-Property type: AnimationTypes<br>
-
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade
-
-<br>
-
-### <a id="properties-animationparameter"/>**AnimationParameter**
-
-Gets or sets the parameter to pass to the MaterialCard.Animation property.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: null
-
-<br>
-
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Gets or sets a color that describes the background color of the card.
@@ -144,17 +115,6 @@ Property type: [CornerRadius](https://learn.microsoft.com/en-us/dotnet/api/micro
 
 <br>
 
-### <a id="properties-customanimation"/>**CustomAnimation**
-
-Gets or sets a custom animation to be executed when card is clicked.
- This is a bindable property.
-
-Property type: ICustomAnimation<br>
-
-Default value: null
-
-<br>
-
 ### <a id="properties-shadow"/>**Shadow**
 
 Gets or sets the shadow effect cast by the element.
@@ -170,6 +130,35 @@ Gets or sets a color that describes the shadow color of the card.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+<br>
+
+### <a id="properties-touchanimation"/>**TouchAnimation**
+
+Gets or sets a custom animation to be executed when card is clicked.
+ This is a bindable property.
+
+Property type: ITouchAnimation<br>
+
+Default value: null
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when card is clicked.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
 
 <br>
 

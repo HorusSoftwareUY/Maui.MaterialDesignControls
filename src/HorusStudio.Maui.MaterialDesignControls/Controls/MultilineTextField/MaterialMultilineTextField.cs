@@ -7,7 +7,7 @@ using Android.App;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A text field <see cref="View" /> let users enter multiline text into a UI and follows Material Design Guidelines <see href="https://m3.material.io/components/text-fields/overview" />.
+/// Multiline text fields let users enter multiline text into a UI and follow Material Design Guidelines. <see href="https://m3.material.io/components/text-fields/overview">See more</see>.
 /// </summary>
 /// <example>
 ///
@@ -95,72 +95,72 @@ public class MaterialMultilineTextField : MaterialInputBase
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialMultilineTextField), defaultBindingMode: BindingMode.TwoWay);
 
     /// <summary>
-    /// The backing store for the <see cref="Keyboard" /> bindable property.
+    /// The backing store for the <see cref="Keyboard">Keyboard</see> bindable property.
     /// </summary>
     public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(nameof(Keyboard), typeof(Keyboard), typeof(MaterialMultilineTextField), defaultValue: Keyboard.Text);
 
     /// <summary>
-    /// The backing store for the <see cref="TextTransform" /> bindable property.
+    /// The backing store for the <see cref="TextTransform">TextTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextTransformProperty = BindableProperty.Create(nameof(TextTransform), typeof(TextTransform), typeof(MaterialMultilineTextField), defaultValue: TextTransform.Default);
 
     /// <summary>
-    /// The backing store for the <see cref="MaxLength" /> bindable property.
+    /// The backing store for the <see cref="MaxLength">MaxLength</see> bindable property.
     /// </summary>
     public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(nameof(MaxLength), typeof(int), typeof(MaterialMultilineTextField), defaultValue: Int32.MaxValue);
 
     /// <summary>
-    /// The backing store for the <see cref="CursorPosition" /> bindable property.
+    /// The backing store for the <see cref="CursorPosition">CursorPosition</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CursorPositionProperty = BindableProperty.Create(nameof(CursorPosition), typeof(int), typeof(MaterialMultilineTextField), defaultValue: 0);
 
     /// <summary>
-    /// The backing store for the <see cref="TextChangedCommand" /> bindable property.
+    /// The backing store for the <see cref="TextChangedCommand">TextChangedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextChangedCommandProperty = BindableProperty.Create(nameof(TextChangedCommand), typeof(ICommand), typeof(MaterialMultilineTextField), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="VerticalTextAlignment" /> bindable property.
+    /// The backing store for the <see cref="VerticalTextAlignment">VerticalTextAlignment</see> bindable property.
     /// </summary>
     public static readonly BindableProperty VerticalTextAlignmentProperty = BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(MaterialMultilineTextField), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialMultilineTextField), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="IsTextPredictionEnabled" /> bindable property.
+    /// The backing store for the <see cref="IsTextPredictionEnabled">IsTextPredictionEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsTextPredictionEnabledProperty = BindableProperty.Create(nameof(IsTextPredictionEnabled), typeof(bool), typeof(MaterialMultilineTextField), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="IsSpellCheckEnabled" /> bindable property.
+    /// The backing store for the <see cref="IsSpellCheckEnabled">IsSpellCheckEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsSpellCheckEnabledProperty = BindableProperty.Create(nameof(IsSpellCheckEnabled), typeof(bool), typeof(MaterialMultilineTextField), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialMultilineTextField), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="IsReadOnly" /> bindable property.
+    /// The backing store for the <see cref="IsReadOnly">IsReadOnly</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsReadOnlyProperty = BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(MaterialMultilineTextField), defaultValue: false);
 
     /// <summary>
-    /// The backing store for the <see cref="CursorColor" /> bindable property.
+    /// The backing store for the <see cref="CursorColor">CursorColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CursorColorProperty = BindableProperty.Create(nameof(CursorColor), typeof(Color), typeof(MaterialMultilineTextField), defaultValueCreator: DefaultCursorColor);
 
     /// <summary>
-    /// The backing store for the <see cref="AutoSize" /> bindable property.
+    /// The backing store for the <see cref="AutoSize">AutoSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty AutoSizeProperty = BindableProperty.Create(nameof(AutoSize), typeof(EditorAutoSizeOption), typeof(MaterialMultilineTextField), defaultValue: EditorAutoSizeOption.TextChanges, propertyChanged: (bindableObject, _, newValue) => 
     {
@@ -175,7 +175,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="Editor" /> control.
+    /// Internal implementation of the <see cref="Editor">Editor</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
