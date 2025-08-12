@@ -48,7 +48,7 @@ public class MaterialTextField : MaterialInputBase
 
     #region Layout
 
-    private readonly CustomEntry _entry;
+    private readonly CustomEntry? _entry;
 
     #endregion Layout
 
@@ -207,7 +207,7 @@ public class MaterialTextField : MaterialInputBase
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
     /// </remarks>
-    public Entry InternalEntry => _entry;
+    public Entry? InternalEntry => _entry;
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input.
@@ -469,7 +469,7 @@ public class MaterialTextField : MaterialInputBase
     {
         var invokeTextChanged = true;
 
-        if (_entry.Text != null)
+        if (_entry != null && _entry.Text != null)
         {
             if (TextTransform == TextTransform.Lowercase)
             {
@@ -491,7 +491,10 @@ public class MaterialTextField : MaterialInputBase
     protected override void SetControlTemplate(MaterialInputType type)
     {
 #if ANDROID
-        if (_entry == null) return;
+        if (_entry == null)
+        {
+            return;
+        }
 
         var horizontalOffset = 3;
         var verticalOffset = -7.5;
@@ -512,11 +515,18 @@ public class MaterialTextField : MaterialInputBase
     protected override void SetControlIsEnabled()
     {
         if (_entry != null)
+        {
             _entry.IsEnabled = IsEnabled;
+        }
     }
 
     protected override void OnControlAppearing()
     {
+        if (_entry == null)
+        {
+            return;
+        }
+        
         // Setup events/animations
         _entry.Focused += ContentFocusChanged;
         _entry.Unfocused += ContentFocusChanged;
@@ -525,6 +535,11 @@ public class MaterialTextField : MaterialInputBase
 
     protected override void OnControlDisappearing()
     {
+        if (_entry == null)
+        {
+            return;
+        }
+        
         // Cleanup events/animations
         _entry.Focused -= ContentFocusChanged;
         _entry.Unfocused -= ContentFocusChanged;

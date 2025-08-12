@@ -225,8 +225,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Layout
 
-        private BoxView _progressBar = null!;
-        private CustomActivityIndicator _customActivityIndicator = null!;
+        private BoxView? _progressBar = null!;
+        private CustomActivityIndicator? _customActivityIndicator = null!;
 
         #endregion Layout
 
@@ -348,7 +348,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             base.HeightRequest = height;
 
-            if (type == MaterialProgressIndicatorType.Circular)
+            if (_customActivityIndicator != null && type == MaterialProgressIndicatorType.Circular)
             {
                 _customActivityIndicator.Size = (int)height;
             }
@@ -362,7 +362,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             base.WidthRequest = width;
 
-            if (type == MaterialProgressIndicatorType.Circular)
+            if (_customActivityIndicator != null && type == MaterialProgressIndicatorType.Circular)
             {
                 _customActivityIndicator.Size = (int)width;
             }
@@ -371,7 +371,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private void StartLinearAnimation()
         {
             var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
-            if (animationManager is null) return;
+            if (animationManager is null || _progressBar is null)
+            {
+                return;
+            }
             
             var index = 1;
             var mainAnimation = new Animation();

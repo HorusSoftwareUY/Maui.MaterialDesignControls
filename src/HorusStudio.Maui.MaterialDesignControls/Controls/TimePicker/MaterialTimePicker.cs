@@ -48,7 +48,7 @@ public class MaterialTimePicker : MaterialInputBase
 
     #region Layout
 
-    private readonly CustomTimePicker _timePicker;
+    private readonly CustomTimePicker? _timePicker;
 
     #endregion Layout
 
@@ -241,9 +241,12 @@ public class MaterialTimePicker : MaterialInputBase
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
-        if (_timePicker == null) return;
-
 #if ANDROID
+        if (_timePicker == null)
+        {
+            return;
+        }
+
         var hOffset = 4;
         var vOffset = 2;
         switch (type)
@@ -263,11 +266,18 @@ public class MaterialTimePicker : MaterialInputBase
     protected override void SetControlIsEnabled()
     {
         if (_timePicker != null)
+        {
             _timePicker.IsEnabled = IsEnabled;
+        }
     }
 
     protected override void OnControlAppearing()
     {
+        if (_timePicker == null)
+        {
+            return;
+        }
+        
         // Setup events/animations
         _timePicker.Focused += ContentFocusChanged;
         _timePicker.Unfocused += ContentFocusChanged;
@@ -275,6 +285,11 @@ public class MaterialTimePicker : MaterialInputBase
 
     protected override void OnControlDisappearing()
     {
+        if (_timePicker == null)
+        {
+            return;
+        }
+        
         // Cleanup events/animations
         _timePicker.Focused -= ContentFocusChanged;
         _timePicker.Unfocused -= ContentFocusChanged;
@@ -284,7 +299,7 @@ public class MaterialTimePicker : MaterialInputBase
     {
         base.ContentFocusChanged(sender, e);
         
-        if (!IsFocused && !_timePicker.CustomTime.HasValue)
+        if (!IsFocused && _timePicker != null && !_timePicker.CustomTime.HasValue)
         {
             // Set the default date if the user doesn't select anything
             Time = _timePicker.InternalTime;
@@ -293,6 +308,11 @@ public class MaterialTimePicker : MaterialInputBase
     
     private void OnTimeChanged(TimeSpan? oldValue, TimeSpan? newValue)
     {
+        if (_timePicker == null)
+        {
+            return;
+        }
+        
         _timePicker.CustomTime = newValue;
         _timePicker.IsVisible = newValue is not null;
         Text =  newValue?.ToString(Format) ?? string.Empty;

@@ -245,7 +245,7 @@ public class MaterialIconButton : ContentView, ITouchableView
     /// </summary>
     public static readonly BindableProperty IsBusyProperty = BindableProperty.Create(nameof(IsBusy), typeof(bool), typeof(MaterialIconButton), defaultValue: false, propertyChanged: (bindable, _, newValue) =>
     {
-        if (bindable is MaterialIconButton self)
+        if (bindable is MaterialIconButton self && self._border != null)
         {
             self._border.IsVisible = !(bool)newValue;
             self._activityIndicatorContainer.IsVisible = !self._border.IsVisible;
@@ -654,7 +654,7 @@ public class MaterialIconButton : ContentView, ITouchableView
     #region Layout
 
     private Grid _mainLayout = null!;
-    private Border _border = null!;
+    private Border? _border = null!;
     private Image _image = null!;
     private MaterialProgressIndicator _activityIndicator = null!;
     private View _internalActivityIndicator = null!;
@@ -753,6 +753,11 @@ public class MaterialIconButton : ContentView, ITouchableView
 
     private void SetBackground(MaterialIconButtonType type)
     {
+        if (_border == null)
+        {
+            return;
+        }
+        
         if (_backgroundColors.TryGetValue(type, out object background) && background != null)
         {
             if ((Background == null && DefaultBackground != null) || !Background.Equals(DefaultBackground))
@@ -770,6 +775,11 @@ public class MaterialIconButton : ContentView, ITouchableView
 
     private void SetBackgroundColor(MaterialIconButtonType type)
     {
+        if (_border == null)
+        {
+            return;
+        }
+        
         if (_backgroundColors.TryGetValue(type, out object background) && background != null)
         {
             if ((BackgroundColor == null && DefaultBackgroundColor == null) || BackgroundColor.Equals(DefaultBackgroundColor))
@@ -828,6 +838,11 @@ public class MaterialIconButton : ContentView, ITouchableView
 
     private void SetBorderColor(MaterialIconButtonType type)
     {
+        if (_border == null)
+        {
+            return;
+        }
+        
         if (_borderColors.TryGetValue(type, out object border) && border != null)
         {
             if ((BorderColor == null && DefaultBorderColor != null) || BorderColor.Equals(DefaultBorderColor))
@@ -857,6 +872,11 @@ public class MaterialIconButton : ContentView, ITouchableView
 
     private void SetBorderWidth(MaterialIconButtonType type)
     {
+        if (_border == null)
+        {
+            return;
+        }
+        
         if (_borderWidths.TryGetValue(type, out double width))
         {
             if (BorderWidth.Equals(DefaultBorderWidth))
@@ -879,6 +899,11 @@ public class MaterialIconButton : ContentView, ITouchableView
 
     private void SetShadow(MaterialIconButtonType type)
     {
+        if (_border == null)
+        {
+            return;
+        }
+        
         if (_shadows.TryGetValue(type, out Shadow shadow))
         {
             if ((Shadow == null && DefaultShadow == null) || Shadow.Equals(DefaultShadow))

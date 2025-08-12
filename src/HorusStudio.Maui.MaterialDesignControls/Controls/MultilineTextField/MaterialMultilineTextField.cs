@@ -50,7 +50,7 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     #region Layout
 
-    private readonly CustomEditor _editor;
+    private readonly CustomEditor? _editor;
 
     #endregion Layout
 
@@ -180,7 +180,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
     /// </remarks>
-    public Editor InternalEditor => _editor;
+    public Editor? InternalEditor => _editor;
 
     /// <summary>
     /// Gets or sets the text displayed as the content of the input.
@@ -361,7 +361,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     {
         var invokeTextChanged = true;
 
-        if (_editor.Text != null)
+        if (_editor?.Text != null)
         {
             if (TextTransform == TextTransform.Lowercase)
             {
@@ -424,6 +424,11 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     protected override void OnControlAppearing()
     {
+        if (_editor == null)
+        {
+            return;
+        }
+        
         // Setup events/animations
         _editor.Focused += ContentFocusChanged;
         _editor.Unfocused += ContentFocusChanged;
@@ -432,6 +437,11 @@ public class MaterialMultilineTextField : MaterialInputBase
 
     protected override void OnControlDisappearing()
     {
+        if (_editor == null)
+        {
+            return;
+        }
+        
         // Cleanup events/animations
         _editor.Focused -= ContentFocusChanged;
         _editor.Unfocused -= ContentFocusChanged;

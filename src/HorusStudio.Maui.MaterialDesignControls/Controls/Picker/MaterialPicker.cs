@@ -49,7 +49,7 @@ public class MaterialPicker : MaterialInputBase
 
     #region Layout
 
-    private readonly CustomPicker _picker;
+    private readonly CustomPicker? _picker;
 
     #endregion Layout
 
@@ -131,7 +131,7 @@ public class MaterialPicker : MaterialInputBase
     public static readonly BindableProperty ItemDisplayPathProperty = BindableProperty.Create(nameof(ItemDisplayPath), typeof(string), typeof(MaterialPicker), defaultValue: null, propertyChanged:
         (bindableObject, _, newValue) =>
         {
-            if (bindableObject is MaterialPicker self)
+            if (bindableObject is MaterialPicker self && self._picker != null)
             {
                 self._picker.ItemDisplayBinding = new Binding(newValue as string);
             }
@@ -152,7 +152,7 @@ public class MaterialPicker : MaterialInputBase
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
     /// </remarks>
-    public Picker InternalPicker => _picker;
+    public Picker? InternalPicker => _picker;
 
     /// <summary>
     /// Gets or sets the vertical text alignment. This is a bindable property.
@@ -297,7 +297,10 @@ public class MaterialPicker : MaterialInputBase
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
-        if (_picker == null) return;
+        if (_picker == null)
+        {
+            return;
+        }
 
 #if ANDROID
         var offset = 3;
@@ -318,11 +321,18 @@ public class MaterialPicker : MaterialInputBase
     protected override void SetControlIsEnabled()
     {
         if (_picker != null)
+        {
             _picker.IsEnabled = IsEnabled;
+        }
     }
 
     protected override void OnControlAppearing()
     {
+        if (_picker == null)
+        {
+            return;
+        }
+        
         // Setup events/animations
         _picker.Focused += ContentFocusChanged;
         _picker.Unfocused += ContentFocusChanged;
@@ -331,6 +341,11 @@ public class MaterialPicker : MaterialInputBase
 
     protected override void OnControlDisappearing()
     {
+        if (_picker == null)
+        {
+            return;
+        }
+        
         // Cleanup events/animations
         _picker.Focused -= ContentFocusChanged;
         _picker.Unfocused -= ContentFocusChanged;
@@ -350,7 +365,7 @@ public class MaterialPicker : MaterialInputBase
             Text = string.Empty;
 
 #if IOS || MACCATALYST
-            if (_picker.Handler is MaterialPickerHandler handler)
+            if (_picker != null && _picker.Handler is MaterialPickerHandler handler)
             {
                 handler.ClearText();
             }
