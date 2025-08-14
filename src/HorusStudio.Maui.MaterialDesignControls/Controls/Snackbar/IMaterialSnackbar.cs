@@ -25,6 +25,9 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SnackbarPage.xaml)
 /// </example>
+/// <todoList>
+/// * [macOS] MaterialSnackbar with icons are not shown due to an icon rendering issue
+/// </todoList>
 public interface IMaterialSnackbar
 {
     /// <summary>

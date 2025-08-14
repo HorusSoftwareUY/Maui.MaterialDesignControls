@@ -59,6 +59,7 @@ public enum MaterialFloatingButtonPosition
 /// </example>
 /// <todoList>
 /// * [Android] Only one Floating Button visible per Page
+/// * [macOS] Does not appear due to a rendering issue with its icon
 /// </todoList>
 public class MaterialFloatingButton : ContentView
 {

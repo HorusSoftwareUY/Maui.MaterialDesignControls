@@ -37,6 +37,8 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// * [iOS] Font attributes doesn't work
 /// * [iOS] Horizontal text alignment doesn't work when there is a date selected
 /// * [Android] Use the colors defined in Material in the date picker dialog
+/// * [macOS] Do not respond to taps when the control area is tapped
+/// * [macOS] HorizontalTextAlignment is not supported
 /// </todoList>
 public class MaterialDatePicker : MaterialInputBase
 {
