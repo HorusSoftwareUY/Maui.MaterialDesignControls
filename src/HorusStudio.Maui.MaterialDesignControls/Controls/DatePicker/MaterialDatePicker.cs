@@ -48,7 +48,7 @@ public class MaterialDatePicker : MaterialInputBase
 
     #region Layout
 
-    private readonly CustomDatePicker _datePicker;
+    private readonly CustomDatePicker? _datePicker;
 
     #endregion Layout
 
@@ -276,7 +276,10 @@ public class MaterialDatePicker : MaterialInputBase
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
-        if (_datePicker == null) return;
+        if (_datePicker == null)
+        {
+            return;
+        }
 
 #if ANDROID
         var hOffset = 4;
@@ -303,6 +306,11 @@ public class MaterialDatePicker : MaterialInputBase
 
     protected override void OnControlAppearing()
     {
+        if (_datePicker == null)
+        {
+            return;
+        }
+        
         // Setup events/animations
         _datePicker.Focused += ContentFocusChanged;
         _datePicker.Unfocused += ContentFocusChanged;
@@ -310,6 +318,11 @@ public class MaterialDatePicker : MaterialInputBase
 
     protected override void OnControlDisappearing()
     {
+        if (_datePicker == null)
+        {
+            return;
+        }
+        
         // Cleanup events/animations
         _datePicker.Focused -= ContentFocusChanged;
         _datePicker.Unfocused -= ContentFocusChanged;
@@ -319,7 +332,7 @@ public class MaterialDatePicker : MaterialInputBase
     {
         base.ContentFocusChanged(sender, e);
         
-        if (!IsFocused && !_datePicker.CustomDate.HasValue)
+        if (!IsFocused && _datePicker != null && !_datePicker.CustomDate.HasValue)
         {
             // Set the default date if the user doesn't select anything
             Date = _datePicker.InternalDateTime;
@@ -328,6 +341,11 @@ public class MaterialDatePicker : MaterialInputBase
     
     private void OnDateChanged(DateTime? oldValue, DateTime? newValue)
     {
+        if (_datePicker == null)
+        {
+            return;
+        }
+        
         _datePicker.CustomDate = newValue;
         _datePicker.IsVisible = newValue is not null;
         Text =  newValue?.ToString(Format) ?? string.Empty;

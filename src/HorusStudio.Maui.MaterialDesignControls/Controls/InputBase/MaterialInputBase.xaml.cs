@@ -1276,7 +1276,7 @@ public abstract partial class MaterialInputBase : IValidableView
     {
         if (_backgroundColors.TryGetValue(GetCurrentTypeState(type), out object background) && background != null)
         {
-            if ((BackgroundColor == null && DefaultBackgroundColor == null) || BackgroundColor.Equals(DefaultBackgroundColor))
+            if (BackgroundColor == null || BackgroundColor.Equals(DefaultBackgroundColor))
             {
                 // Default Material value according to Type
                 if (background is Color backgroundColor)

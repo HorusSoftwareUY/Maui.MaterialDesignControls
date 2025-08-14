@@ -632,12 +632,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Layout
 
-        private MaterialLabel _headlineLabel = null!;
+        private MaterialLabel? _headlineLabel = null!;
         private MaterialLabel _descriptionLabel = null!;
         private MaterialIconButton _leadingIconButton = null!;
         private MaterialProgressIndicator _leadingActivityIndicator = null!;
-        private List<MaterialIconButton> _trailingIconButtons = null!;
-        private List<MaterialProgressIndicator> _trailingActivityIndicators = null!;
+        private List<MaterialIconButton>? _trailingIconButtons = null!;
+        private List<MaterialProgressIndicator>? _trailingActivityIndicators = null!;
         private ColumnDefinition _secondTrailingColumnDefinition = null!;
         private ColumnDefinition _thirdTrailingColumnDefinition = null!;
 
@@ -982,7 +982,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void AddTrailingIcon(TrailingIcon trailingIcon, int trailingIconIndex)
         {
-            if (trailingIcon == null)
+            if (trailingIcon == null || _trailingIconButtons == null || _trailingActivityIndicators == null)
             {
                 return;
             }
@@ -1033,6 +1033,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void TrailingIcon_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            if (_trailingIconButtons == null || _trailingActivityIndicators == null)
+            {
+                return;
+            }
+            
             if (sender is TrailingIcon trailingIcon
                 && trailingIcon.Index.HasValue)
             {

@@ -407,7 +407,7 @@ public class MaterialButton : ContentView, ITouchableView
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
     /// </remarks>
-    public Button InternalButton => _button;
+    public Button? InternalButton => _button;
 
     /// <summary>
     /// Gets or sets the button type according to <see cref="MaterialButtonType">MaterialButtonType</see>.
@@ -866,14 +866,20 @@ public class MaterialButton : ContentView, ITouchableView
         {
             lock (_objectLock)
             {
-                _button.Focused += value;
+                if (_button != null)
+                {
+                    _button.Focused += value;
+                }
             }
         }
         remove
         {
             lock (_objectLock)
             {
-                _button.Focused -= value;
+                if (_button != null)
+                {
+                    _button.Focused -= value;
+                }
             }
         }
     }
@@ -887,14 +893,20 @@ public class MaterialButton : ContentView, ITouchableView
         {
             lock (_objectLock)
             {
-                _button.Unfocused += value;
+                if (_button != null)
+                {
+                    _button.Unfocused += value;
+                }
             }
         }
         remove
         {
             lock (_objectLock)
             {
-                _button.Unfocused -= value;
+                if (_button != null)
+                {
+                    _button.Unfocused -= value;
+                }
             }
         }
     }
@@ -922,7 +934,7 @@ public class MaterialButton : ContentView, ITouchableView
     #region Layout
 
     private Grid _mainLayout = null!;
-    private CustomButton _button = null!;
+    private CustomButton? _button = null!;
     private MaterialProgressIndicator _activityIndicator = null!;
     private View _internalActivityIndicator = null!;
     private Grid _activityIndicatorContainer = null!;
@@ -1023,6 +1035,11 @@ public class MaterialButton : ContentView, ITouchableView
 
     private void SetBackground(MaterialButtonType type)
     {
+        if (_button == null)
+        {
+            return;
+        }
+        
         if (_backgroundColors.TryGetValue(type, out object background) && background != null)
         {
             if ((Background == null && DefaultBackground != null) || !Background.Equals(DefaultBackground))
@@ -1040,6 +1057,11 @@ public class MaterialButton : ContentView, ITouchableView
 
     private void SetBackgroundColor(MaterialButtonType type)
     {
+        if (_button == null)
+        {
+            return;
+        }
+        
         if (_backgroundColors.TryGetValue(type, out object background) && background != null)
         {
             if ((BackgroundColor == null && DefaultBackgroundColor == null) || BackgroundColor.Equals(DefaultBackgroundColor))
@@ -1069,6 +1091,11 @@ public class MaterialButton : ContentView, ITouchableView
 
     private void SetTextColor(MaterialButtonType type)
     {
+        if (_button == null)
+        {
+            return;
+        }
+        
         if (_textColors.TryGetValue(type, out object text) && text != null)
         {
             if ((TextColor == null && DefaultTextColor == null) || TextColor.Equals(DefaultTextColor))
@@ -1127,6 +1154,11 @@ public class MaterialButton : ContentView, ITouchableView
 
     private void SetBorderColor(MaterialButtonType type)
     {
+        if (_button == null)
+        {
+            return;
+        }
+        
         if (_borderColors.TryGetValue(type, out object border) && border != null)
         {
             if ((BorderColor == null && DefaultBorderColor != null) || BorderColor.Equals(DefaultBorderColor))
@@ -1156,6 +1188,11 @@ public class MaterialButton : ContentView, ITouchableView
 
     private void SetBorderWidth(MaterialButtonType type)
     {
+        if (_button == null)
+        {
+            return;
+        }
+        
         if (_borderWidths.TryGetValue(type, out double width))
         {
             if (BorderWidth.Equals(DefaultBorderWidth))
@@ -1178,6 +1215,11 @@ public class MaterialButton : ContentView, ITouchableView
 
     private void SetShadow(MaterialButtonType type)
     {
+        if (_button == null)
+        {
+            return;
+        }
+        
         if (_shadows.TryGetValue(type, out Shadow? shadow))
         {
             if ((Shadow == null && DefaultShadow == null) || Shadow.Equals(DefaultShadow))
@@ -1200,6 +1242,11 @@ public class MaterialButton : ContentView, ITouchableView
 
     private void UpdatePadding()
     {
+        if (_button == null)
+        {
+            return;
+        }
+        
         var hasIcon = ImageSource != null && ContentLayout != null;
 
         if (Padding.Equals(DefaultPadding) ||

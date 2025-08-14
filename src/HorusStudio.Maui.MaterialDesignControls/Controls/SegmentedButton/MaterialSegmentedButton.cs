@@ -469,8 +469,8 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
 
     #region Layout
 
-    private MaterialCard _container;
-    private Grid _itemsContainer;
+    private MaterialCard? _container;
+    private Grid? _itemsContainer;
 
     #endregion
 
@@ -539,6 +539,11 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
 
     private void UpdateItemsSource()
     {
+        if (_itemsContainer == null)
+        {
+            return;
+        }
+        
         _itemsContainer.Children.Clear();
         _itemsContainer.ColumnDefinitions = new ColumnDefinitionCollection();
         _itemsContainer.ColumnSpacing = Type == MaterialSegmentedButtonType.Outlined ? -2 : 0;
@@ -599,6 +604,11 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
             return false;
         }
 
+        if (_itemsContainer == null)
+        {
+            return false;
+        }
+        
         _itemsContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ItemsSource.Count() / 100.0, GridUnitType.Star) });
         _itemsContainer.Add(itemLayout, indexColum);
 
@@ -728,7 +738,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
 
     private void SetBackgroundColor()
     {
-        if (_itemsContainer == null)
+        if (_itemsContainer == null || _container == null)
         {
             return;
         }

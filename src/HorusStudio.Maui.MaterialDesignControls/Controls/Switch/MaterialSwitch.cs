@@ -592,14 +592,14 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Layout
 
         private Grid _mainContainer = null!;
-        private ColumnDefinition _leftColumnMainContainer = null!;
-        private ColumnDefinition _rightColumnMainContainer = null!;
-        private MaterialLabel _textLabel = null!;
+        private ColumnDefinition? _leftColumnMainContainer = null!;
+        private ColumnDefinition? _rightColumnMainContainer = null!;
+        private MaterialLabel? _textLabel = null!;
         private Grid _switch = null!;
-        private Border _track = null!;
-        private Border _thumb = null!;
-        private Image _icon = null!;
-        private MaterialLabel _supportingTextLabel = null!;
+        private Border? _track = null!;
+        private Border? _thumb = null!;
+        private Image? _icon = null!;
+        private MaterialLabel? _supportingTextLabel = null!;
 
         #endregion Layout
 
@@ -756,6 +756,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void UpdateLayoutAfterTextSideChanged(TextSide textSide)
         {
+            if (_leftColumnMainContainer == null || _rightColumnMainContainer == null)
+            {
+                return;
+            }
+            
             var trackWidth = TrackWidthRequest >= DefaultTrackWidthRequest ? TrackWidthRequest : DefaultTrackWidthRequest;
 
             if (textSide == TextSide.Left)
@@ -793,6 +798,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void SetTrackAndThumbSizes()
         {
+            if (_track == null || _thumb == null)
+            {
+                return;
+            }
+            
             var trackWidth = TrackWidthRequest >= DefaultTrackWidthRequest ? TrackWidthRequest : DefaultTrackWidthRequest;
             var trackHeight = TrackHeightRequest >= DefaultTrackHeightRequest ? TrackHeightRequest : DefaultTrackHeightRequest;
             var thumbSelectedSize = trackHeight - ThumbTrackSizeDifference;
@@ -897,6 +907,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void GoToOffState(bool animate)
         {
+            if (_thumb == null)
+            {
+                return;
+            }
+            
             if (animate && Math.Abs(_thumb.TranslationX + _xReference) > 0.0)
             {
                 this.AbortAnimation(SwitchAnimationName);
@@ -937,6 +952,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void GoToOnState(bool animate)
         {
+            if (_thumb == null)
+            {
+                return;
+            }
+            
             if (animate && Math.Abs(_thumb.TranslationX - _xReference) > 0.0)
             {
                 this.AbortAnimation(SwitchAnimationName);
@@ -978,6 +998,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void SetIconSource()
         {
+            if (_icon == null)
+            {
+                return;
+            }
+            
             if (IsToggled)
             {
                 _icon.Source = SelectedIcon;
@@ -992,6 +1017,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void SetThumbSize()
         {
+            if (_thumb == null)
+            {
+                return;
+            }
+            
             if (!IsToggled && ReduceThumbSize)
             {
                 _thumb.Scale = ThumbUnselectedWithoutIconScale;
