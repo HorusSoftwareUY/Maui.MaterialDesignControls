@@ -1,10 +1,10 @@
 ﻿#nullable enable
 
+using Microsoft.Maui.Platform;
 using System.ComponentModel;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Widget;
-using Microsoft.Maui.Platform;
 using AButton = Android.Widget.Button;
 using AView = Android.Views.View;
 using Color = Microsoft.Maui.Graphics.Color;
@@ -64,52 +64,60 @@ public partial class IconTintColorBehavior
 
         static void SetImageViewTintColor(ImageView image, Color? color)
         {
-            if (color is null)
-            {
-                image.ClearColorFilter();
-                color = Colors.Transparent;
-            }
-
             try
             {
+                if (color is null)
+                {
+                    image.ClearColorFilter();
+                    color = Colors.Transparent;
+                }
                 image.SetColorFilter(new PorterDuffColorFilter(color.ToPlatform(), PorterDuff.Mode.SrcIn ?? throw new InvalidOperationException("PorterDuff.Mode.SrcIn should not be null at runtime.")));
             }
-            catch (ObjectDisposedException)
+            catch (Exception ex)
             {
                 // Catching the exception to prevent crashes if the image object has already been disposed.
+                Utils.Logger.LogException("ERROR setting tint color for image", ex, image);
             }
         }
 
         static void SetButtonTintColor(AButton button, Color? color)
         {
-            if (button is MauiMaterialButton nativeButton)
+            try
             {
-                if (color is null)
+                if (button is MauiMaterialButton nativeButton)
                 {
-                    nativeButton?.Icon?.ClearColorFilter();
+                    if (color is null)
+                    {
+                        nativeButton?.Icon?.ClearColorFilter();
+                    }
+                    else
+                    {
+                        nativeButton.IconTint = ColorStateList.ValueOf(color.ToPlatform());
+                        nativeButton.IconTintMode = PorterDuff.Mode.SrcIn;
+                    }
+                    return;
                 }
-                else
-                {
-                    nativeButton.IconTint = ColorStateList.ValueOf(color.ToPlatform());
-                    nativeButton.IconTintMode = PorterDuff.Mode.SrcIn;
-                }
-                return;
-            }
 
-            var drawables = button.GetCompoundDrawables().Where(d => d is not null);
-            foreach (var img in drawables)
+                var drawables = button.GetCompoundDrawables().Where(d => d is not null);
+                foreach (var img in drawables)
+                {
+                    if (color is null)
+                    {
+                        img?.ClearColorFilter();
+                    }
+                    else
+                    {
+                        img?.SetTint(color.ToPlatform());
+                    }
+                }
+
+                color ??= Colors.Transparent;
+            }
+            catch (Exception ex)
             {
-                if (color is null)
-                {
-                    img?.ClearColorFilter();
-                }
-                else
-                {
-                    img?.SetTint(color.ToPlatform());
-                }
+                // Catching the exception to prevent crashes if the image object has already been disposed.
+                Utils.Logger.LogException("ERROR setting tint color for button", ex, button);
             }
-
-            color ??= Colors.Transparent;
         }
     }
 
@@ -135,24 +143,32 @@ public partial class IconTintColorBehavior
     void ClearTintColor(View element, AView control)
     {
         element.PropertyChanged -= OnElementPropertyChanged;
-        switch (control)
+        try
         {
-            case ImageView image:
-                try
-                {
-                    image.ClearColorFilter();
-                }
-                catch (ObjectDisposedException)
-                {
-                    // Catching the exception to prevent crashes if the image object has already been disposed.
-                }
-                break;
-            case AButton button:
-                foreach (var drawable in button.GetCompoundDrawables())
-                {
-                    drawable?.ClearColorFilter();
-                }
-                break;
+            switch (control)
+            {
+                case ImageView image:
+                    try
+                    {
+                        image.ClearColorFilter();
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        // Catching the exception to prevent crashes if the image object has already been disposed.
+                    }
+                    break;
+                case AButton button:
+                    foreach (var drawable in button.GetCompoundDrawables())
+                    {
+                        drawable?.ClearColorFilter();
+                    }
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            // Catching the exception to prevent crashes if the image object has already been disposed.
+            Utils.Logger.LogException("ERROR setting tint color for control", ex, control);
         }
     }
 }
