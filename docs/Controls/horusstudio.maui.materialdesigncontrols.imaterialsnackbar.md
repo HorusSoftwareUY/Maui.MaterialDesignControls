@@ -1,6 +1,6 @@
 # IMaterialSnackbar
 
-Abstraction to handle Material Snackbar component that follows [Material Design Guidelines](https://m3.material.io/components/snackbar/overview).
+Abstraction to handle Snackbars that follow Material Design Guidelines. [See more](https://m3.material.io/components/snackbar/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -27,3 +27,7 @@ private async void DefaultSnackbar()
 ```
 
 [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SnackbarPage.xaml)
+
+## Known issues and pending features
+
+* [macOS] MaterialSnackbar with icons are not shown due to an icon rendering issue

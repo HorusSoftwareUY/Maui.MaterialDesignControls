@@ -1,6 +1,6 @@
 # MaterialNavigationDrawerItem
 
-Wrapper for items defined within a MaterialNavigationDrawer.
+Wrapper for items defined within a material navigation drawer.
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 

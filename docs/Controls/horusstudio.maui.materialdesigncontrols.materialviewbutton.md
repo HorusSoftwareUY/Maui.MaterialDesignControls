@@ -1,6 +1,6 @@
 # MaterialViewButton
 
-It is a touchable view.
+View buttons are Views that react to touch events.
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -19,13 +19,13 @@ Property type: ICommand<br>
 
 Remarks: This property is used to associate a command with an instance of a button.
 
-- <para>This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="P:Microsoft.Maui.Controls.VisualElement.IsEnabled" /> is controlled by the <see cref="M:Microsoft.Maui.Controls.Command.CanExecute(System.Object)" /> if set.</para>
+- <para>This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="P:Microsoft.Maui.Controls.VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="M:Microsoft.Maui.Controls.Command.CanExecute(System.Object)">Command.CanExecute(object)</see> if set.</para>
 
 <br>
 
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
-Gets or sets the parameter to pass to the MaterialViewButton.Command property.
+Gets or sets the parameter to pass to the Command property.
  This is a bindable property.
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>

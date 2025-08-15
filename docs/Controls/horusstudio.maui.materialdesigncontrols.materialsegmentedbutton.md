@@ -1,6 +1,6 @@
 # MaterialSegmentedButton
 
-Segmented buttons  help people select options, switch views, or sort elements, and follows Material Design Guidelines [](https://m3.material.io/components/segmented-buttons/overview).
+Segmented buttons help people select options, switch views, or sort elements, and follow Material Design Guidelines. [See more](https://m3.material.io/components/segmented-buttons/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -38,18 +38,31 @@ var segmentedButtons = new MaterialSegmentedButton
 
 ### <a id="properties-allowmultiselect"/>**AllowMultiSelect**
 
-Gets or sets the if the control allows multiple selection.
+Gets or sets if the segmented button allows multiple selection.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: False
+Default value: false
+
+<br>
+
+### <a id="properties-backgroundcolor"/>**BackgroundColor**
+
+Gets or sets the Background color for the segmented button.
+ This is a bindable property.
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Theme: Light = MaterialLightTheme.Surface - Dark = MaterialDarkTheme.Surface
+
+Remarks: This property has no effect if type is set to Outlined.
 
 <br>
 
 ### <a id="properties-bordercolor"/>**BorderColor**
 
-Gets or sets the border color for the control.
+Gets or sets the border color for the segmented button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -60,13 +73,26 @@ Remarks:
 
 - <para>This property has no effect if <see cref="P:Microsoft.Maui.Controls.IBorderElement.BorderWidth">IBorderElement.BorderWidth</see> is set to 0.</para>
 
-- <para>On Android this property will not have an effect unless <see cref="P:Microsoft.Maui.Controls.VisualElement.BackgroundColor" />is set to a non-default color.</para>
+- <para>On Android this property will not have an effect unless <see cref="P:Microsoft.Maui.Controls.VisualElement.BackgroundColor">background color</see> is set to a non-default color.</para>
+
+<br>
+
+### <a id="properties-borderwidth"/>**BorderWidth**
+
+Gets or sets the width of the border, in device-independent units.
+ This is a bindable property.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: 1
+
+Remarks: This property has no effect if type is set to Filled.
 
 <br>
 
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
-Gets or sets the corner radius for the control.
+Gets or sets the corner radius for the segmented button.
  This is a bindable property.
 
 Property type: [CornerRadius](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.cornerradius)<br>
@@ -88,23 +114,23 @@ Default value: 40
 
 ### <a id="properties-isenabled"/>**IsEnabled**
 
-Gets or sets the state when the Segmented is enabled.
+Gets or sets if the segmented button is enabled.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
 ### <a id="properties-itemssource"/>**ItemsSource**
 
-Gets or sets items source mapped to segmented buttons.
+Gets or sets items' source to define segments.
  This is a bindable property.
 
 Property type: [IEnumerable&lt;MaterialSegmentedButtonItem&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
-Default value: Null
+Default value: null
 
 <br>
 
@@ -126,9 +152,9 @@ Gets or sets the selected button.
 
 Property type: MaterialSegmentedButtonItem<br>
 
-Default value: Null
+Default value: null
 
-Remarks: Useful when you set MaterialSegmentedButton.AllowMultiSelect to False
+Remarks: Used only when AllowMultiSelect=false.
 
 <br>
 
@@ -141,7 +167,20 @@ Property type: [IEnumerable&lt;MaterialSegmentedButtonItem&gt;](https://learn.mi
 
 Default value: Array.Empty
 
-Remarks: Useful when you set MaterialSegmentedButton.AllowMultiSelect to True
+Remarks: Used only when AllowMultiSelect=true.
+
+<br>
+
+### <a id="properties-selectioncommand"/>**SelectionCommand**
+
+Gets or sets the command invoked when the selection of segmented button changes.
+ This is a bindable property.
+
+Property type: ICommand<br>
+
+Default value: null
+
+Remarks: If AllowMultiSelect=true, then [IEnumerable{MaterialSegmentedButton}](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1); MaterialSegmentedButtonItem otherwise.
 
 <br>
 
@@ -176,7 +215,7 @@ Default value: TouchAnimationTypes.Fade
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the segmented buttons type according to MaterialSegmentedButtonType enum.
+Gets or sets the segmented button type.
  This is a bindable property.
 
 Property type: MaterialSegmentedButtonType<br>

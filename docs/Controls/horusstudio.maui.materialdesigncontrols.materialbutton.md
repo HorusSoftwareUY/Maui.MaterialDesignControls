@@ -1,6 +1,6 @@
 # MaterialButton
 
-A button  that reacts to touch events and follows Material Design Guidelines [](https://m3.material.io/components/buttons/overview).
+Buttons react to touch events and follow Material Design Guidelines. [See more](https://m3.material.io/components/buttons/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -51,7 +51,7 @@ Default value: true
 
 ### <a id="properties-background"/>**Background**
 
-Gets or sets a  that describes the background of the button.
+Gets or sets a Brush that describes the background of the button.
  This is a bindable property.
 
 Property type: [Brush](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.brush)<br>
@@ -76,7 +76,7 @@ Gets or sets a color that describes the border stroke color of the button.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
+Remarks: This property has no effect if IBorderElement.BorderWidth is set to 0. On Android this property will not have an effect unless VisualElement.BackgroundColor is set to a non-default color.
 
 <br>
 
@@ -93,7 +93,7 @@ Remarks: Set this value to a non-zero value in order to have a visible border.
 
 ### <a id="properties-busyindicatorcolor"/>**BusyIndicatorColor**
 
-Gets or sets the  for the busy indicator.
+Gets or sets the color for the busy indicator.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -111,7 +111,7 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 ### <a id="properties-characterspacing"/>**CharacterSpacing**
 
-Gets or sets the spacing between each of the characters of MaterialButton.Text when displayed on the button.
+Gets or sets the spacing between each of the characters of Text when displayed on the button.
  This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
@@ -125,13 +125,13 @@ Gets or sets the command to invoke when the button is activated.
 
 Property type: ICommand<br>
 
-Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
+Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. VisualElement.IsEnabled is controlled by the Command.CanExecute(object) if set.
 
 <br>
 
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
-Gets or sets the parameter to pass to the MaterialButton.Command property.
+Gets or sets the parameter to pass to the Command property.
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
@@ -159,7 +159,7 @@ Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32
 
 ### <a id="properties-custombusyindicator"/>**CustomBusyIndicator**
 
-Gets or sets a custom  for busy indicator.
+Gets or sets a custom View for busy indicator.
  This is a bindable property.
 
 Property type: [View](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.view)<br>
@@ -220,7 +220,7 @@ Remarks:
 - <para>which means the value is unset; the effective minimum height will be zero.</para>
 
 - <para>
-  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialButton.HeightRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialButton.HeightRequest" /> will change the resulting height of the element during the next layout pass.</para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialButton.HeightRequest">HeightRequest</see> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialButton.HeightRequest">HeightRequest</see> will change the resulting height of the element during the next layout pass.</para>
 
 <br>
 
@@ -239,7 +239,7 @@ Remarks: With a default value of Size.Zero, the icon will be handled automatical
 
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
-Gets or sets the  for the icon of the button.
+Gets or sets the color for the icon of the button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -253,13 +253,13 @@ Allows you to display a bitmap image on the Button.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-Remarks: For more options have a look at .
+Remarks: For more options have a look at ImageButton.
 
 <br>
 
 ### <a id="properties-internalbutton"/>**InternalButton**
 
-Internal implementation of the  control.
+Internal implementation of the Button control.
 
 Property type: [Button](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.button)<br>
 
@@ -282,13 +282,13 @@ Gets or sets if button is on busy state (executing Command).
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: False
+Default value: false
 
 <br>
 
 ### <a id="properties-linebreakmode"/>**LineBreakMode**
 
-Determines how MaterialButton.Text is shown when the length is overflowing the size of this button.
+Determines how Text is shown when the length is overflowing the size of this button.
  This is a bindable property.
 
 Property type: [LineBreakMode](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.linebreakmode)<br>
@@ -327,7 +327,7 @@ Remarks: Changing the text of a button will trigger a layout cycle.
 
 ### <a id="properties-textcolor"/>**TextColor**
 
-Gets or sets the  for the text of the button.
+Gets or sets the color for the text of the button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -338,7 +338,7 @@ Default value: Light: MaterialLightTheme.OnPrimary - Dark: MaterialDarkTheme.OnP
 
 ### <a id="properties-textdecorations"/>**TextDecorations**
 
-Gets or sets MaterialButton.TextDecorations for the text of the button.
+Gets or sets decorations for Button text.
  This is a bindable property.
 
 Property type: [TextDecorations](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.textdecorations)<br>
@@ -347,7 +347,7 @@ Property type: [TextDecorations](https://learn.microsoft.com/en-us/dotnet/api/mi
 
 ### <a id="properties-texttransform"/>**TextTransform**
 
-Applies text transformation to the MaterialButton.Text displayed on this button.
+Applies text transformation to the Text displayed on this button.
  This is a bindable property.
 
 Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.texttransform)<br>
@@ -356,7 +356,7 @@ Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/micr
 
 ### <a id="properties-touchanimation"/>**TouchAnimation**
 
-Gets or sets a custom touch animation to be executed when button is clicked.
+Gets or sets a custom touch animation to be executed when Button is clicked.
  This is a bindable property.
 
 Property type: ITouchAnimation<br>
@@ -367,7 +367,7 @@ Default value: null
 
 ### <a id="properties-touchanimationtype"/>**TouchAnimationType**
 
-Gets or sets an animation to be executed when button is clicked.
+Gets or sets an animation to be executed when Button is clicked.
  This is a bindable property.
 
 Property type: TouchAnimationTypes<br>
@@ -385,7 +385,7 @@ Default value: TouchAnimationTypes.Fade.
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the button type according to MaterialButtonType enum.
+Gets or sets the button type according to MaterialButtonType.
  This is a bindable property.
 
 Property type: MaterialButtonType<br>

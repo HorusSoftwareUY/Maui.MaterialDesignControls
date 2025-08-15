@@ -1,6 +1,6 @@
 # MaterialFloatingButton
 
-Floating action buttons (FABs) help people take primary actions [see here.](https://m3.material.io/components/floating-action-button/overview)
+Floating action buttons (FABs) help people take primary actions and follow Material Design Guidelines. [See more.](https://m3.material.io/components/floating-action-button/overview)
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -53,7 +53,7 @@ Gets or sets command when press floating button
 
 Property type: ICommand<br>
 
-Default value: Null
+Default value: null
 
 Remarks: This property is used to associate a command with an instance of FAB. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
 
@@ -64,12 +64,12 @@ Remarks: This property is used to associate a command with an instance of FAB. T
 
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
-Gets or sets the parameter to pass to the MaterialFloatingButton.Command property.
+Gets or sets the parameter to pass to the Command property.
  This is a bindable property.
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
-Default value: Null
+Default value: null
 
 <br>
 
@@ -98,7 +98,7 @@ Remarks:
 - <para>which means the value is unset; the effective minimum height will be zero.</para>
 
 - <para>
-  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.HeightRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.HeightRequest" /> will change the resulting height of the element during the next layout pass.</para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.HeightRequest">HeightRequest</see> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.HeightRequest">HeightRequest</see> will change the resulting height of the element during the next layout pass.</para>
 
 <br>
 
@@ -109,7 +109,7 @@ Gets or sets icon in floating button
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-Default value: Null
+Default value: null
 
 <br>
 
@@ -202,10 +202,11 @@ Remarks:
 - <para>which means the value is unset; the effective minimum width will be zero.</para>
 
 - <para>
-  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.WidthRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.WidthRequest" /> will change the resulting width of the element during the next layout pass.</para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.WidthRequest">WidthRequest</see> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButton.WidthRequest">WidthRequest</see> will change the resulting width of the element during the next layout pass.</para>
 
 <br>
 
 ## Known issues and pending features
 
 * [Android] Only one Floating Button visible per Page
+ * [macOS] Does not appear due to a rendering issue with its icon

@@ -1,6 +1,6 @@
 # MaterialIconButton
 
-An icon button  that reacts to touch events and follows Material Design Guidelines [See here.](https://m3.material.io/components/icon-buttons/overview)
+Icon buttons react to touch events and follow Material Design Guidelines. [See more](https://m3.material.io/components/icon-buttons/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -50,7 +50,7 @@ Default value: true
 
 ### <a id="properties-background"/>**Background**
 
-Gets or sets a  that describes the background of the button.
+Gets or sets a Brush that describes the background of the button.
  This is a bindable property.
 
 Property type: [Brush](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.brush)<br>
@@ -73,7 +73,7 @@ Gets or sets a color that describes the border stroke color of the button.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
+Remarks: This property has no effect if IBorderElement.BorderWidth is set to 0. On Android this property will not have an effect unless VisualElement.BackgroundColor is set to a non-default color.
 
 <br>
 
@@ -90,7 +90,7 @@ Remarks: Set this value to a non-zero value in order to have a visible border.
 
 ### <a id="properties-busyindicatorcolor"/>**BusyIndicatorColor**
 
-Gets or sets the  for the busy indicator.
+Gets or sets the color for the busy indicator.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -113,7 +113,7 @@ Gets or sets the command to invoke when the button is activated.
 
 Property type: ICommand<br>
 
-Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
+Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. VisualElement.IsEnabled is controlled by the Command.CanExecute(object) if set.
 
 <br>
 
@@ -139,7 +139,7 @@ Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32
 
 ### <a id="properties-custombusyindicator"/>**CustomBusyIndicator**
 
-Gets or sets a custom  for busy indicator.
+Gets or sets a custom View for busy indicator.
  This is a bindable property.
 
 Property type: [View](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.view)<br>
@@ -160,13 +160,13 @@ Remarks:
 - <para>which means the value is unset; the effective minimum height will be zero.</para>
 
 - <para>
-  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest" /> will change the resulting height of the element during the next layout pass.</para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest">HeightRequest</see> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest">HeightRequest</see> will change the resulting height of the element during the next layout pass.</para>
 
 <br>
 
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
-Gets or sets the  for the icon of the button.
+Gets or sets the color for the icon of the button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -180,7 +180,7 @@ Allows you to display a bitmap image on the Button.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-Remarks: For more options have a look at .
+Remarks: For more options have a look at ImageButton.
 
 <br>
 
@@ -252,7 +252,7 @@ Default value: TouchAnimationTypes.Fade
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the button type according to MaterialIconButtonType enum.
+Gets or sets the button type.
  This is a bindable property.
 
 Property type: MaterialIconButtonType<br>
@@ -291,9 +291,7 @@ Default value: -1
 Remarks: Which means the value is unset; the effective minimum width will be zero.
 
 - <para>
-  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.WidthRequest" /> does not immediately change the Bounds of an element.</para>
-
-- <para>setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest" /> will change the resulting width of the element during the next layout pass.</para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.WidthRequest">WidthRequest</see> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.WidthRequest">WidthRequest</see> will change the resulting width of the element during the next layout pass.</para>
 
 <br>
 

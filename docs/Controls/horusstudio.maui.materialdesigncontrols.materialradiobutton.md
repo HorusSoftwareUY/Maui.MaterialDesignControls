@@ -1,6 +1,6 @@
 # MaterialRadioButton
 
-A RadioButton  let people select one option from a set of options and follows Material Design Guidelines [See here. ](https://m3.material.io/components/radio-button/overview)
+Radio buttons let people select one option from a set of options and follow Material Design Guidelines. [See more](https://m3.material.io/components/radio-button/overview).
  We reuse some code from MAUI official repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButton.cs
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
@@ -8,6 +8,8 @@ Namespace: HorusStudio.Maui.MaterialDesignControls
 Inherits from: MaterialRadioButton → [ContentView](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.contentview)
 
 <br>
+
+Remarks: The [MaterialViewGroup](docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewgroup.md) class allows grouping radio buttons, providing control over the selection type (Single or Multiple), item selection through bindings, and commands that trigger when the selection changes.
 
 ![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialRadioButton.gif)
 
@@ -55,17 +57,15 @@ Property type: ICommand<br>
 
 Remarks: This property is used to associate a command with an instance of a radio button.
  This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
-  is controlled by the  if set.
- The command parameter is of type [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean) and corresponds to the value of the MaterialRadioButton.IsChecked property.
+ VisualElement.IsEnabled is controlled by the Command.CanExecute(object) if set.
+ The command parameter is of type [bool](https://learn.microsoft.com/en-us/dotnet/api/system.boolean) and corresponds to the value of the IsChecked property.
 
 <br>
 
 ### <a id="properties-content"/>**Content**
 
-Gets the MaterialRadioButton.Content for the RadioButton.
+Gets the Content of the radio button.
  This is a bindable property.
- We disabled the set for this property because doesn't have sense set the content because we are setting with the
- radio button and label.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -73,7 +73,7 @@ Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.stri
 
 ### <a id="properties-controltemplate"/>**ControlTemplate**
 
-Gets or sets the MaterialRadioButton.ControlTemplate for the radio button.
+Gets or sets the template for the radio button.
  This is a bindable property.
 
 Property type: [ControlTemplate](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.controltemplate)<br>
@@ -95,7 +95,7 @@ Defines whether an app's UI reflects text scaling preferences set in the operati
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
@@ -119,7 +119,7 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 ### <a id="properties-internalradiobutton"/>**InternalRadioButton**
 
-Internal implementation of the  control.
+Internal implementation of the RadioButton control.
 
 Property type: [RadioButton](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.radiobutton)<br>
 
@@ -129,39 +129,29 @@ Remarks: This property can affect the internal behavior of this control. Use onl
 
 ### <a id="properties-ischecked"/>**IsChecked**
 
-Gets or sets the MaterialRadioButton.IsChecked for the radio button. 
+Gets or sets if the radio button is checked. 
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: False
+Default value: false
 
 <br>
 
 ### <a id="properties-isenabled"/>**IsEnabled**
 
-Gets or sets MaterialRadioButton.IsEnabled for the radio button.
+Gets or sets the radio button is enabled.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: False
-
-<br>
-
-### <a id="properties-isselected"/>**IsSelected**
-
-Gets or sets the MaterialRadioButton.IsChecked property for the radio button.
-
-Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-Remarks: This property is used internally, and it's recommended to avoid setting it directly.
+Default value: false
 
 <br>
 
 ### <a id="properties-strokecolor"/>**StrokeColor**
 
-Gets or sets the  for the stroke of the radio button.
+Gets or sets the stroke color for the radio button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -172,7 +162,7 @@ Default value: Theme: Light: MaterialLightTheme.Primary - Dark: MaterialDarkThem
 
 ### <a id="properties-text"/>**Text**
 
-Gets or sets the MaterialRadioButton.Text for the label.
+Gets or sets a text for the radio button.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
@@ -181,7 +171,7 @@ Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.stri
 
 ### <a id="properties-textcolor"/>**TextColor**
 
-Gets or sets the MaterialRadioButton.TextColor for the text of the label.
+Gets or sets the text color for the radio button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -240,7 +230,7 @@ Property type: TouchAnimationTypes<br>
 | Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
 | Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
 
-Default value: TouchAnimationTypes.Fade
+Default value: ouchAnimationTypes.Fade
 
 <br>
 
@@ -253,7 +243,7 @@ Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.obje
 
 Default value: MaterialRadioButton.Text
 
-Remarks: If a value is not explicitly set, the control will use the value of the MaterialRadioButton.Text property or the  property as its default.
+Remarks: If a value is not explicitly set, the control will use the value of the Text property if set or the Id property as its default.
 
 <br>
 

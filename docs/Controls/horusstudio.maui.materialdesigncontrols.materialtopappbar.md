@@ -1,6 +1,6 @@
 # MaterialTopAppBar
 
-A top app bar  that display navigation, actions, and text at the top of a screen, and follows Material Design Guidelines [see here.](https://m3.material.io/components/top-app-bar/overview)
+Top App bars display navigation, actions, and text at the top of a screen, and follow Material Design Guidelines. [See more](https://m3.material.io/components/top-app-bar/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -44,7 +44,7 @@ var topAppBar = new MaterialTopAppBar
 
 ### <a id="properties-busyindicatorcolor"/>**BusyIndicatorColor**
 
-Gets or sets the  for the busy indicators.
+Gets or sets the color for the busy indicators.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -77,7 +77,7 @@ Default value: null
 
 ### <a id="properties-descriptioncolor"/>**DescriptionColor**
 
-Gets or sets the  for the description text of the top app bar. 
+Gets or sets the color for the description text of the top app bar. 
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -128,7 +128,7 @@ Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsof
 
 Default value: new Thickness(10, 8, 10, 16)
 
-Remarks: This property does not take into account the Left and Right of the set , it only applies the Top and Bottom values.
+Remarks: This property does not take into account Left and Right values of Thickness, it only applies the Top and Bottom values.
 
 <br>
 
@@ -145,7 +145,7 @@ Default value: null
 
 ### <a id="properties-headlinecolor"/>**HeadlineColor**
 
-Gets or sets the  for the headline text of the top app bar. 
+Gets or sets the color for the headline text of the top app bar. 
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -196,7 +196,7 @@ Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsof
 
 Default value: default(Thickness)
 
-Remarks: This property does not take into account the Left and Right of the set , it only applies the Top and Bottom values.
+Remarks: This property does not take into account the Left and Right of the set Thickness, it only applies the Top and Bottom values.
 
 <br>
 
@@ -231,7 +231,7 @@ Default value: TouchAnimationTypes.Fade
 
 ### <a id="properties-iconpadding"/>**IconPadding**
 
-Gets or sets the padding of the MaterialTopAppBar.LeadingIcon and MaterialTopAppBar.TrailingIcons of this top app bar.
+Gets or sets the padding of leading and trailing icons for the top app bar.
  This is a bindable property.
 
 Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
@@ -242,7 +242,7 @@ Default value: 12
 
 ### <a id="properties-iconsize"/>**IconSize**
 
-Gets or sets the size of the MaterialTopAppBar.LeadingIcon and MaterialTopAppBar.TrailingIcons of this top app bar.
+Gets or sets the size of leading and trailing icons for the top app bar.
  This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
@@ -297,7 +297,7 @@ Default value: false
 
 ### <a id="properties-scrollviewanimationlength"/>**ScrollViewAnimationLength**
 
-Gets or sets the duration of the collapse or expand animation bound to the  element. 
+Gets or sets the duration of the collapse or expand animation bound to the ScrollView element. 
  This is a bindable property.
 
 Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
@@ -308,7 +308,7 @@ Default value: 250
 
 ### <a id="properties-scrollviewname"/>**ScrollViewName**
 
-Gets or sets the name of the  element to which the top app bar will be linked to run collapse or expand animations depending on the user's scroll.
+Gets or sets the name of the ScrollView element to which the top app bar will be linked to run collapse or expand animations depending on the user's scroll.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
@@ -332,7 +332,7 @@ Remarks: This property supports a maximum of 3 icon buttons.
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the top app bar type according to MaterialTopAppBarType enum.
+Gets or sets the top app bar type.
  This is a bindable property.
 
 Property type: MaterialTopAppBarType<br>

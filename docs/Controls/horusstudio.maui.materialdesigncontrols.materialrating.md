@@ -59,7 +59,7 @@ Defines whether an app's UI reflects text scaling preferences set in the operati
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
@@ -86,7 +86,7 @@ Default value: MaterialFontSize.BodyLarge - Tablet = 19 / Phone = 16
 
 ### <a id="properties-isenabled"/>**IsEnabled**
 
-Gets or sets MaterialRating.IsEnabled for the rating control.
+Gets or sets if rating control is enabled.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
@@ -117,18 +117,18 @@ Default value: 5
 
 ### <a id="properties-label"/>**Label**
 
-Gets or sets the MaterialRating.Label for the label.
+Gets or sets label text.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-Default value: Null
+Default value: null
 
 <br>
 
 ### <a id="properties-labelcolor"/>**LabelColor**
 
-Gets or sets the MaterialRating.LabelColor for the text of the label.
+Gets or sets the color for label.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -170,7 +170,7 @@ Remarks: For more options have a look at ImageButton.
 
 ### <a id="properties-strokecolor"/>**StrokeColor**
 
-Gets or sets the  for the stroke of default start.
+Gets or sets stroke color.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -179,7 +179,7 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 
 ### <a id="properties-strokethickness"/>**StrokeThickness**
 
-Gets or sets the MaterialRating.StrokeThickness for the default start.
+Gets or sets the stroke thickness.
  This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>

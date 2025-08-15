@@ -1,6 +1,6 @@
 # MaterialCard
 
-A card  that display content and actions about a single subject, and follows Material Design Guidelines [See here](https://m3.material.io/components/cards/overview).
+Cards display content and actions about a single subject, and follow Material Design Guidelines. [See more](https://m3.material.io/components/cards/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -70,7 +70,7 @@ Gets or sets a color that describes the border stroke color of the card.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Remarks: This property has no effect if  is set to 0.
+Remarks: This property has no effect if IBorderElement.BorderWidth is set to 0.
 
 <br>
 
@@ -91,18 +91,18 @@ Gets or sets the command to invoke when the card is clicked. This is a bindable 
 
 Property type: ICommand<br>
 
-Remarks: This property is used to associate a command with an instance of a card. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
+Remarks: This property is used to associate a command with an instance of a card. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. VisualElement.IsEnabled is controlled by the Command.CanExecute(object) if set.
 
 <br>
 
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
-Gets or sets the parameter to pass to the MaterialCard.Command property.
+Gets or sets the parameter to pass to the Command property.
  This is a bindable property.
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
-Default value: null.
+Default value: null
 
 <br>
 
@@ -164,7 +164,7 @@ Default value: TouchAnimationTypes.Fade
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the card type according to MaterialCardType enum.
+Gets or sets the card type.
  This is a bindable property.
 
 Property type: MaterialCardType<br>

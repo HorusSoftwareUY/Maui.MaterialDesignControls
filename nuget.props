@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup Condition=" $(MSBuildProjectName.Equals('HorusStudio.Maui.MaterialDesignControls')) ">
     <PackageId>HorusStudio.Maui.MaterialDesignControls</PackageId>
-    <Version>1.1.0</Version>
+    <Version>2.0.0</Version>
     <Authors>Horus Studio and contributors</Authors>
     <Company>Horus Studio</Company>
     <Title>Material Design Controls for .NET MAUI</Title>
@@ -15,12 +15,35 @@
     <PackageTags>dotnet-maui;dotnet;maui;cross-platform;android;ios;macos;maccatalyst;materialdesign;ui</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
-      - Configure if icon tint color should be automatically set to TextColor or not on: MaterialButton, MaterialChips, MaterialIconButton and MaterialNavigationDrawerItem
-      - Fix TextChanged and TextChangedCommand not being fired on MaterialTextField and MaterialMultilineTextField
-      - Expose internal MAUI control used on: MaterialButton, MaterialCheckBox, MaterialDatePicker, MaterialMultilineTextField, MaterialPicker, MaterialRadioButton, MaterialSlider, MaterialTextField and MaterialTimePicker
-      - Fix spacing on MaterialRating when label is empty
-      - Fix touch bubbling on iOS for: MaterialButton, MaterialDatePicker, MaterialIconButton, MaterialMultilineTextField, MaterialPicker, MaterialSwitch, MaterialTextField and MaterialTimePicker
-      - Ability to override custom handlers for: MaterialButton, MaterialRadioButton, MaterialTextField, MaterialTimePicker, MaterialDatePicker, MaterialPicker, MaterialMultilineTextField, MaterialCheckbox and MaterialSlider
+- Update to .NET 9
+- [MaterialSegmentedButton] new control added
+- [MaterialViewGroup] new control added to group controls and handle single or multiple selection
+- [IValidableView] added for error animations
+- [MaterialTopAppBar] Add IconPadding property
+- [MaterialFloatingButton] [iOS] Fix tap issue
+- Improvements with main thread
+- [MaterialNavigationDrawer] Add IconSize property
+- [MaterialRating] Add ValueChangedCommand and ValueChanged event
+- [MaterialPicker/MaterialDatePicker/MaterialTimePicker] [iOS] Fix HorizontalTextAlignment
+- [MaterialInputBase] Don't animate on tap when control is disabled
+- [MaterialInputBase] Add AlwaysShowLabel property for Outlined type
+- [MaterialInputBase] Add ErrorAnimationType and ErrorAnimatiion properties
+- [MaterialCard] Support Transparent or null shadow
+- [BREAKING CHANGE] [MaterialChipsGroup] Remove control (replaced with MaterialViewGroup)
+- [BREAKING CHANGE] [MaterialRadioButtonsGroup] Remove control (replaced with MaterialViewGroup)
+- [BREAKING CHANGE] [MaterialChips] Rename MaterialChip
+- [BREAKING CHANGE] [MaterialChipsType] Rename to MaterialChipType
+- [BREAKING CHANGE] [MaterialChip] Remove “Unselected” VisualState, “Normal” is used instead
+- [BREAKING CHANGE] [MaterialChip] Remove “IconStateOnSelection” property
+- [BREAKING CHANGE] [MaterialChip] Add SelectionChangedCommand and SelectionChanged event
+- [BREAKING CHANGE] [ITouchable] Rename to ITouchableView
+- [BREAKING CHANGE] [MaterialButton/MaterialCard/MaterialCheckbox/MaterialChip/MaterialIconButton/MaterialNavigationDrawer/MaterialRadioButton/MaterialRating/MaterialSwitch/MaterialViewButton] Rename Animation property to TouchAnimationType
+- [BREAKING CHANGE] [MaterialButton/MaterialCard/MaterialCheckbox/MaterialChip/MaterialIconButton/MaterialNavigationDrawer/MaterialRadioButton/MaterialRating/MaterialSwitch/MaterialViewButton] Remove AnimationParameter property
+- [BREAKING CHANGE] [MaterialButton/MaterialCard/MaterialCheckbox/MaterialChip/MaterialIconButton/MaterialNavigationDrawer/MaterialRadioButton/MaterialRating/MaterialSwitch/MaterialViewButton] Rename CustomAnimation property to TouchAnimation
+- [BREAKING CHANGE] [MaterialTopAppBar] Rename IconButtonAnimation property to IconButtonTouchAnimationType
+- [BREAKING CHANGE] [MaterialTopAppBar] Remove IconButtonAnimationParameter property
+- [BREAKING CHANGE] [MaterialTopAppBar] Rename IconButtonCustomAnimation property to IconButtonTouchAnimation
+- [Issue #93] Fix NullReferenceException thrown when applying implicit styles
     </PackageReleaseNotes>
 
     <PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>

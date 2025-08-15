@@ -96,9 +96,10 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * [MaterialRadioButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialradiobutton.md)
 * [MaterialRating](docs/Controls/horusstudio.maui.materialdesigncontrols.materialrating.md)
 * [MaterialSelection](docs/Controls/horusstudio.maui.materialdesigncontrols.materialselection.md)
+* [MaterialSegmentedButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialsegmentedbutton.md)
 * [MaterialSlider](docs/Controls/horusstudio.maui.materialdesigncontrols.materialslider.md)
-* [MaterialSwitch](docs/Controls/horusstudio.maui.materialdesigncontrols.materialswitch.md)
 * [MaterialSnackbar](docs/Controls/horusstudio.maui.materialdesigncontrols.imaterialsnackbar.md)
+* [MaterialSwitch](docs/Controls/horusstudio.maui.materialdesigncontrols.materialswitch.md)
 * [MaterialTextField](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtextfield.md)
 * [MaterialTimePicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtimepicker.md)
 * [MaterialTopAppBar](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtopappbar.md)
@@ -112,7 +113,6 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * MaterialDialog
 * MaterialDoublePicker
 * MaterialSearch
-* MaterialSegmentedButton
 
 
 ## Styles

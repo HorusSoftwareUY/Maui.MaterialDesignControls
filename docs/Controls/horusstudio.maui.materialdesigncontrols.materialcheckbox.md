@@ -1,6 +1,6 @@
 # MaterialCheckBox
 
-A Checkbox  let users select one or more items from a list, or turn an item on or off and follows Material Design Guidelines [](https://m3.material.io/components/checkbox/overview).
+Checkboxes let users select one or more items from a list, or turn an item on or off and follow Material Design Guidelines. [See more](https://m3.material.io/components/checkbox/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -50,14 +50,14 @@ Property type: ICommand<br>
 
 Remarks: This property is used to associate a command with an instance of a checkbox.
  This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
-  is controlled by the  if set.
- The command parameter is of type [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean) and corresponds to the value of the MaterialCheckBox.IsChecked property.
+ VisualElement.IsEnabled is controlled by the Command.CanExecute(object) if set.
+ The command parameter is of type [bool](https://learn.microsoft.com/en-us/dotnet/api/system.boolean) and corresponds to the value of the IsChecked property.
 
 <br>
 
 ### <a id="properties-color"/>**Color**
 
-Gets or sets the  for the checkbox color.
+Gets or sets the color for the checkbox.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -68,7 +68,7 @@ Default value: Theme: Light: MaterialLightTheme.Primary - Dark: MaterialDarkThem
 
 ### <a id="properties-content"/>**Content**
 
-Gets the MaterialCheckBox.Content for the RadioButton.
+Gets the Content of checkbox.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
@@ -91,7 +91,7 @@ Defines whether an app's UI reflects text scaling preferences set in the operati
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
@@ -118,7 +118,7 @@ Default value: MaterialFontSize.BodyLarge
 
 ### <a id="properties-internalcheckbox"/>**InternalCheckBox**
 
-Internal implementation of the  control.
+Internal implementation of the CheckBox control.
 
 Property type: [CheckBox](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.checkbox)<br>
 
@@ -128,28 +128,29 @@ Remarks: This property can affect the internal behavior of this control. Use onl
 
 ### <a id="properties-ischecked"/>**IsChecked**
 
-Gets or sets MaterialCheckBox.IsChecked for the checkbox.
+Gets or sets if the checkbox is checked.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: False
+Default value: false
 
 <br>
 
 ### <a id="properties-isenabled"/>**IsEnabled**
 
-Gets or sets MaterialCheckBox.IsEnabled for the checkbox. This is a bindable property.
+Gets or sets if the checkbox is enabled.
+ This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: False
+Default value: false
 
 <br>
 
 ### <a id="properties-text"/>**Text**
 
-Gets or sets the MaterialCheckBox.Text for the label.
+Gets or sets the text for the checkbox.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
@@ -160,7 +161,7 @@ Default value: null
 
 ### <a id="properties-textcolor"/>**TextColor**
 
-Gets or sets the MaterialCheckBox.TextColor for the text of the label.
+Gets or sets the color for the text.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -194,7 +195,7 @@ Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/micr
 
 ### <a id="properties-tickcolor"/>**TickColor**
 
-Gets or sets the  for the tick color.
+Gets or sets the color for the tick.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -211,7 +212,7 @@ Gets or sets a custom animation to be executed when checkbox is clicked. This is
 
 Property type: ITouchAnimation<br>
 
-Default value: null.
+Default value: null
 
 <br>
 

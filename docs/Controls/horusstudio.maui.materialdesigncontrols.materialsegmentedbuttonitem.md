@@ -16,7 +16,7 @@ Gets or sets if the icon applies the tint color.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
@@ -26,7 +26,7 @@ Gets if segmented button is selected.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: False
+Default value: false
 
 <br>
 
@@ -36,7 +36,7 @@ Gets or sets selected icon in segmented button.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-Default value: Null
+Default value: null
 
 <br>
 
@@ -54,6 +54,6 @@ Gets or sets unselected icon in segmented button.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-Default value: Null
+Default value: null
 
 <br>

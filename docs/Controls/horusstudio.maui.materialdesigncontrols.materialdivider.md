@@ -1,6 +1,6 @@
 # MaterialDivider
 
-A divider  that group content in lists or other containers and follows Material Design Guidelines [](https://m3.material.io/components/divider/overview).
+Dividers group content in lists or other containers and follow Material Design Guidelines. [See more](https://m3.material.io/components/divider/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -34,7 +34,7 @@ var divider = new MaterialDivider()
 
 ### <a id="properties-color"/>**Color**
 
-Gets or sets the MaterialDivider.Color of the divider.
+Gets or sets the color of the divider.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>

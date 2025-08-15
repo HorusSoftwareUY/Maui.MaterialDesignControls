@@ -1,6 +1,6 @@
 # SegmentedButtonSelectedEventArgs
 
-Event argument raised when when the selection of one of the segmented buttons changes.
+Event argument raised when the selection of one of the segmented buttons changes.
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -12,7 +12,7 @@ Inherits from: SegmentedButtonSelectedEventArgs → [EventArgs](https://learn.mi
 
 ### <a id="properties-selecteditem"/>**SelectedItem**
 
-Gets the currently selected item when  is False.
+Gets the selected item when AllowMultiSelect=false.
 
 Property type: MaterialSegmentedButtonItem<br>
 
@@ -20,7 +20,7 @@ Property type: MaterialSegmentedButtonItem<br>
 
 ### <a id="properties-selecteditems"/>**SelectedItems**
 
-Gets the currently collection of selected items when  is True.
+Gets the selected items collection when AllowMultiSelect=true.
 
 Property type: [IEnumerable&lt;MaterialSegmentedButtonItem&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 

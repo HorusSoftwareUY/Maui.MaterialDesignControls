@@ -1,6 +1,6 @@
 # MaterialProgressIndicator
 
-A progress indicator  that show the status of a process and follows Material Design Guidelines. [See here. ](https://m3.material.io/components/progress-indicators/overview)
+Progress indicators show the status of a process and follow Material Design Guidelines. [See more](https://m3.material.io/components/progress-indicators/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -38,7 +38,7 @@ var progressIndicator = new MaterialProgressIndicator()
 
 ### <a id="properties-heightrequest"/>**HeightRequest**
 
-Gets or sets height of the progress indicator.
+Gets or sets the height of the progress indicator.
  This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
@@ -47,7 +47,7 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 ### <a id="properties-indicatorcolor"/>**IndicatorColor**
 
-Gets or sets the  for the active indicator of the progress indicator.
+Gets or sets the color for the active indicator of the progress indicator.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -63,13 +63,13 @@ Gets or sets if progress indicator is visible.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
 ### <a id="properties-trackcolor"/>**TrackColor**
 
-Gets or sets the  for the track of the progress indicator.
+Gets or sets the track color of the progress indicator.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -82,7 +82,7 @@ Remarks: This property will not have an effect unless MaterialProgressIndicator.
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the progress indicator type according to MaterialProgressIndicatorType enum.
+Gets or sets the progress indicator type.
  This is a bindable property.
 
 Property type: MaterialProgressIndicatorType<br>
@@ -98,7 +98,7 @@ Default value: MaterialProgressIndicatorType.Circular
 
 ### <a id="properties-widthrequest"/>**WidthRequest**
 
-Gets or sets width of the progress indicator.
+Gets or sets the width of the progress indicator.
  This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>

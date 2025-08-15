@@ -30,6 +30,6 @@ Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.obje
 
 Event used to notify the group that one of the properties of the groupable view has changed its value.
 
-Remarks: This event should be raised when the IGroupableView.Value, and/or IGroupableView.IsSelected properties change.
+Remarks: This event should be raised when any IGroupableView property changes.
 
 <br>

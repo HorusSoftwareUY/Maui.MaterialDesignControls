@@ -2,6 +2,7 @@
 
 ## Content table <!-- omit from toc -->
 - [Versions](#versions)
+  - [2.0.0](#200)
   - [1.1.0](#110)
   - [1.0.0-preview.6](#100-preview6)
   - [1.0.0-preview.5](#100-preview5)
@@ -11,6 +12,37 @@
   - [1.0.0-preview.1](#100-preview1)
 
 ## Versions
+### [2.0.0](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/2.0.0)
+- Update to .NET 9
+- [MaterialSegmentedButton] new control added
+- [MaterialViewGroup] new control added to group controls and handle single or multiple selection
+- [IValidableView] added for error animations
+- [MaterialTopAppBar] Add IconPadding property
+- [MaterialFloatingButton] [iOS] Fix tap issue
+- Improvements with main thread
+- [MaterialNavigationDrawer] Add IconSize property
+- [MaterialRating] Add ValueChangedCommand and ValueChanged event
+- [MaterialPicker/MaterialDatePicker/MaterialTimePicker] [iOS] Fix HorizontalTextAlignment
+- [MaterialInputBase] Don't animate on tap when control is disabled
+- [MaterialInputBase] Add AlwaysShowLabel property for Outlined type
+- [MaterialInputBase] Add ErrorAnimationType and ErrorAnimatiion properties
+- [MaterialCard] Support Transparent or null shadow
+- [BREAKING CHANGE] [MaterialChipsGroup] Remove control (replaced with MaterialViewGroup)
+- [BREAKING CHANGE] [MaterialRadioButtonsGroup] Remove control (replaced with MaterialViewGroup)
+- [BREAKING CHANGE] [MaterialChips] Rename MaterialChip
+- [BREAKING CHANGE] [MaterialChipsType] Rename to MaterialChipType
+- [BREAKING CHANGE] [MaterialChip] Remove “Unselected” VisualState, “Normal” is used instead
+- [BREAKING CHANGE] [MaterialChip] Remove “IconStateOnSelection” property
+- [BREAKING CHANGE] [MaterialChip] Add SelectionChangedCommand and SelectionChanged event
+- [BREAKING CHANGE] [ITouchable] Rename to ITouchableView
+- [BREAKING CHANGE] [MaterialButton/MaterialCard/MaterialCheckbox/MaterialChip/MaterialIconButton/MaterialNavigationDrawer/MaterialRadioButton/MaterialRating/MaterialSwitch/MaterialViewButton] Rename Animation property to TouchAnimationType
+- [BREAKING CHANGE] [MaterialButton/MaterialCard/MaterialCheckbox/MaterialChip/MaterialIconButton/MaterialNavigationDrawer/MaterialRadioButton/MaterialRating/MaterialSwitch/MaterialViewButton] Remove AnimationParameter property
+- [BREAKING CHANGE] [MaterialButton/MaterialCard/MaterialCheckbox/MaterialChip/MaterialIconButton/MaterialNavigationDrawer/MaterialRadioButton/MaterialRating/MaterialSwitch/MaterialViewButton] Rename CustomAnimation property to TouchAnimation
+- [BREAKING CHANGE] [MaterialTopAppBar] Rename IconButtonAnimation property to IconButtonTouchAnimationType
+- [BREAKING CHANGE] [MaterialTopAppBar] Remove IconButtonAnimationParameter property
+- [BREAKING CHANGE] [MaterialTopAppBar] Rename IconButtonCustomAnimation property to IconButtonTouchAnimation
+- [Issue #93] Fix NullReferenceException thrown when applying implicit styles
+
 ### [1.1.0](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/1.1.0)
 * Configure if icon tint color should be automatically set to TextColor or not on: MaterialButton, MaterialChips, MaterialIconButton and MaterialNavigationDrawerItem
 * Fix TextChanged and TextChangedCommand not being fired on MaterialTextField and MaterialMultilineTextField
