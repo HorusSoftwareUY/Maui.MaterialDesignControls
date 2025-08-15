@@ -1,6 +1,6 @@
 # MaterialViewButton
 
-It is a touchable view.
+View buttons are Views that react to touch events.
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -9,35 +9,6 @@ Inherits from: MaterialViewButton → [ContentView](https://learn.microsoft.com/
 <br>
 
 ## Properties
-
-### <a id="properties-animation"/>**Animation**
-
-Gets or sets an animation to be executed when an icon is clicked
- This is a bindable property.
-
-Property type: AnimationTypes<br>
-
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade
-
-<br>
-
-### <a id="properties-animationparameter"/>**AnimationParameter**
-
-Gets or sets the parameter to pass to the MaterialViewButton.Animation property.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: null.
-
-<br>
 
 ### <a id="properties-command"/>**Command**
 
@@ -48,13 +19,13 @@ Property type: ICommand<br>
 
 Remarks: This property is used to associate a command with an instance of a button.
 
-- <para>This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="P:Microsoft.Maui.Controls.VisualElement.IsEnabled" /> is controlled by the <see cref="M:Microsoft.Maui.Controls.Command.CanExecute(System.Object)" /> if set.</para>
+- <para>This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="P:Microsoft.Maui.Controls.VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="M:Microsoft.Maui.Controls.Command.CanExecute(System.Object)">Command.CanExecute(object)</see> if set.</para>
 
 <br>
 
 ### <a id="properties-commandparameter"/>**CommandParameter**
 
-Gets or sets the parameter to pass to the MaterialViewButton.Command property.
+Gets or sets the parameter to pass to the Command property.
  This is a bindable property.
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
@@ -63,14 +34,32 @@ Default value: null.
 
 <br>
 
-### <a id="properties-customanimation"/>**CustomAnimation**
+### <a id="properties-touchanimation"/>**TouchAnimation**
 
 Gets or sets a custom animation to be executed when a icon is clicked.
  This is a bindable property.
 
-Property type: ICustomAnimation<br>
+Property type: ITouchAnimation<br>
 
 Default value: null.
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when an icon is clicked
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
 
 <br>
 

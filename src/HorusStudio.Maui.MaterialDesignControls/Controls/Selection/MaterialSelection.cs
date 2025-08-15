@@ -3,7 +3,7 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A selection <see cref="View" /> Selection controls allow the user to select options.
+/// Selections allow users to fire a pick action and display a selected value in a Picker-based experience.
 /// </summary>
 /// <example>
 ///
@@ -64,13 +64,9 @@ public class MaterialSelection : MaterialInputBase
         _label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
         _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
 
-        InputTapCommand = new Command(() => {
-            IsFocused = false;
-            if (IsEnabled && (Command?.CanExecute(CommandParameter) ?? false))
-            {
-                Command.Execute(CommandParameter);
-            }
-        });
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
+        TrailingIconCommand = new Command(() => Focus());
 
         Content = _label;
     }
@@ -80,17 +76,17 @@ public class MaterialSelection : MaterialInputBase
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialSelection), defaultBindingMode: BindingMode.TwoWay);
 
     /// <summary>
-    /// The backing store for the <see cref="Command" /> bindable property.
+    /// The backing store for the <see cref="Command">Command</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialSelection), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="CommandParameter" /> bindable property.
+    /// The backing store for the <see cref="CommandParameter">CommandParameter</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialSelection), defaultValue: null);
 
@@ -155,6 +151,32 @@ public class MaterialSelection : MaterialInputBase
                 break;
         }
 #endif
+    }
+
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
+    {
+        IsFocused = false;
+        if (IsEnabled && (Command?.CanExecute(CommandParameter) ?? false))
+        {
+            Command.Execute(CommandParameter);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        IsFocused = false;
     }
 
     #endregion Methods

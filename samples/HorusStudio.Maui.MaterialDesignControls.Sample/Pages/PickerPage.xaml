@@ -52,6 +52,7 @@
                 <material:MaterialPicker 
                     x:Name="picker"
                     Type="Outlined"
+                    HorizontalTextAlignment="Center"
                     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                     ItemsSource="{Binding ItemsSource}"
                     SelectedIndexChanged="MaterialPicker_SelectedIndexChanged"
@@ -65,7 +66,7 @@
         </material:MaterialCard>
         <material:MaterialLabel Text="You can set colors for background, placeholder, label and/or text; and also set an event when the selected index changed." Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text, checking errors and animation in case of error" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
                 <material:MaterialPicker 
@@ -73,6 +74,7 @@
                     SupportingText="{Binding SupportingTextValue}"
                     ItemsSource="{Binding ColorsSource}"
                     HasError="{Binding HasAnError}"
+                    ErrorAnimationType="Shake"
                     Placeholder="Select a color" />
                 <Grid ColumnSpacing="16">
                     <Grid.ColumnDefinitions>

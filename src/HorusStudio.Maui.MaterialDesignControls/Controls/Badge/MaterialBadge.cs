@@ -9,7 +9,7 @@ public enum MaterialBadgeType
 }
 
 /// <summary>
-/// Badges show notifications, counts, or status information on navigation items and icons <see href="https://m3.material.io/components/badges/overview">see here.</see>
+/// Badges show notifications, counts, or status information on navigation items and icons and follow Material Design Guidelines. <see href="https://m3.material.io/components/badges/overview">See more</see>.
 /// </summary>
 /// <example>
 ///
@@ -60,7 +60,7 @@ public class MaterialBadge : ContentView
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Type" /> bindable property.
+    /// The backing store for the <see cref="Type">Type</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialBadgeType), typeof(MaterialBadge), defaultValue: DefaultBadgeType, propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -76,37 +76,37 @@ public class MaterialBadge : ContentView
     });
     
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialBadge), defaultValue: DefaultText);
     
     /// <summary>
-    /// The backing store for the <see cref="TextColor" /> bindable property.
+    /// The backing store for the <see cref="TextColor">TextColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialBadge), defaultValueCreator: DefaultTextColor);
     
     /// <summary>
-    /// The backing store for the <see cref="FontSize" /> bindable property.
+    /// The backing store for the <see cref="FontSize">FontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialBadge), defaultValueCreator: DefaultFontSize);
     
     /// <summary>
-    /// The backing store for the <see cref="FontFamily" /> bindable property.
+    /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialBadge), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="BackgroundColor" /> bindable property.
+    /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialBadge), defaultValueCreator: DefaultBackgroundColor);
     
     /// <summary>
-    /// The backing store for the <see cref="CornerRadius"/> bindable property.
+    /// The backing store for the <see cref="CornerRadius">CornerRadius</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialBadge), defaultValue: DefaultCornerRadius);
     
     /// <summary>
-    /// The backing store for the <see cref="Padding" /> bindable property.
+    /// The backing store for the <see cref="Padding">Padding</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialBadge), defaultValue: DefaultPadding);
     
@@ -115,7 +115,7 @@ public class MaterialBadge : ContentView
     #region Properties
 
     /// <summary>
-    /// Gets or sets the badge type according to <see cref="MaterialBadgeType"/> enum.
+    /// Gets or sets the badge <see cref="MaterialBadgeType">type</see>.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -132,7 +132,7 @@ public class MaterialBadge : ContentView
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="Empty"/>
+    /// <see langword="string.Empty">string.Empty</see>
     /// </default>
     public string Text
     {
@@ -141,7 +141,7 @@ public class MaterialBadge : ContentView
     }
     
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the text of the Badge.
+    /// Gets or sets the <see cref="Color">color</see> for the text of the Badge.
     /// This is a bindable property.
     /// </summary>
     /// <default>

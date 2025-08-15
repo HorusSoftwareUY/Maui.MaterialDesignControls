@@ -6,7 +6,7 @@ using Microsoft.Maui.Handlers;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A time picker <see cref="View" /> Time pickers let users select a time. They typically appear in forms and dialogs.
+/// Time pickers let users select a time. They typically appear in forms and dialogs and, partially, follow Material Design Guidelines. <see href="https://m3.material.io/components/time-pickers/overview">See more.</see>
 /// </summary>
 /// <example>
 ///
@@ -37,6 +37,8 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// * [iOS] Font attributes doesn't work
 /// * [iOS] Horizontal text alignment doesn't work when there is a date selected
 /// * [Android] Use the colors defined in Material in the time picker dialog
+/// * [macOS] Do not respond to taps when the control area is tapped
+/// * [macOS] HorizontalTextAlignment is not supported
 /// </todoList>
 public class MaterialTimePicker : MaterialInputBase
 {
@@ -48,7 +50,7 @@ public class MaterialTimePicker : MaterialInputBase
 
     #region Layout
 
-    private readonly CustomTimePicker _timePicker;
+    private readonly CustomTimePicker? _timePicker;
 
     #endregion Layout
 
@@ -72,10 +74,10 @@ public class MaterialTimePicker : MaterialInputBase
         _timePicker.SetBinding(TimePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _timePicker.SetBinding(CustomTimePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
         
-        InputTapCommand = new Command(() => DoFocus());
-        LeadingIconCommand = new Command(() => DoFocus());
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
         TrailingIcon = MaterialIcon.TimePicker;
-        TrailingIconCommand = new Command(() => DoFocus());
+        TrailingIconCommand = new Command(() => Focus());
         Content = _timePicker;
     }
 
@@ -84,13 +86,13 @@ public class MaterialTimePicker : MaterialInputBase
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialTimePicker), defaultValue: null);
 
 #nullable enable
     /// <summary>
-    /// The backing store for the <see cref="Time" /> bindable property.
+    /// The backing store for the <see cref="Time">Time</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TimeProperty = BindableProperty.Create(nameof(Time), typeof(TimeSpan?), typeof(MaterialTimePicker), defaultBindingMode: BindingMode.TwoWay, defaultValue: null, propertyChanged:
     (bindable, oldValue, newValue) =>
@@ -101,22 +103,22 @@ public class MaterialTimePicker : MaterialInputBase
 #nullable disable
 
     /// <summary>
-    /// The backing store for the <see cref="Format" /> bindable property.
+    /// The backing store for the <see cref="Format">Format</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FormatProperty = BindableProperty.Create(nameof(Format), typeof(string), typeof(MaterialTimePicker), defaultValue: MaterialFormat.TimeFormat);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialTimePicker), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialTimePicker), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="TimeSelectedCommand" /> bindable property.
+    /// The backing store for the <see cref="TimeSelectedCommand">TimeSelectedCommand<see/> bindable property.
     /// </summary>
     public static readonly BindableProperty TimeSelectedCommandProperty = BindableProperty.Create(nameof(TimeSelectedCommand), typeof(ICommand), typeof(MaterialTimePicker));
 
@@ -125,7 +127,7 @@ public class MaterialTimePicker : MaterialInputBase
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="TimePicker" /> control.
+    /// Internal implementation of the <see cref="TimePicker">TimePicker</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
@@ -149,7 +151,7 @@ public class MaterialTimePicker : MaterialInputBase
     /// <summary>
     /// Gets or sets the displayed time. This is a bindable property.
     /// <value>
-    /// The <see cref="System.TimeSpan"/> displayed in the TimePicker.
+    /// The <see cref="System.TimeSpan">TimeSpan</see> displayed in the TimePicker.
     /// </value>
     /// </summary>
     /// <default>
@@ -206,7 +208,7 @@ public class MaterialTimePicker : MaterialInputBase
     /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
     /// <default>
-    /// <see cref="MaterialFontTracking.BodyLarge"/> 0.5
+    /// <see cref="MaterialFontTracking.BodyLarge">MaterialFontTracking.BodyLarge</see>: 0.5
     /// </default>
     /// <remarks>
     /// To be added.
@@ -241,9 +243,12 @@ public class MaterialTimePicker : MaterialInputBase
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
-        if (_timePicker == null) return;
-
 #if ANDROID
+        if (_timePicker == null)
+        {
+            return;
+        }
+
         var hOffset = 4;
         var vOffset = 2;
         switch (type)
@@ -263,11 +268,18 @@ public class MaterialTimePicker : MaterialInputBase
     protected override void SetControlIsEnabled()
     {
         if (_timePicker != null)
+        {
             _timePicker.IsEnabled = IsEnabled;
+        }
     }
 
     protected override void OnControlAppearing()
     {
+        if (_timePicker == null)
+        {
+            return;
+        }
+        
         // Setup events/animations
         _timePicker.Focused += ContentFocusChanged;
         _timePicker.Unfocused += ContentFocusChanged;
@@ -275,6 +287,11 @@ public class MaterialTimePicker : MaterialInputBase
 
     protected override void OnControlDisappearing()
     {
+        if (_timePicker == null)
+        {
+            return;
+        }
+        
         // Cleanup events/animations
         _timePicker.Focused -= ContentFocusChanged;
         _timePicker.Unfocused -= ContentFocusChanged;
@@ -284,7 +301,7 @@ public class MaterialTimePicker : MaterialInputBase
     {
         base.ContentFocusChanged(sender, e);
         
-        if (!IsFocused && !_timePicker.CustomTime.HasValue)
+        if (!IsFocused && _timePicker != null && !_timePicker.CustomTime.HasValue)
         {
             // Set the default date if the user doesn't select anything
             Time = _timePicker.InternalTime;
@@ -293,6 +310,11 @@ public class MaterialTimePicker : MaterialInputBase
     
     private void OnTimeChanged(TimeSpan? oldValue, TimeSpan? newValue)
     {
+        if (_timePicker == null)
+        {
+            return;
+        }
+        
         _timePicker.CustomTime = newValue;
         _timePicker.IsVisible = newValue is not null;
         Text =  newValue?.ToString(Format) ?? string.Empty;
@@ -304,16 +326,37 @@ public class MaterialTimePicker : MaterialInputBase
         TimeSelected?.Invoke(this, new TimeSelectedEventArgs(oldValue, newValue));
     }
 
-    private void DoFocus()
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
     {
-        if (!IsEnabled) return;
-
+        if (_timePicker != null && IsEnabled)
+        {
 #if ANDROID
-        var handler = _timePicker.Handler as ITimePickerHandler;
-        handler?.PlatformView.PerformClick();
+            var handler = _timePicker.Handler as ITimePickerHandler;
+            handler?.PlatformView.PerformClick();
+            return true;
 #elif IOS || MACCATALYST
-        _timePicker.Focus();
+            return _timePicker.Focus();
 #endif
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        if (_timePicker != null)
+        {
+            _timePicker.Unfocus();
+        }
     }
 
     #endregion Methods

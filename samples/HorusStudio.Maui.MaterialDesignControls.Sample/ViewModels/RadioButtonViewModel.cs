@@ -16,9 +16,18 @@ public partial class RadioButtonViewModel : BaseViewModel
 
     [ObservableProperty]
     private CustomColor _checkedColor;
+    
+    [ObservableProperty]
+    private string _checkedColorText;
 
     [ObservableProperty]
     private bool _isRadioButtonEnabled;
+    
+    [ObservableProperty]
+    private ObservableCollection<object> _selectedRadioButtons;
+        
+    [ObservableProperty]
+    private string _selectedRadioButtonsText;
 
     #endregion
 
@@ -46,18 +55,43 @@ public partial class RadioButtonViewModel : BaseViewModel
             };
 
         CheckedColor = ItemsSourceColors.FirstOrDefault();
+
+        CheckedColorText = $"Selected value: {CheckedColor.Color}";
+        
+        SelectedRadioButtons = new ObservableCollection<object>();
+        SelectedRadioButtonsText = "Selected values: -";
     }
 
     [ICommand]
     private async Task CheckChanged()
     {
-        await DisplayAlert(Title, CheckedColor.Color ?? "none", "OK");
+        if (CheckedColor != null)
+        {
+            CheckedColorText = $"Selected value: {CheckedColor.Color}";
+        }
+        else
+        {
+            CheckedColorText = $"Selected value: -";
+        }
     }
 
     [ICommand]
     private async Task CheckedChanged(object message)
     {
-        await DisplayAlert(Title + " from Command", message.ToString(), "OK");
+        await DisplayAlert("CheckedChangedCommand", $"Value: {message.ToString()}", "OK");
+    }
+    
+    [ICommand]
+    private async Task ShowSelectedRadioButtons()
+    {
+        if (SelectedRadioButtons != null && SelectedRadioButtons.Count > 0)
+        {
+            SelectedRadioButtonsText = $"Selected values: {string.Join(", ", SelectedRadioButtons)}";
+        }
+        else
+        {
+            SelectedRadioButtonsText = "Selected values: -";
+        }
     }
 }
 

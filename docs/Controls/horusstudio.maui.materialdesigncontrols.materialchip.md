@@ -1,23 +1,24 @@
-# MaterialChips
+# MaterialChip
 
-A Chips help people enter information, make selections, filter content, or trigger actions [see here.](https://m3.material.io/components/chips/overview)
+Chips help people enter information, make selections, filter content, or trigger actions and follow Material Design Guidelines. [See more.](https://m3.material.io/components/chips/overview)
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
-Inherits from: MaterialChips → [ContentView](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.contentview)
+Inherits from: MaterialChip → [ContentView](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.contentview)
 
 <br>
 
-![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialChips.gif)
+Remarks: The [MaterialViewGroup](docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewgroup.md) class allows grouping chips, providing control over the selection type (Single or Multiple), item selection through bindings, and commands that trigger when the selection changes.
+
+![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialChip.gif)
 
 ### XAML sample
 
 ```csharp
 xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
 
-<material:MaterialChips
+<material:MaterialChip
        Type="Normal"
-       IconStateOnSelection="BothVisible"
        LeadingIcon="plus.png"
        Text="Suggestion both"
        TrailingIcon="horus_logo.png"/>
@@ -26,10 +27,9 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 ### C# sample
 
 ```csharp
-var chips = new MaterialChips
+var chip = new MaterialChip
 {
-    Type = MaterialChipsType.Normal,
-    IconStateOnSelection = IconStateType.BothVisible,
+    Type = MaterialChipType.Normal,
     LeadingIcon = "plus.png",
     Text = "Suggestion both",
     TrailingIcon="horus_logo.png"
@@ -40,38 +40,31 @@ var chips = new MaterialChips
 
 ## Properties
 
-### <a id="properties-animation"/>**Animation**
+### <a id="properties-applyleadingicontintcolor"/>**ApplyLeadingIconTintColor**
 
-Gets or sets an animation to be executed when is clicked.
+Gets or sets if leading icon should use tint color or not.
  This is a bindable property.
 
-Property type: AnimationTypes<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade
+Default value: true
 
 <br>
 
-### <a id="properties-animationparameter"/>**AnimationParameter**
+### <a id="properties-applytrailingicontintcolor"/>**ApplyTrailingIconTintColor**
 
-Gets or sets the parameter to pass to the MaterialChips.Animation property.
+Gets or sets if trailing icon should use tint color or not.
  This is a bindable property.
 
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: null
+Default value: true
 
 <br>
 
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
-Gets or sets a color that describes the background color of the chips.
+Gets or sets a background color for Chip.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -82,7 +75,7 @@ Default value: Theme: Light = MaterialLightTheme.SurfaceContainerLow - Dark = Ma
 
 ### <a id="properties-bordercolor"/>**BorderColor**
 
-Gets or sets a color that describes the border stroke color of the chips.
+Gets or sets stroke color for Chip.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -93,13 +86,13 @@ Remarks:
 
 - <para>This property has no effect if <see cref="P:Microsoft.Maui.Controls.IBorderElement.BorderWidth">IBorderElement.BorderWidth</see> is set to 0.</para>
 
-- <para>On Android this property will not have an effect unless <see cref="P:Microsoft.Maui.Controls.VisualElement.BackgroundColor" />is set to a non-default color.</para>
+- <para>On Android this property will not have an effect unless <see cref="P:Microsoft.Maui.Controls.VisualElement.BackgroundColor">VisualElement.BackgroundColor</see> is set to a non-default color.</para>
 
 <br>
 
 ### <a id="properties-borderwidth"/>**BorderWidth**
 
-Gets or sets the width of the border, in device-independent units.
+Gets or sets border width for Chip in device-independent units.
  This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
@@ -112,7 +105,7 @@ Remarks: Set this value to a non-zero value in order to have a visible border.
 
 ### <a id="properties-command"/>**Command**
 
-Gets or sets the command to invoke when the Chips is activated.
+Gets or sets the command to invoke when Chip is activated.
  This is a bindable property.
 
 Property type: ICommand<br>
@@ -126,20 +119,9 @@ Remarks: This property is used to associate a command with an instance of Chips.
 
 <br>
 
-### <a id="properties-commandparameter"/>**CommandParameter**
-
-Gets or sets the parameter to pass to the MaterialChips.Command property.
- This is a bindable property.
-
-Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
-
-Default value: null
-
-<br>
-
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
-Gets or sets the corner radius for the Chips.
+Gets or sets the corner radius for Chip.
  This is a bindable property.
 
 Property type: [CornerRadius](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.cornerradius)<br>
@@ -148,20 +130,9 @@ Default value: CornerRadius(8)
 
 <br>
 
-### <a id="properties-customanimation"/>**CustomAnimation**
-
-Gets or sets a custom animation to be executed when is clicked.
- This is a bindable property.
-
-Property type: ICustomAnimation<br>
-
-Default value: null
-
-<br>
-
 ### <a id="properties-fontfamily"/>**FontFamily**
 
-Gets or sets the font family for the text of this chips.
+Gets or sets a font family for Chip.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
@@ -172,7 +143,7 @@ Default value: MaterialFontFamily.Default
 
 ### <a id="properties-fontsize"/>**FontSize**
 
-Gets or sets the size of the font for the text of this chips.
+Gets or sets font size for Chip.
  This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
@@ -181,48 +152,32 @@ Default value: MaterialFontSize.LabelLarge / Tablet: 14 - Phone: 11
 
 <br>
 
-### <a id="properties-iconstateonselection"/>**IconStateOnSelection**
-
-Gets or sets the badge type according to IconStateType enum.
- This is a bindable property.
-
-Property type: IconStateType<br>
-
-| Name | Value | Description |
-| --- | --: | --- |
-| BothVisible | 0 | Visible both icon when selected |
-| LeadingVisible | 1 | Visible only Leading icon when selected |
-| TrailingVisible | 2 | Visible only Trailing icon when selected |
-
-Default value: IconStateType.BothVisible
-
-<br>
-
 ### <a id="properties-isenabled"/>**IsEnabled**
 
-Gets or sets the state when the Chips is enabled.
+Gets or sets if Chip is enabled.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
 ### <a id="properties-isselected"/>**IsSelected**
 
-Gets or sets the state when the Chips is selected.
+Gets or sets if Chip is selected (Filter type only).
+ Inherited from IGroupableView.IsSelected.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: False
+Default value: false
 
 <br>
 
 ### <a id="properties-leadingicon"/>**LeadingIcon**
 
-Gets or sets image leading for the Chips.
+Gets or sets a leading icon for Chip.
  This is a bindable property.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
@@ -233,7 +188,7 @@ Default value: null
 
 ### <a id="properties-leadingicontintcolor"/>**LeadingIconTintColor**
 
-Gets or sets a color that describes the leading icon color of the chips.
+Gets or sets tint color for Chip's leading icon.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -244,7 +199,7 @@ Default value: Theme: Light = MaterialLightTheme.Primary - Dark = MaterialDarkTh
 
 ### <a id="properties-padding"/>**Padding**
 
-Gets or sets the padding for the Chips.
+Gets or sets the padding for Chip.
  This is a bindable property.
 
 Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
@@ -266,7 +221,7 @@ Default value: MaterialElevation.Level1
 
 ### <a id="properties-shadowcolor"/>**ShadowColor**
 
-Gets or sets a color that describes the shadow color of the chips.
+Gets or sets shadow color for Chip.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -277,18 +232,18 @@ Default value: Theme: Light = MaterialLightTheme.Shadow - Dark = MaterialDarkThe
 
 ### <a id="properties-text"/>**Text**
 
-Gets or sets text the Chips.
+Gets or sets text for Chip.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-Default value: [String.Empty](https://docs.microsoft.com/en-us/dotnet/api/system.string.empty)
+Default value: [string.Empty](https://docs.microsoft.com/en-us/dotnet/api/system.string.empty)
 
 <br>
 
 ### <a id="properties-textcolor"/>**TextColor**
 
-Gets or sets text color the Chips.
+Gets or sets text color for Chip.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -297,9 +252,40 @@ Default value: Theme: Light = MaterialLightTheme.OnSurfaceVariant - Dark = Mater
 
 <br>
 
+### <a id="properties-touchanimation"/>**TouchAnimation**
+
+Gets or sets a custom animation to be executed when Chip is activated.
+ Inherited from ITouchableView.TouchAnimation.
+ This is a bindable property.
+
+Property type: ITouchAnimation<br>
+
+Default value: null
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when Chip is activated.
+ Inherited from ITouchableView.TouchAnimationType.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
+
+<br>
+
 ### <a id="properties-trailingicon"/>**TrailingIcon**
 
-Gets or sets image trailing for the Chips.
+Gets or sets a trailing icon for Chip.
  This is a bindable property.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
@@ -310,7 +296,7 @@ Default value: null
 
 ### <a id="properties-trailingicontintcolor"/>**TrailingIconTintColor**
 
-Gets or sets a color that describes the trailing icon color of the chips.
+Gets or sets tint color for Chip's trailing icon.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -321,23 +307,37 @@ Default value: Theme: Light = MaterialLightTheme.Primary - Dark = MaterialDarkTh
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets type Chips.
+Gets or sets Chip type.
  This is a bindable property.
 
-Property type: MaterialChipsType<br>
+Property type: MaterialChipType<br>
 
 | Name | Value | Description |
 | --- | --: | --- |
 | Filter | 0 | Filter chips |
 | Normal | 1 | Assist, input and suggestion chips |
 
-Default value: MaterialChipsType.Normal
+Default value: MaterialChipType.Normal
 
 Remarks:
 
-- <para>Normal: They are for the types assist, input amd suggestion, chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters.</para>
+- <para>Normal: Help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses.</para>
 
-- <para>Filter: chips use tags or descriptive words to filter content. They can be a good alternative to segmented buttons or checkboxes when viewing a list or search results.</para>
+- <para>Filter: Use tags or descriptive words to filter content. They can be a good alternative to segmented buttons or checkboxes when viewing a list or search results.</para>
+
+<br>
+
+### <a id="properties-value"/>**Value**
+
+Gets or sets a value for Chip.
+ Inherited from IGroupableView.Value.
+ This is a bindable property.
+
+Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
+
+Default value: MaterialChip.Text
+
+Remarks: If a value is not explicitly set, the control will use the Text property if set or the Id property as its default.
 
 <br>
 
@@ -348,7 +348,3 @@ Remarks:
 Occurs when the chips is clicked/tapped.
 
 <br>
-
-## Known issues and pending features
-
-* .NET 7 not work LineBreakMode.

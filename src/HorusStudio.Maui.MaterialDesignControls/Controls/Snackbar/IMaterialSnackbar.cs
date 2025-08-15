@@ -1,7 +1,7 @@
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// Abstraction to handle Material Snackbar component that follows <see href="https://m3.material.io/components/snackbar/overview">Material Design Guidelines</see>.
+/// Abstraction to handle Snackbars that follow Material Design Guidelines. <see href="https://m3.material.io/components/snackbar/overview">See more</see>.
 /// </summary>
 /// <example>
 /// <h3>C# sample</h3>
@@ -25,6 +25,9 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/SnackbarPage.xaml)
 /// </example>
+/// <todoList>
+/// * [macOS] MaterialSnackbar with icons are not shown due to an icon rendering issue
+/// </todoList>
 public interface IMaterialSnackbar
 {
     /// <summary>

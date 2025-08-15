@@ -50,8 +50,6 @@
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and other properties" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
-                <!--TODO: fix height request--> 
-                <!--TODO: add text vertical aligment-->
                 <material:MaterialMultilineTextField 
                     MaxLength="100"
                     Type="Outlined"
@@ -68,7 +66,7 @@
         </material:MaterialCard>
         <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set a max length." Type="BodySmall" />
         
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting tex, checking errors and animation in case of error" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
                 <material:MaterialMultilineTextField 
@@ -76,6 +74,7 @@
                     SupportingText="{Binding SupportingTextValue}"
                     Type="Filled"
                     HasError="{Binding HasAnError}"
+                    ErrorAnimationType="Shake"
                     Placeholder="Enter text here" />
                 <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />
             </VerticalStackLayout>

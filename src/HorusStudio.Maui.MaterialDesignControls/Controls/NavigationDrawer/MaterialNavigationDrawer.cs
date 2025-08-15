@@ -7,7 +7,7 @@ using HorusStudio.Maui.MaterialDesignControls.Converters;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A navigation drawer <see cref="View" /> let people switch between UI views on larger devices <see href="https://m3.material.io/components/navigation-drawer/overview" />.
+/// Navigation drawers let people switch between UI views on larger devices and follow Material Design Guidelines. <see href="https://m3.material.io/components/navigation-drawer/overview">See more</see>.
 /// </summary>
 /// <example>
 ///
@@ -62,10 +62,7 @@ public class MaterialNavigationDrawer : ContentView
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeFontSize = _ => MaterialFontSize.LabelLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDisabledColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialDarkTheme.Disable }.GetValueForCurrentTheme<Color>();
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-#nullable enable
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
-#nullable disable
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
     private const double DefaultIconSize = 24.0;
     private const double DefaultItemHeightRequest = 56.0;
     private const double DefaultItemContentSpacing = 12.0;
@@ -83,142 +80,142 @@ public class MaterialNavigationDrawer : ContentView
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="HeadlineTextColor" /> bindable property.
+    /// The backing store for the <see cref="HeadlineTextColor">HeadlineTextColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HeadlineTextColorProperty = BindableProperty.Create(nameof(HeadlineTextColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultHeadlineColor);
 
     /// <summary>
-    /// The backing store for the <see cref="HeadlineFontSize" /> bindable property.
+    /// The backing store for the <see cref="HeadlineFontSize">HeadlineFontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HeadlineFontSizeProperty = BindableProperty.Create(nameof(HeadlineFontSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultHeadlineFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="HeadlineFontFamily" /> bindable property.
+    /// The backing store for the <see cref="HeadlineFontFamily">HeadlineFontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HeadlineFontFamilyProperty = BindableProperty.Create(nameof(HeadlineFontFamily), typeof(string), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="HeadlineMargin" /> bindable property.
+    /// The backing store for the <see cref="HeadlineMargin">HeadlineMargin</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HeadlineMarginProperty = BindableProperty.Create(nameof(HeadlineMargin), typeof(Thickness), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineMargin);
 
     /// <summary>
-    /// The backing store for the <see cref="HeadlineFontAttributes" /> bindable property.
+    /// The backing store for the <see cref="HeadlineFontAttributes">HeadlineFontAttributes</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HeadlineFontAttributesProperty = BindableProperty.Create(nameof(HeadlineFontAttributes), typeof(FontAttributes), typeof(MaterialNavigationDrawer), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="HeadlineFontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="HeadlineFontAutoScalingEnabled">HeadlineFontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HeadlineFontAutoScalingEnabledProperty = BindableProperty.Create(nameof(HeadlineFontAutoScalingEnabled), typeof(bool), typeof(MaterialNavigationDrawer), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="HeadlineCharactersSpacing" /> bindable property.
+    /// The backing store for the <see cref="HeadlineCharactersSpacing">HeadlineCharactersSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HeadlineCharactersSpacingProperty = BindableProperty.Create(nameof(HeadlineCharactersSpacing), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultHeadlineCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="HeadlineTextTransform" /> bindable property.
+    /// The backing store for the <see cref="HeadlineTextTransform">HeadlineTextTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty HeadlineTextTransformProperty = BindableProperty.Create(nameof(HeadlineTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: DefaultHeadlineTextTransform);
 
     /// <summary>
-    /// The backing store for the <see cref="ActiveIndicatorBackgroundColor" /> bindable property.
+    /// The backing store for the <see cref="ActiveIndicatorBackgroundColor">ActiveIndicatorBackgroundColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ActiveIndicatorBackgroundColorProperty = BindableProperty.Create(nameof(ActiveIndicatorBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultActiveIndicatorBackgroundColor);
 
     /// <summary>
-    /// The backing store for the <see cref="ActiveIndicatorLabelColor" /> bindable property.
+    /// The backing store for the <see cref="ActiveIndicatorLabelColor">ActiveIndicatorLabelColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ActiveIndicatorLabelColorProperty = BindableProperty.Create(nameof(ActiveIndicatorLabelColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultActiveIndicatorTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="ActiveIndicatorCornerRadius" /> bindable property.
+    /// The backing store for the <see cref="ActiveIndicatorCornerRadius">ActiveIndicatorCornerRadius</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ActiveIndicatorCornerRadiusProperty = BindableProperty.Create(nameof(ActiveIndicatorCornerRadius), typeof(float), typeof(MaterialNavigationDrawer), defaultValue: DefaultActiveIndicatorCornerRadius);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelColor" /> bindable property.
+    /// The backing store for the <see cref="LabelColor">LabelColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(nameof(LabelColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelFontSize" /> bindable property.
+    /// The backing store for the <see cref="LabelFontSize">LabelFontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelFontSizeProperty = BindableProperty.Create(nameof(LabelFontSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelFontFamily" /> bindable property.
+    /// The backing store for the <see cref="LabelFontFamily">LabelFontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelFontFamilyProperty = BindableProperty.Create(nameof(LabelFontFamily), typeof(string), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelFontAttributes" /> bindable property.
+    /// The backing store for the <see cref="LabelFontAttributes">LabelFontAttributes</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelFontAttributesProperty = BindableProperty.Create(nameof(LabelFontAttributes), typeof(FontAttributes), typeof(MaterialNavigationDrawer), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelFontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="LabelFontAutoScalingEnabled">LabelFontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelFontAutoScalingEnabledProperty = BindableProperty.Create(nameof(LabelFontAutoScalingEnabled), typeof(bool), typeof(MaterialNavigationDrawer), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelCharactersSpacing" /> bindable property.
+    /// The backing store for the <see cref="LabelCharactersSpacing">LabelCharactersSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelCharactersSpacingProperty = BindableProperty.Create(nameof(LabelCharactersSpacing), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="LabelTextTransform" /> bindable property.
+    /// The backing store for the <see cref="LabelTextTransform">LabelTextTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty LabelTextTransformProperty = BindableProperty.Create(nameof(LabelTextTransform), typeof(TextTransform), typeof(MaterialNavigationDrawer), defaultValue: DefaultTextTransform);
 
     /// <summary>
-    /// The backing store for the <see cref="DividerType" /> bindable property.
+    /// The backing store for the <see cref="DividerType">DividerType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty DividerTypeProperty = BindableProperty.Create(nameof(DividerType), typeof(MaterialNavigationDrawerDividerType), typeof(MaterialNavigationDrawer), defaultValue: DefaultDivider);
 
     /// <summary>
-    /// The backing store for the <see cref="DividerColor" /> bindable property.
+    /// The backing store for the <see cref="DividerColor">DividerColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty DividerColorProperty = BindableProperty.Create(nameof(DividerColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultDividerColor);
 
     /// <summary>
-    /// The backing store for the <see cref="BadgeType" /> bindable property.
+    /// The backing store for the <see cref="BadgeType">BadgeType</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BadgeTypeProperty = BindableProperty.Create(nameof(BadgeType), typeof(MaterialBadgeType), typeof(MaterialNavigationDrawer), defaultValue: DefaultBadgeType);
 
     /// <summary>
-    /// The backing store for the <see cref="BadgeTextColor" /> bindable property.
+    /// The backing store for the <see cref="BadgeTextColor">BadgeTextColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BadgeTextColorProperty = BindableProperty.Create(nameof(BadgeTextColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultBadgeTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="BadgeFontSize" /> bindable property.
+    /// The backing store for the <see cref="BadgeFontSize">BadgeFontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BadgeFontSizeProperty = BindableProperty.Create(nameof(BadgeFontSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultBadgeFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="BadgeFontFamily" /> bindable property.
+    /// The backing store for the <see cref="BadgeFontFamily">BadgeFontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BadgeFontFamilyProperty = BindableProperty.Create(nameof(BadgeFontFamily), typeof(string), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="BadgeBackgroundColor" /> bindable property.
+    /// The backing store for the <see cref="BadgeBackgroundColor">BadgeBackgroundColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty BadgeBackgroundColorProperty = BindableProperty.Create(nameof(BadgeBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValue: DefaultBadgeBackground);
 
     /// <summary>
-    /// The backing store for the <see cref="SectionTemplate" /> bindable property.
+    /// The backing store for the <see cref="SectionTemplate">SectionTemplate</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SectionTemplateProperty = BindableProperty.Create(nameof(SectionTemplate), typeof(DataTemplate), typeof(MaterialNavigationDrawer), defaultValue: null, defaultBindingMode: BindingMode.TwoWay);
 
     /// <summary>
-    /// The backing store for the <see cref="ItemTemplate" /> bindable property.
+    /// The backing store for the <see cref="ItemTemplate">ItemTemplate</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), typeof(MaterialNavigationDrawer), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="ItemsSource" /> bindable property.
+    /// The backing store for the <see cref="ItemsSource">ItemsSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<MaterialNavigationDrawerItem>), typeof(MaterialNavigationDrawer), defaultValue: null, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindableObject, _, _) =>
     {
@@ -229,43 +226,42 @@ public class MaterialNavigationDrawer : ContentView
     });
 
     /// <summary>
-    /// The backing store for the <see cref="ItemHeightRequest" /> bindable property.
+    /// The backing store for the <see cref="ItemHeightRequest">ItemHeightRequest</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemHeightRequestProperty = BindableProperty.Create(nameof(ItemHeightRequest), typeof(double), typeof(MaterialNavigationDrawer), defaultValue: DefaultItemHeightRequest);
 
     /// <summary>
-    /// The backing store for the <see cref="Command" /> bindable property.
+    /// The backing store for the <see cref="Command">Command</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialNavigationDrawer), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="Animation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultAnimationType);
-
-#nullable enable
-    /// <summary>
-    /// The backing store for the <see cref="AnimationParameter"/> bindable property.
-    /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultAnimationParameter);
-#nullable disable
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="CustomAnimation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialNavigationDrawer));
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialNavigationDrawer));
 
     /// <summary>
-    /// The backing store for the <see cref="DisabledLabelColor" /> bindable property.
+    /// The backing store for the <see cref="DisabledLabelColor">DisabledLabelColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty DisabledLabelColorProperty = BindableProperty.Create(nameof(DisabledLabelColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultDisabledColor);
+
+    /// <summary>
+    /// The backing store for the <see cref="IconSize">IconSize</see> bindable property.
+    /// </summary>
+    public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(double), typeof(MaterialNavigationDrawer), defaultValue: DefaultIconSize);
 
     #endregion Bindable Properties
 
     #region Properties
-    
+
     /// <summary>
-    /// Gets or sets the <see cref="HeadlineTextColor" /> for the text of the headline. This is a bindable property.
+    /// Gets or sets the <see cref="Color">color</see> for the text of the headline.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
@@ -277,7 +273,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font family for the headline. This is a bindable property.
+    /// Gets or sets the font family for the headline.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
@@ -289,7 +286,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the margin of the headline label. This is a bindable property.
+    /// Gets or sets the margin of the headline label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Thickness(4, 16)
@@ -301,10 +299,11 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text style of the label. This is a bindable property.
+    /// Gets or sets the text style of the label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public FontAttributes HeadlineFontAttributes
     {
@@ -313,10 +312,10 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
+    /// Defines whether an app's UI reflects text scaling preferences set in the operating system.
     /// </summary>
     /// <default>
-    /// <see langword="True"/>
+    /// <see langword="true">True</see>
     /// </default>
     public bool HeadlineFontAutoScalingEnabled
     {
@@ -325,10 +324,11 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Defines the casing of the label. This is a bindable property.
+    /// Defines the casing of the label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="TextTransform.Default">TextTransform.Defaultl</see>
+    /// <see cref="TextTransform.Default">TextTransform.Default</see>
     /// </default>
     public TextTransform HeadlineTextTransform
     {
@@ -337,7 +337,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the spacing between characters of the headline. This is a bindable property.
+    /// Gets or sets the spacing between characters of the headline.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontTracking.TitleSmall">MaterialFontTracking.TitleSmall</see>
@@ -349,7 +350,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Defines the font size of the label. This is a bindable property.
+    /// Defines the font size of the label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontSize.TitleSmall">MaterialFontSize.TitleSmall</see>
@@ -361,7 +363,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Defines the active background color. This is a bindable property.
+    /// Defines the active background color.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.PrimaryContainer">MaterialLightTheme.PrimaryContainer</see> - Dark: <see cref="MaterialDarkTheme.PrimaryContainer">MaterialDarkTheme.PrimaryContainer</see>
@@ -373,7 +376,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Defines the active indicator label color. This is a bindable property.
+    /// Defines the active indicator label color.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.OnPrimaryContainer">MaterialLightTheme.OnPrimaryContainer</see> - Dark: <see cref="MaterialDarkTheme.OnPrimaryContainer">MaterialDarkTheme.OnPrimaryContainer</see>
@@ -385,7 +389,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Defines the active indicator corner radius. This is a bindable property.
+    /// Defines the active indicator corner radius.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// 28.0f
@@ -397,7 +402,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="LabelColor" /> for the text of each item. This is a bindable property.
+    /// Gets or sets the text <see cref="Color">color</see> for each item.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.Text">MaterialLightTheme.Text</see> - Dark: <see cref="MaterialDarkTheme.Text">MaterialDarkTheme.Text</see>
@@ -409,7 +415,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="LabelFontSize" /> for the text of each item. This is a bindable property.
+    /// Gets or sets the font size for each item.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontSize.LabelLarge">MaterialFontSize.LabelLarge</see> / Tablet: 14 - Phone: 11
@@ -421,7 +428,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font family for each item label. This is a bindable property.
+    /// Gets or sets the font family for each item.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
@@ -433,10 +441,11 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text style of each item label. This is a bindable property.
+    /// Gets or sets the text style of each item.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public FontAttributes LabelFontAttributes
     {
@@ -445,10 +454,10 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
+    /// Defines whether an app's UI reflects text scaling preferences set in the operating system.
     /// </summary>
     /// <default>
-    /// <see langword="True" />
+    /// <see langword="true">True</see>
     /// </default>
     public bool LabelFontAutoScalingEnabled
     {
@@ -457,7 +466,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Defines the casing of the label of each item. This is a bindable property.
+    /// Defines the casing of the label of each item.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="TextTransform.Default">TextTransform.Default</see>
@@ -469,7 +479,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the spacing between characters of each item label. This is a bindable property.
+    /// Gets or sets the spacing between characters of each item label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontTracking.LabelLarge">MaterialFontTracking.LabelLarge</see>
@@ -481,7 +492,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets if dividers are visible between sections, items or not visible. This is a bindable property.
+    /// Gets or sets if dividers are visible between sections, items or not visible.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Dividers between sections: <see cref="MaterialNavigationDrawerDividerType.Section">NavigationDrawerDividerType.Section</see> 
@@ -493,7 +505,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Color" /> for the divider. This is a bindable property.
+    /// Gets or sets the <see cref="Color">color</see> for the divider.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.OutlineVariant">MaterialLightTheme.OutlineVariant</see> - Dark: <see cref="MaterialDarkTheme.OutlineVariant">MaterialDarkTheme.OutlineVariant</see>
@@ -505,7 +518,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="MaterialBadgeType" />. This is a bindable property.
+    /// Gets or sets the <see cref="MaterialBadgeType">Badge type</see>.
+    /// This is a bindable property.
     /// </summary>
     public MaterialBadgeType BadgeType
     {
@@ -514,7 +528,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text <see cref="Color" /> for the badge. This is a bindable property.
+    /// Gets or sets the text <see cref="Color">color</see> for the badge.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
@@ -526,7 +541,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="FontSize" /> for the badge label. This is a bindable property.
+    /// Gets or sets font size for the badge label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontSize.LabelLarge">MaterialFontSize.LabelLarge</see>
@@ -538,7 +554,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the font family for the badge label. This is a bindable property.
+    /// Gets or sets the font family for the badge label.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// <see cref="MaterialFontFamily.Default">MaterialFontFamily.Default</see>
@@ -550,7 +567,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the text <see cref="Color" /> for the badge background. This is a bindable property.
+    /// Gets or sets the background <see cref="Color">color</see> for the badge.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="Colors.Transparent">Colors.Transparent</see> - Dark: <see cref="Colors.Transparent">Colors.Transparent</see>
@@ -563,9 +581,10 @@ public class MaterialNavigationDrawer : ContentView
 
     /// <summary>
     /// Gets or sets the section template.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null" />
+    /// <see langword="null">Null</see>
     /// </default>
     public DataTemplate SectionTemplate
     {
@@ -574,10 +593,11 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the item template for each item from ItemsSource. This is a bindable property.
+    /// Gets or sets the item template for each item from ItemsSource.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null" />
+    /// <see langword="null">Null</see>
     /// </default>
     public DataTemplate ItemTemplate
     {
@@ -586,11 +606,9 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the items source. This is a bindable property.
+    /// Gets or sets the items' source.
+    /// This is a bindable property.
     /// </summary>
-    /// <default>
-    /// <see langword="True" />
-    /// </default>
     public IEnumerable<MaterialNavigationDrawerItem> ItemsSource
     {
         get => (IEnumerable<MaterialNavigationDrawerItem>)GetValue(ItemsSourceProperty);
@@ -598,7 +616,8 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the height for each item. This is a bindable property.
+    /// Gets or sets the height for each item.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
     /// 56.0
@@ -610,10 +629,11 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets the command for each item. This is a bindable property.
+    /// Gets or sets the command for each item.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null" />
+    /// <see langword="null">Null</see>
     /// </default>
     public ICommand Command
     {
@@ -622,48 +642,34 @@ public class MaterialNavigationDrawer : ContentView
     }
 
     /// <summary>
-    /// Gets or sets an animation to be executed when an icon is clicked
-    /// The default value is <see cref="AnimationTypes.Fade"/>.
+    /// Gets or sets an animation to be executed when an icon is clicked.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialAnimation.Type">MaterialAnimation.Type</see>
+    /// <see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see>
     /// </default>
-    public AnimationTypes Animation
+    public TouchAnimationTypes TouchAnimationType
     {
-        get => (AnimationTypes)GetValue(AnimationProperty);
-        set => SetValue(AnimationProperty, value);
+        get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+        set => SetValue(TouchAnimationTypeProperty, value);
     }
 
-#nullable enable
     /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-    /// The default value is <see langword="null"/>.
+    /// Gets or sets a custom animation to be executed when an icon is clicked.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="MaterialAnimation.Parameter">MaterialAnimation.Parameter</see>
+    /// <see langword="null">Null</see>
     /// </default>
-    public double? AnimationParameter
+    public ITouchAnimation TouchAnimation
     {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
+        get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+        set => SetValue(TouchAnimationProperty, value);
     }
-#nullable disable
 
     /// <summary>
-    /// Gets or sets a custom animation to be executed when a icon is clicked.
-    /// The default value is <see langword="null"/>.
+    /// Gets or sets the text <see cref="Color">color</see> for the label when is disabled.
     /// This is a bindable property.
-    /// </summary>
-    public ICustomAnimation CustomAnimation
-    {
-        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-        set => SetValue(CustomAnimationProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the text <see cref="Color" /> for the label when is disabled. This is a bindable property.
     /// </summary>
     /// <default>
     /// Light: <see cref="MaterialLightTheme.Disable">MaterialLightTheme.Disable</see> - Dark: <see cref="MaterialDarkTheme.Disable">MaterialDarkTheme.Disable</see>
@@ -672,6 +678,19 @@ public class MaterialNavigationDrawer : ContentView
     {
         get => (Color)GetValue(DisabledLabelColorProperty);
         set => SetValue(DisabledLabelColorProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the icon size for the leading and trailing icons.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// 24
+    /// </default>
+    public double IconSize
+    {
+        get => (double)GetValue(IconSizeProperty);
+        set => SetValue(IconSizeProperty, value);
     }
 
     #endregion Properties
@@ -847,9 +866,8 @@ public class MaterialNavigationDrawer : ContentView
             materialCard.SetBinding(MinimumHeightRequestProperty, new Binding(nameof(ItemHeightRequest), source: this));
             materialCard.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(item.IsSelected), source: item, converter: new IsSelectedToFrameBackgroundConverter(this)));
             materialCard.SetBinding(MaterialCard.CornerRadiusProperty, new Binding(nameof(ActiveIndicatorCornerRadius), source: this));
-            materialCard.SetBinding(MaterialCard.AnimationProperty, new Binding(nameof(Animation), source: this));
-            materialCard.SetBinding(MaterialCard.AnimationParameterProperty, new Binding(nameof(AnimationParameter), source: this));
-            materialCard.SetBinding(MaterialCard.CustomAnimationProperty, new Binding(nameof(CustomAnimation), source: this));
+            materialCard.SetBinding(MaterialCard.TouchAnimationTypeProperty, new Binding(nameof(TouchAnimationType), source: this));
+            materialCard.SetBinding(MaterialCard.TouchAnimationProperty, new Binding(nameof(TouchAnimation), source: this));
 
             materialCard.Command = new Command(() =>
             {
@@ -947,12 +965,13 @@ public class MaterialNavigationDrawer : ContentView
     {
         var icon = new Image
         {
-            HeightRequest = DefaultIconSize,
-            MinimumHeightRequest = DefaultIconSize,
-            WidthRequest = DefaultIconSize,
-            MinimumWidthRequest = DefaultIconSize,
             VerticalOptions = LayoutOptions.Center
         };
+
+        icon.SetBinding(Image.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
+        icon.SetBinding(Image.MinimumHeightRequestProperty, new Binding(nameof(IconSize), source: this));
+        icon.SetBinding(Image.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
+        icon.SetBinding(Image.MinimumWidthRequestProperty, new Binding(nameof(IconSize), source: this));
 
         var tintColorBehavior = new IconTintColorBehavior();
         tintColorBehavior.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(item.IsEnabled), source: item, converter: new ItemEnabledToColorConverter(this)));
@@ -1218,7 +1237,7 @@ public class MaterialNavigationDrawer : ContentView
     #endregion Converters
 
     /// <summary>
-    /// Divider types for <see cref="MaterialNavigationDrawer" />
+    /// Divider types for <see cref="MaterialNavigationDrawer">material navigation drawer</see>.
     /// </summary>
     public enum MaterialNavigationDrawerDividerType
     {

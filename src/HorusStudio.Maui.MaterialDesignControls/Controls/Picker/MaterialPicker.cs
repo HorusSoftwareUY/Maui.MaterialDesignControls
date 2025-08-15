@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Windows.Input;
+using Microsoft.Maui.Handlers;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A picker <see cref="View" /> let users select an option. 
+/// Pickers let users select an option. They typically appear in forms and dialogs. 
 /// </summary>
 /// <example>
 ///
@@ -48,7 +49,7 @@ public class MaterialPicker : MaterialInputBase
 
     #region Layout
 
-    private readonly CustomPicker _picker;
+    private readonly CustomPicker? _picker;
 
     #endregion Layout
 
@@ -72,10 +73,10 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
 
-        InputTapCommand = new Command(() => DoFocus());
-        LeadingIconCommand = new Command(() => DoFocus());
+        InputTapCommand = new Command(() => Focus());
+        LeadingIconCommand = new Command(() => Focus());
         TrailingIcon = MaterialIcon.Picker;
-        TrailingIconCommand = new Command(() => DoFocus());
+        TrailingIconCommand = new Command(() => Focus());
         Content = _picker;
     }
 
@@ -84,27 +85,27 @@ public class MaterialPicker : MaterialInputBase
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="VerticalTextAlignment" /> bindable property.
+    /// The backing store for the <see cref="VerticalTextAlignment">VerticalTextAlignment</see> bindable property.
     /// </summary>
     public static readonly BindableProperty VerticalTextAlignmentProperty = BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(MaterialPicker), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialPicker), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialPicker), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="ItemsSource" /> bindable property.
+    /// The backing store for the <see cref="ItemsSource">ItemsSource</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(MaterialPicker), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="SelectedItem" /> bindable property.
+    /// The backing store for the <see cref="SelectedItem">SelectedItem</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(MaterialPicker), defaultValue: null, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindableObject, _, _) => 
     {
@@ -115,29 +116,29 @@ public class MaterialPicker : MaterialInputBase
     });
 
     /// <summary>
-    /// The backing store for the <see cref="SelectedIndex" /> bindable property.
+    /// The backing store for the <see cref="SelectedIndex">SelectedIndex</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(MaterialPicker), defaultValue: -1);
     
     /// <summary>
-    /// The backing store for the <see cref="SelectedIndexChangedCommand" /> bindable property.
+    /// The backing store for the <see cref="SelectedIndexChangedCommand">SelectedIndexChangedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty SelectedIndexChangedCommandProperty = BindableProperty.Create(nameof(SelectedIndexChangedCommand), typeof(ICommand), typeof(MaterialPicker), defaultValue: null);
     
     /// <summary>
-    /// The backing store for the <see cref="ItemDisplayPath" /> bindable property.
+    /// The backing store for the <see cref="ItemDisplayPath">ItemDisplayPath</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ItemDisplayPathProperty = BindableProperty.Create(nameof(ItemDisplayPath), typeof(string), typeof(MaterialPicker), defaultValue: null, propertyChanged:
         (bindableObject, _, newValue) =>
         {
-            if (bindableObject is MaterialPicker self)
+            if (bindableObject is MaterialPicker self && self._picker != null)
             {
                 self._picker.ItemDisplayBinding = new Binding(newValue as string);
             }
         });
     
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialPicker), defaultValue: null);
 
@@ -146,12 +147,12 @@ public class MaterialPicker : MaterialInputBase
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="Picker" /> control.
+    /// Internal implementation of the <see cref="Picker">Picker</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
     /// </remarks>
-    public Picker InternalPicker => _picker;
+    public Picker? InternalPicker => _picker;
 
     /// <summary>
     /// Gets or sets the vertical text alignment. This is a bindable property.
@@ -188,7 +189,7 @@ public class MaterialPicker : MaterialInputBase
     /// <value>The number of device-independent units that should be in between characters in the text.</value>
     /// </summary>
     /// <default>
-    ///  <see cref="MaterialFontTracking.BodyLarge"/> 0.5
+    ///  <see cref="MaterialFontTracking.BodyLarge">MaterialFontTracking.BodyLarge</see>
     /// </default>
     /// <remarks>
     /// To be added.
@@ -296,7 +297,10 @@ public class MaterialPicker : MaterialInputBase
 
     protected override void SetControlTemplate(MaterialInputType type)
     {
-        if (_picker == null) return;
+        if (_picker == null)
+        {
+            return;
+        }
 
 #if ANDROID
         var offset = 3;
@@ -317,11 +321,18 @@ public class MaterialPicker : MaterialInputBase
     protected override void SetControlIsEnabled()
     {
         if (_picker != null)
+        {
             _picker.IsEnabled = IsEnabled;
+        }
     }
 
     protected override void OnControlAppearing()
     {
+        if (_picker == null)
+        {
+            return;
+        }
+        
         // Setup events/animations
         _picker.Focused += ContentFocusChanged;
         _picker.Unfocused += ContentFocusChanged;
@@ -330,6 +341,11 @@ public class MaterialPicker : MaterialInputBase
 
     protected override void OnControlDisappearing()
     {
+        if (_picker == null)
+        {
+            return;
+        }
+        
         // Cleanup events/animations
         _picker.Focused -= ContentFocusChanged;
         _picker.Unfocused -= ContentFocusChanged;
@@ -347,6 +363,13 @@ public class MaterialPicker : MaterialInputBase
         else
         {
             Text = string.Empty;
+
+#if IOS || MACCATALYST
+            if (_picker != null && _picker.Handler is MaterialPickerHandler handler)
+            {
+                handler.ClearText();
+            }
+#endif
         }
     }
     
@@ -359,11 +382,31 @@ public class MaterialPicker : MaterialInputBase
         SelectedIndexChanged?.Invoke(this, e);
     }
 
-    private void DoFocus()
+    /// <summary>
+    /// Attempts to set focus to this element.
+    /// </summary>
+    /// <returns>true if the keyboard focus was set to this element; false if the call to this method did not force a focus change.</returns>
+    public new bool Focus()
     {
-        if (!IsEnabled) return;
+        if (_picker != null && IsEnabled)
+        {
+            return _picker.Focus();
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-        _picker.Focus();
+    /// <summary>
+    /// Unsets keyboard focus on this element.
+    /// </summary>
+    public new void Unfocus()
+    {
+        if (_picker != null)
+        {
+            _picker.Unfocus();
+        }
     }
 
     #endregion Methods

@@ -18,7 +18,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     }
 
     /// <summary>
-    /// A top app bar <see cref="View" /> that display navigation, actions, and text at the top of a screen, and follows Material Design Guidelines <see href="https://m3.material.io/components/top-app-bar/overview" >see here.</see>
+    /// Top App bars display navigation, actions, and text at the top of a screen, and follow Material Design Guidelines. <see href="https://m3.material.io/components/top-app-bar/overview" >See more</see>.
     /// </summary>
     /// <example>
     ///
@@ -80,9 +80,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const bool DefaultLeadingIconIsBusy = false;
         private static readonly IList? DefaultTrailingIcons = null;
         private const double DefaultIconSize = 48.0;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconButtonAnimationType = _ => MaterialAnimation.Type;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconButtonAnimationParameter = _ => MaterialAnimation.Parameter;
-        private static readonly ICustomAnimation? DefaultIconButtonCustomAnimation = null;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconButtonTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
+        private static readonly Thickness DefaultIconPadding = new(12);
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
         private const double DefaultBusyIndicatorSize = 24.0;
         private static readonly string? DefaultScrollViewName = null;
@@ -94,8 +93,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const int SmallLabelLateralMargin = 48;
         private const int MediumLabelLateralMargin = 10;
         private const int LargeLabelLateralMargin = 10;
-        private static readonly Thickness DefaultIconPadding = new(12);
-
+        
         private IList? _trailingIcons;
 
         #endregion Attributes
@@ -103,7 +101,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Bindable Properties
 
         /// <summary>
-        /// The backing store for the <see cref="Type" /> bindable property.
+        /// The backing store for the <see cref="Type">Type</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialTopAppBarType), typeof(MaterialTopAppBar), DefaultType, BindingMode.OneTime, propertyChanged: (bindable, oldValue, newValue) =>
         {
@@ -119,37 +117,37 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="Headline" /> bindable property.
+        /// The backing store for the <see cref="Headline">Headline</see> bindable property.
         /// </summary>
         public static readonly BindableProperty HeadlineProperty = BindableProperty.Create(nameof(Headline), typeof(string), typeof(MaterialTopAppBar), defaultValue: DefaultHeadline, BindingMode.OneTime);
 
         /// <summary>
-        /// The backing store for the <see cref="HeadlineColor" /> bindable property.
+        /// The backing store for the <see cref="HeadlineColor">HeadlineColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty HeadlineColorProperty = BindableProperty.Create(nameof(HeadlineColor), typeof(Color), typeof(MaterialTopAppBar), defaultValueCreator: DefaultHeadlineColor, defaultBindingMode: BindingMode.OneTime);
 
         /// <summary>
-        /// The backing store for the <see cref="HeadlineFontSize" /> bindable property.
+        /// The backing store for the <see cref="HeadlineFontSize">HeadlineFontSize</see> bindable property.
         /// </summary>
         public static readonly BindableProperty HeadlineFontSizeProperty = BindableProperty.Create(nameof(HeadlineFontSize), typeof(double), typeof(MaterialTopAppBar), defaultValueCreator: DefaultHeadlineFontSize);
 
         /// <summary>
-        /// The backing store for the <see cref="HeadlineFontFamily" /> bindable property.
+        /// The backing store for the <see cref="HeadlineFontFamily">HeadlineFontFamily</see> bindable property.
         /// </summary>
         public static readonly BindableProperty HeadlineFontFamilyProperty = BindableProperty.Create(nameof(HeadlineFontFamily), typeof(string), typeof(MaterialTopAppBar), defaultValueCreator: DefaultHeadlineFontFamily);
 
         /// <summary>
-        /// The backing store for the <see cref="HeadlineFontAttributes" /> bindable property.
+        /// The backing store for the <see cref="HeadlineFontAttributes">HeadlineFontAttributes</see> bindable property.
         /// </summary>
         public static readonly BindableProperty HeadlineFontAttributesProperty = BindableProperty.Create(nameof(HeadlineFontAttributes), typeof(FontAttributes), typeof(MaterialButton), defaultValue: DefaultHeadlineFontAttributes);
 
         /// <summary>
-        /// The backing store for the <see cref="HeadlineMarginAdjustment" /> bindable property.
+        /// The backing store for the <see cref="HeadlineMarginAdjustment">HeadlineMarginAdjustment</see> bindable property.
         /// </summary>
         public static readonly BindableProperty HeadlineMarginAdjustmentProperty = BindableProperty.Create(nameof(HeadlineMarginAdjustment), typeof(Thickness), typeof(MaterialTopAppBar), defaultValue: DefaultHeadlineMarginAdjustment, BindingMode.OneTime);
 
         /// <summary>
-        /// The backing store for the <see cref="Description" /> bindable property.
+        /// The backing store for the <see cref="Description">Description</see> bindable property.
         /// </summary>
         public static readonly BindableProperty DescriptionProperty = BindableProperty.Create(nameof(Description), typeof(string), typeof(MaterialTopAppBar), defaultValue: DefaultDescription, BindingMode.OneTime, propertyChanged: (bindable, _, _) =>
         {
@@ -160,32 +158,32 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="DescriptionColor" /> bindable property.
+        /// The backing store for the <see cref="DescriptionColor">DescriptionColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty DescriptionColorProperty = BindableProperty.Create(nameof(DescriptionColor), typeof(Color), typeof(MaterialTopAppBar), defaultValueCreator: DefaultDescriptionColor, defaultBindingMode: BindingMode.OneTime);
 
         /// <summary>
-        /// The backing store for the <see cref="DescriptionFontSize" /> bindable property.
+        /// The backing store for the <see cref="DescriptionFontSize">DescriptionFontSize</see> bindable property.
         /// </summary>
         public static readonly BindableProperty DescriptionFontSizeProperty = BindableProperty.Create(nameof(DescriptionFontSize), typeof(double), typeof(MaterialTopAppBar), defaultValueCreator: DefaultDescriptionFontSize);
 
         /// <summary>
-        /// The backing store for the <see cref="DescriptionFontFamily" /> bindable property.
+        /// The backing store for the <see cref="DescriptionFontFamily">DescriptionFontFamily</see> bindable property.
         /// </summary>
         public static readonly BindableProperty DescriptionFontFamilyProperty = BindableProperty.Create(nameof(DescriptionFontFamily), typeof(string), typeof(MaterialTopAppBar), defaultValueCreator: DefaultDescriptionFontFamily);
 
         /// <summary>
-        /// The backing store for the <see cref="DescriptionFontAttributes" /> bindable property.
+        /// The backing store for the <see cref="DescriptionFontAttributes">DescriptionFontAttributes</see> bindable property.
         /// </summary>
         public static readonly BindableProperty DescriptionFontAttributesProperty = BindableProperty.Create(nameof(DescriptionFontAttributes), typeof(FontAttributes), typeof(MaterialButton), defaultValue: DefaultDescriptionFontAttributes);
 
         /// <summary>
-        /// The backing store for the <see cref="DescriptionMarginAdjustment" /> bindable property.
+        /// The backing store for the <see cref="DescriptionMarginAdjustment">DescriptionMarginAdjustment</see> bindable property.
         /// </summary>
         public static readonly BindableProperty DescriptionMarginAdjustmentProperty = BindableProperty.Create(nameof(DescriptionMarginAdjustment), typeof(Thickness), typeof(MaterialTopAppBar), defaultValue: DefaultDescriptionMarginAdjustment, BindingMode.OneTime);
 
         /// <summary>
-        /// The backing store for the <see cref="LeadingIcon" /> bindable property.
+        /// The backing store for the <see cref="LeadingIcon">LeadingIcon</see> bindable property.
         /// </summary>
         public static readonly BindableProperty LeadingIconProperty = BindableProperty.Create(nameof(LeadingIcon), typeof(ImageSource), typeof(MaterialTopAppBar), defaultValue: DefaultLeadingIcon, propertyChanged: (bindable, _, _) =>
         {
@@ -196,7 +194,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="LeadingIconCommand" /> bindable property.
+        /// The backing store for the <see cref="LeadingIconCommand">LeadingIconCommand</see> bindable property.
         /// </summary>
         public static readonly BindableProperty LeadingIconCommandProperty = BindableProperty.Create(nameof(LeadingIconCommand), typeof(ICommand), typeof(MaterialTopAppBar), defaultValue: DefaultLeadingIconCommand, BindingMode.OneTime, propertyChanged: (bindable, _, _) =>
         {
@@ -207,7 +205,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="LeadingIconIsBusy" /> bindable property.
+        /// The backing store for the <see cref="LeadingIconIsBusy">LeadingIconIsBusy</see> bindable property.
         /// </summary>
         public static readonly BindableProperty LeadingIconIsBusyProperty = BindableProperty.Create(nameof(LeadingIconIsBusy), typeof(bool), typeof(MaterialTopAppBar), defaultValue: DefaultLeadingIconIsBusy, propertyChanged: (bindable, _, _) =>
         {
@@ -218,7 +216,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="TrailingIcons" /> bindable property.
+        /// The backing store for the <see cref="TrailingIcons">TrailingIcons</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TrailingIconsProperty = BindableProperty.Create(nameof(TrailingIcons), typeof(IList), typeof(MaterialTopAppBar), defaultValue: DefaultTrailingIcons, propertyChanged: (bindable, _, _) =>
         {
@@ -229,32 +227,32 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="IconSize" /> bindable property.
+        /// The backing store for the <see cref="IconSize">IconSize</see> bindable property.
         /// </summary>
         public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(nameof(IconSize), typeof(double), typeof(MaterialTopAppBar), defaultValue: DefaultIconSize);
 
         /// <summary>
-        /// The backing store for the <see cref="IconButtonAnimation" /> bindable property.
+        /// The backing store for the <see cref="IconPadding">IconPadding</see> bindable property.
         /// </summary>
-        public static readonly BindableProperty IconButtonAnimationProperty = BindableProperty.Create(nameof(IconButtonAnimation), typeof(AnimationTypes), typeof(MaterialTopAppBar), defaultValueCreator: DefaultIconButtonAnimationType);
+        public static readonly BindableProperty IconPaddingProperty = BindableProperty.Create(nameof(IconPadding), typeof(Thickness), typeof(MaterialTopAppBar), defaultValue: DefaultIconPadding);
 
         /// <summary>
-        /// The backing store for the <see cref="IconButtonAnimationParameter" /> bindable property.
+        /// The backing store for the <see cref="IconButtonTouchAnimationType">IconButtonTouchAnimationType</see> bindable property.
         /// </summary>
-        public static readonly BindableProperty IconButtonAnimationParameterProperty = BindableProperty.Create(nameof(IconButtonAnimationParameter), typeof(double?), typeof(MaterialTopAppBar), defaultValueCreator: DefaultIconButtonAnimationParameter);
+        public static readonly BindableProperty IconButtonTouchAnimationTypeProperty = BindableProperty.Create(nameof(IconButtonTouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialTopAppBar), defaultValueCreator: DefaultIconButtonTouchAnimationType);
 
         /// <summary>
-        /// The backing store for the <see cref="IconButtonCustomAnimation" /> bindable property.
+        /// The backing store for the <see cref="IconButtonTouchAnimation">IconButtonTouchAnimation</see> bindable property.
         /// </summary>
-        public static readonly BindableProperty IconButtonCustomAnimationProperty = BindableProperty.Create(nameof(IconButtonCustomAnimation), typeof(ICustomAnimation), typeof(MaterialTopAppBar), defaultValue: DefaultIconButtonCustomAnimation);
+        public static readonly BindableProperty IconButtonTouchAnimationProperty = BindableProperty.Create(nameof(IconButtonTouchAnimation), typeof(ITouchAnimation), typeof(MaterialTopAppBar));
 
         /// <summary>
-        /// The backing store for the <see cref="BusyIndicatorColor" /> bindable property.
+        /// The backing store for the <see cref="BusyIndicatorColor">BusyIndicatorColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty BusyIndicatorColorProperty = BindableProperty.Create(nameof(BusyIndicatorColor), typeof(Color), typeof(MaterialTopAppBar), defaultValueCreator: DefaultBusyIndicatorColor);
 
         /// <summary>
-        /// The backing store for the <see cref="BusyIndicatorSize" /> bindable property.
+        /// The backing store for the <see cref="BusyIndicatorSize">BusyIndicatorSize</see> bindable property.
         /// </summary>
         public static readonly BindableProperty BusyIndicatorSizeProperty = BindableProperty.Create(nameof(BusyIndicatorSize), typeof(double), typeof(MaterialTopAppBar), defaultValue: DefaultBusyIndicatorSize, propertyChanged: (bindable, _, _) =>
         {
@@ -265,17 +263,17 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="ScrollViewName" /> bindable property.
+        /// The backing store for the <see cref="ScrollViewName">ScrollViewName</see> bindable property.
         /// </summary>
         public static readonly BindableProperty ScrollViewNameProperty = BindableProperty.Create(nameof(ScrollViewName), typeof(string), typeof(MaterialTopAppBar), defaultValue: DefaultScrollViewName, BindingMode.OneTime);
 
         /// <summary>
-        /// The backing store for the <see cref="ScrollViewAnimationLength" /> bindable property.
+        /// The backing store for the <see cref="ScrollViewAnimationLength">ScrollViewAnimationLength</see> bindable property.
         /// </summary>
         public static readonly BindableProperty ScrollViewAnimationLengthProperty = BindableProperty.Create(nameof(ScrollViewAnimationLength), typeof(int), typeof(MaterialTopAppBar), defaultValue: DefaultScrollViewAnimationLength);
         
         /// <summary>
-        /// The backing store for the <see cref="IsCollapsed" /> bindable property.
+        /// The backing store for the <see cref="IsCollapsed">IsCollapsed</see> bindable property.
         /// </summary>
         public static readonly BindableProperty IsCollapsedProperty = BindableProperty.Create(nameof(IsCollapsedProperty), typeof(bool), typeof(MaterialTopAppBar), defaultBindingMode: BindingMode.OneWayToSource, defaultValue: false);
 
@@ -284,7 +282,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Properties
 
         /// <summary>
-        /// Gets or sets the top app bar type according to <see cref="MaterialTopAppBarType"/> enum.
+        /// Gets or sets the top app bar <see cref="MaterialTopAppBarType">type</see>.
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -307,7 +305,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>
+        /// <see langword="null">Null</see>
         /// </default>
         public string Headline
         {
@@ -316,7 +314,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the headline text of the top app bar. 
+        /// Gets or sets the <see cref="Color">color</see> for the headline text of the top app bar. 
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -372,7 +370,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Allows you to adjust the margins of the headline text. 
         /// This is a bindable property.
         /// </summary>
-        /// <remarks>This property does not take into account the Left and Right of the set <see cref="Thickness" />, it only applies the Top and Bottom values.</remarks>
+        /// <remarks>This property does not take into account the Left and Right of the set <see cref="Thickness">Thickness</see>, it only applies the Top and Bottom values.</remarks>
         /// <default>
         /// <see cref="Thickness">default(Thickness)</see>
         /// </default>
@@ -387,7 +385,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>
+        /// <see langword="null">Null</see>
         /// </default>
         public string Description
         {
@@ -396,7 +394,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the description text of the top app bar. 
+        /// Gets or sets the <see cref="Color">color</see> for the description text of the top app bar. 
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -452,7 +450,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Allows you to adjust the margins of the description text. 
         /// This is a bindable property.
         /// </summary>
-        /// <remarks>This property does not take into account the Left and Right of the set <see cref="Thickness" />, it only applies the Top and Bottom values.</remarks>
+        /// <remarks>This property does not take into account Left and Right values of <see cref="Thickness">Thickness</see>, it only applies the Top and Bottom values.</remarks>
         /// <default>
         /// new Thickness(10, 8, 10, 16)
         /// </default>
@@ -467,7 +465,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>
+        /// <see langword="null">Null</see>
         /// </default>
         public ImageSource LeadingIcon
         {
@@ -481,7 +479,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         /// <remarks>This property is used to associate a command with an instance of a top app bar. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.</remarks>
         /// <default>
-        /// <see langword="null"/>
+        /// <see langword="null">Null</see>
         /// </default>
         public ICommand LeadingIconCommand
         {
@@ -494,7 +492,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="false"/>
+        /// <see langword="false">False</see>
         /// </default>
         public bool LeadingIconIsBusy
         {
@@ -508,7 +506,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         /// <remarks>This property supports a maximum of 3 icon buttons.</remarks>
         /// <default>
-        /// <see langword="null"/>
+        /// <see langword="null">Null</see>
         /// </default>
         public IList TrailingIcons
         {
@@ -517,7 +515,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the size of the <see cref="MaterialTopAppBar.LeadingIcon"/> and <see cref="MaterialTopAppBar.TrailingIcons"/> of this top app bar.
+        /// Gets or sets the size of <see cref="MaterialTopAppBar.LeadingIcon">leading</see> and <see cref="MaterialTopAppBar.TrailingIcons">trailing</see> icons for the top app bar.
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -530,29 +528,29 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
+        /// Gets or sets the padding of <see cref="MaterialTopAppBar.LeadingIcon">leading</see> and <see cref="MaterialTopAppBar.TrailingIcons">trailing</see> icons for the top app bar.
+        /// This is a bindable property.
+        /// </summary>
+        /// <default>
+        /// 12
+        /// </default>
+        public Thickness IconPadding
+        {
+            get => (Thickness)GetValue(IconPaddingProperty);
+            set => SetValue(IconPaddingProperty, value);
+        }
+
+        /// <summary>
         /// Gets or sets an animation to be executed when leading and trailing icon button are clicked.
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>
+        /// <see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see>
         /// </default>
-        public AnimationTypes IconButtonAnimation
+        public TouchAnimationTypes IconButtonTouchAnimationType
         {
-            get => (AnimationTypes)GetValue(IconButtonAnimationProperty);
-            set => SetValue(IconButtonAnimationProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-        /// This is a bindable property.
-        /// </summary>
-        /// <default>
-        /// 0.7
-        /// </default>
-        public double? IconButtonAnimationParameter
-        {
-            get => (double?)GetValue(IconButtonAnimationParameterProperty);
-            set => SetValue(IconButtonAnimationParameterProperty, value);
+            get => (TouchAnimationTypes)GetValue(IconButtonTouchAnimationTypeProperty);
+            set => SetValue(IconButtonTouchAnimationTypeProperty, value);
         }
 
         /// <summary>
@@ -560,16 +558,16 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>
+        /// <see langword="null">Null</see>
         /// </default>
-        public ICustomAnimation IconButtonCustomAnimation
+        public ITouchAnimation IconButtonTouchAnimation
         {
-            get => (ICustomAnimation)GetValue(IconButtonCustomAnimationProperty);
-            set => SetValue(IconButtonCustomAnimationProperty, value);
+            get => (ITouchAnimation)GetValue(IconButtonTouchAnimationProperty);
+            set => SetValue(IconButtonTouchAnimationProperty, value);
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the busy indicators.
+        /// Gets or sets the <see cref="Color">color</see> for the busy indicators.
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -595,11 +593,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the name of the <see cref="ScrollView" /> element to which the top app bar will be linked to run collapse or expand animations depending on the user's scroll.
+        /// Gets or sets the name of the <see cref="ScrollView">ScrollView</see> element to which the top app bar will be linked to run collapse or expand animations depending on the user's scroll.
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>
+        /// <see langword="null">Null</see>
         /// </default>
         public string ScrollViewName
         {
@@ -608,7 +606,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the duration of the collapse or expand animation bound to the <see cref="ScrollView" /> element. 
+        /// Gets or sets the duration of the collapse or expand animation bound to the <see cref="ScrollView">ScrollView</see> element. 
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -634,12 +632,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Layout
 
-        private MaterialLabel _headlineLabel = null!;
+        private MaterialLabel? _headlineLabel = null!;
         private MaterialLabel _descriptionLabel = null!;
         private MaterialIconButton _leadingIconButton = null!;
         private MaterialProgressIndicator _leadingActivityIndicator = null!;
-        private List<MaterialIconButton> _trailingIconButtons = null!;
-        private List<MaterialProgressIndicator> _trailingActivityIndicators = null!;
+        private List<MaterialIconButton>? _trailingIconButtons = null!;
+        private List<MaterialProgressIndicator>? _trailingActivityIndicators = null!;
         private ColumnDefinition _secondTrailingColumnDefinition = null!;
         private ColumnDefinition _thirdTrailingColumnDefinition = null!;
 
@@ -705,14 +703,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Center,
-                IsVisible = false,
-                Padding = DefaultIconPadding
+                IsVisible = false
             };
             _leadingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
             _leadingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
-            _leadingIconButton.SetBinding(MaterialIconButton.AnimationProperty, new Binding(nameof(IconButtonAnimation), source: this));
-            _leadingIconButton.SetBinding(MaterialIconButton.AnimationParameterProperty, new Binding(nameof(IconButtonAnimationParameter), source: this));
-            _leadingIconButton.SetBinding(MaterialIconButton.CustomAnimationProperty, new Binding(nameof(IconButtonCustomAnimation), source: this));
+            _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimationType), source: this));
+            _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
+            _leadingIconButton.SetBinding(MaterialIconButton.PaddingProperty, new Binding(nameof(IconPadding), source: this));
             this.Add(_leadingIconButton, 0);
 
             var busyIndicatorMargin = GetBusyIndicatorMargin();
@@ -985,7 +982,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void AddTrailingIcon(TrailingIcon trailingIcon, int trailingIconIndex)
         {
-            if (trailingIcon == null)
+            if (trailingIcon == null || _trailingIconButtons == null || _trailingActivityIndicators == null)
             {
                 return;
             }
@@ -1007,14 +1004,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 IsBusy = trailingIcon.IsBusy,
                 VerticalOptions = trailingIconButtonsVerticalOptions,
                 HorizontalOptions = LayoutOptions.Center,
-                IsVisible = true,
-                Padding = DefaultIconPadding
+                IsVisible = true
             };
             trailingIconButton.SetBinding(MaterialIconButton.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
             trailingIconButton.SetBinding(MaterialIconButton.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
-            trailingIconButton.SetBinding(MaterialIconButton.AnimationProperty, new Binding(nameof(IconButtonAnimation), source: this));
-            trailingIconButton.SetBinding(MaterialIconButton.AnimationParameterProperty, new Binding(nameof(IconButtonAnimationParameter), source: this));
-            trailingIconButton.SetBinding(MaterialIconButton.CustomAnimationProperty, new Binding(nameof(IconButtonCustomAnimation), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimationType), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.PaddingProperty, new Binding(nameof(IconPadding), source: this));
             _trailingIconButtons.Add(trailingIconButton);
             this.Add(trailingIconButton, trailingIconIndex + 2);
 
@@ -1037,6 +1033,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void TrailingIcon_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            if (_trailingIconButtons == null || _trailingActivityIndicators == null)
+            {
+                return;
+            }
+            
             if (sender is TrailingIcon trailingIcon
                 && trailingIcon.Index.HasValue)
             {

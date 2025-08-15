@@ -1,6 +1,6 @@
 # MaterialNavigationDrawer
 
-A navigation drawer  let people switch between UI views on larger devices [](https://m3.material.io/components/navigation-drawer/overview).
+Navigation drawers let people switch between UI views on larger devices and follow Material Design Guidelines. [See more](https://m3.material.io/components/navigation-drawer/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -38,7 +38,8 @@ var navigationDrawer = new MaterialNavigationDrawer
 
 ### <a id="properties-activeindicatorbackgroundcolor"/>**ActiveIndicatorBackgroundColor**
 
-Defines the active background color. This is a bindable property.
+Defines the active background color.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -48,7 +49,8 @@ Default value: Light: MaterialLightTheme.PrimaryContainer - Dark: MaterialDarkTh
 
 ### <a id="properties-activeindicatorcornerradius"/>**ActiveIndicatorCornerRadius**
 
-Defines the active indicator corner radius. This is a bindable property.
+Defines the active indicator corner radius.
+ This is a bindable property.
 
 Property type: [Single](https://learn.microsoft.com/en-us/dotnet/api/system.single)<br>
 
@@ -58,7 +60,8 @@ Default value: 28.0f
 
 ### <a id="properties-activeindicatorlabelcolor"/>**ActiveIndicatorLabelColor**
 
-Defines the active indicator label color. This is a bindable property.
+Defines the active indicator label color.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -66,40 +69,10 @@ Default value: Light: MaterialLightTheme.OnPrimaryContainer - Dark: MaterialDark
 
 <br>
 
-### <a id="properties-animation"/>**Animation**
-
-Gets or sets an animation to be executed when an icon is clicked
- The default value is AnimationTypes.Fade.
- This is a bindable property.
-
-Property type: AnimationTypes<br>
-
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: MaterialAnimation.Type
-
-<br>
-
-### <a id="properties-animationparameter"/>**AnimationParameter**
-
-Gets or sets the parameter to pass to the MaterialNavigationDrawer.Animation property.
- The default value is null.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: MaterialAnimation.Parameter
-
-<br>
-
 ### <a id="properties-badgebackgroundcolor"/>**BadgeBackgroundColor**
 
-Gets or sets the text  for the badge background. This is a bindable property.
+Gets or sets the background color for the badge.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -109,7 +82,8 @@ Default value: Light: Colors.Transparent - Dark: Colors.Transparent
 
 ### <a id="properties-badgefontfamily"/>**BadgeFontFamily**
 
-Gets or sets the font family for the badge label. This is a bindable property.
+Gets or sets the font family for the badge label.
+ This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -119,7 +93,8 @@ Default value: MaterialFontFamily.Default
 
 ### <a id="properties-badgefontsize"/>**BadgeFontSize**
 
-Gets or sets the  for the badge label. This is a bindable property.
+Gets or sets font size for the badge label.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -129,7 +104,8 @@ Default value: MaterialFontSize.LabelLarge
 
 ### <a id="properties-badgetextcolor"/>**BadgeTextColor**
 
-Gets or sets the text  for the badge. This is a bindable property.
+Gets or sets the text color for the badge.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -139,7 +115,8 @@ Default value: Light: MaterialLightTheme.OnSurfaceVariant - Dark: MaterialDarkTh
 
 ### <a id="properties-badgetype"/>**BadgeType**
 
-Gets or sets the MaterialBadgeType. This is a bindable property.
+Gets or sets the Badge type.
+ This is a bindable property.
 
 Property type: MaterialBadgeType<br>
 
@@ -152,7 +129,8 @@ Property type: MaterialBadgeType<br>
 
 ### <a id="properties-command"/>**Command**
 
-Gets or sets the command for each item. This is a bindable property.
+Gets or sets the command for each item.
+ This is a bindable property.
 
 Property type: ICommand<br>
 
@@ -160,19 +138,10 @@ Default value: null
 
 <br>
 
-### <a id="properties-customanimation"/>**CustomAnimation**
-
-Gets or sets a custom animation to be executed when a icon is clicked.
- The default value is null.
- This is a bindable property.
-
-Property type: ICustomAnimation<br>
-
-<br>
-
 ### <a id="properties-disabledlabelcolor"/>**DisabledLabelColor**
 
-Gets or sets the text  for the label when is disabled. This is a bindable property.
+Gets or sets the text color for the label when is disabled.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -182,7 +151,8 @@ Default value: Light: MaterialLightTheme.Disable - Dark: MaterialDarkTheme.Disab
 
 ### <a id="properties-dividercolor"/>**DividerColor**
 
-Gets or sets the  for the divider. This is a bindable property.
+Gets or sets the color for the divider.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -192,7 +162,8 @@ Default value: Light: MaterialLightTheme.OutlineVariant - Dark: MaterialDarkThem
 
 ### <a id="properties-dividertype"/>**DividerType**
 
-Gets or sets if dividers are visible between sections, items or not visible. This is a bindable property.
+Gets or sets if dividers are visible between sections, items or not visible.
+ This is a bindable property.
 
 Property type: MaterialNavigationDrawerDividerType<br>
 
@@ -202,7 +173,8 @@ Default value: Dividers between sections: NavigationDrawerDividerType.Section
 
 ### <a id="properties-headlinecharactersspacing"/>**HeadlineCharactersSpacing**
 
-Gets or sets the spacing between characters of the headline. This is a bindable property.
+Gets or sets the spacing between characters of the headline.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -212,7 +184,8 @@ Default value: MaterialFontTracking.TitleSmall
 
 ### <a id="properties-headlinefontattributes"/>**HeadlineFontAttributes**
 
-Gets or sets the text style of the label. This is a bindable property.
+Gets or sets the text style of the label.
+ This is a bindable property.
 
 Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.fontattributes)<br>
 
@@ -222,17 +195,18 @@ Default value: null
 
 ### <a id="properties-headlinefontautoscalingenabled"/>**HeadlineFontAutoScalingEnabled**
 
-Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
+Defines whether an app's UI reflects text scaling preferences set in the operating system.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
 ### <a id="properties-headlinefontfamily"/>**HeadlineFontFamily**
 
-Gets or sets the font family for the headline. This is a bindable property.
+Gets or sets the font family for the headline.
+ This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -242,7 +216,8 @@ Default value: MaterialFontFamily.Default
 
 ### <a id="properties-headlinefontsize"/>**HeadlineFontSize**
 
-Defines the font size of the label. This is a bindable property.
+Defines the font size of the label.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -252,7 +227,8 @@ Default value: MaterialFontSize.TitleSmall
 
 ### <a id="properties-headlinemargin"/>**HeadlineMargin**
 
-Gets or sets the margin of the headline label. This is a bindable property.
+Gets or sets the margin of the headline label.
+ This is a bindable property.
 
 Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
 
@@ -262,7 +238,8 @@ Default value: Thickness(4, 16)
 
 ### <a id="properties-headlinetextcolor"/>**HeadlineTextColor**
 
-Gets or sets the MaterialNavigationDrawer.HeadlineTextColor for the text of the headline. This is a bindable property.
+Gets or sets the color for the text of the headline.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -272,17 +249,30 @@ Default value: Light: MaterialLightTheme.Primary - Dark: MaterialDarkTheme.Prima
 
 ### <a id="properties-headlinetexttransform"/>**HeadlineTextTransform**
 
-Defines the casing of the label. This is a bindable property.
+Defines the casing of the label.
+ This is a bindable property.
 
 Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.texttransform)<br>
 
-Default value: TextTransform.Defaultl
+Default value: TextTransform.Default
+
+<br>
+
+### <a id="properties-iconsize"/>**IconSize**
+
+Gets or sets the icon size for the leading and trailing icons.
+ This is a bindable property.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: 24
 
 <br>
 
 ### <a id="properties-itemheightrequest"/>**ItemHeightRequest**
 
-Gets or sets the height for each item. This is a bindable property.
+Gets or sets the height for each item.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -292,17 +282,17 @@ Default value: 56.0
 
 ### <a id="properties-itemssource"/>**ItemsSource**
 
-Gets or sets the items source. This is a bindable property.
+Gets or sets the items' source.
+ This is a bindable property.
 
 Property type: [IEnumerable&lt;MaterialNavigationDrawerItem&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
-
-Default value: True
 
 <br>
 
 ### <a id="properties-itemtemplate"/>**ItemTemplate**
 
-Gets or sets the item template for each item from ItemsSource. This is a bindable property.
+Gets or sets the item template for each item from ItemsSource.
+ This is a bindable property.
 
 Property type: [DataTemplate](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.datatemplate)<br>
 
@@ -312,7 +302,8 @@ Default value: null
 
 ### <a id="properties-labelcharactersspacing"/>**LabelCharactersSpacing**
 
-Gets or sets the spacing between characters of each item label. This is a bindable property.
+Gets or sets the spacing between characters of each item label.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -322,7 +313,8 @@ Default value: MaterialFontTracking.LabelLarge
 
 ### <a id="properties-labelcolor"/>**LabelColor**
 
-Gets or sets the MaterialNavigationDrawer.LabelColor for the text of each item. This is a bindable property.
+Gets or sets the text color for each item.
+ This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -332,7 +324,8 @@ Default value: Light: MaterialLightTheme.Text - Dark: MaterialDarkTheme.Text
 
 ### <a id="properties-labelfontattributes"/>**LabelFontAttributes**
 
-Gets or sets the text style of each item label. This is a bindable property.
+Gets or sets the text style of each item.
+ This is a bindable property.
 
 Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.fontattributes)<br>
 
@@ -342,17 +335,18 @@ Default value: null
 
 ### <a id="properties-labelfontautoscalingenabled"/>**LabelFontAutoScalingEnabled**
 
-Defines whether an app's UI reflects text scaling preferences set in the operating system. The default value of this property is true
+Defines whether an app's UI reflects text scaling preferences set in the operating system.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
 ### <a id="properties-labelfontfamily"/>**LabelFontFamily**
 
-Gets or sets the font family for each item label. This is a bindable property.
+Gets or sets the font family for each item.
+ This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -362,7 +356,8 @@ Default value: MaterialFontFamily.Default
 
 ### <a id="properties-labelfontsize"/>**LabelFontSize**
 
-Gets or sets the MaterialNavigationDrawer.LabelFontSize for the text of each item. This is a bindable property.
+Gets or sets the font size for each item.
+ This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -372,7 +367,8 @@ Default value: MaterialFontSize.LabelLarge / Tablet: 14 - Phone: 11
 
 ### <a id="properties-labeltexttransform"/>**LabelTextTransform**
 
-Defines the casing of the label of each item. This is a bindable property.
+Defines the casing of the label of each item.
+ This is a bindable property.
 
 Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.texttransform)<br>
 
@@ -383,9 +379,39 @@ Default value: TextTransform.Default
 ### <a id="properties-sectiontemplate"/>**SectionTemplate**
 
 Gets or sets the section template.
+ This is a bindable property.
 
 Property type: [DataTemplate](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.datatemplate)<br>
 
 Default value: null
+
+<br>
+
+### <a id="properties-touchanimation"/>**TouchAnimation**
+
+Gets or sets a custom animation to be executed when an icon is clicked.
+ This is a bindable property.
+
+Property type: ITouchAnimation<br>
+
+Default value: null
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when an icon is clicked.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
 
 <br>

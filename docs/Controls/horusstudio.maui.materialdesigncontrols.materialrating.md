@@ -18,7 +18,6 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 <material:MaterialRating
         Label="How do you rate....?"
         Value="1"
-        Animation="Scale"/>
 ```
 
 ### C# sample
@@ -27,8 +26,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 var MaterialRating = new MaterialRating()
 {
     Label = "How do you rate....?",
-    Value = 1,
-    Animation = AnimationTypes.Scale
+    Value = 1
 };
 ```
 
@@ -36,52 +34,12 @@ var MaterialRating = new MaterialRating()
 
 ## Properties
 
-### <a id="properties-animation"/>**Animation**
-
-Gets or sets an animation to be executed when an icon is clicked
- This is a bindable property.
-
-Property type: AnimationTypes<br>
-
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade
-
-<br>
-
-### <a id="properties-animationparameter"/>**AnimationParameter**
-
-Gets or sets the parameter to pass to the MaterialRating.Animation property.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: null
-
-<br>
-
 ### <a id="properties-characterspacing"/>**CharacterSpacing**
 
 Gets or sets the spacing between characters of the label.
  This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
-
-<br>
-
-### <a id="properties-customanimation"/>**CustomAnimation**
-
-Gets or sets a custom animation to be executed when a icon is clicked.
- This is a bindable property.
-
-Property type: ICustomAnimation<br>
-
-Default value: null
 
 <br>
 
@@ -101,7 +59,7 @@ Defines whether an app's UI reflects text scaling preferences set in the operati
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
@@ -128,7 +86,7 @@ Default value: MaterialFontSize.BodyLarge - Tablet = 19 / Phone = 16
 
 ### <a id="properties-isenabled"/>**IsEnabled**
 
-Gets or sets MaterialRating.IsEnabled for the rating control.
+Gets or sets if rating control is enabled.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
@@ -159,18 +117,18 @@ Default value: 5
 
 ### <a id="properties-label"/>**Label**
 
-Gets or sets the MaterialRating.Label for the label.
+Gets or sets label text.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-Default value: Null
+Default value: null
 
 <br>
 
 ### <a id="properties-labelcolor"/>**LabelColor**
 
-Gets or sets the MaterialRating.LabelColor for the text of the label.
+Gets or sets the color for label.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -212,7 +170,7 @@ Remarks: For more options have a look at ImageButton.
 
 ### <a id="properties-strokecolor"/>**StrokeColor**
 
-Gets or sets the  for the stroke of default start.
+Gets or sets stroke color.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -221,10 +179,39 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 
 ### <a id="properties-strokethickness"/>**StrokeThickness**
 
-Gets or sets the MaterialRating.StrokeThickness for the default start.
+Gets or sets the stroke thickness.
  This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+<br>
+
+### <a id="properties-touchanimation"/>**TouchAnimation**
+
+Gets or sets a custom animation to be executed when a icon is clicked.
+ This is a bindable property.
+
+Property type: ITouchAnimation<br>
+
+Default value: null
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when an icon is clicked
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
 
 <br>
 
@@ -258,5 +245,24 @@ Defines the value of the Rating.
 Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 Default value: -1
+
+<br>
+
+### <a id="properties-valuechangedcommand"/>**ValueChangedCommand**
+
+Gets or sets the command to invoke when the value changes.
+ This is a bindable property.
+
+Property type: ICommand<br>
+
+Default value: null
+
+<br>
+
+## Events
+
+### <a id="events-valuechanged"/>**ValueChanged**
+
+Occurs when the value changes.
 
 <br>

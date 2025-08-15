@@ -1,6 +1,6 @@
 # MaterialNavigationDrawerItem
 
-Wrapper for items defined within a MaterialNavigationDrawer.
+Wrapper for items defined within a material navigation drawer.
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -9,6 +9,22 @@ Inherits from: MaterialNavigationDrawerItem → [Object](https://learn.microsoft
 <br>
 
 ## Properties
+
+### <a id="properties-applyleadingicontintcolor"/>**ApplyLeadingIconTintColor**
+
+Gets or sets if the leading icon applies the tint color. The default value is True.
+
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+<br>
+
+### <a id="properties-applytrailingicontintcolor"/>**ApplyTrailingIconTintColor**
+
+Gets or sets if the trailing icon applies the tint color. The default value is True.
+
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+<br>
 
 ### <a id="properties-badgetext"/>**BadgeText**
 

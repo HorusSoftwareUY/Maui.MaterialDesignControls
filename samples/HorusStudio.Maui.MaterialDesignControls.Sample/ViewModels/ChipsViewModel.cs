@@ -28,20 +28,34 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private bool _chipsFilterD;
 
         [ObservableProperty]
+        private string _selectedChipValue;
+        
+        [ObservableProperty]
+        private string _selectedChipText;
+        
+        [ObservableProperty]
         private ObservableCollection<string> _chips;
-
+        
         [ObservableProperty]
-        private List<string> _selectedChips = new();
-
+        private string _selectedChipItem;
+        
         [ObservableProperty]
-        private string _selectedChip;
-
+        private ObservableCollection<object> _selectedChips;
+        
+        [ObservableProperty]
+        private string _selectedChipsText;
+        
         #endregion
 
         public ChipsViewModel()
         {
             Chips = new ObservableCollection<string> { "Chip A", "Chip B", "Chip C", "Chip D", "Chip E" };
             Subtitle = "Chips help people enter information, make selections, filter content, or trigger actions";
+            
+            SelectedChipText = "Selected value: -";
+
+            SelectedChips = new ObservableCollection<object>();
+            SelectedChipsText = "Selected values: -";
         }
 
         [ICommand]
@@ -51,29 +65,75 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async void TappedChipsFilter(string chip)
+        private async void ShowFilterSelection()
         {
-            switch (chip)
+            var message = string.Empty;
+            
+            if (ChipsFilterA)
             {
-                case "A":
-                    ChipsFilterA = !ChipsFilterA;
-                    await DisplayAlert(Title, $"Chips A {((ChipsFilterA) ? "selected" : "not selected")}", "OK");
-                    break;
-                case "B":
-                    ChipsFilterB = !ChipsFilterB;
-                    await DisplayAlert(Title, $"Chips B {((ChipsFilterB) ? "selected" : "not selected")}", "OK");
-                    break;
-                case "C":
-                    ChipsFilterC = !ChipsFilterC;
-                    await DisplayAlert(Title, $"Chips C {((ChipsFilterC) ? "selected" : "not selected")}", "OK");
-                    break;
-                case "D":
-                    ChipsFilterD = !ChipsFilterD;
-                    await DisplayAlert(Title, $"Chips D {((ChipsFilterD) ? "selected" : "not selected")}", "OK");
-                    break;
+                message += "Filter A,";
+            }
+            
+            if (ChipsFilterB)
+            {
+                message += "Filter B,";
+            }
+            
+            if (ChipsFilterC)
+            {
+                message += "Filter C,";
+            }
+            
+            if (ChipsFilterD)
+            {
+                message += "Filter D,";
             }
 
+            if (string.IsNullOrEmpty(message))
+            {
+                message = "No chip selected";
+            }
+            
+            await DisplayAlert(Title, message, "OK");
+        }
+
+        [ICommand]
+        private async Task SelectChipC()
+        {
+            SelectedChipValue = "Option C";
+        }
+        
+        [ICommand]
+        private async Task SelectedValueChanged()
+        {
+            if (!string.IsNullOrEmpty(SelectedChipValue))
+            {
+                SelectedChipText = $"Selected value: {SelectedChipValue}";
+            }
+            else
+            {
+                SelectedChipText = "Selected value: -";
+            }
+        }
+        
+        [ICommand]
+        private async Task ShowSelectedItem()
+        {
+            var message = !string.IsNullOrEmpty(SelectedChipItem) ? $"Selected item: {SelectedChipItem}" : "No item selected";
+            await DisplayAlert(Title, message, "OK");
+        }
+        
+        [ICommand]
+        private async Task ShowSelectedChips()
+        {
+            if (SelectedChips != null && SelectedChips.Count > 0)
+            {
+                SelectedChipsText = $"Selected values: {string.Join(", ", SelectedChips)}";
+            }
+            else
+            {
+                SelectedChipsText = "Selected values: -";
+            }
         }
     }
 }
-

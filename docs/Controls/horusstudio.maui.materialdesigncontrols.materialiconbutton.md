@@ -1,6 +1,6 @@
 # MaterialIconButton
 
-An icon button  that reacts to touch events and follows Material Design Guidelines [See here.](https://m3.material.io/components/icon-buttons/overview)
+Icon buttons react to touch events and follow Material Design Guidelines. [See more](https://m3.material.io/components/icon-buttons/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -37,38 +37,20 @@ var iconButton = new MaterialIconButton()
 
 ## Properties
 
-### <a id="properties-animation"/>**Animation**
+### <a id="properties-applyicontintcolor"/>**ApplyIconTintColor**
 
-Gets or sets an animation to be executed when button is clicked.
+Gets or sets the if the icon applies the tint color.
  This is a bindable property.
 
-Property type: AnimationTypes<br>
+Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade
-
-<br>
-
-### <a id="properties-animationparameter"/>**AnimationParameter**
-
-Gets or sets the parameter to pass to the Animation property.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: Null
+Default value: true
 
 <br>
 
 ### <a id="properties-background"/>**Background**
 
-Gets or sets a  that describes the background of the button.
+Gets or sets a Brush that describes the background of the button.
  This is a bindable property.
 
 Property type: [Brush](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.brush)<br>
@@ -91,7 +73,7 @@ Gets or sets a color that describes the border stroke color of the button.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Remarks: This property has no effect if  is set to 0. On Android this property will not have an effect unless  is set to a non-default color.
+Remarks: This property has no effect if IBorderElement.BorderWidth is set to 0. On Android this property will not have an effect unless VisualElement.BackgroundColor is set to a non-default color.
 
 <br>
 
@@ -108,7 +90,7 @@ Remarks: Set this value to a non-zero value in order to have a visible border.
 
 ### <a id="properties-busyindicatorcolor"/>**BusyIndicatorColor**
 
-Gets or sets the  for the busy indicator.
+Gets or sets the color for the busy indicator.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -131,7 +113,7 @@ Gets or sets the command to invoke when the button is activated.
 
 Property type: ICommand<br>
 
-Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
+Remarks: This property is used to associate a command with an instance of a button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. VisualElement.IsEnabled is controlled by the Command.CanExecute(object) if set.
 
 <br>
 
@@ -155,20 +137,9 @@ Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32
 
 <br>
 
-### <a id="properties-customanimation"/>**CustomAnimation**
-
-Gets or sets a custom animation to be executed when button is clicked.
- This is a bindable property.
-
-Property type: ICustomAnimation<br>
-
-Default value: Null
-
-<br>
-
 ### <a id="properties-custombusyindicator"/>**CustomBusyIndicator**
 
-Gets or sets a custom  for busy indicator.
+Gets or sets a custom View for busy indicator.
  This is a bindable property.
 
 Property type: [View](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.view)<br>
@@ -189,13 +160,13 @@ Remarks:
 - <para>which means the value is unset; the effective minimum height will be zero.</para>
 
 - <para>
-  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest" /> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest" /> will change the resulting height of the element during the next layout pass.</para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest">HeightRequest</see> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest">HeightRequest</see> will change the resulting height of the element during the next layout pass.</para>
 
 <br>
 
 ### <a id="properties-icontintcolor"/>**IconTintColor**
 
-Gets or sets the  for the icon of the button.
+Gets or sets the color for the icon of the button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -209,7 +180,7 @@ Allows you to display a bitmap image on the Button.
 
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
-Remarks: For more options have a look at .
+Remarks: For more options have a look at ImageButton.
 
 <br>
 
@@ -250,9 +221,38 @@ Property type: [Shadow](https://learn.microsoft.com/en-us/dotnet/api/microsoft.m
 
 <br>
 
+### <a id="properties-touchanimation"/>**TouchAnimation**
+
+Gets or sets a custom animation to be executed when button is clicked.
+ This is a bindable property.
+
+Property type: ITouchAnimation<br>
+
+Default value: Null
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when button is clicked.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
+
+<br>
+
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the button type according to MaterialIconButtonType enum.
+Gets or sets the button type.
  This is a bindable property.
 
 Property type: MaterialIconButtonType<br>
@@ -291,9 +291,7 @@ Default value: -1
 Remarks: Which means the value is unset; the effective minimum width will be zero.
 
 - <para>
-  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.WidthRequest" /> does not immediately change the Bounds of an element.</para>
-
-- <para>setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.HeightRequest" /> will change the resulting width of the element during the next layout pass.</para>
+  <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.WidthRequest">WidthRequest</see> does not immediately change the Bounds of an element; setting the <see cref="P:HorusStudio.Maui.MaterialDesignControls.MaterialIconButton.WidthRequest">WidthRequest</see> will change the resulting width of the element during the next layout pass.</para>
 
 <br>
 

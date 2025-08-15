@@ -100,7 +100,7 @@ Default value: #FFFFFF ![](https://placehold.co/15x15/FFFFFF/FFFFFF.png)
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: #1D192B ![](https://placehold.co/15x15/1D192B/1D192B.png)
+Default value: #4A4458 ![](https://placehold.co/15x15/4A4458/4A4458.png)
 
 <br>
 

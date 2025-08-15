@@ -17,7 +17,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     }
 
     /// <summary>
-    /// A card <see cref="View" /> that display content and actions about a single subject, and follows Material Design Guidelines <see href="https://m3.material.io/components/cards/overview">See here</see>.
+    /// Cards display content and actions about a single subject, and follow Material Design Guidelines. <see href="https://m3.material.io/components/cards/overview">See more</see>.
     /// </summary>
     /// <example>
     ///
@@ -67,13 +67,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// <todoList>
     ///  * Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them.
     /// </todoList>
-    public class MaterialCard : Border, ITouchable
+    public class MaterialCard : Border, ITouchableView
     {
         #region Attributes
         
         private const MaterialCardType DefaultCardType = MaterialCardType.Filled;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
         private static readonly Color DefaultShadowColor = Color.FromRgba(1,1,1,.01);
         private static readonly Color DefaultBackgroundColor = Color.FromRgba(1,1,1,.01);
         private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(12);
@@ -113,7 +112,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Bindable Properties
 
         /// <summary>
-        /// The backing store for the <see cref="Type" /> bindable property.
+        /// The backing store for the <see cref="Type">Type</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialCardType), typeof(MaterialCard), defaultValue: DefaultCardType, propertyChanged: (bindable, oldValue, newValue) =>
         {
@@ -129,7 +128,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="Command" /> bindable property.
+        /// The backing store for the <see cref="Command">Command</see> bindable property.
         /// </summary>
         public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialCard), defaultValue: null, propertyChanged:
             (bindable, _, _) =>
@@ -139,27 +138,22 @@ namespace HorusStudio.Maui.MaterialDesignControls
             });
 
         /// <summary>
-        /// The backing store for the <see cref="CommandParameter" /> bindable property.
+        /// The backing store for the <see cref="CommandParameter">CommandParameter</see> bindable property.
         /// </summary>
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialCard), defaultValue: null);
 
         /// <summary>
-        /// The backing store for the <see cref="Animation" /> bindable property.
+        /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
         /// </summary>
-        public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialCard), defaultValueCreator: DefaultAnimationType);
+        public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialCard), defaultValueCreator: DefaultTouchAnimationType);
 
         /// <summary>
-        /// The backing store for the <see cref="AnimationParameter" /> bindable property.
+        /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
         /// </summary>
-        public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialCard), defaultValueCreator: DefaultAnimationParameter);
+        public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialCard), defaultValue: null);
 
         /// <summary>
-        /// The backing store for the <see cref="CustomAnimation" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialCard), defaultValue: null);
-
-        /// <summary>
-        /// The backing store for the <see cref="ShadowColor" /> bindable property.
+        /// The backing store for the <see cref="ShadowColor">ShadowColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(nameof(ShadowColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultShadowColor, propertyChanged: (bindable, _, _) =>
         {
@@ -170,7 +164,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="BackgroundColor" /> bindable property.
+        /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
         {
@@ -181,7 +175,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="BorderColor" /> bindable property.
+        /// The backing store for the <see cref="BorderColor">BorderColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(MaterialCard), defaultValue: DefaultBorderColor, propertyChanged: (bindable, _, _) =>
         {
@@ -192,7 +186,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="CornerRadius" /> bindable property.
+        /// The backing store for the <see cref="CornerRadius">CornerRadius</see> bindable property.
         /// </summary>
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(CornerRadius), typeof(MaterialCard), defaultValue: DefaultCornerRadius, propertyChanged: (bindable, _, _) =>
         {
@@ -203,7 +197,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="BorderWidth" /> bindable property.
+        /// The backing store for the <see cref="BorderWidth">BorderWidth</see> bindable property.
         /// </summary>
         public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(nameof(BorderWidth), typeof(float), typeof(MaterialCard), defaultValue: DefaultBorderWidth, propertyChanged: (bindable, _, _) =>
         {
@@ -214,7 +208,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="Shadow" /> bindable property.
+        /// The backing store for the <see cref="Shadow">Shadow</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty ShadowProperty = BindableProperty.Create(nameof(Shadow), typeof(Shadow), typeof(MaterialCard), defaultValue: DefaultShadow, propertyChanged: (bindable, _, _) =>
         {
@@ -229,7 +223,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Properties
 
         /// <summary>
-        /// Gets or sets the card type according to <see cref="MaterialCardType"/> enum.
+        /// Gets or sets the card <see cref="MaterialCardType">type</see>.
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -244,7 +238,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// Gets or sets the command to invoke when the card is clicked. This is a bindable property.
         /// </summary>
-        /// <remarks>This property is used to associate a command with an instance of a card. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
+        /// <remarks>This property is used to associate a command with an instance of a card. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.</remarks>
         public ICommand Command
         {
             get => (ICommand)GetValue(CommandProperty);
@@ -252,11 +246,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
+        /// Gets or sets the parameter to pass to the <see cref="Command">Command</see> property.
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>.
+        /// <see langword="null">Null</see>
         /// </default>
         public object CommandParameter
         {
@@ -269,25 +263,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>
+        /// <see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see>
         /// </default>
-        public AnimationTypes Animation
+        public TouchAnimationTypes TouchAnimationType
         {
-            get => (AnimationTypes)GetValue(AnimationProperty);
-            set => SetValue(AnimationProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the parameter to pass to the <see cref="Animation"/> property.
-        /// This is a bindable property.
-        /// </summary>
-        /// <default>
-        /// <see langword="null"/>
-        /// </default>
-        public double? AnimationParameter
-        {
-            get => (double?)GetValue(AnimationParameterProperty);
-            set => SetValue(AnimationParameterProperty, value);
+            get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+            set => SetValue(TouchAnimationTypeProperty, value);
         }
 
         /// <summary>
@@ -295,12 +276,12 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="null"/>
+        /// <see langword="null">Null</see>
         /// </default>
-        public ICustomAnimation CustomAnimation
+        public ITouchAnimation TouchAnimation
         {
-            get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-            set => SetValue(CustomAnimationProperty, value);
+            get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+            set => SetValue(TouchAnimationProperty, value);
         }
 
         /// <summary>
@@ -330,7 +311,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Gets or sets a color that describes the border stroke color of the card.
         /// This is a bindable property.
         /// </summary>
-        /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth" /> is set to 0.</remarks>
+        /// <remarks>This property has no effect if <see cref="IBorderElement.BorderWidth">IBorderElement.BorderWidth</see> is set to 0.</remarks>
         public Color BorderColor
         {
             get => (Color)GetValue(BorderColorProperty);
@@ -570,7 +551,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 {
                     Brush = ShadowColor,
                     Radius = base.Shadow.Radius,
-                    Opacity = base.Shadow.Opacity,
+                    Opacity = ShadowColor != Colors.Transparent ? base.Shadow.Opacity : 0,
                     Offset = base.Shadow.Offset
                 };
             }
@@ -580,7 +561,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             if (_shadows.TryGetValue(type, out Shadow shadow))
             {
-                if ((Shadow == null && DefaultShadow == null) || Shadow.Equals(DefaultShadow))
+                if (base.Shadow == null && ((Shadow == null && DefaultShadow == null) || Shadow.Equals(DefaultShadow)))
                 {
                     if (!ShadowColor.Equals(DefaultShadowColor))
                     {
@@ -630,21 +611,21 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region ITouchable
 
-        public async void OnTouch(TouchType gestureType)
+        public async void OnTouch(TouchEventType gestureType)
         {
             Utils.Logger.Debug($"Gesture: {gestureType}");
 
             if (!IsEnabled) return;
-            await TouchAnimation.AnimateAsync(this, gestureType);
+            await TouchAnimationManager.AnimateAsync(this, gestureType);
             
             switch (gestureType)
             {
-                case TouchType.Pressed:
+                case TouchEventType.Pressed:
                     _pressed?.Invoke(this, EventArgs.Empty);
                     VisualStateManager.GoToState(this, ButtonCommonStates.Pressed);
                     break;
 
-                case TouchType.Released:
+                case TouchEventType.Released:
                     if (Command != null && Command.CanExecute(CommandParameter))
                     {
                         Command.Execute(CommandParameter);

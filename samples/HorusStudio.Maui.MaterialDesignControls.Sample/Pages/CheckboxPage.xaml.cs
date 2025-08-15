@@ -11,7 +11,6 @@ public partial class CheckboxPage :  BaseContentPage<CheckboxViewModel>
 
     private void MaterialCheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
-        var selected = e.Value ? "yes" : "no";
-        DisplayAlert("Checkbox Event", $"Selected: {selected}", "OK");
+        DisplayAlert("CheckedChanged event", $"Value: {e.Value.ToString()}", "OK");
     }
 }

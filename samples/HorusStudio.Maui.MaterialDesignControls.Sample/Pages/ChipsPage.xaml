@@ -18,7 +18,7 @@
             <Setter Property="ColumnSpacing" Value="16" />
         </Style>
 
-        <Style x:Key="VisualStateManagerStyle" TargetType="material:MaterialChips"> 
+        <Style x:Key="VisualStateManagerStyle" TargetType="material:MaterialChip"> 
             <Setter Property="VisualStateManager.VisualStateGroups"> 
                 <VisualStateGroupList> 
                     <VisualStateGroup x:Name="CommonStates"> 
@@ -45,13 +45,93 @@
                                 <Setter Property="TrailingIconTintColor" Value="Blue"/>
                             </VisualState.Setters>
                         </VisualState>
-                         <VisualState x:Name="Unselected">
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="SelectedLeadingIconStateManager" TargetType="material:MaterialChip"> 
+            <Setter Property="VisualStateManager.VisualStateGroups"> 
+                <VisualStateGroupList> 
+                    <VisualStateGroup x:Name="CommonStates"> 
+                        <VisualState x:Name="Normal">
                             <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="LightGreen" />
-                                <Setter Property="ShadowColor" Value="Green" />
-                                <Setter Property="BorderColor" Value="Red" />
-                                <Setter Property="LeadingIconTintColor" Value="Black"/>
-                                <Setter Property="TrailingIconTintColor" Value="White"/>
+                                <Setter Property="BorderColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Outline}, Dark={x:Static material:MaterialDarkTheme.Outline}}" />
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurfaceVariant}, Dark={x:Static material:MaterialDarkTheme.OnSurfaceVariant}}" />
+                                <Setter Property="LeadingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                <Setter Property="TrailingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                <Setter Property="ShadowColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Shadow}, Dark={x:Static material:MaterialDarkTheme.Shadow}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BorderColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}" />
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}" />
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnSecondaryContainer}}" />
+                                <Setter Property="LeadingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnSecondaryContainer}}" />
+                                <Setter Property="ShadowColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Shadow}, Dark={x:Static material:MaterialDarkTheme.Shadow}}" />
+                                <Setter Property="LeadingIcon" Value="plus.png" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="SelectedTrailingIconStateManager" TargetType="material:MaterialChip"> 
+            <Setter Property="VisualStateManager.VisualStateGroups"> 
+                <VisualStateGroupList> 
+                    <VisualStateGroup x:Name="CommonStates"> 
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BorderColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Outline}, Dark={x:Static material:MaterialDarkTheme.Outline}}" />
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurfaceVariant}, Dark={x:Static material:MaterialDarkTheme.OnSurfaceVariant}}" />
+                                <Setter Property="LeadingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                <Setter Property="TrailingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                <Setter Property="ShadowColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Shadow}, Dark={x:Static material:MaterialDarkTheme.Shadow}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BorderColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}" />
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}" />
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnSecondaryContainer}}" />
+                                <Setter Property="TrailingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnSecondaryContainer}}" />
+                                <Setter Property="ShadowColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Shadow}, Dark={x:Static material:MaterialDarkTheme.Shadow}}" />
+                                <Setter Property="TrailingIcon" Value="horus_logo.png" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="SelectedBothIconStateManager" TargetType="material:MaterialChip"> 
+            <Setter Property="VisualStateManager.VisualStateGroups"> 
+                <VisualStateGroupList> 
+                    <VisualStateGroup x:Name="CommonStates"> 
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BorderColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Outline}, Dark={x:Static material:MaterialDarkTheme.Outline}}" />
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurfaceVariant}, Dark={x:Static material:MaterialDarkTheme.OnSurfaceVariant}}" />
+                                <Setter Property="LeadingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                <Setter Property="TrailingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                <Setter Property="ShadowColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Shadow}, Dark={x:Static material:MaterialDarkTheme.Shadow}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BorderColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}" />
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}" />
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnSecondaryContainer}}" />
+                                <Setter Property="LeadingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnSecondaryContainer}}" />
+                                <Setter Property="TrailingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnSecondaryContainer}}" />
+                                <Setter Property="ShadowColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Shadow}, Dark={x:Static material:MaterialDarkTheme.Shadow}}" />
+                                <Setter Property="LeadingIcon" Value="plus.png" />
+                                <Setter Property="TrailingIcon" Value="horus_logo.png" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -65,7 +145,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <Grid Style="{StaticResource GridChipsContainer}">
 
-                <material:MaterialChips
+                <material:MaterialChip
                     Grid.Column="0"
                     Grid.Row="0"
                     IsEnabled="{Binding IsEnabledState}"
@@ -73,7 +153,7 @@
                     HorizontalOptions="End"
                     Command="{Binding TappedChipsCommand}"/>
 
-                <material:MaterialChips
+                <material:MaterialChip
                     Grid.Column="1"
                     Grid.Row="0"
                     TrailingIcon="horus_logo.png"
@@ -81,7 +161,7 @@
                     HorizontalOptions="Start"
                     Command="{Binding TappedChipsCommand}"/>
 
-                <material:MaterialChips
+                <material:MaterialChip
                     Grid.Column="0"
                     Grid.Row="1"
                     LeadingIcon="plus.png"
@@ -89,7 +169,7 @@
                     HorizontalOptions="End"
                     Command="{Binding TappedChipsCommand}"/>
 
-                <material:MaterialChips
+                <material:MaterialChip
                     Grid.Column="1"
                     Grid.Row="1"
                     Type="Normal"
@@ -106,46 +186,51 @@
 
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filter Chips" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid Style="{StaticResource GridChipsContainer}">
+            <StackLayout
+                Spacing="8">
+                <Grid Style="{StaticResource GridChipsContainer}">
 
-                <material:MaterialChips
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    IsEnabled="{Binding IsEnabledState}"
-                    Type="Filter"
-                    Text="Filter A"
-                    HorizontalOptions="End"
-                    IsSelected="{Binding ChipsFilterA}"/>
+                    <material:MaterialChip
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        IsEnabled="{Binding IsEnabledState}"
+                        Type="Filter"
+                        Text="Filter A"
+                        HorizontalOptions="End"
+                        IsSelected="{Binding ChipsFilterA}"/>
 
-                <material:MaterialChips
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    Type="Filter"
-                    TrailingIcon="horus_logo.png"
-                    Text="Filter B"
-                    HorizontalOptions="Start"
-                    IsSelected="{Binding ChipsFilterB}"/>
+                    <material:MaterialChip
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Style="{StaticResource SelectedTrailingIconStateManager}"
+                        Type="Filter"
+                        Text="Filter B"
+                        HorizontalOptions="Start"
+                        IsSelected="{Binding ChipsFilterB}"/>
 
-                <material:MaterialChips
-                    Grid.Column="0"
-                    Grid.Row="1"
-                    Type="Filter"
-                    LeadingIcon="plus.png"
-                    Text="Filter C"
-                    HorizontalOptions="End"
-                    IsSelected="{Binding ChipsFilterC}"/>
+                    <material:MaterialChip
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Style="{StaticResource SelectedLeadingIconStateManager}"
+                        Type="Filter"
+                        Text="Filter C"
+                        HorizontalOptions="End"
+                        IsSelected="{Binding ChipsFilterC}"/>
 
-                <material:MaterialChips
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    Type="Filter"
-                    LeadingIcon="plus.png"
-                    Text="Filter D"
-                    HorizontalOptions="Start"
-                    TrailingIcon="horus_logo.png"
-                    IsSelected="{Binding ChipsFilterD}"/>
+                    <material:MaterialChip
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Style="{StaticResource SelectedBothIconStateManager}"
+                        Type="Filter"
+                        Text="Filter D"
+                        HorizontalOptions="Start"
+                        IsSelected="{Binding ChipsFilterD}"/>
 
-            </Grid>
+                </Grid>
+                <material:MaterialButton
+                    Text="Show filter selection"
+                    Command="{Binding ShowFilterSelectionCommand}"/>
+            </StackLayout>
         </material:MaterialCard>
         <material:MaterialLabel 
             Text="Tapping on a filter chip activates it and appends a leading checkmark icon to the starting edge of the chip label."  Type="BodySmall" />
@@ -154,7 +239,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <Grid Style="{StaticResource GridChipsContainer}" RowDefinitions="Auto,Auto,Auto">
 
-                <material:MaterialChips
+                <material:MaterialChip
                     Grid.Column="0"
                     Grid.Row="0"
                     Type="Filter"
@@ -164,29 +249,27 @@
                     HorizontalOptions="End"
                     Style="{StaticResource VisualStateManagerStyle}"/>
 
-                <material:MaterialChips
+                <material:MaterialChip
                     Grid.Column="1"
                     Grid.Row="0"
                     BorderWidth="4"
                     Type="Filter"
-                    IconStateOnSelection="TrailingVisible"
                     TrailingIcon="horus_logo.png"
                     Text="Full API B"
                     HorizontalOptions="Start"
                     Style="{StaticResource VisualStateManagerStyle}"/>
-
-                <material:MaterialChips
+<!--IconStateOnSelection="TrailingVisible"-->
+                <material:MaterialChip
                     Grid.Column="0"
                     Grid.Row="1"
                     Type="Filter"
-                    IconStateOnSelection="LeadingVisible"
                     IsSelected="True"
                     LeadingIcon="plus.png"
                     Text="Full API C"
                     HorizontalOptions="End"
                     Style="{StaticResource VisualStateManagerStyle}"/>
-
-                <material:MaterialChips
+<!--IconStateOnSelection="LeadingVisible"-->
+                <material:MaterialChip
                     Grid.Column="1"
                     Grid.Row="1"
                     HeightRequest="42"
@@ -196,10 +279,9 @@
                     Text="Full API D"
                     Type="Filter"
                     HorizontalOptions="Start"
-                    IconStateOnSelection="BothVisible"
                     TrailingIcon="horus_logo.png"
                     Style="{StaticResource VisualStateManagerStyle}"/>
-
+<!--IconStateOnSelection="BothVisible"-->
                 <HorizontalStackLayout
                     Grid.Row="2"
                     Grid.ColumnSpan="2"
@@ -213,30 +295,90 @@
         <material:MaterialLabel 
             Text="You can modify the chip as you require, this is useful when you need to add it to specific spaces or follow the required layout throughout your app." Type="BodySmall" />
         
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Chips Group (single-selection)" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using attached properties" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <material:MaterialChipsGroup 
-                LabelText="Chips"
-                SupportingText="You must select one"
-                IsMultipleSelection="False"
-                IsEnabled="{Binding IsEnabledState}"
-                HorizontalSpacing="4"
-                SelectedItem="{Binding SelectedChip}"
-                ItemsSource="{Binding Chips}"/>
+            <StackLayout
+                Spacing="8">
+                <StackLayout
+                    material:MaterialViewGroup.GroupName="SingleGroupSample"
+                    material:MaterialViewGroup.SelectionType="Single"
+                    material:MaterialViewGroup.SelectedValue="{Binding SelectedChipValue}"
+                    material:MaterialViewGroup.SelectedValueChangedCommand="{Binding SelectedValueChangedCommand}"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <material:MaterialChip
+                        Type="Filter"
+                        Text="Option A"/>
+                    <material:MaterialChip
+                        Type="Filter"
+                        Text="Option B"/>
+                    <material:MaterialChip
+                        Type="Filter"
+                        Text="Option C"/>
+                </StackLayout>
+                <material:MaterialLabel
+                    Text="{Binding SelectedChipText}"
+                    HorizontalTextAlignment="Center" />
+                <material:MaterialButton
+                    Text="Select Chip C"
+                    Command="{Binding SelectChipCCommand}" />
+            </StackLayout>
         </material:MaterialCard>
-        <material:MaterialLabel Text="You can easily group chips together to give the user a list of single-select options, even offering a way to display animated validation text." Type="BodySmall" />
+        <material:MaterialLabel 
+            Text="We are creating chips using MaterialViewGroup's attachable properties: GroupName, SelectionType (Single), SelectedValue and SelectedValueChangedCommand." Type="BodySmall" />
         
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Chips Group (multi-selection)" />
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="SelectionType: Multiple" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <material:MaterialChipsGroup 
-                LabelText="Chips"
-                IsMultipleSelection="True"
-                ChipsFlexLayoutPercentageBasis="0.5"
-                Align="Center"
-                SelectedItems="{Binding SelectedChips}"
-                ItemsSource="{Binding Chips}"/>
+            <StackLayout
+                Spacing="8">
+                <StackLayout
+                    material:MaterialViewGroup.GroupName="MultipleGroupSample"
+                    material:MaterialViewGroup.SelectionType="Multiple"
+                    material:MaterialViewGroup.SelectedValues="{Binding SelectedChips}"
+                    material:MaterialViewGroup.SelectedValueChangedCommand="{Binding ShowSelectedChipsCommand}"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <material:MaterialChip
+                        Type="Filter"
+                        Text="Option A"/>
+                    <material:MaterialChip
+                        Type="Filter"
+                        Text="Option B"/>
+                    <material:MaterialChip
+                        Type="Filter"
+                        Text="Option C"/>
+                </StackLayout>
+                <material:MaterialLabel
+                    Text="{Binding SelectedChipsText}"
+                    HorizontalTextAlignment="Center" />
+            </StackLayout>
         </material:MaterialCard>
-        <material:MaterialLabel Text="You can also provide a group to select multiple options. The chips group allows for chips alignment, spacing, percentage size, and more." Type="BodySmall" />
+        <material:MaterialLabel 
+            Text="We are creating chips using MaterialViewGroup's attachable properties: GroupName, SelectionType (Multiple), SelectedValues and SelectedValueChangedCommand." Type="BodySmall" />
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Grouping MaterialChip" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <StackLayout
+                Spacing="8">
+                <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
+                            material:MaterialViewGroup.GroupName="TestingChipsGroup"
+                            material:MaterialViewGroup.SelectedValue="{Binding SelectedChipItem}"
+                            BindableLayout.ItemsSource="{Binding Chips}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <material:MaterialChip
+                                Type="Filter"
+                                Text="{Binding .}"
+                                Margin="4" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+                <material:MaterialButton
+                    Text="Show selection"
+                    Command="{Binding ShowSelectedItemCommand}" />
+            </StackLayout>
+        </material:MaterialCard>
+        <material:MaterialLabel Text="We are creating chips using a BindableLayout and MaterialViewGroup's attachable properties" Type="BodySmall" />
+        
     </VerticalStackLayout>
 </local:BaseContentPage>

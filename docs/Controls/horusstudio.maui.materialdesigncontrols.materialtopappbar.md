@@ -1,6 +1,6 @@
 # MaterialTopAppBar
 
-A top app bar  that display navigation, actions, and text at the top of a screen, and follows Material Design Guidelines [see here.](https://m3.material.io/components/top-app-bar/overview)
+Top App bars display navigation, actions, and text at the top of a screen, and follow Material Design Guidelines. [See more](https://m3.material.io/components/top-app-bar/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -44,7 +44,7 @@ var topAppBar = new MaterialTopAppBar
 
 ### <a id="properties-busyindicatorcolor"/>**BusyIndicatorColor**
 
-Gets or sets the  for the busy indicators.
+Gets or sets the color for the busy indicators.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -77,7 +77,7 @@ Default value: null
 
 ### <a id="properties-descriptioncolor"/>**DescriptionColor**
 
-Gets or sets the  for the description text of the top app bar. 
+Gets or sets the color for the description text of the top app bar. 
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -128,7 +128,7 @@ Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsof
 
 Default value: new Thickness(10, 8, 10, 16)
 
-Remarks: This property does not take into account the Left and Right of the set , it only applies the Top and Bottom values.
+Remarks: This property does not take into account Left and Right values of Thickness, it only applies the Top and Bottom values.
 
 <br>
 
@@ -145,7 +145,7 @@ Default value: null
 
 ### <a id="properties-headlinecolor"/>**HeadlineColor**
 
-Gets or sets the  for the headline text of the top app bar. 
+Gets or sets the color for the headline text of the top app bar. 
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -196,53 +196,53 @@ Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsof
 
 Default value: default(Thickness)
 
-Remarks: This property does not take into account the Left and Right of the set , it only applies the Top and Bottom values.
+Remarks: This property does not take into account the Left and Right of the set Thickness, it only applies the Top and Bottom values.
 
 <br>
 
-### <a id="properties-iconbuttonanimation"/>**IconButtonAnimation**
-
-Gets or sets an animation to be executed when leading and trailing icon button are clicked.
- This is a bindable property.
-
-Property type: AnimationTypes<br>
-
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade
-
-<br>
-
-### <a id="properties-iconbuttonanimationparameter"/>**IconButtonAnimationParameter**
-
-Gets or sets the parameter to pass to the  property.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: 0.7
-
-<br>
-
-### <a id="properties-iconbuttoncustomanimation"/>**IconButtonCustomAnimation**
+### <a id="properties-iconbuttontouchanimation"/>**IconButtonTouchAnimation**
 
 Gets or sets a custom animation to be executed when leading and trailing icon button are clicked. 
  This is a bindable property.
 
-Property type: ICustomAnimation<br>
+Property type: ITouchAnimation<br>
 
 Default value: null
 
 <br>
 
+### <a id="properties-iconbuttontouchanimationtype"/>**IconButtonTouchAnimationType**
+
+Gets or sets an animation to be executed when leading and trailing icon button are clicked.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: TouchAnimationTypes.Fade
+
+<br>
+
+### <a id="properties-iconpadding"/>**IconPadding**
+
+Gets or sets the padding of leading and trailing icons for the top app bar.
+ This is a bindable property.
+
+Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
+
+Default value: 12
+
+<br>
+
 ### <a id="properties-iconsize"/>**IconSize**
 
-Gets or sets the size of the MaterialTopAppBar.LeadingIcon and MaterialTopAppBar.TrailingIcons of this top app bar.
+Gets or sets the size of leading and trailing icons for the top app bar.
  This is a bindable property.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
@@ -297,7 +297,7 @@ Default value: false
 
 ### <a id="properties-scrollviewanimationlength"/>**ScrollViewAnimationLength**
 
-Gets or sets the duration of the collapse or expand animation bound to the  element. 
+Gets or sets the duration of the collapse or expand animation bound to the ScrollView element. 
  This is a bindable property.
 
 Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
@@ -308,7 +308,7 @@ Default value: 250
 
 ### <a id="properties-scrollviewname"/>**ScrollViewName**
 
-Gets or sets the name of the  element to which the top app bar will be linked to run collapse or expand animations depending on the user's scroll.
+Gets or sets the name of the ScrollView element to which the top app bar will be linked to run collapse or expand animations depending on the user's scroll.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
@@ -332,7 +332,7 @@ Remarks: This property supports a maximum of 3 icon buttons.
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the top app bar type according to MaterialTopAppBarType enum.
+Gets or sets the top app bar type.
  This is a bindable property.
 
 Property type: MaterialTopAppBarType<br>

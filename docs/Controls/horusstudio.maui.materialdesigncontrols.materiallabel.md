@@ -1,6 +1,6 @@
 # MaterialLabel
 
-A label  that helps make writing legible and beautiful, and follows Material Design Guidelines [See here. ](https://m3.material.io/styles/typography/overview)
+Labels help make writing legible and beautiful, and follow Material Design Guidelines. [See more](https://m3.material.io/styles/typography/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -63,7 +63,7 @@ Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.stri
 
 ### <a id="properties-textcolor"/>**TextColor**
 
-Gets or sets the  for the text of the label.
+Gets or sets the color for the text of the label.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -72,8 +72,8 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the label type according to LabelTypes enum.
- This property handle internally the FontFamily, CharacterSpacing and FontSize properties.
+Gets or sets the label type according to LabelTypes.
+ This property internally handles FontFamily, CharacterSpacing and FontSize properties.
 
 Property type: LabelTypes<br>
 
@@ -101,4 +101,4 @@ Default value: LabelTypes.BodyMedium
 
 ## Known issues and pending features
 
-* [iOS] FontAttributes doesn't work.
+* [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue).

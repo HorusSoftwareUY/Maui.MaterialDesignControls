@@ -1,6 +1,6 @@
 # MaterialBadge
 
-Badges show notifications, counts, or status information on navigation items and icons [see here.](https://m3.material.io/components/badges/overview)
+Badges show notifications, counts, or status information on navigation items and icons and follow Material Design Guidelines. [See more](https://m3.material.io/components/badges/overview).
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -102,13 +102,13 @@ Gets or sets the text displayed as the content of the badge.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-Default value: Empty
+Default value: string.Empty
 
 <br>
 
 ### <a id="properties-textcolor"/>**TextColor**
 
-Gets or sets the  for the text of the Badge.
+Gets or sets the color for the text of the Badge.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -125,7 +125,7 @@ Remarks: The text color may be affected by the following cases:
 
 ### <a id="properties-type"/>**Type**
 
-Gets or sets the badge type according to MaterialBadgeType enum.
+Gets or sets the badge type.
  This is a bindable property.
 
 Property type: MaterialBadgeType<br>

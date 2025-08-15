@@ -38,7 +38,7 @@
         </material:MaterialCard>
         <material:MaterialLabel Text="Selection controls filled and outlined, disabled with custom leading icon." Type="BodySmall" />
         
-        <material:MaterialLabel  Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
+        <material:MaterialLabel  Style="{StaticResource SectionTitle}" Text="Using supporting text, checking errors and animation in case of error" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout>
                 <material:MaterialSelection 
@@ -49,6 +49,7 @@
                     CommandParameter="User selection"
                     TrailingIcon="ic_floating.png"
                     HasError="{Binding HasAnError}"
+                    ErrorAnimationType="Heart"
                     Placeholder="Select user" />
                 
                 <material:MaterialSelection 

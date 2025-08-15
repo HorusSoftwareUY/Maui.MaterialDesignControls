@@ -4,7 +4,7 @@ using System.Windows.Input;
 namespace HorusStudio.Maui.MaterialDesignControls;
 
 /// <summary>
-/// A Checkbox <see cref="View" /> let users select one or more items from a list, or turn an item on or off and follows Material Design Guidelines <see href="https://m3.material.io/components/checkbox/overview"> </see>.
+/// Checkboxes let users select one or more items from a list, or turn an item on or off and follow Material Design Guidelines. <see href="https://m3.material.io/components/checkbox/overview">See more</see>.
 /// </summary>
 /// <example>
 ///
@@ -17,8 +17,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// &lt;material:MaterialCheckBox
 ///         TextSide="Left"
-///         CommandCheckedChanged="{Binding CheckedChangedCommand}"
-///         CommandCheckedChangedParameter="Selected or Unselected"
+///         CheckedChangedCommand="{Binding CheckedChangedCommand}"
 ///         Text="Checkbox 1"/&gt;
 /// </xaml>
 /// </code>
@@ -29,8 +28,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// {
 ///     Text = "Checkbox 1"
 ///     TextSide = TextSide.Left,
-///     CommandCheckedChanged = viewModel.CheckChangedCommand,
-///     CommandCheckedChangedParameter = "Selected or Unselected"
+///     CheckedChangedCommand = viewModel.CheckChangedCommand
 /// };
 ///</code>
 ///
@@ -41,7 +39,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// <todoList>
 /// * [iOS] FontAttributes doesn't work.
 /// </todoList>
-public class MaterialCheckBox : ContentView, ITouchable
+public class MaterialCheckBox : ContentView, ITouchableView
 {
 
     #region Attributes
@@ -52,8 +50,7 @@ public class MaterialCheckBox : ContentView, ITouchable
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.BodyLarge;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationType = _ => MaterialAnimation.Type;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultAnimationParameter = _ => MaterialAnimation.Parameter;
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
 
     #endregion Attributes
 
@@ -69,32 +66,32 @@ public class MaterialCheckBox : ContentView, ITouchable
     #region Bindable Properties
 
     /// <summary>
-    /// The backing store for the <see cref="Content" /> bindable property.
+    /// The backing store for the <see cref="Content">Content</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(string), typeof(MaterialCheckBox), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="Color" /> bindable property.
+    /// The backing store for the <see cref="Color">Color</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(MaterialCheckBox), defaultValueCreator: DefaultColor);
 
     /// <summary>
-    /// The backing store for the <see cref="TickColor" /> bindable property.
+    /// The backing store for the <see cref="TickColor">TickColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TickColorProperty = BindableProperty.Create(nameof(TickColor), typeof(Color), typeof(MaterialCheckBox), defaultValueCreator: DefaultCheckColor);
 
     /// <summary>
-    /// The backing store for the <see cref="Text" /> bindable property.
+    /// The backing store for the <see cref="Text">Text</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(MaterialCheckBox), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="TextColor" /> bindable property.
+    /// The backing store for the <see cref="TextColor">TextColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(MaterialCheckBox), defaultValueCreator: DefaultTextColor);
 
     /// <summary>
-    /// The backing store for the <see cref="IsChecked" /> bindable property.
+    /// The backing store for the <see cref="IsChecked">IsChecked</see> bindable property.
     /// </summary>
     public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(MaterialCheckBox), defaultValue: false, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, newValue) =>
     {
@@ -103,15 +100,15 @@ public class MaterialCheckBox : ContentView, ITouchable
             self.ChangeVisualState();
 
             self.CheckedChanged?.Invoke(self, new CheckedChangedEventArgs(value));
-            if (self.CommandCheckedChanged != null && self.CommandCheckedChanged.CanExecute(self.CommandCheckedChangedParameter))
+            if (self.CheckedChangedCommand != null && self.CheckedChangedCommand.CanExecute(value))
             {
-                self.CommandCheckedChanged.Execute(self.CommandCheckedChangedParameter);
+                self.CheckedChangedCommand.Execute(value);
             }
         }
     });
 
     /// <summary>
-    /// The backing store for the <see cref="IsEnabled" /> bindable property.
+    /// The backing store for the <see cref="IsEnabled">IsEnabled</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(MaterialCheckBox), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (bindable, _, newValue) =>
     {
@@ -122,37 +119,37 @@ public class MaterialCheckBox : ContentView, ITouchable
     });
 
     /// <summary>
-    /// The backing store for the <see cref="FontFamily" /> bindable property.
+    /// The backing store for the <see cref="FontFamily">FontFamily</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MaterialCheckBox), defaultValueCreator: DefaultFontFamily);
 
     /// <summary>
-    /// The backing store for the <see cref="CharacterSpacing" /> bindable property.
+    /// The backing store for the <see cref="CharacterSpacing">CharacterSpacing</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(MaterialCheckBox), defaultValueCreator: DefaultCharacterSpacing);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAttributes" /> bindable property.
+    /// The backing store for the <see cref="FontAttributes">FontAttributes</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes), typeof(FontAttributes), typeof(MaterialCheckBox), defaultValue: null);
 
     /// <summary>
-    /// The backing store for the <see cref="FontAutoScalingEnabled" /> bindable property.
+    /// The backing store for the <see cref="FontAutoScalingEnabled">FontAutoScalingEnabled</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(nameof(FontAutoScalingEnabled), typeof(bool), typeof(MaterialCheckBox), defaultValue: true);
 
     /// <summary>
-    /// The backing store for the <see cref="FontSize" /> bindable property.
+    /// The backing store for the <see cref="FontSize">FontSize</see> bindable property.
     /// </summary>
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(MaterialCheckBox), defaultValueCreator: DefaultFontSize);
 
     /// <summary>
-    /// The backing store for the <see cref="TextTransform" /> bindable property.
+    /// The backing store for the <see cref="TextTransform">TextTransform</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextTransformProperty = BindableProperty.Create(nameof(TextTransform), typeof(TextTransform), typeof(MaterialCheckBox), defaultValue: TextTransform.Default);
 
     /// <summary>
-    /// The backing store for the <see cref="TextSide"/> bindable property.
+    /// The backing store for the <see cref="TextSide">TextSide</see> bindable property.
     /// </summary>
     public static readonly BindableProperty TextSideProperty = BindableProperty.Create(nameof(TextSide), typeof(TextSide), typeof(MaterialCheckBox), defaultValue: TextSide.Right, propertyChanged: (bindable, _, newValue) =>
     {
@@ -163,36 +160,26 @@ public class MaterialCheckBox : ContentView, ITouchable
     });
 
     /// <summary>
-    /// The backing store for the <see cref="Animation"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimationType">TouchAnimationType</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationProperty = BindableProperty.Create(nameof(Animation), typeof(AnimationTypes), typeof(MaterialCheckBox), defaultValueCreator: DefaultAnimationType);
+    public static readonly BindableProperty TouchAnimationTypeProperty = BindableProperty.Create(nameof(TouchAnimationType), typeof(TouchAnimationTypes), typeof(MaterialCheckBox), defaultValueCreator: DefaultTouchAnimationType);
 
     /// <summary>
-    /// The backing store for the <see cref="AnimationParameter"/> bindable property.
+    /// The backing store for the <see cref="TouchAnimation">TouchAnimation</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty AnimationParameterProperty = BindableProperty.Create(nameof(AnimationParameter), typeof(double?), typeof(MaterialCheckBox), defaultValueCreator: DefaultAnimationParameter);
+    public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialCheckBox));
 
     /// <summary>
-    /// The backing store for the <see cref="CustomAnimation"/> bindable property.
+    /// The backing store for the <see cref="CheckedChangedCommand">CheckedChangedCommand</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty CustomAnimationProperty = BindableProperty.Create(nameof(CustomAnimation), typeof(ICustomAnimation), typeof(MaterialCheckBox));
-
-    /// <summary>
-    /// The backing store for the <see cref="CommandCheckedChanged" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty CommandCheckedChangedProperty = BindableProperty.Create(nameof(CommandCheckedChanged), typeof(ICommand), typeof(MaterialCheckBox));
-
-    /// <summary>
-    /// The backing store for the <see cref="CommandCheckedChangedParameter" /> bindable property.
-    /// </summary>
-    public static readonly BindableProperty CommandCheckedChangedParameterProperty = BindableProperty.Create(nameof(CommandCheckedChangedParameter), typeof(object), typeof(MaterialCheckBox));
-
+    public static readonly BindableProperty CheckedChangedCommandProperty = BindableProperty.Create(nameof(CheckedChangedCommand), typeof(ICommand), typeof(MaterialCheckBox));
+    
     #endregion Bindable Properties
 
     #region Properties
 
     /// <summary>
-    /// Internal implementation of the <see cref="CheckBox" /> control.
+    /// Internal implementation of the <see cref="CheckBox">CheckBox</see> control.
     /// </summary>
     /// <remarks>
     /// This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
@@ -200,18 +187,18 @@ public class MaterialCheckBox : ContentView, ITouchable
     public CheckBox InternalCheckBox => _checkbox;
 
     /// <summary>
-    /// Gets the <see cref="Content" /> for the RadioButton.
+    /// Gets the Content of checkbox.
     /// This is a bindable property.
     /// </summary>
     /// <remarks>We disabled the set for this property because doesn't have sense set the content because we are setting with the checkbox and label.</remarks>
     public new string Content => (string)GetValue(ContentProperty);
 
     /// <summary>
-    /// Gets or sets the <see cref="Text" /> for the label.
+    /// Gets or sets the text for the checkbox.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>
+    /// <see langword="null">Null</see>
     /// </default>
     public string Text
     {
@@ -220,7 +207,7 @@ public class MaterialCheckBox : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Microsoft.Maui.Graphics.Color" /> for the checkbox color.
+    /// Gets or sets the <see cref="Color">color</see> for the checkbox.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -233,7 +220,7 @@ public class MaterialCheckBox : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="Microsoft.Maui.Graphics.Color" /> for the tick color.
+    /// Gets or sets the <see cref="Color">color</see> for the tick.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -247,7 +234,7 @@ public class MaterialCheckBox : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="TextColor" /> for the text of the label.
+    /// Gets or sets the <see cref="Color">color</see> for the text.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -260,11 +247,11 @@ public class MaterialCheckBox : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets <see cref="IsChecked" /> for the checkbox.
+    /// Gets or sets if the checkbox is checked.
     /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="False"/>
+    /// <see langword="false">False</see>
     /// </default>
     public bool IsChecked
     {
@@ -273,10 +260,11 @@ public class MaterialCheckBox : ContentView, ITouchable
     }
 
     /// <summary>
-    /// Gets or sets <see cref="IsEnabled" />  for the checkbox. This is a bindable property.
+    /// Gets or sets if the checkbox is enabled.
+    /// This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="False"/>
+    /// <see langword="false" />
     /// </default>
     public new bool IsEnabled
     {
@@ -319,7 +307,7 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// Defines whether an app's UI reflects text scaling preferences set in the operating system.
     /// </summary>
     /// <default>
-    /// <see langword="True"/>
+    /// <see langword="true">True</see>
     /// </default>
     public bool FontAutoScalingEnabled
     {
@@ -364,60 +352,41 @@ public class MaterialCheckBox : ContentView, ITouchable
     /// Gets or sets an animation to be executed when checkbox is clicked. This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see cref="AnimationTypes.Fade">AnimationTypes.Fade</see>
+    /// <see cref="TouchAnimationTypes.Fade">TouchAnimationTypes.Fade</see>
     /// </default>
-    public AnimationTypes Animation
+    public TouchAnimationTypes TouchAnimationType
     {
-        get => (AnimationTypes)GetValue(AnimationProperty);
-        set => SetValue(AnimationProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="Animation"/> property. This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>.
-    /// </default>
-    public double? AnimationParameter
-    {
-        get => (double?)GetValue(AnimationParameterProperty);
-        set => SetValue(AnimationParameterProperty, value);
+        get => (TouchAnimationTypes)GetValue(TouchAnimationTypeProperty);
+        set => SetValue(TouchAnimationTypeProperty, value);
     }
 
     /// <summary>
     /// Gets or sets a custom animation to be executed when checkbox is clicked. This is a bindable property.
     /// </summary>
     /// <default>
-    /// <see langword="null"/>.
+    /// <see langword="null">Null</see>
     /// </default>
-    public ICustomAnimation CustomAnimation
+    public ITouchAnimation TouchAnimation
     {
-        get => (ICustomAnimation)GetValue(CustomAnimationProperty);
-        set => SetValue(CustomAnimationProperty, value);
+        get => (ITouchAnimation)GetValue(TouchAnimationProperty);
+        set => SetValue(TouchAnimationProperty, value);
     }
 
     /// <summary>
     /// Gets or sets the command to invoke when the checkbox changes its status. This is a bindable property.
     /// </summary>
-    /// <remarks>This property is used to associate a command with an instance of a checkbox. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel. <see cref="VisualElement.IsEnabled" /> is controlled by the <see cref="Command.CanExecute(object)"/> if set.</remarks>
-    public ICommand CommandCheckedChanged
+    /// <remarks>
+    /// This property is used to associate a command with an instance of a checkbox.
+    /// This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
+    /// <see cref="VisualElement.IsEnabled">VisualElement.IsEnabled</see> is controlled by the <see cref="Command.CanExecute(object)">Command.CanExecute(object)</see> if set.
+    /// The command parameter is of type <see cref="bool">bool</see> and corresponds to the value of the <see cref="IsChecked">IsChecked</see> property.
+    /// </remarks>
+    public ICommand CheckedChangedCommand
     {
-        get => (ICommand)GetValue(CommandCheckedChangedProperty);
-        set => SetValue(CommandCheckedChangedProperty, value);
+        get => (ICommand)GetValue(CheckedChangedCommandProperty);
+        set => SetValue(CheckedChangedCommandProperty, value);
     }
-
-    /// <summary>
-    /// Gets or sets the parameter to pass to the <see cref="CommandCheckedChangedParameter"/> property. This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see langword="null"/>.
-    /// </default>
-    public object CommandCheckedChangedParameter
-    {
-        get => GetValue(CommandCheckedChangedParameterProperty);
-        set => SetValue(CommandCheckedChangedParameterProperty, value);
-    }
-
+    
     #endregion Properties
 
     #region Constructors
@@ -443,7 +412,7 @@ public class MaterialCheckBox : ContentView, ITouchable
             }
         };
 
-#if IOS
+#if IOS || MACCATALYST
         _mainLayout.Padding = new Thickness(6);
 #endif
 
@@ -512,12 +481,12 @@ public class MaterialCheckBox : ContentView, ITouchable
 
     #region ITouchable
 
-    public async void OnTouch(TouchType gestureType)
+    public async void OnTouch(TouchEventType gestureType)
     {
         if (!IsEnabled) return;
-        await TouchAnimation.AnimateAsync(this, gestureType);
+        await TouchAnimationManager.AnimateAsync(this, gestureType);
 
-        if (gestureType == TouchType.Released)
+        if (gestureType == TouchEventType.Released)
         {
             IsChecked = !IsChecked;
         }

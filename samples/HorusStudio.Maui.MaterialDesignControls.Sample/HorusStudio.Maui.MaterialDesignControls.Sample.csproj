@@ -28,6 +28,7 @@
 		<!-- App Icon -->
 		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.8" />
 		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.55" />
+		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.8" />
 		
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" BaseSize="120,120" Color="White" />
@@ -66,10 +67,4 @@
 		</Reference>
 	</ItemGroup>
 	-->
-	<ItemGroup>
-	  <None Remove="Handlers\" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Handlers\" />
-	</ItemGroup>
 </Project>

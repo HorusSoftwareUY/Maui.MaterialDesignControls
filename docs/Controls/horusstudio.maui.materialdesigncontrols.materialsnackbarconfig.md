@@ -1,6 +1,6 @@
 # MaterialSnackbarConfig
 
-User-defined configuration to display a MaterialSnackbar
+User-defined configuration to display a Snackbar.
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
 
@@ -58,7 +58,7 @@ Default value: 8
 
 ### <a id="properties-defaultactioncolor"/>**DefaultActionColor**
 
-Action text  to be applied by default to every MaterialSnackbar that doesn't set one
+Action text color to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -68,7 +68,7 @@ Default value: Light: MaterialLightTheme.InversePrimary - Dark: MaterialDarkThem
 
 ### <a id="properties-defaultactionsize"/>**DefaultActionSize**
 
-Action font size to be applied by default to every MaterialSnackbar that doesn't set one
+Action font size to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -78,7 +78,7 @@ Default value: MaterialFontSize.BodyMedium
 
 ### <a id="properties-defaultactiontextdecorations"/>**DefaultActionTextDecorations**
 
-Action text decorations to be applied by default to every MaterialSnackbar that doesn't set one
+Action text decorations to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [TextDecorations](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.textdecorations)<br>
 
@@ -88,7 +88,7 @@ Default value: TextDecorations.None
 
 ### <a id="properties-defaultbackgroundcolor"/>**DefaultBackgroundColor**
 
-Background  to be applied by default to every MaterialSnackbar that doesn't set one
+Background color to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -98,7 +98,7 @@ Default value: Light: MaterialLightTheme.InverseSurface - Dark: MaterialDarkThem
 
 ### <a id="properties-defaultcornerradius"/>**DefaultCornerRadius**
 
-Corner radius to be applied by default to every MaterialSnackbar that doesn't set one
+Corner radius to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Single](https://learn.microsoft.com/en-us/dotnet/api/system.single)<br>
 
@@ -108,7 +108,7 @@ Default value: 8
 
 ### <a id="properties-defaultduration"/>**DefaultDuration**
 
-Duration applied by default to every MaterialSnackbar that doesn't set one
+Duration applied by default to every Snackbar that doesn't set one.
 
 Property type: [TimeSpan](https://learn.microsoft.com/en-us/dotnet/api/system.timespan)<br>
 
@@ -118,7 +118,7 @@ Default value: 3 seconds
 
 ### <a id="properties-defaultfontsize"/>**DefaultFontSize**
 
-Text font size to be applied by default to every MaterialSnackbar that doesn't set one
+Text font size to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
@@ -128,7 +128,7 @@ Default value: MaterialFontSize.BodyMedium
 
 ### <a id="properties-defaulticoncolor"/>**DefaultIconColor**
 
-Icon  to be applied by default to every MaterialSnackbar that doesn't set one
+Icon color to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
@@ -138,7 +138,7 @@ Default value: Light: MaterialLightTheme.InverseOnSurface - Dark: MaterialDarkTh
 
 ### <a id="properties-defaulticonsize"/>**DefaultIconSize**
 
-Icon size to be applied by default to every MaterialSnackbar that doesn't set one
+Icon size to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
@@ -148,7 +148,7 @@ Default value: 24
 
 ### <a id="properties-defaultmargin"/>**DefaultMargin**
 
-Margin to be applied by default to every MaterialSnackbar that doesn't set one
+Margin to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
 
@@ -158,7 +158,7 @@ Default value: 24
 
 ### <a id="properties-defaultpadding"/>**DefaultPadding**
 
-Padding to be applied by default to every MaterialSnackbar that doesn't set one
+Padding to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Thickness](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.thickness)<br>
 
@@ -168,7 +168,7 @@ Default value: 16
 
 ### <a id="properties-defaultposition"/>**DefaultPosition**
 
-Position to be applied by default to every MaterialSnackbar that doesn't set one
+Position to be applied by default to every Snackbar that doesn't set one.
 
 Property type: MaterialSnackbarPosition<br>
 
@@ -183,7 +183,7 @@ Default value: MaterialSnackbarPosition.Bottom
 
 ### <a id="properties-defaultspacing"/>**DefaultSpacing**
 
-Spacing between components to be applied by default to every MaterialSnackbar that doesn't set one
+Spacing between components to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
@@ -193,7 +193,7 @@ Default value: 16
 
 ### <a id="properties-defaulttextcolor"/>**DefaultTextColor**
 
-Text  to be applied by default to every MaterialSnackbar that doesn't set one
+Text color to be applied by default to every Snackbar that doesn't set one.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 

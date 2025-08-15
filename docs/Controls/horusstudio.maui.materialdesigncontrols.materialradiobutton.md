@@ -1,6 +1,6 @@
 # MaterialRadioButton
 
-A RadioButton  let people select one option from a set of options and follows Material Design Guidelines [See here. ](https://m3.material.io/components/radio-button/overview)
+Radio buttons let people select one option from a set of options and follow Material Design Guidelines. [See more](https://m3.material.io/components/radio-button/overview).
  We reuse some code from MAUI official repository: https://github.com/dotnet/maui/blob/7076514d83f7e16ac49838307aefd598b45adcec/src/Controls/src/Core/RadioButton/RadioButton.cs
 
 Namespace: HorusStudio.Maui.MaterialDesignControls
@@ -8,6 +8,8 @@ Namespace: HorusStudio.Maui.MaterialDesignControls
 Inherits from: MaterialRadioButton → [ContentView](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.contentview)
 
 <br>
+
+Remarks: The [MaterialViewGroup](docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewgroup.md) class allows grouping radio buttons, providing control over the selection type (Single or Multiple), item selection through bindings, and commands that trigger when the selection changes.
 
 ![](https://raw.githubusercontent.com/HorusSoftwareUY/MaterialDesignControlsPlugin/develop/screenshots/MaterialRadioButton.gif)
 
@@ -18,8 +20,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 
 <material:MaterialRadioButton
         TextSide="Left"
-        CommandCheckedChanged="{Binding CheckedChangedCommand}"
-        CommandCheckedChangedParameter="Selected or Unselected"
+        CheckedChangedCommand="{Binding CheckedChangedCommand}"
         Text="Radio button 1"/>
 ```
 
@@ -30,43 +31,13 @@ var radioButton = new MaterialRadioButton()
 {
     Text = "Radio button 1",
     TextSide = TextSide.Left,
-    CommandCheckedChanged = viewModel.CheckChangedCommand,
-    CommandCheckedChangedParameter = "Selected or Unselected"
+    CheckedChangedCommand = viewModel.CheckChangedCommand
 };
 ```
 
 [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ProgressIndicatorPage.xaml)
 
 ## Properties
-
-### <a id="properties-animation"/>**Animation**
-
-Gets or sets an animation to be executed when radio button is clicked.
- This is a bindable property.
-
-Property type: AnimationTypes<br>
-
-| Name | Value | Description |
-| --- | --: | --- |
-| None | 0 | None |
-| Fade | 1 | Fade |
-| Scale | 2 | Scale |
-| Custom | 3 | Custom |
-
-Default value: AnimationTypes.Fade
-
-<br>
-
-### <a id="properties-animationparameter"/>**AnimationParameter**
-
-Gets or sets the parameter to pass to the MaterialRadioButton.Animation property.
- This is a bindable property.
-
-Property type: [Nullable&lt;Double&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-Default value: null
-
-<br>
 
 ### <a id="properties-characterspacing"/>**CharacterSpacing**
 
@@ -77,34 +48,24 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 <br>
 
-### <a id="properties-commandcheckedchanged"/>**CommandCheckedChanged**
+### <a id="properties-checkedchangedcommand"/>**CheckedChangedCommand**
 
 Gets or sets the command to invoke when the radio button changes its status.
  This is a bindable property.
 
 Property type: ICommand<br>
 
-Remarks: This property is used to associate a command with an instance of a radio button. This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.  is controlled by the  if set.
-
-<br>
-
-### <a id="properties-commandcheckedchangedparameter"/>**CommandCheckedChangedParameter**
-
-Gets or sets the parameter to pass to the MaterialRadioButton.CommandCheckedChangedParameter property.
- This is a bindable property.
-
-Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
-
-Default value: null
+Remarks: This property is used to associate a command with an instance of a radio button.
+ This property is most often set in the MVVM pattern to bind callbacks back into the ViewModel.
+ VisualElement.IsEnabled is controlled by the Command.CanExecute(object) if set.
+ The command parameter is of type [bool](https://learn.microsoft.com/en-us/dotnet/api/system.boolean) and corresponds to the value of the IsChecked property.
 
 <br>
 
 ### <a id="properties-content"/>**Content**
 
-Gets the MaterialRadioButton.Content for the RadioButton.
+Gets the Content of the radio button.
  This is a bindable property.
- We disabled the set for this property because doesn't have sense set the content because we are setting with the
- radio button and label.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
 
@@ -112,21 +73,10 @@ Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.stri
 
 ### <a id="properties-controltemplate"/>**ControlTemplate**
 
-Gets or sets the MaterialRadioButton.ControlTemplate for the radio button.
+Gets or sets the template for the radio button.
  This is a bindable property.
 
 Property type: [ControlTemplate](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.controltemplate)<br>
-
-<br>
-
-### <a id="properties-customanimation"/>**CustomAnimation**
-
-Gets or sets a custom animation to be executed when radio button is clicked.
- This is a bindable property.
-
-Property type: ICustomAnimation<br>
-
-Default value: null
 
 <br>
 
@@ -145,7 +95,7 @@ Defines whether an app's UI reflects text scaling preferences set in the operati
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: True
+Default value: true
 
 <br>
 
@@ -167,42 +117,41 @@ Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.doub
 
 <br>
 
-### <a id="properties-groupname"/>**GroupName**
+### <a id="properties-internalradiobutton"/>**InternalRadioButton**
 
-Gets or sets the [String](https://learn.microsoft.com/en-us/dotnet/api/system.string) GroupName for the radio button. 
- This is a bindable property.
+Internal implementation of the RadioButton control.
 
-Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+Property type: [RadioButton](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.radiobutton)<br>
 
-Default value: MaterialRadioButton.GroupName
+Remarks: This property can affect the internal behavior of this control. Use only if you fully understand the potential impact.
 
 <br>
 
 ### <a id="properties-ischecked"/>**IsChecked**
 
-Gets or sets MaterialRadioButton.IsChecked for the radio button. 
+Gets or sets if the radio button is checked. 
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: False
+Default value: false
 
 <br>
 
 ### <a id="properties-isenabled"/>**IsEnabled**
 
-Gets or sets MaterialRadioButton.IsEnabled for the radio button.
+Gets or sets the radio button is enabled.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-Default value: False
+Default value: false
 
 <br>
 
 ### <a id="properties-strokecolor"/>**StrokeColor**
 
-Gets or sets the  for the stroke of the radio button.
+Gets or sets the stroke color for the radio button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -213,7 +162,7 @@ Default value: Theme: Light: MaterialLightTheme.Primary - Dark: MaterialDarkThem
 
 ### <a id="properties-text"/>**Text**
 
-Gets or sets the MaterialRadioButton.Text for the label.
+Gets or sets a text for the radio button.
  This is a bindable property.
 
 Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
@@ -222,7 +171,7 @@ Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.stri
 
 ### <a id="properties-textcolor"/>**TextColor**
 
-Gets or sets the MaterialRadioButton.TextColor for the text of the label.
+Gets or sets the text color for the radio button.
  This is a bindable property.
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
@@ -256,14 +205,45 @@ Property type: [TextTransform](https://learn.microsoft.com/en-us/dotnet/api/micr
 
 <br>
 
+### <a id="properties-touchanimation"/>**TouchAnimation**
+
+Gets or sets a custom animation to be executed when radio button is clicked.
+ This is a bindable property.
+
+Property type: ITouchAnimation<br>
+
+Default value: null
+
+<br>
+
+### <a id="properties-touchanimationtype"/>**TouchAnimationType**
+
+Gets or sets an animation to be executed when radio button is clicked.
+ This is a bindable property.
+
+Property type: TouchAnimationTypes<br>
+
+| Name | Value | Description |
+| --- | --: | --- |
+| None | 0 | None: no animation runs. |
+| Fade | 1 | Fade: Represents an animation that simulates a "fade" effect by changing the opacity over the target element. |
+| Scale | 2 | Scale: Represents an animation that simulates a "sink" or "sunken" effect by scaling the target element. |
+| Bounce | 3 | Bounce: Represents an animation that simulates a "sink" or "sunken" effect with a "bounce" effect when the user releases the target element. |
+
+Default value: ouchAnimationTypes.Fade
+
+<br>
+
 ### <a id="properties-value"/>**Value**
 
-Defines the value of radio button selected
+Defines the value of the radio button
  This is a bindable property.
 
 Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 
-Default value: null
+Default value: MaterialRadioButton.Text
+
+Remarks: If a value is not explicitly set, the control will use the value of the Text property if set or the Id property as its default.
 
 <br>
 

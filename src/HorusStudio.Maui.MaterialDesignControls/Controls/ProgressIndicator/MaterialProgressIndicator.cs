@@ -11,7 +11,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     }
 
     /// <summary>
-    /// A progress indicator <see cref="View" /> that show the status of a process and follows Material Design Guidelines. <see href="https://m3.material.io/components/progress-indicators/overview">See here. </see>
+    /// Progress indicators show the status of a process and follow Material Design Guidelines. <see href="https://m3.material.io/components/progress-indicators/overview">See more</see>.
     /// </summary>
     /// <example>
     ///
@@ -72,7 +72,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Bindable properties
 
         /// <summary>
-        /// The backing store for the <see cref="Type" /> bindable property.
+        /// The backing store for the <see cref="Type">Type</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(MaterialProgressIndicatorType), typeof(MaterialProgressIndicator), defaultValue: DefaultProgressIndicatorType, propertyChanged: (bindable, oldValue, newValue) =>
         {
@@ -88,7 +88,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="IndicatorColor" /> bindable property.
+        /// The backing store for the <see cref="IndicatorColor">IndicatorColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty IndicatorColorProperty = BindableProperty.Create(nameof(IndicatorColor), typeof(Color), typeof(MaterialProgressIndicator), defaultValueCreator: DefaultIndicatorColor, propertyChanged: (bindable, _, _) =>
         {
@@ -99,7 +99,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="TrackColor" /> bindable property.
+        /// The backing store for the <see cref="TrackColor">TrackColor</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TrackColorProperty = BindableProperty.Create(nameof(TrackColor), typeof(Color), typeof(MaterialProgressIndicator), defaultValueCreator: DefaultTrackColor, propertyChanged: (bindable, _, _) =>
         {
@@ -110,7 +110,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="IsVisible" /> bindable property.
+        /// The backing store for the <see cref="IsVisible">IsVisible</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MaterialProgressIndicator), defaultValue: true, propertyChanged: (bindable, _, _) =>
         {
@@ -121,7 +121,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="HeightRequest" /> bindable property.
+        /// The backing store for the <see cref="HeightRequest">HeightRequest</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultHeightRequest, propertyChanged: (bindable, o, n) =>
         {
@@ -133,7 +133,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
-        /// The backing store for the <see cref="WidthRequest" /> bindable property.
+        /// The backing store for the <see cref="WidthRequest">WidthRequest</see> bindable property.
         /// </summary>
         public new static readonly BindableProperty WidthRequestProperty = BindableProperty.Create(nameof(WidthRequest), typeof(double), typeof(MaterialProgressIndicator), defaultValue: DefaultWidthRequest, propertyChanged: (bindable, o, n) =>
         {
@@ -149,11 +149,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Properties
 
         /// <summary>
-        /// Gets or sets the progress indicator type according to <see cref="MaterialProgressIndicatorType"/> enum.
+        /// Gets or sets the progress indicator <see cref="MaterialProgressIndicatorType">type</see>.
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see cref="MaterialProgressIndicatorType.Circular"/>
+        /// <see cref="MaterialProgressIndicatorType.Circular">MaterialProgressIndicatorType.Circular</see>
         /// </default>
         public MaterialProgressIndicatorType Type
         {
@@ -162,7 +162,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the active indicator of the progress indicator.
+        /// Gets or sets the <see cref="Color">color</see> for the active indicator of the progress indicator.
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -175,7 +175,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Color" /> for the track of the progress indicator.
+        /// Gets or sets the track <see cref="Color">color</see> of the progress indicator.
         /// This is a bindable property.
         /// </summary>
         /// <default>
@@ -193,7 +193,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This is a bindable property.
         /// </summary>
         /// <default>
-        /// <see langword="True">True</see>
+        /// <see langword="true">True</see>
         /// </default>
         public new bool IsVisible
         {
@@ -202,7 +202,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets height of the progress indicator.
+        /// Gets or sets the height of the progress indicator.
         /// This is a bindable property.
         /// </summary>
         public new double HeightRequest
@@ -212,7 +212,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
-        /// Gets or sets width of the progress indicator.
+        /// Gets or sets the width of the progress indicator.
         /// This is a bindable property.
         /// </summary>
         public new double WidthRequest
@@ -225,8 +225,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         #region Layout
 
-        private BoxView _progressBar = null!;
-        private CustomActivityIndicator _customActivityIndicator = null!;
+        private BoxView? _progressBar = null!;
+        private CustomActivityIndicator? _customActivityIndicator = null!;
 
         #endregion Layout
 
@@ -348,7 +348,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             base.HeightRequest = height;
 
-            if (type == MaterialProgressIndicatorType.Circular)
+            if (_customActivityIndicator != null && type == MaterialProgressIndicatorType.Circular)
             {
                 _customActivityIndicator.Size = (int)height;
             }
@@ -362,7 +362,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             base.WidthRequest = width;
 
-            if (type == MaterialProgressIndicatorType.Circular)
+            if (_customActivityIndicator != null && type == MaterialProgressIndicatorType.Circular)
             {
                 _customActivityIndicator.Size = (int)width;
             }
@@ -371,7 +371,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private void StartLinearAnimation()
         {
             var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
-            if (animationManager is null) return;
+            if (animationManager is null || _progressBar is null)
+            {
+                return;
+            }
             
             var index = 1;
             var mainAnimation = new Animation();

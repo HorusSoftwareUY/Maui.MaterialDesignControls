@@ -11,7 +11,6 @@ public partial class RadioButtonPage : BaseContentPage<RadioButtonViewModel>
 
     private void MaterialRadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
-        var selected = e.Value ? "yes" : "no";
-        DisplayAlert("Radio Button Event", $"Selected: {selected}", "OK");
+        DisplayAlert("CheckedChanged event", $"Value: {e.Value.ToString()}", "OK");
     }
 }

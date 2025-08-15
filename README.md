@@ -83,8 +83,7 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * [MaterialButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialbutton.md)
 * [MaterialCard](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcard.md)
 * [MaterialCheckbox](docs/Controls/horusstudio.maui.materialdesigncontrols.materialcheckbox.md)
-* [MaterialChips](docs/Controls/horusstudio.maui.materialdesigncontrols.materialchips.md)
-* [MaterialChipsGroup](docs/Controls/horusstudio.maui.materialdesigncontrols.materialchipsgroup.md)
+* [MaterialChip](docs/Controls/horusstudio.maui.materialdesigncontrols.materialchip.md)
 * [MaterialDatePicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialdatepicker.md)
 * [MaterialDivider](docs/Controls/horusstudio.maui.materialdesigncontrols.materialdivider.md)
 * [MaterialFloatingButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialfloatingbutton.md)
@@ -97,13 +96,15 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * [MaterialRadioButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialradiobutton.md)
 * [MaterialRating](docs/Controls/horusstudio.maui.materialdesigncontrols.materialrating.md)
 * [MaterialSelection](docs/Controls/horusstudio.maui.materialdesigncontrols.materialselection.md)
+* [MaterialSegmentedButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialsegmentedbutton.md)
 * [MaterialSlider](docs/Controls/horusstudio.maui.materialdesigncontrols.materialslider.md)
-* [MaterialSwitch](docs/Controls/horusstudio.maui.materialdesigncontrols.materialswitch.md)
 * [MaterialSnackbar](docs/Controls/horusstudio.maui.materialdesigncontrols.imaterialsnackbar.md)
+* [MaterialSwitch](docs/Controls/horusstudio.maui.materialdesigncontrols.materialswitch.md)
 * [MaterialTextField](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtextfield.md)
 * [MaterialTimePicker](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtimepicker.md)
 * [MaterialTopAppBar](docs/Controls/horusstudio.maui.materialdesigncontrols.materialtopappbar.md)
 * [MaterialViewButton](docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewbutton.md)
+* [MaterialViewGroup](docs/Controls/horusstudio.maui.materialdesigncontrols.materialviewgroup.md)
 
 ### Coming soon
 
@@ -112,7 +113,6 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 * MaterialDialog
 * MaterialDoublePicker
 * MaterialSearch
-* MaterialSegmentedButton
 
 
 ## Styles
