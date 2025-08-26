@@ -174,9 +174,11 @@
                     Grid.Row="1"
                     Type="Normal"
                     LeadingIcon="plus.png"
+                    LeadingIconSize="26"
                     Text="Suggestion D"
                     HorizontalOptions="Start"
                     TrailingIcon="horus_logo.png"
+                    TrailingIconSize="10"
                     Command="{Binding TappedChipsCommand}"
                     CommandParameter="Suggestion D" />
 
