@@ -85,6 +85,7 @@
                      Type="Elevated"
                      Text="Disabled"
                      ImageSource="plus.png"
+                     IconSize="12,12"
                      IsEnabled="False" />
 
                 <material:MaterialButton
