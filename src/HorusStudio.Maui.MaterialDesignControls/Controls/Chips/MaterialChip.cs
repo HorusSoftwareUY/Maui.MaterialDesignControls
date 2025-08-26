@@ -84,6 +84,11 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialChip));
     
     /// <summary>
+    /// The backing store for the <see cref="CommandParameter">CommandParameter</see> bindable property.
+    /// </summary>
+    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialChip));
+    
+    /// <summary>
     /// Gets or sets the state when the Chips is selected.
     /// bindable property.
     /// </summary>
@@ -262,6 +267,19 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     {
         get => (ICommand)GetValue(CommandProperty);
         set => SetValue(CommandProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
+    public object CommandParameter
+    {
+        get => GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
     }
     
     /// <summary>
@@ -605,10 +623,18 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
 
         if (gestureType == TouchEventType.Released)
         {
-            if (Command != null && Command.CanExecute(IsSelected))
+            if (Command != null)
             {
-                Command.Execute(IsSelected);
+                if (CommandParameter != null && Command.CanExecute(CommandParameter))
+                {
+                    Command.Execute(CommandParameter);
+                }
+                else if (CommandParameter == null && Command.CanExecute(IsSelected))
+                {
+                    Command.Execute(IsSelected);
+                }
             }
+            
             _clicked?.Invoke(this, new IsSelectedEventArgs(IsSelected));
         }
     }

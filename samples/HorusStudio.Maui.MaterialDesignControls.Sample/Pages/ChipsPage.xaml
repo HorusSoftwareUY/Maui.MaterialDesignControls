@@ -177,7 +177,8 @@
                     Text="Suggestion D"
                     HorizontalOptions="Start"
                     TrailingIcon="horus_logo.png"
-                    Command="{Binding TappedChipsCommand}"/>
+                    Command="{Binding TappedChipsCommand}"
+                    CommandParameter="Suggestion D" />
 
             </Grid>
         </material:MaterialCard>
