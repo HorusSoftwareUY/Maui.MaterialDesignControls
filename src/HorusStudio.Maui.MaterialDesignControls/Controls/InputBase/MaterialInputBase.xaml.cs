@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Animations;
 using Microsoft.Maui.Controls.Shapes;
@@ -57,11 +58,7 @@ public abstract partial class MaterialInputBase : IValidableView
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultPlaceholderColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultLabelColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultLabelSize = _ => MaterialFontSize.BodySmall;
-    #if ANDROID
-    protected static readonly Thickness DefaultLabelMargin = new (0,-4,0,0);
-    #elif IOS || MACCATALYST
-    protected static readonly Thickness DefaultLabelMargin = new (0,-2,0,0);
-    #endif
+    protected static readonly Thickness DefaultLabelMargin = new (0);
     protected static readonly Thickness DefaultLabelPadding = new (0);
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingSize = _ => MaterialFontSize.BodySmall;
@@ -1615,4 +1612,19 @@ public abstract class MaterialInputCommonStates : VisualStateManager.CommonState
 {
     public const string Error = "Error";
     public const string ErrorFocused = "ErrorFocused";
+}
+
+internal class HalfHeightToMarginConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is double height)
+        {
+            return new Thickness(0, (height / 2) + 1, 0, 0);
+        }
+        return new Thickness(0);
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        => throw new NotImplementedException();
 }
