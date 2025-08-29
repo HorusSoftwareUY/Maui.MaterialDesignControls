@@ -59,9 +59,16 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         }
 
         [ICommand]
-        private async void TappedChips()
+        private async void TappedChips(object parameter)
         {
-            await DisplayAlert(Title, "Chips tapped!", "OK");
+            if (parameter is string text)
+            {
+                await DisplayAlert(Title, $"{text} tapped!", "OK");
+            }
+            else
+            {
+                await DisplayAlert(Title, "Chips tapped!", "OK");
+            }
         }
 
         [ICommand]
