@@ -174,10 +174,13 @@
                     Grid.Row="1"
                     Type="Normal"
                     LeadingIcon="plus.png"
+                    LeadingIconSize="26"
                     Text="Suggestion D"
                     HorizontalOptions="Start"
                     TrailingIcon="horus_logo.png"
-                    Command="{Binding TappedChipsCommand}"/>
+                    TrailingIconSize="10"
+                    Command="{Binding TappedChipsCommand}"
+                    CommandParameter="Suggestion D" />
 
             </Grid>
         </material:MaterialCard>

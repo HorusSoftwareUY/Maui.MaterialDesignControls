@@ -59,6 +59,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     private static readonly ImageSource DefaultLeadingIcon = null!;
     private static readonly ImageSource DefaultTrailingIcon = null!;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconTintColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly double DefaultIconSize = 18;
     private static readonly string DefaultText = string.Empty;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
@@ -82,6 +83,11 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// The backing store for the <see cref="Command">Command</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MaterialChip));
+    
+    /// <summary>
+    /// The backing store for the <see cref="CommandParameter">CommandParameter</see> bindable property.
+    /// </summary>
+    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(MaterialChip));
     
     /// <summary>
     /// Gets or sets the state when the Chips is selected.
@@ -195,6 +201,11 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// The backing store for the <see cref="ApplyLeadingIconTintColor">ApplyLeadingIconTintColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ApplyLeadingIconTintColorProperty = BindableProperty.Create(nameof(ApplyLeadingIconTintColor), typeof(bool), typeof(MaterialChip), defaultValue: true);
+    
+    /// <summary>
+    /// The backing store for the <see cref="LeadingIconSize">LeadingIconSize</see> bindable property.
+    /// </summary>
+    public static readonly BindableProperty LeadingIconSizeProperty = BindableProperty.Create(nameof(LeadingIconSize), typeof(double), typeof(MaterialChip), defaultValue: DefaultIconSize);
 
     /// <summary>
     /// The backing store for the <see cref="TrailingIconTintColor">TrailingIconTintColor</see> bindable property.
@@ -206,6 +217,11 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// </summary>
     public static readonly BindableProperty ApplyTrailingIconTintColorProperty = BindableProperty.Create(nameof(ApplyTrailingIconTintColor), typeof(bool), typeof(MaterialChip), defaultValue: true);
 
+    /// <summary>
+    /// The backing store for the <see cref="TrailingIconSize">TrailingIconSize</see> bindable property.
+    /// </summary>
+    public static readonly BindableProperty TrailingIconSizeProperty = BindableProperty.Create(nameof(TrailingIconSize), typeof(double), typeof(MaterialChip), defaultValue: DefaultIconSize);
+    
     /// <summary>
     /// The backing store for the <see cref="ShadowColor">ShadowColor</see> bindable property.
     /// </summary>
@@ -262,6 +278,19 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     {
         get => (ICommand)GetValue(CommandProperty);
         set => SetValue(CommandProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets the parameter to pass to the <see cref="Command"/> property.
+    /// This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// <see langword="null"/>
+    /// </default>
+    public object CommandParameter
+    {
+        get => GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
     }
     
     /// <summary>
@@ -469,6 +498,18 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
         get => (bool)GetValue(ApplyLeadingIconTintColorProperty);
         set => SetValue(ApplyLeadingIconTintColorProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets the leading icon size. This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// 18 x 18.
+    /// </default>
+    public double LeadingIconSize
+    {
+        get => (double)GetValue(LeadingIconSizeProperty);
+        set => SetValue(LeadingIconSizeProperty, value);
+    }
 
     /// <summary>
     /// Gets or sets tint <see cref="Color">color</see> for Chip's trailing icon.
@@ -494,6 +535,18 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     {
         get => (bool)GetValue(ApplyTrailingIconTintColorProperty);
         set => SetValue(ApplyTrailingIconTintColorProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets the trailing icon size. This is a bindable property.
+    /// </summary>
+    /// <default>
+    /// 18 x 18.
+    /// </default>
+    public double TrailingIconSize
+    {
+        get => (double)GetValue(TrailingIconSizeProperty);
+        set => SetValue(TrailingIconSizeProperty, value);
     }
 
     /// <summary>
@@ -605,10 +658,18 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
 
         if (gestureType == TouchEventType.Released)
         {
-            if (Command != null && Command.CanExecute(IsSelected))
+            if (Command != null)
             {
-                Command.Execute(IsSelected);
+                if (CommandParameter != null && Command.CanExecute(CommandParameter))
+                {
+                    Command.Execute(CommandParameter);
+                }
+                else if (CommandParameter == null && Command.CanExecute(IsSelected))
+                {
+                    Command.Execute(IsSelected);
+                }
             }
+            
             _clicked?.Invoke(this, new IsSelectedEventArgs(IsSelected));
         }
     }
@@ -682,9 +743,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
         {
             Margin = new Thickness(0, 0, 8, 0),
             Aspect = Aspect.AspectFit,
-            IsVisible = false,
-            HeightRequest = 18,
-            WidthRequest = 18,
+            IsVisible = false
         };
 
         var leadingIconTintColor = new IconTintColorBehavior();
@@ -705,9 +764,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
         {
             Margin = new Thickness(8, 0, 0, 0),
             Aspect = Aspect.AspectFit,
-            IsVisible = false,
-            HeightRequest = 18,
-            WidthRequest = 18,
+            IsVisible = false
         };
 
         var trailingIconTintColor = new IconTintColorBehavior();
@@ -743,7 +800,12 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
         _container.SetBinding(MaterialCard.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
 
         _leadingIcon.SetBinding(Image.SourceProperty, new Binding(nameof(LeadingIcon), source: this));
+        _leadingIcon.SetBinding(Image.WidthRequestProperty, new Binding(nameof(LeadingIconSize), source: this));
+        _leadingIcon.SetBinding(Image.HeightRequestProperty, new Binding(nameof(LeadingIconSize), source: this));
+        
         _trailingIcon.SetBinding(Image.SourceProperty, new Binding(nameof(TrailingIcon), source: this));
+        _trailingIcon.SetBinding(Image.WidthRequestProperty, new Binding(nameof(TrailingIconSize), source: this));
+        _trailingIcon.SetBinding(Image.HeightRequestProperty, new Binding(nameof(TrailingIconSize), source: this));
 
         _container.Pressed += InternalPressedHandler;
         _container.Released += InternalReleasedHandler;
