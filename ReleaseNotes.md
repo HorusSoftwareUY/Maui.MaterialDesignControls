@@ -2,6 +2,7 @@
 
 ## Content table <!-- omit from toc -->
 - [Versions](#versions)
+  - [2.0.1](#201)
   - [2.0.0](#200)
   - [1.1.0](#110)
   - [1.0.0-preview.6](#100-preview6)
@@ -12,6 +13,9 @@
   - [1.0.0-preview.1](#100-preview1)
 
 ## Versions
+### [2.0.1](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/2.0.1)
+- [MaterialChip] Add CommandParameter (optional), LeadingIconSize and TrailingIconSize
+- [MaterialInputBase] Fix visual issue on Outlined inputs when a custom font or font size is used
 ### [2.0.0](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/2.0.0)
 - Update to .NET 9
 - [MaterialSegmentedButton] new control added

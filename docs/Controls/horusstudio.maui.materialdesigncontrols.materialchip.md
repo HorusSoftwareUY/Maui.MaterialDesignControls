@@ -119,6 +119,17 @@ Remarks: This property is used to associate a command with an instance of Chips.
 
 <br>
 
+### <a id="properties-commandparameter"/>**CommandParameter**
+
+Gets or sets the parameter to pass to the MaterialChip.Command property.
+ This is a bindable property.
+
+Property type: [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
+
+Default value: null
+
+<br>
+
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
 Gets or sets the corner radius for Chip.
@@ -183,6 +194,16 @@ Gets or sets a leading icon for Chip.
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
 Default value: null
+
+<br>
+
+### <a id="properties-leadingiconsize"/>**LeadingIconSize**
+
+Gets or sets the leading icon size. This is a bindable property.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: 18 x 18.
 
 <br>
 
@@ -291,6 +312,16 @@ Gets or sets a trailing icon for Chip.
 Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.imagesource)<br>
 
 Default value: null
+
+<br>
+
+### <a id="properties-trailingiconsize"/>**TrailingIconSize**
+
+Gets or sets the trailing icon size. This is a bindable property.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: 18 x 18.
 
 <br>
 
