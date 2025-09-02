@@ -229,5 +229,36 @@
             <material:MaterialLabel
                 Text="Custom type with customizations and command" />
         </material:MaterialCard>
+        
+        <material:MaterialDivider Margin="0,24,0,0" />
+
+        <material:MaterialLabel
+            Style="{StaticResource SectionTitle}"
+            Text="Events"
+            LineBreakMode="WordWrap" />
+        
+        <material:MaterialCard
+            Type="Elevated"
+            Touch="MaterialCard_OnTouch">
+            <material:MaterialLabel
+                x:Name="lblTouchEvent"
+                Text="Touch event" />
+        </material:MaterialCard>
+        
+        <material:MaterialCard
+            Type="Filled"
+            Clicked="MaterialCard_OnClicked">
+            <material:MaterialLabel
+                x:Name="lblClickedEvent"
+                Text="Clicked event" />
+        </material:MaterialCard>
+        
+        <material:MaterialCard
+            Type="Outlined"
+            Command="{Binding TapCommand}">
+            <material:MaterialLabel
+                Text="Command" />
+        </material:MaterialCard>
+        
     </VerticalStackLayout>
 </local:BaseContentPage>
