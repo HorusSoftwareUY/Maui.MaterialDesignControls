@@ -13,6 +13,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
         void OnTouch(TouchEventType touchEventType);
 
         /// <summary>
+        /// Occurs when the view is touched.
+        /// </summary>
+        event EventHandler<TouchEventArgs>? Touch;
+
+        /// <summary>
         /// Gets or sets the state when the view is enabled.
         /// </summary>
         bool IsEnabled { get; set; }

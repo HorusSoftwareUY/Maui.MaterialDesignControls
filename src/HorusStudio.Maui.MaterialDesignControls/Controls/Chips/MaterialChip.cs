@@ -623,6 +623,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     #region Events
 
     private EventHandler? _clicked;
+    private EventHandler<Behaviors.TouchEventArgs>? _touch;
     private readonly Lock _objectLock = new();
 
     /// <inheritdoc />
@@ -650,6 +651,29 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
             }
         }
     }
+    
+    /// <summary>
+    /// Occurs when the chip is touched.
+    /// </summary>
+    public event EventHandler<Behaviors.TouchEventArgs>? Touch
+    {
+        add
+        {
+            lock (_objectLock)
+            {
+                _touch += value;
+                _container.Touch += value;
+            }
+        }
+        remove
+        {
+            lock (_objectLock)
+            {
+                _touch -= value;
+                _container.Touch -= value;
+            }
+        }
+    }
 
     /// <inheritdoc />
     public async void OnTouch(TouchEventType gestureType)
@@ -673,31 +697,36 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
             _clicked?.Invoke(this, new IsSelectedEventArgs(IsSelected));
         }
     }
-
-    protected virtual void InternalPressedHandler(object? sender, EventArgs e)
+    
+    protected virtual async void InternalTouchHandler(object? sender, Behaviors.TouchEventArgs e)
     {
         if (!IsEnabled) return;
-        OnTouch(TouchEventType.Pressed);
-    }
 
-    protected virtual void InternalReleasedHandler(object? sender, EventArgs e)
-    {
-        if (!IsEnabled) return;
-        
-        if (Type == MaterialChipType.Normal)
+        switch (e.TouchEventType)
         {
-            VisualStateManager.GoToState(this, VisualStateManager.CommonStates.Normal);
-        }
-        else if (GroupableViewPropertyChanged != null)
-        {
-            GroupableViewPropertyChanged.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsSelected, !IsSelected));
-        }
-        else
-        {
-            IsSelected = !IsSelected;
-        }
+            case TouchEventType.Pressed:
+                OnTouch(TouchEventType.Pressed);
+                break;
+            case TouchEventType.Released:
+                if (Type == MaterialChipType.Normal)
+                {
+                    VisualStateManager.GoToState(this, VisualStateManager.CommonStates.Normal);
+                }
+                else if (GroupableViewPropertyChanged != null)
+                {
+                    GroupableViewPropertyChanged.Invoke(this, new GroupableViewPropertyChangedEventArgs(nameof(IsSelected), IsSelected, !IsSelected));
+                }
+                else
+                {
+                    IsSelected = !IsSelected;
+                }
 
-        OnTouch(TouchEventType.Released);
+                OnTouch(TouchEventType.Released);
+                break;
+            default:
+                await TouchAnimationManager.AnimateAsync(this, TouchEventType.Released);
+                break;
+        }
     }
 
     #endregion Events
@@ -806,9 +835,8 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
         _trailingIcon.SetBinding(Image.SourceProperty, new Binding(nameof(TrailingIcon), source: this));
         _trailingIcon.SetBinding(Image.WidthRequestProperty, new Binding(nameof(TrailingIconSize), source: this));
         _trailingIcon.SetBinding(Image.HeightRequestProperty, new Binding(nameof(TrailingIconSize), source: this));
-
-        _container.Pressed += InternalPressedHandler;
-        _container.Released += InternalReleasedHandler;
+        
+        _container.Touch += InternalTouchHandler;
 
         _container.Content = _hStack;
         Content = _container;

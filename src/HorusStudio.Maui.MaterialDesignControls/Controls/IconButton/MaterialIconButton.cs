@@ -584,6 +584,7 @@ public class MaterialIconButton : ContentView, ITouchableView
     private EventHandler? _clicked;
     private EventHandler? _pressed;
     private EventHandler? _released;
+    private EventHandler<Behaviors.TouchEventArgs>? _touch;
     private readonly object _objectLock = new();
 
     /// <summary>
@@ -645,6 +646,27 @@ public class MaterialIconButton : ContentView, ITouchableView
             lock (_objectLock)
             {
                 _released -= value;
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Occurs when the icon button is touched.
+    /// </summary>
+    public event EventHandler<Behaviors.TouchEventArgs>? Touch
+    {
+        add
+        {
+            lock (_objectLock)
+            {
+                _touch += value;
+            }
+        }
+        remove
+        {
+            lock (_objectLock)
+            {
+                _touch -= value;
             }
         }
     }
@@ -950,6 +972,8 @@ public class MaterialIconButton : ContentView, ITouchableView
         
         if (!IsEnabled) return;
         await TouchAnimationManager.AnimateAsync(this, gestureType);
+        
+        _touch?.Invoke(this, new Behaviors.TouchEventArgs(gestureType));
 
         switch (gestureType)
         {

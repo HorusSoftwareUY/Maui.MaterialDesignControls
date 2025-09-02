@@ -409,10 +409,36 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
 
     #region Events
 
+    private EventHandler<Behaviors.TouchEventArgs>? _touch;
+    private readonly object _objectLock = new();
+    
     /// <summary>
     /// Occurs when the selection of one of the segmented buttons changes.
     /// </summary>
     public event EventHandler<SegmentedButtonSelectedEventArgs>? SelectionChanged;
+    
+    /// <summary>
+    /// Occurs when the segmented button is touched.
+    /// </summary>
+    public event EventHandler<Behaviors.TouchEventArgs>? Touch
+    {
+        add
+        {
+            lock (_objectLock)
+            {
+                _touch += value;
+                AddTouchEvents();
+            }
+        }
+        remove
+        {
+            lock (_objectLock)
+            {
+                _touch -= value;
+                RemoveTouchEvents();
+            }
+        }
+    }
 
     private void OnSegmentedButtonTap(MaterialSegmentedButtonItem segmentedButton)
     {
@@ -462,6 +488,41 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
         else
         {
             SelectionChanged?.Invoke(this, new SegmentedButtonSelectedEventArgs(SelectedItem));
+        }
+    }
+    
+    protected virtual async void InternalTouchHandler(object? sender, Behaviors.TouchEventArgs e)
+    {
+        if (!IsEnabled) return;
+        
+        _touch?.Invoke(sender, new Behaviors.TouchEventArgs(e.TouchEventType));
+    }
+    
+    private void AddTouchEvents()
+    {
+        if (_itemsContainer.Children != null && _itemsContainer.Children.Any())
+        {
+            foreach (var itemView in _itemsContainer.Children)
+            {
+                if (itemView is ITouchableView touchableView)
+                {
+                    touchableView.Touch += InternalTouchHandler;
+                }
+            }
+        }
+    }
+    
+    private void RemoveTouchEvents()
+    {
+        if (_itemsContainer.Children != null && _itemsContainer.Children.Any())
+        {
+            foreach (var itemView in _itemsContainer.Children)
+            {
+                if (itemView is ITouchableView touchableView)
+                {
+                    touchableView.Touch -= InternalTouchHandler;
+                }
+            }
         }
     }
 
@@ -543,6 +604,8 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
         {
             return;
         }
+
+        RemoveTouchEvents();
         
         _itemsContainer.Children.Clear();
         _itemsContainer.ColumnDefinitions = new ColumnDefinitionCollection();
@@ -607,6 +670,11 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
         if (_itemsContainer == null)
         {
             return false;
+        }
+        
+        if (itemLayout is ITouchableView touchableView && _touch != null)
+        {
+            touchableView.Touch += InternalTouchHandler;
         }
         
         _itemsContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ItemsSource.Count() / 100.0, GridUnitType.Star) });

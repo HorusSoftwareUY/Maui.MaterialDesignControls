@@ -107,6 +107,7 @@ public class MaterialViewButton : ContentView, ITouchableView
     private EventHandler? _clicked;
     private EventHandler? _pressed;
     private EventHandler? _released;
+    private EventHandler<Behaviors.TouchEventArgs>? _touch;
     private readonly object _objectLock = new();
 
     /// <summary>
@@ -177,6 +178,30 @@ public class MaterialViewButton : ContentView, ITouchableView
             }
         }
     }
+    
+    /// <summary>
+    /// Occurs when the card is touched.
+    /// </summary>
+    public event EventHandler<Behaviors.TouchEventArgs>? Touch
+    {
+        add
+        {
+            lock (_objectLock)
+            {
+                _touch += value;
+                UpdateTouchBehavior();
+            }
+        }
+        remove
+        {
+            lock (_objectLock)
+            {
+                _touch -= value;
+                UpdateTouchBehavior();
+            }
+        }
+    }
+
 
     #endregion Events
     
@@ -188,6 +213,8 @@ public class MaterialViewButton : ContentView, ITouchableView
 
         if (!IsEnabled) return;
         await TouchAnimationManager.AnimateAsync(this, gestureType);
+        
+        _touch?.Invoke(this, new Behaviors.TouchEventArgs(gestureType));
         
         switch (gestureType)
         {
@@ -221,7 +248,7 @@ public class MaterialViewButton : ContentView, ITouchableView
     {
         var touchBehavior = Behaviors.FirstOrDefault(b => b is TouchBehavior) as TouchBehavior;
             
-        if (Command != null || _clicked != null || _pressed != null || _released != null)
+        if (Command != null || _clicked != null || _pressed != null || _released != null || _touch != null)
         {
             if (touchBehavior == null)
             {
