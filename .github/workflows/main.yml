@@ -1,0 +1,44 @@
+name: Build, pack and push HorusStudio.Maui.MaterialDesignControls NuGet package
+
+env:
+  IOS_CSPROJ_FILE_PATH: 'src/MaterialDesignControls.iOS/MaterialDesignControls.iOS.csproj'
+  ANDROID_CSPROJ_FILE_PATH: 'src/MaterialDesignControls.Android/MaterialDesignControls.Android.csproj'
+  SLN_FILE_PATH: 'example/ExampleMaterialDesignControls.sln'
+
+on:
+  push:
+    branches: [ "master" ] # branches: [ "master" ]
+
+env:
+  SLN_FILE_PATH: 'HorusStudio.Maui.MaterialDesignControls.sln'
+  CSPROJ_FILE_PATH: 'src/HorusStudio.Maui.MaterialDesignControls/HorusStudio.Maui.MaterialDesignControls.csproj'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+        include-prerelease: true
+
+    - name: Install MAUI workloads
+      run: |
+        dotnet workload install maui
+        dotnet workload restore
+
+    - name: Restore dependencies
+      run: nuget restore ${{ env.SLN_FILE_PATH }}
+
+    - name: Build solution
+      run: dotnet build ${{ env.SLN_FILE_PATH }} -c Release --no-restore
+      
+    - name: Pack NuGet package
+      run: dotnet pack ${{ env.CSPROJ_FILE_PATH }} -c Release -o ./artifacts --no-build
+
+    - name: Publish NuGet package
+      #run: dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
