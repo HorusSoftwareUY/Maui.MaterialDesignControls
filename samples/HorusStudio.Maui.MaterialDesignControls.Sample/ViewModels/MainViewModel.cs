@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using AsyncAwaitBestPractices;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using Plugin.Maui.BottomSheet.Navigation;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
@@ -46,10 +48,14 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             { Models.Pages.MultilineTextField, typeof(MultilineTextFieldViewModel) },
             { Models.Pages.Label, typeof(LabelViewModel) }
         };
+    
+        private readonly IBottomSheetNavigationService _bottomSheetNavigationService;
         
-        public MainViewModel()
+        public MainViewModel( IBottomSheetNavigationService bottomSheetNavigationService)
         {
             CreateMenu();
+            _bottomSheetNavigationService = bottomSheetNavigationService;
+
         }
         
         private void CreateMenu()
@@ -98,8 +104,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
          
         [ICommand]
         private async Task AboutUsAsync()
-        {
-            await GoToAsync<AboutViewModel>();
+        {   
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                _bottomSheetNavigationService.NavigateToAsync("BottomSheetTestPage").SafeFireAndForget();
+            });
+            
         }
     }
 }

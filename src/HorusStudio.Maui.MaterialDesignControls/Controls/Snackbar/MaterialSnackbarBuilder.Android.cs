@@ -4,6 +4,7 @@ using Android.Text;
 using Android.Text.Style;
 using Android.Views;
 using Android.Widget;
+using AndroidX.Core.View;
 using Google.Android.Material.Snackbar;
 using Microsoft.Maui.Platform;
 using Button = Android.Widget.Button;
@@ -77,14 +78,24 @@ class MaterialSnackbarBuilder : Snackbar.Callback
         ArgumentNullException.ThrowIfNull(config);
         ArgumentNullException.ThrowIfNull(activity);
         
-        var rootView = activity.Window!.DecorView.RootView;
+        var activitys = Platform.CurrentActivity!;
+        var rootView = activitys.Window?.DecorView?.RootView;
+
+        var bottomSheet = rootView?.FindViewById(Resource.Id.design_bottom_sheet);
+        var parent = bottomSheet?.RootView ?? rootView;
+
         var snackbar = Snackbar.Make(
-            activity,
-            rootView!,
+            parent!,
             config.Message,
             Convert.ToInt32(config.Duration.TotalMilliseconds)
         );
+
         
+        if (snackbar.View != null)
+        {
+            ViewCompat.SetElevation(snackbar.View, 1000f);
+        }
+
         if (snackbar.View is Snackbar.SnackbarLayout snackbarView &&
             snackbarView.GetChildAt(0) is SnackbarContentLayout snackbarContent)
         {

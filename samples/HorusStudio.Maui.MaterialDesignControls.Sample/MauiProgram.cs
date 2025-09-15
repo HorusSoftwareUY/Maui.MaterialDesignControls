@@ -1,5 +1,6 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
+using Plugin.Maui.BottomSheet.Hosting;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample
 {
@@ -105,10 +106,14 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 }, configureHandlers: handlers =>
                 {
                     handlers.AddHandler(typeof(MaterialTextField), typeof(Handlers.CustomMaterialTextFieldHandler));
-                });
+                })
+                .UseBottomSheet()
+                ;
          
             builder.Services
                 .AutoConfigureViewModelsAndPages();
+            builder.Services.AddBottomSheet<BottomSheetTestPage, BottomSheetTestViewModel>("BottomSheetTestPage");
+
 
             return builder.Build();
         }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bottomsheet:BottomSheet
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    States="Medium"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bottomsheet="http://pluginmauibottomsheet.com"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.BottomSheetTestPage">
+    <bottomsheet:BottomSheet.Content>
+        <bottomsheet:BottomSheetContent>
+            <bottomsheet:BottomSheetContent.ContentTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Button Command="{Binding ShowSnackBarCommand}"
+                                Text="click"
+                                BackgroundColor="Red"
+                                HorizontalOptions="Fill"
+                                HeightRequest="48"></Button>
+                    </StackLayout>
+                </DataTemplate>
+            </bottomsheet:BottomSheetContent.ContentTemplate>
+        </bottomsheet:BottomSheetContent>
+    </bottomsheet:BottomSheet.Content>
+</bottomsheet:BottomSheet>
