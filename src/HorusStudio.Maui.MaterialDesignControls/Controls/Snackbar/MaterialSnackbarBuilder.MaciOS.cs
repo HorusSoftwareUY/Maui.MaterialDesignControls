@@ -1,4 +1,5 @@
 using Foundation;
+using HorusStudio.Maui.MaterialDesignControls.Extensions.Label;
 using Microsoft.Maui.Platform;
 using UIKit;
 
@@ -7,6 +8,8 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 class MaterialSnackbarBuilder : UIView
 {
     #region Constants
+    
+    private const int TextMaxLines = 20;
     
     private const bool UseBlur = false;
     private const bool UseAnimation = true;
@@ -272,14 +275,16 @@ class MaterialSnackbarBuilder : UIView
 
         var label = new UILabel
         {
-            Text = materialSnackbarConfig.Message,
             TextColor = materialSnackbarConfig.TextColor.ToPlatform(),
             Font = font,
             LineBreakMode = UILineBreakMode.WordWrap,
             Lines = 0,
             TranslatesAutoresizingMaskIntoConstraints = false
         };
-
+        
+        label.SetTextCharacterSpacing(materialSnackbarConfig.Message, materialSnackbarConfig.CharacterSpacing);
+        label.SetLineBreakMode(materialSnackbarConfig.LineBreakMode, TextMaxLines);
+            
         return label;
     }
 }

@@ -5,7 +5,7 @@ using Button = Android.Widget.Button;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Extensions.Label;
 
-public static class LabelExtensions
+public static partial class LabelExtensions
 {
     public static void SetText(this TextView textView, string text, TextDecorations textDecorations, double characterSpacing)
     {
