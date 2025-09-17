@@ -57,4 +57,23 @@ public static partial class LabelExtensions
                 break;
         }
     }
+    
+    public static void SetFontAttributes(this TextView textView, FontAttributes fontAttributes)
+    {
+        switch (fontAttributes)
+        {
+            case FontAttributes.Bold:
+                textView.SetTypeface(textView.Typeface, Android.Graphics.TypefaceStyle.Bold);
+                break;
+            case FontAttributes.Italic:
+                textView.SetTypeface(textView.Typeface, Android.Graphics.TypefaceStyle.Italic);
+                break;
+            case FontAttributes.Bold | FontAttributes.Italic:
+                textView.SetTypeface(textView.Typeface, Android.Graphics.TypefaceStyle.BoldItalic);
+                break;
+            default:
+                textView.SetTypeface(textView.Typeface, Android.Graphics.TypefaceStyle.Normal);
+                break;
+        }
+    }
 }

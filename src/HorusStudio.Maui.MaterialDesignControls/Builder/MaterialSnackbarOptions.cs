@@ -13,6 +13,7 @@ public sealed class MaterialSnackbarOptions
     public double? DefaultFontSize { get; set; }
     public double? DefaultCharacterSpacing { get; set; }
     public LineBreakMode? DefaultLineBreakMode { get; set; }
+    public FontAttributes? DefaultFontAttributes { get; set; }
     public Color? DefaultActionColor { get; set; }
     public double? DefaultActionSize { get; set; }
     public TextDecorations? DefaultActionTextDecorations { get; set; }

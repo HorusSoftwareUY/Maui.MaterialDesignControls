@@ -44,4 +44,26 @@ public static partial class LabelExtensions
                 break;
         }
     }
+    
+    public static void SetFontAttributes(this UILabel label, FontAttributes fontAttributes)
+    {
+        var currentFont = label.Font ?? UIFont.SystemFontOfSize(UIFont.LabelFontSize);
+        switch (fontAttributes)
+        {
+            case FontAttributes.Bold:
+                label.Font = UIFont.BoldSystemFontOfSize(currentFont.PointSize);
+                break;
+            case FontAttributes.Italic:
+                label.Font = UIFont.ItalicSystemFontOfSize(currentFont.PointSize);
+                break;
+            case FontAttributes.Bold | FontAttributes.Italic:
+                var descriptor = currentFont.FontDescriptor
+                    .CreateWithTraits(UIFontDescriptorSymbolicTraits.Bold | UIFontDescriptorSymbolicTraits.Italic);
+                label.Font = UIFont.FromDescriptor(descriptor, currentFont.PointSize);
+                break;
+            default:
+                label.Font = UIFont.SystemFontOfSize(currentFont.PointSize);
+                break;
+        }
+    }
 }

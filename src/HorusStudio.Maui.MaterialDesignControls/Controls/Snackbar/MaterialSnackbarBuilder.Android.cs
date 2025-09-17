@@ -162,6 +162,7 @@ class MaterialSnackbarBuilder
         textView.SetLineBreakMode(config.LineBreakMode, TextMaxLines);
         textView.SetBackgroundColor(Android.Graphics.Color.Transparent);
         textView.SetIncludeFontPadding(false);
+        textView.SetFontAttributes(config.FontAttributes);
 
         return textView;
     }

@@ -284,6 +284,7 @@ class MaterialSnackbarBuilder : UIView
         
         label.SetTextCharacterSpacing(materialSnackbarConfig.Message, materialSnackbarConfig.CharacterSpacing);
         label.SetLineBreakMode(materialSnackbarConfig.LineBreakMode, TextMaxLines);
+        label.SetFontAttributes(materialSnackbarConfig.FontAttributes);
             
         return label;
     }

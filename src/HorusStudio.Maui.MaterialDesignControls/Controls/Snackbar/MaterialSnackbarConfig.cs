@@ -50,6 +50,7 @@ public class MaterialSnackbarConfig(string message)
     private static readonly Func<double> DefaultFontSizeBuilder = () => MaterialFontSize.BodyMedium;
     private static readonly Func<double> DefaultCharacterSpacingBuilder = () => 0;
     private static readonly Func<LineBreakMode> DefaultLineBreakModeBuilder = () => LineBreakMode.WordWrap;
+    private static readonly Func<FontAttributes> DefaultFontAttributesBuilder = () => FontAttributes.None;
     private static readonly Func<Color> DefaultActionColorBuilder = () => new AppThemeBindingExtension { Light = MaterialLightTheme.InversePrimary, Dark = MaterialDarkTheme.InversePrimary }.GetValueForCurrentTheme<Color>();
     private static readonly Func<double> DefaultActionSizeBuilder = () => MaterialFontSize.BodyMedium;
     private static readonly Func<Color> DefaultIconColorBuilder = () => new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
@@ -58,6 +59,7 @@ public class MaterialSnackbarConfig(string message)
     private static Color? _defaultTextColor;
     private static double? _defaultFontSize;
     private static LineBreakMode? _defaultLineBreakMode;
+    private static FontAttributes? _defaultFontAttributes;
     private static double? _defaultCharacterSpacing;
     private static Color? _defaultActionColor;
     private static double? _defaultActionSize;
@@ -152,6 +154,19 @@ public class MaterialSnackbarConfig(string message)
         get => _defaultLineBreakMode ?? DefaultLineBreakModeBuilder();
         set => _defaultLineBreakMode = value;
     }
+
+    /// <summary>
+    /// Gets or sets a value that indicates whether the font for the text of this snackbar is bold, italic, or neither.
+    /// This is a bindable property.
+    /// </summary>
+    /// /// <default>
+    /// FontAttributes.None
+    /// </default>
+    public static FontAttributes DefaultFontAttributes
+    {
+        get => _defaultFontAttributes ?? DefaultFontAttributesBuilder();
+        set => _defaultFontAttributes = value;
+    }
     
     /// <summary>
     /// Action text <see cref="Color">color</see> to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
@@ -218,6 +233,7 @@ public class MaterialSnackbarConfig(string message)
     private double? _fontSize;
     private double? _characterSpacing;
     private LineBreakMode? _lineBreakMode;
+    private FontAttributes? _fontAttributes;
     private Color? _textColor;
     private Thickness? _margin;
     private Thickness? _padding;
@@ -290,6 +306,19 @@ public class MaterialSnackbarConfig(string message)
     {
         get => _lineBreakMode ?? DefaultLineBreakMode; 
         set => _lineBreakMode = value;
+    }
+    
+    /// <summary>
+    /// Gets or sets a value that indicates whether the font for the text of this snackbar is bold, italic, or neither.
+    /// This is a bindable property.
+    /// </summary>
+    /// /// <default>
+    /// FontAttributes.None
+    /// </default>
+    public FontAttributes FontAttributes
+    {
+        get => _fontAttributes ?? DefaultFontAttributes; 
+        set => _fontAttributes = value;
     }
     
     /// <summary>
@@ -407,6 +436,7 @@ public class MaterialSnackbarConfig(string message)
         if (options.DefaultFontSize != null) DefaultFontSize = options.DefaultFontSize.Value;
         if (options.DefaultCharacterSpacing != null) DefaultCharacterSpacing = options.DefaultCharacterSpacing.Value;
         if (options.DefaultLineBreakMode != null) DefaultLineBreakMode = options.DefaultLineBreakMode.Value;
+        if (options.DefaultFontAttributes != null) DefaultFontAttributes = options.DefaultFontAttributes.Value;
         if (options.DefaultIconSize != null) DefaultIconSize = options.DefaultIconSize.Value;
     }
     
