@@ -2,7 +2,7 @@ name: Build, pack and push HorusStudio.Maui.MaterialDesignControls NuGet package
 
 on:
   push:
-    branches: [ "feature/pipelines" ] # branches: [ "master" ]
+    branches: [ "master" ]
 
 env:
   SLN_FILE_PATH: 'HorusStudio.Maui.MaterialDesignControls.sln'
@@ -49,7 +49,5 @@ jobs:
     - name: Publish NuGet package
       run: |
         echo "📦 Publishing NuGet package..."
-        # echo "📦 TESTING..."
+        dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
         echo "✅ NuGet package published successfully!"
-
-# dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
