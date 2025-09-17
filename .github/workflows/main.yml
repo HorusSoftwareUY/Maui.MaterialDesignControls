@@ -31,13 +31,13 @@ jobs:
     - name: Restore dependencies
       run: |
         echo "📦 Restoring dependencies..."
-        nuget restore ${{ env.SLN_FILE_PATH }}
+        dotnet restore ${{ env.SLN_FILE_PATH }}
         echo "✅ Dependencies restored successfully!"
 
     - name: Build solution
       run: |
         echo "📦 Building solution..."
-        dotnet build ${{ env.SLN_FILE_PATH }} -c Release --no-restore
+        dotnet build ${{ env.CSPROJ_FILE_PATH }} -c Release --no-restore
         echo "✅ Solution built successfully!"
       
     - name: Pack NuGet package
