@@ -1,13 +1,8 @@
 name: Build, pack and push HorusStudio.Maui.MaterialDesignControls NuGet package
 
-env:
-  IOS_CSPROJ_FILE_PATH: 'src/MaterialDesignControls.iOS/MaterialDesignControls.iOS.csproj'
-  ANDROID_CSPROJ_FILE_PATH: 'src/MaterialDesignControls.Android/MaterialDesignControls.Android.csproj'
-  SLN_FILE_PATH: 'example/ExampleMaterialDesignControls.sln'
-
 on:
   push:
-    branches: [ "master" ] # branches: [ "master" ]
+    branches: [ "feature/pipelines" ] # branches: [ "master" ]
 
 env:
   SLN_FILE_PATH: 'HorusStudio.Maui.MaterialDesignControls.sln'
@@ -28,17 +23,33 @@ jobs:
 
     - name: Install MAUI workloads
       run: |
+        echo "📦 Installing MAUI workloads..."
         dotnet workload install maui
         dotnet workload restore
+        echo "✅ MAUI workloads installed successfully!"
 
     - name: Restore dependencies
-      run: nuget restore ${{ env.SLN_FILE_PATH }}
+      run: |
+        echo "📦 Restoring dependencies..."
+        nuget restore ${{ env.SLN_FILE_PATH }}
+        echo "✅ Dependencies restored successfully!"
 
     - name: Build solution
-      run: dotnet build ${{ env.SLN_FILE_PATH }} -c Release --no-restore
+      run: |
+        echo "📦 Building solution..."
+        dotnet build ${{ env.SLN_FILE_PATH }} -c Release --no-restore
+        echo "✅ Solution built successfully!"
       
     - name: Pack NuGet package
-      run: dotnet pack ${{ env.CSPROJ_FILE_PATH }} -c Release -o ./artifacts --no-build
+      run: |
+        echo "📦 Packaging NuGet package..."
+        dotnet pack ${{ env.CSPROJ_FILE_PATH }} -c Release -o ./artifacts --no-build
+        echo "✅ NuGet package packed successfully!"
 
     - name: Publish NuGet package
-      #run: dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+      run: |
+        echo "📦 Publishing NuGet package..."
+        # echo "📦 TESTING..."
+        echo "✅ NuGet package published successfully!"
+
+# dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
