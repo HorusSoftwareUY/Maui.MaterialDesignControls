@@ -310,6 +310,20 @@ Property type: [ImageSource](https://learn.microsoft.com/en-us/dotnet/api/micros
 
 <br>
 
+## Events
+
+### <a id="events-toggled"/>**Toggled**
+
+Occurs when the switch is toggled.
+
+<br>
+
+### <a id="events-touch"/>**Touch**
+
+Occurs when the switch is touched.
+
+<br>
+
 ## Known issues and pending features
 
 * Track color animation: change from on-track color to off-track color within the toggle animation.

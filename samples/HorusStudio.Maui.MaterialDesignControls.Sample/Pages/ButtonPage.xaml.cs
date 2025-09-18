@@ -48,7 +48,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             
             System.Diagnostics.Debug.WriteLine(ReleaseBtn.Text);
         }
-
+        
+        private void OnTouch(object? sender, TouchEventArgs e)
+        {
+            TouchBtn.Text = $"Touch event: {e.TouchEventType}";
+        }
+        
         void MaterialButton_Clicked(System.Object sender, System.EventArgs e)
         {
         }

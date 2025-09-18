@@ -30,4 +30,5 @@ private async void DefaultSnackbar()
 
 ## Known issues and pending features
 
-* [macOS] MaterialSnackbar with icons are not shown due to an icon rendering issue
+* [macOS] MaterialSnackbar with icons are not shown due to an icon rendering issue.
+ * Add FontFamily, TextTransform and TextDecorations properties.

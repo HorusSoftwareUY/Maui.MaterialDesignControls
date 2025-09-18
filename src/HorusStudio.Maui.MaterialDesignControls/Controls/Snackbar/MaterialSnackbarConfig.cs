@@ -48,6 +48,9 @@ public class MaterialSnackbarConfig(string message)
     private static readonly Func<Color> DefaultBackgroundColorBuilder = () => new AppThemeBindingExtension { Light = MaterialLightTheme.InverseSurface, Dark = MaterialDarkTheme.InverseSurface }.GetValueForCurrentTheme<Color>();
     private static readonly Func<Color> DefaultTextColorBuilder = () => new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
     private static readonly Func<double> DefaultFontSizeBuilder = () => MaterialFontSize.BodyMedium;
+    private static readonly Func<double> DefaultCharacterSpacingBuilder = () => 0;
+    private static readonly Func<LineBreakMode> DefaultLineBreakModeBuilder = () => LineBreakMode.WordWrap;
+    private static readonly Func<FontAttributes> DefaultFontAttributesBuilder = () => FontAttributes.None;
     private static readonly Func<Color> DefaultActionColorBuilder = () => new AppThemeBindingExtension { Light = MaterialLightTheme.InversePrimary, Dark = MaterialDarkTheme.InversePrimary }.GetValueForCurrentTheme<Color>();
     private static readonly Func<double> DefaultActionSizeBuilder = () => MaterialFontSize.BodyMedium;
     private static readonly Func<Color> DefaultIconColorBuilder = () => new AppThemeBindingExtension { Light = MaterialLightTheme.InverseOnSurface, Dark = MaterialDarkTheme.InverseOnSurface }.GetValueForCurrentTheme<Color>();
@@ -55,6 +58,9 @@ public class MaterialSnackbarConfig(string message)
     private static Color? _defaultBackgroundColor;
     private static Color? _defaultTextColor;
     private static double? _defaultFontSize;
+    private static LineBreakMode? _defaultLineBreakMode;
+    private static FontAttributes? _defaultFontAttributes;
+    private static double? _defaultCharacterSpacing;
     private static Color? _defaultActionColor;
     private static double? _defaultActionSize;
     private static Color? _defaultIconColor;
@@ -126,6 +132,43 @@ public class MaterialSnackbarConfig(string message)
     }
     
     /// <summary>
+    /// Text character spacing to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
+    /// </summary>
+    /// <default>
+    /// 0
+    /// </default>
+    public static double DefaultCharacterSpacing
+    {
+        get => _defaultCharacterSpacing ?? DefaultCharacterSpacingBuilder();
+        set => _defaultCharacterSpacing = value;
+    }
+    
+    /// <summary>
+    /// Determines how <see cref="Text">Text</see> is shown by default when the length is overflowing the size of this snackbar.
+    /// </summary>
+    /// <default>
+    /// LineBreakMode.WordWrap
+    /// </default>
+    public static LineBreakMode DefaultLineBreakMode
+    {
+        get => _defaultLineBreakMode ?? DefaultLineBreakModeBuilder();
+        set => _defaultLineBreakMode = value;
+    }
+
+    /// <summary>
+    /// Gets or sets a value that indicates whether the font for the text of this snackbar is bold, italic, or neither.
+    /// This is a bindable property.
+    /// </summary>
+    /// /// <default>
+    /// FontAttributes.None
+    /// </default>
+    public static FontAttributes DefaultFontAttributes
+    {
+        get => _defaultFontAttributes ?? DefaultFontAttributesBuilder();
+        set => _defaultFontAttributes = value;
+    }
+    
+    /// <summary>
     /// Action text <see cref="Color">color</see> to be applied by default to every <see cref="IMaterialSnackbar">Snackbar</see> that doesn't set one.
     /// </summary>
     /// <default>
@@ -188,6 +231,9 @@ public class MaterialSnackbarConfig(string message)
     private Color? _backgroundColor;
     private float? _cornerRadius;
     private double? _fontSize;
+    private double? _characterSpacing;
+    private LineBreakMode? _lineBreakMode;
+    private FontAttributes? _fontAttributes;
     private Color? _textColor;
     private Thickness? _margin;
     private Thickness? _padding;
@@ -236,6 +282,43 @@ public class MaterialSnackbarConfig(string message)
     {
         get => _fontSize ?? DefaultFontSize; 
         set => _fontSize = value;
+    }
+    
+    /// <summary>
+    /// Gets or sets character spacing for snackbar.
+    /// </summary>
+    /// <default>
+    /// 0
+    /// </default>
+    public double CharacterSpacing
+    {
+        get => _characterSpacing ?? DefaultCharacterSpacing; 
+        set => _characterSpacing = value;
+    }
+    
+    /// <summary>
+    /// Determines how <see cref="Text">Text</see> is shown when the length is overflowing the size of this snackbar.
+    /// </summary>
+    /// <default>
+    /// LineBreakMode.WordWrap
+    /// </default>
+    public LineBreakMode LineBreakMode
+    {
+        get => _lineBreakMode ?? DefaultLineBreakMode; 
+        set => _lineBreakMode = value;
+    }
+    
+    /// <summary>
+    /// Gets or sets a value that indicates whether the font for the text of this snackbar is bold, italic, or neither.
+    /// This is a bindable property.
+    /// </summary>
+    /// /// <default>
+    /// FontAttributes.None
+    /// </default>
+    public FontAttributes FontAttributes
+    {
+        get => _fontAttributes ?? DefaultFontAttributes; 
+        set => _fontAttributes = value;
     }
     
     /// <summary>
@@ -351,6 +434,9 @@ public class MaterialSnackbarConfig(string message)
         if (options.DefaultActionTextDecorations != null) DefaultActionTextDecorations = options.DefaultActionTextDecorations.Value;
         if (options.DefaultCornerRadius != null) DefaultCornerRadius = options.DefaultCornerRadius.Value;
         if (options.DefaultFontSize != null) DefaultFontSize = options.DefaultFontSize.Value;
+        if (options.DefaultCharacterSpacing != null) DefaultCharacterSpacing = options.DefaultCharacterSpacing.Value;
+        if (options.DefaultLineBreakMode != null) DefaultLineBreakMode = options.DefaultLineBreakMode.Value;
+        if (options.DefaultFontAttributes != null) DefaultFontAttributes = options.DefaultFontAttributes.Value;
         if (options.DefaultIconSize != null) DefaultIconSize = options.DefaultIconSize.Value;
     }
     

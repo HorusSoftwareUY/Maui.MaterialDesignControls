@@ -1,8 +1,10 @@
 using Android.App;
 using Android.Views;
+using Android.Widget;
 using HorusStudio.Maui.MaterialDesignControls;
 using ImageButton = Android.Widget.ImageButton;
 using Microsoft.Maui.Platform;
+using View = Android.Views.View;
 
 namespace Google.Android.Material.Snackbar;
 
@@ -18,7 +20,17 @@ public static class SnackbarExtensions
         var icon = source.ToDrawable(size, color);
         if (icon is null) return null;
         
-        var button = new ImageButton(activity);
+        var button = new ImageButton(activity)
+        {
+            Id = View.GenerateViewId(),
+            LayoutParameters = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WrapContent,
+                ViewGroup.LayoutParams.WrapContent)
+            {
+                Gravity = GravityFlags.CenterVertical
+            }
+        };
+        
         button.SetImageDrawable(icon);
         button.SetPadding(padding);
         button.SetBackgroundColor(Colors.Transparent.ToPlatform());
@@ -29,7 +41,7 @@ public static class SnackbarExtensions
         
         return button;
     }
-
+    
     public static ImageButton? AddIcon(this SnackbarContentLayout contentLayout, 
         Activity activity, 
         ImageSource source,
@@ -47,20 +59,6 @@ public static class SnackbarExtensions
             contentLayout.AddView(iconView, index);
         }
         
-        return iconView;
-    }
-
-    public static ImageButton? AddIcon(this SnackbarContentLayout contentLayout,
-        Activity activity,
-        MaterialSnackbarConfig.IconConfig config,
-        int index)
-    {
-        var iconView = AddIcon(contentLayout, activity, config.Source, config.Size, config.Color, new Thickness(0), config.Action, index);
-        if (iconView?.LayoutParameters != null)
-        {
-            iconView.LayoutParameters.Width = config.Size.DpToPixels();
-            iconView.LayoutParameters.Height = ViewGroup.LayoutParams.MatchParent;
-        }
         return iconView;
     }
 }

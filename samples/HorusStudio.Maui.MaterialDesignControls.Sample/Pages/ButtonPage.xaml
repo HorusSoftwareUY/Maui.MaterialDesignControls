@@ -339,6 +339,12 @@
                     Type="Tonal"
                     Text="Release me"
                     Released="OnCounterReleased" />
+                
+                <material:MaterialButton
+                    x:Name="TouchBtn"
+                    Type="Elevated"
+                    Text="Touch event"
+                    Touch="OnTouch" />
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel Text="Use event handlers instead of command if needed." Type="BodySmall"/>

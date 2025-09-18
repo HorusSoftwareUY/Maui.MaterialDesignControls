@@ -1,0 +1,88 @@
+name: Build, pack and push HorusStudio.Maui.MaterialDesignControls NuGet package
+
+on:
+  push:
+    branches: [ "master" ]
+
+permissions:
+  contents: write
+
+env:
+  SLN_FILE_PATH: 'HorusStudio.Maui.MaterialDesignControls.sln'
+  CSPROJ_FILE_PATH: 'src/HorusStudio.Maui.MaterialDesignControls/HorusStudio.Maui.MaterialDesignControls.csproj'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+        include-prerelease: true
+
+    - name: Install MAUI workloads
+      run: |
+        echo "📦 Installing MAUI workloads..."
+        dotnet workload install maui
+        dotnet workload restore
+        echo "✅ MAUI workloads installed successfully!"
+
+    - name: Restore dependencies
+      run: |
+        echo "📦 Restoring dependencies..."
+        dotnet restore ${{ env.SLN_FILE_PATH }}
+        echo "✅ Dependencies restored successfully!"
+
+    - name: Build solution
+      run: |
+        echo "📦 Building solution..."
+        dotnet build ${{ env.CSPROJ_FILE_PATH }} -c Release --no-restore
+        echo "✅ Solution built successfully!"
+      
+    - name: Pack NuGet package
+      run: |
+        echo "📦 Packaging NuGet package..."
+        dotnet pack ${{ env.CSPROJ_FILE_PATH }} -c Release -o ./artifacts --no-build
+        echo "✅ NuGet package packed successfully!"
+
+    - name: Publish NuGet package
+      run: |
+        echo "📦 Publishing NuGet package..."
+        dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+        echo "✅ NuGet package published successfully!"
+
+    - name: Get version from nupkg
+      id: get_version
+      run: |
+        FILE=$(ls ./artifacts/*.nupkg | head -n 1)
+        VERSION=$(echo $FILE | sed -E 's/.*\.([0-9]+\.[0-9]+\.[0-9]+)\.nupkg/\1/')
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Create Git tag
+      run: |
+        echo "📦 Creating Git tag..."
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git tag -a "v${{ steps.get_version.outputs.version }}" -m "Release v${{ steps.get_version.outputs.version }}"
+        git push origin "v${{ steps.get_version.outputs.version }}"
+        echo "✅ Git tag created and pushed successfully!"
+
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.get_version.outputs.version }}
+        release_name: ${{ steps.get_version.outputs.version }}
+        body: |
+          ### [NuGet package](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/${{ steps.get_version.outputs.version }})
+          #### New features
+          - 
+          #### Bug fixes
+          -
+        draft: true
+        prerelease: false

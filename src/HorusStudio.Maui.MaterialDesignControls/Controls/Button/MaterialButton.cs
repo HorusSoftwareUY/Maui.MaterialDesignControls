@@ -63,6 +63,7 @@ public enum MaterialButtonType
 /// * ContentLayout is buggy.
 /// * Add default Material behavior for pressed state on default styles (v2).
 /// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
+/// * [Android] When placed inside a ScrollView, it will fire Command on drag event as well. This behavior is totally inherited from MAUI Button. If you need to avoid that, we recommend using MaterialCard, MaterialChip, or MaterialViewButton instead.
 /// </todoList>
 public class MaterialButton : ContentView, ITouchableView
 {
@@ -792,6 +793,7 @@ public class MaterialButton : ContentView, ITouchableView
     private EventHandler? _clicked;
     private EventHandler? _pressed;
     private EventHandler? _released;
+    private EventHandler<TouchEventArgs>? _touch;
     private readonly object _objectLock = new();
 
     /// <summary>
@@ -853,6 +855,27 @@ public class MaterialButton : ContentView, ITouchableView
             lock (_objectLock)
             {
                 _released -= value;
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Occurs when the button is touched.
+    /// </summary>
+    public event EventHandler<TouchEventArgs>? Touch
+    {
+        add
+        {
+            lock (_objectLock)
+            {
+                _touch += value;
+            }
+        }
+        remove
+        {
+            lock (_objectLock)
+            {
+                _touch -= value;
             }
         }
     }
@@ -1280,12 +1303,14 @@ public class MaterialButton : ContentView, ITouchableView
     {
         Utils.Logger.Debug($"Gesture: {gestureType}");
 
-        if (!IsEnabled || (Command == null && _pressed == null && _released == null && _clicked == null))
+        if (!IsEnabled || (Command == null && _pressed == null && _released == null && _clicked == null && _touch == null))
         {
             return;
         }
 
         await TouchAnimationManager.AnimateAsync(this, gestureType);
+        
+        _touch?.Invoke(this, new TouchEventArgs(gestureType));
 
         if (gestureType == TouchEventType.Released)
         {

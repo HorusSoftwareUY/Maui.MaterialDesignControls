@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
+namespace HorusStudio.Maui.MaterialDesignControls
 {
     /// <summary>
     /// The ITouchableView interface serves as a base for touchable views.
@@ -11,6 +11,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
         /// Method invoked when a touch event occurs on the view, updating the gesture state for that view.
         /// </summary>
         void OnTouch(TouchEventType touchEventType);
+
+        /// <summary>
+        /// Occurs when the view is touched.
+        /// </summary>
+        event EventHandler<TouchEventArgs>? Touch;
 
         /// <summary>
         /// Gets or sets the state when the view is enabled.
