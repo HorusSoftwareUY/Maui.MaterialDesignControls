@@ -286,7 +286,7 @@ Find more usages and samples on our [sample app](samples/HorusStudio.Maui.Materi
 
 ## Release notes
 
-Check out our progress [here](ReleaseNotes.md).
+Check out our progress [here](https://github.com/HorusSoftwareUY/Maui.MaterialDesignControls/releases).
 
 ## Developed by
 <a href="http://horus.com.uy"><img src="resources/logo.png" width="200"></a>

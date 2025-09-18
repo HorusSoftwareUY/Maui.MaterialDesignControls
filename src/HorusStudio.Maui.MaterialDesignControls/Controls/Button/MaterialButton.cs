@@ -63,7 +63,6 @@ public enum MaterialButtonType
 /// * ContentLayout is buggy.
 /// * Add default Material behavior for pressed state on default styles (v2).
 /// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
-/// * TESTING
 /// </todoList>
 public class MaterialButton : ContentView, ITouchableView
 {
