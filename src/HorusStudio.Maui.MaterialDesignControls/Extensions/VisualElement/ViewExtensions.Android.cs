@@ -76,7 +76,7 @@ static partial class ViewExtensions
         return view;
     }
     
-    public static View SetGravity(this View view, MaterialSnackbarPosition position)
+    public static void SetGravity(this Window window, MaterialSnackbarPosition position)
     {
         var gravityFlags = position switch
         {
@@ -85,19 +85,8 @@ static partial class ViewExtensions
             _ => throw new ArgumentOutOfRangeException(nameof(position), position, "Snackbar position value is not valid.")
         };
         
-        switch (view.LayoutParameters)
-        {
-            case FrameLayout.LayoutParams frameLayoutParams:
-                frameLayoutParams.Gravity = gravityFlags;
-                view.LayoutParameters = frameLayoutParams;
-                break;
-            case LinearLayout.LayoutParams linearLayoutParams:
-                linearLayoutParams.Gravity = gravityFlags;
-                view.LayoutParameters = linearLayoutParams;
-                break;
-        }
-        
-        return view;
+        window.SetGravity(gravityFlags);
+        window?.SetLayout(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
     }
     
     public static View SetGravity(this View view, LayoutOptions horizontalLayoutOptions, LayoutOptions verticalLayoutOptions)
