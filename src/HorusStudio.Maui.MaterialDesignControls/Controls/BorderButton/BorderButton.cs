@@ -105,7 +105,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private EventHandler? _clicked;
         private EventHandler? _pressed;
         private EventHandler? _released;
-        private EventHandler<Behaviors.TouchEventArgs>? _touch;
+        private EventHandler<TouchEventArgs>? _touch;
         private readonly object _objectLock = new();
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// Occurs when the border button is touched.
         /// </summary>
-        public event EventHandler<Behaviors.TouchEventArgs>? Touch
+        public event EventHandler<TouchEventArgs>? Touch
         {
             add
             {
@@ -211,7 +211,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             if (!IsEnabled) return;
             await TouchAnimationManager.AnimateAsync(this, gestureType);
             
-            _touch?.Invoke(this, new Behaviors.TouchEventArgs(gestureType));
+            _touch?.Invoke(this, new TouchEventArgs(gestureType));
 
             switch (gestureType)
             {

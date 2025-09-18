@@ -1,5 +1,4 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
-using TouchEventArgs = HorusStudio.Maui.MaterialDesignControls.Behaviors.TouchEventArgs;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 {

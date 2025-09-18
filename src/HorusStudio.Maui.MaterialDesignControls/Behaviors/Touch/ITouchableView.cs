@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace HorusStudio.Maui.MaterialDesignControls.Behaviors
+namespace HorusStudio.Maui.MaterialDesignControls
 {
     /// <summary>
     /// The ITouchableView interface serves as a base for touchable views.

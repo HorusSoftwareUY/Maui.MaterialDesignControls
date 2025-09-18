@@ -508,7 +508,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         
         await TouchAnimationManager.AnimateAsync(this, gestureType);
         
-        Touch?.Invoke(this, new Behaviors.TouchEventArgs(gestureType));
+        Touch?.Invoke(this, new TouchEventArgs(gestureType));
         
         if (gestureType == TouchEventType.Released)
         {
@@ -537,7 +537,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     /// <summary>
     /// Occurs when the radio button is touched.
     /// </summary>
-    public event EventHandler<Behaviors.TouchEventArgs>? Touch;
+    public event EventHandler<TouchEventArgs>? Touch;
 
     #endregion Events
 

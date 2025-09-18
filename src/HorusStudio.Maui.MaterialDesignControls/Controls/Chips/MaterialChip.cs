@@ -623,7 +623,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     #region Events
 
     private EventHandler? _clicked;
-    private EventHandler<Behaviors.TouchEventArgs>? _touch;
+    private EventHandler<TouchEventArgs>? _touch;
     private readonly Lock _objectLock = new();
 
     /// <inheritdoc />
@@ -655,7 +655,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
     /// <summary>
     /// Occurs when the chip is touched.
     /// </summary>
-    public event EventHandler<Behaviors.TouchEventArgs>? Touch
+    public event EventHandler<TouchEventArgs>? Touch
     {
         add
         {
@@ -698,7 +698,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
         }
     }
     
-    protected virtual async void InternalTouchHandler(object? sender, Behaviors.TouchEventArgs e)
+    protected virtual async void InternalTouchHandler(object? sender, TouchEventArgs e)
     {
         if (!IsEnabled) return;
 

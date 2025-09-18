@@ -593,7 +593,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// Occurs when the switch is touched.
         /// </summary>
-        public event EventHandler<Behaviors.TouchEventArgs>? Touch;
+        public event EventHandler<TouchEventArgs>? Touch;
 
         #endregion Events
 
@@ -1077,7 +1077,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             if (!IsEnabled) return;
             await TouchAnimationManager.AnimateAsync(this, gestureType);
 
-            Touch?.Invoke(this, new Behaviors.TouchEventArgs(gestureType));
+            Touch?.Invoke(this, new TouchEventArgs(gestureType));
             
             switch (gestureType)
             {

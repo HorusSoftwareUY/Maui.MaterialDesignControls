@@ -793,7 +793,7 @@ public class MaterialButton : ContentView, ITouchableView
     private EventHandler? _clicked;
     private EventHandler? _pressed;
     private EventHandler? _released;
-    private EventHandler<Behaviors.TouchEventArgs>? _touch;
+    private EventHandler<TouchEventArgs>? _touch;
     private readonly object _objectLock = new();
 
     /// <summary>
@@ -862,7 +862,7 @@ public class MaterialButton : ContentView, ITouchableView
     /// <summary>
     /// Occurs when the button is touched.
     /// </summary>
-    public event EventHandler<Behaviors.TouchEventArgs>? Touch
+    public event EventHandler<TouchEventArgs>? Touch
     {
         add
         {
@@ -1310,7 +1310,7 @@ public class MaterialButton : ContentView, ITouchableView
 
         await TouchAnimationManager.AnimateAsync(this, gestureType);
         
-        _touch?.Invoke(this, new Behaviors.TouchEventArgs(gestureType));
+        _touch?.Invoke(this, new TouchEventArgs(gestureType));
 
         if (gestureType == TouchEventType.Released)
         {

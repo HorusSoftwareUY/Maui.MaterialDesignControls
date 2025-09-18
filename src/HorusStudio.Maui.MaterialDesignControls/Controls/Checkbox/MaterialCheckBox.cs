@@ -478,7 +478,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
         if (!IsEnabled) return;
         await TouchAnimationManager.AnimateAsync(this, gestureType);
 
-        Touch?.Invoke(this, new Behaviors.TouchEventArgs(gestureType));
+        Touch?.Invoke(this, new TouchEventArgs(gestureType));
         
         if (gestureType == TouchEventType.Released)
         {
@@ -498,13 +498,13 @@ public class MaterialCheckBox : ContentView, ITouchableView
     /// <summary>
     /// Occurs when the checkbox is touched.
     /// </summary>
-    public event EventHandler<Behaviors.TouchEventArgs>? Touch;
+    public event EventHandler<TouchEventArgs>? Touch;
 
     #endregion Events
 
     #region Methods
     
-    private void OnCheckBoxTouch(object? sender, Behaviors.TouchEventArgs e)
+    private void OnCheckBoxTouch(object? sender, TouchEventArgs e)
     {
         OnTouch(e.TouchEventType);
     }

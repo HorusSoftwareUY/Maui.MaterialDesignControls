@@ -409,7 +409,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
 
     #region Events
 
-    private EventHandler<Behaviors.TouchEventArgs>? _touch;
+    private EventHandler<TouchEventArgs>? _touch;
     private readonly object _objectLock = new();
     
     /// <summary>
@@ -420,7 +420,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     /// <summary>
     /// Occurs when the segmented button is touched.
     /// </summary>
-    public event EventHandler<Behaviors.TouchEventArgs>? Touch
+    public event EventHandler<TouchEventArgs>? Touch
     {
         add
         {
@@ -491,11 +491,11 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
         }
     }
     
-    protected virtual async void InternalTouchHandler(object? sender, Behaviors.TouchEventArgs e)
+    protected virtual async void InternalTouchHandler(object? sender, TouchEventArgs e)
     {
         if (!IsEnabled) return;
         
-        _touch?.Invoke(sender, new Behaviors.TouchEventArgs(e.TouchEventType));
+        _touch?.Invoke(sender, new TouchEventArgs(e.TouchEventType));
     }
     
     private void AddTouchEvents()
