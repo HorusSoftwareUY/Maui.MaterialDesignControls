@@ -3,6 +3,8 @@ name: Run the documentation generation tool and push changes to develop branch
 on:
   push:
     branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
 
 permissions:
   contents: write
