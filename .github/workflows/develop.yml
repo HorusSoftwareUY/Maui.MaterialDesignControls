@@ -1,0 +1,60 @@
+name: Build, pack and push HorusStudio.Maui.MaterialDesignControls NuGet package
+
+on:
+  push:
+    branches: [ "feature/pipelines" ] # branches: [ "develop" ]
+
+env:
+  SLN_FILE_PATH: 'HorusStudio.Maui.MaterialDesignControls.sln'
+  CSPROJ_FILE_PATH: 'src/HorusStudio.Maui.MaterialDesignControls/HorusStudio.Maui.MaterialDesignControls.csproj'
+  MATERIALDESIGNCONTROLS_DLL_FILE_PATH: 'src/HorusStudio.Maui.MaterialDesignControls/bin/Release/net9.0-android/HorusStudio.Maui.MaterialDesignControls.dll'
+  XMLDOC2MARKDOWN_FILE_PATH: 'tools/XMLDoc2Markdown/XMLDoc2Markdown.dll'
+  DOCUMENTATION_OUTPUT_PATH: 'docs'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install MAUI workloads
+      run: |
+        echo "📦 Installing MAUI workloads..."
+        dotnet workload install maui
+        dotnet workload restore
+        echo "✅ MAUI workloads installed successfully!"
+
+    - name: Restore dependencies
+      run: |
+        echo "📦 Restoring dependencies..."
+        dotnet restore ${{ env.SLN_FILE_PATH }}
+        echo "✅ Dependencies restored successfully!"
+
+    - name: Build solution
+      run: |
+        echo "📦 Building solution..."
+        dotnet build ${{ env.CSPROJ_FILE_PATH }} -c Release --no-restore
+        echo "✅ Solution built successfully!"
+
+    - name: Unzip the documentation generation tool
+      run: |
+        echo "📦 Unzipping the documentation generation tool..."
+        unzip tools/XMLDoc2Markdown.zip -d tools/
+        echo "✅ Documentation generation tool unzipped successfully!"
+
+    - name: Run the documentation generation tool
+      run: |
+       echo "📦 Running the documentation generation tool..."
+       dotnet ${{ env.XMLDOC2MARKDOWN_FILE_PATH }} ${{ env.MATERIALDESIGNCONTROLS_DLL_FILE_PATH }} ${{ env.DOCUMENTATION_OUTPUT_PATH }} --exclude-class-static="HorusStudio.Maui.MaterialDesignControls.MaterialLightTheme,HorusStudio.Maui.MaterialDesignControls.MaterialDarkTheme,HorusStudio.Maui.MaterialDesignControls.MaterialFontSize,HorusStudio.Maui.MaterialDesignControls.MaterialFontFamily,HorusStudio.Maui.MaterialDesignControls.MaterialElevation,HorusStudio.Maui.MaterialDesignControls.MaterialAnimation,HorusStudio.Maui.MaterialDesignControls.MaterialFontTracking,HorusStudio.Maui.MaterialDesignControls.MaterialIcon,HorusStudio.Maui.MaterialDesignControls.MaterialFormat" --excludeinternal --onlyinternal-members --no-index-page --specific-namespace="HorusStudio.Maui.MaterialDesignControls"
+       echo "✅ Documentation generated successfully!"
+
+    - name: Commit & push changes
+      run: |
+        echo "📦 Committing and pushing changes..."
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Auto-generate docs [skip ci]" || echo "No changes to commit"
+        git push origin HEAD:${GITHUB_REF#refs/heads/}
+        echo "✅ Changes committed and pushed successfully!"
