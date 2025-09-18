@@ -508,6 +508,8 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         
         await TouchAnimationManager.AnimateAsync(this, gestureType);
         
+        Touch?.Invoke(this, new TouchEventArgs(gestureType));
+        
         if (gestureType == TouchEventType.Released)
         {
             if (GroupableViewPropertyChanged != null)
@@ -531,6 +533,11 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     /// Occurs when the radio button is switched 
     /// </summary>
     public event EventHandler<CheckedChangedEventArgs>? CheckedChanged;
+    
+    /// <summary>
+    /// Occurs when the radio button is touched.
+    /// </summary>
+    public event EventHandler<TouchEventArgs>? Touch;
 
     #endregion Events
 

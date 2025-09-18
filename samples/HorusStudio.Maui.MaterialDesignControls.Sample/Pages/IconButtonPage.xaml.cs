@@ -7,6 +7,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         private int _clickedCount = 0;
         private int _pressedCount = 0;
         private int _releasedCount = 0;
+        private int _touchCount = 0;
         
         public IconButtonPage(IconButtonViewModel viewModel) : base(viewModel)
         {
@@ -35,6 +36,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             var msg = $"Released {_releasedCount} time{(_releasedCount == 1 ? string.Empty : "s")}";
             System.Diagnostics.Debug.WriteLine(msg);
             DisplayAlert("Events", msg, "OK");
+        }
+        
+        private void OnTouch(object? sender, TouchEventArgs e)
+        {
+            lblTouchEvent.Text = $"Touch event: {e.TouchEventType}";
         }
     }
 }

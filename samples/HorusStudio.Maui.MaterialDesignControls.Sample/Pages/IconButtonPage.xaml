@@ -224,6 +224,18 @@
                     Type="Tonal"
                     ImageSource="settings.png"
                     Released="OnCounterReleased" />
+                
+                <HorizontalStackLayout>
+                    <material:MaterialIconButton
+                        Type="Tonal"
+                        ImageSource="settings.png"
+                        Touch="OnTouch" />
+                    <material:MaterialLabel
+                        x:Name="lblTouchEvent"
+                        Text="Touch event" 
+                        Type="BodySmall"
+                        VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
             </VerticalStackLayout>
         </material:MaterialCard>
         <material:MaterialLabel Text="Use event handlers instead of command if needed." Type="BodySmall"/>

@@ -59,7 +59,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
     private readonly MaterialLabel _label;
     private readonly CustomCheckBox _checkbox;
     private readonly Grid _mainLayout;
-    private readonly BoxView _boxView;
+    private readonly MaterialViewButton _viewButton;
 
     #endregion Layout
 
@@ -431,19 +431,11 @@ public class MaterialCheckBox : ContentView, ITouchableView
         _mainLayout.Children.Add(_checkbox);
 
 #if ANDROID
-        _boxView = new()
-        {
-            BackgroundColor = Colors.Transparent,
-            Color = Colors.Transparent
-        };
-        _boxView.SetValue(Grid.RowProperty, 0);
-        _boxView.SetValue(Grid.ColumnProperty, 0);
-
-        var tapGestureRecognizer = new TapGestureRecognizer();
-        tapGestureRecognizer.Tapped += OnCheckBoxTapped;
-        _boxView.GestureRecognizers.Add(tapGestureRecognizer);
-
-        _mainLayout.Children.Add(_boxView);
+        _viewButton = new();
+        _viewButton.SetValue(Grid.RowProperty, 0);
+        _viewButton.SetValue(Grid.ColumnProperty, 0);
+        _viewButton.Touch += OnCheckBoxTouch;
+        _mainLayout.Children.Add(_viewButton);
 #endif
 
         _checkbox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(IsChecked), source: this));
@@ -486,6 +478,8 @@ public class MaterialCheckBox : ContentView, ITouchableView
         if (!IsEnabled) return;
         await TouchAnimationManager.AnimateAsync(this, gestureType);
 
+        Touch?.Invoke(this, new TouchEventArgs(gestureType));
+        
         if (gestureType == TouchEventType.Released)
         {
             IsChecked = !IsChecked;
@@ -501,16 +495,18 @@ public class MaterialCheckBox : ContentView, ITouchableView
     /// </summary>
     public event EventHandler<CheckedChangedEventArgs>? CheckedChanged;
 
+    /// <summary>
+    /// Occurs when the checkbox is touched.
+    /// </summary>
+    public event EventHandler<TouchEventArgs>? Touch;
+
     #endregion Events
 
     #region Methods
-
-    private void OnCheckBoxTapped(object? sender, TappedEventArgs e)
+    
+    private void OnCheckBoxTouch(object? sender, TouchEventArgs e)
     {
-        if(IsEnabled)
-        {
-            this.IsChecked = !this.IsChecked;
-        }
+        OnTouch(e.TouchEventType);
     }
 
     private void TextSideChanged(TextSide textSide)
@@ -539,8 +535,8 @@ public class MaterialCheckBox : ContentView, ITouchableView
                 _mainLayout.Children.Add(_label);
                 _mainLayout.Children.Add(_checkbox);
 #if ANDROID
-                _boxView.SetValue(Grid.ColumnProperty, 1);
-                _mainLayout.Children.Add(_boxView);
+                _viewButton.SetValue(Grid.ColumnProperty, 1);
+                _mainLayout.Children.Add(_viewButton);
 #endif
                 break;
             case TextSide.Right:
@@ -562,8 +558,8 @@ public class MaterialCheckBox : ContentView, ITouchableView
                 _mainLayout.Children.Add(_checkbox);
 
 #if ANDROID
-                _boxView.SetValue(Grid.ColumnProperty, 0);
-                _mainLayout.Children.Add(_boxView);
+                _viewButton.SetValue(Grid.ColumnProperty, 0);
+                _mainLayout.Children.Add(_viewButton);
 #endif
                 _mainLayout.Children.Add(_label);
                 break;
