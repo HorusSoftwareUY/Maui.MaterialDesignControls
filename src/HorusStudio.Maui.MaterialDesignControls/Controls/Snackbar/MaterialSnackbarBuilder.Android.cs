@@ -198,18 +198,3 @@ class MaterialSnackbarBuilder
         return actionButton;
     }
 }
-
-class LetterSpacingSpan(float letterSpacing) : MetricAffectingSpan
-{
-    public float LetterSpacing => letterSpacing;
-
-    public override void UpdateDrawState(TextPaint? ds) => Apply(ds);
-
-    public override void UpdateMeasureState(TextPaint paint) => Apply(paint);
-
-    private void Apply(TextPaint? paint)
-    {
-        if (paint is null) return;
-        paint.LetterSpacing = LetterSpacing;
-    }
-}
