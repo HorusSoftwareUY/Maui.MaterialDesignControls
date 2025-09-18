@@ -4,6 +4,9 @@ on:
   push:
     branches: [ "feature/pipelines" ] # branches: [ "develop" ]
 
+permissions:
+  contents: write
+
 env:
   SLN_FILE_PATH: 'HorusStudio.Maui.MaterialDesignControls.sln'
   CSPROJ_FILE_PATH: 'src/HorusStudio.Maui.MaterialDesignControls/HorusStudio.Maui.MaterialDesignControls.csproj'
