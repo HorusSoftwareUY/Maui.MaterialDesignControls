@@ -2,7 +2,7 @@ name: Build, pack and push HorusStudio.Maui.MaterialDesignControls NuGet package
 
 on:
   push:
-    branches: [ "feature/pipelines" ] # branches: [ "develop" ]
+    branches: [ "develop" ]
 
 permissions:
   contents: write
