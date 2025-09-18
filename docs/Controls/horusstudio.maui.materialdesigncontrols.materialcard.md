@@ -200,6 +200,12 @@ Occurs when the card is released.
 
 <br>
 
+### <a id="events-touch"/>**Touch**
+
+Occurs when the card is touched.
+
+<br>
+
 ## Known issues and pending features
 
 * Disable color styles looks a bit weird with the opacities that the guideline specifies, we have to review them.

@@ -46,6 +46,16 @@ Default value: Light: MaterialLightTheme.InverseSurface - Dark: MaterialDarkThem
 
 <br>
 
+### <a id="properties-characterspacing"/>**CharacterSpacing**
+
+Gets or sets character spacing for snackbar.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: 0
+
+<br>
+
 ### <a id="properties-cornerradius"/>**CornerRadius**
 
 Gets or sets corner radius for snackbar
@@ -96,6 +106,16 @@ Default value: Light: MaterialLightTheme.InverseSurface - Dark: MaterialDarkThem
 
 <br>
 
+### <a id="properties-defaultcharacterspacing"/>**DefaultCharacterSpacing**
+
+Text character spacing to be applied by default to every Snackbar that doesn't set one.
+
+Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
+
+Default value: 0
+
+<br>
+
 ### <a id="properties-defaultcornerradius"/>**DefaultCornerRadius**
 
 Corner radius to be applied by default to every Snackbar that doesn't set one.
@@ -113,6 +133,17 @@ Duration applied by default to every Snackbar that doesn't set one.
 Property type: [TimeSpan](https://learn.microsoft.com/en-us/dotnet/api/system.timespan)<br>
 
 Default value: 3 seconds
+
+<br>
+
+### <a id="properties-defaultfontattributes"/>**DefaultFontAttributes**
+
+Gets or sets a value that indicates whether the font for the text of this snackbar is bold, italic, or neither.
+ This is a bindable property.
+
+Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.fontattributes)<br>
+
+Default value: FontAttributes.None
 
 <br>
 
@@ -143,6 +174,16 @@ Icon size to be applied by default to every Snackbar that doesn't set one.
 Property type: [Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 Default value: 24
+
+<br>
+
+### <a id="properties-defaultlinebreakmode"/>**DefaultLineBreakMode**
+
+Determines how Text is shown by default when the length is overflowing the size of this snackbar.
+
+Property type: [LineBreakMode](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.linebreakmode)<br>
+
+Default value: LineBreakMode.WordWrap
 
 <br>
 
@@ -211,6 +252,17 @@ Default value: 3 seconds
 
 <br>
 
+### <a id="properties-fontattributes"/>**FontAttributes**
+
+Gets or sets a value that indicates whether the font for the text of this snackbar is bold, italic, or neither.
+ This is a bindable property.
+
+Property type: [FontAttributes](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.controls.fontattributes)<br>
+
+Default value: FontAttributes.None
+
+<br>
+
 ### <a id="properties-fontsize"/>**FontSize**
 
 Gets or sets text size for snackbar.
@@ -228,6 +280,16 @@ Gets or sets configuration for leading icon, if available.
 Property type: IconConfig<br>
 
 Default value: null
+
+<br>
+
+### <a id="properties-linebreakmode"/>**LineBreakMode**
+
+Determines how Text is shown when the length is overflowing the size of this snackbar.
+
+Property type: [LineBreakMode](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.linebreakmode)<br>
+
+Default value: LineBreakMode.WordWrap
 
 <br>
 

@@ -237,6 +237,12 @@ Occurs when the selection of one of the segmented buttons changes.
 
 <br>
 
+### <a id="events-touch"/>**Touch**
+
+Occurs when the segmented button is touched.
+
+<br>
+
 ## Known issues and pending features
 
 * [iOS] FontAttributes doesn't work (MAUI issue)

@@ -315,6 +315,12 @@ Occurs when the button is released.
 
 <br>
 
+### <a id="events-touch"/>**Touch**
+
+Occurs when the icon button is touched.
+
+<br>
+
 ## Known issues and pending features
 
 * Shadow doesn't react to VisualStateManager changes.

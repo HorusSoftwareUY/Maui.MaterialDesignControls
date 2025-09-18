@@ -379,3 +379,9 @@ Remarks: If a value is not explicitly set, the control will use the Text propert
 Occurs when the chips is clicked/tapped.
 
 <br>
+
+### <a id="events-touch"/>**Touch**
+
+Occurs when the chip is touched.
+
+<br>

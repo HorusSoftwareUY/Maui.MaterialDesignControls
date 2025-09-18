@@ -241,6 +241,12 @@ Occurs when the checkbox is checked / unchecked
 
 <br>
 
+### <a id="events-touch"/>**Touch**
+
+Occurs when the checkbox is touched.
+
+<br>
+
 ## Known issues and pending features
 
 * [iOS] FontAttributes doesn't work.

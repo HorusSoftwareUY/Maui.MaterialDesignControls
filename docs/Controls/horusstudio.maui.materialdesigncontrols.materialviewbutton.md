@@ -82,3 +82,9 @@ Occurs when the card is pressed.
 Occurs when the card is released.
 
 <br>
+
+### <a id="events-touch"/>**Touch**
+
+Occurs when the card is touched.
+
+<br>

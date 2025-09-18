@@ -429,6 +429,12 @@ Occurs when the button is released.
 
 <br>
 
+### <a id="events-touch"/>**Touch**
+
+Occurs when the button is touched.
+
+<br>
+
 ### <a id="events-unfocused"/>**Unfocused**
 
 Occurs when the button is unfocused.
@@ -442,4 +448,4 @@ Occurs when the button is unfocused.
  * ContentLayout is buggy.
  * Add default Material behavior for pressed state on default styles (v2).
  * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
- * TESTING
+ * [Android] When placed inside a ScrollView, it will fire Command on drag event as well. This behavior is totally inherited from MAUI Button. If you need to avoid that, we recommend using MaterialCard, MaterialChip, or MaterialViewButton instead.
