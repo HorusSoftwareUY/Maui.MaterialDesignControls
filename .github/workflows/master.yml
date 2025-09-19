@@ -3,6 +3,8 @@ name: Build, pack and push HorusStudio.Maui.MaterialDesignControls NuGet package
 on:
   push:
     branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 permissions:
   contents: write
