@@ -63,10 +63,10 @@ jobs:
 
     - name: Commit & push changes
       run: |
-        echo "📦 Committing and pushing changes......"
+        echo "📦 Committing and pushing changes..."
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add .
         git commit -m "Auto-generate docs [skip ci]" || echo "No changes to commit"
         git push origin HEAD:${GITHUB_REF#refs/heads/}
-        echo "✅ Changes committed and pushed successfully!!!"
+        echo "✅ Changes committed and pushed successfully!"
