@@ -449,3 +449,4 @@ Occurs when the button is unfocused.
  * Add default Material behavior for pressed state on default styles (v2).
  * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
  * [Android] When placed inside a ScrollView, it will fire Command on drag event as well. This behavior is totally inherited from MAUI Button. If you need to avoid that, we recommend using MaterialCard, MaterialChip, or MaterialViewButton instead.
+ *
