@@ -1,0 +1,131 @@
+name: Build, sign and publish the sample app to App Store and Google Play
+
+on:
+  push:
+    branches: [ "feature/sample-app-release" ] # branches: [ "master" ]
+  workflow_dispatch: 
+
+env:
+  SLN_FILE_PATH: 'HorusStudio.Maui.MaterialDesignControls.sln'
+  CSPROJ_FILE_PATH: 'samples/HorusStudio.Maui.MaterialDesignControls.Sample/HorusStudio.Maui.MaterialDesignControls.Sample.csproj'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+        include-prerelease: true
+
+    - name: Install MAUI workloads
+      run: |
+        echo "📦 Installing MAUI workloads..."
+        dotnet workload install maui
+        dotnet workload restore
+        echo "✅ MAUI workloads installed successfully!"
+
+    - name: Restore dependencies
+      run: |
+        echo "📦 Restoring dependencies..."
+        dotnet restore ${{ env.SLN_FILE_PATH }}
+        echo "✅ Dependencies restored successfully!"
+
+    - name: Get version from nuget.props
+      id: get_version
+      run: |
+        echo "📦 Extracting version from nuget.props..."
+        VERSION=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" nuget.props)
+        echo "Version found: $VERSION"
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "✅ Version extracted successfully!"
+
+    - name: Get release notes from nuget.props
+      id: get_release_notes
+      run: |
+        echo "📦 Extracting release notes from nuget.props..."
+        RELEASE_NOTES=$(xmllint --xpath "string(//Project/PropertyGroup/PackageReleaseNotes)" nuget.props)
+        echo "Release notes found:"
+        echo "$RELEASE_NOTES"
+        echo "release_notes<<EOF" >> $GITHUB_OUTPUT
+        echo "$RELEASE_NOTES" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+        echo "✅ Release notes extracted successfully!"
+
+    # Android Build & Upload
+    - name: Decode Android Keystore
+      run: |
+        echo "📦 Decoding Android Keystore..."
+        echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > mauimaterialdesigncontrolssample.keystore
+        echo "✅ Android Keystore decoded successfully!"
+
+    - name: Build Android
+      run: |
+        echo "📦 Building Android app..."
+        dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net9.0-android -c Release -o ./output/android \
+          /p:AndroidKeyStore=true \
+          /p:AndroidSigningKeyStore=mauimaterialdesigncontrolssample.keystore \
+          /p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEY_ALIAS }} \
+          /p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_PASSWORD }} \
+          /p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        echo "✅ Android app built successfully!"
+
+    - name: Upload Android Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: HorusStudio.Maui.MaterialDesignControls.Sample.Android
+        path: ./output/android/*.aab
+
+    - name: Generate whatsnew files
+      run: |
+        mkdir -p whatsnew
+        echo "🚀 This new version of the app corresponds to the latest available version of the NuGet package: https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/${{ steps.get_version.outputs.version }}" > whatsnew/en-US.txt
+        echo "Release notes for HorusStudio.Maui.MaterialDesignControls ${{ steps.get_version.outputs.version }}:" > whatsnew/en-US.txt
+        echo "${{ steps.get_release_notes.outputs.release_notes }}" > whatsnew/en-US.txt
+
+    - name: Upload to Google Play
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_JSON }}
+        packageName: com.horusstudio.maui.materialdesigncontrols.sample
+        releaseFiles: ./output/android/*.aab
+        track: internal
+        whatsNewDirectory: ./whatsnew
+
+    # iOS Build & Upload
+    - name: Setup Apple Certificate
+      uses: apple-actions/import-codesign-certs@v2
+      with:
+        p12-file-base64: ${{ secrets.P12_CERTIFICATE_BASE64 }}
+        p12-password: ${{ secrets.P12_PASSWORD }}
+        provisioning-profile-base64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+
+    - name: Build iOS
+      run: |
+        echo "📦 Building iOS app..."
+        dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net9.0-ios -c Release -o ./output/ios \
+        /p:ArchiveOnBuild=true \
+        /p:CodesignKey="Apple Distribution"
+        echo "✅ iOS app built successfully!"
+
+    - name: Upload iOS Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: HorusStudio.Maui.MaterialDesignControls.Sample.iOS
+        path: ./output/ios/*.ipa
+
+    - name: Upload to TestFlight
+      uses: apple-actions/upload-testflight-build@v1
+      with:
+        app-path: ./output/ios/*.ipa
+        issuer-id: ${{ secrets.APPLE_ISSUER_ID }}
+        api-key-id: ${{ secrets.APPLE_KEY_ID }}
+        api-private-key: ${{ secrets.APPLE_PRIVATE_KEY }}
+        release-notes: |
+          🚀 This new version of the app corresponds to the latest available version of the NuGet package: https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/${{ steps.get_version.outputs.version }}
+          Release notes for HorusStudio.Maui.MaterialDesignControls ${{ steps.get_version.outputs.version }}:
+          ${{ steps.get_release_notes.outputs.release_notes }}
