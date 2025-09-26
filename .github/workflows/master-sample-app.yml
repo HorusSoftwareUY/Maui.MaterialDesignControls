@@ -63,11 +63,11 @@ jobs:
         echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > mauimaterialdesigncontrolssample.keystore
         echo "✅ Android Keystore decoded successfully!"
 
-    - name: List files
-      run: ls -la
+    # - name: List files
+    #   run: ls -la
 
-    - name: Check keystore
-      run: file ./mauimaterialdesigncontrolssample.keystore
+    # - name: Check keystore
+    #   run: file ./mauimaterialdesigncontrolssample.keystore
 
     - name: Set keystore permissions
       run: chmod 600 ./mauimaterialdesigncontrolssample.keystore
@@ -96,14 +96,14 @@ jobs:
         echo "Release notes for HorusStudio.Maui.MaterialDesignControls ${{ steps.get_version.outputs.version }}:" > whatsnew/en-US.txt
         echo "${{ steps.get_release_notes.outputs.release_notes }}" > whatsnew/en-US.txt
 
-    - name: Upload to Google Play
-      uses: r0adkll/upload-google-play@v1
-      with:
-        serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_JSON }}
-        packageName: com.horusstudio.maui.materialdesigncontrols.sample
-        releaseFiles: ./output/android/*.aab
-        track: internal
-        whatsNewDirectory: ./whatsnew
+    # - name: Upload to Google Play
+    #   uses: r0adkll/upload-google-play@v1
+    #   with:
+    #     serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_JSON }}
+    #     packageName: com.horusstudio.maui.materialdesigncontrols.sample
+    #     releaseFiles: ./output/android/*.aab
+    #     track: internal
+    #     whatsNewDirectory: ./whatsnew
 
     # iOS Build & Upload
     - name: Setup Apple Certificate
