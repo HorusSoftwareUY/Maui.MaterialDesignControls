@@ -66,12 +66,18 @@ jobs:
     - name: List files
       run: ls -la
 
+    - name: Check keystore
+      run: file ./mauimaterialdesigncontrolssample.keystore
+
+    - name: Set keystore permissions
+      run: chmod 600 ./mauimaterialdesigncontrolssample.keystore
+
     - name: Build Android
       run: |
         echo "📦 Building Android app..."
         dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net9.0-android -c Release -o ./output/android \
           /p:AndroidKeyStore=true \
-          /p:AndroidSigningKeyStore=./mauimaterialdesigncontrolssample.keystore \
+          /p:AndroidSigningKeyStore=${{ github.workspace }}/mauimaterialdesigncontrolssample.keystore \
           /p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEY_ALIAS }} \
           /p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_PASSWORD }} \
           /p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
