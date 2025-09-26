@@ -60,7 +60,7 @@ jobs:
     - name: Decode Android Keystore
       run: |
         echo "📦 Decoding Android Keystore..."
-        echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > mauimaterialdesigncontrolssample.keystore
+        echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > samples/HorusStudio.Maui.MaterialDesignControls.Sample/mauimaterialdesigncontrolssample.keystore
         echo "✅ Android Keystore decoded successfully!"
 
     - name: Build Android
@@ -68,7 +68,7 @@ jobs:
         echo "📦 Building Android app..."
         dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net9.0-android -c Release -o ./output/android \
           /p:AndroidKeyStore=true \
-          /p:AndroidSigningKeyStore=mauimaterialdesigncontrolssample.keystore \
+          /p:AndroidSigningKeyStore=samples/HorusStudio.Maui.MaterialDesignControls.Sample/mauimaterialdesigncontrolssample.keystore \
           /p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEY_ALIAS }} \
           /p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_PASSWORD }} \
           /p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
