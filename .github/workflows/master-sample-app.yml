@@ -63,12 +63,6 @@ jobs:
         echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > mauimaterialdesigncontrolssample.keystore
         echo "✅ Android Keystore decoded successfully!"
 
-    # - name: List files
-    #   run: ls -la
-
-    # - name: Check keystore
-    #   run: file ./mauimaterialdesigncontrolssample.keystore
-
     - name: Set keystore permissions
       run: chmod 600 ./mauimaterialdesigncontrolssample.keystore
 
@@ -127,14 +121,14 @@ jobs:
         name: HorusStudio.Maui.MaterialDesignControls.Sample.iOS
         path: ./output/ios/*.ipa
 
-    - name: Upload to TestFlight
-      uses: apple-actions/upload-testflight-build@v1
-      with:
-        app-path: ./output/ios/*.ipa
-        issuer-id: ${{ secrets.APPLE_ISSUER_ID }}
-        api-key-id: ${{ secrets.APPLE_KEY_ID }}
-        api-private-key: ${{ secrets.APPLE_PRIVATE_KEY }}
-        release-notes: |
-          🚀 This new version of the app corresponds to the latest available version of the NuGet package: https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/${{ steps.get_version.outputs.version }}
-          Release notes for HorusStudio.Maui.MaterialDesignControls ${{ steps.get_version.outputs.version }}:
-          ${{ steps.get_release_notes.outputs.release_notes }}
+    # - name: Upload to TestFlight
+    #   uses: apple-actions/upload-testflight-build@v1
+    #   with:
+    #     app-path: ./output/ios/*.ipa
+    #     issuer-id: ${{ secrets.APPLE_ISSUER_ID }}
+    #     api-key-id: ${{ secrets.APPLE_KEY_ID }}
+    #     api-private-key: ${{ secrets.APPLE_PRIVATE_KEY }}
+    #     release-notes: |
+    #       🚀 This new version of the app corresponds to the latest available version of the NuGet package: https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/${{ steps.get_version.outputs.version }}
+    #       Release notes for HorusStudio.Maui.MaterialDesignControls ${{ steps.get_version.outputs.version }}:
+    #       ${{ steps.get_release_notes.outputs.release_notes }}
