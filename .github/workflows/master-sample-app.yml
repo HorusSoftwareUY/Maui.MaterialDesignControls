@@ -105,7 +105,14 @@ jobs:
       with:
         p12-file-base64: ${{ secrets.P12_CERTIFICATE_BASE64 }}
         p12-password: ${{ secrets.P12_PASSWORD }}
-        provisioning-profile-base64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+
+    - name: Install Provisioning Profile
+      run: |
+        echo "📦 Installing Provisioning Profile..."
+        echo "${{ secrets.PROVISIONING_PROFILE_BASE64 }}" | base64 --decode > profile.mobileprovision
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+        echo "✅ Provisioning Profile installed successfully!"
 
     - name: Build iOS
       run: |
