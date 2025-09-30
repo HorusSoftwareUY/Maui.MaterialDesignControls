@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup Condition=" $(MSBuildProjectName.Equals('HorusStudio.Maui.MaterialDesignControls')) ">
     <PackageId>HorusStudio.Maui.MaterialDesignControls</PackageId>
-    <Version>2.1.0</Version>
+    <Version>2.1.1</Version>
     <Authors>Horus Studio and contributors</Authors>
     <Company>Horus Studio</Company>
     <Title>Material Design Controls for .NET MAUI</Title>
@@ -15,12 +15,7 @@
     <PackageTags>dotnet-maui;dotnet;maui;cross-platform;android;ios;macos;maccatalyst;materialdesign;ui</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
-- [BREAKING CHANGE] Change ITouchableView namespace to HorusStudio.Maui.MaterialDesignControls 
-- [ITouchableView] Add new Touch event and, therefore, to MaterialButton, MaterialCard, MaterialCheckBox, MaterialChip, MaterialIconButton, MaterialRadioButton, MaterialSegmentedButton, MaterialSwitch and MaterialViewButton
-- [MaterialCheckbox] Fix touch animation
-- [MaterialChip] Fix visual issue when dragging it remained as pressed
-- [MaterialSnackbar] Add support for CharacterSpacing, LineBreakMode and FontAttributes
-- [Android] [MaterialSnackbar] Show on top of all content
+- [Android] [MaterialSnackbar] The background dim/overlay has been removed, and the padding has been adjusted when using an action button.
     </PackageReleaseNotes>
 
     <PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>
