@@ -56,21 +56,35 @@ jobs:
         dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
         echo "✅ NuGet package published successfully!"
 
-    - name: Get version from nupkg
+    - name: Get version from nuget.props
       id: get_version
       run: |
-        FILE=$(ls ./artifacts/*.nupkg | head -n 1)
-        VERSION=$(echo $FILE | sed -E 's/.*\.([0-9]+\.[0-9]+\.[0-9]+)\.nupkg/\1/')
+        echo "📦 Extracting version from nuget.props..."
+        VERSION=$(xmllint --xpath "string(//Project/PropertyGroup/Version)" nuget.props)
+        echo "Version found: $VERSION"
         echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "✅ Version extracted successfully!"
 
-    - name: Create Git tag
+    - name: Get release notes from nuget.props
+      id: get_release_notes
       run: |
-        echo "📦 Creating Git tag..."
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git tag -a "v${{ steps.get_version.outputs.version }}" -m "Release v${{ steps.get_version.outputs.version }}"
-        git push origin "v${{ steps.get_version.outputs.version }}"
-        echo "✅ Git tag created and pushed successfully!"
+        echo "📦 Extracting release notes from nuget.props..."
+        RELEASE_NOTES=$(xmllint --xpath "string(//Project/PropertyGroup/PackageReleaseNotes)" nuget.props)
+        echo "Release notes found:"
+        echo "$RELEASE_NOTES"
+        echo "release_notes<<EOF" >> $GITHUB_OUTPUT
+        echo "$RELEASE_NOTES" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+        echo "✅ Release notes extracted successfully!"
+
+    # - name: Create Git tag
+    #   run: |
+    #     echo "📦 Creating Git tag..."
+    #     git config user.name "github-actions[bot]"
+    #     git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    #     git tag -a "v${{ steps.get_version.outputs.version }}" -m "Release v${{ steps.get_version.outputs.version }}"
+    #     git push origin "v${{ steps.get_version.outputs.version }}"
+    #     echo "✅ Git tag created and pushed successfully!"
 
     - name: Create GitHub Release
       uses: actions/create-release@v1
@@ -80,10 +94,8 @@ jobs:
         tag_name: ${{ steps.get_version.outputs.version }}
         release_name: ${{ steps.get_version.outputs.version }}
         body: |
-          ### [NuGet package](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/${{ steps.get_version.outputs.version }})
-          #### New features
-          - 
-          #### Bug fixes
-          -
+          [NuGet package](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/${{ steps.get_version.outputs.version }})
+          
+          ${{ steps.get_release_notes.outputs.release_notes }}
         draft: true
         prerelease: false
