@@ -3,6 +3,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Text;
 using Android.Text.Style;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Google.Android.Material.Snackbar;
@@ -57,9 +58,8 @@ class MaterialSnackbarBuilder
         
         var insets = root!.GetInsets();
         root.SetRoundedBackground(config.BackgroundColor, config.CornerRadius)
-            .SetMargin(config.Margin, insets)
-            .SetPadding(config.Padding);
-
+            .SetMargin(config.Margin, insets);
+        
         if (config.LeadingIcon is not null)
         {
             _leadingIconView = activity.CreateImageButton(config.LeadingIcon.Source, config.LeadingIcon.Size,
@@ -98,8 +98,20 @@ class MaterialSnackbarBuilder
         _textView!.SetMargin(new Thickness(_leadingIconView is not null ? config.Spacing : 0,0,0,0));
         _actionView?.SetMargin(new Thickness(config.Spacing,0,_trailingIconView is not null ? config.Spacing : 0,0));
         
+        if (config.Action is not null)
+        {
+            root.SetPadding(new Thickness(config.Padding.Left, 0, config.Padding.Right, 0));
+            _textView?.SetPadding(new Thickness(0, config.Padding.Top, 0, config.Padding.Bottom));
+        }
+        else
+        {
+            root.SetPadding(config.Padding);
+        }
+
         _dialog = new Dialog(activity);
         _dialog.SetContentView(root);
+        
+        _dialog.Window?.ClearFlags(WindowManagerFlags.DimBehind);
         
         _dialog.Window?.SetGravity(config.Position);
 
@@ -169,12 +181,15 @@ class MaterialSnackbarBuilder
     
     private static Button ConfigureAction(Activity activity, MaterialSnackbarConfig.ActionConfig config, Action dismiss)
     {
+        int fixedHeight = (int)TypedValue.ApplyDimension(
+            ComplexUnitType.Dip, 60, activity.Resources.DisplayMetrics);
+        
         var actionButton = new Button(activity)
         {
             Id = View.GenerateViewId(),
             LayoutParameters = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WrapContent,
-                ViewGroup.LayoutParams.WrapContent)
+                fixedHeight)
             {
                 Gravity = GravityFlags.CenterVertical
             }
