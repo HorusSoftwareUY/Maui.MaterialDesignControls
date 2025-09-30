@@ -2,8 +2,6 @@ using Android.App;
 using Android.Graphics;
 using Android.OS;
 using Android.Text;
-using Android.Text.Style;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Google.Android.Material.Snackbar;
@@ -20,6 +18,7 @@ class MaterialSnackbarBuilder
     #region Constants
     
     private const int TextMaxLines = 20;
+    private const int MinimumHeight = 60;
     
     #endregion Constants
     
@@ -55,6 +54,8 @@ class MaterialSnackbarBuilder
                 Gravity = GravityFlags.CenterVertical
             }
         };
+        
+        root.SetMinimumHeight(MinimumHeight.DpToPixels());
         
         var insets = root!.GetInsets();
         root.SetRoundedBackground(config.BackgroundColor, config.CornerRadius)
@@ -181,15 +182,12 @@ class MaterialSnackbarBuilder
     
     private static Button ConfigureAction(Activity activity, MaterialSnackbarConfig.ActionConfig config, Action dismiss)
     {
-        int fixedHeight = (int)TypedValue.ApplyDimension(
-            ComplexUnitType.Dip, 60, activity.Resources.DisplayMetrics);
-        
         var actionButton = new Button(activity)
         {
             Id = View.GenerateViewId(),
             LayoutParameters = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WrapContent,
-                fixedHeight)
+                ViewGroup.LayoutParams.WrapContent)
             {
                 Gravity = GravityFlags.CenterVertical
             }
