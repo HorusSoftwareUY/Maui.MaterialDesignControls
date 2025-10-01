@@ -1,8 +1,8 @@
 name: Build, sign and publish the sample app to App Store and Google Play
 
 on:
-  push:
-    branches: [ "feature/sample-app-release" ] # branches: [ "master" ]
+  # push:
+  #   branches: [ "feature/sample-app-release" ] # branches: [ "master" ]
   workflow_dispatch: 
 
 env:
