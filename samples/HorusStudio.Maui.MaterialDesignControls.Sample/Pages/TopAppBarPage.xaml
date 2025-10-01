@@ -7,7 +7,8 @@
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TopAppBarPage"
     x:TypeArguments="vm:TopAppBarViewModel"
-    x:DataType="vm:TopAppBarViewModel">
+    x:DataType="vm:TopAppBarViewModel"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     
     <Grid
         RowDefinitions="Auto,*">
