@@ -16,7 +16,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
-                    Type="Elevated"
+                    Type="Filled"
                     Text="Show example"
                     Command="{Binding DefaultSnackbarCommand}" />
             </VerticalStackLayout>
@@ -29,7 +29,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
-                    Type="Elevated"
+                    Type="Filled"
                     Text="Show example"
                     Command="{Binding DismissedCallbackSnackbarCommand}"/>
             </VerticalStackLayout>
@@ -42,7 +42,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
-                    Type="Elevated"
+                    Type="Filled"
                     Text="Show example"
                     Command="{Binding SnackbarWithIconsCommand}"/>
             </VerticalStackLayout>
@@ -55,7 +55,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
-                    Type="Elevated"
+                    Type="Filled"
                     Text="Show example"
                     Command="{Binding FullApiSnackbarCommand}"/>
             </VerticalStackLayout>

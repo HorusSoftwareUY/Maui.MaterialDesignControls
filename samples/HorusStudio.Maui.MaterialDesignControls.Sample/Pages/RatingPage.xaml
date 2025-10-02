@@ -72,8 +72,7 @@
             Text="Changing icons for all ratings" />
         <material:MaterialCard
             Style="{StaticResource CardControlContainer}"
-            Type="Outlined"
-            BackgroundColor="White">
+            Type="Outlined">
             <VerticalStackLayout>
                 <material:MaterialRating
                     Label="How do you rate....?"
