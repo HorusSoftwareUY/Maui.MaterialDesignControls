@@ -67,7 +67,7 @@ public class MaterialFloatingButton : ContentView
 
     private const MaterialFloatingButtonType DefaultFloatingButtonType = MaterialFloatingButtonType.FAB;
     private const MaterialFloatingButtonPosition DefaultFloatingButtonPosition = MaterialFloatingButtonPosition.BottomRight;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ =>  new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ =>  new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialDarkTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconColor = _ => new AppThemeBindingExtension{ Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer}.GetValueForCurrentTheme<Color>();
     private static readonly ImageSource DefaultIcon = string.Empty;
     private const double DefaultIconSize = 24;
