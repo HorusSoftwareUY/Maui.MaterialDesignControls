@@ -1,9 +1,9 @@
 <Project>
   <ItemGroup Condition=" $(MSBuildProjectName.Contains('Maui')) ">
+    <PackageVersion Include="CommunityToolkit.Maui" Version="12.1.0" />
     <PackageVersion Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
     <PackageVersion Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     <PackageVersion Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />

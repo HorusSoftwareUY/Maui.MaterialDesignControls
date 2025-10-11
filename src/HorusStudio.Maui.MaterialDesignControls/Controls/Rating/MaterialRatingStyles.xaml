@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.MaterialRatingStyles">
+
+    <Style
+        TargetType="material:MaterialRating">
+        <Setter
+            Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup
+                    x:Name="CommonStates">
+
+                    <!-- Disabled State -->
+                    <VisualState
+                        x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="StrokeColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledBackgroundOnSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledBackgroundOnSurface}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <!--Normal State-->
+                    <VisualState
+                        x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter
+                                Property="StrokeColor"
+                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

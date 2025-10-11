@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.MaterialSegmentedButtonStyles">
+
+    <Style
+        TargetType="material:MaterialSegmentedButton">
+        <Setter
+            Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup
+                    x:Name="CommonStates">
+
+                    <!-- Disabled State -->
+                    <VisualState
+                        x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledBackgroundSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledBackgroundSurface}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <!-- Normal State -->
+                    <VisualState
+                        x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

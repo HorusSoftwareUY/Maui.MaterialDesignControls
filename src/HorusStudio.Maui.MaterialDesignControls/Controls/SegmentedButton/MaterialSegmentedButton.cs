@@ -937,36 +937,8 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
-        disabledState.Setters.Add(
-            MaterialSegmentedButton.BackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Surface,
-                Dark = MaterialDarkTheme.Surface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
-
-        var normalState = new VisualState { Name = VisualStateManager.CommonStates.Normal };
-        normalState.Setters.Add(
-            MaterialSegmentedButton.BackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Surface,
-                Dark = MaterialDarkTheme.Surface
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        commonStatesGroup.States.Add(disabledState);
-        commonStatesGroup.States.Add(normalState);
-
-        var style = new Style(typeof(MaterialSegmentedButton));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialSegmentedButtonStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

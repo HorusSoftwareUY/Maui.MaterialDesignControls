@@ -1,4 +1,5 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
+﻿using CommunityToolkit.Maui;
+using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample
@@ -14,6 +15,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .UseMaterialDesignControls(options =>
                 {
                     options.EnableDebug();

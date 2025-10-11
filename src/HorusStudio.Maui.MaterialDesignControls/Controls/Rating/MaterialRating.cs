@@ -40,7 +40,7 @@ public class MaterialRating : ContentView
 {
     #region Attributes
 
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text };
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultStrokeColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private const double DefaultStrokeThickness = 2.0;
     private const int DefaultItemsSize = 5;
@@ -454,6 +454,8 @@ public class MaterialRating : ContentView
 
     public MaterialRating()
     {
+        this.SetAppTheme(LabelColorProperty, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Dark);
+
         Grid mainLayout = new()
         {
             Margin = new Thickness(0),
@@ -850,26 +852,8 @@ public class MaterialRating : ContentView
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
-
-        disabledState.Setters.Add(
-            MaterialRating.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
-
-        commonStatesGroup.States.Add(disabledState);
-
-        var style = new Style(typeof(MaterialRating));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialRatingStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

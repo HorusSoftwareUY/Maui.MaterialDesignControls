@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.MaterialSliderStyles">
+
+    <Style
+        TargetType="material:MaterialSlider">
+        <Setter
+            Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup
+                    x:Name="CommonStates">
+
+                    <!-- Normal State -->
+                    <VisualState
+                        x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                            <Setter Property="ActiveTrackColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                            <Setter Property="InactiveTrackColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}" />
+                            <Setter Property="ValueIndicatorBackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.InverseSurface}, Dark={x:Static material:MaterialDarkTheme.InverseSurface}}" />
+                            <Setter Property="ValueIndicatorTextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.InverseOnSurface}, Dark={x:Static material:MaterialDarkTheme.InverseOnSurface}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    
+                    <!-- Disabled State -->
+                    <VisualState
+                        x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="ActiveTrackColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledForegroundOnSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledForegroundOnSurface}}" />
+                            <Setter Property="InactiveTrackColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledBackgroundOnSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledBackgroundOnSurface}}" />
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledForegroundOnSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledForegroundOnSurface}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <!-- Pressed State -->
+                    <VisualState
+                        x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                            <Setter Property="ActiveTrackColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                            <Setter Property="InactiveTrackColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}" />
+                            <Setter Property="ValueIndicatorBackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.InverseSurface}, Dark={x:Static material:MaterialDarkTheme.InverseSurface}}" />
+                            <Setter Property="ValueIndicatorTextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.InverseOnSurface}, Dark={x:Static material:MaterialDarkTheme.InverseOnSurface}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
