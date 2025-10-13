@@ -173,7 +173,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
     /// The backing store for the <see cref="CheckedChangedCommand">CheckedChangedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CheckedChangedCommandProperty = BindableProperty.Create(nameof(CheckedChangedCommand), typeof(ICommand), typeof(MaterialCheckBox));
-    
+
     #endregion Bindable Properties
 
     #region Properties
@@ -386,7 +386,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
         get => (ICommand)GetValue(CheckedChangedCommandProperty);
         set => SetValue(CheckedChangedCommandProperty, value);
     }
-    
+
     #endregion Properties
 
     #region Constructors
@@ -418,7 +418,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
 
         _checkbox = new()
         {
-            Margin = new Thickness(0,0,10,0),
+            Margin = new Thickness(0, 0, 10, 0),
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Center,
             MinimumHeightRequest = 20,
@@ -479,7 +479,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
         await TouchAnimationManager.AnimateAsync(this, gestureType);
 
         Touch?.Invoke(this, new TouchEventArgs(gestureType));
-        
+
         if (gestureType == TouchEventType.Released)
         {
             IsChecked = !IsChecked;
@@ -503,7 +503,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
     #endregion Events
 
     #region Methods
-    
+
     private void OnCheckBoxTouch(object? sender, TouchEventArgs e)
     {
         OnTouch(e.TouchEventType);
@@ -580,7 +580,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
         {
             VisualStateManager.GoToState(this, CheckboxCommonStates.Unchecked);
         }
-    }  
+    }
 
     #endregion Methods
 
@@ -588,71 +588,8 @@ public class MaterialCheckBox : ContentView, ITouchableView
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = CheckboxCommonStates.Disabled };
-
-        disabledState.Setters.Add(
-            MaterialCheckBox.TextColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        disabledState.Setters.Add(
-            MaterialCheckBox.ColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        var checkedState = new VisualState { Name = CheckboxCommonStates.Checked };
-
-        checkedState.Setters.Add(
-            MaterialCheckBox.ColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Primary,
-                Dark = MaterialDarkTheme.Primary
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(1f));
-
-        checkedState.Setters.Add(
-            MaterialCheckBox.TickColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnPrimary,
-                Dark = MaterialDarkTheme.OnPrimary
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(1f));
-
-        var uncheckedState = new VisualState { Name = CheckboxCommonStates.Unchecked };
-        uncheckedState.Setters.Add(
-            MaterialCheckBox.ColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurfaceVariant,
-                Dark = MaterialDarkTheme.OnSurfaceVariant
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(1f));
-
-        commonStatesGroup.States.Add(disabledState);
-        commonStatesGroup.States.Add(checkedState);
-        commonStatesGroup.States.Add(uncheckedState);
-
-        var style = new Style(typeof(MaterialCheckBox));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialCheckBoxStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

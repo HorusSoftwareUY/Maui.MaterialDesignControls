@@ -1282,7 +1282,7 @@ public abstract partial class MaterialInputBase : IValidableView
                 }
                 else if (background is AppThemeBindingExtension theme)
                 {
-                    view.BackgroundColor = theme.GetValueForCurrentTheme<Color>();
+                    view.SetAppTheme(View.BackgroundColorProperty, theme.Light, theme.Dark);
                 }
             }
             else

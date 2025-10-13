@@ -53,7 +53,7 @@
     /// </code>
     /// 
     /// <h3>C# sample</h3>
-    /// <code>
+    /// <code>                
     /// var label = new MaterialLabel()
     /// {
     ///     Type = LabelTypes.HeadlineLarge,
@@ -75,7 +75,7 @@
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamilyRegular = _ => MaterialFontFamily.Regular;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamilyMedium = _ => MaterialFontFamily.Medium;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text };
 
         #endregion Attributes
 
@@ -186,6 +186,8 @@
 
         public MaterialLabel()
         {
+            this.SetAppTheme(TextColorProperty, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Dark);
+
             base.TextColor = this.TextColor;
             base.FontFamily = this.FontFamily;
 

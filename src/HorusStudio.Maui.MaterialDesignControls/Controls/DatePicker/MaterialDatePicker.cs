@@ -399,13 +399,8 @@ public class MaterialDatePicker : MaterialInputBase
     #region Styles
     internal static IEnumerable<Style> GetStyles()
     {
-        var style = new Style(typeof(MaterialDatePicker)) { ApplyToDerivedTypes = true };
-
-        var baseStyles = MaterialInputBase.GetBaseStyles();
-
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialDatePickerStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

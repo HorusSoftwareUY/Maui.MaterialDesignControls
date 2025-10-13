@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.MaterialFloatingButtonStyles">
+
+    <Style
+        TargetType="material:MaterialFloatingButton">
+        <Setter
+            Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup
+                    x:Name="CommonStates">
+
+                    <!-- Normal State -->
+                    <VisualState
+                        x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.PrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.PrimaryContainer}}" />
+                            <Setter Property="IconColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnPrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnPrimaryContainer}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <!-- Disabled State -->
+                    <VisualState
+                        x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledBackgroundSurfaceContainerHighest}, Dark={x:Static material:MaterialDarkTheme.DisabledBackgroundSurfaceContainerHighest}}" />
+                            <Setter Property="IconColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledForegroundOnSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledForegroundOnSurface}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

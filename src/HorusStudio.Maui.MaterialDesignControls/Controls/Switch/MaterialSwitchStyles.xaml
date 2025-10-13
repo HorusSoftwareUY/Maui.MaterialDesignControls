@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.MaterialSwitchStyles">
+
+    <Style
+        TargetType="material:MaterialSwitch">
+        <Setter
+            Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup
+                    x:Name="CommonStates">
+
+                    <!-- Normal State -->
+                    <VisualState
+                        x:Name="Normal" />
+
+                    <!-- Off State -->
+                    <VisualState
+                        x:Name="Off">
+                        <VisualState.Setters>
+                            <Setter Property="TrackColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerHighest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerHighest}}" />
+                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Outline}, Dark={x:Static material:MaterialDarkTheme.Outline}}" />
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Outline}, Dark={x:Static material:MaterialDarkTheme.Outline}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <!-- On State -->
+                    <VisualState
+                        x:Name="On">
+                        <VisualState.Setters>
+                            <Setter Property="TrackColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnPrimary}, Dark={x:Static material:MaterialDarkTheme.OnPrimary}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <!-- OffDisabled State -->
+                    <VisualState
+                        x:Name="OffDisabled">
+                        <VisualState.Setters>
+                            <Setter Property="TrackColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledForegroundSurfaceContainerHighest}, Dark={x:Static material:MaterialDarkTheme.DisabledForegroundSurfaceContainerHighest}}" />
+                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledBackgroundOnSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledBackgroundOnSurface}}" />
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledForegroundOnSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledForegroundOnSurface}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <!-- OnDisabled State -->
+                    <VisualState
+                        x:Name="OnDisabled">
+                        <VisualState.Setters>
+                            <Setter Property="TrackColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledBackgroundOnSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledBackgroundOnSurface}}" />
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}" />
+                            <Setter Property="BorderColor" Value="Transparent" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

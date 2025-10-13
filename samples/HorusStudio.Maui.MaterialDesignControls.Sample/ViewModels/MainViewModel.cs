@@ -44,7 +44,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             { Models.Pages.TimePicker, typeof(TimePickerViewModel) },
             { Models.Pages.TextField, typeof(TextFieldViewModel) },
             { Models.Pages.MultilineTextField, typeof(MultilineTextFieldViewModel) },
-            { Models.Pages.Label, typeof(LabelViewModel) }
+            { Models.Pages.Label, typeof(LabelViewModel) },
+            { Models.Pages.Appearance, typeof(AppearanceViewModel) }
         };
         
         public MainViewModel()
@@ -56,6 +57,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             var menuItems = new List<MaterialNavigationDrawerItem>
             {
+                new() { Headline = Sections.Settings, Text = Models.Pages.Appearance, LeadingIcon = "settings.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.Button, LeadingIcon = "ic_button.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.FloatingButton, LeadingIcon = "ic_floating.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.IconButton, LeadingIcon = "ic_icon_button.png" },

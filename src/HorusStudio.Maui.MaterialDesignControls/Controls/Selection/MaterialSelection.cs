@@ -185,13 +185,8 @@ public class MaterialSelection : MaterialInputBase
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var style = new Style(typeof(MaterialSelection)) { ApplyToDerivedTypes = true };
-
-        var baseStyles = MaterialInputBase.GetBaseStyles();
-
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialSelectionStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles
