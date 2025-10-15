@@ -1,5 +1,8 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
+using HorusStudio.Maui.MaterialDesignControls.Sample.Services;
+using HorusStudio.Maui.MaterialDesignControls.Sample.Utils;
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
+using Microsoft.Maui.LifecycleEvents;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample
 {
@@ -14,6 +17,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .InitFirebase()
                 .UseMaterialDesignControls(options =>
                 {
                     options.EnableDebug();
@@ -108,9 +112,66 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 });
          
             builder.Services
-                .AutoConfigureViewModelsAndPages();
+                .AutoConfigureViewModelsAndPages()
+                .RegisterServices();
 
             return builder.Build();
+        }
+        
+        private static MauiAppBuilder InitFirebase(this MauiAppBuilder builder)
+        {
+            builder.ConfigureLifecycleEvents(events => 
+            {
+#if IOS
+            events.AddiOS(iOS => iOS.WillFinishLaunching((_, __) =>
+            {
+                var coreType = typeof(Firebase.Core.App);
+                var installationsType = typeof(Firebase.Installations.Installations);
+                var analyticsType = typeof(Firebase.Analytics.Analytics);
+
+                Firebase.Core.App.Configure();
+
+                Firebase.Crashlytics.Crashlytics.SharedInstance.Init();
+                Firebase.Crashlytics.Crashlytics.SharedInstance.SetCrashlyticsCollectionEnabled(true);
+                Firebase.Crashlytics.Crashlytics.SharedInstance.SendUnsentReports();
+
+                var installation = Firebase.Installations.Installations.DefaultInstance;
+                installation.GetAuthToken(completion: (token, error) => {
+                    if (error != null)
+                    {
+                        Logger.Log($"Error getting firebase authentication token: {error.Description}");
+                    }
+                });
+
+                return false;
+            }));
+#elif ANDROID
+                events.AddAndroid(android => android.OnCreate((activity, _) =>
+                {
+                    Firebase.FirebaseApp.InitializeApp(activity);
+                    Firebase.Crashlytics.FirebaseCrashlytics.Instance.SetCrashlyticsCollectionEnabled(Java.Lang.Boolean.True);
+                    Firebase.Crashlytics.FirebaseCrashlytics.Instance.SendUnsentReports();
+                }));
+#endif
+            });
+
+            return builder;
+        }
+        
+        static IServiceCollection RegisterServices(this IServiceCollection services)
+        {
+#if IOS
+            services.AddSingleton<IAnalyticsService, HorusStudio.Maui.MaterialDesignControls.Sample.iOS.Services.AnalyticsService>();
+            services.AddSingleton<ICrashlyticsService, HorusStudio.Maui.MaterialDesignControls.Sample.iOS.Services.CrashlyticsService>();
+#elif ANDROID
+            services.AddSingleton<IAnalyticsService, HorusStudio.Maui.MaterialDesignControls.Sample.Android.Services.AnalyticsService>();
+            services.AddSingleton<ICrashlyticsService, HorusStudio.Maui.MaterialDesignControls.Sample.Android.Services.CrashlyticsService>();
+#elif MACCATALYST
+            services.AddSingleton<IAnalyticsService, HorusStudio.Maui.MaterialDesignControls.Sample.MacCatalyst.Services.AnalyticsService>();
+            services.AddSingleton<ICrashlyticsService, HorusStudio.Maui.MaterialDesignControls.Sample.MacCatalyst.Services.CrashlyticsService>();
+#endif
+
+            return services;
         }
 
         static IServiceCollection AutoConfigureViewModelsAndPages(this IServiceCollection services)

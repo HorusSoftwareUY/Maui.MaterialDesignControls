@@ -43,17 +43,36 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+    <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
+        <GoogleServicesJson Include="Platforms\Android\google-services.json" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-ios'">
+        <BundleResource Include="GoogleService-Info.plist" />
+    </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" />
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" />
 	</ItemGroup>
-	
+
+    <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-ios'">
+        <PackageReference Include="AdamE.Firebase.iOS.Analytics" />
+        <PackageReference Include="AdamE.Firebase.iOS.Crashlytics" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
+        <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Ktx" />
+        <PackageReference Include="Xamarin.Firebase.Analytics" />
+        <PackageReference Include="Xamarin.Firebase.Crashlytics" />
+    </ItemGroup>
+    
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj" />
 	</ItemGroup>
-	
+    
 	<!--
 	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
 	  <Reference Include="HorusStudio.Maui.MaterialDesignControls">
