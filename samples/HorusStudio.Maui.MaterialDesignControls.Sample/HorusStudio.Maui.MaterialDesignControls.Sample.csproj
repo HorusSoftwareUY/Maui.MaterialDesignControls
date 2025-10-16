@@ -43,11 +43,11 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
+    <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android' and '$(Configuration)' == 'Release'">
         <GoogleServicesJson Include="Platforms\Android\google-services.json" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-ios'">
+    <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-ios' and '$(Configuration)' == 'Release'">
         <BundleResource Include="GoogleService-Info.plist" />
     </ItemGroup>
 
