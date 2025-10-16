@@ -21,12 +21,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 .UseMaterialDesignControls(options =>
                 {
                     options.EnableDebug();
-                    /*
                     options.OnException((sender, exception) =>
                     {
-                        System.Diagnostics.Debug.WriteLine($"EXCEPTION ON LIBRARY: {sender} - {exception}");
+                        Logger.LogException(exception);
                     });
-                    */
                     options.ConfigureFonts(fonts =>
                     {
                         fonts.AddFont("Roboto-Regular.ttf", FontRegular);
@@ -114,8 +112,16 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             builder.Services
                 .AutoConfigureViewModelsAndPages()
                 .RegisterServices();
-
-            return builder.Build();
+            
+            var app = builder.Build();
+            App.ServiceProvider = app.Services;
+            
+#if RELEASE
+            var crashlyticsService = App.ServiceProvider.GetService<ICrashlyticsService>();
+            crashlyticsService?.InitCrashDetection();
+#endif
+            
+            return app;
         }
         
         private static MauiAppBuilder InitFirebase(this MauiAppBuilder builder)
@@ -139,7 +145,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 installation.GetAuthToken(completion: (token, error) => {
                     if (error != null)
                     {
-                        Logger.Log($"Error getting firebase authentication token: {error.Description}");
+                        Logger.LogInfo($"Error getting firebase authentication token: {error.Description}");
                     }
                 });
 

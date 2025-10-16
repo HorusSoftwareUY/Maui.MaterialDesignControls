@@ -37,7 +37,7 @@ public class AnalyticsService : IAnalyticsService
         }
         catch (Exception ex)
         {
-            Logger.Log($"Error logging event on firebase: {ex.Message}");
+            Logger.LogInfo($"Error logging event on firebase: {ex.Message}");
         }
     }
 }

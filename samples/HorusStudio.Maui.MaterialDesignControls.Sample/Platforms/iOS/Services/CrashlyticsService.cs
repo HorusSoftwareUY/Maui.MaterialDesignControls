@@ -8,14 +8,6 @@ public class CrashlyticsService : ICrashlyticsService
 {
     public void InitCrashDetection()
     {
-        AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
-        {
-            if (e.ExceptionObject is System.Exception ex)
-            {
-                LogException(ex, new Dictionary<string, string> { {"CrashDetectionMethod", "AppDomain.CurrentDomain.UnhandledException"} });
-            }
-        };
-
         TaskScheduler.UnobservedTaskException += (sender, e) =>
         {
             LogException(e.Exception, new Dictionary<string, string> { {"CrashDetectionMethod", "TaskScheduler.UnobservedTaskException"} });
@@ -39,7 +31,7 @@ public class CrashlyticsService : ICrashlyticsService
                    }
                    catch (Exception ex)
                    {
-                       Logger.Log($"Error logging exception log on firebase: {ex.Message}");
+                       Logger.LogInfo($"Error logging exception log on firebase: {ex.Message}");
                    }
                }
            }
@@ -51,7 +43,7 @@ public class CrashlyticsService : ICrashlyticsService
        }
        catch (Exception ex)
        {
-           Logger.Log($"Error logging event on firebase: {ex.Message}");
+           Logger.LogInfo($"Error logging event on firebase: {ex.Message}");
        }
     }
     
@@ -78,7 +70,7 @@ public class CrashlyticsService : ICrashlyticsService
                         }
                         catch (Exception stackFrameEx)
                         {
-                            Logger.Log($"Error getting stack frame: {stackFrameEx.Message}");
+                            Logger.LogInfo($"Error getting stack frame: {stackFrameEx.Message}");
                         }
                     }
                 }
@@ -86,7 +78,7 @@ public class CrashlyticsService : ICrashlyticsService
         }
         catch (Exception stackFramesEx)
         {
-            Logger.Log($"Error getting stack frames: {stackFramesEx.Message}");
+            Logger.LogInfo($"Error getting stack frames: {stackFramesEx.Message}");
         }
 
         return result;
