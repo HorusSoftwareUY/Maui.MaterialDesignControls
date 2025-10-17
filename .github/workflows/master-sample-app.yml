@@ -3,7 +3,17 @@ name: Build, sign and publish the sample app to App Store and Google Play
 on:
   # push:
   #   branches: [ "feature/sample-app-release" ] # branches: [ "master" ]
-  workflow_dispatch: 
+  workflow_dispatch:
+    inputs:
+      platforms:
+        description: "Platforms to build"
+        required: true
+        default: "android_ios"
+        type: choice
+        options:
+          - android_ios
+          - android
+          - ios
 
 env:
   SLN_FILE_PATH: 'HorusStudio.Maui.MaterialDesignControls.sln'
@@ -15,6 +25,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Show selected platforms to build
+      run: |
+        echo "Selected platforms to build: ${{ github.event.inputs.platforms }}"
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -34,24 +48,6 @@ jobs:
         echo "📦 Restoring dependencies..."
         dotnet restore ${{ env.SLN_FILE_PATH }}
         echo "✅ Dependencies restored successfully!"
-
-    - name: Setup Firebase config file for Android
-      run: |
-        echo "📦 Creating Firebase config file for Android..."
-        mkdir -p samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android
-        echo "${{ secrets.FIREBASE_GOOGLE_SERVICES_JSON }}" > samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
-        echo "🔎 samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json (show 10 first lines):"
-        head -n 10 samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
-        echo "✅ Firebase config file created successfully!"
-
-    - name: Setup Firebase config file for iOS
-      run: |
-        echo "📦 Creating Firebase config file for iOS..."
-        mkdir -p samples/HorusStudio.Maui.MaterialDesignControls.Sample
-        echo "${{ secrets.FIREBASE_GOOGLE_SERVICE_INFO_PLIST }}" > samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist
-        echo "🔎 samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist (show 10 first lines):"
-        head -n 10 samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist
-        echo "✅ Firebase config file created successfully!"
 
     - name: Get version from nuget.props
       id: get_version
@@ -75,16 +71,29 @@ jobs:
         echo "✅ Release notes extracted successfully!"
 
     # Android Build & Upload
+    - name: Setup Firebase config file for Android
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'android' }}
+      run: |
+        echo "📦 Creating Firebase config file for Android..."
+        mkdir -p samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android
+        echo "${{ secrets.FIREBASE_GOOGLE_SERVICES_JSON }}" > samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
+        echo "🔎 samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json (show 10 first lines):"
+        head -n 10 samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
+        echo "✅ Firebase config file created successfully!"
+
     - name: Decode Android Keystore
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'android' }}
       run: |
         echo "📦 Decoding Android Keystore..."
         echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > mauimaterialdesigncontrolssample.keystore
         echo "✅ Android Keystore decoded successfully!"
 
     - name: Set keystore permissions
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'android' }}
       run: chmod 600 ./mauimaterialdesigncontrolssample.keystore
 
     - name: Build Android
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'android' }}
       run: |
         echo "📦 Building Android app..."
         dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net9.0-android -c Release -o ./output/android \
@@ -96,12 +105,14 @@ jobs:
         echo "✅ Android app built successfully!"
 
     - name: Upload Android Artifact
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'android' }}
       uses: actions/upload-artifact@v4
       with:
         name: HorusStudio.Maui.MaterialDesignControls.Sample.Android
         path: ./output/android/*.aab
 
     - name: Generate whatsnew files
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'android' }}
       run: |
         mkdir -p whatsnew
         echo "🚀 This new version of the app corresponds to the latest available version of the NuGet package: https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/${{ steps.get_version.outputs.version }}" > whatsnew/en-US.txt
@@ -109,6 +120,7 @@ jobs:
         echo "${{ steps.get_release_notes.outputs.release_notes }}" > whatsnew/en-US.txt
 
     # - name: Upload to Google Play
+    #   if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'android' }}
     #   uses: r0adkll/upload-google-play@v1
     #   with:
     #     serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_JSON }}
@@ -118,13 +130,25 @@ jobs:
     #     whatsNewDirectory: ./whatsnew
 
     # iOS Build & Upload
+    - name: Setup Firebase config file for iOS
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'ios' }}
+      run: |
+        echo "📦 Creating Firebase config file for iOS..."
+        mkdir -p samples/HorusStudio.Maui.MaterialDesignControls.Sample
+        echo "${{ secrets.FIREBASE_GOOGLE_SERVICE_INFO_PLIST }}" > samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist
+        echo "🔎 samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist (show 10 first lines):"
+        head -n 10 samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist
+        echo "✅ Firebase config file created successfully!"
+
     - name: Setup Apple Certificate
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'ios' }}
       uses: apple-actions/import-codesign-certs@v2
       with:
         p12-file-base64: ${{ secrets.P12_CERTIFICATE_BASE64 }}
         p12-password: ${{ secrets.P12_PASSWORD }}
 
     - name: Install Provisioning Profile
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'ios' }}
       run: |
         echo "📦 Installing Provisioning Profile..."
         echo "${{ secrets.PROVISIONING_PROFILE_BASE64 }}" | base64 --decode > profile.mobileprovision
@@ -133,6 +157,7 @@ jobs:
         echo "✅ Provisioning Profile installed successfully!"
 
     - name: Build iOS
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'ios' }}
       run: |
         echo "📦 Building iOS app..."
         dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net9.0-ios -c Release -o ./output/ios \
@@ -141,12 +166,14 @@ jobs:
         echo "✅ iOS app built successfully!"
 
     - name: Upload iOS Artifact
+      if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'ios' }}
       uses: actions/upload-artifact@v4
       with:
         name: HorusStudio.Maui.MaterialDesignControls.Sample.iOS
         path: ./output/ios/*.ipa
 
     # - name: Upload to TestFlight
+    #   if: ${{ github.event.inputs.platforms == 'android_ios' || github.event.inputs.platforms == 'ios' }}
     #   uses: apple-actions/upload-testflight-build@v1
     #   with:
     #     app-path: ./output/ios/*.ipa
