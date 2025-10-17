@@ -9,7 +9,8 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.CheckboxPage"
     x:TypeArguments="vm:CheckboxViewModel"
     x:DataType="vm:CheckboxViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
     <ContentPage.Resources>
         <Style x:Key="VisualStateManagerStyle"

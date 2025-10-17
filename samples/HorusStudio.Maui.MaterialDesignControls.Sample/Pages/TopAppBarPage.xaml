@@ -7,7 +7,8 @@
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TopAppBarPage"
     x:TypeArguments="vm:TopAppBarViewModel"
-    x:DataType="vm:TopAppBarViewModel">
+    x:DataType="vm:TopAppBarViewModel"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     
     <Grid
         RowDefinitions="Auto,*">
@@ -17,19 +18,11 @@
             LeadingIconCommand="{Binding GoBackCommand}"
             LeadingIcon="ic_back.png"
             ScrollViewName="scrollView"
-            IsCollapsed="{Binding TopBarIsCollapsed}"
             Type="Large">
             <material:MaterialTopAppBar.TrailingIcons>
                 <material:TrailingIcon 
                     Icon="ic_web.png" />
             </material:MaterialTopAppBar.TrailingIcons>
-            <material:MaterialTopAppBar.Triggers>
-                <DataTrigger TargetType="material:MaterialTopAppBar" Binding="{Binding TopBarIsCollapsed}" Value="True">
-                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLowest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLowest}}" />
-                    <Setter Property="Shadow" Value="{x:Static material:MaterialElevation.Level2}" />
-                    <Setter Property="ZIndex" Value="1000" />
-                </DataTrigger>
-            </material:MaterialTopAppBar.Triggers>
         </material:MaterialTopAppBar>
 
         <ScrollView

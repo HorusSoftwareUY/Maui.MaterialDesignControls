@@ -8,7 +8,8 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SegmentedButtonsPage"
     x:TypeArguments="vm:SegmentedButtonsViewModel"
     x:DataType="vm:SegmentedButtonsViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     <VerticalStackLayout Spacing="8">
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined multiple-selection button" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">

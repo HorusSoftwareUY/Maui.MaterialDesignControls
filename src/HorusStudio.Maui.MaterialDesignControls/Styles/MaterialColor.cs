@@ -61,9 +61,9 @@
 
         // Surface colors
         /// <default>
-        /// #FEF7FF <img>https://placehold.co/15x15/FEF7FF/FEF7FF.png</img>
+        /// #FFFFFF <img>https://placehold.co/15x15/FFFFFF/FFFFFF.png</img>
         /// </default>
-        public static Color Surface { get; set; } = Color.FromArgb("#FEF7FF");
+        public static Color Surface { get; set; } = Color.FromArgb("#FFFFFF");
         /// <default>
         /// #1D1B20 <img>https://placehold.co/15x15/1D1B20/1D1B20.png</img>
         /// </default>

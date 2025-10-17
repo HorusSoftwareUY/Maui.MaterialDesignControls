@@ -8,7 +8,8 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.CardPage"
     x:TypeArguments="vm:CardViewModel"
     x:DataType="vm:CardViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
     <ContentPage.Resources>
         <Style x:Key="VisualStateManagerStyle" TargetType="material:MaterialCard"> 

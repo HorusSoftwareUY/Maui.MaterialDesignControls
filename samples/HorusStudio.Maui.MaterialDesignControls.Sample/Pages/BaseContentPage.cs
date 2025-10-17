@@ -43,11 +43,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         /// </summary>
         public static readonly BindableProperty TopBarIconsProperty = BindableProperty.Create(nameof(TopBarIcons), typeof(IEnumerable<TrailingIcon>), typeof(BaseContentPage<>));
         
-        /// <summary>
-        /// The backing store for the <see cref="TopBarIsCollapsed" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty TopBarIsCollapsedProperty = BindableProperty.Create(nameof(TopBarIsCollapsed), typeof(bool), typeof(BaseContentPage<>));
-        
         #endregion Bindable Properties
         
         #region Properties
@@ -113,15 +108,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         {
             get => (IEnumerable<TrailingIcon>)GetValue(TopBarIconsProperty);
             set => SetValue(TopBarIconsProperty, value);
-        }
-        
-        /// <summary>
-        /// Gets or sets a collection of icons to be displayed on Top App Bar. This is a bindable property.
-        /// </summary>
-        public bool TopBarIsCollapsed
-        {
-            get => (bool)GetValue(TopBarIsCollapsedProperty);
-            set => SetValue(TopBarIsCollapsedProperty, value);
         }
         
         #endregion Properties

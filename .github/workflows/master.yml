@@ -77,15 +77,6 @@ jobs:
         echo "EOF" >> $GITHUB_OUTPUT
         echo "✅ Release notes extracted successfully!"
 
-    # - name: Create Git tag
-    #   run: |
-    #     echo "📦 Creating Git tag..."
-    #     git config user.name "github-actions[bot]"
-    #     git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-    #     git tag -a "v${{ steps.get_version.outputs.version }}" -m "Release v${{ steps.get_version.outputs.version }}"
-    #     git push origin "v${{ steps.get_version.outputs.version }}"
-    #     echo "✅ Git tag created and pushed successfully!"
-
     - name: Create GitHub Release
       uses: actions/create-release@v1
       env:
@@ -97,5 +88,5 @@ jobs:
           [NuGet package](https://www.nuget.org/packages/HorusStudio.Maui.MaterialDesignControls/${{ steps.get_version.outputs.version }})
           
           ${{ steps.get_release_notes.outputs.release_notes }}
-        draft: true
+        draft: false
         prerelease: false

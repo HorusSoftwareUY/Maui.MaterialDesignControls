@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+             xmlns:materialBehaviors="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Behaviors;assembly=HorusStudio.Maui.MaterialDesignControls"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.ConnectionItemView">
 
     <ContentView.Resources>
@@ -48,9 +49,17 @@
             <TapGestureRecognizer Command="{Binding Command}" CommandParameter="{Binding CommandParameter}" />
         </Grid.GestureRecognizers>
         
-        <Image Style="{StaticResource ConnectionIcon}"  Source="{Binding IconSource}" />
+        <Image Style="{StaticResource ConnectionIcon}" Source="{Binding IconSource}">
+            <Image.Behaviors>
+                <materialBehaviors:IconTintColorBehavior TintColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurface}, Dark={x:Static material:MaterialDarkTheme.OnSurface}}" IsEnabled="True" />
+            </Image.Behaviors>
+        </Image>
         <material:MaterialLabel Style="{StaticResource ConnectionName}" Text="{Binding LabelText}" />
-        <Image Style="{StaticResource ConnectionArrow}" Source="arrow_right" />
+        <Image Style="{StaticResource ConnectionArrow}" Source="arrow_right">
+            <Image.Behaviors>
+                <materialBehaviors:IconTintColorBehavior TintColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurface}, Dark={x:Static material:MaterialDarkTheme.OnSurface}}" IsEnabled="True" />
+            </Image.Behaviors>
+        </Image>
         
     </Grid>
 

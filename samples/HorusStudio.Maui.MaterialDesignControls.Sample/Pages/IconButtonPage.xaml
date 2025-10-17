@@ -8,7 +8,8 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.IconButtonPage"
     x:TypeArguments="vm:IconButtonViewModel"
     x:DataType="vm:IconButtonViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
     <ContentPage.Resources>
         <Style x:Key="ButtonsContainer" TargetType="Grid">

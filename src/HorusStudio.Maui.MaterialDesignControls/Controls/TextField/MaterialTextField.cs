@@ -42,7 +42,7 @@ public class MaterialTextField : MaterialInputBase
     #region Attributes
 
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCursorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCursorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 
@@ -447,7 +447,7 @@ public class MaterialTextField : MaterialInputBase
     /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
     /// </default>
     /// <remarks>
-    /// This Property only works on iOS and 'ndroid' 29 or later
+    /// This Property only works on iOS and 'Android' 29 or later
     /// </remarks>
     public Color CursorColor
     {

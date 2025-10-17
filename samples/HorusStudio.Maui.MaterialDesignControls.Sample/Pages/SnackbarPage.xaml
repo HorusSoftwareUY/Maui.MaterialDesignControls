@@ -8,14 +8,15 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SnackbarPage"
     x:TypeArguments="vm:SnackbarViewModel"
     x:DataType="vm:SnackbarViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
     <VerticalStackLayout Spacing="8">
         <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar" />
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
-                    Type="Elevated"
+                    Type="Filled"
                     Text="Show example"
                     Command="{Binding DefaultSnackbarCommand}" />
             </VerticalStackLayout>
@@ -28,7 +29,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
-                    Type="Elevated"
+                    Type="Filled"
                     Text="Show example"
                     Command="{Binding DismissedCallbackSnackbarCommand}"/>
             </VerticalStackLayout>
@@ -41,7 +42,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
-                    Type="Elevated"
+                    Type="Filled"
                     Text="Show example"
                     Command="{Binding SnackbarWithIconsCommand}"/>
             </VerticalStackLayout>
@@ -54,7 +55,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
             <VerticalStackLayout Spacing="16" Padding="2,8">
                 <material:MaterialButton
-                    Type="Elevated"
+                    Type="Filled"
                     Text="Show example"
                     Command="{Binding FullApiSnackbarCommand}"/>
             </VerticalStackLayout>

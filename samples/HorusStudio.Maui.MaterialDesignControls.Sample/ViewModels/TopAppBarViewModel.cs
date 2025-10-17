@@ -18,10 +18,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         [ObservableProperty]
         private List<TrailingIcon> _trailingIcons;
-
-        [ObservableProperty] 
-        private bool _topBarIsCollapsed;
-
+        
         #endregion
 
         public TopAppBarViewModel()

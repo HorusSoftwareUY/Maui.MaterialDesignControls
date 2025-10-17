@@ -9,7 +9,8 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.AboutPage"
     x:TypeArguments="vm:AboutViewModel"
     x:DataType="vm:AboutViewModel"
-    ControlTemplate="{StaticResource PageWithTopAppBar}">
+    ControlTemplate="{StaticResource PageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     <ContentPage.Resources>
 
         <Style x:Key="Logo" TargetType="Image">
