@@ -36,10 +36,18 @@ jobs:
         dotnet-version: '9.0.x'
         include-prerelease: true
 
-    - name: Install MAUI workloads
+    # - name: Install MAUI workloads
+    #   run: |
+    #     echo "📦 Installing MAUI workloads..."
+    #     dotnet workload install maui
+    #     dotnet workload restore
+    #     echo "✅ MAUI workloads installed successfully!"
+
+    - name: Install MAUI workloads (Xcode 16.x compatible)
       run: |
-        echo "📦 Installing MAUI workloads..."
-        dotnet workload install maui
+        echo "📦 Installing MAUI workloads compatible with Xcode 16.x..."
+        dotnet workload install maui --skip-manifest-update
+        dotnet workload update --from-rollback-file https://aka.ms/dotnet/maui/rollback/9.0.100.json
         dotnet workload restore
         echo "✅ MAUI workloads installed successfully!"
 
