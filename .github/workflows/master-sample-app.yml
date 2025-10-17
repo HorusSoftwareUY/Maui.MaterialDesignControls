@@ -47,7 +47,6 @@ jobs:
       run: |
         echo "📦 Installing MAUI workloads compatible with Xcode 16.x..."
         dotnet workload install maui --skip-manifest-update
-        dotnet workload update --from-rollback-file https://aka.ms/dotnet/maui/rollback/9.0.100.json
         dotnet workload restore
         echo "✅ MAUI workloads installed successfully!"
 
