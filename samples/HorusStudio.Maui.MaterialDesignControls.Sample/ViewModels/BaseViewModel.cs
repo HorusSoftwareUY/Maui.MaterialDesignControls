@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
+using HorusStudio.Maui.MaterialDesignControls.Sample.Utils;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -117,6 +117,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             {
                 Shell.Current.FlyoutBehavior = FlyoutBehavior.Disabled;
             }
+
+            if (!string.IsNullOrEmpty(Title))
+            {
+                var eventName = $"{Title.ToLower().Replace(" ", "_")}_page_appearing";
+                Logger.LogEvent(eventName);
+            }
         }
 
         public virtual void Disappearing() { }
@@ -139,7 +145,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString(), nameof(GoToAsync));
+                Logger.LogException(ex);
             }
             finally
             {
@@ -165,7 +171,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString(), nameof(GoToAsync));
+                Logger.LogException(ex);
             }
             finally
             {

@@ -1,4 +1,6 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
+﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Utils;
+using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 {
@@ -22,7 +24,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             else
                 ClickBtn.Text = $"Clicked {_clickedCount} times";
             
-            System.Diagnostics.Debug.WriteLine(ClickBtn.Text);
+            Logger.LogInfo(ClickBtn.Text);
         }
         
         private void OnCounterPressed(object sender, EventArgs e)
@@ -34,7 +36,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             else
                 PressBtn.Text = $"Pressed {_pressedCount} times";
             
-            System.Diagnostics.Debug.WriteLine(PressBtn.Text);
+            Logger.LogInfo(PressBtn.Text);
         }
         
         private void OnCounterReleased(object sender, EventArgs e)
@@ -46,7 +48,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
             else
                 ReleaseBtn.Text = $"Released {_releasedCount} times";
             
-            System.Diagnostics.Debug.WriteLine(ReleaseBtn.Text);
+            Logger.LogInfo(ReleaseBtn.Text);
         }
         
         private void OnTouch(object? sender, TouchEventArgs e)
