@@ -1,5 +1,7 @@
 {
   "sdk": {
-    "allowPrerelease": false
+    "allowPrerelease": false,
+    "version": "9.0.x",
+    "workloadVersion": "9.0.100"
   }
 }
