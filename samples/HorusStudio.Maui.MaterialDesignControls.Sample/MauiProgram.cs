@@ -17,7 +17,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+#if RELEASE
                 .InitFirebase()
+#endif
                 .UseMaterialDesignControls(options =>
                 {
                     options.EnableDebug();
