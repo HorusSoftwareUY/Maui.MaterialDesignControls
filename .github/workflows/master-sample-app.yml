@@ -35,6 +35,24 @@ jobs:
         dotnet restore ${{ env.SLN_FILE_PATH }}
         echo "✅ Dependencies restored successfully!"
 
+    - name: Setup Firebase config file for Android
+      run: |
+        echo "📦 Creating Firebase config file for Android..."
+        mkdir -p samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android
+        echo "${{ secrets.FIREBASE_GOOGLE_SERVICES_JSON }}" > samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
+        echo "🔎 samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json:"
+        ls -l samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android
+        echo "✅ Firebase config file created successfully!"
+
+    - name: Setup Firebase config file for iOS
+      run: |
+        echo "📦 Creating Firebase config file for iOS..."
+        mkdir -p samples/HorusStudio.Maui.MaterialDesignControls.Sample
+        echo "${{ secrets.FIREBASE_GOOGLE_SERVICE_INFO_PLIST }}" > samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist
+        echo "🔎 samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist:"
+        ls -l samples/HorusStudio.Maui.MaterialDesignControls.Sample
+        echo "✅ Firebase config file created successfully!"
+
     - name: Get version from nuget.props
       id: get_version
       run: |
