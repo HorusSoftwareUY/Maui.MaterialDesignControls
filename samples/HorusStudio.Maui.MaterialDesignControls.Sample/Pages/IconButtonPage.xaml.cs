@@ -1,4 +1,5 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
+﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Utils;
+using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 {
@@ -18,7 +19,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         {
             _clickedCount++;
             var msg = $"Clicked {_clickedCount} time{(_clickedCount == 1 ? string.Empty : "s")}";
-            System.Diagnostics.Debug.WriteLine(msg);
+            Logger.LogInfo(msg);
             DisplayAlert("Events", msg, "OK");
         }
         
@@ -26,7 +27,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         {
             _pressedCount++;
             var msg = $"Pressed {_pressedCount} time{(_pressedCount == 1 ? string.Empty : "s")}";
-            System.Diagnostics.Debug.WriteLine(msg);
+            Logger.LogInfo(msg);
             DisplayAlert("Events", msg, "OK");
         }
         
@@ -34,7 +35,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
         {
             _releasedCount++;
             var msg = $"Released {_releasedCount} time{(_releasedCount == 1 ? string.Empty : "s")}";
-            System.Diagnostics.Debug.WriteLine(msg);
+            Logger.LogInfo(msg);
             DisplayAlert("Events", msg, "OK");
         }
         

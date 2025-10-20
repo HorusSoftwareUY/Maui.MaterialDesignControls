@@ -2,6 +2,8 @@
 
 public partial class App
 {
+    public static IServiceProvider ServiceProvider { get; set; }
+    
     public App()
     {
         InitializeComponent();
