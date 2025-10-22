@@ -497,32 +497,8 @@ public class MaterialMultilineTextField : MaterialInputBase
     #region Styles
     internal static IEnumerable<Style> GetStyles()
     {
-        var style = new Style(typeof(MaterialMultilineTextField)) { ApplyToDerivedTypes = true };
-
-        var baseStyles = MaterialInputBase.GetBaseStyles();
-
-        var errorFocusedGroup = baseStyles.First(g => g.Name.Equals(nameof(VisualStateManager.CommonStates)));
-        baseStyles.Remove(errorFocusedGroup);
-
-        var errorFocusedStates = errorFocusedGroup.States.First(s => s.Name.Equals(MaterialInputCommonStates.ErrorFocused));
-
-        errorFocusedGroup.States.Remove(errorFocusedStates);
-
-        errorFocusedStates.Setters.Add(
-            MaterialMultilineTextField.CursorColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Error,
-                Dark = MaterialDarkTheme.Error
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        errorFocusedGroup.States.Add(errorFocusedStates);
-        baseStyles.Add(errorFocusedGroup);
-
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialMultilineTextFieldStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

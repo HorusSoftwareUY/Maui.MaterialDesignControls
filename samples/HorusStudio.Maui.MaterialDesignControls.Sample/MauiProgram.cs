@@ -1,4 +1,5 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
+﻿using CommunityToolkit.Maui;
+using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Services;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Utils;
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
@@ -20,6 +21,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
 #if RELEASE
                 .InitFirebase()
 #endif
+                .UseMauiCommunityToolkit()
                 .UseMaterialDesignControls(options =>
                 {
                     options.EnableDebug();

@@ -634,61 +634,8 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = RadioButtonCommonStates.Disabled };
-
-        disabledState.Setters.Add(
-            MaterialRadioButton.TextColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        disabledState.Setters.Add(
-            MaterialRadioButton.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        var checkedState = new VisualState { Name = RadioButtonCommonStates.Checked };
-
-        checkedState.Setters.Add(
-            MaterialRadioButton.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Primary,
-                Dark = MaterialDarkTheme.Primary
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(1f));
-
-        var uncheckedState = new VisualState { Name = RadioButtonCommonStates.Unchecked };
-        uncheckedState.Setters.Add(
-            MaterialRadioButton.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurfaceVariant,
-                Dark = MaterialDarkTheme.OnSurfaceVariant
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(1f));
-
-        commonStatesGroup.States.Add(disabledState);
-        commonStatesGroup.States.Add(checkedState);
-        commonStatesGroup.States.Add(uncheckedState);
-
-        var style = new Style(typeof(MaterialRadioButton));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialRadioButtonStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
     #endregion Styles
 }
