@@ -1,4 +1,7 @@
-﻿using Microsoft.Maui.Platform;
+﻿#if ANDROID
+using Android.Views; 
+#endif
+using Microsoft.Maui.Platform;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Helpers
 {
@@ -13,12 +16,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Helpers
 
             window.SetStatusBarColor(color.ToPlatform());
 
-            var flag = Android.Views.SystemUiFlags.LightStatusBar;
+            var flag = SystemUiFlags.LightStatusBar;
 
             if (darkStatusBarTint)
-                window.DecorView.SystemUiVisibility |= (Android.Views.StatusBarVisibility)flag;
+                window.DecorView.SystemUiVisibility |= (StatusBarVisibility)flag;
             else
-                window.DecorView.SystemUiVisibility &= ~(Android.Views.StatusBarVisibility)flag;
+                window.DecorView.SystemUiVisibility &= ~(StatusBarVisibility)flag;
 #endif
 
 #if IOS
