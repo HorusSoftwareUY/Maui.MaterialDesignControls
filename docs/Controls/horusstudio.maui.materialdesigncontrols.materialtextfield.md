@@ -131,7 +131,7 @@ Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.ma
 
 Default value: Light: MaterialLightTheme.Primary - Dark: MaterialDarkTheme.Primary
 
-Remarks: This Property only works on iOS and 'ndroid' 29 or later
+Remarks: This Property only works on iOS and 'Android' 29 or later
 
 <br>
 
