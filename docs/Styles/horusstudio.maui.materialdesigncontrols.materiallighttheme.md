@@ -16,6 +16,48 @@ Default value: #9791A1 ![](https://placehold.co/15x15/9791A1/9791A1.png)
 
 <br>
 
+#### DisabledBackgroundOnSurface
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+<br>
+
+#### DisabledBackgroundSurface
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+<br>
+
+#### DisabledBackgroundSurfaceContainerHighest
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+<br>
+
+#### DisabledForegroundOnSurface
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+<br>
+
+#### DisabledForegroundSurface
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+<br>
+
+#### DisabledForegroundSurfaceContainerHighest
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+<br>
+
+#### DisabledShadow
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+<br>
+
 #### Error
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>

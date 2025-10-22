@@ -251,6 +251,17 @@ Default value: 48.0
 
 <br>
 
+### <a id="properties-icontintcolor"/>**IconTintColor**
+
+Gets or sets the tint color of leading and trailing icons for the top app bar.
+ This is a bindable property.
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Theme: Light = MaterialLightTheme.OnSurfaceVariant - Dark = MaterialDarkTheme.OnSurfaceVariant
+
+<br>
+
 ### <a id="properties-iscollapsed"/>**IsCollapsed**
 
 Indicates if app bar is collapsed or not. 
