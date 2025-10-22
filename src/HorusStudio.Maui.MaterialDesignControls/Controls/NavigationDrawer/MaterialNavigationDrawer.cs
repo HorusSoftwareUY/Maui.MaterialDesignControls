@@ -45,7 +45,7 @@ public class MaterialNavigationDrawer : ContentView
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineFontSize = _ => MaterialFontSize.TitleSmall;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineCharacterSpacing = _ => MaterialFontTracking.TitleSmall;
     private const TextTransform DefaultHeadlineTextTransform = TextTransform.Default;
-    private static readonly Thickness DefaultHeadlineMargin = new (4, 16);
+    private static readonly Thickness DefaultHeadlineMargin = new(4, 16);
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text };
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelLarge;
@@ -53,12 +53,11 @@ public class MaterialNavigationDrawer : ContentView
     private const TextTransform DefaultTextTransform = TextTransform.Default;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveIndicatorBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialDarkTheme.PrimaryContainer };
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveIndicatorTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer };
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultInactiveIndicatorBackgroundColor = _ => Colors.Transparent;
     private const float DefaultActiveIndicatorCornerRadius = 28.0f;
     private static readonly Thickness DefaultActiveIndicatorPadding = new(16, 0);
     private const MaterialNavigationDrawerDividerType DefaultDivider = MaterialNavigationDrawerDividerType.Section;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDividerColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant };
-    private static readonly Thickness DefaultDividerMargin = new (16, 1);
+    private static readonly Thickness DefaultDividerMargin = new(16, 1);
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant };
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBadgeFontSize = _ => MaterialFontSize.LabelLarge;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDisabledColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Disable, Dark = MaterialDarkTheme.Disable };
@@ -124,11 +123,6 @@ public class MaterialNavigationDrawer : ContentView
     /// The backing store for the <see cref="ActiveIndicatorBackgroundColor">ActiveIndicatorBackgroundColor</see> bindable property.
     /// </summary>
     public static readonly BindableProperty ActiveIndicatorBackgroundColorProperty = BindableProperty.Create(nameof(ActiveIndicatorBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultActiveIndicatorBackgroundColor);
-
-    /// <summary>
-    /// The backing store for the <see cref="InactiveIndicatorBackgroundColor">InactiveIndicatorBackgroundColor</see> bindable property.
-    /// </summary>
-    public static readonly BindableProperty InactiveIndicatorBackgroundColorProperty = BindableProperty.Create(nameof(InactiveIndicatorBackgroundColor), typeof(Color), typeof(MaterialNavigationDrawer), defaultValueCreator: DefaultInactiveIndicatorBackgroundColor);
 
     /// <summary>
     /// The backing store for the <see cref="ActiveIndicatorLabelColor">ActiveIndicatorLabelColor</see> bindable property.
@@ -379,19 +373,6 @@ public class MaterialNavigationDrawer : ContentView
     {
         get => (Color)GetValue(ActiveIndicatorBackgroundColorProperty);
         set => SetValue(ActiveIndicatorBackgroundColorProperty, value);
-    }
-
-    /// <summary>
-    /// Defines the inactive background color.
-    /// This is a bindable property.
-    /// </summary>
-    /// <default>
-    /// <see cref="Colors.Transparent">Colors.Transparent</see>
-    /// </default>
-    public Color InactiveIndicatorBackgroundColor
-    {
-        get => (Color)GetValue(InactiveIndicatorBackgroundColorProperty);
-        set => SetValue(InactiveIndicatorBackgroundColorProperty, value);
     }
 
     /// <summary>
@@ -888,7 +869,7 @@ public class MaterialNavigationDrawer : ContentView
                 VerticalOptions = LayoutOptions.Fill
             };
 
-            SetItemLayoutBackgroundColorPropertyBinding(materialCard, item);
+            SetBackgroundColorPropertyBindings(item, materialCard);
 
             materialCard.SetBinding(IsEnabledProperty, new Binding(nameof(item.IsEnabled), source: item));
             materialCard.SetBinding(HeightRequestProperty, new Binding(nameof(ItemHeightRequest), source: this));
@@ -896,12 +877,6 @@ public class MaterialNavigationDrawer : ContentView
             materialCard.SetBinding(MaterialCard.CornerRadiusProperty, new Binding(nameof(ActiveIndicatorCornerRadius), source: this));
             materialCard.SetBinding(MaterialCard.TouchAnimationTypeProperty, new Binding(nameof(TouchAnimationType), source: this));
             materialCard.SetBinding(MaterialCard.TouchAnimationProperty, new Binding(nameof(TouchAnimation), source: this));
-
-            item.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == nameof(item.IsSelected))
-                    SetItemLayoutBackgroundColorPropertyBinding(materialCard, item);
-            };
 
             materialCard.Command = new Command(() =>
             {
@@ -1002,15 +977,24 @@ public class MaterialNavigationDrawer : ContentView
             VerticalOptions = LayoutOptions.Center
         };
 
-        var tintColorBehavior = new IconTintColorBehavior();
-
-        SetTintColorPropertyBinding(tintColorBehavior, item);
-        SetTintColorIsEnabledPropertyBinding(tintColorBehavior, item, isLeadingIcon);
-
         icon.SetBinding(Image.HeightRequestProperty, new Binding(nameof(IconSize), source: this));
         icon.SetBinding(Image.MinimumHeightRequestProperty, new Binding(nameof(IconSize), source: this));
         icon.SetBinding(Image.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
         icon.SetBinding(Image.MinimumWidthRequestProperty, new Binding(nameof(IconSize), source: this));
+
+
+        var tintColorBehavior = new IconTintColorBehavior();
+
+        SetIconTintColorPropertyBindings(tintColorBehavior, item);
+
+        if (isLeadingIcon)
+        {
+            tintColorBehavior.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(item.ApplyLeadingIconTintColor), source: item));
+        }
+        else
+        {
+            tintColorBehavior.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(item.ApplyTrailingIconTintColor), source: item));
+        }
 
         icon.Behaviors.Add(tintColorBehavior);
 
@@ -1026,12 +1010,6 @@ public class MaterialNavigationDrawer : ContentView
             SetTrailingIconVisibilityPropertyBindings(icon, item);
             SetTrailingIconSourcePropertyBindings(icon, item);
         }
-
-        item.PropertyChanged += (s, e) =>
-        {
-            if (e.PropertyName == nameof(item.IsEnabled))
-                SetTintColorPropertyBinding(tintColorBehavior, item);
-        };
 
         return icon;
     }
@@ -1052,12 +1030,6 @@ public class MaterialNavigationDrawer : ContentView
         label.SetBinding(Label.FontAutoScalingEnabledProperty, new Binding(nameof(LabelFontAutoScalingEnabled), source: this));
         label.SetBinding(Label.CharacterSpacingProperty, new Binding(nameof(LabelCharactersSpacing), source: this));
         label.SetBinding(Label.TextTransformProperty, new Binding(nameof(LabelTextTransform), source: this));
-
-        item.PropertyChanged += (s, e) =>
-        {
-            if (e.PropertyName == nameof(item.IsEnabled) || e.PropertyName == nameof(item.IsSelected))
-                SetLabelTextColorPropertyBindings(label, item);
-        };
 
         return label;
     }
@@ -1118,43 +1090,69 @@ public class MaterialNavigationDrawer : ContentView
     #endregion Methods
 
     #region Setters
-    private void SetItemLayoutBackgroundColorPropertyBinding(MaterialCard card, MaterialNavigationDrawerItem item)
+
+    private void SetBackgroundColorPropertyBindings(MaterialNavigationDrawerItem item, MaterialCard materialCard)
     {
-        if (item.IsSelected)
-            card.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(ActiveIndicatorBackgroundColor), source: this));
-        else
-            card.SetBinding(MaterialCard.BackgroundColorProperty, new Binding(nameof(InactiveIndicatorBackgroundColor), source: this));
+        materialCard.SetBinding(MaterialCard.BackgroundColorProperty, new MultiBinding
+        {
+            Bindings = new Collection<BindingBase>
+                {
+                    new Binding(nameof(item.IsSelected), source: item),
+                    new Binding(nameof(ActiveIndicatorBackgroundColor), source: this)
+                },
+            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
+            {
+                var isSelected = (bool)values[0];
+                var activeColor = (Color)values[1];
+                return isSelected ? activeColor : Colors.Transparent;
+            })
+        });
     }
 
     private void SetLabelTextColorPropertyBindings(MaterialLabel label, MaterialNavigationDrawerItem item)
     {
-        if (item.IsEnabled)
+        label.SetBinding(MaterialLabel.TextColorProperty, new MultiBinding
         {
-            if (item.IsSelected)
-                label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(ActiveIndicatorLabelColor), source: this));
-            else
-                label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(LabelColor), source: this));
-        }
-        else
-        {
-            label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(DisabledLabelColor), source: this));
-        }
+            Bindings = new Collection<BindingBase>
+            {
+                new Binding(nameof(item.IsEnabled), source: item),
+                new Binding(nameof(item.IsSelected), source: item),
+                new Binding(nameof(ActiveIndicatorLabelColor), source: this),
+                new Binding(nameof(LabelColor), source: this),
+                new Binding(nameof(DisabledLabelColor), source: this)
+            },
+            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
+            {
+                var isEnabled = (bool)values[0];
+                var isSelected = (bool)values[1];
+                var activeIndicatorLabelColor = (Color)values[2];
+                var labelColor = (Color)values[3];
+                var disabledLabelColor = (Color)values[4];
+
+                return isEnabled ? (isSelected ? activeIndicatorLabelColor : labelColor) : disabledLabelColor;
+            })
+        });
     }
 
-    private void SetTintColorPropertyBinding(IconTintColorBehavior tintColorBehavior, MaterialNavigationDrawerItem item)
+    private void SetIconTintColorPropertyBindings(IconTintColorBehavior iconTintColorBehavior, MaterialNavigationDrawerItem item)
     {
-        if (item.IsEnabled)
-            tintColorBehavior.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(LabelColor), source: this));
-        else
-            tintColorBehavior.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(DisabledLabelColor), source: this));
-    }
+        iconTintColorBehavior.SetBinding(IconTintColorBehavior.TintColorProperty, new MultiBinding
+        {
+            Bindings = new Collection<BindingBase>
+            {
+                new Binding(nameof(item.IsEnabled), source: item),
+                new Binding(nameof(LabelColor), source: this),
+                new Binding(nameof(DisabledLabelColor), source: this)
+            },
+            Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
+            {
+                var isEnabled = (bool)values[0];
+                var labelColor = (Color)values[1];
+                var disabledLabelColor = (Color)values[2];
 
-    private void SetTintColorIsEnabledPropertyBinding(IconTintColorBehavior tintColorBehavior, MaterialNavigationDrawerItem item, bool isLeadingIcon)
-    {
-        if (isLeadingIcon)
-            tintColorBehavior.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(item.ApplyLeadingIconTintColor), source: item));
-        else
-            tintColorBehavior.SetBinding(IconTintColorBehavior.IsEnabledProperty, new Binding(nameof(item.ApplyTrailingIconTintColor), source: item));
+                return isEnabled ? labelColor : disabledLabelColor;
+            })
+        });
     }
 
     private void SetLeadingIconVisibilityPropertyBindings(Image image, MaterialNavigationDrawerItem item)
@@ -1253,6 +1251,7 @@ public class MaterialNavigationDrawer : ContentView
     #endregion Setters
 
     #region Converters
+
     private class MultiValueConverter(Func<object[], Type, object, CultureInfo, object> convert) : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
