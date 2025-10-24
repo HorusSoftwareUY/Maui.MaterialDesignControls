@@ -1032,8 +1032,8 @@ public abstract partial class MaterialInputBase : IValidableView
     /// - The hint label uses the identifier "{AutomationId}_Hint".
     /// - The supporting text label uses the identifier "{AutomationId}_SupportingText".
     /// - The placeholder text label uses the identifier "{AutomationId}_Placeholder".
-    /// - The leading icon uses the identifier "{AutomationId}_LeadingIcon".
-    /// - The trailing icon uses the identifier "{AutomationId}_TrailingIcon".
+    /// - The leading icon button uses the identifier "{AutomationId}_LeadingIcon".
+    /// - The trailing icon button uses the identifier "{AutomationId}_TrailingIcon".
     /// 
     /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
     /// </remarks>

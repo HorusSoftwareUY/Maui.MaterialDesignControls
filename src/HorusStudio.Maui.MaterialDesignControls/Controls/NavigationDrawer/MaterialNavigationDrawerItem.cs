@@ -21,6 +21,7 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
     private bool _applyTrailingIconTintColor = true;
     private bool _isSelected;
     private bool _isEnabled = true;
+    private string _automationId = null!;
     
     #endregion Attributes
     
@@ -123,6 +124,18 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
     {
         get => _isEnabled;
         set => SetProperty(ref _isEnabled, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// </remarks>
+    public string AutomationId
+    {
+        get => _automationId;
+        set => SetProperty(ref _automationId, value);
     }
     
     /// <inheritdoc />

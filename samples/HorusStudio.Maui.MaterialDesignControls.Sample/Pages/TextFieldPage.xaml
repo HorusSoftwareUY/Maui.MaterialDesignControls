@@ -15,6 +15,7 @@
             <material:MaterialCard Style="{StaticResource CardControlContainer}">
                 <VerticalStackLayout>
                     <material:MaterialTextField
+                        AutomationId="txtFilled"
                         Placeholder="Enter text here" />
                     
                     <material:MaterialTextField

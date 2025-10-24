@@ -1019,6 +1019,7 @@ public class MaterialNavigationDrawer : ContentView
         label.SetBinding(Label.FontAutoScalingEnabledProperty, new Binding(nameof(LabelFontAutoScalingEnabled), source: this));
         label.SetBinding(Label.CharacterSpacingProperty, new Binding(nameof(LabelCharactersSpacing), source: this));
         label.SetBinding(Label.TextTransformProperty, new Binding(nameof(LabelTextTransform), source: this));
+        label.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: item));
 
         return label;
     }

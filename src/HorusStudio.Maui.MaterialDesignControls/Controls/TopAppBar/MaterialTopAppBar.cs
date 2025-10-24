@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -275,8 +276,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="IsCollapsed">IsCollapsed</see> bindable property.
         /// </summary>
-        public static readonly BindableProperty IsCollapsedProperty = BindableProperty.Create(nameof(IsCollapsedProperty), typeof(bool), typeof(MaterialTopAppBar), defaultBindingMode: BindingMode.OneWayToSource, defaultValue: false);
+        public static readonly BindableProperty IsCollapsedProperty = BindableProperty.Create(nameof(IsCollapsed), typeof(bool), typeof(MaterialTopAppBar), defaultBindingMode: BindingMode.OneWayToSource, defaultValue: false);
 
+        /// <summary>
+        /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+        /// </summary>
+        public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialTopAppBar), null);
+        
         #endregion Bindable Properties
 
         #region Properties
@@ -627,6 +633,28 @@ namespace HorusStudio.Maui.MaterialDesignControls
             get => (bool)GetValue(IsCollapsedProperty);
             private set => SetValue(IsCollapsedProperty, value);
         }
+        
+        /// <summary>
+        /// Gets or sets a value that allows the automation framework to find and interact with this element.
+        /// </summary>
+        /// <remarks>
+        /// This value may only be set once on an element.
+        /// 
+        /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
+        /// - The headline label uses the identifier "{AutomationId}_Headline".
+        /// - The description label uses the identifier "{AutomationId}_Description".
+        /// - The leading icon button uses the identifier "{AutomationId}_LeadingIcon".
+        /// - The leading icon button's busy indicator uses the identifier "{AutomationId}_LeadingIconBusyIndicator".
+        /// - Trailing icon buttons use the identifier "{AutomationId}_TrailingIcon_{index}".
+        /// - Trailing icon buttons' busy indicators uses the identifier "{AutomationId}_TrailingIconBusyIndicator_{index}".
+        /// 
+        /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+        /// </remarks>
+        public new string AutomationId
+        {
+            get => (string)GetValue(AutomationIdProperty);
+            set => SetValue(AutomationIdProperty, value);
+        }
 
         #endregion Properties
 
@@ -683,6 +711,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _headlineLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(HeadlineFontFamily), source: this));
             _headlineLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(HeadlineFontAttributes), source: this));
             _headlineLabel.SetBinding(MaterialLabel.MarginProperty, new Binding(nameof(HeadlineMarginAdjustment), source: this));
+            _headlineLabel.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Headline"));
             this.Add(_headlineLabel, 0);
             Grid.SetColumnSpan(_headlineLabel, 3);
 
@@ -697,6 +726,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _descriptionLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(DescriptionFontFamily), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(DescriptionFontAttributes), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.MarginProperty, new Binding(nameof(DescriptionMarginAdjustment), source: this));
+            _descriptionLabel.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Description"));
             Grid.SetColumnSpan(_descriptionLabel, 3);
 
             _leadingIconButton = new MaterialIconButton
@@ -710,6 +740,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimationType), source: this));
             _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
             _leadingIconButton.SetBinding(MaterialIconButton.PaddingProperty, new Binding(nameof(IconPadding), source: this));
+            _leadingIconButton.SetBinding(MaterialIconButton.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "LeadingIcon"));
             this.Add(_leadingIconButton, 0);
 
             var busyIndicatorMargin = GetBusyIndicatorMargin();
@@ -724,6 +755,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 IsVisible = false
             };
             _leadingActivityIndicator.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
+            _leadingActivityIndicator.SetBinding(MaterialIconButton.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "LeadingIconBusyIndicator"));
             this.Add(_leadingActivityIndicator, 0);
 
             UpdateLayoutAfterTypeChanged(Type);
@@ -1011,6 +1043,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimationType), source: this));
             trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
             trailingIconButton.SetBinding(MaterialIconButton.PaddingProperty, new Binding(nameof(IconPadding), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"TrailingIcon_{trailingIconIndex}"));
             _trailingIconButtons.Add(trailingIconButton);
             this.Add(trailingIconButton, trailingIconIndex + 2);
 
@@ -1025,6 +1058,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 IsVisible = false
             };
             activityIndicatorTrailing.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
+            activityIndicatorTrailing.SetBinding(MaterialProgressIndicator.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"TrailingIconBusyIndicator_{trailingIconIndex}"));
             _trailingActivityIndicators.Add(activityIndicatorTrailing);
             this.Add(activityIndicatorTrailing, trailingIconIndex + 2);
 

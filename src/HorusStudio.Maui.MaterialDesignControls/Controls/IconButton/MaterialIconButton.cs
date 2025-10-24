@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.Controls.Shapes;
 
@@ -304,6 +305,11 @@ public class MaterialIconButton : ContentView, ITouchableView
             self._image.Behaviors.Clear();
         }
     });
+    
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialIconButton), null);
 
     #endregion Bindable Properties
 
@@ -576,6 +582,28 @@ public class MaterialIconButton : ContentView, ITouchableView
         get => (bool)GetValue(UseIconTintColorProperty);
         set => SetValue(UseIconTintColorProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
+    /// - The headline label uses the identifier "{AutomationId}_Headline".
+    /// - The description label uses the identifier "{AutomationId}_Description".
+    /// - The leading icon button uses the identifier "{AutomationId}_LeadingIcon".
+    /// - The leading icon button's busy indicator uses the identifier "{AutomationId}_LeadingIconBusyIndicator".
+    /// - Trailing icon buttons use the identifier "{AutomationId}_TrailingIcon_{index}".
+    /// - Trailing icon buttons' busy indicators uses the identifier "{AutomationId}_TrailingIconBusyIndicator_{index}".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
+    }
 
     #endregion Properties
 
@@ -705,6 +733,7 @@ public class MaterialIconButton : ContentView, ITouchableView
 
         _image.Loaded += async (s, e) => await ImageLoaded(s as Image);
         _image.SetBinding(Image.SourceProperty, new Binding(nameof(ImageSource), source: this));
+        _image.SetBinding(Image.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         var iconTintColor = new IconTintColorBehavior();
         iconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(InternalIconTintColor), source: this));
@@ -739,6 +768,7 @@ public class MaterialIconButton : ContentView, ITouchableView
         _activityIndicator.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.HeightRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.WidthRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
+        _activityIndicator.SetBinding(MaterialProgressIndicator.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "BusyIndicator"));
 
         _internalActivityIndicator = CustomBusyIndicator ?? _activityIndicator;
         _internalActivityIndicator.HorizontalOptions = LayoutOptions.Center;

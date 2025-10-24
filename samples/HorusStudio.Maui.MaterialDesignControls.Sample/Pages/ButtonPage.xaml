@@ -322,6 +322,7 @@
             <VerticalStackLayout>
                 <material:MaterialButton
                     x:Name="ClickBtn"
+                    AutomationId="ClickBtn"
                     Type="Filled"
                     Text="Click me"
                     TouchAnimationType="Bounce"
