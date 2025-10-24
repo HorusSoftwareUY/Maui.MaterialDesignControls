@@ -75,6 +75,7 @@ public class MaterialDatePicker : MaterialInputBase
         _datePicker.SetBinding(DatePicker.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _datePicker.SetBinding(DatePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _datePicker.SetBinding(CustomDatePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+        _datePicker.SetBinding(DatePicker.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
         
         InputTapCommand = new Command(() => Focus());
         LeadingIconCommand = new Command(() => Focus());

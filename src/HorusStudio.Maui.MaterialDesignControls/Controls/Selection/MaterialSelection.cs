@@ -63,6 +63,7 @@ public class MaterialSelection : MaterialInputBase
         _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Text), source: this));
         _label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
         _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        _label.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         InputTapCommand = new Command(() => Focus());
         LeadingIconCommand = new Command(() => Focus());

@@ -72,6 +72,7 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
+        _picker.SetBinding(Picker.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         InputTapCommand = new Command(() => Focus());
         LeadingIconCommand = new Command(() => Focus());
