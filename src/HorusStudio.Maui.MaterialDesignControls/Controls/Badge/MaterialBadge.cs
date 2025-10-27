@@ -113,7 +113,7 @@ public class MaterialBadge : ContentView
     /// <summary>
     /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
     /// </summary>
-    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialButton), null);
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialBadge), null);
     
     #endregion
 

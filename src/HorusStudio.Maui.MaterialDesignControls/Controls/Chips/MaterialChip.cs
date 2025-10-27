@@ -1,5 +1,6 @@
 using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -242,6 +243,11 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
             self.GroupableViewPropertyChanged?.Invoke(self, new GroupableViewPropertyChangedEventArgs(nameof(Value), oldValue, newValue));
         }
     });
+    
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialChip), null);
     
     #endregion Bindable Properties
 
@@ -618,6 +624,24 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
         set => SetValue(ValueProperty, value);
     }
     
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
+    /// - The <see cref="MaterialChip"/> control uses the same <see cref="AutomationId"/> value.
+    /// - The chip's text label uses the identifier "{AutomationId}_Text".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
+    }
+    
     #endregion Properties
 
     #region Events
@@ -816,6 +840,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
         _textLabel.SetBinding(Label.TextColorProperty, new Binding(nameof(TextColor), source: this));
         _textLabel.SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
         _textLabel.SetBinding(Label.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        _textLabel.SetBinding(Label.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Text"));
 
         _container.SetBinding(MaterialCard.PaddingProperty, new Binding(nameof(Padding), source: this));
         _container.SetBinding(MaterialCard.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
@@ -827,6 +852,7 @@ public class MaterialChip : ContentView, ITouchableView, IGroupableView
         _container.SetBinding(MaterialCard.ShadowProperty, new Binding(nameof(Shadow), source: this));
         _container.SetBinding(MaterialCard.ShadowColorProperty, new Binding(nameof(ShadowColor), source: this));
         _container.SetBinding(MaterialCard.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        _container.SetBinding(MaterialCard.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         _leadingIcon.SetBinding(Image.SourceProperty, new Binding(nameof(LeadingIcon), source: this));
         _leadingIcon.SetBinding(Image.WidthRequestProperty, new Binding(nameof(LeadingIconSize), source: this));
