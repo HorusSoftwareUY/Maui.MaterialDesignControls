@@ -47,6 +47,9 @@ public enum MaterialChipType
 /// [See more example](../../samples/HorusStudio.Maui.MaterialDesignControls.Sample/Pages/ChipsPage.xaml)
 /// 
 /// </example>
+/// <todoList>
+/// * The Selected property in Appium is not supported when using the AutomationId of this control.
+/// </todoList>
 public class MaterialChip : ContentView, ITouchableView, IGroupableView
 {
     #region Attributes
