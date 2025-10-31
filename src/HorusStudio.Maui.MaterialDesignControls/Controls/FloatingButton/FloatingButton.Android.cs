@@ -130,6 +130,9 @@ class FloatingButton : Snackbar.Callback
 
                 if (iconView?.LayoutParameters != null)
                     iconView.LayoutParameters.Width = ViewGroup.LayoutParams.MatchParent;
+                
+                if (!string.IsNullOrEmpty(fab.AutomationId))
+                    iconView.ContentDescription = fab.AutomationId;
             }
 
             Logger.Debug("FAB created");
