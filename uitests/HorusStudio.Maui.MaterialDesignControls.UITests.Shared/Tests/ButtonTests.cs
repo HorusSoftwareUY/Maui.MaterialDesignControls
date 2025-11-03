@@ -11,7 +11,7 @@ public class ButtonTests : BaseTest
 	    ClickNavigationDrawerItem("menu_Button");
 	    
 	    ScrollToElement("ClickBtn");
-	    var clickBtn = FindUIElement("ClickBtn");
+	    var clickBtn = FindUIElementById("ClickBtn");
 	    Assert.That(clickBtn.Text, Is.EqualTo("Click me"));
 	    clickBtn.Click();
 	    Wait(500);

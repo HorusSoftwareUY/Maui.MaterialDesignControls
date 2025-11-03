@@ -10,7 +10,7 @@ public class TextFieldTests : BaseTest
     {
         ClickNavigationDrawerItem("menu_TextField");
         
-        var txtFilled = FindUIElement("txtFilled");
+        var txtFilled = FindUIElementById("txtFilled");
         txtFilled.Clear();
         txtFilled.SendKeys("Testing");
         Wait(500);
