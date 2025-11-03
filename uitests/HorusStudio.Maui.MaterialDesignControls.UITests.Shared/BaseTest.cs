@@ -13,7 +13,7 @@ public abstract class BaseTest
 {
 	protected AppiumDriver App => AppiumSetup.App;
 	
-	protected AppiumElement FindUIElement(string id)
+	protected AppiumElement FindUIElementById(string id)
 	{
 		try
 		{
@@ -26,7 +26,21 @@ public abstract class BaseTest
 		}
 		catch (NoSuchElementException ex)
 		{
-			Logger.LogInfo($"{nameof(FindUIElement)} - Id: {id} - {nameof(NoSuchElementException)}: {ex.Message}");
+			Logger.LogInfo($"{nameof(FindUIElementById)} - Id: {id} - {nameof(NoSuchElementException)}: {ex.Message}");
+
+			return FindUIElementByContentDescription(id);
+		}
+	}
+	
+	private AppiumElement FindUIElementByContentDescription(string contentDescription)
+	{
+		try
+		{
+			return App.FindElement(MobileBy.XPath($"//*[@content-desc='{contentDescription}']"));
+		}
+		catch (NoSuchElementException ex)
+		{
+			Logger.LogInfo($"{nameof(FindUIElementByContentDescription)} - ContentDescription: {contentDescription} - {nameof(NoSuchElementException)}: {ex.Message}");
 			return null;
 		}
 	}
@@ -78,19 +92,19 @@ public abstract class BaseTest
 
 	protected void ClickNavigationDrawerItem(string itemAutomationId)
 	{
-		FindUIElement("menu").Click();
+		FindUIElementById("menu").Click();
 		Wait(2000);
 	    
 		ScrollToElement(itemAutomationId);
 		Wait(500);
 		
-		FindUIElement(itemAutomationId).Click();
+		FindUIElementById(itemAutomationId).Click();
 		Wait(2000);
 	}
 
 	protected void ClickTopAppBarLeadingIcon()
 	{
-		FindUIElement("topAppBar_LeadingIcon").Click();
+		FindUIElementById("topAppBar_LeadingIcon").Click();
 		Wait(2000);
 	}
 }
