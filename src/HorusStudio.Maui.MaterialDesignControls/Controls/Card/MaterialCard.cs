@@ -492,7 +492,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     }
                     else if (background is AppThemeBindingExtension theme)
                     {
-                        base.BackgroundColor = theme.GetValueForCurrentTheme<Color>();
+                        this.SetAppTheme(Border.BackgroundColorProperty, theme.Light, theme.Dark);
                     }
                 }
                 else
@@ -521,7 +521,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                     }
                     else if (border is AppThemeBindingExtension theme)
                     {
-                        Stroke = new SolidColorBrush(theme.GetValueForCurrentTheme<Color>());
+                        this.SetAppTheme(StrokeProperty, new SolidColorBrush((Color)theme.Light), new SolidColorBrush((Color)theme.Dark));
                     }
                 }
                 else
@@ -679,47 +679,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         internal static IEnumerable<Style> GetStyles()
         {
-            var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-            var disabledState = new VisualState { Name = ButtonCommonStates.Disabled };
-            disabledState.Setters.Add(
-                MaterialCard.BackgroundColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.Surface,
-                    Dark = MaterialDarkTheme.Surface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.38f));
-
-            disabledState.Setters.Add(MaterialCard.ShadowProperty, null);
-
-            disabledState.Setters.Add(
-                MaterialCard.BorderColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.Surface,
-                    Dark = MaterialDarkTheme.Surface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.38f));
-
-            //disabledState.Setters.Add(MaterialCard.OpacityProperty, 0.38f);
-
-            var pressedState = new VisualState { Name = ButtonCommonStates.Pressed };
-            //pressedState.Setters.Add(MaterialCard.OpacityProperty, 1f);
-
-            var normalState = new VisualState { Name = ButtonCommonStates.Normal };
-            //normalState.Setters.Add(MaterialCard.OpacityProperty, 1f);
-
-            commonStatesGroup.States.Add(normalState);
-            commonStatesGroup.States.Add(disabledState);
-            commonStatesGroup.States.Add(pressedState);
-
-            var style = new Style(typeof(MaterialCard));
-            style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-            return new List<Style> { style };
+            var resourceDictionary = new MaterialCardStyles();
+            return resourceDictionary.Values.OfType<Style>();
         }
 
         #endregion Styles

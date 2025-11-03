@@ -41,7 +41,7 @@ public class MaterialSlider : ContentView
 {
     #region Attributes
 
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text };
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultThumbColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultActiveTrackColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultInactiveTrackColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SecondaryContainer, Dark = MaterialDarkTheme.SecondaryContainer }.GetValueForCurrentTheme<Color>();
@@ -1045,6 +1045,10 @@ public class MaterialSlider : ContentView
 
     public MaterialSlider()
     {
+        this.SetAppTheme(LabelColorProperty, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Dark);
+        this.SetAppTheme(MinimumLabelColorProperty, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Dark);
+        this.SetAppTheme(MaximumLabelColorProperty, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Dark);
+        
         Padding = ShowValueIndicator ? new Thickness(0, ValueIndicatorSize / 1.5, 0, 10) : new Thickness(0);
 
         Grid mainLayout = new()
@@ -1393,94 +1397,8 @@ public class MaterialSlider : ContentView
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = SliderCommonStates.Disabled };
-
-        disabledState.Setters.Add(
-            MaterialSlider.ActiveTrackColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        disabledState.Setters.Add(
-            MaterialSlider.InactiveTrackColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
-
-        disabledState.Setters.Add(
-            MaterialSlider.ThumbColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        var pressedState = new VisualState { Name = SliderCommonStates.Pressed };
-
-        pressedState.Setters.Add(
-            MaterialSlider.ThumbColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Primary,
-                Dark = MaterialDarkTheme.Primary
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        pressedState.Setters.Add(
-            MaterialSlider.ActiveTrackColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Primary,
-                Dark = MaterialDarkTheme.Primary
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        pressedState.Setters.Add(
-            MaterialSlider.InactiveTrackColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.SecondaryContainer,
-                Dark = MaterialDarkTheme.SecondaryContainer
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        pressedState.Setters.Add(
-            MaterialSlider.ValueIndicatorBackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.InverseSurface,
-                Dark = MaterialDarkTheme.InverseSurface
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        pressedState.Setters.Add(
-            MaterialSlider.ValueIndicatorTextColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.InverseOnSurface,
-                Dark = MaterialDarkTheme.InverseOnSurface
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        commonStatesGroup.States.Add(disabledState);
-        commonStatesGroup.States.Add(pressedState);
-
-        var style = new Style(typeof(MaterialSlider));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialSliderStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
     #endregion Styles
 }

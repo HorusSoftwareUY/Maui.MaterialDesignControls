@@ -23,10 +23,11 @@ xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=H
 ### C# sample
 
 ```csharp
+
 var label = new MaterialLabel()
 {
-    Type = LabelTypes.HeadlineLarge,
-    Text = "This Material Label"
+ Type = LabelTypes.HeadlineLarge,
+ Text = "This Material Label"
 };
 ```
 

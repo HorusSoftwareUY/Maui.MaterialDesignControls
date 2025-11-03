@@ -72,7 +72,7 @@ public class MaterialIconButton : ContentView, ITouchableView
     private const double DefaultWidthRequest = 40;
     private static readonly Thickness DefaultPadding = new(8);
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary };
     private const double DefaultBusyIndicatorSize = 24;
     private static readonly Shadow DefaultShadow = null!;
     private static readonly ImageSource? DefaultImageSource = Image.SourceProperty.DefaultValue as ImageSource;
@@ -714,6 +714,8 @@ public class MaterialIconButton : ContentView, ITouchableView
 
     public MaterialIconButton()
     {
+        this.SetAppTheme(BusyIndicatorColorProperty, ((AppThemeBindingExtension)DefaultBusyIndicatorColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultBusyIndicatorColor.Invoke(this)).Dark);
+
         CreateLayout();
         if (Type == DefaultButtonType)
         {
@@ -843,7 +845,7 @@ public class MaterialIconButton : ContentView, ITouchableView
                 }
                 else if (background is AppThemeBindingExtension theme)
                 {
-                    _border.BackgroundColor = theme.GetValueForCurrentTheme<Color>();
+                    _border.SetAppTheme(Border.BackgroundColorProperty, theme.Light, theme.Dark);
                 }
             }
             else
@@ -872,7 +874,7 @@ public class MaterialIconButton : ContentView, ITouchableView
                 }
                 else if (tint is AppThemeBindingExtension theme)
                 {
-                    InternalIconTintColor = theme.GetValueForCurrentTheme<Color>();
+                    this.SetAppTheme(InternalIconTintColorProperty, theme.Light, theme.Dark);
                 }
             }
             else
@@ -906,7 +908,7 @@ public class MaterialIconButton : ContentView, ITouchableView
                 }
                 else if (border is AppThemeBindingExtension theme)
                 {
-                    _border.Stroke = theme.GetValueForCurrentTheme<Color>();
+                    _border.SetAppTheme(Border.StrokeProperty, theme.Light, theme.Dark);
                 }
             }
             else
@@ -1040,51 +1042,8 @@ public class MaterialIconButton : ContentView, ITouchableView
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = ButtonCommonStates.Disabled };
-        disabledState.Setters.Add(
-            MaterialIconButton.BackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
-
-        disabledState.Setters.Add(
-            MaterialIconButton.IconTintColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        disabledState.Setters.Add(MaterialIconButton.ShadowProperty, null);
-
-        disabledState.Setters.Add(
-            MaterialIconButton.BorderColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
-
-        var pressedState = new VisualState { Name = ButtonCommonStates.Pressed };
-
-        commonStatesGroup.States.Add(new VisualState { Name = ButtonCommonStates.Normal });
-        commonStatesGroup.States.Add(disabledState);
-        commonStatesGroup.States.Add(pressedState);
-
-        var style = new Style(typeof(MaterialIconButton));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialIconButtonStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

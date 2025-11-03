@@ -44,8 +44,8 @@ public class MaterialBadge : ContentView
 
     private const MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
     private static readonly string DefaultText = string.Empty;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError }.GetValueForCurrentTheme<Color>();
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError };
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error };
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelSmall;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
     private static readonly CornerRadius DefaultCornerRadius = new(8);
@@ -257,6 +257,9 @@ public class MaterialBadge : ContentView
 
     public MaterialBadge()
     {
+        this.SetAppTheme(TextColorProperty, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Dark);
+        this.SetAppTheme(BackgroundColorProperty, ((AppThemeBindingExtension)DefaultBackgroundColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultBackgroundColor.Invoke(this)).Dark);
+
         CreateLayout();
         
         if (Type == DefaultBadgeType)

@@ -8,10 +8,11 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.NavigationDrawerPage"
     x:TypeArguments="vm:NavigationDrawerViewModel"
     x:DataType="vm:NavigationDrawerViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     <ContentPage.Resources>
         <Style x:Key="DrawerContainer" TargetType="material:MaterialCard">
-            <Setter Property="BackgroundColor" Value="{StaticResource White}" />
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}" />
             <Setter Property="CornerRadius" Value="16" />
             <Setter Property="Padding" Value="12,16" />
         </Style>
@@ -22,7 +23,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
            <VerticalStackLayout Spacing="16"> 
                 <material:MaterialCard Style="{StaticResource DrawerContainer}">
-                    <material:MaterialNavigationDrawer 
+                    <material:MaterialNavigationDrawer
                         Command="{Binding TestCommand}"
                         ItemsSource="{Binding Items}" />
                 </material:MaterialCard>

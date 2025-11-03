@@ -44,7 +44,7 @@ public class MaterialMultilineTextField : MaterialInputBase
     #region Attributes
 
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCursorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCursorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 
@@ -325,8 +325,11 @@ public class MaterialMultilineTextField : MaterialInputBase
     /// <summary>
     /// Gets or sets a color of the caret indicator.
     /// </summary>
+    /// <default>
+    /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
+    /// </default>
     /// <remarks>
-    /// This Property only works on iOS and 'ndroid' 29 or later
+    /// This Property only works on iOS and 'Android' 29 or later
     /// </remarks>
     public Color CursorColor
     {
@@ -495,32 +498,8 @@ public class MaterialMultilineTextField : MaterialInputBase
     #region Styles
     internal static IEnumerable<Style> GetStyles()
     {
-        var style = new Style(typeof(MaterialMultilineTextField)) { ApplyToDerivedTypes = true };
-
-        var baseStyles = MaterialInputBase.GetBaseStyles();
-
-        var errorFocusedGroup = baseStyles.First(g => g.Name.Equals(nameof(VisualStateManager.CommonStates)));
-        baseStyles.Remove(errorFocusedGroup);
-
-        var errorFocusedStates = errorFocusedGroup.States.First(s => s.Name.Equals(MaterialInputCommonStates.ErrorFocused));
-
-        errorFocusedGroup.States.Remove(errorFocusedStates);
-
-        errorFocusedStates.Setters.Add(
-            MaterialMultilineTextField.CursorColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Error,
-                Dark = MaterialDarkTheme.Error
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        errorFocusedGroup.States.Add(errorFocusedStates);
-        baseStyles.Add(errorFocusedGroup);
-
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialMultilineTextFieldStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

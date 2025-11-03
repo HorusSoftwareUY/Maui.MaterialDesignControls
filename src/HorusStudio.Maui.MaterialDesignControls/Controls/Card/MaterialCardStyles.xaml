@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.MaterialCardStyles">
+
+    <Style
+        TargetType="material:MaterialCard">
+        <Setter
+            Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup
+                    x:Name="CommonStates">
+
+                    <!-- Normal State -->
+                    <VisualState
+                        x:Name="Normal" />
+
+                    <!-- Disabled State -->
+                    <VisualState
+                        x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter
+                                Property="BackgroundColor"
+                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledForegroundSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledForegroundSurface}}" />
+                            <Setter
+                                Property="BorderColor"
+                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.DisabledForegroundSurface}, Dark={x:Static material:MaterialDarkTheme.DisabledForegroundSurface}}" />
+                            <Setter
+                                Property="Shadow"
+                                Value="{x:Null}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <!-- Pressed State -->
+                    <VisualState
+                        x:Name="Pressed" />
+
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

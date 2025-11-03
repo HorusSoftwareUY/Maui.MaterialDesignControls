@@ -40,7 +40,7 @@ public static class MaterialDesignControlsBuilderExtensions
     /// <returns>Updated MAUI application builder</returns>
     public static MauiAppBuilder UseMaterialDesignControls(this MauiAppBuilder appBuilder,
         Action<MaterialDesignControlsBuilder>? configureDelegate = null, Action<MaterialHandlerOptions>? configureHandlers = null)
-    {   
+    {
         Logger.Debug("Configuring Material Design Controls");
         try
         {
@@ -65,7 +65,7 @@ public static class MaterialDesignControlsBuilderExtensions
             if (!ex.Data.Contains(Logger.LoggedKey)) Logger.LogException(ex);
         }
         Logger.Debug("Material Design Controls configuration COMPLETED");
-        
+
         return appBuilder;
     }
 
@@ -79,7 +79,7 @@ public static class MaterialDesignControlsBuilderExtensions
         Logger.DebugMode = true;
         return builder;
     }
-    
+
     /// <summary>
     /// Registers a delegate to be invoked in case of Exception.
     /// </summary>
@@ -92,7 +92,7 @@ public static class MaterialDesignControlsBuilderExtensions
         Logger.OnException += configureDelegate.Invoke;
         return builder;
     }
-    
+
     /// <summary>
     /// Registers custom fonts on MAUI Application and Material Design Controls library.
     /// It also indicates MDC which font to use for Regular, Medium and Default.
@@ -104,7 +104,7 @@ public static class MaterialDesignControlsBuilderExtensions
     public static MaterialDesignControlsBuilder ConfigureFonts(this MaterialDesignControlsBuilder builder, Action<IFontCollection>? configureDelegate, MaterialFontOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
-        
+
         ConfigurationWithLogger(() =>
             {
                 builder.AppBuilder.ConfigureFonts(fonts =>
@@ -116,7 +116,7 @@ public static class MaterialDesignControlsBuilderExtensions
 
         return builder;
     }
-    
+
     /// <summary>
     /// Overrides, partially or fully, default color palettes for one or both Light and Dark themes.
     /// </summary>
@@ -138,10 +138,10 @@ public static class MaterialDesignControlsBuilderExtensions
             MaterialDarkTheme.Configure(darkTheme);
             Logger.Debug("Dark Theme configuration COMPLETED");
         }
-        
+
         return builder;
     }
-    
+
     /// <summary>
     /// Overrides, partially or fully, default color palettes for one or both Light and Dark themes from Resources.
     /// MDC will match resource keys with <see cref="MaterialTheme">MaterialTheme</see> property names.
@@ -151,29 +151,29 @@ public static class MaterialDesignControlsBuilderExtensions
     /// <param name="lightThemeResourcePrefix">Prefix for Light theme colors. Optional.</param>
     /// <param name="darkThemeResourcePrefix">Prefix for Dark theme colors. Optional.</param>
     /// <returns></returns>
-    public static MaterialDesignControlsBuilder ConfigureThemesFromResources(this MaterialDesignControlsBuilder builder, 
+    public static MaterialDesignControlsBuilder ConfigureThemesFromResources(this MaterialDesignControlsBuilder builder,
         string? resourceDictionaryName = null,
         string? lightThemeResourcePrefix = null,
         string? darkThemeResourcePrefix = null)
     {
         Logger.Debug("Enqueuing Themes loading task from resources");
-        
+
         MaterialDesignControls.EnqueueAction(
             resourceDictionaryName,
             resources =>
             {
                 Logger.DebugWithCallerInfo($"Configuring Themes from Resources source: {resources.Source}", nameof(MaterialDesignControlsBuilder), nameof(ConfigureThemesFromResources));
-                
+
                 builder.ConfigureThemes(
-                    resources.FromResources<MaterialTheme>(lightThemeResourcePrefix), 
+                    resources.FromResources<MaterialTheme>(lightThemeResourcePrefix),
                     resources.FromResources<MaterialTheme>(darkThemeResourcePrefix));
-                
+
                 Logger.DebugWithCallerInfo("Themes configuration from resources COMPLETED", nameof(MaterialDesignControlsBuilder), nameof(ConfigureThemesFromResources));
             });
-        
+
         return builder;
     }
-    
+
     /// <summary>
     /// Overrides, partially or fully, default font sizes for texts.
     /// </summary>
@@ -201,12 +201,12 @@ public static class MaterialDesignControlsBuilderExtensions
         string? resourcePrefix = null)
     {
         builder.ConfigureFromResources<MaterialSizeOptions>(
-            ConfigureFontSize, 
-            resourceDictionaryName, 
-            resourcePrefix, 
-            nameof(MaterialDesignControlsBuilder), 
+            ConfigureFontSize,
+            resourceDictionaryName,
+            resourcePrefix,
+            nameof(MaterialDesignControlsBuilder),
             nameof(ConfigureFontSizeFromResources));
-        
+
         return builder;
     }
 
@@ -237,12 +237,12 @@ public static class MaterialDesignControlsBuilderExtensions
         string? resourcePrefix = null)
     {
         builder.ConfigureFromResources<MaterialSizeOptions>(
-            ConfigureFontTracking, 
-            resourceDictionaryName, 
-            resourcePrefix, 
-            nameof(MaterialDesignControlsBuilder), 
+            ConfigureFontTracking,
+            resourceDictionaryName,
+            resourcePrefix,
+            nameof(MaterialDesignControlsBuilder),
             nameof(ConfigureFontTrackingFromResources));
-        
+
         return builder;
     }
 
@@ -272,12 +272,12 @@ public static class MaterialDesignControlsBuilderExtensions
         string? resourcePrefix = null)
     {
         builder.ConfigureFromResources<MaterialElevationOptions>(
-            ConfigureElevation, 
-            resourceDictionaryName, 
-            resourcePrefix, 
-            nameof(MaterialDesignControlsBuilder), 
+            ConfigureElevation,
+            resourceDictionaryName,
+            resourcePrefix,
+            nameof(MaterialDesignControlsBuilder),
             nameof(ConfigureElevationFromResources));
-        
+
         return builder;
     }
 
@@ -308,12 +308,12 @@ public static class MaterialDesignControlsBuilderExtensions
         string? resourcePrefix = null)
     {
         builder.ConfigureFromResources<MaterialFormatOptions>(
-            ConfigureStringFormat, 
-            resourceDictionaryName, 
-            resourcePrefix, 
-            nameof(MaterialDesignControlsBuilder), 
+            ConfigureStringFormat,
+            resourceDictionaryName,
+            resourcePrefix,
+            nameof(MaterialDesignControlsBuilder),
             nameof(ConfigureStringFormatFromResources));
-        
+
         return builder;
     }
 
@@ -343,12 +343,12 @@ public static class MaterialDesignControlsBuilderExtensions
         string? resourcePrefix = null)
     {
         builder.ConfigureFromResources<MaterialIconOptions>(
-            ConfigureIcons, 
-            resourceDictionaryName, 
-            resourcePrefix, 
-            nameof(MaterialDesignControlsBuilder), 
+            ConfigureIcons,
+            resourceDictionaryName,
+            resourcePrefix,
+            nameof(MaterialDesignControlsBuilder),
             nameof(ConfigureIconsFromResources));
-        
+
         return builder;
     }
 
@@ -379,12 +379,12 @@ public static class MaterialDesignControlsBuilderExtensions
         string? resourcePrefix = null)
     {
         builder.ConfigureFromResources<MaterialAnimationOptions>(
-            ConfigureAnimations, 
-            resourceDictionaryName, 
-            resourcePrefix, 
-            nameof(MaterialDesignControlsBuilder), 
+            ConfigureAnimations,
+            resourceDictionaryName,
+            resourcePrefix,
+            nameof(MaterialDesignControlsBuilder),
             nameof(ConfigureAnimationsFromResources));
-        
+
         return builder;
     }
 
@@ -399,8 +399,8 @@ public static class MaterialDesignControlsBuilderExtensions
         ArgumentNullException.ThrowIfNull(options);
         ConfigurationWithLogger(() => MaterialSnackbarConfig.Configure(options));
         return builder;
-    } 
-    
+    }
+
     /// <summary>
     /// Registers a user-defined implementation for <see cref="IMaterialSnackbar">IMaterialSnackbar</see> and set global default configuration.
     /// </summary>
@@ -414,14 +414,14 @@ public static class MaterialDesignControlsBuilderExtensions
         {
             var sd = builder.AppBuilder.Services.FirstOrDefault(s => s.ServiceType == typeof(IMaterialSnackbar));
             if (sd != null) builder.AppBuilder.Services.Remove(sd);
-        
+
             builder.AppBuilder.Services.AddSingleton(typeof(IMaterialSnackbar), typeof(T));
             if (options != null)
             {
                 MaterialSnackbarConfig.Configure(options);
             }
         });
-        
+
         return builder;
     }
 
@@ -441,7 +441,7 @@ public static class MaterialDesignControlsBuilderExtensions
         ConfigurationWithLogger(() =>
         {
             handlers
-                .AddHandler(typeof(CustomButton), typeof(MaterialButtonHandler ))
+                .AddHandler(typeof(CustomButton), typeof(MaterialButtonHandler))
                 .AddHandler(typeof(CustomRadioButton), typeof(MaterialRadioButtonHandler))
                 .AddHandler(typeof(CustomEntry), typeof(MaterialTextFieldHandler))
                 .AddHandler(typeof(CustomTimePicker), typeof(MaterialTimePickerHandler))
@@ -513,11 +513,11 @@ public static class MaterialDesignControlsBuilderExtensions
             }));
 #endif
     }
-    
+
     #endregion MauiAppBuilder
-    
+
     #region Styles & Resources
-    
+
     private static void RegisterDefaultStyles()
     {
         Logger.Debug("Start registering components default styles");
@@ -548,13 +548,13 @@ public static class MaterialDesignControlsBuilderExtensions
 
         Logger.Debug("Components styles registration COMPLETED");
     }
-    
+
     private static ResourceDictionary AddStyles(this ResourceDictionary resources, IEnumerable<Style> styles)
     {
         foreach (var style in styles)
         {
             Logger.Debug($"Registering default style for {style.TargetType.Name}");
-            
+
             var implicitStyleName = style.TargetType.FullName!;
             if (resources.TryGetValue(implicitStyleName, out var resource))
             {
@@ -564,21 +564,21 @@ public static class MaterialDesignControlsBuilderExtensions
                     foreach (var setter in currentStyle.Setters)
                     {
                         style.Setters.Add(setter);
-                    }    
+                    }
                 }
                 resources[implicitStyleName] = style;
             }
             else
             {
-                resources.Add(style);    
+                resources.Add(style);
             }
-        }    
-    
+        }
+
         return resources;
     }
 
-    private static MaterialDesignControlsBuilder ConfigureFromResources<T>(this MaterialDesignControlsBuilder builder, 
-        Func<MaterialDesignControlsBuilder, T, MaterialDesignControlsBuilder> func, 
+    private static MaterialDesignControlsBuilder ConfigureFromResources<T>(this MaterialDesignControlsBuilder builder,
+        Func<MaterialDesignControlsBuilder, T, MaterialDesignControlsBuilder> func,
         string? resourceDictionaryName = null,
         string? resourcePrefix = null,
         string? callerFilePath = null,
@@ -587,29 +587,29 @@ public static class MaterialDesignControlsBuilderExtensions
         var methodName = callerMemberName?
             .Replace("Configure", string.Empty)
             .Replace("FromResources", string.Empty);
-        
+
         Logger.DebugWithCallerInfo($"Enqueuing {methodName} loading task from resources", callerFilePath, callerMemberName);
-        
+
         MaterialDesignControls.EnqueueAction(
             resourceDictionaryName,
             resources =>
             {
                 Logger.DebugWithCallerInfo($"Configuring {methodName} from Resources source: {resources.Source}", callerFilePath, callerMemberName);
-                
+
                 var opt = resources.FromResources<T>(resourcePrefix);
-                func(builder, opt);    
-                
+                func(builder, opt);
+
                 Logger.DebugWithCallerInfo($"{methodName} configuration from resources COMPLETED", callerFilePath, callerMemberName);
             });
-        
+
         return builder;
     }
-    
+
     private static T FromResources<T>(this ResourceDictionary dictionary, string? prefix = null) where T : new()
     {
         var resSource = dictionary.Source?.ToString();
         resSource = string.IsNullOrEmpty(resSource) ? "ALL MERGED" : resSource;
-        
+
         Logger.Debug($"Loading resources from {resSource} into {typeof(T).Name}");
         T result = new T();
 
@@ -625,14 +625,14 @@ public static class MaterialDesignControlsBuilderExtensions
         }
         Logger.Debug($"Properties loaded from resources: {propertiesSet}");
         Logger.Debug($"Loaded configuration: {JsonSerializer.Serialize(result, JsonSerializationUtils.Instance.SerializerOptions)}");
-        
+
         return result;
     }
-    
+
     #endregion Styles & Resources
-    
+
     #region Logging
-    
+
     private static void ConfigurationWithLogger(Action onTry, Action<Exception>? onCatch = null, bool @throw = false, [CallerFilePath] string? callerFilePath = null, [CallerMemberName] string? callerMemberName = null)
     {
         Logger.DebugWithCallerInfo("Init configuration", callerFilePath, callerMemberName);
@@ -644,7 +644,7 @@ public static class MaterialDesignControlsBuilderExtensions
             }, @throw, callerFilePath, callerMemberName);
         Logger.DebugWithCallerInfo("Configuration COMPLETED", callerFilePath, callerMemberName);
     }
-    
+
     private static void ConfigurationWithLoggerAndCaller(Action onTry, Action<Exception>? onCatch = null, bool @throw = false, string? callerFilePath = null, string? callerMemberName = null)
     {
         Logger.DebugWithCallerInfo("Init configuration", callerFilePath, callerMemberName);
@@ -656,6 +656,6 @@ public static class MaterialDesignControlsBuilderExtensions
             }, @throw, callerFilePath, callerMemberName);
         Logger.DebugWithCallerInfo("Configuration COMPLETED", callerFilePath, callerMemberName);
     }
-    
+
     #endregion Logging
 }

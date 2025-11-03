@@ -105,7 +105,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Handlers
             button.SetBackground(drawable);
             button.Click += (s, e) =>
             {
-                var view = VirtualView?.Handler?.PlatformView as Android.Views.View;
+                var view = VirtualView?.Handler?.PlatformView as AndroidViews.View;
                 if (view != null)
                 {
                     view.ClearFocus();
