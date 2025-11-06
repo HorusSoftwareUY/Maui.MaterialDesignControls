@@ -1,26 +1,26 @@
-﻿using Android.Views;
+﻿using AndroidViews = Android.Views;
 
 namespace Microsoft.Maui;
 
 static class TextAlignmentExtensions
 {
-    public static GravityFlags ToGravityFlags(this TextAlignment textAlignment)
+    public static AndroidViews.GravityFlags ToGravityFlags(this TextAlignment textAlignment)
     {
         return textAlignment switch
         {
-            TextAlignment.Start => GravityFlags.Left,
-            TextAlignment.Center => GravityFlags.Center,
-            _ => GravityFlags.Right
+            TextAlignment.Start =>AndroidViews.GravityFlags.Left,
+            TextAlignment.Center => AndroidViews.GravityFlags.Center,
+            _ => AndroidViews.GravityFlags.Right
         };
     }
 
-    public static Android.Views.TextAlignment ToAndroid(this TextAlignment textAlignment)
+    public static AndroidViews.TextAlignment ToAndroid(this TextAlignment textAlignment)
     {
         return textAlignment switch
         {
-            TextAlignment.Start => Android.Views.TextAlignment.TextStart,
-            TextAlignment.Center => Android.Views.TextAlignment.Center,
-            _ => Android.Views.TextAlignment.TextEnd
+            TextAlignment.Start => AndroidViews.TextAlignment.TextStart,
+            TextAlignment.Center => AndroidViews.TextAlignment.Center,
+            _ => AndroidViews.TextAlignment.TextEnd
         };
     }
 }

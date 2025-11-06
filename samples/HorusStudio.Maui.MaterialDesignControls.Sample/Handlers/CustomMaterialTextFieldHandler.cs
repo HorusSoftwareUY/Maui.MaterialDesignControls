@@ -51,8 +51,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Handlers
         AndroidViews.View? floatingButton;
         AndroidViews.WindowManagerLayoutParams? layoutParams;
         AndroidViews.IWindowManager? windowManager;
-
-        protected override void ConnectHandler(AppCompatEditText platformView)
+        
+        protected override void ConnectHandler(MauiAppCompatEditText platformView)
         {
             base.ConnectHandler(platformView);
 
@@ -140,8 +140,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Handlers
                 windowManager?.RemoveView(floatingButton);
             }
         }
-
-        protected override void DisconnectHandler(AppCompatEditText platformView)
+        
+        protected override void DisconnectHandler(MauiAppCompatEditText platformView)
         {
             RemoveFloatingButton();
             platformView.FocusChange -= OnFocusChanged;

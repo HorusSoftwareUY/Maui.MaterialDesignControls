@@ -43,7 +43,7 @@
                         LeadingIconIsBusy="{TemplateBinding Path=BackCommand.IsRunning}"
                         LeadingIcon="ic_back.png"
                         Type="Large"
-                        ScrollViewName="MdcControlPageScroll"
+
                         TrailingIcons="{TemplateBinding TopBarIcons}"
                         x:Name="mdcTopBar" />
                     <ScrollView Grid.Row="1" x:Name="MdcControlPageScroll">
