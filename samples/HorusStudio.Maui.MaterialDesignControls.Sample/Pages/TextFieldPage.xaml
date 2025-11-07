@@ -216,7 +216,7 @@
                     <material:MaterialTextField 
                         Type="Filled"
                         Label="Phone number"
-                        Text="Text here"
+                        Placeholder="Enter phone number here"
                         Keyboard="Telephone"/>
                 </VerticalStackLayout>
             </material:MaterialCard>
