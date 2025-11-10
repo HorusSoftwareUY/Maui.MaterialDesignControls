@@ -1,10 +1,8 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using HorusStudio.Maui.MaterialDesignControls.Converters;
 using Microsoft.Maui.Controls.Shapes;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
 
 namespace HorusStudio.Maui.MaterialDesignControls
 {

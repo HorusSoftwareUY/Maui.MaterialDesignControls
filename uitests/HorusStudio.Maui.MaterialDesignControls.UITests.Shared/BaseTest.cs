@@ -87,7 +87,7 @@ public abstract class BaseTest
 
 	protected void Wait(int milliseconds)
 	{
-		Task.Delay(500).Wait();
+		Task.Delay(milliseconds).Wait();
 	}
 
 	protected void ClickNavigationDrawerItem(string itemAutomationId)
