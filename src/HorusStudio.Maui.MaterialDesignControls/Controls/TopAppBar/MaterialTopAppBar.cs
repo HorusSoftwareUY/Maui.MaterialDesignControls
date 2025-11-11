@@ -659,7 +659,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <remarks>
         /// This value may only be set once on an element.
         /// 
-        /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
+        /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
         /// - The headline label uses the identifier "{AutomationId}_Headline".
         /// - The description label uses the identifier "{AutomationId}_Description".
         /// - The leading icon button uses the identifier "{AutomationId}_LeadingIcon".
@@ -781,7 +781,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 IsVisible = false
             };
             _leadingActivityIndicator.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
-            _leadingActivityIndicator.SetBinding(MaterialIconButton.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "LeadingIconBusyIndicator"));
+            _leadingActivityIndicator.SetBinding(MaterialProgressIndicator.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "LeadingIconBusyIndicator"));
             this.Add(_leadingActivityIndicator, 0);
 
             UpdateLayoutAfterTypeChanged(Type);

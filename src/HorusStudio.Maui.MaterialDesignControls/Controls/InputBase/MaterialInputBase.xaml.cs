@@ -1027,8 +1027,8 @@ public abstract partial class MaterialInputBase : IValidableView
     /// <remarks>
     /// This value may only be set once on an element.
     /// 
-    /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
-    /// - The main input control (e.g., <see cref="Entry"/>, <see cref="Editor"/>, <see cref="Picker"/>, etc.) uses the same <see cref="AutomationId"/> value.
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The main input control (e.g., <see cref="Entry">Entry</see>, <see cref="Editor">Editor</see>, <see cref="Picker">Picker</see>, etc.) uses the same <see cref="AutomationId">AutomationId</see> value.
     /// - The hint label uses the identifier "{AutomationId}_Hint".
     /// - The supporting text label uses the identifier "{AutomationId}_SupportingText".
     /// - The placeholder text label uses the identifier "{AutomationId}_Placeholder".

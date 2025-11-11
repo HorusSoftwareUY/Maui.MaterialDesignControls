@@ -1027,8 +1027,8 @@ public class MaterialSlider : ContentView
     /// <remarks>
     /// This value may only be set once on an element.
     /// 
-    /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
-    /// - The <see cref="Slider"/> control uses the same <see cref="AutomationId"/> value.
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The <see cref="Slider">Slider</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
     /// - The label uses the identifier "{AutomationId}_Label".
     /// 
     /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.

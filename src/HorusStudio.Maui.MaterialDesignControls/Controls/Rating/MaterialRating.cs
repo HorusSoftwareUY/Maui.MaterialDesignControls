@@ -450,7 +450,7 @@ public class MaterialRating : ContentView
     /// <remarks>
     /// This value may only be set once on an element.
     /// 
-    /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
     /// - The label uses the identifier "{AutomationId}_Label".
     /// - Item buttons use the identifier "{AutomationId}_Item_{index}".
     /// 
@@ -678,7 +678,7 @@ public class MaterialRating : ContentView
         customImageButton.SetValue(Grid.ColumnProperty, column);
 
         customImageButton.SetBinding(MaterialIconButton.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
-        customImageButton.SetBinding(Grid.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"Item_{value}"));
+        customImageButton.SetBinding(MaterialIconButton.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"Item_{value}"));
 
         SetIconsRatingControl(customImageButton, this.Value, populatedObjects - 1);
 

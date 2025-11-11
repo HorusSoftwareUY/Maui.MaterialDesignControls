@@ -589,13 +589,9 @@ public class MaterialIconButton : ContentView, ITouchableView
     /// <remarks>
     /// This value may only be set once on an element.
     /// 
-    /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
-    /// - The headline label uses the identifier "{AutomationId}_Headline".
-    /// - The description label uses the identifier "{AutomationId}_Description".
-    /// - The leading icon button uses the identifier "{AutomationId}_LeadingIcon".
-    /// - The leading icon button's busy indicator uses the identifier "{AutomationId}_LeadingIconBusyIndicator".
-    /// - Trailing icon buttons use the identifier "{AutomationId}_TrailingIcon_{index}".
-    /// - Trailing icon buttons' busy indicators uses the identifier "{AutomationId}_TrailingIconBusyIndicator_{index}".
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The <see cref="Image">Image</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
+    /// - The icon button's busy indicator uses the identifier "{AutomationId}_BusyIndicator".
     /// 
     /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
     /// </remarks>

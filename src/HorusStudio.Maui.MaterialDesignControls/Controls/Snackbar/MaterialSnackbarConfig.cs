@@ -424,7 +424,7 @@ public class MaterialSnackbarConfig(string message)
     /// <remarks>
     /// This value may only be set once on an element.
     /// 
-    /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
     /// - The snackbar's message label uses the identifier "{AutomationId}_Message".
     /// - The snackbar's leading icon uses the identifier "{AutomationId}_LeadingIcon".
     /// - The snackbar's trailing icon uses the identifier "{AutomationId}_TrailingIcon".

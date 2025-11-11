@@ -798,8 +798,8 @@ public class MaterialButton : ContentView, ITouchableView
     /// <remarks>
     /// This value may only be set once on an element.
     /// 
-    /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
-    /// - The <see cref="Button"/> control uses the same <see cref="AutomationId"/> value.
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The <see cref="Button">Button</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
     /// - The button's busy indicator uses the identifier "{AutomationId}_BusyIndicator".
     /// 
     /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
@@ -1049,7 +1049,7 @@ public class MaterialButton : ContentView, ITouchableView
         _activityIndicator.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.HeightRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.WidthRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
-        _activityIndicator.SetBinding(Button.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "BusyIndicator"));
+        _activityIndicator.SetBinding(MaterialProgressIndicator.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "BusyIndicator"));
 
         _internalActivityIndicator = CustomBusyIndicator ?? _activityIndicator;
         _internalActivityIndicator.HorizontalOptions = LayoutOptions.Center;

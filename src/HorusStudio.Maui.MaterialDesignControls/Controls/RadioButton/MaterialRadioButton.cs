@@ -436,8 +436,8 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     /// <remarks>
     /// This value may only be set once on an element.
     /// 
-    /// When set on this control, the <see cref="AutomationId"/> is also used as a base identifier for its internal elements:
-    /// - The <see cref="MaterialRadioButton"/> control uses the same <see cref="AutomationId"/> value.
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The <see cref="RadioButton">RadioButton</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
     /// - The chip's text label uses the identifier "{AutomationId}_Text".
     /// 
     /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
