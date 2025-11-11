@@ -11,6 +11,7 @@ public class TextFieldTests : BaseTest
         ClickNavigationDrawerItem("menu_TextField");
         
         var txtFilled = FindUIElementById("txtFilled");
+        Assert.That(txtFilled, Is.Not.Null, "MaterialTextField with id 'txtFilled' was not found.");
         txtFilled.Clear();
         txtFilled.SendKeys("Testing");
         Wait(500);

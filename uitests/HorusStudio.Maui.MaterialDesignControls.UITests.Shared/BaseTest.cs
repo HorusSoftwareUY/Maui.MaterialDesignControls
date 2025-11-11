@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using HorusStudio.Maui.MaterialDesignControls.UITests.Utils;
+using NUnit.Framework;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Interactions;
@@ -13,7 +14,7 @@ public abstract class BaseTest
 {
 	protected AppiumDriver App => AppiumSetup.App;
 	
-	protected AppiumElement FindUIElementById(string id)
+	protected AppiumElement? FindUIElementById(string id)
 	{
 		try
 		{
@@ -32,7 +33,7 @@ public abstract class BaseTest
 		}
 	}
 	
-	private AppiumElement FindUIElementByContentDescription(string contentDescription)
+	private AppiumElement? FindUIElementByContentDescription(string contentDescription)
 	{
 		try
 		{
@@ -92,19 +93,25 @@ public abstract class BaseTest
 
 	protected void ClickNavigationDrawerItem(string itemAutomationId)
 	{
-		FindUIElementById("menu").Click();
+		var menu = FindUIElementById("menu");
+		Assert.That(menu, Is.Not.Null, "MaterialIconButton with id 'menu' was not found.");
+		menu.Click();
 		Wait(2000);
 	    
 		ScrollToElement(itemAutomationId);
 		Wait(500);
 		
-		FindUIElementById(itemAutomationId).Click();
+		var item = FindUIElementById(itemAutomationId);
+		Assert.That(item, Is.Not.Null, $"Element with id '{itemAutomationId}' was not found.");
+		item.Click();
 		Wait(2000);
 	}
 
 	protected void ClickTopAppBarLeadingIcon()
 	{
-		FindUIElementById("topAppBar_LeadingIcon").Click();
+		var topAppBar_LeadingIcon = FindUIElementById("topAppBar_LeadingIcon");
+		Assert.That(topAppBar_LeadingIcon, Is.Not.Null, "MaterialIconButton with id 'topAppBar_LeadingIcon' was not found.");
+		topAppBar_LeadingIcon.Click();
 		Wait(2000);
 	}
 }

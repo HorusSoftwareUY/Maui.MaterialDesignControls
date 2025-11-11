@@ -12,6 +12,7 @@ public class ButtonTests : BaseTest
 	    
 	    ScrollToElement("ClickBtn");
 	    var clickBtn = FindUIElementById("ClickBtn");
+	    Assert.That(clickBtn, Is.Not.Null, "MaterialButton with id 'ClickBtn' was not found.");
 	    Assert.That(clickBtn.Text, Is.EqualTo("Click me"));
 	    clickBtn.Click();
 	    Wait(500);
