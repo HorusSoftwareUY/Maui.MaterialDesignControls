@@ -595,7 +595,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// This value may only be set once on an element.
         /// 
         /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
-        /// - The <see cref="MaterialSwitch">MaterialSwitch</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
+        /// - The <see cref="Switch">Switch</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
         /// - The switch's text label uses the identifier "{AutomationId}_Text".
         /// - The supporting text label uses the identifier "{AutomationId}_SupportingText".
         /// 
@@ -693,6 +693,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 VerticalOptions = LayoutOptions.Center
             };
+            _switch.SetBinding(Grid.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
             _track = new Border
             {
@@ -733,8 +734,6 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
             Behaviors.Add(new TouchBehavior());
 
-            SetBinding(ContentView.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
-            
             Content = _switch;
         }
 
