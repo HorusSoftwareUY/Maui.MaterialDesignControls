@@ -671,7 +671,7 @@ public class MaterialRating : ContentView
             Padding = 4,
             Margin = new Thickness(3),
             Style = GetStyleForMaterialRating(),
-            UseIconTintColor = false
+            ApplyIconTintColor = false
         };
 
         customImageButton.SetValue(Grid.RowProperty, row);
