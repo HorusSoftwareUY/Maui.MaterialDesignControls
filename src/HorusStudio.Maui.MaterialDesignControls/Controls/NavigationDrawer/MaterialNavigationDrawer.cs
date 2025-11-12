@@ -784,7 +784,7 @@ public class MaterialNavigationDrawer : ContentView
         try
         {
             Utils.Logger.Debug($"Creating section '{item.Headline}'");
-            return AddItem(item, SectionTemplate ?? GetDefaultSectionDataTemplate(item));
+            return AddItem(item, SectionTemplate ?? GetDefaultSectionDataTemplate(item), true);
         }
         catch (Exception ex)
         {
@@ -798,7 +798,7 @@ public class MaterialNavigationDrawer : ContentView
         try
         {
             Utils.Logger.Debug($"Creating item '{item.Text}'");
-            return AddItem(item, ItemTemplate ?? GetDefaultItemDataTemplate(item));
+            return AddItem(item, ItemTemplate ?? GetDefaultItemDataTemplate(item), false);
         }
         catch (Exception ex)
         {
@@ -807,12 +807,36 @@ public class MaterialNavigationDrawer : ContentView
         return false;
     }
 
-    private bool AddItem(MaterialNavigationDrawerItem item, DataTemplate? itemTemplate)
+    private bool AddItem(MaterialNavigationDrawerItem item, DataTemplate? itemTemplate, bool isHeadlineSection)
     {
         if (itemTemplate?.CreateContent() is not View itemView) return false;
 
         itemView.BindingContext = item;
-        _itemsContainer.Children.Add(itemView);
+        itemView.SetBinding(View.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: isHeadlineSection ? "Section" : "Item"));
+
+        if (!isHeadlineSection && ItemTemplate != null)
+        {
+            var materialViewButton = new MaterialViewButton
+            {
+                Command = new Command(() =>
+                {
+                    if (!item.IsEnabled) return;
+
+                    ToggleItemSelection(item);
+                    ExecuteCommand(item);
+                }),
+                Content = itemView
+            };
+            materialViewButton.SetBinding(MaterialViewButton.IsEnabledProperty, new Binding(nameof(item.IsEnabled), source: item));
+            materialViewButton.SetBinding(MaterialViewButton.TouchAnimationTypeProperty, new Binding(nameof(TouchAnimationType), source: this));
+            materialViewButton.SetBinding(MaterialViewButton.TouchAnimationProperty, new Binding(nameof(TouchAnimation), source: this));
+            _itemsContainer.Children.Add(materialViewButton);
+        }
+        else
+        {
+            _itemsContainer.Children.Add(itemView);
+        }
+        
         return true;
     }
 
@@ -965,10 +989,20 @@ public class MaterialNavigationDrawer : ContentView
             return null;
         }
     }
+    
+    private View CreateLeadingIcon(MaterialNavigationDrawerItem item)
+    {
+        var view = CreateItemIcon(item, true);
+        view.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "LeadingIcon"));
+        return view;
+    }
 
-    private View CreateLeadingIcon(MaterialNavigationDrawerItem item) => CreateItemIcon(item, true);
-
-    private View CreateTrailingIcon(MaterialNavigationDrawerItem item) => CreateItemIcon(item, false);
+    private View CreateTrailingIcon(MaterialNavigationDrawerItem item)
+    {
+        var view = CreateItemIcon(item, false);
+        view.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "TrailingIcon"));
+        return view;
+    }
 
     private View CreateItemIcon(MaterialNavigationDrawerItem item, bool isLeadingIcon)
     {
@@ -981,8 +1015,7 @@ public class MaterialNavigationDrawer : ContentView
         icon.SetBinding(Image.MinimumHeightRequestProperty, new Binding(nameof(IconSize), source: this));
         icon.SetBinding(Image.WidthRequestProperty, new Binding(nameof(IconSize), source: this));
         icon.SetBinding(Image.MinimumWidthRequestProperty, new Binding(nameof(IconSize), source: this));
-
-
+        
         var tintColorBehavior = new IconTintColorBehavior();
 
         SetIconTintColorPropertyBindings(tintColorBehavior, item);
@@ -1030,7 +1063,7 @@ public class MaterialNavigationDrawer : ContentView
         label.SetBinding(Label.FontAutoScalingEnabledProperty, new Binding(nameof(LabelFontAutoScalingEnabled), source: this));
         label.SetBinding(Label.CharacterSpacingProperty, new Binding(nameof(LabelCharactersSpacing), source: this));
         label.SetBinding(Label.TextTransformProperty, new Binding(nameof(LabelTextTransform), source: this));
-        label.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: item));
+        label.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Text"));
 
         return label;
     }
@@ -1046,6 +1079,7 @@ public class MaterialNavigationDrawer : ContentView
         badge.SetBinding(MaterialBadge.FontFamilyProperty, new Binding(nameof(BadgeFontFamily), source: this));
         badge.SetBinding(MaterialBadge.BackgroundColorProperty, new Binding(nameof(BadgeBackgroundColor), source: this));
         badge.SetBinding(MaterialBadge.TextProperty, new Binding(nameof(item.BadgeText), source: item));
+        badge.SetBinding(MaterialBadge.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Badge"));
         badge.Margin = new Thickness(DefaultItemContentSpacing, 0, 0, 0);
 
         return badge;
@@ -1083,6 +1117,7 @@ public class MaterialNavigationDrawer : ContentView
             label.SetBinding(MarginProperty, new Binding(nameof(HeadlineMargin), source: this));
             label.SetBinding(Label.TextProperty, new Binding(nameof(item.Headline), source: item));
             label.SetBinding(IsVisibleProperty, new Binding(nameof(item.Headline), source: item, converter: new IsNotNullOrEmptyConverter()));
+            label.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Headline"));
 
             return label;
         });
