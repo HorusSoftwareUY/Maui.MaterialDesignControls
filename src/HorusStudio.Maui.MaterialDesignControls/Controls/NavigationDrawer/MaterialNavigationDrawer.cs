@@ -812,7 +812,7 @@ public class MaterialNavigationDrawer : ContentView
         if (itemTemplate?.CreateContent() is not View itemView) return false;
 
         itemView.BindingContext = item;
-        itemView.SetBinding(View.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: isHeadlineSection ? "Section" : "Item"));
+        itemView.SetBinding(View.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: item, converter: new AutomationIdConverter(), converterParameter: isHeadlineSection ? "Section" : "Item"));
 
         if (!isHeadlineSection && ItemTemplate != null)
         {
@@ -993,14 +993,14 @@ public class MaterialNavigationDrawer : ContentView
     private View CreateLeadingIcon(MaterialNavigationDrawerItem item)
     {
         var view = CreateItemIcon(item, true);
-        view.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "LeadingIcon"));
+        view.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: item, converter: new AutomationIdConverter(), converterParameter: "LeadingIcon"));
         return view;
     }
 
     private View CreateTrailingIcon(MaterialNavigationDrawerItem item)
     {
         var view = CreateItemIcon(item, false);
-        view.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "TrailingIcon"));
+        view.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: item, converter: new AutomationIdConverter(), converterParameter: "TrailingIcon"));
         return view;
     }
 
@@ -1063,7 +1063,7 @@ public class MaterialNavigationDrawer : ContentView
         label.SetBinding(Label.FontAutoScalingEnabledProperty, new Binding(nameof(LabelFontAutoScalingEnabled), source: this));
         label.SetBinding(Label.CharacterSpacingProperty, new Binding(nameof(LabelCharactersSpacing), source: this));
         label.SetBinding(Label.TextTransformProperty, new Binding(nameof(LabelTextTransform), source: this));
-        label.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Text"));
+        label.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: item, converter: new AutomationIdConverter(), converterParameter: "Text"));
 
         return label;
     }
@@ -1079,7 +1079,7 @@ public class MaterialNavigationDrawer : ContentView
         badge.SetBinding(MaterialBadge.FontFamilyProperty, new Binding(nameof(BadgeFontFamily), source: this));
         badge.SetBinding(MaterialBadge.BackgroundColorProperty, new Binding(nameof(BadgeBackgroundColor), source: this));
         badge.SetBinding(MaterialBadge.TextProperty, new Binding(nameof(item.BadgeText), source: item));
-        badge.SetBinding(MaterialBadge.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Badge"));
+        badge.SetBinding(MaterialBadge.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: item, converter: new AutomationIdConverter(), converterParameter: "Badge"));
         badge.Margin = new Thickness(DefaultItemContentSpacing, 0, 0, 0);
 
         return badge;
@@ -1117,7 +1117,7 @@ public class MaterialNavigationDrawer : ContentView
             label.SetBinding(MarginProperty, new Binding(nameof(HeadlineMargin), source: this));
             label.SetBinding(Label.TextProperty, new Binding(nameof(item.Headline), source: item));
             label.SetBinding(IsVisibleProperty, new Binding(nameof(item.Headline), source: item, converter: new IsNotNullOrEmptyConverter()));
-            label.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Headline"));
+            label.SetBinding(Label.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: item, converter: new AutomationIdConverter(), converterParameter: "Headline"));
 
             return label;
         });
