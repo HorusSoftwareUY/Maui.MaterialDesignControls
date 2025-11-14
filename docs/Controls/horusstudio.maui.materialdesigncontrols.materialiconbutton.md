@@ -39,12 +39,28 @@ var iconButton = new MaterialIconButton()
 
 ### <a id="properties-applyicontintcolor"/>**ApplyIconTintColor**
 
-Gets or sets the if the icon applies the tint color.
+Gets or sets if the icon applies the tint color.
  This is a bindable property.
 
 Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 Default value: true
+
+<br>
+
+### <a id="properties-automationid"/>**AutomationId**
+
+Gets or sets a value that allows the automation framework to find and interact with this element.
+
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Remarks: This value may only be set once on an element.
+ 
+ When set on this control, the AutomationId is also used as a base identifier for its internal elements:
+ - The Image control uses the same AutomationId value.
+ - The icon button's busy indicator uses the identifier "{AutomationId}_BusyIndicator".
+ 
+ This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
 
 <br>
 
@@ -266,16 +282,6 @@ Property type: MaterialIconButtonType<br>
 | Custom | 4 | Custom material icon button |
 
 Default value: MaterialIconButtonType.Filled
-
-<br>
-
-### <a id="properties-useicontintcolor"/>**UseIconTintColor**
-
-Gets or sets if button should use tint color.
- The default value is true.
- This is a bindable property.
-
-Property type: [Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 <br>
 

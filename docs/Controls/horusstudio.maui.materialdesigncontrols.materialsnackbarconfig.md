@@ -36,6 +36,28 @@ Default value: null
 
 <br>
 
+### <a id="properties-automationid"/>**AutomationId**
+
+Gets or sets a value that allows the automation framework to find and interact with this element.
+
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Remarks: This value may only be set once on an element.
+ 
+ When set on this control, the AutomationId is also used as a base identifier for its internal elements:
+ - The snackbar's message label uses the identifier "{AutomationId}_Message".
+ - The snackbar's leading icon uses the identifier "{AutomationId}_LeadingIcon".
+ - The snackbar's trailing icon uses the identifier "{AutomationId}_TrailingIcon".
+ - The snackbar's action button uses the identifier "{AutomationId}_Action".
+ 
+ This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+ 
+ Note: On Android, the value assigned to this AutomationId property
+ will be mapped to the native Android property ContentDescription (content-desc),
+ unlike most other controls where it maps to the Id (resource-id) property.
+
+<br>
+
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Gets or sets a color that describes the background color of snackbar.
