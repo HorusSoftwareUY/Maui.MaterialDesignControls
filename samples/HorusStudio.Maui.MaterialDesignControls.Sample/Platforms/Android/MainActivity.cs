@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
+using Android.Runtime;
 using Android.OS;
 using Android.Views;
 using Microsoft.Maui.Platform;
@@ -7,6 +8,7 @@ using Microsoft.Maui.Platform;
 namespace HorusStudio.Maui.MaterialDesignControls.Sample
 {
     [Activity(Theme = "@style/MyAppTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+    [Register("com.horusstudio.maui.materialdesigncontrols.sample.MainActivity")]
     public class MainActivity : MauiAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

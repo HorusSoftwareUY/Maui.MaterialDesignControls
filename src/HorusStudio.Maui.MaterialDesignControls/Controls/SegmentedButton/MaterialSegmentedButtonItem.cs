@@ -16,6 +16,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private ImageSource? _unselectedIcon;
         private bool _applyIconTintColor = true;
         private bool _isSelected = false;
+        private string _automationId = null!;
 
         #endregion Attributes
 
@@ -76,6 +77,18 @@ namespace HorusStudio.Maui.MaterialDesignControls
         {
             get => _isSelected;
             internal set => SetProperty(ref _isSelected, value);
+        }
+        
+        /// <summary>
+        /// Gets or sets a value that allows the automation framework to find and interact with this element.
+        /// </summary>
+        /// <remarks>
+        /// This value may only be set once on an element.
+        /// </remarks>
+        public string AutomationId
+        {
+            get => _automationId;
+            set => SetProperty(ref _automationId, value);
         }
 
         /// <inheritdoc />

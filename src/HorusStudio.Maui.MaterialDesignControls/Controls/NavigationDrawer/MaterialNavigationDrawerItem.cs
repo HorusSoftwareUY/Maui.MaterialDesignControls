@@ -21,6 +21,7 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
     private bool _applyTrailingIconTintColor = true;
     private bool _isSelected;
     private bool _isEnabled = true;
+    private string _automationId = null!;
     
     #endregion Attributes
     
@@ -123,6 +124,29 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
     {
         get => _isEnabled;
         set => SetProperty(ref _isEnabled, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The text label uses the identifier "{AutomationId}_Text".
+    /// - The leading icon uses the identifier "{AutomationId}_LeadingIcon".
+    /// - The trailing icon uses the identifier "{AutomationId}_TrailingIcon".
+    /// - The badge label uses the identifier "{AutomationId}_Badge".
+    /// - The headline label uses the identifier "{AutomationId}_Headline".
+    /// - The headline section layout uses the identifier "{AutomationId}_Section".
+    /// - The item layout uses the identifier "{AutomationId}_Item".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public string AutomationId
+    {
+        get => _automationId;
+        set => SetProperty(ref _automationId, value);
     }
     
     /// <inheritdoc />

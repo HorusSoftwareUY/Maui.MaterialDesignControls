@@ -38,7 +38,7 @@
 
     <Grid RowDefinitions="48,*">
         <Grid Grid.Row="0" ColumnDefinitions="24,*,24" Padding="16,0" >
-            <material:MaterialIconButton Grid.Column="0" ImageSource="menu" Command="{Binding ToggleMenuCommand}" />
+            <material:MaterialIconButton Grid.Column="0" ImageSource="menu" Command="{Binding ToggleMenuCommand}" AutomationId="menu" />
             <Image Grid.Column="1" Aspect="Center">
                 <Image.Source>
                     <AppThemeBinding Light="horus_studio_logo" Dark="horus_studio_logo_white" />

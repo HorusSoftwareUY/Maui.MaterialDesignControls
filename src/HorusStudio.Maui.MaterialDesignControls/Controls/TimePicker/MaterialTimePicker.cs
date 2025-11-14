@@ -73,6 +73,7 @@ public class MaterialTimePicker : MaterialInputBase
         _timePicker.SetBinding(TimePicker.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _timePicker.SetBinding(TimePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _timePicker.SetBinding(CustomTimePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+        _timePicker.SetBinding(TimePicker.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
         
         InputTapCommand = new Command(() => Focus());
         LeadingIconCommand = new Command(() => Focus());

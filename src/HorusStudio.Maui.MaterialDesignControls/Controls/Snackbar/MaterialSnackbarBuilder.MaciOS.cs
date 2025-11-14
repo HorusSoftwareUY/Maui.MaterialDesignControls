@@ -127,12 +127,16 @@ class MaterialSnackbarBuilder : UIView
         
         if (materialSnackbarConfig.LeadingIcon?.Source is not null)
         {
-            container.AddArrangedSubview(
-                ConfigureIconButton(
-                    materialSnackbarConfig.LeadingIcon.Source.Source(), 
-                    materialSnackbarConfig.LeadingIcon.Size, 
-                    materialSnackbarConfig.LeadingIcon.Color, 
-                    materialSnackbarConfig.LeadingIcon.Action));
+            var leadingIconButton = ConfigureIconButton(
+                materialSnackbarConfig.LeadingIcon.Source.Source(),
+                materialSnackbarConfig.LeadingIcon.Size,
+                materialSnackbarConfig.LeadingIcon.Color,
+                materialSnackbarConfig.LeadingIcon.Action);
+            
+            if (!string.IsNullOrEmpty(materialSnackbarConfig.AutomationId))
+                leadingIconButton.AccessibilityIdentifier = $"{materialSnackbarConfig.AutomationId}_LeadingIcon";
+            
+            container.AddArrangedSubview(leadingIconButton);
         }
 
         container.AddArrangedSubview(ConfigureText(materialSnackbarConfig));
@@ -144,12 +148,16 @@ class MaterialSnackbarBuilder : UIView
         
         if (materialSnackbarConfig.TrailingIcon?.Source is not null)
         {
-            container.AddArrangedSubview(
-                ConfigureIconButton(
-                    materialSnackbarConfig.TrailingIcon.Source.Source(), 
-                    materialSnackbarConfig.TrailingIcon.Size, 
-                    materialSnackbarConfig.TrailingIcon.Color, 
-                    materialSnackbarConfig.TrailingIcon.Action));
+            var trailingIconButton = ConfigureIconButton(
+                materialSnackbarConfig.TrailingIcon.Source.Source(),
+                materialSnackbarConfig.TrailingIcon.Size,
+                materialSnackbarConfig.TrailingIcon.Color,
+                materialSnackbarConfig.TrailingIcon.Action);
+            
+            if (!string.IsNullOrEmpty(materialSnackbarConfig.AutomationId))
+                trailingIconButton.AccessibilityIdentifier = $"{materialSnackbarConfig.AutomationId}_TrailingIcon";
+            
+            container.AddArrangedSubview(trailingIconButton);
         }
 
         return container;
@@ -265,6 +273,9 @@ class MaterialSnackbarBuilder : UIView
         widthConstraint.Priority = (int)UILayoutPriority.Required;
         button.AddConstraint(widthConstraint);
 
+        if (!string.IsNullOrEmpty(materialSnackbarConfig.AutomationId))
+            button.AccessibilityIdentifier = $"{materialSnackbarConfig.AutomationId}_Action";
+        
         return button;
     }
 
@@ -286,6 +297,9 @@ class MaterialSnackbarBuilder : UIView
         label.SetLineBreakMode(materialSnackbarConfig.LineBreakMode, TextMaxLines);
         label.SetFontAttributes(materialSnackbarConfig.FontAttributes);
             
+        if (!string.IsNullOrEmpty(materialSnackbarConfig.AutomationId))
+            label.AccessibilityIdentifier = $"{materialSnackbarConfig.AutomationId}_Message";
+        
         return label;
     }
 }

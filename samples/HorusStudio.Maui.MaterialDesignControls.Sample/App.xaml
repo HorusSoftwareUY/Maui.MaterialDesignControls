@@ -37,6 +37,7 @@
                 <Grid
                     RowDefinitions="Auto,*">
                     <material:MaterialTopAppBar
+                        AutomationId="topAppBar"
                         Headline="{TemplateBinding Title}"
                         Description="{TemplateBinding Subtitle}"
                         LeadingIconCommand="{TemplateBinding BackCommand}"

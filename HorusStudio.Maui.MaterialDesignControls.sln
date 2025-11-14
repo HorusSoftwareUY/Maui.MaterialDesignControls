@@ -16,6 +16,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HorusStudio.Maui.MaterialDe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HorusStudio.Maui.MaterialDesignControls", "src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj", "{DE16B804-FCC3-4132-8E64-56E61CE5FF99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HorusStudio.Maui.MaterialDesignControls.UITests.Shared", "uitests\HorusStudio.Maui.MaterialDesignControls.UITests.Shared\HorusStudio.Maui.MaterialDesignControls.UITests.Shared.csproj", "{195A74C4-6A23-4EC3-AFBF-E790E884D62A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HorusStudio.Maui.MaterialDesignControls.UITests.Android", "uitests\HorusStudio.Maui.MaterialDesignControls.UITests.Android\HorusStudio.Maui.MaterialDesignControls.UITests.Android.csproj", "{FE72E602-30BF-4BAD-AB15-DCE4E40AA2D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HorusStudio.Maui.MaterialDesignControls.UITests.iOS", "uitests\HorusStudio.Maui.MaterialDesignControls.UITests.iOS\HorusStudio.Maui.MaterialDesignControls.UITests.iOS.csproj", "{CB54ADBF-1CFE-45FC-A636-E1412E815746}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HorusStudio.Maui.MaterialDesignControls.UITests.macOS", "uitests\HorusStudio.Maui.MaterialDesignControls.UITests.macOS\HorusStudio.Maui.MaterialDesignControls.UITests.macOS.csproj", "{3B0A314E-5A17-4700-865F-F5686C3C4D44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +40,22 @@ Global
 		{DE16B804-FCC3-4132-8E64-56E61CE5FF99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE16B804-FCC3-4132-8E64-56E61CE5FF99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE16B804-FCC3-4132-8E64-56E61CE5FF99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{195A74C4-6A23-4EC3-AFBF-E790E884D62A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195A74C4-6A23-4EC3-AFBF-E790E884D62A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195A74C4-6A23-4EC3-AFBF-E790E884D62A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195A74C4-6A23-4EC3-AFBF-E790E884D62A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE72E602-30BF-4BAD-AB15-DCE4E40AA2D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE72E602-30BF-4BAD-AB15-DCE4E40AA2D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE72E602-30BF-4BAD-AB15-DCE4E40AA2D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE72E602-30BF-4BAD-AB15-DCE4E40AA2D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB54ADBF-1CFE-45FC-A636-E1412E815746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB54ADBF-1CFE-45FC-A636-E1412E815746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB54ADBF-1CFE-45FC-A636-E1412E815746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB54ADBF-1CFE-45FC-A636-E1412E815746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B0A314E-5A17-4700-865F-F5686C3C4D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B0A314E-5A17-4700-865F-F5686C3C4D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B0A314E-5A17-4700-865F-F5686C3C4D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B0A314E-5A17-4700-865F-F5686C3C4D44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

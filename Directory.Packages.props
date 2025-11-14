@@ -5,10 +5,14 @@
     <PackageVersion Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="Appium.WebDriver" Version="5.0.0" />
     <PackageVersion Include="AdamE.Firebase.iOS.Analytics" Version="12.3.0" />
     <PackageVersion Include="AdamE.Firebase.iOS.Crashlytics" Version="12.3.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageVersion Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
+    <PackageVersion Include="NUnit" Version="4.0.1" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageVersion Include="Xamarin.AndroidX.Lifecycle.LiveData.Ktx" Version="2.8.7.4" />
     <PackageVersion Include="Xamarin.Firebase.Analytics" Version="122.3.0.2" />
     <PackageVersion Include="Xamarin.Firebase.Crashlytics" Version="119.4.2.1" />

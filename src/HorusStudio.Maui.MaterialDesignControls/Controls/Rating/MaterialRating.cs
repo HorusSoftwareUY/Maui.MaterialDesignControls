@@ -181,6 +181,11 @@ public class MaterialRating : ContentView
     /// </summary>
     public static readonly BindableProperty ValueChangedCommandProperty = BindableProperty.Create(nameof(ValueChangedCommand), typeof(ICommand), typeof(MaterialRating));
 
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialRating), null);
+    
     #endregion Bindable Properties
 
     #region Properties
@@ -438,6 +443,24 @@ public class MaterialRating : ContentView
         get => (ICommand)GetValue(ValueChangedCommandProperty);
         set => SetValue(ValueChangedCommandProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The label uses the identifier "{AutomationId}_Label".
+    /// - Item buttons use the identifier "{AutomationId}_Item_{index}".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
+    }
 
     #endregion Properties
 
@@ -501,6 +524,7 @@ public class MaterialRating : ContentView
         label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTransform), source: this));
         label.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         label.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(Label), source: this, converter: new IsNotNullOrEmptyConverter()));
+        label.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"Label"));
 
         mainLayout.Children.Add(label);
 
@@ -624,6 +648,7 @@ public class MaterialRating : ContentView
         customGrid.SetValue(Grid.ColumnProperty, column);
 
         customGrid.SetBinding(Grid.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        customGrid.SetBinding(Grid.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"Item_{value}"));
 
         SetIconsRatingControl(customGrid, this.Value);
 
@@ -646,13 +671,14 @@ public class MaterialRating : ContentView
             Padding = 4,
             Margin = new Thickness(3),
             Style = GetStyleForMaterialRating(),
-            UseIconTintColor = false
+            ApplyIconTintColor = false
         };
 
         customImageButton.SetValue(Grid.RowProperty, row);
         customImageButton.SetValue(Grid.ColumnProperty, column);
 
         customImageButton.SetBinding(MaterialIconButton.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        customImageButton.SetBinding(MaterialIconButton.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"Item_{value}"));
 
         SetIconsRatingControl(customImageButton, this.Value, populatedObjects - 1);
 

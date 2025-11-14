@@ -82,6 +82,7 @@ public class MaterialMultilineTextField : MaterialInputBase
         _editor.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
         _editor.SetBinding(CustomEditor.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
         _editor.SetBinding(Editor.AutoSizeProperty, new Binding(nameof(AutoSize), source: this));
+        _editor.SetBinding(Editor.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         InputTapCommand = new Command(() => Focus());
         LeadingIconCommand = new Command(() => Focus());
