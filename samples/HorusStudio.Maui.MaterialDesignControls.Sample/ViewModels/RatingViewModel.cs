@@ -27,21 +27,35 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
             SelectedIcons = new ObservableCollection<ImageSource>
             {
-                "verybad.png",
-                "bad.png",
-                "middle.png",
-                "good.png",
-                "verygood.png",
+                "mood_bad_c",
+                "sentiment_dissatisfied_c",
+                "sentiment_neutral_c",
+                "sentiment_satisfied_c",
+                "mood_c",
             };
-
-            UnselectedIcons = new ObservableCollection<ImageSource>
+            
+            if (Application.Current?.RequestedTheme == AppTheme.Dark)
             {
-                "verybad_unselected.png",
-                "bad_unselected.png",
-                "middle_unselected.png",
-                "good_unselected.png",
-                "verygood_unselected.png",
-            };
+                UnselectedIcons = new ObservableCollection<ImageSource>
+                {
+                    "mood_bad_d",
+                    "sentiment_dissatisfied_d",
+                    "sentiment_neutral_d",
+                    "sentiment_satisfied_d",
+                    "mood_d",
+                };
+            }
+            else
+            {
+                UnselectedIcons = new ObservableCollection<ImageSource>
+                {
+                    "mood_bad_l",
+                    "sentiment_dissatisfied_l",
+                    "sentiment_neutral_l",
+                    "sentiment_satisfied_l",
+                    "mood_l",
+                };
+            }
         }
 
 

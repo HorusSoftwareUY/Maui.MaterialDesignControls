@@ -11,9 +11,6 @@ public partial class MaterialSliderHandler : ISliderHandler
     {
         if (slider is CustomSlider customSlider && handler.PlatformView is UISlider control)
         {
-            control.MaximumTrackTintColor = customSlider.MaximumTrackColor.ToPlatform();
-            control.MinimumTrackTintColor = customSlider.MinimumTrackColor.ToPlatform();
-
             control.UserInteractionEnabled = customSlider.UserInteractionEnabled;
 
             control.SetTrackDesign(customSlider.TrackHeight * 1.1f, customSlider.MinimumTrackColor.ToPlatform(), customSlider.MaximumTrackColor.ToPlatform(), customSlider.TrackCornerRadius);

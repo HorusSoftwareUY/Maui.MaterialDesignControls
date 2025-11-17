@@ -240,6 +240,7 @@ public class MaterialSnackbarConfig(string message)
     private MaterialSnackbarPosition? _position;
     private TimeSpan? _duration;
     private int? _spacing;
+    private string _automationId;
     
     #endregion Attributes
     
@@ -415,6 +416,30 @@ public class MaterialSnackbarConfig(string message)
     {
         get => _spacing ?? DefaultSpacing; 
         set => _spacing = value;
+    }
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The snackbar's message label uses the identifier "{AutomationId}_Message".
+    /// - The snackbar's leading icon uses the identifier "{AutomationId}_LeadingIcon".
+    /// - The snackbar's trailing icon uses the identifier "{AutomationId}_TrailingIcon".
+    /// - The snackbar's action button uses the identifier "{AutomationId}_Action".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    ///
+    /// Note: On Android, the value assigned to this AutomationId property
+    /// will be mapped to the native Android property ContentDescription (content-desc),
+    /// unlike most other controls where it maps to the Id (resource-id) property.
+    /// </remarks>
+    public string AutomationId
+    {
+        get => _automationId; 
+        set => _automationId = value;
     }
 
     #endregion Properties

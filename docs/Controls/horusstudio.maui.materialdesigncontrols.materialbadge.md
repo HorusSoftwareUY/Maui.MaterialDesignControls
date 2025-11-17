@@ -34,6 +34,16 @@ var badgeSmall = new MaterialBadge()
 
 ## Properties
 
+### <a id="properties-automationid"/>**AutomationId**
+
+Gets or sets a value that allows the automation framework to find and interact with this element.
+
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Remarks: This value may only be set once on an element.
+
+<br>
+
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Gets or sets a color that describes the background color of the badge.

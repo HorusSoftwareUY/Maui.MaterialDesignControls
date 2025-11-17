@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
 using Microsoft.Maui.Controls.Shapes;
 
@@ -71,7 +72,7 @@ public class MaterialIconButton : ContentView, ITouchableView
     private const double DefaultWidthRequest = 40;
     private static readonly Thickness DefaultPadding = new(8);
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary };
     private const double DefaultBusyIndicatorSize = 24;
     private static readonly Shadow DefaultShadow = null!;
     private static readonly ImageSource? DefaultImageSource = Image.SourceProperty.DefaultValue as ImageSource;
@@ -292,18 +293,11 @@ public class MaterialIconButton : ContentView, ITouchableView
             self.SetShadow(self.Type);
         }
     });
-
-
+    
     /// <summary>
-    /// The backing store for the <see cref="UseIconTintColor">UseIconTintColor</see> bindable property.
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty UseIconTintColorProperty = BindableProperty.Create(nameof(UseIconTintColor), typeof(bool), typeof(MaterialIconButton), defaultBindingMode: BindingMode.OneTime, defaultValue: true, propertyChanged: (bindable, _, newValue) =>
-    {
-        if (bindable is MaterialIconButton self && newValue is bool value && !value)
-        {
-            self._image.Behaviors.Clear();
-        }
-    });
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialIconButton), null);
 
     #endregion Bindable Properties
 
@@ -440,7 +434,7 @@ public class MaterialIconButton : ContentView, ITouchableView
     }
 
     /// <summary>
-    /// Gets or sets the if the icon applies the tint color.
+    /// Gets or sets if the icon applies the tint color.
     /// This is a bindable property.
     /// </summary>
     /// <default>
@@ -564,17 +558,23 @@ public class MaterialIconButton : ContentView, ITouchableView
         get => (Shadow)GetValue(ShadowProperty);
         set => SetValue(ShadowProperty, value);
     }
-
-
+    
     /// <summary>
-    /// Gets or sets if button should use tint color.
-    /// The default value is <see langword="true">true</see>.
-    /// This is a bindable property.
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
     /// </summary>
-    public bool UseIconTintColor
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The <see cref="Image">Image</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
+    /// - The icon button's busy indicator uses the identifier "{AutomationId}_BusyIndicator".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public new string AutomationId
     {
-        get => (bool)GetValue(UseIconTintColorProperty);
-        set => SetValue(UseIconTintColorProperty, value);
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
     }
 
     #endregion Properties
@@ -686,6 +686,8 @@ public class MaterialIconButton : ContentView, ITouchableView
 
     public MaterialIconButton()
     {
+        this.SetAppTheme(BusyIndicatorColorProperty, ((AppThemeBindingExtension)DefaultBusyIndicatorColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultBusyIndicatorColor.Invoke(this)).Dark);
+
         CreateLayout();
         if (Type == DefaultButtonType)
         {
@@ -705,6 +707,7 @@ public class MaterialIconButton : ContentView, ITouchableView
 
         _image.Loaded += async (s, e) => await ImageLoaded(s as Image);
         _image.SetBinding(Image.SourceProperty, new Binding(nameof(ImageSource), source: this));
+        _image.SetBinding(Image.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         var iconTintColor = new IconTintColorBehavior();
         iconTintColor.SetBinding(IconTintColorBehavior.TintColorProperty, new Binding(nameof(InternalIconTintColor), source: this));
@@ -739,6 +742,7 @@ public class MaterialIconButton : ContentView, ITouchableView
         _activityIndicator.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.HeightRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
         _activityIndicator.SetBinding(MaterialProgressIndicator.WidthRequestProperty, new Binding(nameof(BusyIndicatorSize), source: this));
+        _activityIndicator.SetBinding(MaterialProgressIndicator.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "BusyIndicator"));
 
         _internalActivityIndicator = CustomBusyIndicator ?? _activityIndicator;
         _internalActivityIndicator.HorizontalOptions = LayoutOptions.Center;
@@ -813,7 +817,7 @@ public class MaterialIconButton : ContentView, ITouchableView
                 }
                 else if (background is AppThemeBindingExtension theme)
                 {
-                    _border.BackgroundColor = theme.GetValueForCurrentTheme<Color>();
+                    _border.SetAppTheme(Border.BackgroundColorProperty, theme.Light, theme.Dark);
                 }
             }
             else
@@ -842,7 +846,7 @@ public class MaterialIconButton : ContentView, ITouchableView
                 }
                 else if (tint is AppThemeBindingExtension theme)
                 {
-                    InternalIconTintColor = theme.GetValueForCurrentTheme<Color>();
+                    this.SetAppTheme(InternalIconTintColorProperty, theme.Light, theme.Dark);
                 }
             }
             else
@@ -876,7 +880,7 @@ public class MaterialIconButton : ContentView, ITouchableView
                 }
                 else if (border is AppThemeBindingExtension theme)
                 {
-                    _border.Stroke = theme.GetValueForCurrentTheme<Color>();
+                    _border.SetAppTheme(Border.StrokeProperty, theme.Light, theme.Dark);
                 }
             }
             else
@@ -1010,51 +1014,8 @@ public class MaterialIconButton : ContentView, ITouchableView
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = ButtonCommonStates.Disabled };
-        disabledState.Setters.Add(
-            MaterialIconButton.BackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
-
-        disabledState.Setters.Add(
-            MaterialIconButton.IconTintColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        disabledState.Setters.Add(MaterialIconButton.ShadowProperty, null);
-
-        disabledState.Setters.Add(
-            MaterialIconButton.BorderColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
-
-        var pressedState = new VisualState { Name = ButtonCommonStates.Pressed };
-
-        commonStatesGroup.States.Add(new VisualState { Name = ButtonCommonStates.Normal });
-        commonStatesGroup.States.Add(disabledState);
-        commonStatesGroup.States.Add(pressedState);
-
-        var style = new Style(typeof(MaterialIconButton));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialIconButtonStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

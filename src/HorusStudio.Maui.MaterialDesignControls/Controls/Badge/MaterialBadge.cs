@@ -44,8 +44,8 @@ public class MaterialBadge : ContentView
 
     private const MaterialBadgeType DefaultBadgeType = MaterialBadgeType.Large;
     private static readonly string DefaultText = string.Empty;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError }.GetValueForCurrentTheme<Color>();
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnError, Dark = MaterialDarkTheme.OnError };
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Error, Dark = MaterialDarkTheme.Error };
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.LabelSmall;
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
     private static readonly CornerRadius DefaultCornerRadius = new(8);
@@ -109,6 +109,11 @@ public class MaterialBadge : ContentView
     /// The backing store for the <see cref="Padding">Padding</see> bindable property.
     /// </summary>
     public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialBadge), defaultValue: DefaultPadding);
+    
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialBadge), null);
     
     #endregion
 
@@ -227,6 +232,18 @@ public class MaterialBadge : ContentView
         set => SetValue(PaddingProperty, value);
     }
     
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
+    }
+    
     #endregion
 
     #region Layout
@@ -240,6 +257,9 @@ public class MaterialBadge : ContentView
 
     public MaterialBadge()
     {
+        this.SetAppTheme(TextColorProperty, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Dark);
+        this.SetAppTheme(BackgroundColorProperty, ((AppThemeBindingExtension)DefaultBackgroundColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultBackgroundColor.Invoke(this)).Dark);
+
         CreateLayout();
         
         if (Type == DefaultBadgeType)
@@ -269,6 +289,7 @@ public class MaterialBadge : ContentView
             _lblText.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
             _lblText.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
             _lblText.SetBinding(Label.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+            _lblText.SetBinding(Label.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
             _frmContainer = new MaterialCard
             {

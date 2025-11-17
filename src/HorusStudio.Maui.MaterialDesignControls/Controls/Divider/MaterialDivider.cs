@@ -32,7 +32,7 @@
     {
         #region Attributes
 
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OutlineVariant, Dark = MaterialDarkTheme.OutlineVariant };
         private const double DefaultHeightRequest = 1.0;
 
         #endregion Attributes
@@ -85,6 +85,8 @@
 
         public MaterialDivider()
         {
+            this.SetAppTheme(ColorProperty, ((AppThemeBindingExtension)DefaultColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultColor.Invoke(this)).Dark);
+
             base.Color = this.Color;
             base.HeightRequest = this.HeightRequest;
 

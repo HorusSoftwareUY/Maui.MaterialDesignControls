@@ -8,7 +8,8 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.RatingPage"
     x:TypeArguments="vm:RatingViewModel"
     x:DataType="vm:RatingViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     
     <VerticalStackLayout Spacing="8">
         <material:MaterialLabel
@@ -71,8 +72,7 @@
             Text="Changing icons for all ratings" />
         <material:MaterialCard
             Style="{StaticResource CardControlContainer}"
-            Type="Outlined"
-            BackgroundColor="White">
+            Type="Outlined">
             <VerticalStackLayout>
                 <material:MaterialRating
                     Label="How do you rate....?"

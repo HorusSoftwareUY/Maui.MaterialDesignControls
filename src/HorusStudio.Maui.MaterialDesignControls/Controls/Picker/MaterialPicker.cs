@@ -72,6 +72,7 @@ public class MaterialPicker : MaterialInputBase
         _picker.SetBinding(Picker.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
         _picker.SetBinding(Picker.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         _picker.SetBinding(Picker.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
+        _picker.SetBinding(Picker.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         InputTapCommand = new Command(() => Focus());
         LeadingIconCommand = new Command(() => Focus());
@@ -414,13 +415,8 @@ public class MaterialPicker : MaterialInputBase
     #region Styles
     internal static IEnumerable<Style> GetStyles()
     {
-        var style = new Style(typeof(MaterialPicker)) { ApplyToDerivedTypes = true };
-
-        var baseStyles = MaterialInputBase.GetBaseStyles();
-
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialPickerStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

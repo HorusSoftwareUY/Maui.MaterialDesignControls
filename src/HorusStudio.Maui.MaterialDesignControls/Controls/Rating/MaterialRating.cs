@@ -40,7 +40,7 @@ public class MaterialRating : ContentView
 {
     #region Attributes
 
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text };
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultStrokeColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
     private const double DefaultStrokeThickness = 2.0;
     private const int DefaultItemsSize = 5;
@@ -181,6 +181,11 @@ public class MaterialRating : ContentView
     /// </summary>
     public static readonly BindableProperty ValueChangedCommandProperty = BindableProperty.Create(nameof(ValueChangedCommand), typeof(ICommand), typeof(MaterialRating));
 
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialRating), null);
+    
     #endregion Bindable Properties
 
     #region Properties
@@ -438,6 +443,24 @@ public class MaterialRating : ContentView
         get => (ICommand)GetValue(ValueChangedCommandProperty);
         set => SetValue(ValueChangedCommandProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The label uses the identifier "{AutomationId}_Label".
+    /// - Item buttons use the identifier "{AutomationId}_Item_{index}".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
+    }
 
     #endregion Properties
 
@@ -454,6 +477,8 @@ public class MaterialRating : ContentView
 
     public MaterialRating()
     {
+        this.SetAppTheme(LabelColorProperty, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Dark);
+
         Grid mainLayout = new()
         {
             Margin = new Thickness(0),
@@ -499,6 +524,7 @@ public class MaterialRating : ContentView
         label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTransform), source: this));
         label.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         label.SetBinding(MaterialLabel.IsVisibleProperty, new Binding(nameof(Label), source: this, converter: new IsNotNullOrEmptyConverter()));
+        label.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"Label"));
 
         mainLayout.Children.Add(label);
 
@@ -622,6 +648,7 @@ public class MaterialRating : ContentView
         customGrid.SetValue(Grid.ColumnProperty, column);
 
         customGrid.SetBinding(Grid.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        customGrid.SetBinding(Grid.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"Item_{value}"));
 
         SetIconsRatingControl(customGrid, this.Value);
 
@@ -644,13 +671,14 @@ public class MaterialRating : ContentView
             Padding = 4,
             Margin = new Thickness(3),
             Style = GetStyleForMaterialRating(),
-            UseIconTintColor = false
+            ApplyIconTintColor = false
         };
 
         customImageButton.SetValue(Grid.RowProperty, row);
         customImageButton.SetValue(Grid.ColumnProperty, column);
 
         customImageButton.SetBinding(MaterialIconButton.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        customImageButton.SetBinding(MaterialIconButton.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"Item_{value}"));
 
         SetIconsRatingControl(customImageButton, this.Value, populatedObjects - 1);
 
@@ -850,26 +878,8 @@ public class MaterialRating : ContentView
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
-
-        disabledState.Setters.Add(
-            MaterialRating.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
-
-        commonStatesGroup.States.Add(disabledState);
-
-        var style = new Style(typeof(MaterialRating));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialRatingStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

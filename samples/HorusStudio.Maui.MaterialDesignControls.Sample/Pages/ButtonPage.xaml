@@ -8,7 +8,8 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.ButtonPage"
     x:TypeArguments="vm:ButtonViewModel"
     x:DataType="vm:ButtonViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
     <ContentPage.Resources>
         <Style x:Key="ButtonsContainer" TargetType="Grid">
@@ -322,6 +323,7 @@
             <VerticalStackLayout>
                 <material:MaterialButton
                     x:Name="ClickBtn"
+                    AutomationId="ClickBtn"
                     Type="Filled"
                     Text="Click me"
                     TouchAnimationType="Bounce"

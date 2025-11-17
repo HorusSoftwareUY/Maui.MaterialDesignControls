@@ -4,14 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:materialBehaviors="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Behaviors;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.NavigationDrawerPage"
     x:TypeArguments="vm:NavigationDrawerViewModel"
     x:DataType="vm:NavigationDrawerViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     <ContentPage.Resources>
         <Style x:Key="DrawerContainer" TargetType="material:MaterialCard">
-            <Setter Property="BackgroundColor" Value="{StaticResource White}" />
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}" />
             <Setter Property="CornerRadius" Value="16" />
             <Setter Property="Padding" Value="12,16" />
         </Style>
@@ -22,7 +24,7 @@
         <material:MaterialCard Style="{StaticResource CardControlContainer}">
            <VerticalStackLayout Spacing="16"> 
                 <material:MaterialCard Style="{StaticResource DrawerContainer}">
-                    <material:MaterialNavigationDrawer 
+                    <material:MaterialNavigationDrawer
                         Command="{Binding TestCommand}"
                         ItemsSource="{Binding Items}" />
                 </material:MaterialCard>
@@ -65,6 +67,78 @@
                 <material:MaterialCard Style="{StaticResource DrawerContainer}">
                     <material:MaterialNavigationDrawer 
                         ItemsSource="{Binding DisabledItems}" />
+                </material:MaterialCard>
+            </VerticalStackLayout>
+        </material:MaterialCard>
+        
+        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom templates" />
+        <material:MaterialCard Style="{StaticResource CardControlContainer}">
+            <VerticalStackLayout> 
+                <material:MaterialCard Style="{StaticResource DrawerContainer}">
+                    <material:MaterialNavigationDrawer
+                        Command="{Binding TestCommand}"
+                        ItemsSource="{Binding CustomTemplateItems}"
+                        DividerType="None">
+                        <material:MaterialNavigationDrawer.SectionTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    x:DataType="material:MaterialNavigationDrawerItem"
+                                    ColumnDefinitions="*,Auto,*"
+                                    ColumnSpacing="12"
+                                    Padding="12">
+                                    <material:MaterialDivider
+                                        Color="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}"
+                                        VerticalOptions="Center"/>
+                                    <material:MaterialLabel 
+                                        Grid.Column="1"
+                                        Text="{Binding Headline}" 
+                                        FontSize="16"
+                                        VerticalOptions="Center"
+                                        TextColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+                                    <material:MaterialDivider
+                                        Grid.Column="2"
+                                        Color="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}"
+                                        VerticalOptions="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </material:MaterialNavigationDrawer.SectionTemplate>
+                        <material:MaterialNavigationDrawer.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout
+                                    x:DataType="material:MaterialNavigationDrawerItem"
+                                    Orientation="Horizontal"
+                                    Spacing="12"
+                                    Padding="12"
+                                    HorizontalOptions="Center">
+                                    <Image
+                                        Source="{Binding LeadingIcon}"
+                                        WidthRequest="24"
+                                        HeightRequest="24"
+                                        VerticalOptions="Center">
+                                        <Image.Behaviors>
+                                            <materialBehaviors:IconTintColorBehavior
+                                                TintColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                    <material:MaterialLabel
+                                        Text="{Binding Text}"
+                                        FontSize="14"
+                                        VerticalOptions="Center"
+                                        TextColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+                                    <Image
+                                        Source="{Binding TrailingIcon}"
+                                        WidthRequest="12"
+                                        HeightRequest="12"
+                                        VerticalOptions="Center">
+                                        <Image.Behaviors>
+                                            <materialBehaviors:IconTintColorBehavior
+                                                TintColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                </StackLayout>
+                            </DataTemplate>
+                        </material:MaterialNavigationDrawer.ItemTemplate>
+                    </material:MaterialNavigationDrawer>
                 </material:MaterialCard>
             </VerticalStackLayout>
         </material:MaterialCard>

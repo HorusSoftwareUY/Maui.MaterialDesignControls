@@ -8,7 +8,8 @@
              x:DataType="vm:MainViewModel"
              xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     <ContentPage.Resources>
 
         <Style x:Key="MainCard" TargetType="Border">
@@ -37,9 +38,13 @@
 
     <Grid RowDefinitions="48,*">
         <Grid Grid.Row="0" ColumnDefinitions="24,*,24" Padding="16,0" >
-            <ImageButton Grid.Column="0" Source="menu" Aspect="Center" Command="{Binding ToggleMenuCommand}" />
-            <Image Grid.Column="1" Source="horus_studio_logo" Aspect="Center" />
-            <ImageButton Grid.Column="2" Source="info" Aspect="Center" Command="{Binding AboutUsCommand}" />
+            <material:MaterialIconButton Grid.Column="0" ImageSource="menu" Command="{Binding ToggleMenuCommand}" AutomationId="menu" />
+            <Image Grid.Column="1" Aspect="Center">
+                <Image.Source>
+                    <AppThemeBinding Light="horus_studio_logo" Dark="horus_studio_logo_white" />
+                </Image.Source>
+            </Image>
+            <material:MaterialIconButton Grid.Column="2" ImageSource="info" Command="{Binding AboutUsCommand}" />
         </Grid>
 
         <ScrollView Grid.Row="1">

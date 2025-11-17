@@ -75,6 +75,7 @@ public class MaterialDatePicker : MaterialInputBase
         _datePicker.SetBinding(DatePicker.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _datePicker.SetBinding(DatePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _datePicker.SetBinding(CustomDatePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+        _datePicker.SetBinding(DatePicker.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
         
         InputTapCommand = new Command(() => Focus());
         LeadingIconCommand = new Command(() => Focus());
@@ -399,13 +400,8 @@ public class MaterialDatePicker : MaterialInputBase
     #region Styles
     internal static IEnumerable<Style> GetStyles()
     {
-        var style = new Style(typeof(MaterialDatePicker)) { ApplyToDerivedTypes = true };
-
-        var baseStyles = MaterialInputBase.GetBaseStyles();
-
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialDatePickerStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

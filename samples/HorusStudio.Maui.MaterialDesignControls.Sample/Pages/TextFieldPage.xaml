@@ -8,13 +8,15 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TextFieldPage"
     x:TypeArguments="vm:TextFieldViewModel"
     x:DataType="vm:TextFieldViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}">
+    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     
         <VerticalStackLayout Spacing="8">
             <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
             <material:MaterialCard Style="{StaticResource CardControlContainer}">
                 <VerticalStackLayout>
                     <material:MaterialTextField
+                        AutomationId="txtFilled"
                         Placeholder="Enter text here" />
                     
                     <material:MaterialTextField
@@ -215,7 +217,7 @@
                     <material:MaterialTextField 
                         Type="Filled"
                         Label="Phone number"
-                        Text="Text here"
+                        Placeholder="Enter phone number here"
                         Keyboard="Telephone"/>
                 </VerticalStackLayout>
             </material:MaterialCard>

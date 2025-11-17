@@ -35,6 +35,20 @@ var MaterialFloatingButton = new MaterialFloatingButton()
 
 ## Properties
 
+### <a id="properties-automationid"/>**AutomationId**
+
+Gets or sets a value that allows the automation framework to find and interact with this element.
+
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Remarks: This value may only be set once on an element.
+ 
+ Note: On Android, the value assigned to this AutomationId property
+ will be mapped to the native Android property ContentDescription (content-desc),
+ unlike most other controls where it maps to the Id (resource-id) property.
+
+<br>
+
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Gets or sets background color floating button

@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -36,6 +37,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// <todoList>
     /// * Track color animation: change from on-track color to off-track color within the toggle animation.
     /// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
+    /// * The Selected property in Appium is not supported when using the AutomationId of this control, just like with the native MAUI control.
     /// </todoList>
     public class MaterialSwitch : ContentView, ITouchableView
     {
@@ -56,14 +58,14 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private const double DefaultBorderWidth = 2;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultThumbColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface };
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBorderColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Outline, Dark = MaterialDarkTheme.Outline }.GetValueForCurrentTheme<Color>();
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.BodyLarge;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
         private const FontAttributes DefaultFontAttributes = FontAttributes.None;
         private const TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
         private const TextSide DefaultTextSide = TextSide.Left;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant };
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingFontSize = _ => MaterialFontSize.BodySmall;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultSupportingFontFamily = _ => MaterialFontFamily.Default;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
@@ -74,7 +76,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const double ThumbTrackSizeDifference = 8;
         private const double ThumbUnselectedWithoutIconScale = 0.7;
         private const string SwitchAnimationName = "SwitchAnimation";
-        
+
         private bool _isOnToggledState;
         private double _xReference;
         private bool ReduceThumbSize => UnselectedIcon == null;
@@ -280,6 +282,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialSwitch));
 
+        /// <summary>
+        /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+        /// </summary>
+        public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialSwitch), null);
+        
         #endregion Bindable Properties
 
         #region Properties
@@ -580,6 +587,25 @@ namespace HorusStudio.Maui.MaterialDesignControls
             get => (ITouchAnimation)GetValue(TouchAnimationProperty);
             set => SetValue(TouchAnimationProperty, value);
         }
+        
+        /// <summary>
+        /// Gets or sets a value that allows the automation framework to find and interact with this element.
+        /// </summary>
+        /// <remarks>
+        /// This value may only be set once on an element.
+        /// 
+        /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+        /// - The <see cref="Switch">Switch</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
+        /// - The switch's text label uses the identifier "{AutomationId}_Text".
+        /// - The supporting text label uses the identifier "{AutomationId}_SupportingText".
+        /// 
+        /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+        /// </remarks>
+        public new string AutomationId
+        {
+            get => (string)GetValue(AutomationIdProperty);
+            set => SetValue(AutomationIdProperty, value);
+        }
 
         #endregion Properties
 
@@ -589,7 +615,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// Occurs when the switch is toggled.
         /// </summary>
         public event EventHandler<ToggledEventArgs>? Toggled;
-        
+
         /// <summary>
         /// Occurs when the switch is touched.
         /// </summary>
@@ -615,6 +641,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         public MaterialSwitch()
         {
+            this.SetAppTheme(TextColorProperty, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Dark);
+            this.SetAppTheme(SupportingTextColorProperty, ((AppThemeBindingExtension)DefaultSupportingTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultSupportingTextColor.Invoke(this)).Dark);
+
             CreateLayout();
 
             if (!IsToggled)
@@ -655,7 +684,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 }
             }
         }
-        
+
         private void CreateLayout()
         {
             HorizontalOptions = LayoutOptions.Center;
@@ -664,6 +693,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 VerticalOptions = LayoutOptions.Center
             };
+            _switch.SetBinding(Grid.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
             _track = new Border
             {
@@ -684,7 +714,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 VerticalOptions = LayoutOptions.Center
             };
 
-            _thumb.SetBinding(Microsoft.Maui.Controls.Frame.BackgroundColorProperty, new Binding(nameof(ThumbColor), source: this));
+            _thumb.SetBinding(Border.BackgroundColorProperty, new Binding(nameof(ThumbColor), source: this));
 
             SetTrackAndThumbSizes();
 
@@ -739,6 +769,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _textLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
             _textLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
             _textLabel.SetBinding(MaterialLabel.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+            _textLabel.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Text"));
 
             _supportingTextLabel = new MaterialLabel()
             {
@@ -751,6 +782,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _supportingTextLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingFontSize), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(SupportingFontAttributes), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+            _supportingTextLabel.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "SupportingText"));
 
             Content = null;
             _mainContainer.Children.Add(_switch);
@@ -768,7 +800,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 return;
             }
-            
+
             var trackWidth = TrackWidthRequest >= DefaultTrackWidthRequest ? TrackWidthRequest : DefaultTrackWidthRequest;
 
             if (textSide == TextSide.Left)
@@ -778,7 +810,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
                 Grid.SetRow(_textLabel, 0);
                 Grid.SetColumn(_textLabel, 0);
-                
+
                 Grid.SetRow(_supportingTextLabel, 1);
                 Grid.SetColumn(_supportingTextLabel, 0);
 
@@ -793,10 +825,10 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
                 Grid.SetRow(_textLabel, 0);
                 Grid.SetColumn(_textLabel, 1);
-                
+
                 Grid.SetRow(_supportingTextLabel, 1);
                 Grid.SetColumn(_supportingTextLabel, 1);
-                
+
                 Grid.SetRow(_switch, 0);
                 Grid.SetColumn(_switch, 0);
                 Grid.SetRowSpan(_switch, 2);
@@ -810,7 +842,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 return;
             }
-            
+
             var trackWidth = TrackWidthRequest >= DefaultTrackWidthRequest ? TrackWidthRequest : DefaultTrackWidthRequest;
             var trackHeight = TrackHeightRequest >= DefaultTrackHeightRequest ? TrackHeightRequest : DefaultTrackHeightRequest;
             var thumbSelectedSize = trackHeight - ThumbTrackSizeDifference;
@@ -919,14 +951,14 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 return;
             }
-            
+
             if (animate && Math.Abs(_thumb.TranslationX + _xReference) > 0.0)
             {
                 this.AbortAnimation(SwitchAnimationName);
-                
+
                 var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
                 if (animationManager is null) return;
-                
+
                 var animation = new Animation
                 {
                     {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, -_xReference)}
@@ -964,15 +996,15 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 return;
             }
-            
+
             if (animate && Math.Abs(_thumb.TranslationX - _xReference) > 0.0)
             {
                 this.AbortAnimation(SwitchAnimationName);
                 IsToggled = true;
-                
+
                 var animationManager = Application.Current?.Handler?.MauiContext?.Services.GetService<Microsoft.Maui.Animations.IAnimationManager>();
                 if (animationManager is null) return;
-                
+
                 var animation = new Animation
                 {
                     {0, 1, new Animation(v => _thumb.TranslationX = v, _thumb.TranslationX, _xReference)}
@@ -1010,7 +1042,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 return;
             }
-            
+
             if (IsToggled)
             {
                 _icon.Source = SelectedIcon;
@@ -1029,7 +1061,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 return;
             }
-            
+
             if (!IsToggled && ReduceThumbSize)
             {
                 _thumb.Scale = ThumbUnselectedWithoutIconScale;
@@ -1078,7 +1110,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             await TouchAnimationManager.AnimateAsync(this, gestureType);
 
             Touch?.Invoke(this, new TouchEventArgs(gestureType));
-            
+
             switch (gestureType)
             {
                 case TouchEventType.Pressed:
@@ -1106,122 +1138,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         internal static IEnumerable<Style> GetStyles()
         {
-            var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-            var offState = new VisualState { Name = SwitchCommonStates.Off };
-            offState.Setters.Add(
-                MaterialSwitch.TrackColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.SurfaceContainerHighest,
-                    Dark = MaterialDarkTheme.SurfaceContainerHighest
-                }
-                .GetValueForCurrentTheme<Color>());
-            offState.Setters.Add(
-                MaterialSwitch.BorderColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.Outline,
-                    Dark = MaterialDarkTheme.Outline
-                }
-                .GetValueForCurrentTheme<Color>());
-            offState.Setters.Add(
-                MaterialSwitch.ThumbColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.Outline,
-                    Dark = MaterialDarkTheme.Outline
-                }
-                .GetValueForCurrentTheme<Color>());
-
-            var onState = new VisualState { Name = SwitchCommonStates.On };
-            onState.Setters.Add(
-                MaterialSwitch.TrackColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.Primary,
-                    Dark = MaterialDarkTheme.Primary
-                }
-                .GetValueForCurrentTheme<Color>());
-            onState.Setters.Add(
-                MaterialSwitch.BorderColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.Primary,
-                    Dark = MaterialDarkTheme.Primary
-                }
-                .GetValueForCurrentTheme<Color>());
-            onState.Setters.Add(
-                MaterialSwitch.ThumbColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.OnPrimary,
-                    Dark = MaterialDarkTheme.OnPrimary
-                }
-                .GetValueForCurrentTheme<Color>());
-
-            var offDisabledState = new VisualState { Name = SwitchCommonStates.OffDisabled };
-            offDisabledState.Setters.Add(
-                MaterialSwitch.TrackColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.SurfaceContainerHighest,
-                    Dark = MaterialDarkTheme.SurfaceContainerHighest
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.12f));
-            offDisabledState.Setters.Add(
-                MaterialSwitch.BorderColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.12f));
-            offDisabledState.Setters.Add(
-                MaterialSwitch.ThumbColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.38f));
-
-            var onDisabledState = new VisualState { Name = SwitchCommonStates.OnDisabled };
-            onDisabledState.Setters.Add(
-                MaterialSwitch.TrackColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.OnSurface,
-                    Dark = MaterialDarkTheme.OnSurface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(0.12f));
-            onDisabledState.Setters.Add(
-                MaterialSwitch.BorderColorProperty,
-                Colors.Transparent);
-            onDisabledState.Setters.Add(
-                MaterialSwitch.ThumbColorProperty,
-                new AppThemeBindingExtension
-                {
-                    Light = MaterialLightTheme.Surface,
-                    Dark = MaterialDarkTheme.Surface
-                }
-                .GetValueForCurrentTheme<Color>()
-                .WithAlpha(1f));
-
-            commonStatesGroup.States.Add(new VisualState { Name = SwitchCommonStates.Normal });
-            commonStatesGroup.States.Add(offState);
-            commonStatesGroup.States.Add(onState);
-            commonStatesGroup.States.Add(offDisabledState);
-            commonStatesGroup.States.Add(onDisabledState);
-
-            var style = new Style(typeof(MaterialSwitch));
-            style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-            return new List<Style> { style };
+            var resourceDictionary = new MaterialSwitchStyles();
+            return resourceDictionary.Values.OfType<Style>();
         }
 
         #endregion Styles

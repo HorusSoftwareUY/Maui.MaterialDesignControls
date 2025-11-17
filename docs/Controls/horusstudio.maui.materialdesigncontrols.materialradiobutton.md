@@ -39,6 +39,22 @@ var radioButton = new MaterialRadioButton()
 
 ## Properties
 
+### <a id="properties-automationid"/>**AutomationId**
+
+Gets or sets a value that allows the automation framework to find and interact with this element.
+
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Remarks: This value may only be set once on an element.
+ 
+ When set on this control, the AutomationId is also used as a base identifier for its internal elements:
+ - The RadioButton control uses the same AutomationId value.
+ - The chip's text label uses the identifier "{AutomationId}_Text".
+ 
+ This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+
+<br>
+
 ### <a id="properties-characterspacing"/>**CharacterSpacing**
 
 Gets or sets the spacing between characters of the label.
@@ -265,3 +281,4 @@ Occurs when the radio button is touched.
 
 * [iOS] FontAttributes doesn't work.
  * Using a control template doesn't work when define a custom style for disabled state.
+ * The Selected property in Appium is not supported when using the AutomationId of this control, just like with the native MAUI control.

@@ -67,8 +67,8 @@ public class MaterialFloatingButton : ContentView
 
     private const MaterialFloatingButtonType DefaultFloatingButtonType = MaterialFloatingButtonType.FAB;
     private const MaterialFloatingButtonPosition DefaultFloatingButtonPosition = MaterialFloatingButtonPosition.BottomRight;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ =>  new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialLightTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconColor = _ => new AppThemeBindingExtension{ Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer}.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.PrimaryContainer, Dark = MaterialDarkTheme.PrimaryContainer }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnPrimaryContainer, Dark = MaterialDarkTheme.OnPrimaryContainer }.GetValueForCurrentTheme<Color>();
     private static readonly ImageSource DefaultIcon = string.Empty;
     private const double DefaultIconSize = 24;
     private const double DefaultCornerRadius = 16;
@@ -169,6 +169,11 @@ public class MaterialFloatingButton : ContentView
     /// </summary>
     public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialFloatingButton), defaultValue: DefaultPadding);
 
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialFloatingButton), null);
+    
     #endregion
 
     #region Properties
@@ -349,6 +354,22 @@ public class MaterialFloatingButton : ContentView
         get => (Thickness)GetValue(PaddingProperty);
         set => SetValue(PaddingProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    ///
+    /// Note: On Android, the value assigned to this AutomationId property
+    /// will be mapped to the native Android property ContentDescription (content-desc),
+    /// unlike most other controls where it maps to the Id (resource-id) property.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
+    }
 
     #endregion
 
@@ -472,36 +493,8 @@ public class MaterialFloatingButton : ContentView
     
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
-        disabledState.Setters.Add(
-            MaterialFloatingButton.BackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.SurfaceContainerHighest,
-                Dark = MaterialDarkTheme.SurfaceContainerHighest
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.9f));
-
-        disabledState.Setters.Add(
-            MaterialFloatingButton.IconColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-        
-        commonStatesGroup.States.Add(new VisualState { Name = VisualStateManager.CommonStates.Normal });
-        commonStatesGroup.States.Add(disabledState);
-
-        var style = new Style(typeof(MaterialFloatingButton));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialFloatingButtonStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
     
     #endregion

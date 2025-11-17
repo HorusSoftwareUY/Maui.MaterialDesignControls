@@ -73,6 +73,7 @@ public class MaterialTimePicker : MaterialInputBase
         _timePicker.SetBinding(TimePicker.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _timePicker.SetBinding(TimePicker.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _timePicker.SetBinding(CustomTimePicker.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+        _timePicker.SetBinding(TimePicker.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
         
         InputTapCommand = new Command(() => Focus());
         LeadingIconCommand = new Command(() => Focus());
@@ -364,13 +365,8 @@ public class MaterialTimePicker : MaterialInputBase
     #region Styles
     internal static IEnumerable<Style> GetStyles()
     {
-        var style = new Style(typeof(MaterialTimePicker)) { ApplyToDerivedTypes = true };
-
-        var baseStyles = MaterialInputBase.GetBaseStyles();
-
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialTimePickerStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

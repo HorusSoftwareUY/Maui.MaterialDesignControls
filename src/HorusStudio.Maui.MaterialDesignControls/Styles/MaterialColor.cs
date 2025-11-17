@@ -61,9 +61,9 @@
 
         // Surface colors
         /// <default>
-        /// #FEF7FF <img>https://placehold.co/15x15/FEF7FF/FEF7FF.png</img>
+        /// #FFFFFF <img>https://placehold.co/15x15/FFFFFF/FFFFFF.png</img>
         /// </default>
-        public static Color Surface { get; set; } = Color.FromArgb("#FEF7FF");
+        public static Color Surface { get; set; } = Color.FromArgb("#FFFFFF");
         /// <default>
         /// #1D1B20 <img>https://placehold.co/15x15/1D1B20/1D1B20.png</img>
         /// </default>
@@ -156,6 +156,16 @@
         /// #9791A1 <img>https://placehold.co/15x15/9791A1/9791A1.png</img>
         /// </default>
         public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
+
+        //Disabled colors
+        public static Color DisabledBackgroundOnSurface => OnSurface.WithAlpha(0.12f);
+        public static Color DisabledForegroundOnSurface => OnSurface.WithAlpha(0.38f);
+        public static Color DisabledBackgroundSurface => Surface.WithAlpha(0.12f);
+        public static Color DisabledForegroundSurface => Surface.WithAlpha(0.38f);
+        public static Color DisabledBackgroundSurfaceContainerHighest => SurfaceContainerHighest.WithAlpha(0.9f);
+        public static Color DisabledForegroundSurfaceContainerHighest => SurfaceContainerHighest.WithAlpha(0.12f);
+        public static Color DisabledShadow => Shadow.WithAlpha(0.38f);
+
         
         internal static void Configure(MaterialTheme options)
         {
@@ -352,6 +362,15 @@
         /// #9791A1 <img>https://placehold.co/15x15/9791A1/9791A1.png</img>
         /// </default>
         public static Color Disable { get; set; } = Color.FromArgb("#9791A1");
+
+        //Disabled colors
+        public static Color DisabledBackgroundOnSurface => OnSurface.WithAlpha(0.12f);
+        public static Color DisabledForegroundOnSurface => OnSurface.WithAlpha(0.38f);
+        public static Color DisabledBackgroundSurface => Surface.WithAlpha(0.12f);
+        public static Color DisabledForegroundSurface => Surface.WithAlpha(0.38f);
+        public static Color DisabledBackgroundSurfaceContainerHighest => SurfaceContainerHighest.WithAlpha(0.9f);
+        public static Color DisabledForegroundSurfaceContainerHighest => SurfaceContainerHighest.WithAlpha(0.12f);
+        public static Color DisabledShadow => Shadow.WithAlpha(0.38f);
 
         internal static void Configure(MaterialTheme options)
         {

@@ -45,18 +45,18 @@ public abstract partial class MaterialInputBase : IValidableView
 
     protected const MaterialInputType DefaultInputType = MaterialInputType.Filled;
     protected const bool DefaultIsEnabled = true;
-    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialLightTheme.OnSurface }.GetValueForCurrentTheme<Color>();
-    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconTintColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconTintColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     protected static readonly Brush? DefaultBackground = Entry.BackgroundProperty.DefaultValue as Brush;
-    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialLightTheme.SurfaceContainer }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer }.GetValueForCurrentTheme<Color>();
     protected const double DefaultBorderWidth = 1;
-    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultBorderColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultBorderColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     protected static readonly CornerRadius DefaultCornerRadius = new(0);
     protected const TextAlignment DefaultHorizontalTextAlignment = TextAlignment.Start;
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontFamily = _ => MaterialFontFamily.Default;
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultFontSize = _ => MaterialFontSize.BodyLarge;
-    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultPlaceholderColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
-    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultLabelColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialLightTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultPlaceholderColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultLabelColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultLabelSize = _ => MaterialFontSize.BodySmall;
     protected static readonly Thickness DefaultLabelMargin = new (0);
     protected static readonly Thickness DefaultLabelPadding = new (0);
@@ -70,11 +70,11 @@ public abstract partial class MaterialInputBase : IValidableView
 
     private readonly Dictionary<MaterialInputTypeStates, object> _backgroundColors = new()
     {
-        { MaterialInputTypeStates.FilledDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest.WithAlpha(0.04f), Dark = MaterialLightTheme.SurfaceContainerHighest.WithAlpha(0.04f) } },
-        { MaterialInputTypeStates.FilledFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialLightTheme.SurfaceContainerHighest } },
-        { MaterialInputTypeStates.FilledNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialLightTheme.SurfaceContainerHighest } },
-        { MaterialInputTypeStates.FilledError, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialLightTheme.SurfaceContainerHighest } },
-        { MaterialInputTypeStates.FilledErrorFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialLightTheme.SurfaceContainerHighest } },
+        { MaterialInputTypeStates.FilledDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest.WithAlpha(0.04f), Dark = MaterialDarkTheme.SurfaceContainerHighest.WithAlpha(0.04f) } },
+        { MaterialInputTypeStates.FilledFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest } },
+        { MaterialInputTypeStates.FilledNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest } },
+        { MaterialInputTypeStates.FilledError, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest } },
+        { MaterialInputTypeStates.FilledErrorFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest } },
         { MaterialInputTypeStates.OutlinedDisabled, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
         { MaterialInputTypeStates.OutlinedFocused, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
         { MaterialInputTypeStates.OutlinedNormal, new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer } },
@@ -401,6 +401,11 @@ public abstract partial class MaterialInputBase : IValidableView
     /// </summary>
     public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultHeightRequest);
 
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialInputBase), null);
+    
     #endregion Bindable Properties
 
     #region Properties
@@ -1016,6 +1021,28 @@ public abstract partial class MaterialInputBase : IValidableView
         set => SetValue(HeightRequestProperty, value);
     }
     
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The main input control (e.g., <see cref="Entry">Entry</see>, <see cref="Editor">Editor</see>, <see cref="Picker">Picker</see>, etc.) uses the same <see cref="AutomationId">AutomationId</see> value.
+    /// - The hint label uses the identifier "{AutomationId}_Hint".
+    /// - The supporting text label uses the identifier "{AutomationId}_SupportingText".
+    /// - The placeholder text label uses the identifier "{AutomationId}_Placeholder".
+    /// - The leading icon button uses the identifier "{AutomationId}_LeadingIcon".
+    /// - The trailing icon button uses the identifier "{AutomationId}_TrailingIcon".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
+    }
+    
     #endregion Properties
 
     #region Events
@@ -1282,7 +1309,7 @@ public abstract partial class MaterialInputBase : IValidableView
                 }
                 else if (background is AppThemeBindingExtension theme)
                 {
-                    view.BackgroundColor = theme.GetValueForCurrentTheme<Color>();
+                    view.SetAppTheme(View.BackgroundColorProperty, theme.Light, theme.Dark);
                 }
             }
             else

@@ -62,6 +62,22 @@ Default value: true
 
 <br>
 
+### <a id="properties-automationid"/>**AutomationId**
+
+Gets or sets a value that allows the automation framework to find and interact with this element.
+
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Remarks: This value may only be set once on an element.
+ 
+ When set on this control, the AutomationId is also used as a base identifier for its internal elements:
+ - The MaterialChip control uses the same AutomationId value.
+ - The chip's text label uses the identifier "{AutomationId}_Text".
+ 
+ This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+
+<br>
+
 ### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Gets or sets a background color for Chip.
@@ -385,3 +401,7 @@ Occurs when the chips is clicked/tapped.
 Occurs when the chip is touched.
 
 <br>
+
+## Known issues and pending features
+
+* The Selected property in Appium is not supported when using the AutomationId of this control.

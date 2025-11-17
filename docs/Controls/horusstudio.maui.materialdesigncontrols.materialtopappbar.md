@@ -42,6 +42,26 @@ var topAppBar = new MaterialTopAppBar
 
 ## Properties
 
+### <a id="properties-automationid"/>**AutomationId**
+
+Gets or sets a value that allows the automation framework to find and interact with this element.
+
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Remarks: This value may only be set once on an element.
+ 
+ When set on this control, the AutomationId is also used as a base identifier for its internal elements:
+ - The headline label uses the identifier "{AutomationId}_Headline".
+ - The description label uses the identifier "{AutomationId}_Description".
+ - The leading icon button uses the identifier "{AutomationId}_LeadingIcon".
+ - The leading icon button's busy indicator uses the identifier "{AutomationId}_LeadingIconBusyIndicator".
+ - Trailing icon buttons use the identifier "{AutomationId}_TrailingIcon_{index}".
+ - Trailing icon buttons' busy indicators uses the identifier "{AutomationId}_TrailingIconBusyIndicator_{index}".
+ 
+ This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+
+<br>
+
 ### <a id="properties-busyindicatorcolor"/>**BusyIndicatorColor**
 
 Gets or sets the color for the busy indicators.
@@ -248,6 +268,17 @@ Gets or sets the size of leading and trailing icons for the top app bar.
 Property type: [Double](https://learn.microsoft.com/en-us/dotnet/api/system.double)<br>
 
 Default value: 48.0
+
+<br>
+
+### <a id="properties-icontintcolor"/>**IconTintColor**
+
+Gets or sets the tint color of leading and trailing icons for the top app bar.
+ This is a bindable property.
+
+Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
+
+Default value: Theme: Light = MaterialLightTheme.OnSurfaceVariant - Dark = MaterialDarkTheme.OnSurfaceVariant
 
 <br>
 

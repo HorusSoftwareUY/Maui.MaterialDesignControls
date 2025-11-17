@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -41,6 +42,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// <todoList>
 /// * [iOS] FontAttributes doesn't work.
 /// * Using a control template doesn't work when define a custom style for disabled state.
+/// * The Selected property in Appium is not supported when using the AutomationId of this control, just like with the native MAUI control.
 /// </todoList>
 public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
 {
@@ -189,6 +191,11 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
     /// The backing store for the <see cref="CheckedChangedCommand">CheckedChangedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CheckedChangedCommandProperty = BindableProperty.Create(nameof(CheckedChangedCommand), typeof(ICommand), typeof(MaterialRadioButton));
+    
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialRadioButton), null);
     
     #endregion Bindable Properties
 
@@ -423,6 +430,24 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         set => SetValue(CheckedChangedCommandProperty, value);
     }
     
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The <see cref="RadioButton">RadioButton</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
+    /// - The chip's text label uses the identifier "{AutomationId}_Text".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
+    }
+    
     #endregion Properties
 
     #region Constructors
@@ -471,6 +496,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         _radioButton.SetBinding(RadioButton.ValueProperty, new Binding(nameof(Value), source: this));
         _radioButton.SetBinding(RadioButton.ControlTemplateProperty, new Binding(nameof(ControlTemplate), source: this));
         _radioButton.SetBinding(CustomRadioButton.StrokeColorProperty, new Binding(nameof(StrokeColor), source: this));
+        _radioButton.SetBinding(RadioButton.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
         
         _label = new()
         {
@@ -490,6 +516,7 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
         _label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
         _label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
+        _label.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Text"));
 
         TextSideChanged(TextSide);
 
@@ -634,61 +661,8 @@ public class MaterialRadioButton : ContentView, ITouchableView, IGroupableView
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = RadioButtonCommonStates.Disabled };
-
-        disabledState.Setters.Add(
-            MaterialRadioButton.TextColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        disabledState.Setters.Add(
-            MaterialRadioButton.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        var checkedState = new VisualState { Name = RadioButtonCommonStates.Checked };
-
-        checkedState.Setters.Add(
-            MaterialRadioButton.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Primary,
-                Dark = MaterialDarkTheme.Primary
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(1f));
-
-        var uncheckedState = new VisualState { Name = RadioButtonCommonStates.Unchecked };
-        uncheckedState.Setters.Add(
-            MaterialRadioButton.StrokeColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurfaceVariant,
-                Dark = MaterialDarkTheme.OnSurfaceVariant
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(1f));
-
-        commonStatesGroup.States.Add(disabledState);
-        commonStatesGroup.States.Add(checkedState);
-        commonStatesGroup.States.Add(uncheckedState);
-
-        var style = new Style(typeof(MaterialRadioButton));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialRadioButtonStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
     #endregion Styles
 }

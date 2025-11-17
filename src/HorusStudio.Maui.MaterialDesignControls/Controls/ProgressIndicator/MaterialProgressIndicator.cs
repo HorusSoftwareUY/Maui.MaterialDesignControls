@@ -47,8 +47,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
         #region Attributes
 
         private const MaterialProgressIndicatorType DefaultProgressIndicatorType = MaterialProgressIndicatorType.Circular;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTrackColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary };
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTrackColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest };
         private const double DefaultHeightRequest = -1;
         private const double DefaultWidthRequest = -1;
         private const int CircularThickness = 4;
@@ -234,6 +234,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         public MaterialProgressIndicator()
         {
+            this.SetAppTheme(IndicatorColorProperty, ((AppThemeBindingExtension)DefaultIndicatorColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultIndicatorColor.Invoke(this)).Dark);
+            this.SetAppTheme(TrackColorProperty, ((AppThemeBindingExtension)DefaultTrackColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTrackColor.Invoke(this)).Dark);
+
             Padding = 0;
 
             if (Type == DefaultProgressIndicatorType)

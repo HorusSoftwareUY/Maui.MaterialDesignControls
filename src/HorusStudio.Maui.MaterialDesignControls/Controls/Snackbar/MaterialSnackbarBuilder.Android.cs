@@ -65,6 +65,10 @@ class MaterialSnackbarBuilder
         {
             _leadingIconView = activity.CreateImageButton(config.LeadingIcon.Source, config.LeadingIcon.Size,
                 config.LeadingIcon.Color, new Thickness(0), config.LeadingIcon.Action);
+            
+            if (!string.IsNullOrEmpty(config.AutomationId))
+                _leadingIconView.ContentDescription = $"{config.AutomationId}_LeadingIcon";
+            
             root.AddView(_leadingIconView);
         }
         
@@ -85,7 +89,7 @@ class MaterialSnackbarBuilder
         
         if (config.Action is not null)
         {
-            _actionView = ConfigureAction(activity, config.Action, Dismiss);
+            _actionView = ConfigureAction(activity, config, Dismiss);
             root.AddView(_actionView);
         }
         
@@ -93,6 +97,10 @@ class MaterialSnackbarBuilder
         {
             _trailingIconView = activity.CreateImageButton(config.TrailingIcon.Source, config.TrailingIcon.Size,
                 config.TrailingIcon.Color, new Thickness(0), config.TrailingIcon.Action);
+            
+            if (!string.IsNullOrEmpty(config.AutomationId))
+                _trailingIconView.ContentDescription = $"{config.AutomationId}_TrailingIcon";
+            
             root.AddView(_trailingIconView);
         }
         
@@ -177,10 +185,13 @@ class MaterialSnackbarBuilder
         textView.SetIncludeFontPadding(false);
         textView.SetFontAttributes(config.FontAttributes);
 
+        if (!string.IsNullOrEmpty(config.AutomationId))
+            textView.ContentDescription = $"{config.AutomationId}_Message";
+
         return textView;
     }
     
-    private static Button ConfigureAction(Activity activity, MaterialSnackbarConfig.ActionConfig config, Action dismiss)
+    private static Button ConfigureAction(Activity activity, MaterialSnackbarConfig config, Action dismiss)
     {
         var actionButton = new Button(activity)
         {
@@ -193,8 +204,8 @@ class MaterialSnackbarBuilder
             }
         };
         
-        actionButton.SetText(config.Text, config.TextDecorations);
-        actionButton.SetTextColor(config.Color.ToPlatform());
+        actionButton.SetText(config.Action.Text, config.Action.TextDecorations);
+        actionButton.SetTextColor(config.Action.Color.ToPlatform());
         actionButton.SetBackgroundColor(Colors.Transparent.ToPlatform());
         actionButton.SetTypeface(actionButton.Typeface, TypefaceStyle.Bold);
         actionButton.SetTextSize(Android.Util.ComplexUnitType.Dip, (float)config.FontSize);
@@ -204,9 +215,12 @@ class MaterialSnackbarBuilder
         actionButton.SetAllCaps(false);
         actionButton.Click += (s, e) =>
         {
-            config.Action.Invoke();
+            config.Action.Action.Invoke();
             dismiss.Invoke();
         };
+        
+        if (!string.IsNullOrEmpty(config.AutomationId))
+            actionButton.ContentDescription = $"{config.AutomationId}_Action";
         
         return actionButton;
     }

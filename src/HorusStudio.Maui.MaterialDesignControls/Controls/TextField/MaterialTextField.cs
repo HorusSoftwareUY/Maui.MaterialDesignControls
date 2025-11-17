@@ -42,7 +42,7 @@ public class MaterialTextField : MaterialInputBase
     #region Attributes
 
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCharacterSpacing = _ => MaterialFontTracking.BodyLarge;
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCursorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialLightTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultCursorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
 
     #endregion Attributes
 
@@ -83,6 +83,7 @@ public class MaterialTextField : MaterialInputBase
         _entry.SetBinding(Entry.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
         _entry.SetBinding(InputView.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
         _entry.SetBinding(CustomEntry.CursorColorProperty, new Binding(nameof(CursorColor), source: this));
+        _entry.SetBinding(Entry.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         InputTapCommand = new Command(() => Focus());
         LeadingIconCommand = new Command(() => Focus());
@@ -447,7 +448,7 @@ public class MaterialTextField : MaterialInputBase
     /// Light: <see cref="MaterialLightTheme.Primary">MaterialLightTheme.Primary</see> - Dark: <see cref="MaterialDarkTheme.Primary">MaterialDarkTheme.Primary</see>
     /// </default>
     /// <remarks>
-    /// This Property only works on iOS and 'ndroid' 29 or later
+    /// This Property only works on iOS and 'Android' 29 or later
     /// </remarks>
     public Color CursorColor
     {
@@ -583,32 +584,8 @@ public class MaterialTextField : MaterialInputBase
     #region Styles
     internal static IEnumerable<Style> GetStyles()
     {
-        var style = new Style(typeof(MaterialTextField)) { ApplyToDerivedTypes = true };
-
-        var baseStyles = MaterialInputBase.GetBaseStyles();
-
-        var errorFocusedGroup = baseStyles.First(g => g.Name.Equals(nameof(VisualStateManager.CommonStates)));
-        baseStyles.Remove(errorFocusedGroup);
-
-        var errorFocusedStates = errorFocusedGroup.States.First(s => s.Name.Equals(MaterialInputCommonStates.ErrorFocused));
-
-        errorFocusedGroup.States.Remove(errorFocusedStates);
-
-        errorFocusedStates.Setters.Add(
-            MaterialTextField.CursorColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Error,
-                Dark = MaterialDarkTheme.Error
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        errorFocusedGroup.States.Add(errorFocusedStates);
-        baseStyles.Add(errorFocusedGroup);
-
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialTextFieldStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles

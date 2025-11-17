@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
 using HorusStudio.Maui.MaterialDesignControls.Utils;
 
 namespace HorusStudio.Maui.MaterialDesignControls
@@ -64,17 +65,18 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private const MaterialTopAppBarType DefaultType = MaterialTopAppBarType.CenterAligned;
         private static readonly string? DefaultHeadline = null;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text };
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineFontSize = _ => MaterialFontSize.HeadlineLarge;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultHeadlineFontFamily = _ => MaterialFontFamily.Default;
         private const FontAttributes DefaultHeadlineFontAttributes = FontAttributes.None;
         private static readonly Thickness DefaultHeadlineMarginAdjustment = default(Thickness);
         private static readonly string? DefaultDescription = null;
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDescriptionColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDescriptionColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text };
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDescriptionFontSize = _ => MaterialFontSize.BodyMedium;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDescriptionFontFamily = _ => MaterialFontFamily.Default;
         private const FontAttributes DefaultDescriptionFontAttributes = FontAttributes.None;
         private static readonly Thickness DefaultDescriptionMarginAdjustment = new(DescriptionLateralMargin, 8, DescriptionLateralMargin, 16);
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconTintColorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant };
         private static readonly ImageSource? DefaultLeadingIcon = null;
         private static readonly ICommand? DefaultLeadingIconCommand = null;
         private const bool DefaultLeadingIconIsBusy = false;
@@ -82,7 +84,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private const double DefaultIconSize = 48.0;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconButtonTouchAnimationType = _ => MaterialAnimation.TouchAnimationType;
         private static readonly Thickness DefaultIconPadding = new(12);
-        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+        private static readonly BindableProperty.CreateDefaultValueDelegate DefaultBusyIndicatorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary };
         private const double DefaultBusyIndicatorSize = 24.0;
         private static readonly string? DefaultScrollViewName = null;
         private const int DefaultScrollViewAnimationLength = 250;
@@ -216,6 +218,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         });
 
         /// <summary>
+        /// The backing store for the <see cref="IconTintColor">IconTintColor</see> bindable property.
+        /// </summary>
+        public static readonly BindableProperty IconTintColorProperty = BindableProperty.Create(nameof(IconTintColor), typeof(Color), typeof(MaterialTopAppBar), defaultValueCreator: DefaultIconTintColorColor, defaultBindingMode: BindingMode.OneTime);
+
+        /// <summary>
         /// The backing store for the <see cref="TrailingIcons">TrailingIcons</see> bindable property.
         /// </summary>
         public static readonly BindableProperty TrailingIconsProperty = BindableProperty.Create(nameof(TrailingIcons), typeof(IList), typeof(MaterialTopAppBar), defaultValue: DefaultTrailingIcons, propertyChanged: (bindable, _, _) =>
@@ -275,8 +282,13 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// <summary>
         /// The backing store for the <see cref="IsCollapsed">IsCollapsed</see> bindable property.
         /// </summary>
-        public static readonly BindableProperty IsCollapsedProperty = BindableProperty.Create(nameof(IsCollapsedProperty), typeof(bool), typeof(MaterialTopAppBar), defaultBindingMode: BindingMode.OneWayToSource, defaultValue: false);
+        public static readonly BindableProperty IsCollapsedProperty = BindableProperty.Create(nameof(IsCollapsed), typeof(bool), typeof(MaterialTopAppBar), defaultBindingMode: BindingMode.OneWayToSource, defaultValue: false);
 
+        /// <summary>
+        /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+        /// </summary>
+        public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialTopAppBar), null);
+        
         #endregion Bindable Properties
 
         #region Properties
@@ -541,6 +553,19 @@ namespace HorusStudio.Maui.MaterialDesignControls
         }
 
         /// <summary>
+        /// Gets or sets the tint color of <see cref="MaterialTopAppBar.IconTintColor">leading</see> and <see cref="MaterialTopAppBar.IconTintColor">trailing</see> icons for the top app bar.
+        /// This is a bindable property.
+        /// </summary>
+        /// <default>
+        /// Theme: Light = <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark = <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+        /// </default>
+        public Color IconTintColor
+        {
+            get => (Color)GetValue(IconTintColorProperty);
+            set => SetValue(IconTintColorProperty, value);
+        }
+
+        /// <summary>
         /// Gets or sets an animation to be executed when leading and trailing icon button are clicked.
         /// This is a bindable property.
         /// </summary>
@@ -627,6 +652,28 @@ namespace HorusStudio.Maui.MaterialDesignControls
             get => (bool)GetValue(IsCollapsedProperty);
             private set => SetValue(IsCollapsedProperty, value);
         }
+        
+        /// <summary>
+        /// Gets or sets a value that allows the automation framework to find and interact with this element.
+        /// </summary>
+        /// <remarks>
+        /// This value may only be set once on an element.
+        /// 
+        /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+        /// - The headline label uses the identifier "{AutomationId}_Headline".
+        /// - The description label uses the identifier "{AutomationId}_Description".
+        /// - The leading icon button uses the identifier "{AutomationId}_LeadingIcon".
+        /// - The leading icon button's busy indicator uses the identifier "{AutomationId}_LeadingIconBusyIndicator".
+        /// - Trailing icon buttons use the identifier "{AutomationId}_TrailingIcon_{index}".
+        /// - Trailing icon buttons' busy indicators uses the identifier "{AutomationId}_TrailingIconBusyIndicator_{index}".
+        /// 
+        /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+        /// </remarks>
+        public new string AutomationId
+        {
+            get => (string)GetValue(AutomationIdProperty);
+            set => SetValue(AutomationIdProperty, value);
+        }
 
         #endregion Properties
 
@@ -647,6 +694,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         public MaterialTopAppBar()
         {
+            this.SetAppTheme(HeadlineColorProperty, ((AppThemeBindingExtension)DefaultHeadlineColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultHeadlineColor.Invoke(this)).Dark);
+            this.SetAppTheme(IconTintColorProperty, ((AppThemeBindingExtension)DefaultIconTintColorColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultIconTintColorColor.Invoke(this)).Dark);
+            this.SetAppTheme(DescriptionColorProperty, ((AppThemeBindingExtension)DefaultDescriptionColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultDescriptionColor.Invoke(this)).Dark);
+            this.SetAppTheme(BusyIndicatorColorProperty, ((AppThemeBindingExtension)DefaultBusyIndicatorColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultBusyIndicatorColor.Invoke(this)).Dark);
+
             CreateLayout();
         }
 
@@ -683,6 +735,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _headlineLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(HeadlineFontFamily), source: this));
             _headlineLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(HeadlineFontAttributes), source: this));
             _headlineLabel.SetBinding(MaterialLabel.MarginProperty, new Binding(nameof(HeadlineMarginAdjustment), source: this));
+            _headlineLabel.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Headline"));
             this.Add(_headlineLabel, 0);
             Grid.SetColumnSpan(_headlineLabel, 3);
 
@@ -697,6 +750,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _descriptionLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(DescriptionFontFamily), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(DescriptionFontAttributes), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.MarginProperty, new Binding(nameof(DescriptionMarginAdjustment), source: this));
+            _descriptionLabel.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Description"));
             Grid.SetColumnSpan(_descriptionLabel, 3);
 
             _leadingIconButton = new MaterialIconButton
@@ -710,6 +764,9 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimationType), source: this));
             _leadingIconButton.SetBinding(MaterialIconButton.TouchAnimationProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
             _leadingIconButton.SetBinding(MaterialIconButton.PaddingProperty, new Binding(nameof(IconPadding), source: this));
+            _leadingIconButton.SetBinding(MaterialIconButton.IconTintColorProperty, new Binding(nameof(IconTintColor), source: this));
+            _leadingIconButton.SetBinding(MaterialIconButton.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "LeadingIcon"));
+
             this.Add(_leadingIconButton, 0);
 
             var busyIndicatorMargin = GetBusyIndicatorMargin();
@@ -724,6 +781,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 IsVisible = false
             };
             _leadingActivityIndicator.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
+            _leadingActivityIndicator.SetBinding(MaterialProgressIndicator.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "LeadingIconBusyIndicator"));
             this.Add(_leadingActivityIndicator, 0);
 
             UpdateLayoutAfterTypeChanged(Type);
@@ -1011,6 +1069,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationTypeProperty, new Binding(nameof(IconButtonTouchAnimationType), source: this));
             trailingIconButton.SetBinding(MaterialIconButton.TouchAnimationProperty, new Binding(nameof(IconButtonTouchAnimation), source: this));
             trailingIconButton.SetBinding(MaterialIconButton.PaddingProperty, new Binding(nameof(IconPadding), source: this));
+            trailingIconButton.SetBinding(MaterialIconButton.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"TrailingIcon_{trailingIconIndex}"));
             _trailingIconButtons.Add(trailingIconButton);
             this.Add(trailingIconButton, trailingIconIndex + 2);
 
@@ -1025,6 +1084,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 IsVisible = false
             };
             activityIndicatorTrailing.SetBinding(MaterialProgressIndicator.IndicatorColorProperty, new Binding(nameof(BusyIndicatorColor), source: this));
+            activityIndicatorTrailing.SetBinding(MaterialProgressIndicator.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: $"TrailingIconBusyIndicator_{trailingIconIndex}"));
             _trailingActivityIndicators.Add(activityIndicatorTrailing);
             this.Add(activityIndicatorTrailing, trailingIconIndex + 2);
 

@@ -63,6 +63,7 @@ public class MaterialSelection : MaterialInputBase
         _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(Text), source: this));
         _label.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
         _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        _label.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         InputTapCommand = new Command(() => Focus());
         LeadingIconCommand = new Command(() => Focus());
@@ -185,13 +186,8 @@ public class MaterialSelection : MaterialInputBase
 
     internal static IEnumerable<Style> GetStyles()
     {
-        var style = new Style(typeof(MaterialSelection)) { ApplyToDerivedTypes = true };
-
-        var baseStyles = MaterialInputBase.GetBaseStyles();
-
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, baseStyles);
-
-        return new List<Style> { style };
+        var resourceDictionary = new MaterialSelectionStyles();
+        return resourceDictionary.Values.OfType<Style>();
     }
 
     #endregion Styles
