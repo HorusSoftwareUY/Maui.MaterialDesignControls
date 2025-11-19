@@ -38,7 +38,7 @@ jobs:
           "sdk": {
             "allowPrerelease": false,
             "version": "9.0.307",
-            "workloadVersion": "9.0.100"
+            "workloadVersion": "9.0.300"
           }
         }' > "${{ env.GLOBAL_JSON_FILE }}"
 
