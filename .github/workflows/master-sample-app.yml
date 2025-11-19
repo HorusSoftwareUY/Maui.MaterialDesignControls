@@ -78,7 +78,7 @@ jobs:
         mkdir -p samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android
         echo "${{ secrets.FIREBASE_GOOGLE_SERVICES_JSON }}" > samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
         echo "🔎 samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json (show 10 first lines):"
-        head -n 10 samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
+        cat samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
         echo "✅ Firebase config file created successfully!"
 
     - name: Decode Android Keystore
