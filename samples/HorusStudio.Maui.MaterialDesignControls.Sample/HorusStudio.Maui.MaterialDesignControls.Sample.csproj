@@ -14,9 +14,15 @@
 		<ApplicationIdGuid>24a1a7f0-9c21-4710-9d6d-f863bd1bdb97</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-		<ApplicationVersion>2</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
+		<ApplicationVersion>3</ApplicationVersion>
 	</PropertyGroup>
+
+    <PropertyGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
+        <RuntimeIdentifiers>
+            android-arm;android-arm64;android-x86;android-x64
+        </RuntimeIdentifiers>
+    </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|$(NetVersion)-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
