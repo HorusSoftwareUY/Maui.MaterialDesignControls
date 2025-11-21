@@ -13,7 +13,7 @@
 
   <PropertyGroup Condition=" $(MSBuildProjectName.Contains('Maui')) ">
     <UseMaui>true</UseMaui>
-    <MauiVersion>10.0.0-rc.2.25504.7</MauiVersion>
+    <MauiVersion>10.0.10</MauiVersion>
     <XamlCompilationOptions>Compile</XamlCompilationOptions>
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
   </PropertyGroup>
