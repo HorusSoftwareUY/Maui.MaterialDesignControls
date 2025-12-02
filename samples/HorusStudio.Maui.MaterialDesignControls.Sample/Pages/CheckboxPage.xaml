@@ -9,7 +9,6 @@
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.CheckboxPage"
     x:TypeArguments="vm:CheckboxViewModel"
     x:DataType="vm:CheckboxViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
     <ContentPage.Resources>
@@ -47,102 +46,105 @@
             </Setter>
         </Style>
     </ContentPage.Resources>
+    <views:ControlPageWithTopAppBar>
+        <views:ControlPageWithTopAppBar.PageContent>
+            <VerticalStackLayout Spacing="8">
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Normal" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout Spacing="0">
+                        <material:MaterialCheckBox
+                            Text="Checkbox 1" />
+                        <material:MaterialCheckBox
+                            Text="Checkbox 2" />
+                        <material:MaterialCheckBox
+                            Text="Checkbox 3" />
+                        <material:MaterialCheckBox 
+                            Text="Checkbox 4 (disabled)"
+                            IsEnabled="False" />
+                        <material:MaterialCheckBox 
+                            Text="Checkbox 5 (disabled)"
+                            IsChecked="True"
+                            IsEnabled="False" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Normal Material Checkbox with default properties" Type="BodySmall" />
 
-    <VerticalStackLayout Spacing="8">
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Normal" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="0">
-                <material:MaterialCheckBox
-                    Text="Checkbox 1" />
-                <material:MaterialCheckBox
-                    Text="Checkbox 2" />
-                <material:MaterialCheckBox
-                    Text="Checkbox 3" />
-                <material:MaterialCheckBox 
-                    Text="Checkbox 4 (disabled)"
-                    IsEnabled="False" />
-                <material:MaterialCheckBox 
-                    Text="Checkbox 5 (disabled)"
-                    IsChecked="True"
-                    IsEnabled="False" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Binding a value" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialCheckBox 
+                            Text="Checkbox 1" 
+                            IsChecked="{Binding Value}" />
+
+                        <material:MaterialButton Command="{Binding CheckValueCommand}" Text="Check value" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="We can set color, text color, text size, font attributes, text transform, characters spacing and other properties. On iOS you can change the color of the tick" Type="BodySmall" />
+
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing some properties" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout Spacing="0">
+                        <material:MaterialCheckBox 
+                            Text="Checkbox 1"
+                            Color="DarkOrange"
+                            TextColor="DarkGreen"
+                            FontAttributes="Bold" />
+
+                        <material:MaterialCheckBox 
+                            Text="Checkbox 2"
+                            Color="DarkOrange"
+                            TextColor="DarkGreen"
+                            CharacterSpacing="10" />
+
+                        <material:MaterialCheckBox 
+                            Text="Checkbox 3"
+                            Color="DarkOrange"
+                            FontSize="25"
+                            TextColor="DarkGreen" />
+
+                        <material:MaterialCheckBox 
+                            Text="Checkbox 4 (tick color)"
+                            TickColor="Black"
+                            IsChecked="True"
+                            Color="DarkOrange"
+                            TextColor="DarkGreen" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="We can set color, text color, text size, font attributes, text transform, characters spacing and other properties. On iOS you can change the color of the tick" Type="BodySmall" />
+
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom events, new style and text side changing" />
+
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout Spacing="0">
+                        <material:MaterialCheckBox 
+                            Text="CheckBox 1"
+                            Style="{StaticResource VisualStateManagerStyle}"
+                            TextSide="Left"
+                            IsEnabled="{Binding IsCheckboxEnabled}"
+                            CheckedChanged="MaterialCheckBox_CheckedChanged" />
+
+                        <material:MaterialCheckBox 
+                            Text="CheckBox 2"
+                            TextSide="Left"
+                            IsEnabled="{Binding IsCheckboxEnabled}"
+                            Style="{StaticResource VisualStateManagerStyle}"
+                            CheckedChangedCommand="{Binding CheckedChangedCommand}" />
+
+                        <material:MaterialCheckBox 
+                            Text="CheckBox 3"
+                            TextSide="Left"
+                            IsEnabled="{Binding IsCheckboxEnabled}"
+                            Style="{StaticResource VisualStateManagerStyle}" />
+
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <material:MaterialSwitch
+                                Text="Is enabled"
+                                IsToggled="{Binding IsCheckboxEnabled}" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Setting events, new style using visual state manager and text side" Type="BodySmall" />
             </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Normal Material Checkbox with default properties" Type="BodySmall" />
-
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Binding a value" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialCheckBox 
-                    Text="Checkbox 1" 
-                    IsChecked="{Binding Value}" />
-
-                <material:MaterialButton Command="{Binding CheckValueCommand}" Text="Check value" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="We can set color, text color, text size, font attributes, text transform, characters spacing and other properties. On iOS you can change the color of the tick" Type="BodySmall" />
-
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing some properties" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="0">
-                <material:MaterialCheckBox 
-                    Text="Checkbox 1"
-                    Color="DarkOrange"
-                    TextColor="DarkGreen"
-                    FontAttributes="Bold" />
-
-                <material:MaterialCheckBox 
-                    Text="Checkbox 2"
-                    Color="DarkOrange"
-                    TextColor="DarkGreen"
-                    CharacterSpacing="10" />
-
-                <material:MaterialCheckBox 
-                    Text="Checkbox 3"
-                    Color="DarkOrange"
-                    FontSize="25"
-                    TextColor="DarkGreen" />
-
-                <material:MaterialCheckBox 
-                    Text="Checkbox 4 (tick color)"
-                    TickColor="Black"
-                    IsChecked="True"
-                    Color="DarkOrange"
-                    TextColor="DarkGreen" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="We can set color, text color, text size, font attributes, text transform, characters spacing and other properties. On iOS you can change the color of the tick" Type="BodySmall" />
-
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom events, new style and text side changing" />
-
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="0">
-                <material:MaterialCheckBox 
-                    Text="CheckBox 1"
-                    Style="{StaticResource VisualStateManagerStyle}"
-                    TextSide="Left"
-                    IsEnabled="{Binding IsCheckboxEnabled}"
-                    CheckedChanged="MaterialCheckBox_CheckedChanged" />
-
-                <material:MaterialCheckBox 
-                    Text="CheckBox 2"
-                    TextSide="Left"
-                    IsEnabled="{Binding IsCheckboxEnabled}"
-                    Style="{StaticResource VisualStateManagerStyle}"
-                    CheckedChangedCommand="{Binding CheckedChangedCommand}" />
-
-                <material:MaterialCheckBox 
-                    Text="CheckBox 3"
-                    TextSide="Left"
-                    IsEnabled="{Binding IsCheckboxEnabled}"
-                    Style="{StaticResource VisualStateManagerStyle}" />
-
-                <HorizontalStackLayout HorizontalOptions="Center">
-                    <material:MaterialSwitch
-                        Text="Is enabled"
-                        IsToggled="{Binding IsCheckboxEnabled}" />
-                </HorizontalStackLayout>
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Setting events, new style using visual state manager and text side" Type="BodySmall" />
-    </VerticalStackLayout>
+        </views:ControlPageWithTopAppBar.PageContent>
+    </views:ControlPageWithTopAppBar>
 </local:BaseContentPage>

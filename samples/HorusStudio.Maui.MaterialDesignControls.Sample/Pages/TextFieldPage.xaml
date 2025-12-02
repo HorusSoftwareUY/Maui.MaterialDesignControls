@@ -5,222 +5,91 @@
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TextFieldPage"
     x:TypeArguments="vm:TextFieldViewModel"
     x:DataType="vm:TextFieldViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     
-        <VerticalStackLayout Spacing="8">
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
-            <material:MaterialCard Style="{StaticResource CardControlContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialTextField
-                        AutomationId="txtFilled"
-                        Placeholder="Enter text here" />
-                    
-                    <material:MaterialTextField
-                        LeadingIcon="settings.png"
-                        Placeholder="Enter text here" />
-                    
-                    <material:MaterialTextField
-                        TrailingIcon="star_unselected.png"
-                        Placeholder="Enter text here"
-                        Label="Custom label" />
-                    
-                    <material:MaterialTextField
-                        LeadingIcon="settings.png"
-                        TrailingIcon="star_unselected.png"
-                        Placeholder="Enter text here"
-                        Label="Custom label"
-                        AlwaysShowLabel="{Binding FixedLabel}" />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-            <material:MaterialLabel Text="An input control with a filled background, featuring a movable label, placeholder text, and optional icons." Type="BodySmall" />
-
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
-            <material:MaterialCard Style="{StaticResource CardControlContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialTextField
-                        Type="Outlined"
-                        Label="Label"
-                        AlwaysShowLabel="{Binding FixedLabel}"
-                        Placeholder="Enter text here" />
-                    
-                    <material:MaterialSwitch Text="Fixed label" IsToggled="{Binding FixedLabel}" />
-                    
-                    <material:MaterialTextField
-                        Type="Outlined"
-                        LeadingIcon="settings.png"
-                        Placeholder="Enter text here" />
-                    
-                    <material:MaterialTextField
-                        Type="Outlined"
-                        TrailingIcon="star_unselected.png"
-                        Placeholder="Enter text here"
-                        Label="Custom label" />
-                    
-                    <material:MaterialTextField
-                        Type="Outlined"
-                        LeadingIcon="settings.png"
-                        TrailingIcon="star_unselected.png"
-                        Placeholder="Enter text here"
-                        Label="Custom label" />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-            <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." Type="BodySmall" />
-            
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using commands and some configuration" />
-            <material:MaterialCard Style="{StaticResource CardControlContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialTextField 
-                        Type="Filled"
-                        Keyboard="Numeric"
-                        ReturnType="Search"
-                        LeadingIcon="star_selected.png"
-                        LeadingIconCommand="{Binding LeadingActionCommand}"
-                        Focused="MaterialTextField_Focused"
-                        Unfocused="MaterialTextField_Focused"
-                        ClearButtonVisibility="WhileEditing"
-                        Placeholder="Enter text here" />
-                    
-                    <material:MaterialTextField 
-                        Type="Outlined"
-                        Keyboard="Numeric"
-                        ReturnType="Send"
-                        TrailingIcon="star_selected.png"
-                        TrailingIconCommand="{Binding TrailingActionCommand}"
-                        Focused="MaterialTextField_Focused"
-                        Unfocused="MaterialTextField_Focused"
-                        ClearButtonVisibility="WhileEditing"
-                        Placeholder="Enter text here" />
-                    
-                    <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-            <material:MaterialLabel Text="You can change the return type, keyboard, define events like focused, unfocused or text changed, trailing icon or leading icon and clear button visibility." Type="BodySmall" />
-
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and return command" />
-            <material:MaterialCard Style="{StaticResource CardControlContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialTextField 
-                        MaxLength="10"
-                        Type="Outlined"
-                        Label="Custom label"
-                        ReturnCommand="{Binding ReturnCommand}"
-                        ReturnType="Done"
-                        TextColor="DarkGoldenrod"
-                        LabelColor="DarkGreen"
-                        BorderColor="DarkGray"
-                        BorderWidth="4"
-                        PlaceholderColor="DarkBlue"
-                        Placeholder="Enter text here" />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-            <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set a max length." Type="BodySmall" />
-            
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
-            <material:MaterialCard Style="{StaticResource CardControlContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialTextField 
-                        Text="{Binding Text}"
-                        SupportingText="(*) required"
-                        Type="Filled"
-                        HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here"
-                        ErrorAnimationType="None" />
-                    
-                    <material:MaterialTextField 
-                        Text="{Binding Text}"
-                        SupportingText="{Binding SupportingTextValue}"
-                        Type="Filled"
-                        Label="With trailing icon"
-                        TrailingIcon="settings.png"
-                        HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here" 
-                        ErrorAnimationType="None" />
-
-                    <material:MaterialTextField 
-                        Text="{Binding Text}"
-                        SupportingText="With custom animation"
-                        Type="Outlined"
-                        HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here">
-                        <material:MaterialTextField.ErrorAnimation>
-                            <material:HeartAnimation Duration="2000" Scale="0.8" />
-                        </material:MaterialTextField.ErrorAnimation>
-                    </material:MaterialTextField>
-                    
-                    <material:MaterialTextField 
-                        Text="{Binding Text}"
-                        SupportingText="{Binding SupportingTextValue}"
-                        Type="Outlined"
-                        Label="With trailing icon and Shake animation"
-                        TrailingIcon="settings.png"
-                        HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here"
-                        ErrorAnimationType="Shake" />
-                    
-                    <material:MaterialTextField 
-                        Text="{Binding Text}"
-                        SupportingText="With custom error icon and Heart animation"
-                        Type="Filled"
-                        Label="Custom error"
-                        ErrorIcon="info.png"
-                        HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here" 
-                        ErrorAnimationType="Heart" />
-                    
-                    <material:MaterialTextField 
-                        Text="{Binding Text}"
-                        SupportingText="With custom error icon Jump animation"
-                        Type="Outlined"
-                        Label="Custom error"
-                        ErrorIcon="info.png"
-                        HasError="{Binding HasAnError}"
-                        Placeholder="Enter text here"
-                        ErrorAnimationType="Jump" />
-                    
-                    <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Validate required" />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-            <material:MaterialLabel Text="You can bind the text, set a supporting text and use an state when an error occured." Type="BodySmall" />
-            
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
-            <material:MaterialCard Style="{StaticResource CardControlContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialTextField 
-                        Type="Outlined"
-                        Label="New Info"
-                        IsEnabled="False"
-                        Text="Information here" />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-            <material:MaterialLabel Text="You can disabled a text field." Type="BodySmall" />
-            
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Read only" />
-            <material:MaterialCard Style="{StaticResource CardControlContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialTextField 
-                        Type="Filled"
-                        IsPassword="True"
-                        Label="Password"
-                        IsReadOnly="True"
-                        Text="Text here" />
-                </VerticalStackLayout>
-            </material:MaterialCard>
-            <material:MaterialLabel Text="You can set read only and is password." Type="BodySmall" />
-
-            <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom handler" />
-            <material:MaterialCard Style="{StaticResource CardControlContainer}">
-                <VerticalStackLayout>
-                    <material:MaterialTextField 
-                        Type="Filled"
-                        Label="Phone number"
-                        Placeholder="Enter phone number here"
-                        Keyboard="Telephone"/>
-                </VerticalStackLayout>
-            </material:MaterialCard>
-            <material:MaterialLabel Text="This control uses a custom handler implemented in the sample app, which adds a custom button to close the keyboard. The button is shown when the input gains focus and only when the keyboard type is set to telephone." Type="BodySmall" />
-        </VerticalStackLayout>
+    <views:ControlPageWithTopAppBar>
+        <views:ControlPageWithTopAppBar.PageContent>
+            <VerticalStackLayout Spacing="8">
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialTextField AutomationId="txtFilled" Placeholder="Enter text here" />
+                        <material:MaterialTextField LeadingIcon="settings.png" Placeholder="Enter text here" />
+                        <material:MaterialTextField TrailingIcon="star_unselected.png" Placeholder="Enter text here" Label="Custom label" />
+                        <material:MaterialTextField LeadingIcon="settings.png" TrailingIcon="star_unselected.png" Placeholder="Enter text here" Label="Custom label" AlwaysShowLabel="{Binding FixedLabel}" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="An input control with a filled background, featuring a movable label, placeholder text, and optional icons." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialTextField Type="Outlined" Label="Label" AlwaysShowLabel="{Binding FixedLabel}" Placeholder="Enter text here" />
+                        <material:MaterialSwitch Text="Fixed label" IsToggled="{Binding FixedLabel}" />
+                        <material:MaterialTextField Type="Outlined" LeadingIcon="settings.png" Placeholder="Enter text here" />
+                        <material:MaterialTextField Type="Outlined" TrailingIcon="star_unselected.png" Placeholder="Enter text here" Label="Custom label" />
+                        <material:MaterialTextField Type="Outlined" LeadingIcon="settings.png" TrailingIcon="star_unselected.png" Placeholder="Enter text here" Label="Custom label" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using commands and some configuration" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialTextField Type="Filled" Keyboard="Numeric" ReturnType="Search" LeadingIcon="star_selected.png" LeadingIconCommand="{Binding LeadingActionCommand}" Focused="MaterialTextField_Focused" Unfocused="MaterialTextField_Focused" ClearButtonVisibility="WhileEditing" Placeholder="Enter text here" />
+                        <material:MaterialTextField Type="Outlined" Keyboard="Numeric" ReturnType="Send" TrailingIcon="star_selected.png" TrailingIconCommand="{Binding TrailingActionCommand}" Focused="MaterialTextField_Focused" Unfocused="MaterialTextField_Focused" ClearButtonVisibility="WhileEditing" Placeholder="Enter text here" />
+                        <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can change the return type, keyboard, define events like focused, unfocused or text changed, trailing icon or leading icon and clear button visibility." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and return command" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialTextField MaxLength="10" Type="Outlined" Label="Custom label" ReturnCommand="{Binding ReturnCommand}" ReturnType="Done" TextColor="DarkGoldenrod" LabelColor="DarkGreen" BorderColor="DarkGray" BorderWidth="4" PlaceholderColor="DarkBlue" Placeholder="Enter text here" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set a max length." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting text and checking errors" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialTextField Text="{Binding Text}" SupportingText="(*) required" Type="Filled" HasError="{Binding HasAnError}" Placeholder="Enter text here" ErrorAnimationType="None" />
+                        <material:MaterialTextField Text="{Binding Text}" SupportingText="{Binding SupportingTextValue}" Type="Filled" Label="With trailing icon" TrailingIcon="settings.png" HasError="{Binding HasAnError}" Placeholder="Enter text here" ErrorAnimationType="None" />
+                        <material:MaterialTextField Text="{Binding Text}" SupportingText="With custom animation" Type="Outlined" HasError="{Binding HasAnError}" Placeholder="Enter text here">
+                            <material:MaterialTextField.ErrorAnimation>
+                                <material:HeartAnimation Duration="2000" Scale="0.8" />
+                            </material:MaterialTextField.ErrorAnimation>
+                        </material:MaterialTextField>
+                        <material:MaterialTextField Text="{Binding Text}" SupportingText="{Binding SupportingTextValue}" Type="Outlined" Label="With trailing icon and Shake animation" TrailingIcon="settings.png" HasError="{Binding HasAnError}" Placeholder="Enter text here" ErrorAnimationType="Shake" />
+                        <material:MaterialTextField Text="{Binding Text}" SupportingText="With custom error icon and Heart animation" Type="Filled" Label="Custom error" ErrorIcon="info.png" HasError="{Binding HasAnError}" Placeholder="Enter text here" ErrorAnimationType="Heart" />
+                        <material:MaterialTextField Text="{Binding Text}" SupportingText="With custom error icon Jump animation" Type="Outlined" Label="Custom error" ErrorIcon="info.png" HasError="{Binding HasAnError}" Placeholder="Enter text here" ErrorAnimationType="Jump" />
+                        <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Validate required" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can bind the text, set a supporting text and use an state when an error occured." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialTextField Type="Outlined" Label="New Info" IsEnabled="False" Text="Information here" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can disabled a text field." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Read only" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialTextField Type="Filled" IsPassword="True" Label="Password" IsReadOnly="True" Text="Text here" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can set read only and is password." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom handler" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialTextField Type="Filled" Label="Phone number" Placeholder="Enter phone number here" Keyboard="Telephone"/>
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="This control uses a custom handler implemented in the sample app, which adds a custom button to close the keyboard. The button is shown when the input gains focus and only when the keyboard type is set to telephone." Type="BodySmall" />
+            </VerticalStackLayout>
+        </views:ControlPageWithTopAppBar.PageContent>
+    </views:ControlPageWithTopAppBar>
 </local:BaseContentPage>

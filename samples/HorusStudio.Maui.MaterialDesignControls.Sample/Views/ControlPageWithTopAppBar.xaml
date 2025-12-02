@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
-    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.PageLayout"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.ControlPageWithTopAppBar"
     x:DataType="vm:BaseViewModel">
     <Grid
         RowDefinitions="Auto,*">

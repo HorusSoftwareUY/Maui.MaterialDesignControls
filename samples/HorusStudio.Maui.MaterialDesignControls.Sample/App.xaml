@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Converters"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
-             xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
-             xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
              x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -31,65 +29,6 @@
                 <Setter Property="Type" Value="TitleLarge" />
                 <Setter Property="Margin" Value="0,36,0,0" />
             </Style>
-
-            <ControlTemplate x:Key="ControlPageWithTopAppBar" 
-                             x:DataType="vm:BaseViewModel">
-                <Grid
-                    RowDefinitions="Auto,*">
-                    <material:MaterialTopAppBar
-                        AutomationId="topAppBar"
-                        Headline="{TemplateBinding Title}"
-                        Description="{TemplateBinding Subtitle}"
-                        LeadingIconCommand="{TemplateBinding BackCommand}"
-                        LeadingIconIsBusy="{TemplateBinding Path=BackCommand.IsRunning}"
-                        LeadingIcon="ic_back.png"
-                        Type="Large"
-                        ScrollViewName="MdcControlPageScroll"
-                        TrailingIcons="{TemplateBinding TopBarIcons}"
-                        x:Name="mdcTopBar" />
-                    <ScrollView Grid.Row="1" x:Name="MdcControlPageScroll">
-                        <VerticalStackLayout Style="{StaticResource MainLayout}">
-                            <material:MaterialSegmentedButton
-                                ItemsSource="{TemplateBinding TabItems}"
-                                SelectedItem="{TemplateBinding SelectedTabItem}"
-                                SelectionCommand="{TemplateBinding TabItemsSelection}"
-                                HeightRequest="40"
-                                CornerRadius="20" />
-                            
-                            <Grid>
-                                <ContentPresenter IsVisible="{TemplateBinding CustomizationMode, Converter={StaticResource ReverseBoolConverter}}" />
-                                <material:MaterialCard
-                                    Style="{StaticResource CardControlContainer}"
-                                    IsVisible="{TemplateBinding CustomizationMode}"
-                                    Padding="32"
-                                    Margin="0,24">
-                                    <material:MaterialLabel Text="Soon you will be able to customize controls live" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </material:MaterialCard>    
-                            </Grid>
-                        </VerticalStackLayout>
-                    </ScrollView>
-                </Grid>
-            </ControlTemplate>
-            
-            <ControlTemplate x:Key="PageWithTopAppBar" 
-                             x:DataType="vm:BaseViewModel">
-                <Grid
-                    RowDefinitions="Auto,*">
-                    <material:MaterialTopAppBar
-                        Headline="{TemplateBinding Title}"
-                        Description="{TemplateBinding Subtitle}"
-                        LeadingIconCommand="{TemplateBinding BackCommand}"
-                        LeadingIconIsBusy="{TemplateBinding Path=BackCommand.IsRunning}"
-                        LeadingIcon="ic_back.png"
-                        Type="Large"
-                        ScrollViewName="MdcPageScroll" />
-                    <ScrollView Grid.Row="1" x:Name="MdcPageScroll">
-                        <VerticalStackLayout Style="{StaticResource MainLayout}">
-                            <ContentPresenter />
-                        </VerticalStackLayout>
-                    </ScrollView>
-                </Grid>
-            </ControlTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Views;
 
-public partial class PageLayout : ContentView
+public partial class ControlPageWithTopAppBar : ContentView
 {
-    public static readonly BindableProperty PageContentProperty = BindableProperty.Create(nameof(PageContent), typeof(View), typeof(PageLayout), propertyChanged: (bindable, _, newValue) =>
+    public static readonly BindableProperty PageContentProperty = BindableProperty.Create(nameof(PageContent), typeof(View), typeof(ControlPageWithTopAppBar), propertyChanged: (bindable, _, newValue) =>
     {
-        if (bindable is PageLayout self && newValue is View view)
+        if (bindable is ControlPageWithTopAppBar self && newValue is View view)
         {
             self.contentPresenter.Content = view;
         }
@@ -22,7 +22,7 @@ public partial class PageLayout : ContentView
         set => SetValue(PageContentProperty, value);
     }
     
-    public PageLayout()
+    public ControlPageWithTopAppBar()
     {
         InitializeComponent();
     }

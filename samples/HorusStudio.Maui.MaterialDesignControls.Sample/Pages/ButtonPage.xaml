@@ -56,8 +56,8 @@
 
     </ContentPage.Resources>
 
-    <views:PageLayout>
-        <views:PageLayout.PageContent>
+    <views:ControlPageWithTopAppBar>
+        <views:ControlPageWithTopAppBar.PageContent>
             
             <VerticalStackLayout Spacing="8">
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Elevated" />
@@ -391,6 +391,6 @@
                 
             </VerticalStackLayout>
             
-        </views:PageLayout.PageContent>
-    </views:PageLayout>
+        </views:ControlPageWithTopAppBar.PageContent>
+    </views:ControlPageWithTopAppBar>
 </local:BaseContentPage>
