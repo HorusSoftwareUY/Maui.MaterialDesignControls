@@ -30,7 +30,7 @@
                     HeightRequest="40"
                     CornerRadius="20" />
                 <Grid>
-                    <ContentPresenter
+                    <ContentView
                         x:Name="contentPresenter"
                         IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}" />
                     <material:MaterialCard

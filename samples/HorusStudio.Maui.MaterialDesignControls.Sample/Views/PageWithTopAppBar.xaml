@@ -18,7 +18,7 @@
             ScrollViewName="MdcPageScroll" />
         <ScrollView Grid.Row="1" x:Name="MdcPageScroll">
             <VerticalStackLayout Style="{StaticResource MainLayout}">
-                <ContentPresenter
+                <ContentView
                     x:Name="contentPresenter" />
             </VerticalStackLayout>
         </ScrollView>
