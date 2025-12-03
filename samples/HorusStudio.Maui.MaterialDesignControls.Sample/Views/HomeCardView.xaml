@@ -11,14 +11,21 @@
         </Style>
 
         <Style x:Key="ImageContainer" TargetType="material:MaterialCard">
-            <Setter Property="HeightRequest" Value="180" />
+            <Setter Property="HeightRequest">
+                <Setter.Value>
+                    <OnIdiom x:TypeArguments="x:Double" Phone="180" Tablet="240" />
+                </Setter.Value>
+            </Setter>
             <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.PrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.PrimaryContainer}}" />
             <Setter Property="CornerRadius" Value="24" />
         </Style>
 
     </ContentView.Resources>
 
-    <material:MaterialCard Style="{StaticResource HomeCard}" Padding="0">
+    <material:MaterialCard x:Name="card" 
+                           Style="{StaticResource HomeCard}" 
+                           Padding="0"
+                           CommandParameter="{Binding NavigationParameter}">
         <VerticalStackLayout Padding="0,0,0,24">
             <material:MaterialCard Style="{StaticResource ImageContainer}" Padding="0">
                 <Image Source="{Binding ImageSource}" 
@@ -29,7 +36,6 @@
                 <material:MaterialLabel Type="TitleLarge" Text="{Binding Title}" />
                 <material:MaterialLabel Type="BodyMedium" Text="{Binding Description}" />
             </VerticalStackLayout>
-
         </VerticalStackLayout>
     </material:MaterialCard>
 

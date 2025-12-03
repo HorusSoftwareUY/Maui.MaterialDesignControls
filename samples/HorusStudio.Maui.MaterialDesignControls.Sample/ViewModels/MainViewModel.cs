@@ -92,9 +92,32 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async Task MenuItemClickAsync(MaterialNavigationDrawerItem menuItem)
         {
-            if (menuItem != null && _viewmodelTypeMap.TryGetValue(menuItem.Text, out Type viewModelType))
+            if (menuItem != null)
+            {
+                await NavigateToSamplePageAsync(menuItem.Text);
+            }
+        }
+        
+        [ICommand]
+        private async Task CardClickAsync(string parameter)
+        {
+            await NavigateToSamplePageAsync(parameter);
+        }
+        
+        private async Task NavigateToSamplePageAsync(string page)
+        {
+            if (!string.IsNullOrEmpty(page) && _viewmodelTypeMap.TryGetValue(page, out Type viewModelType))
             {
                 await GoToAsync(viewModelType.Name);
+                CleanMenuSelection();
+            }
+        }
+        
+        private void CleanMenuSelection()
+        {
+            foreach (var materialNavigationDrawerItem in MenuItems)
+            {
+                materialNavigationDrawerItem.IsSelected = false;
             }
         }
          

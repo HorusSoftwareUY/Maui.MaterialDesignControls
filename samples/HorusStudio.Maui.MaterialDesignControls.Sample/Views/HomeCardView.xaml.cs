@@ -1,3 +1,5 @@
+using System.Windows.Input;
+
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Views;
 
 public partial class HomeCardView : ContentView
@@ -15,6 +17,9 @@ public partial class HomeCardView : ContentView
 
     public static readonly BindableProperty DescriptionProperty =
         BindableProperty.Create(nameof(Description), typeof(string), typeof(HomeCardView), default(string));
+    
+    public static readonly BindableProperty NavigationParameterProperty =
+        BindableProperty.Create(nameof(NavigationParameter), typeof(string), typeof(HomeCardView), default(string));
 
     public string ImageSource
     {
@@ -39,12 +44,27 @@ public partial class HomeCardView : ContentView
         get => (string)GetValue(DescriptionProperty);
         set => SetValue(DescriptionProperty, value);
     }
+    
+    public string NavigationParameter
+    {
+        get => (string)GetValue(NavigationParameterProperty);
+        set => SetValue(NavigationParameterProperty, value);
+    }
 
     #endregion
 
-     public HomeCardView()
+    public HomeCardView()
 	{
 		InitializeComponent();
         Content.BindingContext = this;
+    }
+
+    protected override void OnBindingContextChanged()
+    {
+        var mainViewModel = BindingContext as ViewModels.MainViewModel;
+        if (mainViewModel != null)
+        {
+            card.Command = mainViewModel.CardClickCommand;
+        }
     }
 }

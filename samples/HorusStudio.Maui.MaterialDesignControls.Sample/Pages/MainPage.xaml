@@ -7,6 +7,7 @@
              x:TypeArguments="vm:MainViewModel"
              x:DataType="vm:MainViewModel"
              xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
+             xmlns:models="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Models"
              xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
@@ -20,7 +21,11 @@
         </Style>
 
         <Style x:Key="MainImageContainer" TargetType="Frame">
-            <Setter Property="HeightRequest" Value="160" />
+            <Setter Property="HeightRequest">
+                <Setter.Value>
+                    <OnIdiom x:TypeArguments="x:Double" Phone="160" Tablet="240" />
+                </Setter.Value>
+            </Setter>
             <Setter Property="BorderColor" Value="Transparent" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.PrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.PrimaryContainer}}" />
@@ -65,28 +70,22 @@
 
                     </VerticalStackLayout>
                 </Border>
-
-                <material:MaterialLabel Type="HeadlineMedium" Text="News &amp; launches" />
                 
-                <views:HomeCardView Title="Filled buttons"
-                                    Description="Filled buttons have high visual impact when used for important actions."
-                                    ImageSource="home_filled_buttons.png"
-                                    ImageAspect="AspectFill"/>
-
                 <VerticalStackLayout Style="{StaticResource SectionHeader}">
-                    <material:MaterialLabel Type="HeadlineMedium" Text="Actions" />
-                    <material:MaterialLabel Type="BodyMedium" Text="Action components help people achieve an aim." />
+                    <material:MaterialLabel Type="HeadlineMedium" Text="Buttons" />
                 </VerticalStackLayout>
 
-                <views:HomeCardView Title="Common Buttons"
-                                    Description="Buttons help people take action, such as sending an email, sharing a document, or liking a comment."
+                <views:HomeCardView Title="Buttons"
+                                    Description="Buttons prompt most actions in a UI"
                                     ImageSource="home_common_buttons.png"
-                                    ImageAspect="Center"/>
+                                    ImageAspect="Center"
+                                    NavigationParameter="{x:Static models:Pages.Button}" />
 
-                <views:HomeCardView Title="Extended FAB"
-                                    Description="Extended floating action buttons (extended FABs) help people take primary actions. They're wider than FABs to accommodate a text label and larger target area."
+                <views:HomeCardView Title="Floating action buttons (FABs)"
+                                    Description="Floating action buttons (FABs) help people take primary actions"
                                     ImageSource="home_extended_fab.png"
-                                    ImageAspect="Center"/>
+                                    ImageAspect="Center"
+                                    NavigationParameter="{x:Static models:Pages.FloatingButton}" />
 
                 <VerticalStackLayout Style="{StaticResource SectionHeader}">
                     <material:MaterialLabel Type="HeadlineMedium" Text="Communication" />
@@ -96,12 +95,14 @@
                 <views:HomeCardView Title="Badges"
                                     Description="Badges convey dynamic information, such as counts or status. A badge can include labels or numbers."
                                     ImageSource="home_badges.png"
-                                    ImageAspect="AspectFit"/>
+                                    ImageAspect="AspectFit"
+                                    NavigationParameter="{x:Static models:Pages.Badge}" />
 
                 <views:HomeCardView Title="Progress indicators"
                                     Description="Progress indicators inform users about the status of ongoing processes, such as loading an app or submitting a form."
                                     ImageSource="home_progress_indicators.png"
-                                    ImageAspect="AspectFit"/>
+                                    ImageAspect="AspectFit"
+                                    NavigationParameter="{x:Static models:Pages.ProgressIndicator}" />
 
             </VerticalStackLayout>
         </ScrollView>
