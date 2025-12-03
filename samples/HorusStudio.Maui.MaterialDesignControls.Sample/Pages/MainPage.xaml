@@ -33,12 +33,11 @@
             <Setter Property="HasShadow" Value="False" />
             <Setter Property="IsClippedToBounds" Value="True" />
         </Style>
-
-        <Style x:Key="SectionHeader" TargetType="VerticalStackLayout">
-            <Setter Property="Spacing" Value="7" />
+        
+        <Style x:Key="SectionLabel" TargetType="material:MaterialLabel">
             <Setter Property="Margin" Value="0,20,0,0" />
+            <Setter Property="Type" Value="HeadlineMedium" />
         </Style>
-
     </ContentPage.Resources>
 
     <Grid RowDefinitions="48,*">
@@ -71,42 +70,203 @@
                     </VerticalStackLayout>
                 </Border>
                 
-                <VerticalStackLayout Style="{StaticResource SectionHeader}">
-                    <material:MaterialLabel Type="HeadlineMedium" Text="Buttons" />
-                </VerticalStackLayout>
+                <material:MaterialLabel 
+                    Style="{StaticResource SectionLabel}"
+                    Text="Actions" />
 
-                <views:HomeCardView Title="Buttons"
-                                    Description="Buttons prompt most actions in a UI"
-                                    ImageSource="home_common_buttons.png"
-                                    ImageAspect="Center"
-                                    NavigationParameter="{x:Static models:Pages.Button}" />
+                <views:HomeCardView 
+                    Title="Buttons"
+                    Description="Buttons prompt most actions in a UI."
+                    ImageSource="home_common_buttons.png"
+                    ImageAspect="Center"
+                    NavigationParameter="{x:Static models:Pages.Button}" />
 
-                <views:HomeCardView Title="Floating action buttons (FABs)"
-                                    Description="Floating action buttons (FABs) help people take primary actions"
-                                    ImageSource="home_extended_fab.png"
-                                    ImageAspect="Center"
-                                    NavigationParameter="{x:Static models:Pages.FloatingButton}" />
+                <views:HomeCardView 
+                    Title="Floating action buttons (FABs)"
+                    Description="Floating action buttons (FABs) help people take primary actions."
+                    ImageSource="home_extended_fab.png"
+                    ImageAspect="Center"
+                    NavigationParameter="{x:Static models:Pages.FloatingButton}" />
 
-                <VerticalStackLayout Style="{StaticResource SectionHeader}">
-                    <material:MaterialLabel Type="HeadlineMedium" Text="Communication" />
-                    <material:MaterialLabel Type="BodyMedium" Text="Communication components provide helpful information." />
-                </VerticalStackLayout>
+                <views:HomeCardView 
+                    Title="Icon buttons"
+                    Description="Icon buttons help people take actions with a single tap."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.IconButton}" />
+                
+                <views:HomeCardView 
+                    Title="Segmented buttons"
+                    Description="Segmented buttons help people select options, switch views, or sort elements."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.SegmentedButtons}" />
+                
+                <material:MaterialLabel 
+                    Style="{StaticResource SectionLabel}"
+                    Text="Communications" />
+                
+                <views:HomeCardView 
+                    Title="Badges"
+                    Description="Badges show notifications, counts, or status information on navigation items and icons."
+                    ImageSource="home_badges.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Badge}" />
+                
+                <views:HomeCardView 
+                    Title="Progress indicators"
+                    Description="Progress indicators show the status of a process in real time."
+                    ImageSource="home_progress_indicators.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.ProgressIndicator}" />
+                
+                <views:HomeCardView 
+                    Title="Snackbar"
+                    Description="Snackbars show short updates about app processes at the bottom of the screen."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Snackbar}" />
+                
+                <material:MaterialLabel 
+                    Style="{StaticResource SectionLabel}"
+                    Text="Containment" />
+                
+                <views:HomeCardView 
+                    Title="Cards"
+                    Description="Cards display content and actions about a single subject."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Card}" />
+                
+                <views:HomeCardView 
+                    Title="Divider"
+                    Description="Dividers are thin lines that group content in lists or other containers."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Divider}" />
+                
+                <material:MaterialLabel 
+                    Style="{StaticResource SectionLabel}"
+                    Text="Navigation" />
+                
+                <views:HomeCardView 
+                    Title="Navigation drawer"
+                    Description="Navigation drawers let people switch between UI views on larger devices."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.NavigationDrawer}" />
+                
+                <views:HomeCardView 
+                    Title="Top app bars"
+                    Description="Top app bars are placed at the top of the screen to help people navigate through a product."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.TopAppBar}" />
 
-                <views:HomeCardView Title="Badges"
-                                    Description="Badges convey dynamic information, such as counts or status. A badge can include labels or numbers."
-                                    ImageSource="home_badges.png"
-                                    ImageAspect="AspectFit"
-                                    NavigationParameter="{x:Static models:Pages.Badge}" />
+                <material:MaterialLabel 
+                    Style="{StaticResource SectionLabel}"
+                    Text="Selection" />
+                
+                <views:HomeCardView 
+                    Title="Checkbox"
+                    Description="Checkboxes let users select one or more items from a list, or turn an item on or off."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Checkbox}" />
+                
+                <views:HomeCardView 
+                    Title="Chips"
+                    Description="Chips help people enter information, make selections, filter content, or trigger actions."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Chip}" />
 
-                <views:HomeCardView Title="Progress indicators"
-                                    Description="Progress indicators inform users about the status of ongoing processes, such as loading an app or submitting a form."
-                                    ImageSource="home_progress_indicators.png"
-                                    ImageAspect="AspectFit"
-                                    NavigationParameter="{x:Static models:Pages.ProgressIndicator}" />
+                <views:HomeCardView 
+                    Title="Date pickers"
+                    Description="Date pickers let people select a date, or a range of dates."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.DatePicker}" />
+                
+                <views:HomeCardView 
+                    Title="Pickers"
+                    Description="Pickers let people select an option from a list of values. They typically appear in forms and dialogs."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Picker}" />
+                
+                <views:HomeCardView 
+                    Title="Radio button"
+                    Description="Radio buttons let people select one option from a set of options."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.RadioButton}" />
+                
+                <views:HomeCardView 
+                    Title="Rating"
+                    Description="This control allow people to view and set rating values that reflect degrees of satisfaction."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Rating}" />
+                
+                <views:HomeCardView 
+                    Title="Selection"
+                    Description="Selection control allow people choose an option in a custom way with same look &amp; feel than pickers and text fields. They typically appear in forms and dialogs."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Selection}" />
+                
+                <views:HomeCardView 
+                    Title="Sliders"
+                    Description="Sliders allow users to make selections from a range of values."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Slider}" />
+                
+                <views:HomeCardView 
+                    Title="Switch"
+                    Description="Switches toggle the selection of an item on and off."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Switch}" />
+                
+                <views:HomeCardView 
+                    Title="Time pickers"
+                    Description="Time pickers help people select and set a specific time."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.TimePicker}" />
+
+                <material:MaterialLabel 
+                    Style="{StaticResource SectionLabel}"
+                    Text="Text inputs" />
+                
+                <views:HomeCardView 
+                    Title="Multiline text fields"
+                    Description="Multiline text fields let people enter text into a UI. They typically appear in forms and dialogs."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.MultilineTextField}" />
+                
+                <views:HomeCardView 
+                    Title="Text fields"
+                    Description="Text fields let users enter text into a UI."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.TextField}" />
+                
+                <material:MaterialLabel 
+                    Style="{StaticResource SectionLabel}"
+                    Text="Typography" />
+                
+                <views:HomeCardView 
+                    Title="Labels"
+                    Description="Use labels to make content readable and beautiful."
+                    ImageSource="home_filled_buttons.png"
+                    ImageAspect="AspectFill"
+                    NavigationParameter="{x:Static models:Pages.Label}" />
 
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
-
-
 </local:BaseContentPage>
