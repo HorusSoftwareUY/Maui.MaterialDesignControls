@@ -16,25 +16,29 @@
                     <OnIdiom x:TypeArguments="x:Double" Phone="180" Tablet="240" />
                 </Setter.Value>
             </Setter>
+            
             <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.PrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.PrimaryContainer}}" />
             <Setter Property="CornerRadius" Value="24" />
         </Style>
-
     </ContentView.Resources>
 
     <material:MaterialCard x:Name="card" 
                            Style="{StaticResource HomeCard}" 
                            Padding="0"
-                           CommandParameter="{Binding NavigationParameter}">
+                           Command="{Binding CardClickCommand}">
         <VerticalStackLayout Padding="0,0,0,24">
             <material:MaterialCard Style="{StaticResource ImageContainer}" Padding="0">
-                <Image Source="{Binding ImageSource}" 
-                       Aspect="{Binding ImageAspect}"/>
+                <Grid>
+                    <Image x:Name="previewImage" />
+                    <ContentView x:Name="previewContent"
+                                 Padding="16,0"
+                                 IsVisible="False" />
+                </Grid>
             </material:MaterialCard>
 
             <VerticalStackLayout Spacing="7" Padding="24, 0">
-                <material:MaterialLabel Type="TitleLarge" Text="{Binding Title}" />
-                <material:MaterialLabel Type="BodyMedium" Text="{Binding Description}" />
+                <material:MaterialLabel x:Name="lblTitle" Type="TitleLarge" />
+                <material:MaterialLabel x:Name="lblDescription" Type="BodyMedium" />
             </VerticalStackLayout>
         </VerticalStackLayout>
     </material:MaterialCard>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -14,6 +15,52 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         private IEnumerable<MaterialNavigationDrawerItem> _menuItems;
 
         public override string Title => string.Empty;
+
+        [ObservableProperty] 
+        private ObservableCollection<MaterialSegmentedButtonItem> _segmentedButtonItems = new ObservableCollection<MaterialSegmentedButtonItem>()
+        {
+            new MaterialSegmentedButtonItem("Songs")
+            {
+                SelectedIcon = "ic_checkbox.png"
+            },
+            new MaterialSegmentedButtonItem("Albums")
+            {
+                SelectedIcon = "ic_checkbox.png"
+            },
+            new MaterialSegmentedButtonItem("Podcasts")
+            {
+                SelectedIcon = "ic_checkbox.png"
+            }
+        };
+        
+        [ObservableProperty]
+        private MaterialSegmentedButtonItem _selectedSegmentedButtonItem;
+
+        [ObservableProperty] private ObservableCollection<MaterialNavigationDrawerItem> _navigationDrawerItemsitems = new ObservableCollection<MaterialNavigationDrawerItem>()
+        {
+            new()
+            {
+                Headline = "Mail",
+                LeadingIcon = "email.png",
+                TrailingIcon = "arrow_drop_down.png",
+                Text = "Inbox",
+                BadgeText = "30"
+            },
+            new()
+            {
+                Headline = "Mail",
+                LeadingIcon = "star_unselected.png",
+                TrailingIcon = "arrow_drop_down.png",
+                Text = "Favorites"
+            },
+            new()
+            {
+                Headline = "Mail",
+                LeadingIcon = "trash.png",
+                TrailingIcon = "arrow_drop_down.png",
+                Text = "Trash"
+            }
+        };
 
         #endregion
 
@@ -51,6 +98,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         public MainViewModel()
         {
             CreateMenu();
+
+            SelectedSegmentedButtonItem = SegmentedButtonItems[0];
         }
         
         private void CreateMenu()

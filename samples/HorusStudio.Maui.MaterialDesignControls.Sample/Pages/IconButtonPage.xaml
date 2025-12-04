@@ -86,7 +86,7 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Type="Tonal"
-                             HorizontalOptions="End"
+                            HorizontalOptions="End"
                             ImageSource="settings.png"
                             Command="{Binding MaterialIconButton2Command}"
                             CommandParameter="Filled tonal icon button clicked!"
