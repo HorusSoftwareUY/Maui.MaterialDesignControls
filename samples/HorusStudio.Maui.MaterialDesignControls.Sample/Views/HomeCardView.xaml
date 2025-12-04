@@ -16,8 +16,7 @@
                     <OnIdiom x:TypeArguments="x:Double" Phone="180" Tablet="240" />
                 </Setter.Value>
             </Setter>
-            
-            <Setter Property="Background" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.PrimaryContainer}, Dark={x:Static material:MaterialDarkTheme.PrimaryContainer}}" />
+            <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource HomePreviewCardBackgroundLight}, Dark={StaticResource HomePreviewCardBackgroundDark}}" />
             <Setter Property="CornerRadius" Value="24" />
         </Style>
     </ContentView.Resources>
@@ -29,10 +28,12 @@
         <VerticalStackLayout Padding="0,0,0,24">
             <material:MaterialCard Style="{StaticResource ImageContainer}" Padding="0">
                 <Grid>
-                    <Image x:Name="previewImage" />
+                    <Image x:Name="previewImage"
+                           Margin="16" />
                     <ContentView x:Name="previewContent"
-                                 Padding="16,0"
+                                 Padding="16"
                                  IsVisible="False" />
+                    <ContentView InputTransparent="False" />
                 </Grid>
             </material:MaterialCard>
 

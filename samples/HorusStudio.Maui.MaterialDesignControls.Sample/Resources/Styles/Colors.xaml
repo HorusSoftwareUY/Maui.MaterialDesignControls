@@ -46,4 +46,7 @@
     <Color x:Key="BackgroundColorDark">#1D1B20</Color>
     <Color x:Key="ForegroundColorLight">#1D1B20</Color>
     <Color x:Key="ForegroundColorDark">White</Color>
+    
+    <Color x:Key="HomePreviewCardBackgroundLight">#DEDCF8</Color>
+    <Color x:Key="HomePreviewCardBackgroundDark">#353347</Color>
 </ResourceDictionary>

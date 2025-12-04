@@ -40,22 +40,18 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             new()
             {
-                Headline = "Mail",
                 LeadingIcon = "email.png",
-                TrailingIcon = "arrow_drop_down.png",
                 Text = "Inbox",
                 BadgeText = "30"
             },
             new()
             {
-                Headline = "Mail",
                 LeadingIcon = "star_unselected.png",
                 TrailingIcon = "arrow_drop_down.png",
                 Text = "Favorites"
             },
             new()
             {
-                Headline = "Mail",
                 LeadingIcon = "trash.png",
                 TrailingIcon = "arrow_drop_down.png",
                 Text = "Trash"
