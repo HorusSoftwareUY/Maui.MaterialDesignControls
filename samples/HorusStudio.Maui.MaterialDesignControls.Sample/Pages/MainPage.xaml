@@ -224,17 +224,13 @@
                             Type="Filled"
                             BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}">
                             <HorizontalStackLayout>
-                                <Image 
-                                    Source="ic_icon_button.png"
-                                    WidthRequest="32"
-                                    Aspect="AspectFit"
-                                    VerticalOptions="Center">
-                                    <Image.Behaviors>
-                                        <materialBehaviors:IconTintColorBehavior 
-                                            TintColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnPrimary}, Dark={x:Static material:MaterialDarkTheme.OnPrimary}}" 
-                                            IsEnabled="True" />
-                                    </Image.Behaviors>
-                                </Image>
+                                <material:MaterialIconButton
+                                    Type="Filled"
+                                    ImageSource="ic_icon_button.png"
+                                    IconTintColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnPrimary}, Dark={x:Static material:MaterialDarkTheme.OnPrimary}}"
+                                    VerticalOptions="Center"
+                                    Padding="0"
+                                    WidthRequest="32" />
                                 <VerticalStackLayout
                                     Spacing="8">
                                     <material:MaterialLabel
