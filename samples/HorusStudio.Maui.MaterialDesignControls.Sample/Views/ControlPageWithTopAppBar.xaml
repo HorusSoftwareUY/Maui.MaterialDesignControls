@@ -23,27 +23,31 @@
             x:Name="MdcControlPageScroll">
             <VerticalStackLayout
                 Style="{StaticResource MainLayout}">
-                <material:MaterialSegmentedButton
-                    ItemsSource="{Binding TabItems}"
-                    SelectedItem="{Binding SelectedTabItem}"
-                    SelectionCommand="{Binding TabItemsSelectionCommand}"
-                    HeightRequest="40"
-                    CornerRadius="20" />
-                <Grid>
-                    <ContentView
-                        x:Name="contentPresenter"
-                        IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}" />
-                    <material:MaterialCard
-                        Style="{StaticResource CardControlContainer}"
-                        IsVisible="{Binding IsCustomize}"
-                        Padding="32"
-                        Margin="0,24">
-                        <material:MaterialLabel
-                            Text="Soon you will be able to customize controls live"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center" />
-                    </material:MaterialCard>
-                </Grid>
+                <!-- <material:MaterialSegmentedButton -->
+                <!--     ItemsSource="{Binding TabItems}" -->
+                <!--     SelectedItem="{Binding SelectedTabItem}" -->
+                <!--     SelectionCommand="{Binding TabItemsSelectionCommand}" -->
+                <!--     HeightRequest="40" -->
+                <!--     CornerRadius="20" /> -->
+                <!-- <Grid> -->
+                <!--     <ContentView -->
+                <!--         x:Name="contentPresenter" -->
+                <!--         IsVisible="{Binding IsCustomize, Converter={StaticResource ReverseBoolConverter}}" /> -->
+                <!--     <material:MaterialCard -->
+                <!--         Style="{StaticResource CardControlContainer}" -->
+                <!--         IsVisible="{Binding IsCustomize}" -->
+                <!--         Padding="32" -->
+                <!--         Margin="0,24"> -->
+                <!--         <material:MaterialLabel -->
+                <!--             Text="Soon you will be able to customize controls live" -->
+                <!--             HorizontalOptions="Center" -->
+                <!--             VerticalOptions="Center" /> -->
+                <!--     </material:MaterialCard> -->
+                <!-- </Grid> -->
+                
+                <ContentView
+                    x:Name="contentPresenter"
+                    Padding="0,-16,0,0"/>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
