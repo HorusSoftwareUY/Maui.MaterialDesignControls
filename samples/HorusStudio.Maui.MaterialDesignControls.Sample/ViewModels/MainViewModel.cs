@@ -11,6 +11,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
         
+        private readonly IMaterialSnackbar _snackbar;
+        
         [ObservableProperty]
         private IEnumerable<MaterialNavigationDrawerItem> _menuItems;
 
@@ -91,8 +93,10 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             { Models.Pages.Appearance, typeof(AppearanceViewModel) }
         };
         
-        public MainViewModel()
+        public MainViewModel(IMaterialSnackbar snackbar)
         {
+            _snackbar = snackbar;
+            
             CreateMenu();
 
             SelectedSegmentedButtonItem = SegmentedButtonItems[0];
@@ -110,9 +114,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new() { Headline = Sections.Communications, Text = Models.Pages.Badge, AutomationId = $"menu_{nameof(Models.Pages.Badge)}", LeadingIcon = "ic_badge.png" },
                 new() { Headline = Sections.Communications, Text = Models.Pages.ProgressIndicator, AutomationId = $"menu_{nameof(Models.Pages.ProgressIndicator)}", LeadingIcon = "ic_progress_indicator.png" },
                 new() { Headline = Sections.Communications, Text = Models.Pages.Snackbar, AutomationId = $"menu_{nameof(Models.Pages.Snackbar)}", LeadingIcon = "ic_snackbar.png" },
-                new() { Headline = Sections.Containment, Text = Models.Pages.BottomSheet, AutomationId = $"menu_{nameof(Models.Pages.BottomSheet)}", LeadingIcon = "ic_bottomsheet.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Containment, Text = Models.Pages.BottomSheet, AutomationId = $"menu_{nameof(Models.Pages.BottomSheet)}", LeadingIcon = "ic_bottomsheet.png", TrailingIcon = "pending_actions.png" },
                 new() { Headline = Sections.Containment, Text = Models.Pages.Card, AutomationId = $"menu_{nameof(Models.Pages.Card)}", LeadingIcon = "ic_card.png" },
-                new() { Headline = Sections.Containment, Text = Models.Pages.Dialog, AutomationId = $"menu_{nameof(Models.Pages.Dialog)}", LeadingIcon = "ic_dialog.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Containment, Text = Models.Pages.Dialog, AutomationId = $"menu_{nameof(Models.Pages.Dialog)}", LeadingIcon = "ic_dialog.png", TrailingIcon = "pending_actions.png" },
                 new() { Headline = Sections.Containment, Text = Models.Pages.Divider, AutomationId = $"menu_{nameof(Models.Pages.Divider)}", LeadingIcon = "ic_divider.png"},
                 new() { Headline = Sections.Navigation, Text = Models.Pages.NavigationDrawer, AutomationId = $"menu_{nameof(Models.Pages.NavigationDrawer)}", LeadingIcon = "ic_navigation_drawer.png" },
                 new() { Headline = Sections.Navigation, Text = Models.Pages.TopAppBar, AutomationId = $"menu_{nameof(Models.Pages.TopAppBar)}", LeadingIcon = "ic_top_app_bar.png" },
@@ -151,9 +155,22 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         
         private async Task NavigateToSamplePageAsync(string page)
         {
-            if (!string.IsNullOrEmpty(page) && _viewmodelTypeMap.TryGetValue(page, out Type viewModelType))
+            if (!string.IsNullOrEmpty(page))
             {
-                await GoToAsync(viewModelType.Name);
+                if (page == Models.Pages.BottomSheet
+                    || page == Models.Pages.Dialog)
+                {
+                    var icon = page == Models.Pages.BottomSheet ? "ic_bottomsheet.png" : "ic_dialog.png";
+                    _ = _snackbar.ShowAsync(new MaterialSnackbarConfig($"{page} is under development and will be available soon")
+                    {
+                        LeadingIcon = new MaterialSnackbarConfig.IconConfig(icon)
+                    });
+                }
+                else if (_viewmodelTypeMap.TryGetValue(page, out Type viewModelType))
+                {
+                    await GoToAsync(viewModelType.Name);
+                }
+                
                 CleanMenuSelection();
             }
         }
