@@ -1507,6 +1507,15 @@ public abstract partial class MaterialInputBase : IValidableView
                 Dark = MaterialDarkTheme.OnSurface
             }
             .GetValueForCurrentTheme<Color>());
+        
+        normal.Setters.Add(
+            MaterialInputBase.PlaceholderColorProperty,
+            new AppThemeBindingExtension
+                {
+                    Light = MaterialLightTheme.OnSurfaceVariant,
+                    Dark = MaterialDarkTheme.OnSurfaceVariant
+                }
+                .GetValueForCurrentTheme<Color>());
 
         normal.Setters.Add(
             MaterialInputBase.LabelColorProperty,
