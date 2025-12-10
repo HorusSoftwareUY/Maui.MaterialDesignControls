@@ -27,9 +27,9 @@
                 <material:MaterialCard Style="{StaticResource CardControlContainer}">
                     <material:MaterialPicker 
                         Type="Outlined"
-                        BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                         ItemsSource="{Binding ItemsSource}"
-                        Placeholder="Select an option" />
+                        Placeholder="Select an option"
+                        Style="{StaticResource OutlinedInputBaseSamples}" />
                 </material:MaterialCard>
                 <material:MaterialLabel Text="Default outlined picker control with a clear outline around the field, featuring a movable label and placeholder text." Type="BodySmall" />
                 
@@ -56,14 +56,14 @@
                             x:Name="picker"
                             Type="Outlined"
                             HorizontalTextAlignment="Center"
-                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                             ItemsSource="{Binding ItemsSource}"
                             SelectedIndexChanged="MaterialPicker_SelectedIndexChanged"
                             TextColor="DarkGoldenrod"
                             LabelColor="DarkGreen"
                             BorderColor="DarkGray"
                             PlaceholderColor="DarkBlue"
-                            Placeholder="Select an item" />
+                            Placeholder="Select an item"
+                            Style="{StaticResource OutlinedInputBaseSamples}" />
                         <material:MaterialLabel x:Name="LabelSelectedIndex" Text="Selected Index: -1" />
                     </VerticalStackLayout>
                 </material:MaterialCard>
@@ -98,11 +98,11 @@
                     <VerticalStackLayout>
                         <material:MaterialPicker 
                             Type="Outlined"
-                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                             Placeholder="Select a new color"
                             IsEnabled="False"
                             ItemsSource="{Binding ColorsSource}"
-                            SelectedItem="{Binding SelectedDisabledColor, Mode=TwoWay}" />
+                            SelectedItem="{Binding SelectedDisabledColor, Mode=TwoWay}"
+                            Style="{StaticResource OutlinedInputBaseSamples}" />
                     </VerticalStackLayout>
                 </material:MaterialCard>
                 <material:MaterialLabel Text="You can disable a picker." Type="BodySmall" />

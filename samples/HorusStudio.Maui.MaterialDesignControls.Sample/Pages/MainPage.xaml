@@ -39,6 +39,10 @@
             <Setter Property="Margin" Value="0,20,0,0" />
             <Setter Property="Type" Value="HeadlineMedium" />
         </Style>
+        
+        <Style x:Key="OutlinedInputBase" TargetType="material:MaterialInputBase">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource HomePreviewCardBackgroundLight}, Dark={StaticResource HomePreviewCardBackgroundDark}}" />
+        </Style>
     </ContentPage.Resources>
 
     <Grid RowDefinitions="48,*">
@@ -386,7 +390,8 @@
                             <material:MaterialDatePicker
                                 Type="Outlined"
                                 Placeholder="Date of birth"
-                                Date="10/12/1990" />
+                                Date="10/12/1990"
+                                Style="{StaticResource OutlinedInputBase}" />
                         </VerticalStackLayout>
                     </views:HomeCardView.PreviewContent>
                 </views:HomeCardView>
@@ -404,7 +409,8 @@
                                 Placeholder="Select an option" />
                             <material:MaterialPicker
                                 Type="Outlined"
-                                Placeholder="Select an option" />
+                                Placeholder="Select an option"
+                                Style="{StaticResource OutlinedInputBase}" />
                         </VerticalStackLayout>
                     </views:HomeCardView.PreviewContent>
                 </views:HomeCardView>
@@ -455,7 +461,8 @@
                                 Type="Outlined"
                                 LeadingIcon="card.png"
                                 TrailingIcon="arrow_right.png"
-                                Placeholder="Pick your payment card" />
+                                Placeholder="Pick your payment card"
+                                Style="{StaticResource OutlinedInputBase}" />
                         </VerticalStackLayout>
                     </views:HomeCardView.PreviewContent>
                 </views:HomeCardView>
@@ -506,7 +513,8 @@
                             <material:MaterialTimePicker 
                                 Type="Outlined"
                                 Placeholder="Appointment time"
-                                Time="10:30"/>
+                                Time="10:30"
+                                Style="{StaticResource OutlinedInputBase}" />
                         </VerticalStackLayout>
                     </views:HomeCardView.PreviewContent>
                 </views:HomeCardView>
@@ -546,7 +554,8 @@
                                 Type="Outlined"
                                 LeadingIcon="card.png" 
                                 Placeholder="Payment card number"
-                                Text="1234 XXXX XXXX XXXX"/>
+                                Text="1234 XXXX XXXX XXXX"
+                                Style="{StaticResource OutlinedInputBase}" />
                         </VerticalStackLayout>
                     </views:HomeCardView.PreviewContent>
                 </views:HomeCardView>

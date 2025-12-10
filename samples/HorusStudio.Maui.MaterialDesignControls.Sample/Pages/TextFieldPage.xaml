@@ -27,11 +27,11 @@
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
                 <material:MaterialCard Style="{StaticResource CardControlContainer}">
                     <VerticalStackLayout>
-                        <material:MaterialTextField Type="Outlined" Label="Label" AlwaysShowLabel="{Binding FixedLabel}" Placeholder="Enter text here" />
+                        <material:MaterialTextField Type="Outlined" Label="Label" AlwaysShowLabel="{Binding FixedLabel}" Placeholder="Enter text here" Style="{StaticResource OutlinedInputBaseSamples}" />
                         <material:MaterialSwitch Text="Fixed label" IsToggled="{Binding FixedLabel}" />
-                        <material:MaterialTextField Type="Outlined" LeadingIcon="settings.png" Placeholder="Enter text here" />
-                        <material:MaterialTextField Type="Outlined" TrailingIcon="star_unselected.png" Placeholder="Enter text here" Label="Custom label" />
-                        <material:MaterialTextField Type="Outlined" LeadingIcon="settings.png" TrailingIcon="star_unselected.png" Placeholder="Enter text here" Label="Custom label" />
+                        <material:MaterialTextField Type="Outlined" LeadingIcon="settings.png" Placeholder="Enter text here" Style="{StaticResource OutlinedInputBaseSamples}" />
+                        <material:MaterialTextField Type="Outlined" TrailingIcon="star_unselected.png" Placeholder="Enter text here" Label="Custom label" Style="{StaticResource OutlinedInputBaseSamples}" />
+                        <material:MaterialTextField Type="Outlined" LeadingIcon="settings.png" TrailingIcon="star_unselected.png" Placeholder="Enter text here" Label="Custom label" Style="{StaticResource OutlinedInputBaseSamples}" />
                     </VerticalStackLayout>
                 </material:MaterialCard>
                 <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, and optional icons." Type="BodySmall" />
@@ -39,7 +39,7 @@
                 <material:MaterialCard Style="{StaticResource CardControlContainer}">
                     <VerticalStackLayout>
                         <material:MaterialTextField Type="Filled" Keyboard="Numeric" ReturnType="Search" LeadingIcon="star_selected.png" LeadingIconCommand="{Binding LeadingActionCommand}" Focused="MaterialTextField_Focused" Unfocused="MaterialTextField_Focused" ClearButtonVisibility="WhileEditing" Placeholder="Enter text here" />
-                        <material:MaterialTextField Type="Outlined" Keyboard="Numeric" ReturnType="Send" TrailingIcon="star_selected.png" TrailingIconCommand="{Binding TrailingActionCommand}" Focused="MaterialTextField_Focused" Unfocused="MaterialTextField_Focused" ClearButtonVisibility="WhileEditing" Placeholder="Enter text here" />
+                        <material:MaterialTextField Type="Outlined" Keyboard="Numeric" ReturnType="Send" TrailingIcon="star_selected.png" TrailingIconCommand="{Binding TrailingActionCommand}" Focused="MaterialTextField_Focused" Unfocused="MaterialTextField_Focused" ClearButtonVisibility="WhileEditing" Placeholder="Enter text here" Style="{StaticResource OutlinedInputBaseSamples}" />
                         <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
                     </VerticalStackLayout>
                 </material:MaterialCard>
@@ -47,7 +47,7 @@
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and return command" />
                 <material:MaterialCard Style="{StaticResource CardControlContainer}">
                     <VerticalStackLayout>
-                        <material:MaterialTextField MaxLength="10" Type="Outlined" Label="Custom label" ReturnCommand="{Binding ReturnCommand}" ReturnType="Done" TextColor="DarkGoldenrod" LabelColor="DarkGreen" BorderColor="DarkGray" BorderWidth="4" PlaceholderColor="DarkBlue" Placeholder="Enter text here" />
+                        <material:MaterialTextField MaxLength="10" Type="Outlined" Label="Custom label" ReturnCommand="{Binding ReturnCommand}" ReturnType="Done" TextColor="DarkGoldenrod" LabelColor="DarkGreen" BorderColor="DarkGray" BorderWidth="4" PlaceholderColor="DarkBlue" Placeholder="Enter text here" Style="{StaticResource OutlinedInputBaseSamples}" />
                     </VerticalStackLayout>
                 </material:MaterialCard>
                 <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set a max length." Type="BodySmall" />
@@ -71,7 +71,7 @@
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
                 <material:MaterialCard Style="{StaticResource CardControlContainer}">
                     <VerticalStackLayout>
-                        <material:MaterialTextField Type="Outlined" Label="New Info" IsEnabled="False" Text="Information here" />
+                        <material:MaterialTextField Type="Outlined" Label="New Info" IsEnabled="False" Text="Information here" Style="{StaticResource OutlinedInputBaseSamples}" />
                     </VerticalStackLayout>
                 </material:MaterialCard>
                 <material:MaterialLabel Text="You can disabled a text field." Type="BodySmall" />

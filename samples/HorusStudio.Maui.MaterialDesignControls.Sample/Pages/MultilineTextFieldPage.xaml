@@ -28,8 +28,8 @@
                     <VerticalStackLayout>
                         <material:MaterialMultilineTextField 
                             Type="Outlined"
-                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
-                            Placeholder="Enter text here" />
+                            Placeholder="Enter text here"
+                            Style="{StaticResource OutlinedInputBaseSamples}" />
                     </VerticalStackLayout>
                 </material:MaterialCard>
                 <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, auto size by default is Enabled, but in this example is disabeld." Type="BodySmall" />
@@ -56,7 +56,6 @@
                         <material:MaterialMultilineTextField 
                             MaxLength="100"
                             Type="Outlined"
-                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                             VerticalTextAlignment="End"
                             HorizontalTextAlignment="Start"
                             TextColor="DarkGoldenrod"
@@ -64,7 +63,8 @@
                             LabelColor="DarkGreen"
                             BorderColor="DarkGray"
                             PlaceholderColor="DarkBlue"
-                            Placeholder="Enter text here" />
+                            Placeholder="Enter text here"
+                            Style="{StaticResource OutlinedInputBaseSamples}" />
                     </VerticalStackLayout>
                 </material:MaterialCard>
                 <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set a max length." Type="BodySmall" />
@@ -89,11 +89,11 @@
                     <VerticalStackLayout>
                         <material:MaterialMultilineTextField 
                             Type="Outlined"
-                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                             HeightRequest="150"
                             Label="New Info"
                             IsEnabled="False"
-                            Text="{Binding Observation}" />
+                            Text="{Binding Observation}"
+                            Style="{StaticResource OutlinedInputBaseSamples}" />
                     </VerticalStackLayout>
                 </material:MaterialCard>
                 <material:MaterialLabel Text="You can disabled a multiline text field." Type="BodySmall" />
@@ -103,11 +103,11 @@
                     <VerticalStackLayout>
                         <material:MaterialMultilineTextField 
                             Type="Outlined"
-                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
                             HeightRequest="150"
                             Label="New Info"
                             IsReadOnly="True"
-                            Text="{Binding Observation}" />
+                            Text="{Binding Observation}"
+                            Style="{StaticResource OutlinedInputBaseSamples}" />
                     </VerticalStackLayout>
                 </material:MaterialCard>
                 <material:MaterialLabel Text="You can set read only." Type="BodySmall" />

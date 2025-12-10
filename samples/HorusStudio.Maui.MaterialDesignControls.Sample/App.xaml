@@ -29,6 +29,10 @@
                 <Setter Property="Type" Value="TitleLarge" />
                 <Setter Property="Margin" Value="0,36,0,0" />
             </Style>
+            
+            <Style x:Key="OutlinedInputBaseSamples" TargetType="material:MaterialInputBase">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
