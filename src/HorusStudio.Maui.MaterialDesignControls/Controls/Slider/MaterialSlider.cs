@@ -2,6 +2,7 @@
 using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 using Microsoft.Maui.Controls.Shapes;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
 using Slider = Microsoft.Maui.Controls.Slider;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
@@ -413,6 +414,11 @@ public class MaterialSlider : ContentView
     /// </summary>
     public static readonly BindableProperty ValueChangedCommandProperty = BindableProperty.Create(nameof(ValueChangedCommand), typeof(ICommand), typeof(MaterialSlider));
 
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialSlider), null);
+    
     #endregion Bindable Properties
 
     #region Properties
@@ -1014,6 +1020,24 @@ public class MaterialSlider : ContentView
         get => (ICommand)GetValue(ValueChangedCommandProperty);
         set => SetValue(ValueChangedCommandProperty, value);
     }
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The <see cref="Slider">Slider</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
+    /// - The label uses the identifier "{AutomationId}_Label".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
+    }
 
     #endregion Properties
 
@@ -1070,6 +1094,7 @@ public class MaterialSlider : ContentView
         label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
         label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(LabelTransform), source: this));
         label.SetBinding(MaterialLabel.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        label.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Label"));
 
         mainLayout.Children.Add(label);
 
@@ -1181,6 +1206,7 @@ public class MaterialSlider : ContentView
         _slider.SetBinding(CustomSlider.ThumbBackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
         _slider.SetBinding(CustomSlider.ThumbWidthProperty, new Binding(nameof(ThumbWidth), source: this));
         _slider.SetBinding(CustomSlider.ThumbHeightProperty, new Binding(nameof(ThumbHeight), source: this));
+        _slider.SetBinding(Slider.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         _slider.SetValue(Grid.RowProperty, 0);
         _slider.SetValue(Grid.ColumnProperty, 1);

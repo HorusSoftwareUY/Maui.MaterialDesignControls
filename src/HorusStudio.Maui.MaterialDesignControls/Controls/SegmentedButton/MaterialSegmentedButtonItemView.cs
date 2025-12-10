@@ -229,6 +229,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
                 };
 
                 _label.SetBinding(MaterialLabel.TextProperty, new Binding(nameof(item.Text), source: item));
+                _label.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(item.AutomationId), source: item));
 
                 _label.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(TextColor), source: this));
                 _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));

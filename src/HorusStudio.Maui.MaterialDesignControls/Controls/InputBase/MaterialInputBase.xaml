@@ -16,6 +16,7 @@
         <converters:IsNotNullOrEmptyConverter x:Key="IsNotNullOrEmpty" />
         <converters:TrailingIconIsVisibleConverter x:Key="IsTrailingIconVisible" />
         <converters:TrailingIconSourceConverter x:Key="TrailingIconSource" />
+        <converters:AutomationIdConverter x:Key="AutomationIdConverter" />
         <material:HalfHeightToMarginConverter x:Key="HalfHeightToMarginConverter" />
         
         <Style x:Key="MainBorder" TargetType="material:BorderButton">
@@ -74,6 +75,7 @@
             <Setter Property="Text" Value="{Binding Placeholder, Source={x:Reference InputBase}}" />
             <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="AutomationId" Value="{Binding AutomationId, Source={x:Reference InputBase}, Converter={StaticResource AutomationIdConverter}, ConverterParameter=Placeholder}" />
             <Setter Property="IsVisible" Value="false" />
             <Style.Triggers>
                 <MultiTrigger TargetType="Label">
@@ -103,6 +105,7 @@
             <Setter Property="TextColor" Value="{Binding SupportingColor, Source={x:Reference InputBase}}" />
             <Setter Property="Text" Value="{Binding SupportingText, Source={x:Reference InputBase}}" />
             <Setter Property="IsVisible" Value="{Binding SupportingText, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" />
+            <Setter Property="AutomationId" Value="{Binding AutomationId, Source={x:Reference InputBase}, Converter={StaticResource AutomationIdConverter}, ConverterParameter=SupportingText}" />
         </Style>
 
         <Style x:Key="Hint" TargetType="Label">
@@ -112,6 +115,7 @@
             <Setter Property="LineBreakMode" Value="{Binding LabelLineBreakMode, Source={x:Reference InputBase}}" />
             <Setter Property="FontSize" Value="{Binding LabelSize, Source={x:Reference InputBase}}" />
             <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
+            <Setter Property="AutomationId" Value="{Binding AutomationId, Source={x:Reference InputBase}, Converter={StaticResource AutomationIdConverter}, ConverterParameter=Hint}" />
         </Style>
         
         <Style x:Key="FilledHint" TargetType="Label" BaseResourceKey="Hint">
@@ -177,6 +181,7 @@
             <Setter Property="CommandParameter" Value="{Binding LeadingIconCommandParameter, Source={x:Reference InputBase}}" />
             <Setter Property="ImageSource" Value="{Binding LeadingIcon, Source={x:Reference InputBase}}" />
             <Setter Property="IsVisible" Value="{Binding LeadingIcon, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
+            <Setter Property="AutomationId" Value="{Binding AutomationId, Source={x:Reference InputBase}, Converter={StaticResource AutomationIdConverter}, ConverterParameter=LeadingIcon}" />
         </Style>
         
         <Style x:Key="TrailingIcon" TargetType="material:MaterialIconButton" BaseResourceKey="BaseIcon">
@@ -184,6 +189,7 @@
             <Setter Property="IconTintColor" Value="{Binding TrailingIconTintColor, Source={x:Reference InputBase}}" />
             <Setter Property="Command" Value="{Binding TrailingIconCommand, Source={x:Reference InputBase}}" />
             <Setter Property="CommandParameter" Value="{Binding TrailingIconCommandParameter, Source={x:Reference InputBase}}" />
+            <Setter Property="AutomationId" Value="{Binding AutomationId, Source={x:Reference InputBase}, Converter={StaticResource AutomationIdConverter}, ConverterParameter=TrailingIcon}" />
             <Setter Property="ImageSource">
                 <MultiBinding Converter="{StaticResource TrailingIconSource}">
                     <Binding Path="TrailingIcon" Source="{x:Reference InputBase}" />

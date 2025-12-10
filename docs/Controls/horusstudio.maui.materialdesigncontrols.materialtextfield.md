@@ -43,6 +43,26 @@ Default value: False
 
 <br>
 
+### <a id="properties-automationid"/>**AutomationId**
+
+Gets or sets a value that allows the automation framework to find and interact with this element.
+
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Remarks: This value may only be set once on an element.
+ 
+ When set on this control, the AutomationId is also used as a base identifier for its internal elements:
+ - The main input control (e.g., Entry, Editor, Picker, etc.) uses the same AutomationId value.
+ - The hint label uses the identifier "{AutomationId}_Hint".
+ - The supporting text label uses the identifier "{AutomationId}_SupportingText".
+ - The placeholder text label uses the identifier "{AutomationId}_Placeholder".
+ - The leading icon button uses the identifier "{AutomationId}_LeadingIcon".
+ - The trailing icon button uses the identifier "{AutomationId}_TrailingIcon".
+ 
+ This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+
+<br>
+
 ### <a id="properties-background"/>**Background**
 
 Gets or sets a Brush that describes the background of the input. This is a bindable property.

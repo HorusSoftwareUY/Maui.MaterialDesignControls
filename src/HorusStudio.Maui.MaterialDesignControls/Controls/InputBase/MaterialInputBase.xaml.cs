@@ -401,6 +401,11 @@ public abstract partial class MaterialInputBase : IValidableView
     /// </summary>
     public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(MaterialInputBase), defaultValue: DefaultHeightRequest);
 
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialInputBase), null);
+    
     #endregion Bindable Properties
 
     #region Properties
@@ -1014,6 +1019,28 @@ public abstract partial class MaterialInputBase : IValidableView
     {
         get => (double)GetValue(HeightRequestProperty);
         set => SetValue(HeightRequestProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The main input control (e.g., <see cref="Entry">Entry</see>, <see cref="Editor">Editor</see>, <see cref="Picker">Picker</see>, etc.) uses the same <see cref="AutomationId">AutomationId</see> value.
+    /// - The hint label uses the identifier "{AutomationId}_Hint".
+    /// - The supporting text label uses the identifier "{AutomationId}_SupportingText".
+    /// - The placeholder text label uses the identifier "{AutomationId}_Placeholder".
+    /// - The leading icon button uses the identifier "{AutomationId}_LeadingIcon".
+    /// - The trailing icon button uses the identifier "{AutomationId}_TrailingIcon".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
     }
     
     #endregion Properties

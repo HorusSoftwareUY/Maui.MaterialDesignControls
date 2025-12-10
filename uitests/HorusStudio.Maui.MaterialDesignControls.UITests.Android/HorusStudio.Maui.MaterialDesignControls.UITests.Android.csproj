@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>$(NetVersion)</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsTestProject>true</IsTestProject>
+        <RootNamespace>HorusStudio.Maui.MaterialDesignControls.UITests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="..\HorusStudio.Maui.MaterialDesignControls.UITests.Shared\**\*.cs" LinkBase="Shared" Visible="false"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="../HorusStudio.Maui.MaterialDesignControls.UITests.Shared/obj/**/.NETCoreApp,Version=v9.0.AssemblyAttributes.cs"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Appium.WebDriver"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+        <PackageReference Include="NUnit"/>
+        <PackageReference Include="NUnit3TestAdapter"/>
+    </ItemGroup>
+
+</Project>

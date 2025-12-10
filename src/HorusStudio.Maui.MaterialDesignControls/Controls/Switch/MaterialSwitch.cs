@@ -1,7 +1,8 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
-using Microsoft.Maui.Controls.Shapes;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Behaviors;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace HorusStudio.Maui.MaterialDesignControls
 {
@@ -36,6 +37,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// <todoList>
     /// * Track color animation: change from on-track color to off-track color within the toggle animation.
     /// * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
+    /// * The Selected property in Appium is not supported when using the AutomationId of this control, just like with the native MAUI control.
     /// </todoList>
     public class MaterialSwitch : ContentView, ITouchableView
     {
@@ -280,6 +282,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// </summary>
         public static readonly BindableProperty TouchAnimationProperty = BindableProperty.Create(nameof(TouchAnimation), typeof(ITouchAnimation), typeof(MaterialSwitch));
 
+        /// <summary>
+        /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+        /// </summary>
+        public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialSwitch), null);
+        
         #endregion Bindable Properties
 
         #region Properties
@@ -580,6 +587,25 @@ namespace HorusStudio.Maui.MaterialDesignControls
             get => (ITouchAnimation)GetValue(TouchAnimationProperty);
             set => SetValue(TouchAnimationProperty, value);
         }
+        
+        /// <summary>
+        /// Gets or sets a value that allows the automation framework to find and interact with this element.
+        /// </summary>
+        /// <remarks>
+        /// This value may only be set once on an element.
+        /// 
+        /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+        /// - The <see cref="Switch">Switch</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
+        /// - The switch's text label uses the identifier "{AutomationId}_Text".
+        /// - The supporting text label uses the identifier "{AutomationId}_SupportingText".
+        /// 
+        /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+        /// </remarks>
+        public new string AutomationId
+        {
+            get => (string)GetValue(AutomationIdProperty);
+            set => SetValue(AutomationIdProperty, value);
+        }
 
         #endregion Properties
 
@@ -667,6 +693,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 VerticalOptions = LayoutOptions.Center
             };
+            _switch.SetBinding(Grid.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
             _track = new Border
             {
@@ -742,6 +769,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _textLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
             _textLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
             _textLabel.SetBinding(MaterialLabel.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+            _textLabel.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Text"));
 
             _supportingTextLabel = new MaterialLabel()
             {
@@ -754,6 +782,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _supportingTextLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(SupportingFontSize), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(SupportingFontAttributes), source: this));
             _supportingTextLabel.SetBinding(MaterialLabel.HorizontalTextAlignmentProperty, new Binding(nameof(HorizontalTextAlignment), source: this));
+            _supportingTextLabel.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "SupportingText"));
 
             Content = null;
             _mainContainer.Children.Add(_switch);

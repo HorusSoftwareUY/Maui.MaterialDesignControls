@@ -169,6 +169,11 @@ public class MaterialFloatingButton : ContentView
     /// </summary>
     public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(MaterialFloatingButton), defaultValue: DefaultPadding);
 
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialFloatingButton), null);
+    
     #endregion
 
     #region Properties
@@ -348,6 +353,22 @@ public class MaterialFloatingButton : ContentView
     {
         get => (Thickness)GetValue(PaddingProperty);
         set => SetValue(PaddingProperty, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    ///
+    /// Note: On Android, the value assigned to this AutomationId property
+    /// will be mapped to the native Android property ContentDescription (content-desc),
+    /// unlike most other controls where it maps to the Id (resource-id) property.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
     }
 
     #endregion

@@ -1,5 +1,6 @@
 ﻿using HorusStudio.Maui.MaterialDesignControls.Behaviors;
 using System.Windows.Input;
+using HorusStudio.Maui.MaterialDesignControls.Converters;
 
 namespace HorusStudio.Maui.MaterialDesignControls;
 
@@ -38,6 +39,7 @@ namespace HorusStudio.Maui.MaterialDesignControls;
 /// 
 /// <todoList>
 /// * [iOS] FontAttributes doesn't work.
+/// * The Selected property in Appium is not supported when using the AutomationId of this control, just like with the native MAUI control.
 /// </todoList>
 public class MaterialCheckBox : ContentView, ITouchableView
 {
@@ -173,7 +175,12 @@ public class MaterialCheckBox : ContentView, ITouchableView
     /// The backing store for the <see cref="CheckedChangedCommand">CheckedChangedCommand</see> bindable property.
     /// </summary>
     public static readonly BindableProperty CheckedChangedCommandProperty = BindableProperty.Create(nameof(CheckedChangedCommand), typeof(ICommand), typeof(MaterialCheckBox));
-
+    
+    /// <summary>
+    /// The backing store for the <see cref="AutomationId">AutomationId</see> bindable property.
+    /// </summary>
+    public new static readonly BindableProperty AutomationIdProperty = BindableProperty.Create(nameof(AutomationId), typeof(string), typeof(MaterialCheckBox), null);
+    
     #endregion Bindable Properties
 
     #region Properties
@@ -386,7 +393,25 @@ public class MaterialCheckBox : ContentView, ITouchableView
         get => (ICommand)GetValue(CheckedChangedCommandProperty);
         set => SetValue(CheckedChangedCommandProperty, value);
     }
-
+    
+    /// <summary>
+    /// Gets or sets a value that allows the automation framework to find and interact with this element.
+    /// </summary>
+    /// <remarks>
+    /// This value may only be set once on an element.
+    /// 
+    /// When set on this control, the <see cref="AutomationId">AutomationId</see> is also used as a base identifier for its internal elements:
+    /// - The <see cref="CheckBox">CheckBox</see> control uses the same <see cref="AutomationId">AutomationId</see> value.
+    /// - The checkbox's text label uses the identifier "{AutomationId}_Text".
+    /// 
+    /// This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+    /// </remarks>
+    public new string AutomationId
+    {
+        get => (string)GetValue(AutomationIdProperty);
+        set => SetValue(AutomationIdProperty, value);
+    }
+    
     #endregion Properties
 
     #region Constructors
@@ -441,6 +466,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
         _checkbox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(IsChecked), source: this));
         _checkbox.SetBinding(CheckBox.ColorProperty, new Binding(nameof(Color), source: this));
         _checkbox.SetBinding(CustomCheckBox.TickColorProperty, new Binding(nameof(TickColor), source: this));
+        _checkbox.SetBinding(CheckBox.AutomationIdProperty, new Binding(nameof(AutomationId), source: this));
 
         _label = new()
         {
@@ -460,6 +486,7 @@ public class MaterialCheckBox : ContentView, ITouchableView
         _label.SetBinding(MaterialLabel.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
         _label.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(FontSize), source: this));
         _label.SetBinding(MaterialLabel.TextTransformProperty, new Binding(nameof(TextTransform), source: this));
+        _label.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Text"));
 
         TextSideChanged(TextSide);
         ChangeVisualState();

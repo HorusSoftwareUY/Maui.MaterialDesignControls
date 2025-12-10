@@ -120,20 +120,21 @@ class FloatingButton : UIView
             TranslatesAutoresizingMaskIntoConstraints = false
         };
 
-        var button = GetButtonImage(fab.Icon.Source(), fab.IconSize, fab.IconColor);
+        var button = GetButtonImage(fab.Icon.Source(), fab.IconSize, fab.IconColor, fab.AutomationId);
         container.AddArrangedSubview(button);
 
         return container;
     }
     
-    private UIButton GetButtonImage(string? iconSource, double iconSize, Color tintColor)
+    private UIButton GetButtonImage(string? iconSource, double iconSize, Color tintColor, string automationId)
     {
         var button = new UIButton
         {
             TranslatesAutoresizingMaskIntoConstraints = false,
             BackgroundColor = UIColor.Clear,
             TintColor = tintColor.ToPlatform(),
-            UserInteractionEnabled = false
+            UserInteractionEnabled = false,
+            AccessibilityIdentifier = automationId
         };
         
         var imageView = GetIcon(iconSource, iconSize);

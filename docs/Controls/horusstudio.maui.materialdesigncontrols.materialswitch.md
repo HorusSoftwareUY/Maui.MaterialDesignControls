@@ -32,6 +32,23 @@ var switch = new MaterialSwitch()
 
 ## Properties
 
+### <a id="properties-automationid"/>**AutomationId**
+
+Gets or sets a value that allows the automation framework to find and interact with this element.
+
+Property type: [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+Remarks: This value may only be set once on an element.
+ 
+ When set on this control, the AutomationId is also used as a base identifier for its internal elements:
+ - The Switch control uses the same AutomationId value.
+ - The switch's text label uses the identifier "{AutomationId}_Text".
+ - The supporting text label uses the identifier "{AutomationId}_SupportingText".
+ 
+ This convention allows automated tests and accessibility tools to consistently locate all subelements of the control.
+
+<br>
+
 ### <a id="properties-bordercolor"/>**BorderColor**
 
 Gets or sets a color that describes the border stroke color of the switch.
@@ -328,3 +345,4 @@ Occurs when the switch is touched.
 
 * Track color animation: change from on-track color to off-track color within the toggle animation.
  * [iOS] FontAttributes and SupportingFontAttributes don't work (MAUI issue)
+ * The Selected property in Appium is not supported when using the AutomationId of this control, just like with the native MAUI control.

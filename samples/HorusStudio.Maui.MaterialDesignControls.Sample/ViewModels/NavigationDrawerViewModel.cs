@@ -21,6 +21,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         
         [ObservableProperty]
         private ObservableCollection<MaterialNavigationDrawerItem> _disabledItems;
+        
+        [ObservableProperty]
+        private ObservableCollection<MaterialNavigationDrawerItem> _customTemplateItems;
 
         #endregion
 
@@ -30,6 +33,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
             LoadItems(_includeAllItems);
             LoadDisabledItems();
+            LoadCustomTemplateItems();
         }
 
         #region Commands
@@ -73,7 +77,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             {
                 _variantItem,
 
-                new MaterialNavigationDrawerItem
+                new()
                 {
                     Headline = "Mail",
                     SelectedLeadingIcon = "email.png",
@@ -82,21 +86,21 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     TrailingIcon = "arrow_drop_down.png",
                     Text = "Inbox"
                 },
-                new MaterialNavigationDrawerItem
+                new()
                 {
                     Headline = "Mail",
                     Text = "Favorites (Different icons)",
                     SelectedLeadingIcon = "star_selected.png",
                     LeadingIcon = "star_unselected.png",
                 },
-                new MaterialNavigationDrawerItem
+                new()
                 {
                     Headline = "Mail",
                     SelectedLeadingIcon = "trash.png",
                     LeadingIcon = "trash.png",
                     Text = "Trash",
                 },
-                new MaterialNavigationDrawerItem
+                new()
                 {
                     Headline = "Other samples",
                     SelectedLeadingIcon = "card.png",
@@ -110,7 +114,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             {
                 list.AddRange(new List<MaterialNavigationDrawerItem>
                 {
-                    new MaterialNavigationDrawerItem
+                    new()
                     {
                         Headline = "Other samples",
                         SelectedLeadingIcon = "card.png",
@@ -118,7 +122,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                         Text = "Disabled",
                         IsEnabled = false
                     },
-                    new MaterialNavigationDrawerItem
+                    new()
                     {
                         Headline = "Other samples",
                         SelectedLeadingIcon = "star_selected.png",
@@ -127,7 +131,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                         TrailingIcon = "card.png",
                         Text = "Custom icon",
                     },
-                    new MaterialNavigationDrawerItem
+                    new()
                     {
                         Headline = "Other samples",
                         Text = "Without icon",
@@ -191,6 +195,43 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             };
             
             DisabledItems = new ObservableCollection<MaterialNavigationDrawerItem>(disabledItems);
+        }
+        
+        private void LoadCustomTemplateItems()
+        {
+            var customTemplateItems = new List<MaterialNavigationDrawerItem>
+            {
+                new()
+                {
+                    Headline = "Mail",
+                    LeadingIcon = "email.png",
+                    TrailingIcon = "arrow_right.png",
+                    Text = "Inbox"
+                },
+                new()
+                {
+                    Headline = "Mail",
+                    LeadingIcon = "star_unselected.png",
+                    TrailingIcon = "arrow_right.png",
+                    Text = "Favorites"
+                },
+                new()
+                {
+                    Headline = "Mail",
+                    LeadingIcon = "trash.png",
+                    TrailingIcon = "arrow_right.png",
+                    Text = "Trash"
+                },
+                new()
+                {
+                    Headline = "Other samples",
+                    LeadingIcon = "card.png",
+                    TrailingIcon = "arrow_right.png",
+                    Text = "Cards"
+                },
+            };
+            
+            CustomTemplateItems = new ObservableCollection<MaterialNavigationDrawerItem>(customTemplateItems);
         }
         
         private void IncrementBadgetText()
