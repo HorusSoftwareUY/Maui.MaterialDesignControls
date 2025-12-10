@@ -89,6 +89,45 @@
                     </VerticalStackLayout>
                 </material:MaterialCard>
                 <material:MaterialLabel Text="This control uses a custom handler implemented in the sample app, which adds a custom button to close the keyboard. The button is shown when the input gains focus and only when the keyboard type is set to telephone." Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing default style" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialTextField
+                            Type="Filled"
+                            Placeholder="Enter text here"
+                            PlaceholderColor="DimGray"
+                            TextColor="DarkOliveGreen"
+                            LabelColor="DarkOliveGreen"
+                            BorderColor="DarkSlateGrey"
+                            BackgroundColor="LightGreen" />
+                        <material:MaterialTextField
+                            Type="Outlined"
+                            Placeholder="Enter text here"
+                            PlaceholderColor="DimGray"
+                            TextColor="DarkOliveGreen"
+                            LabelColor="DarkOliveGreen"
+                            BorderColor="DarkSlateGrey"
+                            BackgroundColor="LightGreen" />
+                        <material:MaterialTextField
+                            Type="Filled"
+                            Placeholder="Enter text here"
+                            PlaceholderColor="{AppThemeBinding Light=DarkRed, Dark=DarkBlue}"
+                            TextColor="{AppThemeBinding Light=DarkRed, Dark=DarkBlue}"
+                            LabelColor="{AppThemeBinding Light=DarkRed, Dark=DarkBlue}"
+                            BorderColor="{AppThemeBinding Light=DarkRed, Dark=DarkBlue}"
+                            BackgroundColor="{AppThemeBinding Light=LightCoral, Dark=LightBlue}" />
+                        <material:MaterialTextField
+                            Type="Outlined"
+                            Placeholder="Enter text here"
+                            PlaceholderColor="{AppThemeBinding Light=DarkRed, Dark=DarkBlue}"
+                            TextColor="{AppThemeBinding Light=DarkRed, Dark=DarkBlue}"
+                            LabelColor="{AppThemeBinding Light=DarkRed, Dark=DarkBlue}"
+                            BorderColor="{AppThemeBinding Light=DarkRed, Dark=DarkBlue}"
+                            BackgroundColor="{AppThemeBinding Light=LightCoral, Dark=LightBlue}" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can set background color, place holder color, label color and text color." Type="BodySmall" />
             </VerticalStackLayout>
         </views:ControlPageWithTopAppBar.PageContent>
     </views:ControlPageWithTopAppBar>

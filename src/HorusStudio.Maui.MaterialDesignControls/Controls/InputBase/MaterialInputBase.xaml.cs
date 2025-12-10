@@ -48,7 +48,7 @@ public abstract partial class MaterialInputBase : IValidableView
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurface, Dark = MaterialDarkTheme.OnSurface }.GetValueForCurrentTheme<Color>();
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconTintColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     protected static readonly Brush? DefaultBackground = Entry.BackgroundProperty.DefaultValue as Brush;
-    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainer, Dark = MaterialDarkTheme.SurfaceContainer }.GetValueForCurrentTheme<Color>();
+    protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultBackgroundColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.SurfaceContainerHighest, Dark = MaterialDarkTheme.SurfaceContainerHighest }.GetValueForCurrentTheme<Color>();
     protected const double DefaultBorderWidth = 1;
     protected static readonly BindableProperty.CreateDefaultValueDelegate DefaultBorderColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant }.GetValueForCurrentTheme<Color>();
     protected static readonly CornerRadius DefaultCornerRadius = new(0);
@@ -189,7 +189,7 @@ public abstract partial class MaterialInputBase : IValidableView
     /// <summary>
     /// The backing store for the <see cref="BackgroundColor">BackgroundColor</see> bindable property.
     /// </summary>
-    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialInputBase), defaultValueCreator: DefaultBackgroundColor, propertyChanged: (bindable, _, _) =>
+    public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(MaterialInputBase), defaultValue: null, propertyChanged: (bindable, _, _) =>
     {
         if (bindable is MaterialInputBase self)
         {
@@ -451,11 +451,11 @@ public abstract partial class MaterialInputBase : IValidableView
     /// Gets or sets a color that describes the background color of the input. This is a bindable property.
     /// </summary>
     /// <default>
-    ///  Light: <see cref="MaterialLightTheme.OnSurfaceVariant">MaterialLightTheme.OnSurfaceVariant</see> - Dark: <see cref="MaterialDarkTheme.OnSurfaceVariant">MaterialDarkTheme.OnSurfaceVariant</see>
+    ///  Light: <see cref="MaterialLightTheme.SurfaceContainerHighest">MaterialLightTheme.SurfaceContainerHighest</see> - Dark: <see cref="MaterialDarkTheme.SurfaceContainerHighest">MaterialDarkTheme.SurfaceContainerHighest</see>
     /// </default>
-    public new Color BackgroundColor
+    public new Color? BackgroundColor
     {
-        get => (Color)GetValue(BackgroundColorProperty);
+        get => (Color?)GetValue(BackgroundColorProperty);
         set => SetValue(BackgroundColorProperty, value);
     }
 
@@ -1300,7 +1300,7 @@ public abstract partial class MaterialInputBase : IValidableView
     {
         if (_backgroundColors.TryGetValue(GetCurrentTypeState(type), out object background) && background != null)
         {
-            if (BackgroundColor == null || BackgroundColor.Equals(DefaultBackgroundColor))
+            if (BackgroundColor == null)
             {
                 // Default Material value according to Type
                 if (background is Color backgroundColor)
