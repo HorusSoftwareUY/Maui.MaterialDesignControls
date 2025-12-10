@@ -38,7 +38,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ObservableProperty]
         private MaterialSegmentedButtonItem _selectedSegmentedButtonItem;
 
-        [ObservableProperty] private ObservableCollection<MaterialNavigationDrawerItem> _navigationDrawerItemsitems = new ObservableCollection<MaterialNavigationDrawerItem>()
+        [ObservableProperty] 
+        private ObservableCollection<MaterialNavigationDrawerItem> _navigationDrawerItems = new ObservableCollection<MaterialNavigationDrawerItem>()
         {
             new()
             {

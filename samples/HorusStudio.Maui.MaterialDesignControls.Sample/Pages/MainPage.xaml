@@ -304,7 +304,7 @@
                             BackgroundColor="{AppThemeBinding Light={StaticResource HomePreviewCardBackgroundLight}, Dark={StaticResource HomePreviewCardBackgroundDark}}"
                             BadgeBackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}"
                             BadgeTextColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnPrimary}, Dark={x:Static material:MaterialDarkTheme.OnPrimary}}"
-                            ItemsSource="{Binding NavigationDrawerItemsitems}" />
+                            ItemsSource="{Binding NavigationDrawerItems}" />
                     </views:HomeCardView.PreviewContent>
                 </views:HomeCardView>
                 
