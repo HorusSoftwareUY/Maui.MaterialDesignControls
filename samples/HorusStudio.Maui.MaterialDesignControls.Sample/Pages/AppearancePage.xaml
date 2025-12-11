@@ -8,12 +8,12 @@
     xmlns:converters="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Converters"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:essentialsModels="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Essentials"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
     x:DataType="vm:AppearanceViewModel"
     x:TypeArguments="vm:AppearanceViewModel"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface},
-                                      Dark={x:Static material:MaterialDarkTheme.Surface}}"
-    ControlTemplate="{StaticResource PageWithTopAppBar}">
+                                      Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
     <ContentPage.Resources>
         <toolkit:EnumToBoolConverter
@@ -91,179 +91,183 @@
         </Style>
     </ContentPage.Resources>
 
-    <VerticalStackLayout
-        Spacing="0">
-        <material:MaterialLabel
-            Text="Mode"
-            Style="{StaticResource SectionTitle}" />
+    <views:PageWithTopAppBar>
+        <views:PageWithTopAppBar.PageContent>
+            <VerticalStackLayout
+                Spacing="0">
+                <material:MaterialLabel
+                    Text="Mode"
+                    Style="{StaticResource SectionTitle}" />
 
-        <material:MaterialCard
-            Padding="24"
-            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}">
-            <Grid
-                ColumnDefinitions="*,*,*"
-                ColumnSpacing="16">
-                <Border
-                    Style="{StaticResource ModeBorder}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding SelectThemeModeCommand}"
-                            CommandParameter="{x:Static essentialsModels:AppTheme.Light}">
-                        </TapGestureRecognizer>
-                    </Border.GestureRecognizers>
-                    <Border.Triggers>
-                        <DataTrigger
-                            TargetType="Border"
-                            Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Light}}"
-                            Value="True">
-                            <Setter
-                                Property="Stroke"
-                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
-                        </DataTrigger>
-                    </Border.Triggers>
-                    <VerticalStackLayout
-                        HorizontalOptions="Start"
-                        VerticalOptions="Center"
-                        Spacing="8">
-                        <material:MaterialIconButton
-                            Style="{StaticResource ModeIcon}"
-                            ImageSource="light_mode.png">
-                            <material:MaterialIconButton.Triggers>
+                <material:MaterialCard
+                    Padding="24"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}">
+                    <Grid
+                        ColumnDefinitions="*,*,*"
+                        ColumnSpacing="16">
+                        <Border
+                            Style="{StaticResource ModeBorder}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding SelectThemeModeCommand}"
+                                    CommandParameter="{x:Static essentialsModels:AppTheme.Light}">
+                                </TapGestureRecognizer>
+                            </Border.GestureRecognizers>
+                            <Border.Triggers>
                                 <DataTrigger
-                                    TargetType="material:MaterialIconButton"
+                                    TargetType="Border"
                                     Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Light}}"
                                     Value="True">
                                     <Setter
-                                        Property="IconTintColor"
+                                        Property="Stroke"
                                         Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
                                 </DataTrigger>
-                            </material:MaterialIconButton.Triggers>
-                        </material:MaterialIconButton>
-                        <material:MaterialLabel
-                            Text="Light"
-                            Style="{StaticResource ModeLabel}">
-                            <material:MaterialLabel.Triggers>
-                                <DataTrigger
-                                    TargetType="material:MaterialLabel"
-                                    Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Light}}"
-                                    Value="True">
-                                    <Setter
-                                        Property="TextColor"
-                                        Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
-                                </DataTrigger>
-                            </material:MaterialLabel.Triggers>
-                        </material:MaterialLabel>
-                    </VerticalStackLayout>
-                </Border>
+                            </Border.Triggers>
+                            <VerticalStackLayout
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Spacing="8">
+                                <material:MaterialIconButton
+                                    Style="{StaticResource ModeIcon}"
+                                    ImageSource="light_mode.png">
+                                    <material:MaterialIconButton.Triggers>
+                                        <DataTrigger
+                                            TargetType="material:MaterialIconButton"
+                                            Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Light}}"
+                                            Value="True">
+                                            <Setter
+                                                Property="IconTintColor"
+                                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                        </DataTrigger>
+                                    </material:MaterialIconButton.Triggers>
+                                </material:MaterialIconButton>
+                                <material:MaterialLabel
+                                    Text="Light"
+                                    Style="{StaticResource ModeLabel}">
+                                    <material:MaterialLabel.Triggers>
+                                        <DataTrigger
+                                            TargetType="material:MaterialLabel"
+                                            Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Light}}"
+                                            Value="True">
+                                            <Setter
+                                                Property="TextColor"
+                                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                        </DataTrigger>
+                                    </material:MaterialLabel.Triggers>
+                                </material:MaterialLabel>
+                            </VerticalStackLayout>
+                        </Border>
 
-                <Border
-                    Grid.Column="1"
-                    Style="{StaticResource ModeBorder}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding SelectThemeModeCommand}"
-                            CommandParameter="{x:Static essentialsModels:AppTheme.Dark}">
-                        </TapGestureRecognizer>
-                    </Border.GestureRecognizers>
-                    <Border.Triggers>
-                        <DataTrigger
-                            TargetType="Border"
-                            Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Dark}}"
-                            Value="True">
-                            <Setter
-                                Property="Stroke"
-                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
-                        </DataTrigger>
-                    </Border.Triggers>
-                    <VerticalStackLayout
-                        HorizontalOptions="Start"
-                        VerticalOptions="Center"
-                        Spacing="8">
-                        <material:MaterialIconButton
-                            Style="{StaticResource ModeIcon}"
-                            ImageSource="dark_mode.png">
-                            <material:MaterialIconButton.Triggers>
+                        <Border
+                            Grid.Column="1"
+                            Style="{StaticResource ModeBorder}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding SelectThemeModeCommand}"
+                                    CommandParameter="{x:Static essentialsModels:AppTheme.Dark}">
+                                </TapGestureRecognizer>
+                            </Border.GestureRecognizers>
+                            <Border.Triggers>
                                 <DataTrigger
-                                    TargetType="material:MaterialIconButton"
+                                    TargetType="Border"
                                     Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Dark}}"
                                     Value="True">
                                     <Setter
-                                        Property="IconTintColor"
+                                        Property="Stroke"
                                         Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
                                 </DataTrigger>
-                            </material:MaterialIconButton.Triggers>
-                        </material:MaterialIconButton>
-                        <material:MaterialLabel
-                            Text="Dark"
-                            Style="{StaticResource ModeLabel}">
-                            <material:MaterialLabel.Triggers>
-                                <DataTrigger
-                                    TargetType="material:MaterialLabel"
-                                    Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Dark}}"
-                                    Value="True">
-                                    <Setter
-                                        Property="TextColor"
-                                        Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
-                                </DataTrigger>
-                            </material:MaterialLabel.Triggers>
-                        </material:MaterialLabel>
-                    </VerticalStackLayout>
-                </Border>
+                            </Border.Triggers>
+                            <VerticalStackLayout
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Spacing="8">
+                                <material:MaterialIconButton
+                                    Style="{StaticResource ModeIcon}"
+                                    ImageSource="dark_mode.png">
+                                    <material:MaterialIconButton.Triggers>
+                                        <DataTrigger
+                                            TargetType="material:MaterialIconButton"
+                                            Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Dark}}"
+                                            Value="True">
+                                            <Setter
+                                                Property="IconTintColor"
+                                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                        </DataTrigger>
+                                    </material:MaterialIconButton.Triggers>
+                                </material:MaterialIconButton>
+                                <material:MaterialLabel
+                                    Text="Dark"
+                                    Style="{StaticResource ModeLabel}">
+                                    <material:MaterialLabel.Triggers>
+                                        <DataTrigger
+                                            TargetType="material:MaterialLabel"
+                                            Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Dark}}"
+                                            Value="True">
+                                            <Setter
+                                                Property="TextColor"
+                                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                        </DataTrigger>
+                                    </material:MaterialLabel.Triggers>
+                                </material:MaterialLabel>
+                            </VerticalStackLayout>
+                        </Border>
 
-                <Border
-                    Grid.Column="2"
-                    Style="{StaticResource ModeBorder}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding SelectThemeModeCommand}"
-                            CommandParameter="{x:Static essentialsModels:AppTheme.Unspecified}">
-                        </TapGestureRecognizer>
-                    </Border.GestureRecognizers>
-                    <Border.Triggers>
-                        <DataTrigger
-                            TargetType="Border"
-                            Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Unspecified}}"
-                            Value="True">
-                            <Setter
-                                Property="Stroke"
-                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
-                        </DataTrigger>
-                    </Border.Triggers>
-                    <VerticalStackLayout
-                        HorizontalOptions="Start"
-                        VerticalOptions="Center"
-                        Spacing="8">
-                        <material:MaterialIconButton
-                            Style="{StaticResource ModeIcon}"
-                            ImageSource="system_mode.png">
-                            <material:MaterialIconButton.Triggers>
+                        <Border
+                            Grid.Column="2"
+                            Style="{StaticResource ModeBorder}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding SelectThemeModeCommand}"
+                                    CommandParameter="{x:Static essentialsModels:AppTheme.Unspecified}">
+                                </TapGestureRecognizer>
+                            </Border.GestureRecognizers>
+                            <Border.Triggers>
                                 <DataTrigger
-                                    TargetType="material:MaterialIconButton"
+                                    TargetType="Border"
                                     Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Unspecified}}"
                                     Value="True">
                                     <Setter
-                                        Property="IconTintColor"
+                                        Property="Stroke"
                                         Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
                                 </DataTrigger>
-                            </material:MaterialIconButton.Triggers>
-                        </material:MaterialIconButton>
-                        <material:MaterialLabel
-                            Text="System"
-                            Style="{StaticResource ModeLabel}">
-                            <material:MaterialLabel.Triggers>
-                                <DataTrigger
-                                    TargetType="material:MaterialLabel"
-                                    Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Unspecified}}"
-                                    Value="True">
-                                    <Setter
-                                        Property="TextColor"
-                                        Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
-                                </DataTrigger>
-                            </material:MaterialLabel.Triggers>
-                        </material:MaterialLabel>
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
-        </material:MaterialCard>
-    </VerticalStackLayout>
+                            </Border.Triggers>
+                            <VerticalStackLayout
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Spacing="8">
+                                <material:MaterialIconButton
+                                    Style="{StaticResource ModeIcon}"
+                                    ImageSource="system_mode.png">
+                                    <material:MaterialIconButton.Triggers>
+                                        <DataTrigger
+                                            TargetType="material:MaterialIconButton"
+                                            Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Unspecified}}"
+                                            Value="True">
+                                            <Setter
+                                                Property="IconTintColor"
+                                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                        </DataTrigger>
+                                    </material:MaterialIconButton.Triggers>
+                                </material:MaterialIconButton>
+                                <material:MaterialLabel
+                                    Text="System"
+                                    Style="{StaticResource ModeLabel}">
+                                    <material:MaterialLabel.Triggers>
+                                        <DataTrigger
+                                            TargetType="material:MaterialLabel"
+                                            Binding="{Binding SelectedThemeMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static essentialsModels:AppTheme.Unspecified}}"
+                                            Value="True">
+                                            <Setter
+                                                Property="TextColor"
+                                                Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}" />
+                                        </DataTrigger>
+                                    </material:MaterialLabel.Triggers>
+                                </material:MaterialLabel>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </material:MaterialCard>
+            </VerticalStackLayout>
+        </views:PageWithTopAppBar.PageContent>
+    </views:PageWithTopAppBar>
 </local:BaseContentPage>

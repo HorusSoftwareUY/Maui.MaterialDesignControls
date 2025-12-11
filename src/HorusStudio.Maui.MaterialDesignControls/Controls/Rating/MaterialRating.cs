@@ -41,7 +41,7 @@ public class MaterialRating : ContentView
     #region Attributes
 
     private static readonly BindableProperty.CreateDefaultValueDelegate DefaultTextColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Text, Dark = MaterialDarkTheme.Text };
-    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultStrokeColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary }.GetValueForCurrentTheme<Color>();
+    private static readonly BindableProperty.CreateDefaultValueDelegate DefaultStrokeColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.Primary, Dark = MaterialDarkTheme.Primary };
     private const double DefaultStrokeThickness = 2.0;
     private const int DefaultItemsSize = 5;
     private const int DefaultItemsPerRow = 5;
@@ -478,6 +478,7 @@ public class MaterialRating : ContentView
     public MaterialRating()
     {
         this.SetAppTheme(LabelColorProperty, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultTextColor.Invoke(this)).Dark);
+        this.SetAppTheme(StrokeColorProperty, ((AppThemeBindingExtension)DefaultStrokeColor.Invoke(this)).Light, ((AppThemeBindingExtension)DefaultStrokeColor.Invoke(this)).Dark);
 
         Grid mainLayout = new()
         {
@@ -800,16 +801,22 @@ public class MaterialRating : ContentView
             size = 40;
 
         bool isSelected = gridContainer.CommandParameter != null && (int)gridContainer.CommandParameter <= value;
+
+        var filledBrush = new SolidColorBrush(StrokeColor);
+        
         var starPath = new Path
         {
             Data = CreateStarPathGeometry(size, size),
-            Fill = isSelected ? new SolidColorBrush(StrokeColor) : null,
+            Fill = isSelected ? filledBrush : null,
             Stroke = new SolidColorBrush(StrokeColor),
             StrokeThickness = StrokeThickness,
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Center
         };
-
+        
+        filledBrush.SetBinding(SolidColorBrush.ColorProperty, new Binding(nameof(StrokeColor), source: this));
+        starPath.SetBinding(Path.StrokeProperty, new Binding(nameof(StrokeColor), source: this));
+        
         gridContainer.Content = starPath;
     }
 

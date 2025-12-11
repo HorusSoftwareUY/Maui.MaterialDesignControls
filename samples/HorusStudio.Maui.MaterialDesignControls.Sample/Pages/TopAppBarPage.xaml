@@ -5,34 +5,24 @@
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.TopAppBarPage"
     x:TypeArguments="vm:TopAppBarViewModel"
     x:DataType="vm:TopAppBarViewModel"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
-    
-    <Grid
-        RowDefinitions="Auto,*">
-        <material:MaterialTopAppBar
-            Headline="{Binding Title}"
-            Description="{Binding Subtitle}"
-            LeadingIconCommand="{Binding GoBackCommand}"
-            LeadingIcon="ic_back.png"
-            ScrollViewName="scrollView"
-            Type="Large">
-            <material:MaterialTopAppBar.TrailingIcons>
-                <material:TrailingIcon 
-                    Icon="ic_web.png" />
-            </material:MaterialTopAppBar.TrailingIcons>
-        </material:MaterialTopAppBar>
+    <views:ControlPageWithTopAppBar>
+        <views:ControlPageWithTopAppBar.PageContent>
+            <VerticalStackLayout Spacing="8">
 
-        <ScrollView
-            x:Name="scrollView"
-            Grid.Row="1"
-            VerticalScrollBarVisibility="Never">
-            <VerticalStackLayout Style="{StaticResource MainLayout}">
-
-                <material:MaterialLabel
-                    Text="The MaterialTopAppBar above uses the ScrollViewName to bind the control to a ScrollView and run an animation when scrolling down."/>
+                <material:MaterialCard
+                    Style="{StaticResource CardControlContainer}"
+                    Padding="24"
+                    Margin="0,24,0,0">
+                    <material:MaterialLabel
+                        Text="The MaterialTopAppBar above uses the ScrollViewName to bind the control to a ScrollView and run an animation when scrolling down."
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </material:MaterialCard>
                 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="CenterAligned" />
                 <material:MaterialCard Style="{StaticResource CardControlContainer}">
@@ -263,6 +253,6 @@
                     </material:MaterialTopAppBar>
                 </material:MaterialCard>
             </VerticalStackLayout>
-        </ScrollView>
-    </Grid>
+        </views:ControlPageWithTopAppBar.PageContent>
+    </views:ControlPageWithTopAppBar>
 </local:BaseContentPage>

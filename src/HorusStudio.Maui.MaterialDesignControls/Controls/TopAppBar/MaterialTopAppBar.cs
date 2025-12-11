@@ -743,7 +743,8 @@ namespace HorusStudio.Maui.MaterialDesignControls
             {
                 HorizontalTextAlignment = TextAlignment.Center,
                 VerticalTextAlignment = TextAlignment.Center,
-                LineBreakMode = LineBreakMode.WordWrap
+                LineBreakMode = LineBreakMode.WordWrap,
+                IsVisible = false
             };
             _descriptionLabel.SetBinding(MaterialLabel.TextColorProperty, new Binding(nameof(DescriptionColor), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.FontSizeProperty, new Binding(nameof(DescriptionFontSize), source: this));
@@ -751,6 +752,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _descriptionLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(DescriptionFontAttributes), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.MarginProperty, new Binding(nameof(DescriptionMarginAdjustment), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Description"));
+            this.Add(_descriptionLabel, 0, 1);
             Grid.SetColumnSpan(_descriptionLabel, 3);
 
             _leadingIconButton = new MaterialIconButton
@@ -877,15 +879,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
 
         private void SetDescription()
         {
-            if (!string.IsNullOrEmpty(Description))
-            {
-                this.Add(_descriptionLabel, 0, 1);
-            }
-            else
-            {
-                Children.Remove(_descriptionLabel);
-            }
-
+            _descriptionLabel.IsVisible = !string.IsNullOrEmpty(Description);
             _descriptionLabel.Text = Description;
         }
 

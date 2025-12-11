@@ -5,64 +5,67 @@
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SnackbarPage"
     x:TypeArguments="vm:SnackbarViewModel"
     x:DataType="vm:SnackbarViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
-    <VerticalStackLayout Spacing="8">
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="16" Padding="2,8">
-                <material:MaterialButton
-                    Type="Filled"
-                    Text="Show example"
-                    Command="{Binding DefaultSnackbarCommand}" />
+    <views:ControlPageWithTopAppBar>
+        <views:ControlPageWithTopAppBar.PageContent>
+            <VerticalStackLayout Spacing="8">
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout Spacing="16" Padding="2,8">
+                        <material:MaterialButton
+                            Type="Filled"
+                            Text="Show example"
+                            Command="{Binding DefaultSnackbarCommand}" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel 
+                    Text="Snackbars inform users of a process that an app has performed or will perform. They appear temporarily, towards the bottom of the screen. They shouldn’t interrupt the user experience, and they don’t require user input to disappear."
+                    Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Dismissed callback" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout Spacing="16" Padding="2,8">
+                        <material:MaterialButton
+                            Type="Filled"
+                            Text="Show example"
+                            Command="{Binding DismissedCallbackSnackbarCommand}"/>
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel 
+                    Text="Set just a message and dismissed callback"
+                    Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar with icon(s)" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout Spacing="16" Padding="2,8">
+                        <material:MaterialButton
+                            Type="Filled"
+                            Text="Show example"
+                            Command="{Binding SnackbarWithIconsCommand}"/>
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel 
+                    Text="Set leading and/or trailing icon to snackbar for more events"
+                    Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Full API" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout Spacing="16" Padding="2,8">
+                        <material:MaterialButton
+                            Type="Filled"
+                            Text="Show example"
+                            Command="{Binding FullApiSnackbarCommand}"/>
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel 
+                    Text="Set or change any aspect for you snackbar with full api access."
+                    Type="BodySmall"/>
             </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel 
-            Text="Snackbars inform users of a process that an app has performed or will perform. They appear temporarily, towards the bottom of the screen. They shouldn’t interrupt the user experience, and they don’t require user input to disappear."
-            Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Dismissed callback" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="16" Padding="2,8">
-                <material:MaterialButton
-                    Type="Filled"
-                    Text="Show example"
-                    Command="{Binding DismissedCallbackSnackbarCommand}"/>
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel 
-            Text="Set just a message and dismissed callback"
-            Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar with icon(s)" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="16" Padding="2,8">
-                <material:MaterialButton
-                    Type="Filled"
-                    Text="Show example"
-                    Command="{Binding SnackbarWithIconsCommand}"/>
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel 
-            Text="Set leading and/or trailing icon to snackbar for more events"
-            Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Snackbar Full API" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout Spacing="16" Padding="2,8">
-                <material:MaterialButton
-                    Type="Filled"
-                    Text="Show example"
-                    Command="{Binding FullApiSnackbarCommand}"/>
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel 
-            Text="Set or change any aspect for you snackbar with full api access."
-            Type="BodySmall"/>
-
-    </VerticalStackLayout>
+        </views:ControlPageWithTopAppBar.PageContent>
+    </views:ControlPageWithTopAppBar>
 </local:BaseContentPage>
