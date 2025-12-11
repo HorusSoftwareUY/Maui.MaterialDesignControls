@@ -58,6 +58,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
     /// </example>
     /// <todoList>
     /// * [iOS] The scroll animation has lag by the headline size change
+    /// * [iOS] When using <c>ScrollViewName</c> for collapse/expand animation and setting a <c>Description</c> that wraps to more than one line, layout issues may occur. It is recommended to set <see cref="DescriptionLineBreakMode">DescriptionLineBreakMode</see> to <see cref="LineBreakMode.TailTruncation">LineBreakMode.TailTruncation</see> in this scenario.
     /// </todoList>
     public class MaterialTopAppBar : Grid
     {
@@ -76,6 +77,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultDescriptionFontFamily = _ => MaterialFontFamily.Default;
         private const FontAttributes DefaultDescriptionFontAttributes = FontAttributes.None;
         private static readonly Thickness DefaultDescriptionMarginAdjustment = new(DescriptionLateralMargin, 8, DescriptionLateralMargin, 16);
+        private static readonly LineBreakMode DefaultDescriptionLineBreakMode = LineBreakMode.WordWrap;
         private static readonly BindableProperty.CreateDefaultValueDelegate DefaultIconTintColorColor = _ => new AppThemeBindingExtension { Light = MaterialLightTheme.OnSurfaceVariant, Dark = MaterialDarkTheme.OnSurfaceVariant };
         private static readonly ImageSource? DefaultLeadingIcon = null;
         private static readonly ICommand? DefaultLeadingIconCommand = null;
@@ -183,6 +185,11 @@ namespace HorusStudio.Maui.MaterialDesignControls
         /// The backing store for the <see cref="DescriptionMarginAdjustment">DescriptionMarginAdjustment</see> bindable property.
         /// </summary>
         public static readonly BindableProperty DescriptionMarginAdjustmentProperty = BindableProperty.Create(nameof(DescriptionMarginAdjustment), typeof(Thickness), typeof(MaterialTopAppBar), defaultValue: DefaultDescriptionMarginAdjustment, BindingMode.OneTime);
+        
+        /// <summary>
+        /// The backing store for the <see cref="DescriptionLineBreakMode">DescriptionLineBreakMode</see> bindable property.
+        /// </summary>
+        public static readonly BindableProperty DescriptionLineBreakModeProperty = BindableProperty.Create(nameof(DescriptionLineBreakMode), typeof(LineBreakMode), typeof(MaterialTopAppBar), defaultValue: DefaultDescriptionLineBreakMode, defaultBindingMode: BindingMode.OneTime);
 
         /// <summary>
         /// The backing store for the <see cref="LeadingIcon">LeadingIcon</see> bindable property.
@@ -471,6 +478,19 @@ namespace HorusStudio.Maui.MaterialDesignControls
             get => (Thickness)GetValue(DescriptionMarginAdjustmentProperty);
             set => SetValue(DescriptionMarginAdjustmentProperty, value);
         }
+        
+        /// <summary>
+        /// Gets or sets the line break mode for the description text of this top app bar.
+        /// This is a bindable property.
+        /// </summary>
+        /// <default>
+        /// <see cref="LineBreakMode.WordWrap">LineBreakMode.WordWrap</see>
+        /// </default>
+        public LineBreakMode DescriptionLineBreakMode
+        {
+            get => (LineBreakMode)GetValue(DescriptionLineBreakModeProperty);
+            set => SetValue(DescriptionLineBreakModeProperty, value);
+        }
 
         /// <summary>
         /// Allows you to display an icon button on the left side of the top app bar. 
@@ -751,6 +771,7 @@ namespace HorusStudio.Maui.MaterialDesignControls
             _descriptionLabel.SetBinding(MaterialLabel.FontFamilyProperty, new Binding(nameof(DescriptionFontFamily), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.FontAttributesProperty, new Binding(nameof(DescriptionFontAttributes), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.MarginProperty, new Binding(nameof(DescriptionMarginAdjustment), source: this));
+            _descriptionLabel.SetBinding(MaterialLabel.LineBreakModeProperty, new Binding(nameof(DescriptionLineBreakMode), source: this));
             _descriptionLabel.SetBinding(MaterialLabel.AutomationIdProperty, new Binding(nameof(AutomationId), source: this, converter: new AutomationIdConverter(), converterParameter: "Description"));
             this.Add(_descriptionLabel, 0, 1);
             Grid.SetColumnSpan(_descriptionLabel, 3);

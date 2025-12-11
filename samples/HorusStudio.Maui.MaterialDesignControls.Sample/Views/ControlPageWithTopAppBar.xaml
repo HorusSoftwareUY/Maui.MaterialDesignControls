@@ -9,6 +9,7 @@
     <Grid
         RowDefinitions="Auto,*">
         <material:MaterialTopAppBar
+            x:Name="topAppBar"
             AutomationId="topAppBar"
             Headline="{Binding Title}"
             Description="{Binding Subtitle}"
@@ -16,7 +17,6 @@
             LeadingIconIsBusy="{Binding Path=GoBackCommand.IsRunning}"
             LeadingIcon="ic_back.png"
             Type="Large"
-            ScrollViewName="MdcControlPageScroll"
             TrailingIcons="{Binding ContextualActions}" />
         <ScrollView
             Grid.Row="1"
