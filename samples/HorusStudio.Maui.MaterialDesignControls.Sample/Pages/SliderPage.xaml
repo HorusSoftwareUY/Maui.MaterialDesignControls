@@ -5,110 +5,114 @@
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SliderPage"
     x:TypeArguments="vm:SliderViewModel"
     x:DataType="vm:SliderViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     
-    <VerticalStackLayout Spacing="8">
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialSlider 
-                    Label="Only label"
-                    Value="{Binding Value}"
-                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
-                <material:MaterialButton 
-                    Command="{Binding CheckValueCommand}"
-                    Text="Check value" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can use rating control with default properties, but you need to set the thumb background color equals to the container slider background color." Type="BodySmall" />
+    <views:ControlPageWithTopAppBar>
+        <views:ControlPageWithTopAppBar.PageContent>
+            <VerticalStackLayout Spacing="8">
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Default" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialSlider 
+                            Label="Only label"
+                            Value="{Binding Value}"
+                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
+                        <material:MaterialButton 
+                            Command="{Binding CheckValueCommand}"
+                            Text="Check value" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can use rating control with default properties, but you need to set the thumb background color equals to the container slider background color." Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Defining a event value changed" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialSlider 
-                    Label="Event"
-                    ValueChanged="MaterialSlider_ValueChanged"
-                    Minimum="1"
-                    Maximum="10"
-                    ShowValueIndicator="False"
-                    MinimumLabel="-"
-                    MaximumLabel="+"
-                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
-                <material:MaterialLabel x:Name="displayLabel" Text="The Slider value will be show it here." />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can set a ValueChanged Event or Command. You can also set left/right labels and minimum/maximum values." Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing some properties" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialSlider 
-                    Label="Changing the colors of track and thumb"
-                    ThumbColor="DarkRed"
-                    ActiveTrackColor="Gray"
-                    InactiveTrackColor="LightGray"
-                    ValueIndicatorBackgroundColor="DarkBlue"
-                    ValueIndicatorSize="40"
-                    MinimumImageSource="volum_out.png"
-                    MaximumImageSource="volum_in.png"
-                    ShowIcons="True"
-                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel
-            Text="You can set the thumb color, the track maximum color and the track minimum color. And set icons for left and right sides. Change the value indicator background color or size. Or simply, hide the value indicator."
-            Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Defining a event value changed" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialSlider 
+                            Label="Event"
+                            ValueChanged="MaterialSlider_ValueChanged"
+                            Minimum="1"
+                            Maximum="10"
+                            ShowValueIndicator="False"
+                            MinimumLabel="-"
+                            MaximumLabel="+"
+                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
+                        <material:MaterialLabel x:Name="displayLabel" Text="The Slider value will be show it here." />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can set a ValueChanged Event or Command. You can also set left/right labels and minimum/maximum values." Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing some properties" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialSlider 
+                            Label="Changing the colors of track and thumb"
+                            ThumbColor="DarkRed"
+                            ActiveTrackColor="Gray"
+                            InactiveTrackColor="LightGray"
+                            ValueIndicatorBackgroundColor="DarkBlue"
+                            ValueIndicatorSize="40"
+                            MinimumImageSource="volum_out.png"
+                            MaximumImageSource="volum_in.png"
+                            ShowIcons="True"
+                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel
+                    Text="You can set the thumb color, the track maximum color and the track minimum color. And set icons for left and right sides. Change the value indicator background color or size. Or simply, hide the value indicator."
+                    Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a thumb image" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialSlider 
-                    Label="Thumb icon"
-                    MinimumLabel="0"
-                    MaximumLabel="10"
-                    Minimum="0"
-                    ThumbHeight="35"
-                    ThumbWidth="35"
-                    Maximum="10"
-                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
-                    ThumbImageSource="icon_opacity.png" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel
-            Text="You can set the thumb image source. Set the track height, thumb height and thumb width."
-            Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a thumb image" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialSlider 
+                            Label="Thumb icon"
+                            MinimumLabel="0"
+                            MaximumLabel="10"
+                            Minimum="0"
+                            ThumbHeight="35"
+                            ThumbWidth="35"
+                            Maximum="10"
+                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
+                            ThumbImageSource="icon_opacity.png" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel
+                    Text="You can set the thumb image source. Set the track height, thumb height and thumb width."
+                    Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a track image" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialSlider 
-                    Label="Track image"
-                    Minimum="16"
-                    ThumbColor="Black"
-                    ValueIndicatorFormat="{Binding ValueFormat}"
-                    ValueIndicatorFontSize="12"
-                    TrackHeight="14"
-                    Maximum="32"
-                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
-                    TrackImageSource="scale.png" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can set the track as an image source." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using a track image" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialSlider 
+                            Label="Track image"
+                            Minimum="16"
+                            ThumbColor="Black"
+                            ValueIndicatorFormat="{Binding ValueFormat}"
+                            ValueIndicatorFontSize="12"
+                            TrackHeight="14"
+                            Maximum="32"
+                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
+                            TrackImageSource="scale.png" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can set the track as an image source." Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialSlider 
-                    Label="Value"
-                    Value="{Binding Value}"
-                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
-                    IsEnabled="False" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialSlider 
+                            Label="Value"
+                            Value="{Binding Value}"
+                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
+                            IsEnabled="False" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can disable slider." Type="BodySmall" />
             </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can disable slider." Type="BodySmall" />
-    </VerticalStackLayout>
+        </views:ControlPageWithTopAppBar.PageContent>
+    </views:ControlPageWithTopAppBar>
 </local:BaseContentPage>

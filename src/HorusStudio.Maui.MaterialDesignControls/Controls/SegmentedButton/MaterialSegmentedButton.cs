@@ -687,9 +687,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     {
         return new DataTemplate(() =>
         {
-            var itemContent = new MaterialSegmentedButtonItemView();
-            itemContent.Style = GetItemViewStyle();
-            return itemContent;
+            return new MaterialSegmentedButtonItemView();
         });
     }
 
@@ -831,83 +829,7 @@ public class MaterialSegmentedButton : ContentView, ITouchableView
     #endregion
     
     #region Styles
-
-    private Style GetItemViewStyle()
-    {
-        var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };
-
-        var disabledState = new VisualState { Name = VisualStateManager.CommonStates.Disabled };
-
-        disabledState.Setters.Add(
-            MaterialSegmentedButtonItemView.BackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Surface,
-                Dark = MaterialDarkTheme.Surface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.12f));
-
-        disabledState.Setters.Add(
-            MaterialSegmentedButtonItemView.TextColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>()
-            .WithAlpha(0.38f));
-
-        var normalState = new VisualState { Name = VisualStateManager.CommonStates.Normal };
-
-        normalState.Setters.Add(
-            MaterialSegmentedButtonItemView.BackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.Surface,
-                Dark = MaterialDarkTheme.Surface
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        normalState.Setters.Add(
-            MaterialSegmentedButtonItemView.TextColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        var selectedState = new VisualState { Name = VisualStateManager.CommonStates.Selected };
-
-        selectedState.Setters.Add(
-            MaterialSegmentedButtonItemView.BackgroundColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.SecondaryContainer,
-                Dark = MaterialDarkTheme.SecondaryContainer
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        selectedState.Setters.Add(
-            MaterialSegmentedButtonItemView.TextColorProperty,
-            new AppThemeBindingExtension
-            {
-                Light = MaterialLightTheme.OnSurface,
-                Dark = MaterialDarkTheme.OnSurface
-            }
-            .GetValueForCurrentTheme<Color>());
-
-        commonStatesGroup.States.Add(disabledState);
-        commonStatesGroup.States.Add(normalState);
-        commonStatesGroup.States.Add(selectedState);
-
-        var style = new Style(typeof(MaterialSegmentedButtonItemView));
-        style.Setters.Add(VisualStateManager.VisualStateGroupsProperty, new VisualStateGroupList() { commonStatesGroup });
-
-        return style;
-    }
-
+    
     private Style GetItemLayoutStyle()
     {
         var commonStatesGroup = new VisualStateGroup { Name = nameof(VisualStateManager.CommonStates) };

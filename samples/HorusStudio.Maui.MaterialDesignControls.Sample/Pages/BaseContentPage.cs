@@ -1,131 +1,14 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
+﻿using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 {
     public abstract class BaseContentPage<TBaseViewModel> : ContentPage where TBaseViewModel : BaseViewModel
     {
-        #region Bindable Properties
-        
-        /// <summary>
-        /// The backing store for the <see cref="Subtitle" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty SubtitleProperty = BindableProperty.Create(nameof(Subtitle), typeof(string), typeof(BaseContentPage<>));
-
-        /// <summary>
-        /// The backing store for the <see cref="TabItems" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty TabItemsProperty = BindableProperty.Create(nameof(TabItems), typeof(ObservableCollection<MaterialSegmentedButtonItem>), typeof(BaseContentPage<>));
-
-        /// <summary>
-        /// The backing store for the <see cref="SelectedTabItem" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty SelectedTabItemProperty = BindableProperty.Create(nameof(SelectedTabItem), typeof(MaterialSegmentedButtonItem), typeof(BaseContentPage<>));
-
-        /// <summary>
-        /// The backing store for the <see cref="TabItemsSelection" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty TabItemsSelectionProperty = BindableProperty.Create(nameof(TabItemsSelection), typeof(ICommand), typeof(BaseContentPage<>));
-
-        /// <summary>
-        /// The backing store for the <see cref="CustomizationMode" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty CustomizationModeProperty = BindableProperty.Create(nameof(CustomizationMode), typeof(bool), typeof(BaseContentPage<>));
-        
-        /// <summary>
-        /// The backing store for the <see cref="BackCommand" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty BackCommandProperty = BindableProperty.Create(nameof(BackCommand), typeof(ICommand), typeof(BaseContentPage<>));
-        
-        /// <summary>
-        /// The backing store for the <see cref="TopBarIcons" /> bindable property.
-        /// </summary>
-        public static readonly BindableProperty TopBarIconsProperty = BindableProperty.Create(nameof(TopBarIcons), typeof(IEnumerable<TrailingIcon>), typeof(BaseContentPage<>));
-        
-        #endregion Bindable Properties
-        
-        #region Properties
-        
-        /// <summary>
-        /// Gets or sets a subtitle for page. This is a bindable property.
-        /// </summary>
-        public string Subtitle
-        {
-            get => (string)GetValue(SubtitleProperty);
-            set => SetValue(SubtitleProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a list of tab items. This is a bindable property.
-        /// </summary>
-        public ObservableCollection<MaterialSegmentedButtonItem> TabItems
-        {
-            get => (ObservableCollection<MaterialSegmentedButtonItem>)GetValue(TabItemsProperty);
-            set => SetValue(TabItemsProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the selected tab item. This is a bindable property.
-        /// </summary>
-        public MaterialSegmentedButtonItem SelectedTabItem
-        {
-            get => (MaterialSegmentedButtonItem)GetValue(SelectedTabItemProperty);
-            set => SetValue(SelectedTabItemProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a commando to be fired when the tab items selection change. This is a bindable property.
-        /// </summary>
-        public ICommand TabItemsSelection
-        {
-            get => (ICommand)GetValue(TabItemsSelectionProperty);
-            set => SetValue(TabItemsSelectionProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a flag to determine whether customization mode is active or not. This is a bindable property.
-        /// </summary>
-        public bool CustomizationMode
-        {
-            get => (bool)GetValue(CustomizationModeProperty);
-            set => SetValue(CustomizationModeProperty, value);
-        }
-        
-        /// <summary>
-        /// Gets or sets a command to be fired when back button is pressed. This is a bindable property.
-        /// </summary>
-        public ICommand BackCommand
-        {
-            get => (ICommand)GetValue(BackCommandProperty);
-            set => SetValue(BackCommandProperty, value);
-        }
-        
-        /// <summary>
-        /// Gets or sets a collection of icons to be displayed on Top App Bar. This is a bindable property.
-        /// </summary>
-        public IEnumerable<TrailingIcon> TopBarIcons
-        {
-            get => (IEnumerable<TrailingIcon>)GetValue(TopBarIconsProperty);
-            set => SetValue(TopBarIconsProperty, value);
-        }
-        
-        #endregion Properties
-        
         public BaseContentPage(TBaseViewModel viewModel)
         {
             BindingContext = viewModel;
             viewModel.DisplayAlert = DisplayAlert;
             viewModel.DisplayActionSheet = DisplayActionSheet;
-            
-            SetBinding(TitleProperty, new Binding(nameof(BaseViewModel.Title)));
-            SetBinding(SubtitleProperty, new Binding(nameof(BaseViewModel.Subtitle)));
-            SetBinding(TabItemsProperty, new Binding(nameof(BaseViewModel.TabItems)));
-            SetBinding(SelectedTabItemProperty, new Binding(nameof(BaseViewModel.SelectedTabItem)));
-            SetBinding(TabItemsSelectionProperty, new Binding(nameof(BaseViewModel.TabItemsSelectionCommand)));
-            SetBinding(CustomizationModeProperty, new Binding(nameof(BaseViewModel.IsCustomize), mode: BindingMode.TwoWay));
-            SetBinding(BackCommandProperty, new Binding(nameof(BaseViewModel.GoBackCommand)));
-            SetBinding(TopBarIconsProperty, new Binding(nameof(BaseViewModel.ContextualActions)));
             
             Shell.SetNavBarIsVisible(this, false);
         }
