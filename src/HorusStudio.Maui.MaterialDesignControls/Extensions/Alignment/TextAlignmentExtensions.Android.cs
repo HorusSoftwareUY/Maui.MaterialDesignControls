@@ -8,7 +8,7 @@ static class TextAlignmentExtensions
     {
         return textAlignment switch
         {
-            TextAlignment.Start =>AndroidViews.GravityFlags.Left,
+            TextAlignment.Start => AndroidViews.GravityFlags.Left,
             TextAlignment.Center => AndroidViews.GravityFlags.Center,
             _ => AndroidViews.GravityFlags.Right
         };
