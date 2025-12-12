@@ -14,8 +14,8 @@
 		<ApplicationIdGuid>24a1a7f0-9c21-4710-9d6d-f863bd1bdb97</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0.3</ApplicationDisplayVersion>
-		<ApplicationVersion>4</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0.4</ApplicationDisplayVersion>
+		<ApplicationVersion>5</ApplicationVersion>
 	</PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
