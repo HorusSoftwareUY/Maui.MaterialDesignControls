@@ -85,10 +85,6 @@
 		<ProjectReference Include="..\..\src\HorusStudio.Maui.MaterialDesignControls\HorusStudio.Maui.MaterialDesignControls.csproj" />
 	</ItemGroup>
     
-<!--	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android'">-->
-<!--	  <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Ktx" />-->
-<!--	</ItemGroup>-->
-    
 	<!--
 	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
 	  <Reference Include="HorusStudio.Maui.MaterialDesignControls">
