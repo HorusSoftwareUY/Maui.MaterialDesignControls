@@ -46,6 +46,7 @@ public partial class HomeCardView : ContentView
             if (bindable is HomeCardView self && newValue is string navigationParameter)
             {
                 self.card.CommandParameter = navigationParameter;
+                self.previewOverlayButton.CommandParameter = navigationParameter;
             }
         });
     

@@ -33,7 +33,8 @@
                     <ContentView x:Name="previewContent"
                                  Padding="16"
                                  IsVisible="False" />
-                    <ContentView InputTransparent="False" />
+                    <material:MaterialViewButton x:Name="previewOverlayButton"
+                                                 Command="{Binding CardClickCommand}" />
                 </Grid>
             </material:MaterialCard>
 
