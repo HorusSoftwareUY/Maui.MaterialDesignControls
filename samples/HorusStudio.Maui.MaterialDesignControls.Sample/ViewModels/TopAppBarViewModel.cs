@@ -23,8 +23,6 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public TopAppBarViewModel()
         {
-            Subtitle = "Top app bars display navigation, actions, and text at the top of a screen.";
-
             ChangeTrailingIcons();
         }
 

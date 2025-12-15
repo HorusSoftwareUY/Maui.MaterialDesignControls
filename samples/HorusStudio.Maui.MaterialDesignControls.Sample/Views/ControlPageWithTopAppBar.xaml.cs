@@ -16,10 +16,24 @@ public partial class ControlPageWithTopAppBar : ContentView
         }
     });
     
+    public static readonly BindableProperty AnimateScrollViewProperty = BindableProperty.Create(nameof(AnimateScrollView), typeof(bool), typeof(ControlPageWithTopAppBar), false, propertyChanged: (bindable, _, newValue) =>
+    {
+        if (bindable is ControlPageWithTopAppBar self && newValue is bool animateScrollView)
+        {
+            self.topAppBar.ScrollViewName = animateScrollView ? "MdcControlPageScroll" : null;
+        }
+    });
+    
     public View? PageContent
     {
         get => (View?)GetValue(PageContentProperty);
         set => SetValue(PageContentProperty, value);
+    }
+    
+    public bool AnimateScrollView
+    {
+        get => (bool)GetValue(AnimateScrollViewProperty);
+        set => SetValue(AnimateScrollViewProperty, value);
     }
     
     public ControlPageWithTopAppBar()

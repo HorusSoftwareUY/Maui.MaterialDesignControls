@@ -10,7 +10,8 @@
     x:TypeArguments="vm:TopAppBarViewModel"
     x:DataType="vm:TopAppBarViewModel"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
-    <views:ControlPageWithTopAppBar>
+    <views:ControlPageWithTopAppBar
+        AnimateScrollView="True">
         <views:ControlPageWithTopAppBar.PageContent>
             <VerticalStackLayout Spacing="8">
 
@@ -18,10 +19,15 @@
                     Style="{StaticResource CardControlContainer}"
                     Padding="24"
                     Margin="0,24,0,0">
-                    <material:MaterialLabel
-                        Text="The MaterialTopAppBar above uses the ScrollViewName to bind the control to a ScrollView and run an animation when scrolling down."
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center" />
+                    <VerticalStackLayout
+                        Spacing="16">
+                        <material:MaterialLabel
+                            Text="Top app bars display navigation, actions, and text at the top of a screen."
+                            Type="TitleMedium" />
+                        <material:MaterialLabel
+                            Text="The MaterialTopAppBar above uses the ScrollViewName to bind the control to a ScrollView and run an animation when scrolling down."
+                            Type="BodyMedium" />
+                    </VerticalStackLayout>
                 </material:MaterialCard>
                 
                 <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="CenterAligned" />
