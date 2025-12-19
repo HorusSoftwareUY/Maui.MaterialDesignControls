@@ -7,7 +7,7 @@ using Microsoft.Maui.Platform;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample
 {
-    [Activity(Theme = "@style/MyAppTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+    [Activity(Theme = "@style/MyAppTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density, ScreenOrientation = ScreenOrientation.Portrait)]
     [Register("com.horusstudio.maui.materialdesigncontrols.sample.MainActivity")]
     public class MainActivity : MauiAppCompatActivity
     {

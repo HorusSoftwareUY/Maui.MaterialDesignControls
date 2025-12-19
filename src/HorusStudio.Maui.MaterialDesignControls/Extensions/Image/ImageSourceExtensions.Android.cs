@@ -1,4 +1,5 @@
 ﻿using Android.Graphics.Drawables;
+using AndroidGraphics = Android.Graphics;
 using Microsoft.Maui.Platform;
 
 namespace Microsoft.Maui.Controls;
@@ -11,13 +12,13 @@ static partial class ImageSourceExtensions
         
         var currentApp = Microsoft.Maui.ApplicationModel.Platform.AppContext;
         var imgId = currentApp.GetDrawableId(iconSource);
-        var bmp = Android.Graphics.BitmapFactory.DecodeResource(currentApp.Resources, imgId);
+        var bmp = AndroidGraphics.BitmapFactory.DecodeResource(currentApp.Resources, imgId);
         if (bmp == null) return null;
 
         if (size != null)
         {
             var iconSizeInDp = Convert.ToInt32(size).DpToPixels();
-            bmp = Android.Graphics.Bitmap.CreateScaledBitmap(bmp, iconSizeInDp, iconSizeInDp, true);    
+            bmp = AndroidGraphics.Bitmap.CreateScaledBitmap(bmp, iconSizeInDp, iconSizeInDp, true);    
         }
         
         var icon = new BitmapDrawable(currentApp.Resources, bmp);

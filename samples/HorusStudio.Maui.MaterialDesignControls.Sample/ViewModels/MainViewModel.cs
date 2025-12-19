@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -10,10 +11,55 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
     {
         #region Attributes & Properties
         
+        private readonly IMaterialSnackbar _snackbar;
+        
         [ObservableProperty]
         private IEnumerable<MaterialNavigationDrawerItem> _menuItems;
 
         public override string Title => string.Empty;
+
+        [ObservableProperty] 
+        private ObservableCollection<MaterialSegmentedButtonItem> _segmentedButtonItems = new ObservableCollection<MaterialSegmentedButtonItem>()
+        {
+            new MaterialSegmentedButtonItem("Songs")
+            {
+                SelectedIcon = "ic_checkbox.png"
+            },
+            new MaterialSegmentedButtonItem("Albums")
+            {
+                SelectedIcon = "ic_checkbox.png"
+            },
+            new MaterialSegmentedButtonItem("Podcasts")
+            {
+                SelectedIcon = "ic_checkbox.png"
+            }
+        };
+        
+        [ObservableProperty]
+        private MaterialSegmentedButtonItem _selectedSegmentedButtonItem;
+
+        [ObservableProperty] 
+        private ObservableCollection<MaterialNavigationDrawerItem> _navigationDrawerItems = new ObservableCollection<MaterialNavigationDrawerItem>()
+        {
+            new()
+            {
+                LeadingIcon = "email.png",
+                Text = "Inbox",
+                BadgeText = "30"
+            },
+            new()
+            {
+                LeadingIcon = "star_unselected.png",
+                TrailingIcon = "arrow_drop_down.png",
+                Text = "Favorites"
+            },
+            new()
+            {
+                LeadingIcon = "trash.png",
+                TrailingIcon = "arrow_drop_down.png",
+                Text = "Trash"
+            }
+        };
 
         #endregion
 
@@ -48,9 +94,13 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             { Models.Pages.Appearance, typeof(AppearanceViewModel) }
         };
         
-        public MainViewModel()
+        public MainViewModel(IMaterialSnackbar snackbar)
         {
+            _snackbar = snackbar;
+            
             CreateMenu();
+
+            SelectedSegmentedButtonItem = SegmentedButtonItems[0];
         }
         
         private void CreateMenu()
@@ -65,9 +115,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new() { Headline = Sections.Communications, Text = Models.Pages.Badge, AutomationId = $"menu_{nameof(Models.Pages.Badge)}", LeadingIcon = "ic_badge.png" },
                 new() { Headline = Sections.Communications, Text = Models.Pages.ProgressIndicator, AutomationId = $"menu_{nameof(Models.Pages.ProgressIndicator)}", LeadingIcon = "ic_progress_indicator.png" },
                 new() { Headline = Sections.Communications, Text = Models.Pages.Snackbar, AutomationId = $"menu_{nameof(Models.Pages.Snackbar)}", LeadingIcon = "ic_snackbar.png" },
-                new() { Headline = Sections.Containment, Text = Models.Pages.BottomSheet, AutomationId = $"menu_{nameof(Models.Pages.BottomSheet)}", LeadingIcon = "ic_bottomsheet.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Containment, Text = Models.Pages.BottomSheet, AutomationId = $"menu_{nameof(Models.Pages.BottomSheet)}", LeadingIcon = "ic_bottomsheet.png", TrailingIcon = "pending_actions.png" },
                 new() { Headline = Sections.Containment, Text = Models.Pages.Card, AutomationId = $"menu_{nameof(Models.Pages.Card)}", LeadingIcon = "ic_card.png" },
-                new() { Headline = Sections.Containment, Text = Models.Pages.Dialog, AutomationId = $"menu_{nameof(Models.Pages.Dialog)}", LeadingIcon = "ic_dialog.png", TrailingIcon = "pending_actions.png", IsEnabled = false },
+                new() { Headline = Sections.Containment, Text = Models.Pages.Dialog, AutomationId = $"menu_{nameof(Models.Pages.Dialog)}", LeadingIcon = "ic_dialog.png", TrailingIcon = "pending_actions.png" },
                 new() { Headline = Sections.Containment, Text = Models.Pages.Divider, AutomationId = $"menu_{nameof(Models.Pages.Divider)}", LeadingIcon = "ic_divider.png"},
                 new() { Headline = Sections.Navigation, Text = Models.Pages.NavigationDrawer, AutomationId = $"menu_{nameof(Models.Pages.NavigationDrawer)}", LeadingIcon = "ic_navigation_drawer.png" },
                 new() { Headline = Sections.Navigation, Text = Models.Pages.TopAppBar, AutomationId = $"menu_{nameof(Models.Pages.TopAppBar)}", LeadingIcon = "ic_top_app_bar.png" },
@@ -92,9 +142,45 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         [ICommand]
         private async Task MenuItemClickAsync(MaterialNavigationDrawerItem menuItem)
         {
-            if (menuItem != null && _viewmodelTypeMap.TryGetValue(menuItem.Text, out Type viewModelType))
+            if (menuItem != null)
             {
-                await GoToAsync(viewModelType.Name);
+                await NavigateToSamplePageAsync(menuItem.Text);
+            }
+        }
+        
+        [ICommand]
+        private async Task CardClickAsync(string parameter)
+        {
+            await NavigateToSamplePageAsync(parameter);
+        }
+        
+        private async Task NavigateToSamplePageAsync(string page)
+        {
+            if (!string.IsNullOrEmpty(page))
+            {
+                if (page == Models.Pages.BottomSheet
+                    || page == Models.Pages.Dialog)
+                {
+                    var icon = page == Models.Pages.BottomSheet ? "ic_bottomsheet.png" : "ic_dialog.png";
+                    _ = _snackbar.ShowAsync(new MaterialSnackbarConfig($"{page} is under development and will be available soon")
+                    {
+                        LeadingIcon = new MaterialSnackbarConfig.IconConfig(icon)
+                    });
+                }
+                else if (_viewmodelTypeMap.TryGetValue(page, out Type viewModelType))
+                {
+                    await GoToAsync(viewModelType.Name);
+                }
+                
+                CleanMenuSelection();
+            }
+        }
+        
+        private void CleanMenuSelection()
+        {
+            foreach (var materialNavigationDrawerItem in MenuItems)
+            {
+                materialNavigationDrawerItem.IsSelected = false;
             }
         }
          

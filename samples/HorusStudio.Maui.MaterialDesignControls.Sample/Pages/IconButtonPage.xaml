@@ -5,10 +5,10 @@
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.IconButtonPage"
     x:TypeArguments="vm:IconButtonViewModel"
     x:DataType="vm:IconButtonViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
     <ContentPage.Resources>
@@ -52,193 +52,196 @@
         </Style>
 
     </ContentPage.Resources>
+    <views:ControlPageWithTopAppBar>
+        <views:ControlPageWithTopAppBar.PageContent>
+            <VerticalStackLayout Spacing="8">
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <Grid Style="{StaticResource ButtonsContainer}">
+                        <material:MaterialIconButton
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Type="Filled"
+                            ImageSource="settings.png"
+                            HorizontalOptions="End"
+                            Command="{Binding MaterialIconButton1Command}"
+                            CommandParameter="Filled icon button clicked!"
+                            IsBusy="{Binding MaterialIconButton1Command.IsRunning}" />
 
-    <VerticalStackLayout Spacing="8">
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid Style="{StaticResource ButtonsContainer}">
-                <material:MaterialIconButton
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Type="Filled"
-                    ImageSource="settings.png"
-                    HorizontalOptions="End"
-                    Command="{Binding MaterialIconButton1Command}"
-                    CommandParameter="Filled icon button clicked!"
-                    IsBusy="{Binding MaterialIconButton1Command.IsRunning}" />
+                        <material:MaterialIconButton
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Type="Filled"
+                            HorizontalOptions="Start"
+                            ImageSource="settings.png"
+                            IsEnabled="False" />
+                    </Grid>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Filled icon buttons have higher visual impact and are best for high emphasis actions." Type="BodySmall" />
 
-                <material:MaterialIconButton
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Type="Filled"
-                    HorizontalOptions="Start"
-                    ImageSource="settings.png"
-                    IsEnabled="False" />
-            </Grid>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Filled icon buttons have higher visual impact and are best for high emphasis actions." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled tonal" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <Grid Style="{StaticResource ButtonsContainer}">
+                        <material:MaterialIconButton
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Type="Tonal"
+                            HorizontalOptions="End"
+                            ImageSource="settings.png"
+                            Command="{Binding MaterialIconButton2Command}"
+                            CommandParameter="Filled tonal icon button clicked!"
+                            IsBusy="{Binding MaterialIconButton2Command.IsRunning}" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled tonal" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid Style="{StaticResource ButtonsContainer}">
-                <material:MaterialIconButton
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Type="Tonal"
-                     HorizontalOptions="End"
-                    ImageSource="settings.png"
-                    Command="{Binding MaterialIconButton2Command}"
-                    CommandParameter="Filled tonal icon button clicked!"
-                    IsBusy="{Binding MaterialIconButton2Command.IsRunning}" />
+                        <material:MaterialIconButton
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Type="Tonal"
+                             HorizontalOptions="Start"
+                            ImageSource="settings.png"
+                            IsEnabled="False" />
+                    </Grid>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Filled tonal icon buttons are a middle ground between filled and outlined icon buttons. They’re useful in contexts where the button requires slightly more emphasis than an outline would give, such as a secondary action paired with a high emphasis action." Type="BodySmall" />
 
-                <material:MaterialIconButton
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Type="Tonal"
-                     HorizontalOptions="Start"
-                    ImageSource="settings.png"
-                    IsEnabled="False" />
-            </Grid>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Filled tonal icon buttons are a middle ground between filled and outlined icon buttons. They’re useful in contexts where the button requires slightly more emphasis than an outline would give, such as a secondary action paired with a high emphasis action." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <Grid Style="{StaticResource ButtonsContainer}">
+                        <material:MaterialIconButton
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Type="Outlined"
+                            ImageSource="settings.png"
+                            HorizontalOptions="End"
+                            Command="{Binding MaterialIconButton3Command}"
+                            CommandParameter="Outlined icon button clicked!"
+                            IsBusy="{Binding MaterialIconButton3Command.IsRunning}" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid Style="{StaticResource ButtonsContainer}">
-                <material:MaterialIconButton
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Type="Outlined"
-                    ImageSource="settings.png"
-                    HorizontalOptions="End"
-                    Command="{Binding MaterialIconButton3Command}"
-                    CommandParameter="Outlined icon button clicked!"
-                    IsBusy="{Binding MaterialIconButton3Command.IsRunning}" />
+                        <material:MaterialIconButton
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Type="Outlined"
+                            HorizontalOptions="Start"
+                            ImageSource="settings.png"
+                            IsEnabled="False" />
+                    </Grid>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Outlined icon buttons are medium-emphasis buttons. They’re useful when an icon button needs more emphasis than a standard icon button but less than a filled or filled tonal icon button. " Type="BodySmall" />
 
-                <material:MaterialIconButton
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Type="Outlined"
-                    HorizontalOptions="Start"
-                    ImageSource="settings.png"
-                    IsEnabled="False" />
-            </Grid>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Outlined icon buttons are medium-emphasis buttons. They’re useful when an icon button needs more emphasis than a standard icon button but less than a filled or filled tonal icon button. " Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Standard" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <Grid Style="{StaticResource ButtonsContainer}">
+                        <material:MaterialIconButton
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Type="Standard"
+                            HorizontalOptions="End"
+                            ImageSource="settings.png"
+                            Command="{Binding MaterialIconButton4Command}"
+                            CommandParameter="Standard icon button clicked!"
+                            IsBusy="{Binding MaterialIconButton4Command.IsRunning}" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Standard" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid Style="{StaticResource ButtonsContainer}">
-                <material:MaterialIconButton
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Type="Standard"
-                    HorizontalOptions="End"
-                    ImageSource="settings.png"
-                    Command="{Binding MaterialIconButton4Command}"
-                    CommandParameter="Standard icon button clicked!"
-                    IsBusy="{Binding MaterialIconButton4Command.IsRunning}" />
+                        <material:MaterialIconButton
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Type="Standard"
+                            HorizontalOptions="Start"
+                            ImageSource="settings.png"
+                            IsEnabled="False" />
+                    </Grid>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Use standard icon buttons for the lowest priority actions." Type="BodySmall" />
 
-                <material:MaterialIconButton
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Type="Standard"
-                    HorizontalOptions="Start"
-                    ImageSource="settings.png"
-                    IsEnabled="False" />
-            </Grid>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Use standard icon buttons for the lowest priority actions." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <Grid Style="{StaticResource ButtonsContainer}" RowDefinitions="Auto,Auto">
+                        <material:MaterialIconButton
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            BackgroundColor="LightSkyBlue"
+                            BorderColor="DarkBlue"
+                            BorderWidth="3"
+                            HorizontalOptions="End"
+                            Type="Custom"
+                            IsEnabled="{Binding IsEnabled}"
+                            Command="{Binding MaterialIconButton5Command}"
+                            CommandParameter="Custom icon button clicked!"
+                            IsBusy="{Binding MaterialIconButton5Command.IsRunning}"
+                            ImageSource="settings.png"
+                            IconTintColor="SlateBlue"
+                            BusyIndicatorColor="DarkCyan"
+                            BusyIndicatorSize="22"
+                            HeightRequest="60"
+                            WidthRequest="60"
+                            CornerRadius="30"
+                            TouchAnimationType="Scale">
+                            <material:MaterialIconButton.Shadow>
+                                <Shadow Brush="Black" 
+                                    Offset="4,4"
+                                    Radius="6"
+                                    Opacity="0.4" />
+                            </material:MaterialIconButton.Shadow>
+                        </material:MaterialIconButton>
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Custom" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid Style="{StaticResource ButtonsContainer}" RowDefinitions="Auto,Auto">
-                <material:MaterialIconButton
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    BackgroundColor="LightSkyBlue"
-                    BorderColor="DarkBlue"
-                    BorderWidth="3"
-                    HorizontalOptions="End"
-                    Type="Custom"
-                    IsEnabled="{Binding IsEnabled}"
-                    Command="{Binding MaterialIconButton5Command}"
-                    CommandParameter="Custom icon button clicked!"
-                    IsBusy="{Binding MaterialIconButton5Command.IsRunning}"
-                    ImageSource="settings.png"
-                    IconTintColor="SlateBlue"
-                    BusyIndicatorColor="DarkCyan"
-                    BusyIndicatorSize="22"
-                    HeightRequest="60"
-                    WidthRequest="60"
-                    CornerRadius="30"
-                    TouchAnimationType="Scale">
-                    <material:MaterialIconButton.Shadow>
-                        <Shadow Brush="Black" 
-                            Offset="4,4"
-                            Radius="6"
-                            Opacity="0.4" />
-                    </material:MaterialIconButton.Shadow>
-                </material:MaterialIconButton>
+                        <material:MaterialIconButton
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Style="{StaticResource VisualStateManagerStyle}"
+                            Type="Custom"
+                            HorizontalOptions="Start"
+                            ImageSource="settings.png"
+                            IsEnabled="{Binding IsEnabled}"
+                            Command="{Binding MaterialIconButton6Command}"
+                            CommandParameter="Custom icon button clicked!"
+                            IsBusy="{Binding MaterialIconButton6Command.IsRunning}"
+                            BusyIndicatorColor="DarkGoldenrod"
+                            BusyIndicatorSize="44" />
 
-                <material:MaterialIconButton
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Style="{StaticResource VisualStateManagerStyle}"
-                    Type="Custom"
-                    HorizontalOptions="Start"
-                    ImageSource="settings.png"
-                    IsEnabled="{Binding IsEnabled}"
-                    Command="{Binding MaterialIconButton6Command}"
-                    CommandParameter="Custom icon button clicked!"
-                    IsBusy="{Binding MaterialIconButton6Command.IsRunning}"
-                    BusyIndicatorColor="DarkGoldenrod"
-                    BusyIndicatorSize="44" />
-
-                <HorizontalStackLayout
-                    Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    HorizontalOptions="Center">
-                    <material:MaterialSwitch
-                        Text="Is enabled"
-                        IsToggled="{Binding IsEnabled}" />    
-                </HorizontalStackLayout>
-            </Grid>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Use custom icon buttons if you need to combine properties from different types." Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Events" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialIconButton
-                    Type="Filled"
-                    ImageSource="settings.png"
-                    Clicked="OnCounterClicked" />
+                        <HorizontalStackLayout
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            HorizontalOptions="Center">
+                            <material:MaterialSwitch
+                                Text="Is enabled"
+                                IsToggled="{Binding IsEnabled}" />    
+                        </HorizontalStackLayout>
+                    </Grid>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Use custom icon buttons if you need to combine properties from different types." Type="BodySmall" />
                 
-                <material:MaterialIconButton
-                    Type="Outlined"
-                    ImageSource="settings.png"
-                    TouchAnimationType="Scale"
-                    Pressed="OnCounterPressed" />
-                
-                <material:MaterialIconButton
-                    Type="Tonal"
-                    ImageSource="settings.png"
-                    Released="OnCounterReleased" />
-                
-                <HorizontalStackLayout>
-                    <material:MaterialIconButton
-                        Type="Tonal"
-                        ImageSource="settings.png"
-                        Touch="OnTouch" />
-                    <material:MaterialLabel
-                        x:Name="lblTouchEvent"
-                        Text="Touch event" 
-                        Type="BodySmall"
-                        VerticalTextAlignment="Center" />
-                </HorizontalStackLayout>
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Events" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialIconButton
+                            Type="Filled"
+                            ImageSource="settings.png"
+                            Clicked="OnCounterClicked" />
+                        
+                        <material:MaterialIconButton
+                            Type="Outlined"
+                            ImageSource="settings.png"
+                            TouchAnimationType="Scale"
+                            Pressed="OnCounterPressed" />
+                        
+                        <material:MaterialIconButton
+                            Type="Tonal"
+                            ImageSource="settings.png"
+                            Released="OnCounterReleased" />
+                        
+                        <HorizontalStackLayout>
+                            <material:MaterialIconButton
+                                Type="Tonal"
+                                ImageSource="settings.png"
+                                Touch="OnTouch" />
+                            <material:MaterialLabel
+                                x:Name="lblTouchEvent"
+                                Text="Touch event" 
+                                Type="BodySmall"
+                                VerticalTextAlignment="Center" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Use event handlers instead of command if needed." Type="BodySmall"/>
             </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Use event handlers instead of command if needed." Type="BodySmall"/>
-    </VerticalStackLayout>
+        </views:ControlPageWithTopAppBar.PageContent>
+    </views:ControlPageWithTopAppBar>
 </local:BaseContentPage>

@@ -5,110 +5,113 @@
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.MultilineTextFieldPage"
     x:TypeArguments="vm:MultilineTextFieldViewModel"
     x:DataType="vm:MultilineTextFieldViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
     
-    <VerticalStackLayout Spacing="8">
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialMultilineTextField 
-                    Placeholder="Enter text here" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="An input control with a filled background, featuring a movable label, placeholder text, and optional icons." Type="BodySmall" />
+    <views:ControlPageWithTopAppBar>
+        <views:ControlPageWithTopAppBar.PageContent>
+            <VerticalStackLayout Spacing="8">
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filled" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialMultilineTextField 
+                            Placeholder="Enter text here" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="An input control with a filled background, featuring a movable label, placeholder text, and optional icons." Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialMultilineTextField 
-                    Type="Outlined"
-                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
-                    Placeholder="Enter text here" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, auto size by default is Enabled, but in this example is disabeld." Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using commands and some configuration" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialMultilineTextField 
-                    Type="Filled"
-                    Keyboard="Email"
-                    LeadingIcon="info.png"
-                    LeadingIconCommand="{Binding LeadingActionCommand}"
-                    Focused="MaterialTextField_Focused"
-                    Unfocused="MaterialTextField_Focused"
-                    Placeholder="Enter text here" />
-                <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can change the return type, keyboard, define events like focused, unfocused or text changed and trailing icon or leading icon." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Outlined" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialMultilineTextField 
+                            Type="Outlined"
+                            Placeholder="Enter text here"
+                            Style="{StaticResource OutlinedInputBaseSamples}" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="An input control with a clear outline around the field, featuring a movable label, placeholder text, auto size by default is Enabled, but in this example is disabeld." Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using commands and some configuration" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialMultilineTextField 
+                            Type="Filled"
+                            Keyboard="Email"
+                            LeadingIcon="info.png"
+                            LeadingIconCommand="{Binding LeadingActionCommand}"
+                            Focused="MaterialTextField_Focused"
+                            Unfocused="MaterialTextField_Focused"
+                            Placeholder="Enter text here" />
+                        <material:MaterialLabel x:Name="Labelfocused" Text="Unfocused" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can change the return type, keyboard, define events like focused, unfocused or text changed and trailing icon or leading icon." Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and other properties" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialMultilineTextField 
-                    MaxLength="100"
-                    Type="Outlined"
-                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
-                    VerticalTextAlignment="End"
-                    HorizontalTextAlignment="Start"
-                    TextColor="DarkGoldenrod"
-                    HeightRequest="100"
-                    LabelColor="DarkGreen"
-                    BorderColor="DarkGray"
-                    PlaceholderColor="DarkBlue"
-                    Placeholder="Enter text here" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Changing max length and other properties" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialMultilineTextField 
+                            MaxLength="100"
+                            Type="Outlined"
+                            VerticalTextAlignment="End"
+                            HorizontalTextAlignment="Start"
+                            TextColor="DarkGoldenrod"
+                            HeightRequest="100"
+                            LabelColor="DarkGreen"
+                            BorderColor="DarkGray"
+                            PlaceholderColor="DarkBlue"
+                            Placeholder="Enter text here"
+                            Style="{StaticResource OutlinedInputBaseSamples}" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set a max length." Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting tex, checking errors and animation in case of error" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialMultilineTextField 
+                            Text="{Binding Text}"
+                            SupportingText="{Binding SupportingTextValue}"
+                            Type="Filled"
+                            HasError="{Binding HasAnError}"
+                            ErrorAnimationType="Shake"
+                            Placeholder="Enter text here" />
+                        <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can bind the text, set a supporting text and use an animation when an errors occured." Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialMultilineTextField 
+                            Type="Outlined"
+                            HeightRequest="150"
+                            Label="New Info"
+                            IsEnabled="False"
+                            Text="{Binding Observation}"
+                            Style="{StaticResource OutlinedInputBaseSamples}" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can disabled a multiline text field." Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Read only" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialMultilineTextField 
+                            Type="Outlined"
+                            HeightRequest="150"
+                            Label="New Info"
+                            IsReadOnly="True"
+                            Text="{Binding Observation}"
+                            Style="{StaticResource OutlinedInputBaseSamples}" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="You can set read only." Type="BodySmall" />
             </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can set background color, place holder color, label color, text color and set a max length." Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using supporting tex, checking errors and animation in case of error" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialMultilineTextField 
-                    Text="{Binding Text}"
-                    SupportingText="{Binding SupportingTextValue}"
-                    Type="Filled"
-                    HasError="{Binding HasAnError}"
-                    ErrorAnimationType="Shake"
-                    Placeholder="Enter text here" />
-                <material:MaterialButton Command="{Binding CheckTextFieldCommand}" Text="Check Value" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can bind the text, set a supporting text and use an animation when an errors occured." Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Disabled" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialMultilineTextField 
-                    Type="Outlined"
-                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
-                    HeightRequest="150"
-                    Label="New Info"
-                    IsEnabled="False"
-                    Text="{Binding Observation}" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can disabled a multiline text field." Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Read only" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialMultilineTextField 
-                    Type="Outlined"
-                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}"
-                    HeightRequest="150"
-                    Label="New Info"
-                    IsReadOnly="True"
-                    Text="{Binding Observation}" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="You can set read only." Type="BodySmall" />
-
-    </VerticalStackLayout>
+        </views:ControlPageWithTopAppBar.PageContent>
+    </views:ControlPageWithTopAppBar>
 </local:BaseContentPage>

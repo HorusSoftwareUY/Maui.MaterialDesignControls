@@ -50,6 +50,7 @@
                         x:Name="Normal">
                         <VisualState.Setters>
                             <Setter Property="TextColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurface}, Dark={x:Static material:MaterialDarkTheme.OnSurface}}" />
+                            <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurfaceVariant}, Dark={x:Static material:MaterialDarkTheme.OnSurfaceVariant}}" />
                             <Setter Property="LabelColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurfaceVariant}, Dark={x:Static material:MaterialDarkTheme.OnSurfaceVariant}}" />
                             <Setter Property="SupportingColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurfaceVariant}, Dark={x:Static material:MaterialDarkTheme.OnSurfaceVariant}}" />
                             <Setter Property="LeadingIconTintColor" Value="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurfaceVariant}, Dark={x:Static material:MaterialDarkTheme.OnSurfaceVariant}}" />

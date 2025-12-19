@@ -79,7 +79,7 @@ Gets or sets a color that describes the background color of the input. This is a
 
 Property type: [Color](https://learn.microsoft.com/en-us/dotnet/api/microsoft.maui.graphics.color)<br>
 
-Default value: Light: MaterialLightTheme.OnSurfaceVariant - Dark: MaterialDarkTheme.OnSurfaceVariant
+Default value: Light: MaterialLightTheme.SurfaceContainerHighest - Dark: MaterialDarkTheme.SurfaceContainerHighest
 
 <br>
 

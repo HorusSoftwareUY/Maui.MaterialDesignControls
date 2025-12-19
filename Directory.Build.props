@@ -2,7 +2,7 @@
   <Import Project="nuget.props" />
 
   <PropertyGroup>
-    <NetVersion>net9.0</NetVersion>
+    <NetVersion>net10.0</NetVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
@@ -13,7 +13,7 @@
 
   <PropertyGroup Condition=" $(MSBuildProjectName.Contains('Maui')) ">
     <UseMaui>true</UseMaui>
-    <MauiVersion>9.0.80</MauiVersion>
+    <MauiVersion>10.0.10</MauiVersion>
     <XamlCompilationOptions>Compile</XamlCompilationOptions>
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
   </PropertyGroup>

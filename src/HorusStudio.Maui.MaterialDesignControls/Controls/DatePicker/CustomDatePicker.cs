@@ -23,7 +23,7 @@ internal class CustomDatePicker : DatePicker
         }
     }
 
-    public DateTime InternalDateTime => base.Date;
+    public DateTime? InternalDateTime => base.Date;
 
     #endregion Attributes
 

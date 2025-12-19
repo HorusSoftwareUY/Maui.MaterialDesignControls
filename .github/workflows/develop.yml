@@ -11,7 +11,7 @@ permissions:
 env:
   SLN_FILE_PATH: 'HorusStudio.Maui.MaterialDesignControls.sln'
   CSPROJ_FILE_PATH: 'src/HorusStudio.Maui.MaterialDesignControls/HorusStudio.Maui.MaterialDesignControls.csproj'
-  MATERIALDESIGNCONTROLS_DLL_FILE_PATH: 'src/HorusStudio.Maui.MaterialDesignControls/bin/Release/net9.0-android/HorusStudio.Maui.MaterialDesignControls.dll'
+  MATERIALDESIGNCONTROLS_DLL_FILE_PATH: 'src/HorusStudio.Maui.MaterialDesignControls/bin/Release/net10.0-android/HorusStudio.Maui.MaterialDesignControls.dll'
   XMLDOC2MARKDOWN_FILE_PATH: 'tools/XMLDoc2Markdown/XMLDoc2Markdown.dll'
   DOCUMENTATION_OUTPUT_PATH: 'docs'
 
@@ -27,7 +27,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'
+        dotnet-version: '10.0.x'
         include-prerelease: true
 
     - name: Install MAUI workloads

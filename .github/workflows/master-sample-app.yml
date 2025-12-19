@@ -18,6 +18,7 @@ on:
 env:
   SLN_FILE_PATH: 'HorusStudio.Maui.MaterialDesignControls.sln'
   CSPROJ_FILE_PATH: 'samples/HorusStudio.Maui.MaterialDesignControls.Sample/HorusStudio.Maui.MaterialDesignControls.Sample.csproj'
+  GLOBAL_JSON_FILE: 'global.json'
 
 jobs:
   build:
@@ -30,11 +31,21 @@ jobs:
       run: |
         echo "Selected platforms to build: ${{ github.event.inputs.platforms }}"
 
+    # TODO: REMOVE THIS STEP WHEN THE GITHUB RUNNER HAS THE LATEST XCODE AND WORKLOAD VERSIONS
+    - name: Fix global.json for correct .NET workload
+      run: |
+        echo '{
+          "sdk": {
+            "allowPrerelease": false,
+            "version": "9.0.307",
+            "workloadVersion": "9.0.300"
+          }
+        }' > "${{ env.GLOBAL_JSON_FILE }}"
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.0.x'
-        include-prerelease: true
 
     - name: Install MAUI workloads
       run: |
@@ -76,7 +87,7 @@ jobs:
       run: |
         echo "📦 Creating Firebase config file for Android..."
         mkdir -p samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android
-        echo "${{ secrets.FIREBASE_GOOGLE_SERVICES_JSON }}" > samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
+        echo "${{ secrets.FIREBASE_GOOGLE_SERVICES_JSON }}" | base64 --decode > samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
         echo "🔎 samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json (show 10 first lines):"
         head -n 10 samples/HorusStudio.Maui.MaterialDesignControls.Sample/Platforms/Android/google-services.json
         echo "✅ Firebase config file created successfully!"
@@ -135,7 +146,7 @@ jobs:
       run: |
         echo "📦 Creating Firebase config file for iOS..."
         mkdir -p samples/HorusStudio.Maui.MaterialDesignControls.Sample
-        echo "${{ secrets.FIREBASE_GOOGLE_SERVICE_INFO_PLIST }}" > samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist
+        echo "${{ secrets.FIREBASE_GOOGLE_SERVICE_INFO_PLIST }}" | base64 --decode > samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist
         echo "🔎 samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist (show 10 first lines):"
         head -n 10 samples/HorusStudio.Maui.MaterialDesignControls.Sample/GoogleService-Info.plist
         echo "✅ Firebase config file created successfully!"

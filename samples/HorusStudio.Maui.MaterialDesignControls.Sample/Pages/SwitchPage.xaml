@@ -5,10 +5,10 @@
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SwitchPage"
     x:TypeArguments="vm:SwitchViewModel"
     x:DataType="vm:SwitchViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
     <ContentPage.Resources>
@@ -56,192 +56,195 @@
             </Setter>
         </Style>
     </ContentPage.Resources>
+    <views:ControlPageWithTopAppBar>
+        <views:ControlPageWithTopAppBar.PageContent>
+            <VerticalStackLayout Spacing="8">
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Visual states" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <Grid
+                        Style="{StaticResource SwitchContainer}">
+                        <material:MaterialSwitch
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            IsEnabled="True"
+                            IsToggled="True" />
+                        <material:MaterialSwitch
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            IsEnabled="True"
+                            IsToggled="False" />
+                        <material:MaterialSwitch
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            IsEnabled="False"
+                            IsToggled="True" />
+                        <material:MaterialSwitch
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsEnabled="False"
+                            IsToggled="False" />
+                    </Grid>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Switches provide 4 default states (VisualState): On, Off, OnDisabled and OffDisabled." Type="BodySmall" />
 
-    <VerticalStackLayout Spacing="8">
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Visual states" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid
-                Style="{StaticResource SwitchContainer}">
-                <material:MaterialSwitch
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    IsEnabled="True"
-                    IsToggled="True" />
-                <material:MaterialSwitch
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    IsEnabled="True"
-                    IsToggled="False" />
-                <material:MaterialSwitch
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    IsEnabled="False"
-                    IsToggled="True" />
-                <material:MaterialSwitch
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    IsEnabled="False"
-                    IsToggled="False" />
-            </Grid>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Switches provide 4 default states (VisualState): On, Off, OnDisabled and OffDisabled." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Text on the left side" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialSwitch
+                            IsEnabled="True"
+                            IsToggled="True"
+                            Text="Option A"
+                            SupportingText="This is a supporting text" />
+                        <material:MaterialSwitch
+                            IsEnabled="True"
+                            IsToggled="False"
+                            Text="Option B" />
+                        <material:MaterialSwitch
+                            IsEnabled="False"
+                            IsToggled="True"
+                            Text="Option C" />
+                        <material:MaterialSwitch
+                            IsEnabled="False"
+                            IsToggled="False"
+                            Text="Option D" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="With the TextSide property you can tell whether you want the text on the left or right." Type="BodySmall" />
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Text on the left side" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialSwitch
-                    IsEnabled="True"
-                    IsToggled="True"
-                    Text="Option A"
-                    SupportingText="This is a supporting text" />
-                <material:MaterialSwitch
-                    IsEnabled="True"
-                    IsToggled="False"
-                    Text="Option B" />
-                <material:MaterialSwitch
-                    IsEnabled="False"
-                    IsToggled="True"
-                    Text="Option C" />
-                <material:MaterialSwitch
-                    IsEnabled="False"
-                    IsToggled="False"
-                    Text="Option D" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Text on the right side" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialSwitch
+                            IsEnabled="True"
+                            IsToggled="True"
+                            Text="Option A"
+                            SupportingText="This is a supporting text"
+                            TextSide="Right" />
+                        <material:MaterialSwitch
+                            IsEnabled="True"
+                            IsToggled="False"
+                            Text="Option B"
+                            TextSide="Right" />
+                        <material:MaterialSwitch
+                            IsEnabled="False"
+                            IsToggled="True"
+                            Text="Option C"
+                            TextSide="Right" />
+                        <material:MaterialSwitch
+                            IsEnabled="False"
+                            IsToggled="False"
+                            Text="Option D"
+                            TextSide="Right" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="With the TextSide property you can tell whether you want the text on the left or right." Type="BodySmall" />
+
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Bindings" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialSwitch
+                            Text="Option A"
+                            IsToggled="{Binding IsToggled}"
+                            IsEnabled="{Binding IsEnabled}" />
+                        <material:MaterialSwitch
+                            Text="Is toggled"
+                            TextSide="Right"
+                            IsToggled="{Binding IsToggled}" />
+                        <material:MaterialSwitch
+                            Text="Is enabled"
+                            TextSide="Right"
+                            IsToggled="{Binding IsEnabled}" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Switches provide state control by binding the IsToggled and IsEnabled properties." Type="BodySmall" />
+
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Icons" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <Grid
+                        Style="{StaticResource SwitchContainer}"
+                        RowDefinitions="Auto">
+                        <material:MaterialSwitch
+                            SelectedIcon="volume.png"
+                            UnselectedIcon="mute.png" />
+                        <material:MaterialSwitch
+                            Grid.Column="1"
+                            SelectedIcon="volume.png" />
+                    </Grid>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="With the TextSide property you can tell whether you want the text on the left or right." Type="BodySmall" />
+
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Styled with VisualStateManager" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <Grid
+                        Style="{StaticResource SwitchContainer}">
+                        <material:MaterialSwitch
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            IsEnabled="True"
+                            IsToggled="True"
+                            Style="{StaticResource VisualStateManagerStyle}" />
+                        <material:MaterialSwitch
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            IsEnabled="True"
+                            IsToggled="False"
+                            Style="{StaticResource VisualStateManagerStyle}" />
+                        <material:MaterialSwitch
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            IsEnabled="False"
+                            IsToggled="True"
+                            Style="{StaticResource VisualStateManagerStyle}" />
+                        <material:MaterialSwitch
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsEnabled="False"
+                            IsToggled="False"
+                            Style="{StaticResource VisualStateManagerStyle}" />
+                    </Grid>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="VisualStateManager allows you to configure properties for each state including TrackColor, BorderColor and ThumbColor." Type="BodySmall" />
+
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API sample" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <VerticalStackLayout>
+                        <material:MaterialSwitch
+                            IsEnabled="True"
+                            IsToggled="True"
+                            Text="Option A"
+                            Style="{StaticResource VisualStateManagerStyle}"
+                            BorderWidth="4"
+                            FontSize="16"
+                            FontFamily="FontMedium"
+                            FontAttributes="Italic"
+                            SupportingText="This is a supporting text"
+                            SupportingTextColor="DarkGray"
+                            SupportingFontFamily="FontRegular"
+                            SupportingFontAttributes="Italic"
+                            SupportingFontSize="10"
+                            TextSide="Right"
+                            Spacing="20"
+                            TrackWidthRequest="70"
+                            TrackHeightRequest="40"
+                            ToggledCommand="{Binding SwitchTappedCommand}"
+                            HorizontalTextAlignment="Center" />
+                        <material:MaterialSwitch
+                            IsEnabled="True"
+                            IsToggled="True"
+                            Text="Option B"
+                            Style="{StaticResource VisualStateManagerStyle}"
+                            BorderWidth="0"
+                            FontSize="10"
+                            FontFamily="FontRegular"
+                            TextSide="Right"
+                            Spacing="40"
+                            SupportingText="This is a supporting text"
+                            TextSpacing="12"
+                            SupportingTextColor="DarkRed" />
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="Example with the rest of the properties offered by the switch control." Type="BodySmall" />
             </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="With the TextSide property you can tell whether you want the text on the left or right." Type="BodySmall" />
-
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Text on the right side" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialSwitch
-                    IsEnabled="True"
-                    IsToggled="True"
-                    Text="Option A"
-                    SupportingText="This is a supporting text"
-                    TextSide="Right" />
-                <material:MaterialSwitch
-                    IsEnabled="True"
-                    IsToggled="False"
-                    Text="Option B"
-                    TextSide="Right" />
-                <material:MaterialSwitch
-                    IsEnabled="False"
-                    IsToggled="True"
-                    Text="Option C"
-                    TextSide="Right" />
-                <material:MaterialSwitch
-                    IsEnabled="False"
-                    IsToggled="False"
-                    Text="Option D"
-                    TextSide="Right" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="With the TextSide property you can tell whether you want the text on the left or right." Type="BodySmall" />
-
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Bindings" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialSwitch
-                    Text="Option A"
-                    IsToggled="{Binding IsToggled}"
-                    IsEnabled="{Binding IsEnabled}" />
-                <material:MaterialSwitch
-                    Text="Is toggled"
-                    TextSide="Right"
-                    IsToggled="{Binding IsToggled}" />
-                <material:MaterialSwitch
-                    Text="Is enabled"
-                    TextSide="Right"
-                    IsToggled="{Binding IsEnabled}" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Switches provide state control by binding the IsToggled and IsEnabled properties." Type="BodySmall" />
-
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Icons" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid
-                Style="{StaticResource SwitchContainer}"
-                RowDefinitions="Auto">
-                <material:MaterialSwitch
-                    SelectedIcon="volume.png"
-                    UnselectedIcon="mute.png" />
-                <material:MaterialSwitch
-                    Grid.Column="1"
-                    SelectedIcon="volume.png" />
-            </Grid>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="With the TextSide property you can tell whether you want the text on the left or right." Type="BodySmall" />
-
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Styled with VisualStateManager" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid
-                Style="{StaticResource SwitchContainer}">
-                <material:MaterialSwitch
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    IsEnabled="True"
-                    IsToggled="True"
-                    Style="{StaticResource VisualStateManagerStyle}" />
-                <material:MaterialSwitch
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    IsEnabled="True"
-                    IsToggled="False"
-                    Style="{StaticResource VisualStateManagerStyle}" />
-                <material:MaterialSwitch
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    IsEnabled="False"
-                    IsToggled="True"
-                    Style="{StaticResource VisualStateManagerStyle}" />
-                <material:MaterialSwitch
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    IsEnabled="False"
-                    IsToggled="False"
-                    Style="{StaticResource VisualStateManagerStyle}" />
-            </Grid>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="VisualStateManager allows you to configure properties for each state including TrackColor, BorderColor and ThumbColor." Type="BodySmall" />
-
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API sample" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <VerticalStackLayout>
-                <material:MaterialSwitch
-                    IsEnabled="True"
-                    IsToggled="True"
-                    Text="Option A"
-                    Style="{StaticResource VisualStateManagerStyle}"
-                    BorderWidth="4"
-                    FontSize="16"
-                    FontFamily="FontMedium"
-                    FontAttributes="Italic"
-                    SupportingText="This is a supporting text"
-                    SupportingTextColor="DarkGray"
-                    SupportingFontFamily="FontRegular"
-                    SupportingFontAttributes="Italic"
-                    SupportingFontSize="10"
-                    TextSide="Right"
-                    Spacing="20"
-                    TrackWidthRequest="70"
-                    TrackHeightRequest="40"
-                    ToggledCommand="{Binding SwitchTappedCommand}"
-                    HorizontalTextAlignment="Center" />
-                <material:MaterialSwitch
-                    IsEnabled="True"
-                    IsToggled="True"
-                    Text="Option B"
-                    Style="{StaticResource VisualStateManagerStyle}"
-                    BorderWidth="0"
-                    FontSize="10"
-                    FontFamily="FontRegular"
-                    TextSide="Right"
-                    Spacing="40"
-                    SupportingText="This is a supporting text"
-                    TextSpacing="12"
-                    SupportingTextColor="DarkRed" />
-            </VerticalStackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="Example with the rest of the properties offered by the switch control." Type="BodySmall" />
-    </VerticalStackLayout>
+        </views:ControlPageWithTopAppBar.PageContent>
+    </views:ControlPageWithTopAppBar>
 </local:BaseContentPage>

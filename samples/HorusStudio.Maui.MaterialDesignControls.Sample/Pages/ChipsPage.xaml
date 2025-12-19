@@ -5,10 +5,10 @@
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.ChipsPage"
     x:TypeArguments="vm:ChipsViewModel"
     x:DataType="vm:ChipsViewModel"
-    ControlTemplate="{StaticResource ControlPageWithTopAppBar}"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
     <ContentPage.Resources>
@@ -140,249 +140,252 @@
             </Setter>
         </Style>
     </ContentPage.Resources>
+    <views:ControlPageWithTopAppBar>
+        <views:ControlPageWithTopAppBar.PageContent>
+            <VerticalStackLayout Spacing="8">
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Suggestion Chips" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <Grid Style="{StaticResource GridChipsContainer}">
 
-    <VerticalStackLayout Spacing="8">
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Suggestion Chips" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid Style="{StaticResource GridChipsContainer}">
+                        <material:MaterialChip
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            IsEnabled="{Binding IsEnabledState}"
+                            Text="Suggestion A"
+                            HorizontalOptions="End"
+                            Command="{Binding TappedChipsCommand}"/>
 
-                <material:MaterialChip
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    IsEnabled="{Binding IsEnabledState}"
-                    Text="Suggestion A"
-                    HorizontalOptions="End"
-                    Command="{Binding TappedChipsCommand}"/>
+                        <material:MaterialChip
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            TrailingIcon="horus_logo.png"
+                            Text="Suggestion B"
+                            HorizontalOptions="Start"
+                            Command="{Binding TappedChipsCommand}"/>
 
-                <material:MaterialChip
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    TrailingIcon="horus_logo.png"
-                    Text="Suggestion B"
-                    HorizontalOptions="Start"
-                    Command="{Binding TappedChipsCommand}"/>
+                        <material:MaterialChip
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            LeadingIcon="plus.png"
+                            Text="Suggestion C"
+                            HorizontalOptions="End"
+                            Command="{Binding TappedChipsCommand}"/>
 
-                <material:MaterialChip
-                    Grid.Column="0"
-                    Grid.Row="1"
-                    LeadingIcon="plus.png"
-                    Text="Suggestion C"
-                    HorizontalOptions="End"
-                    Command="{Binding TappedChipsCommand}"/>
+                        <material:MaterialChip
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            Type="Normal"
+                            LeadingIcon="plus.png"
+                            LeadingIconSize="26"
+                            Text="Suggestion D"
+                            HorizontalOptions="Start"
+                            TrailingIcon="horus_logo.png"
+                            TrailingIconSize="10"
+                            Command="{Binding TappedChipsCommand}"
+                            CommandParameter="Suggestion D" />
 
-                <material:MaterialChip
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    Type="Normal"
-                    LeadingIcon="plus.png"
-                    LeadingIconSize="26"
-                    Text="Suggestion D"
-                    HorizontalOptions="Start"
-                    TrailingIcon="horus_logo.png"
-                    TrailingIconSize="10"
-                    Command="{Binding TappedChipsCommand}"
-                    CommandParameter="Suggestion D" />
+                    </Grid>
+                </material:MaterialCard>
+                <material:MaterialLabel 
+                    Text="Suggestion chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters." Type="BodySmall" />
 
-            </Grid>
-        </material:MaterialCard>
-        <material:MaterialLabel 
-            Text="Suggestion chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters." Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filter Chips" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <StackLayout
+                        Spacing="8">
+                        <Grid Style="{StaticResource GridChipsContainer}">
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Filter Chips" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <StackLayout
-                Spacing="8">
-                <Grid Style="{StaticResource GridChipsContainer}">
+                            <material:MaterialChip
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                IsEnabled="{Binding IsEnabledState}"
+                                Type="Filter"
+                                Text="Filter A"
+                                HorizontalOptions="End"
+                                IsSelected="{Binding ChipsFilterA}"/>
 
-                    <material:MaterialChip
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        IsEnabled="{Binding IsEnabledState}"
-                        Type="Filter"
-                        Text="Filter A"
-                        HorizontalOptions="End"
-                        IsSelected="{Binding ChipsFilterA}"/>
+                            <material:MaterialChip
+                                Grid.Column="1"
+                                Grid.Row="0"
+                                Style="{StaticResource SelectedTrailingIconStateManager}"
+                                Type="Filter"
+                                Text="Filter B"
+                                HorizontalOptions="Start"
+                                IsSelected="{Binding ChipsFilterB}"/>
 
-                    <material:MaterialChip
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        Style="{StaticResource SelectedTrailingIconStateManager}"
-                        Type="Filter"
-                        Text="Filter B"
-                        HorizontalOptions="Start"
-                        IsSelected="{Binding ChipsFilterB}"/>
+                            <material:MaterialChip
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Style="{StaticResource SelectedLeadingIconStateManager}"
+                                Type="Filter"
+                                Text="Filter C"
+                                HorizontalOptions="End"
+                                IsSelected="{Binding ChipsFilterC}"/>
 
-                    <material:MaterialChip
-                        Grid.Column="0"
-                        Grid.Row="1"
-                        Style="{StaticResource SelectedLeadingIconStateManager}"
-                        Type="Filter"
-                        Text="Filter C"
-                        HorizontalOptions="End"
-                        IsSelected="{Binding ChipsFilterC}"/>
+                            <material:MaterialChip
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Style="{StaticResource SelectedBothIconStateManager}"
+                                Type="Filter"
+                                Text="Filter D"
+                                HorizontalOptions="Start"
+                                IsSelected="{Binding ChipsFilterD}"/>
 
-                    <material:MaterialChip
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        Style="{StaticResource SelectedBothIconStateManager}"
-                        Type="Filter"
-                        Text="Filter D"
-                        HorizontalOptions="Start"
-                        IsSelected="{Binding ChipsFilterD}"/>
+                        </Grid>
+                        <material:MaterialButton
+                            Text="Show filter selection"
+                            Command="{Binding ShowFilterSelectionCommand}"/>
+                    </StackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel 
+                    Text="Tapping on a filter chip activates it and appends a leading checkmark icon to the starting edge of the chip label."  Type="BodySmall" />
 
-                </Grid>
-                <material:MaterialButton
-                    Text="Show filter selection"
-                    Command="{Binding ShowFilterSelectionCommand}"/>
-            </StackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel 
-            Text="Tapping on a filter chip activates it and appends a leading checkmark icon to the starting edge of the chip label."  Type="BodySmall" />
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API Chips" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <Grid Style="{StaticResource GridChipsContainer}" RowDefinitions="Auto,Auto,Auto">
 
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Full API Chips" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <Grid Style="{StaticResource GridChipsContainer}" RowDefinitions="Auto,Auto,Auto">
+                        <material:MaterialChip
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Type="Filter"
+                            FontSize="20"
+                            IsEnabled="{Binding IsEnabledState}"
+                            Text="Full API A"
+                            HorizontalOptions="End"
+                            Style="{StaticResource VisualStateManagerStyle}"/>
 
-                <material:MaterialChip
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    Type="Filter"
-                    FontSize="20"
-                    IsEnabled="{Binding IsEnabledState}"
-                    Text="Full API A"
-                    HorizontalOptions="End"
-                    Style="{StaticResource VisualStateManagerStyle}"/>
-
-                <material:MaterialChip
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    BorderWidth="4"
-                    Type="Filter"
-                    TrailingIcon="horus_logo.png"
-                    Text="Full API B"
-                    HorizontalOptions="Start"
-                    Style="{StaticResource VisualStateManagerStyle}"/>
+                        <material:MaterialChip
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            BorderWidth="4"
+                            Type="Filter"
+                            TrailingIcon="horus_logo.png"
+                            Text="Full API B"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource VisualStateManagerStyle}"/>
 <!--IconStateOnSelection="TrailingVisible"-->
-                <material:MaterialChip
-                    Grid.Column="0"
-                    Grid.Row="1"
-                    Type="Filter"
-                    IsSelected="True"
-                    LeadingIcon="plus.png"
-                    Text="Full API C"
-                    HorizontalOptions="End"
-                    Style="{StaticResource VisualStateManagerStyle}"/>
+                        <material:MaterialChip
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            Type="Filter"
+                            IsSelected="True"
+                            LeadingIcon="plus.png"
+                            Text="Full API C"
+                            HorizontalOptions="End"
+                            Style="{StaticResource VisualStateManagerStyle}"/>
 <!--IconStateOnSelection="LeadingVisible"-->
-                <material:MaterialChip
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    HeightRequest="42"
-                    WidthRequest="140"
-                    CornerRadius="0"
-                    LeadingIcon="plus.png"
-                    Text="Full API D"
-                    Type="Filter"
-                    HorizontalOptions="Start"
-                    TrailingIcon="horus_logo.png"
-                    Style="{StaticResource VisualStateManagerStyle}"/>
+                        <material:MaterialChip
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            HeightRequest="42"
+                            WidthRequest="140"
+                            CornerRadius="0"
+                            LeadingIcon="plus.png"
+                            Text="Full API D"
+                            Type="Filter"
+                            HorizontalOptions="Start"
+                            TrailingIcon="horus_logo.png"
+                            Style="{StaticResource VisualStateManagerStyle}"/>
 <!--IconStateOnSelection="BothVisible"-->
-                <HorizontalStackLayout
-                    Grid.Row="2"
-                    Grid.ColumnSpan="2"
-                    HorizontalOptions="Center">
-                    <material:MaterialSwitch
-                        Text="Is enabled"
-                        IsToggled="{Binding IsEnabledState}" />    
-                </HorizontalStackLayout>
-            </Grid>
-        </material:MaterialCard>
-        <material:MaterialLabel 
-            Text="You can modify the chip as you require, this is useful when you need to add it to specific spaces or follow the required layout throughout your app." Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using attached properties" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <StackLayout
-                Spacing="8">
-                <StackLayout
-                    material:MaterialViewGroup.GroupName="SingleGroupSample"
-                    material:MaterialViewGroup.SelectionType="Single"
-                    material:MaterialViewGroup.SelectedValue="{Binding SelectedChipValue}"
-                    material:MaterialViewGroup.SelectedValueChangedCommand="{Binding SelectedValueChangedCommand}"
-                    Orientation="Horizontal"
-                    Spacing="8">
-                    <material:MaterialChip
-                        Type="Filter"
-                        Text="Option A"/>
-                    <material:MaterialChip
-                        Type="Filter"
-                        Text="Option B"/>
-                    <material:MaterialChip
-                        Type="Filter"
-                        Text="Option C"/>
-                </StackLayout>
-                <material:MaterialLabel
-                    Text="{Binding SelectedChipText}"
-                    HorizontalTextAlignment="Center" />
-                <material:MaterialButton
-                    Text="Select Chip C"
-                    Command="{Binding SelectChipCCommand}" />
-            </StackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel 
-            Text="We are creating chips using MaterialViewGroup's attachable properties: GroupName, SelectionType (Single), SelectedValue and SelectedValueChangedCommand." Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="SelectionType: Multiple" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <StackLayout
-                Spacing="8">
-                <StackLayout
-                    material:MaterialViewGroup.GroupName="MultipleGroupSample"
-                    material:MaterialViewGroup.SelectionType="Multiple"
-                    material:MaterialViewGroup.SelectedValues="{Binding SelectedChips}"
-                    material:MaterialViewGroup.SelectedValueChangedCommand="{Binding ShowSelectedChipsCommand}"
-                    Orientation="Horizontal"
-                    Spacing="8">
-                    <material:MaterialChip
-                        Type="Filter"
-                        Text="Option A"/>
-                    <material:MaterialChip
-                        Type="Filter"
-                        Text="Option B"/>
-                    <material:MaterialChip
-                        Type="Filter"
-                        Text="Option C"/>
-                </StackLayout>
-                <material:MaterialLabel
-                    Text="{Binding SelectedChipsText}"
-                    HorizontalTextAlignment="Center" />
-            </StackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel 
-            Text="We are creating chips using MaterialViewGroup's attachable properties: GroupName, SelectionType (Multiple), SelectedValues and SelectedValueChangedCommand." Type="BodySmall" />
-        
-        <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Grouping MaterialChip" />
-        <material:MaterialCard Style="{StaticResource CardControlContainer}">
-            <StackLayout
-                Spacing="8">
-                <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
-                            material:MaterialViewGroup.GroupName="TestingChipsGroup"
-                            material:MaterialViewGroup.SelectedValue="{Binding SelectedChipItem}"
-                            BindableLayout.ItemsSource="{Binding Chips}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="x:String">
+                        <HorizontalStackLayout
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            HorizontalOptions="Center">
+                            <material:MaterialSwitch
+                                Text="Is enabled"
+                                IsToggled="{Binding IsEnabledState}" />    
+                        </HorizontalStackLayout>
+                    </Grid>
+                </material:MaterialCard>
+                <material:MaterialLabel 
+                    Text="You can modify the chip as you require, this is useful when you need to add it to specific spaces or follow the required layout throughout your app." Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Using attached properties" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <StackLayout
+                        Spacing="8">
+                        <StackLayout
+                            material:MaterialViewGroup.GroupName="SingleGroupSample"
+                            material:MaterialViewGroup.SelectionType="Single"
+                            material:MaterialViewGroup.SelectedValue="{Binding SelectedChipValue}"
+                            material:MaterialViewGroup.SelectedValueChangedCommand="{Binding SelectedValueChangedCommand}"
+                            Orientation="Horizontal"
+                            Spacing="8">
                             <material:MaterialChip
                                 Type="Filter"
-                                Text="{Binding .}"
-                                Margin="4" />
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </FlexLayout>
-                <material:MaterialButton
-                    Text="Show selection"
-                    Command="{Binding ShowSelectedItemCommand}" />
-            </StackLayout>
-        </material:MaterialCard>
-        <material:MaterialLabel Text="We are creating chips using a BindableLayout and MaterialViewGroup's attachable properties" Type="BodySmall" />
-        
-    </VerticalStackLayout>
+                                Text="Option A"/>
+                            <material:MaterialChip
+                                Type="Filter"
+                                Text="Option B"/>
+                            <material:MaterialChip
+                                Type="Filter"
+                                Text="Option C"/>
+                        </StackLayout>
+                        <material:MaterialLabel
+                            Text="{Binding SelectedChipText}"
+                            HorizontalTextAlignment="Center" />
+                        <material:MaterialButton
+                            Text="Select Chip C"
+                            Command="{Binding SelectChipCCommand}" />
+                    </StackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel 
+                    Text="We are creating chips using MaterialViewGroup's attachable properties: GroupName, SelectionType (Single), SelectedValue and SelectedValueChangedCommand." Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="SelectionType: Multiple" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <StackLayout
+                        Spacing="8">
+                        <StackLayout
+                            material:MaterialViewGroup.GroupName="MultipleGroupSample"
+                            material:MaterialViewGroup.SelectionType="Multiple"
+                            material:MaterialViewGroup.SelectedValues="{Binding SelectedChips}"
+                            material:MaterialViewGroup.SelectedValueChangedCommand="{Binding ShowSelectedChipsCommand}"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <material:MaterialChip
+                                Type="Filter"
+                                Text="Option A"/>
+                            <material:MaterialChip
+                                Type="Filter"
+                                Text="Option B"/>
+                            <material:MaterialChip
+                                Type="Filter"
+                                Text="Option C"/>
+                        </StackLayout>
+                        <material:MaterialLabel
+                            Text="{Binding SelectedChipsText}"
+                            HorizontalTextAlignment="Center" />
+                    </StackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel 
+                    Text="We are creating chips using MaterialViewGroup's attachable properties: GroupName, SelectionType (Multiple), SelectedValues and SelectedValueChangedCommand." Type="BodySmall" />
+                
+                <material:MaterialLabel Style="{StaticResource SectionTitle}" Text="Grouping MaterialChip" />
+                <material:MaterialCard Style="{StaticResource CardControlContainer}">
+                    <StackLayout
+                        Spacing="8">
+                        <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start"
+                                    material:MaterialViewGroup.GroupName="TestingChipsGroup"
+                                    material:MaterialViewGroup.SelectedValue="{Binding SelectedChipItem}"
+                                    BindableLayout.ItemsSource="{Binding Chips}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <material:MaterialChip
+                                        Type="Filter"
+                                        Text="{Binding .}"
+                                        Margin="4" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                        <material:MaterialButton
+                            Text="Show selection"
+                            Command="{Binding ShowSelectedItemCommand}" />
+                    </StackLayout>
+                </material:MaterialCard>
+                <material:MaterialLabel Text="We are creating chips using a BindableLayout and MaterialViewGroup's attachable properties" Type="BodySmall" />
+                
+            </VerticalStackLayout>
+        </views:ControlPageWithTopAppBar.PageContent>
+    </views:ControlPageWithTopAppBar>
 </local:BaseContentPage>

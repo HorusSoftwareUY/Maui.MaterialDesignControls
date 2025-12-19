@@ -22,7 +22,7 @@ internal class CustomTimePicker : TimePicker
         }
     }
 
-    public TimeSpan InternalTime => base.Time;
+    public TimeSpan? InternalTime => base.Time;
 
     #endregion Attributes
 
