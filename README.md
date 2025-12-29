@@ -30,6 +30,15 @@ MaterialDesignControls for .NET MAUI, provides a collection of UI controls that 
 
 ## Demo
 
+**Try our sample app!**
+
+Now available for download:
+
+- **Android:** [Install from Google Play](https://play.google.com/store/apps/details?id=com.horusstudio.maui.materialdesigncontrols.sample)
+- **iOS:** [Install from TestFlight](https://testflight.apple.com/join/sgJWsvkZ)
+
+Check out the YouTube demo video here:
+
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/FyGZbp_P5os/0.jpg)](https://www.youtube.com/watch?v=FyGZbp_P5os)
 
 ## Platform support
