@@ -10,4 +10,5 @@ public class Sections
     public const string TextInputs = "Text inputs";
     public const string Typography = "Typography";
     public const string Settings = "Settings";
+    public const string Samples = "Samples";
 }

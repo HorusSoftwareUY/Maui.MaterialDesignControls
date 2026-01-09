@@ -91,7 +91,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             { Models.Pages.TextField, typeof(TextFieldViewModel) },
             { Models.Pages.MultilineTextField, typeof(MultilineTextFieldViewModel) },
             { Models.Pages.Label, typeof(LabelViewModel) },
-            { Models.Pages.Appearance, typeof(AppearanceViewModel) }
+            { Models.Pages.Appearance, typeof(AppearanceViewModel) },
+            { Models.Pages.SampleA, typeof(SampleAPageViewModel) },
+            { Models.Pages.SampleB, typeof(SampleBPageViewModel) }
         };
         
         public MainViewModel(IMaterialSnackbar snackbar)
@@ -133,7 +135,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new() { Headline = Sections.Selection, Text = Models.Pages.TimePicker, AutomationId = $"menu_{nameof(Models.Pages.TimePicker)}", LeadingIcon = "ic_time.png" },
                 new() { Headline = Sections.TextInputs, Text = Models.Pages.MultilineTextField, AutomationId = $"menu_{nameof(Models.Pages.MultilineTextField)}", LeadingIcon = "ic_editor.png" },
                 new() { Headline = Sections.TextInputs, Text = Models.Pages.TextField, AutomationId = $"menu_{nameof(Models.Pages.TextField)}", LeadingIcon = "ic_entry.png" },
-                new() { Headline = Sections.Typography, Text = Models.Pages.Label, AutomationId = $"menu_{nameof(Models.Pages.Label)}", LeadingIcon = "ic_label.png" }
+                new() { Headline = Sections.Typography, Text = Models.Pages.Label, AutomationId = $"menu_{nameof(Models.Pages.Label)}", LeadingIcon = "ic_label.png" },
+                new() { Headline = Sections.Samples, Text = Models.Pages.SampleA, AutomationId = $"menu_{nameof(Models.Pages.SampleA)}", LeadingIcon = "ic_button.png" },
+                new() { Headline = Sections.Samples, Text = Models.Pages.SampleB, AutomationId = $"menu_{nameof(Models.Pages.SampleB)}", LeadingIcon = "ic_button.png" },
             };
 
             MenuItems = menuItems;

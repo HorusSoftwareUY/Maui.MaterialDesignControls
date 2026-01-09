@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SampleAPage"
+    x:TypeArguments="vm:SampleAPageViewModel"
+    x:DataType="vm:SampleAPageViewModel"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
+
+    <Grid
+        RowDefinitions="Auto,*">
+        <material:MaterialTopAppBar
+            AutomationId="topAppBar"
+            Headline="{Binding Title}"
+            Description="{Binding Subtitle}"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIconIsBusy="{Binding Path=GoBackCommand.IsRunning}"
+            LeadingIcon="ic_back.png"
+            Type="Large"
+            TrailingIcons="{Binding ContextualActions}" />
+        <Grid
+            Grid.Row="1">
+            
+            <material:MaterialTextField 
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="-100"
+                TranslationX="0"
+                Type="Outlined"
+                LeadingIcon="card.png" 
+                Placeholder="Payment card number"
+                Text="1234 XXXX XXXX XXXX" />
+            
+            <material:MaterialCard
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="0"
+                TranslationX="0"
+                Type="Filled"
+                BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}">
+                <HorizontalStackLayout>
+                    <material:MaterialIconButton
+                        Type="Filled"
+                        ImageSource="ic_icon_button.png"
+                        IconTintColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnPrimary}, Dark={x:Static material:MaterialDarkTheme.OnPrimary}}"
+                        VerticalOptions="Center"
+                        Padding="0"
+                        WidthRequest="32" />
+                    <VerticalStackLayout
+                        Spacing="8">
+                        <material:MaterialLabel
+                            Type="TitleMedium"
+                            Text="Saved podcasts"
+                            TextColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnPrimary}, Dark={x:Static material:MaterialDarkTheme.OnPrimary}}" />
+                        <material:MaterialLabel
+                            Text="80 episodes" 
+                            Type="BodySmall"
+                            TextColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnPrimary}, Dark={x:Static material:MaterialDarkTheme.OnPrimary}}" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </material:MaterialCard>
+            
+            <material:MaterialSegmentedButton
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="100"
+                TranslationX="0"
+                ItemsSource="{Binding SegmentedButtonItems}"
+                SelectedItem="{Binding SelectedSegmentedButtonItem}" />
+            
+            <material:MaterialDatePicker
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="200"
+                TranslationX="0"
+                Type="Outlined"
+                Placeholder="Date of birth"
+                Date="10/12/1990" />
+            
+            
+            <!-- ................ -->
+            
+            <material:MaterialProgressIndicator
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="-100"
+                TranslationX="240"
+                Type="Circular" />
+            
+            <material:MaterialRadioButton
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="-100"
+                TranslationX="380"
+                Text="English"
+                IsChecked="True" />
+            
+            <material:MaterialTimePicker 
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="0"
+                TranslationX="270"
+                Type="Filled"
+                Placeholder="Appointment time"
+                Time="10:30"/>
+            
+            <material:MaterialSwitch
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="0"
+                TranslationX="450"
+                IsToggled="True" />
+            
+            <material:MaterialSlider
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="100"
+                TranslationX="300"
+                WidthRequest="200"
+                Label="Alarm volume"
+                ShowValueIndicator="False"
+                Value="0.3"
+                BackgroundColor="{AppThemeBinding Light={StaticResource HomePreviewCardBackgroundLight}, Dark={StaticResource HomePreviewCardBackgroundDark}}" />
+            
+            <Grid
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="200"
+                TranslationX="200">
+                <material:MaterialIconButton
+                    Type="Filled"
+                    ImageSource="ic_rating.png" />
+                <material:MaterialBadge
+                    Text="3"
+                    VerticalOptions="Start"
+                    HorizontalOptions="End"/>
+            </Grid>
+            
+            <material:MaterialCheckBox
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="200"
+                TranslationX="350"
+                Text="Dark mode"
+                IsChecked="True" />
+            
+            <!-- ................ -->
+            
+            <material:MaterialButton
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="-100"
+                TranslationX="-380"
+                Type="Filled"
+                Text="Add"
+                ImageSource="plus.png" />
+            <material:MaterialButton
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="-100"
+                TranslationX="-250"
+                Type="Outlined"
+                Text="Add"
+                ImageSource="plus.png" />
+            
+            <VerticalStackLayout
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="0"
+                TranslationX="-350"
+                Spacing="8">
+                <HorizontalStackLayout
+                    Spacing="8">
+                    <material:MaterialChip
+                        Text="Turn on lights"
+                        LeadingIcon="light_mode.png" />
+                    <material:MaterialChip
+                        Text="Set alarm"
+                        LeadingIcon="ic_time.png" />
+                </HorizontalStackLayout>
+                <material:MaterialChip
+                    Text="View your appointments"
+                    LeadingIcon="ic_date.png" />
+            </VerticalStackLayout>
+            
+            <material:MaterialPicker
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="100"
+                TranslationX="-300"
+                Type="Filled"
+                Placeholder="Select an option" />
+            
+            <material:MaterialIconButton
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="100"
+                TranslationX="-470"
+                Type="Tonal"
+                ImageSource="info.png" />
+
+            <material:MaterialRating
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TranslationY="200"
+                TranslationX="-300"
+                Label="How do you rate our service?"
+                Value="3" />
+            
+        </Grid>
+    </Grid>
+    
+</local:BaseContentPage>

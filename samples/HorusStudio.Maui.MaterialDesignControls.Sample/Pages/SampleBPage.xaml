@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.SampleBPage"
+    x:TypeArguments="vm:SampleBPageViewModel"
+    x:DataType="vm:SampleBPageViewModel"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}"
+    Padding="{OnPlatform iOS='0,0,0,-40'}">
+
+    <Grid
+        RowDefinitions="Auto,*">
+        
+        <VerticalStackLayout
+            Spacing="0">
+            <material:MaterialTopAppBar
+                AutomationId="topAppBar"
+                LeadingIconCommand="{Binding GoBackCommand}"
+                LeadingIconIsBusy="{Binding Path=GoBackCommand.IsRunning}"
+                LeadingIcon="ic_back.png"
+                IconTintColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}"
+                Type="Small" />
+            <Image
+                HeightRequest="200"
+                WidthRequest="200"
+                HorizontalOptions="Center">
+                <Image.Source>
+                    <AppThemeBinding Light="material_icon_light" Dark="material_icon_dark" />
+                </Image.Source>
+            </Image>
+        </VerticalStackLayout>
+        
+        <material:MaterialCard
+            Grid.Row="1"
+            CornerRadius="24,24,0,0"
+            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}"
+            Padding="0">
+            <VerticalStackLayout
+                Spacing="16"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                
+                <material:MaterialTextField
+                    Type="Outlined"
+                    Placeholder="Email"
+                    Keyboard="Email"
+                    ReturnType="Next"
+                    Text="{Binding Email}"
+                    SupportingText="{Binding EmailSupportingText}"
+                    SupportingColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Error}, Dark={x:Static material:MaterialDarkTheme.Error}}" />
+
+                <material:MaterialTextField
+                    Type="Outlined"
+                    Placeholder="Password"
+                    IsPassword="True"
+                    ReturnType="Done"
+                    Text="{Binding Password}" />
+
+                <material:MaterialButton
+                    Type="Filled"
+                    Text="Sign in"
+                    Command="{Binding LoginCommand}"
+                    IsBusy="{Binding LoginCommand.IsRunning}" />
+
+                <material:MaterialButton
+                    Type="Text"
+                    Text="Forgot your password?"
+                    Command="{Binding RecoverPasswordCommand}"
+                    HorizontalOptions="Center" />
+
+                <HorizontalStackLayout
+                    Spacing="16">
+                    <material:MaterialDivider
+                        VerticalOptions="Center"
+                        WidthRequest="80" />
+                    <material:MaterialLabel
+                        Type="BodySmall"
+                        Text="Or sign in with"
+                        VerticalTextAlignment="Center" />
+                    <material:MaterialDivider
+                        VerticalOptions="Center"
+                        WidthRequest="80" />
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout
+                    Spacing="16"
+                    HorizontalOptions="Center">
+                    <material:MaterialIconButton
+                        Type="Outlined"
+                        ImageSource="connection_github.png"
+                        Command="{Binding SocialLoginCommand}"
+                        CommandParameter="GitHub" />
+                    <material:MaterialIconButton
+                        Type="Outlined"
+                        ImageSource="connection_linkedin.png"
+                        Command="{Binding SocialLoginCommand}"
+                        CommandParameter="LinkedIn" />
+                    <material:MaterialIconButton
+                        Type="Outlined"
+                        ImageSource="connection_x.png"
+                        Command="{Binding SocialLoginCommand}"
+                        CommandParameter="X" />
+                </HorizontalStackLayout>
+                
+                <material:MaterialLabel
+                    Type="BodySmall"
+                    TextColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSurfaceVariant}, Dark={x:Static material:MaterialDarkTheme.OnSurfaceVariant}}"
+                    Text="{Binding AppVersion}"
+                    HorizontalTextAlignment="Center"
+                    Margin="0,24,0,0" />
+
+            </VerticalStackLayout>
+        </material:MaterialCard>
+    </Grid>
+</local:BaseContentPage>
+

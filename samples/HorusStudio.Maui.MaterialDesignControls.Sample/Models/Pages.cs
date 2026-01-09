@@ -29,4 +29,6 @@ public class Pages
     public const string MultilineTextField = "Multiline text fields";
     public const string Label = "Labels";
     public const string Appearance = "Appearance";
+    public const string SampleA = "Sample A";
+    public const string SampleB = "Sample B";
 }
