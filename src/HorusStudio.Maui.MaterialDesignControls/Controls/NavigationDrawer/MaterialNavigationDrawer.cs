@@ -1155,15 +1155,20 @@ public class MaterialNavigationDrawer : ContentView
                 new Binding(nameof(item.IsSelected), source: item),
                 new Binding(nameof(ActiveIndicatorLabelColor), source: this),
                 new Binding(nameof(LabelColor), source: this),
-                new Binding(nameof(DisabledLabelColor), source: this)
+                new Binding(nameof(DisabledLabelColor), source: this),
+                new Binding(nameof(item.LabelColor), source: item)
             },
             Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
             {
                 var isEnabled = (bool)values[0];
                 var isSelected = (bool)values[1];
                 var activeIndicatorLabelColor = (Color)values[2];
-                var labelColor = (Color)values[3];
+                var drawerLabelColor = (Color)values[3];
                 var disabledLabelColor = (Color)values[4];
+                var itemLabelColor = values[5] as Color?;
+
+                // If item has its own LabelColor, use it instead of drawer's LabelColor
+                var labelColor = itemLabelColor ?? drawerLabelColor;
 
                 return isEnabled ? (isSelected ? activeIndicatorLabelColor : labelColor) : disabledLabelColor;
             })
@@ -1178,13 +1183,18 @@ public class MaterialNavigationDrawer : ContentView
             {
                 new Binding(nameof(item.IsEnabled), source: item),
                 new Binding(nameof(LabelColor), source: this),
-                new Binding(nameof(DisabledLabelColor), source: this)
+                new Binding(nameof(DisabledLabelColor), source: this),
+                new Binding(nameof(item.LabelColor), source: item)
             },
             Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
             {
                 var isEnabled = (bool)values[0];
-                var labelColor = (Color)values[1];
+                var drawerLabelColor = (Color)values[1];
                 var disabledLabelColor = (Color)values[2];
+                var itemLabelColor = values[3] as Color?;
+
+                // If item has its own LabelColor, use it instead of drawer's LabelColor
+                var labelColor = itemLabelColor ?? drawerLabelColor;
 
                 return isEnabled ? labelColor : disabledLabelColor;
             })

@@ -22,6 +22,7 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
     private bool _isSelected;
     private bool _isEnabled = true;
     private string _automationId = null!;
+    private Color? _labelColor;
     
     #endregion Attributes
     
@@ -147,6 +148,16 @@ public class MaterialNavigationDrawerItem : INotifyPropertyChanged
     {
         get => _automationId;
         set => SetProperty(ref _automationId, value);
+    }
+    
+    /// <summary>
+    /// Gets or sets the label color for this item. If null, falls back to the MaterialNavigationDrawer's LabelColor.
+    /// This color is also applied to the leading and trailing icons when ApplyLeadingIconTintColor or ApplyTrailingIconTintColor is true.
+    /// </summary>
+    public Color? LabelColor
+    {
+        get => _labelColor;
+        set => SetProperty(ref _labelColor, value);
     }
     
     /// <inheritdoc />
