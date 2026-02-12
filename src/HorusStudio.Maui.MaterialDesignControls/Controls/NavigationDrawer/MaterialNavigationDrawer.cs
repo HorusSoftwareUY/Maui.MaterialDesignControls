@@ -1156,19 +1156,24 @@ public class MaterialNavigationDrawer : ContentView
                 new Binding(nameof(ActiveIndicatorLabelColor), source: this),
                 new Binding(nameof(LabelColor), source: this),
                 new Binding(nameof(DisabledLabelColor), source: this),
-                new Binding(nameof(item.LabelColor), source: item)
+                new Binding(nameof(item.LabelColor), source: item),
+                new Binding(nameof(item.ActiveIndicatorLabelColor), source: item)
             },
             Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
             {
                 var isEnabled = (bool)values[0];
                 var isSelected = (bool)values[1];
-                var activeIndicatorLabelColor = (Color)values[2];
+                var drawerActiveIndicatorLabelColor = (Color)values[2];
                 var drawerLabelColor = (Color)values[3];
                 var disabledLabelColor = (Color)values[4];
                 var itemLabelColor = values[5] as Color?;
+                var itemActiveIndicatorLabelColor = values[6] as Color?;
 
                 // If item has its own LabelColor, use it instead of drawer's LabelColor
                 var labelColor = itemLabelColor ?? drawerLabelColor;
+                
+                // If item has its own ActiveIndicatorLabelColor, use it instead of drawer's ActiveIndicatorLabelColor
+                var activeIndicatorLabelColor = itemActiveIndicatorLabelColor ?? drawerActiveIndicatorLabelColor;
 
                 return isEnabled ? (isSelected ? activeIndicatorLabelColor : labelColor) : disabledLabelColor;
             })
@@ -1186,19 +1191,24 @@ public class MaterialNavigationDrawer : ContentView
                 new Binding(nameof(ActiveIndicatorLabelColor), source: this),
                 new Binding(nameof(LabelColor), source: this),
                 new Binding(nameof(DisabledLabelColor), source: this),
-                new Binding(nameof(item.LabelColor), source: item)
+                new Binding(nameof(item.LabelColor), source: item),
+                new Binding(nameof(item.ActiveIndicatorLabelColor), source: item)
             },
             Converter = new MultiValueConverter((values, targetType, parameter, culture) =>
             {
                 var isEnabled = (bool)values[0];
                 var isSelected = (bool)values[1];
-                var activeIndicatorLabelColor = (Color)values[2];
+                var drawerActiveIndicatorLabelColor = (Color)values[2];
                 var drawerLabelColor = (Color)values[3];
                 var disabledLabelColor = (Color)values[4];
                 var itemLabelColor = values[5] as Color?;
+                var itemActiveIndicatorLabelColor = values[6] as Color?;
 
                 // If item has its own LabelColor, use it instead of drawer's LabelColor
                 var labelColor = itemLabelColor ?? drawerLabelColor;
+                
+                // If item has its own ActiveIndicatorLabelColor, use it instead of drawer's ActiveIndicatorLabelColor
+                var activeIndicatorLabelColor = itemActiveIndicatorLabelColor ?? drawerActiveIndicatorLabelColor;
 
                 return isEnabled ? (isSelected ? activeIndicatorLabelColor : labelColor) : disabledLabelColor;
             })
