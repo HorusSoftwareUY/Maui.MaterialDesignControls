@@ -1166,8 +1166,8 @@ public class MaterialNavigationDrawer : ContentView
                 var drawerActiveIndicatorLabelColor = (Color)values[2];
                 var drawerLabelColor = (Color)values[3];
                 var disabledLabelColor = (Color)values[4];
-                var itemLabelColor = values[5] as Color?;
-                var itemActiveIndicatorLabelColor = values[6] as Color?;
+                var itemLabelColor = (Color?)values[5];
+                var itemActiveIndicatorLabelColor = (Color?)values[6];
 
                 // If item has its own LabelColor, use it instead of drawer's LabelColor
                 var labelColor = itemLabelColor ?? drawerLabelColor;
@@ -1201,8 +1201,8 @@ public class MaterialNavigationDrawer : ContentView
                 var drawerActiveIndicatorLabelColor = (Color)values[2];
                 var drawerLabelColor = (Color)values[3];
                 var disabledLabelColor = (Color)values[4];
-                var itemLabelColor = values[5] as Color?;
-                var itemActiveIndicatorLabelColor = values[6] as Color?;
+                var itemLabelColor = (Color?)values[5];
+                var itemActiveIndicatorLabelColor = (Color?)values[6];
 
                 // If item has its own LabelColor, use it instead of drawer's LabelColor
                 var labelColor = itemLabelColor ?? drawerLabelColor;

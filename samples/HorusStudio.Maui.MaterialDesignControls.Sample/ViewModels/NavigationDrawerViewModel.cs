@@ -99,7 +99,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                     SelectedLeadingIcon = "trash.png",
                     LeadingIcon = "trash.png",
                     Text = "Trash",
-                    LabelColor = Colors.Red
+                    LabelColor = Colors.Red,
+                    ActiveIndicatorLabelColor = Colors.Red
                 },
                 new()
                 {
