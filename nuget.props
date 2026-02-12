@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup Condition=" $(MSBuildProjectName.Equals('HorusStudio.Maui.MaterialDesignControls')) ">
     <PackageId>HorusStudio.Maui.MaterialDesignControls</PackageId>
-    <Version>10.0.0</Version>
+    <Version>10.0.1</Version>
     <Authors>Horus Studio and contributors</Authors>
     <Company>Horus Studio</Company>
     <Title>Material Design Controls for .NET MAUI</Title>
@@ -15,7 +15,7 @@
     <PackageTags>dotnet-maui;dotnet;maui;cross-platform;android;ios;macos;maccatalyst;materialdesign;ui</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
-- Add net10.0 support
+- Add independent LabelColor support for NavigationDrawer items
     </PackageReleaseNotes>
     <PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>
     <EscapedCurrentDirectory>$([System.Text.RegularExpressions.Regex]::Escape('$(MSBuildThisFileDirectory)'))</EscapedCurrentDirectory>
