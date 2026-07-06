@@ -24,6 +24,13 @@
         </RuntimeIdentifiers>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'Release' and $(TargetFramework.Contains('-android'))">
+        <AndroidLinkMode>None</AndroidLinkMode>
+        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+        <AndroidUseAssemblyStore>false</AndroidUseAssemblyStore>
+        <RunAOTCompilation>false</RunAOTCompilation>
+    </PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|$(NetVersion)-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
