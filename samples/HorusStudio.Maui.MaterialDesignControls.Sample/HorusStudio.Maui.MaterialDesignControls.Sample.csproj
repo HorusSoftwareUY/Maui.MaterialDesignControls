@@ -10,7 +10,7 @@
 		<ApplicationTitle>Material Design Controls</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.horusstudio.maui.materialdesigncontrols.sample</ApplicationId>
+		<ApplicationId>com.horusstudio.maui.materialdesigncontrols.sample.coreclr</ApplicationId>
 		<ApplicationIdGuid>24a1a7f0-9c21-4710-9d6d-f863bd1bdb97</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -19,9 +19,10 @@
 	</PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
-        <RuntimeIdentifiers>
-            android-arm;android-arm64;android-x86;android-x64
-        </RuntimeIdentifiers>
+        <!-- CoreCLR (.NET 11+) only supports 64-bit Android: arm64 and x64 -->
+        <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+        <!-- Use CoreCLR instead of Mono on Android (.NET 11+) -->
+        <UseMonoRuntime>false</UseMonoRuntime>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Release' and $(TargetFramework.Contains('-android'))">
@@ -29,6 +30,9 @@
         <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
         <AndroidUseAssemblyStore>false</AndroidUseAssemblyStore>
         <RunAOTCompilation>false</RunAOTCompilation>
+        <!-- Disable R2R: CoreCLR defaults PublishReadyToRun=true in Release, but R2R assemblies
+             clear the ILOnly PE flag which causes Mono.Cecil to fail in _LinkAssembliesNoShrink. -->
+        <PublishReadyToRun>false</PublishReadyToRun>
     </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|$(NetVersion)-ios|AnyCPU'">

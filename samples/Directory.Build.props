@@ -1,0 +1,18 @@
+<Project>
+  <!-- Import root Directory.Build.props -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <NetVersion>net11.0</NetVersion>
+    <MauiVersion>11.0.0-preview.5.26304.4</MauiVersion>
+  </PropertyGroup>
+
+  <!-- .NET 11 Android (API 37) requires minimum SupportedOSPlatformVersion of 24 -->
+  <Choose>
+    <When Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+      <PropertyGroup>
+        <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+      </PropertyGroup>
+    </When>
+  </Choose>
+</Project>
