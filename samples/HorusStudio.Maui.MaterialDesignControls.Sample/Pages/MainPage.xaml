@@ -70,7 +70,7 @@
                             <material:MaterialLabel HorizontalTextAlignment="Center" Type="DisplaySmall" FontAttributes="Bold" Text="Material Design Controls"  />
                             <material:MaterialLabel HorizontalTextAlignment="Center" Type="BodyMedium" Text="The latest version of Google’s open-source design system for .NET MAUI and Xamarin Forms." />
                             <material:MaterialLabel HorizontalTextAlignment="Center" Type="BodyMedium" Text="Powered by Horus Studio." />
-                            <material:MaterialLabel HorizontalTextAlignment="Center" Type="BodyMedium" TextColor="Violet" Text="Running with CoreCLR (.NET 11 preview 5)" />
+                            <material:MaterialLabel x:Name="RuntimeLabel" HorizontalTextAlignment="Center" Type="BodyMedium" TextColor="Violet" Text="Running with CoreCLR (.NET 11 preview 5)" />
                         </VerticalStackLayout>
 
                     </VerticalStackLayout>

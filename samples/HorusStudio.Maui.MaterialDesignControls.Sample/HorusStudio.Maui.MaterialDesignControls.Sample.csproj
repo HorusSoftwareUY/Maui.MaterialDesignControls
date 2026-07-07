@@ -6,23 +6,30 @@
 		<RootNamespace>HorusStudio.Maui.MaterialDesignControls.Sample</RootNamespace>
 		<SingleProject>true</SingleProject>
 
+		<!-- Runtime switch: set UseMono=true to compile with Mono runtime -->
+		<UseMono Condition="'$(UseMono)' == ''">true</UseMono>
+
 		<!-- Display name -->
 		<ApplicationTitle>Material Design Controls</ApplicationTitle>
 
-		<!-- App Identifier -->
-		<ApplicationId>com.horusstudio.maui.materialdesigncontrols.sample.coreclr</ApplicationId>
+		<!-- App Identifier: .coreclr or .mono depending on runtime -->
+		<ApplicationId Condition="'$(UseMono)' != 'true'">com.horusstudio.maui.materialdesigncontrols.sample.coreclr</ApplicationId>
+		<ApplicationId Condition="'$(UseMono)' == 'true'">com.horusstudio.maui.materialdesigncontrols.sample.mono</ApplicationId>
 		<ApplicationIdGuid>24a1a7f0-9c21-4710-9d6d-f863bd1bdb97</ApplicationIdGuid>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0.4</ApplicationDisplayVersion>
 		<ApplicationVersion>5</ApplicationVersion>
+
+		<!-- DefineConstants for runtime-specific C# code -->
+		<DefineConstants Condition="'$(UseMono)' == 'true'">$(DefineConstants);USE_MONO</DefineConstants>
 	</PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
         <!-- CoreCLR (.NET 11+) only supports 64-bit Android: arm64 and x64 -->
-        <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+        <RuntimeIdentifiers Condition="'$(UseMono)' != 'true'">android-arm64;android-x64</RuntimeIdentifiers>
         <!-- Use CoreCLR instead of Mono on Android (.NET 11+) -->
-        <UseMonoRuntime>false</UseMonoRuntime>
+        <UseMonoRuntime>$(UseMono)</UseMonoRuntime>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Release' and $(TargetFramework.Contains('-android'))">
@@ -44,15 +51,23 @@
         <CodesignKey>iPhone Distribution</CodesignKey>
 	</PropertyGroup>
 	<ItemGroup>
-		<!-- App Icon -->
-		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.68" />
-		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="1" />
-		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="1" />
+		<!-- App Icon: CoreCLR (default) -->
+		<MauiIcon Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.68" />
+		<MauiIcon Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="1" />
+		<MauiIcon Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="1" />
+		<!-- App Icon: Mono -->
+		<MauiIcon Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_mono.svg" Color="#E1F5FE" BaseSize="24,24" ForegroundScale="0.68" />
+		<MauiIcon Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_mono.svg" Color="#E1F5FE" BaseSize="24,24" ForegroundScale="1" />
+		<MauiIcon Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_mono.svg" Color="#E1F5FE" BaseSize="24,24" ForegroundScale="1" />
 		
-		<!-- Splash Screen -->
-		<MauiSplashScreen Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\Splash\splash.svg" BaseSize="120,120" Color="White" />
-		<MauiSplashScreen Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\Splash\splash.svg" BaseSize="300,300" Color="White" />
-		<MauiSplashScreen Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\Splash\splash.svg" BaseSize="200,200" Color="White" />
+		<!-- Splash Screen: CoreCLR (default) -->
+		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\Splash\splash.svg" BaseSize="120,120" Color="White" />
+		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\Splash\splash.svg" BaseSize="300,300" Color="White" />
+		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\Splash\splash.svg" BaseSize="200,200" Color="White" />
+		<!-- Splash Screen: Mono -->
+		<MauiSplashScreen Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\Splash\splash_mono.svg" BaseSize="120,120" Color="White" />
+		<MauiSplashScreen Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\Splash\splash_mono.svg" BaseSize="300,300" Color="White" />
+		<MauiSplashScreen Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\Splash\splash_mono.svg" BaseSize="200,200" Color="White" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
