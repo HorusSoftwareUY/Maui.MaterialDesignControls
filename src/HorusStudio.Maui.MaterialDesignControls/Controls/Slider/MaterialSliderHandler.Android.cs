@@ -113,6 +113,7 @@ public partial class MaterialSliderHandler
     }
 }
 
+[Android.Runtime.Register("horusstudio/maui/materialdesigncontrols/VerticalBarDrawable")]
 class VerticalBarDrawable : Drawable
 {
     private readonly Paint _paint;

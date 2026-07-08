@@ -66,6 +66,14 @@
                         </Grid>
                     </material:MaterialCard>
 
+                    <!-- Error label (only visible on crash) -->
+                    <material:MaterialLabel
+                        Text="{Binding ErrorText}"
+                        TextColor="{x:Static material:MaterialLightTheme.Error}"
+                        Type="BodySmall"
+                        Margin="16,0,16,4"
+                        IsVisible="{Binding HasError}" />
+
                     <!-- Reload button -->
                     <material:MaterialButton
                         Text="Reload benchmark"
@@ -81,45 +89,43 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:BenchmarkItem">
                     <Grid Padding="16,3">
-                        <material:MaterialCard Type="Filled">
+                        <Border
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="Transparent"
+                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerHighest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerHighest}}">
                             <Grid
                                 ColumnDefinitions="Auto,*,Auto"
                                 ColumnSpacing="12"
                                 Padding="12,10">
 
                                 <!-- Score badge -->
-                                <Border
+                                <Grid
                                     Grid.Column="0"
-                                    BackgroundColor="{Binding ScoreColor}"
-                                    StrokeThickness="0"
                                     WidthRequest="40"
                                     HeightRequest="40"
                                     VerticalOptions="Center">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="20" />
-                                    </Border.StrokeShape>
-                                    <material:MaterialLabel
-                                        Text="{Binding Score}"
-                                        Type="LabelMedium"
+                                    <BoxView
+                                        Color="{Binding ScoreColor}"
+                                        CornerRadius="20"
+                                        WidthRequest="40"
+                                        HeightRequest="40" />
+                                    <Label
+                                        Text="{Binding ScoreText}"
+                                        FontSize="12"
+                                        FontAttributes="Bold"
                                         TextColor="White"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center" />
-                                </Border>
+                                </Grid>
 
                                 <!-- Main content -->
                                 <VerticalStackLayout
                                     Grid.Column="1"
                                     Spacing="1"
                                     VerticalOptions="Center">
-                                    <material:MaterialLabel
-                                        Text="{Binding Title}"
-                                        Type="LabelLarge" />
-                                    <material:MaterialLabel
-                                        Text="{Binding Email}"
-                                        Type="BodySmall" />
-                                    <material:MaterialLabel
-                                        Text="{Binding TagsDisplay}"
-                                        Type="BodySmall" />
+                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" />
+                                    <Label Text="{Binding Email}" FontSize="11" />
+                                    <Label Text="{Binding TagsDisplay}" FontSize="11" />
                                 </VerticalStackLayout>
 
                                 <!-- Right column: department + date + status -->
@@ -128,23 +134,18 @@
                                     Spacing="2"
                                     VerticalOptions="Center"
                                     HorizontalOptions="End">
-                                    <material:MaterialLabel
-                                        Text="{Binding Department}"
-                                        Type="LabelSmall"
-                                        HorizontalOptions="End" />
-                                    <material:MaterialLabel
-                                        Text="{Binding FormattedDate}"
-                                        Type="BodySmall"
-                                        HorizontalOptions="End" />
-                                    <material:MaterialLabel
+                                    <Label Text="{Binding Department}" FontSize="11" FontAttributes="Bold" HorizontalOptions="End" />
+                                    <Label Text="{Binding FormattedDate}" FontSize="10" HorizontalOptions="End" />
+                                    <Label
                                         Text="{Binding StatusLabel}"
                                         TextColor="{Binding StatusColor}"
-                                        Type="LabelSmall"
+                                        FontSize="11"
+                                        FontAttributes="Bold"
                                         HorizontalOptions="End" />
                                 </VerticalStackLayout>
 
                             </Grid>
-                        </material:MaterialCard>
+                        </Border>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

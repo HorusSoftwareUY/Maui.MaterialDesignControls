@@ -112,6 +112,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             if (this is MainViewModel)
             {
                 Shell.Current.BindingContext = this;
+                Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
             }
             else
             {

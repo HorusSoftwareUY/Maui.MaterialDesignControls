@@ -4,6 +4,7 @@ using HorusStudio.Maui.MaterialDesignControls.Sample.Services;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Utils;
 using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
 using Microsoft.Maui.LifecycleEvents;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample
 {
@@ -21,6 +22,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
 #if RELEASE
                 .InitFirebase()
 #endif
+                .UseSkiaSharp()
                 .UseMauiCommunityToolkit()
                 .UseMaterialDesignControls(options =>
                 {
