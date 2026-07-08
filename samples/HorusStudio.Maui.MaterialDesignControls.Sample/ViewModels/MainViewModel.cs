@@ -91,7 +91,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             { Models.Pages.TextField, typeof(TextFieldViewModel) },
             { Models.Pages.MultilineTextField, typeof(MultilineTextFieldViewModel) },
             { Models.Pages.Label, typeof(LabelViewModel) },
-            { Models.Pages.Appearance, typeof(AppearanceViewModel) }
+            { Models.Pages.Appearance, typeof(AppearanceViewModel) },
+            { Models.Pages.BenchmarkList, typeof(BenchmarkListViewModel) }
         };
         
         public MainViewModel(IMaterialSnackbar snackbar)
@@ -107,6 +108,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
         {
             var menuItems = new List<MaterialNavigationDrawerItem>
             {
+                new() { Headline = Sections.Benchmarks, Text = Models.Pages.BenchmarkList, AutomationId = $"menu_{nameof(Models.Pages.BenchmarkList)}", LeadingIcon = "ic_progress_indicator.png" },
                 new() { Headline = Sections.Settings, Text = Models.Pages.Appearance, AutomationId = $"menu_{nameof(Models.Pages.Appearance)}", LeadingIcon = "settings.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.Button, AutomationId = $"menu_{nameof(Models.Pages.Button)}", LeadingIcon = "ic_button.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.FloatingButton, AutomationId = $"menu_{nameof(Models.Pages.FloatingButton)}", LeadingIcon = "ic_floating.png" },

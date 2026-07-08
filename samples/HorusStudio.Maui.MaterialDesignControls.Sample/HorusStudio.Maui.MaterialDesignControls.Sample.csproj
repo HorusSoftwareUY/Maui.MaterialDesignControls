@@ -7,7 +7,7 @@
 		<SingleProject>true</SingleProject>
 
 		<!-- Runtime switch: set UseMono=true to compile with Mono runtime -->
-		<UseMono Condition="'$(UseMono)' == ''">true</UseMono>
+		<UseMono Condition="'$(UseMono)' == ''">false</UseMono>
 
 		<!-- Display name -->
 		<ApplicationTitle>Material Design Controls</ApplicationTitle>

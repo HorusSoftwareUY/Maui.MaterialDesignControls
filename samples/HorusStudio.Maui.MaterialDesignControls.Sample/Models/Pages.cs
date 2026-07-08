@@ -29,4 +29,5 @@ public class Pages
     public const string MultilineTextField = "Multiline text fields";
     public const string Label = "Labels";
     public const string Appearance = "Appearance";
+    public const string BenchmarkList = "Virtual list (10k items)";
 }
