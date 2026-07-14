@@ -7,7 +7,19 @@
 		<SingleProject>true</SingleProject>
 
 		<!-- Runtime switch: set UseMono=true to compile with Mono runtime -->
-		<UseMono Condition="'$(UseMono)' == ''">false</UseMono>
+		<UseMono Condition="'$(UseMono)' == ''">true</UseMono>
+
+		<!-- Separate intermediate and output dirs per runtime so icon/asset caches
+		     never collide between a CoreCLR build and a Mono build. Without this,
+		     MAUI's incremental icon task reuses the cached mipmap/Assets from a
+		     previous build because appicon.svg (the base input) hasn't changed,
+		     even though ForegroundFile and Color differ between runtimes.
+		     Note: we change IntermediateOutputPath/OutputPath but NOT their Base
+		     counterparts, so the SDK keeps excluding obj\** from the compile glob. -->
+		<_RuntimeSlug Condition="'$(UseMono)' == 'true'">mono</_RuntimeSlug>
+		<_RuntimeSlug Condition="'$(UseMono)' != 'true'">coreclr</_RuntimeSlug>
+		<IntermediateOutputPath>obj\$(_RuntimeSlug)\$(Configuration)\$(TargetFramework)\</IntermediateOutputPath>
+		<OutputPath>bin\$(_RuntimeSlug)\$(Configuration)\$(TargetFramework)\</OutputPath>
 
 		<!-- Display name -->
 		<ApplicationTitle>Material Design Controls</ApplicationTitle>
@@ -23,11 +35,18 @@
 
 		<!-- DefineConstants for runtime-specific C# code -->
 		<DefineConstants Condition="'$(UseMono)' == 'true'">$(DefineConstants);USE_MONO</DefineConstants>
+		<!-- Navigation timing: enabled by default in Debug and Release; override with -p:EnableNavTiming=false to disable -->
+		<EnableNavTiming Condition="'$(EnableNavTiming)' == ''">true</EnableNavTiming>
+		<DefineConstants Condition="'$(EnableNavTiming)' == 'true'">$(DefineConstants);ENABLE_NAV_TIMING</DefineConstants>
 	</PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
-        <!-- CoreCLR (.NET 11+) only supports 64-bit Android: arm64 and x64 -->
-        <RuntimeIdentifiers Condition="'$(UseMono)' != 'true'">android-arm64;android-x64</RuntimeIdentifiers>
+        <!-- CoreCLR (.NET 11+) only supports 64-bit Android. We target arm64 only:
+             all modern Android phones are ARM64; x64 is only needed for Intel-based
+             emulators/Chromebooks (very rare). Add android-x64 here if needed.
+             ⚠️  x64 Android emulators are NOT supported with this config.
+                 To run on an emulator add android-x64 to RuntimeIdentifiers. -->
+        <RuntimeIdentifiers Condition="'$(UseMono)' != 'true'">android-arm64</RuntimeIdentifiers>
         <!-- Use CoreCLR instead of Mono on Android (.NET 11+) -->
         <UseMonoRuntime>$(UseMono)</UseMonoRuntime>
     </PropertyGroup>
@@ -36,10 +55,15 @@
         <AndroidLinkMode>None</AndroidLinkMode>
         <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
         <AndroidUseAssemblyStore>false</AndroidUseAssemblyStore>
-        <RunAOTCompilation>false</RunAOTCompilation>
-        <!-- Disable R2R: CoreCLR defaults PublishReadyToRun=true in Release, but R2R assemblies
-             clear the ILOnly PE flag which causes Mono.Cecil to fail in _LinkAssembliesNoShrink. -->
-        <PublishReadyToRun>false</PublishReadyToRun>
+        <!-- AOT: enabled for both runtimes to get a fair benchmark comparison and better startup.
+             With AndroidLinkMode=None the full BCL is compiled — build time increases ~3-5x.
+             Override with -p:RunAOTCompilation=false for faster iteration builds. -->
+        <RunAOTCompilation>true</RunAOTCompilation>
+        <!-- R2R (ReadyToRun) — CoreCLR only: pre-JITs assemblies at build time for faster startup
+             and better sustained throughput. Disabled for Mono because R2R assemblies clear the
+             ILOnly PE flag, which causes Mono.Cecil to fail in _LinkAssembliesNoShrink. -->
+        <PublishReadyToRun Condition="'$(UseMono)' != 'true'">true</PublishReadyToRun>
+        <PublishReadyToRun Condition="'$(UseMono)' == 'true'">false</PublishReadyToRun>
     </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|$(NetVersion)-ios|AnyCPU'">
@@ -52,13 +76,9 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon: CoreCLR (default) -->
-		<MauiIcon Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.68" />
-		<MauiIcon Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="1" />
-		<MauiIcon Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="1" />
+		<MauiIcon Condition="'$(UseMono)' != 'true'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.68" />
 		<!-- App Icon: Mono -->
-		<MauiIcon Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_mono.svg" Color="#E1F5FE" BaseSize="24,24" ForegroundScale="0.68" />
-		<MauiIcon Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_mono.svg" Color="#E1F5FE" BaseSize="24,24" ForegroundScale="1" />
-		<MauiIcon Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_mono.svg" Color="#E1F5FE" BaseSize="24,24" ForegroundScale="1" />
+		<MauiIcon Condition="'$(UseMono)' == 'true'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_mono.svg" Color="#E1F5FE" BaseSize="24,24" ForegroundScale="0.68" />
 		
 		<!-- Splash Screen: CoreCLR (default) -->
 		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\Splash\splash.svg" BaseSize="74,120" Color="White" />

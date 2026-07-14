@@ -89,6 +89,8 @@ El JSON se pre-genera al entrar a la pantalla (no se cuenta en las métricas). E
 - `ViewModels/BenchmarkListViewModel.cs` — lógica de benchmark
 - `Pages/BenchmarkListPage.xaml` + `.xaml.cs` — UI con `CollectionView` sin `ScrollView` anidado (virtualización activa)
 
+> **Nota:** además del bind inicial, esta página también mide el rendimiento durante el **scroll de la lista**. Ver Nota 5 para el detalle de esas métricas.
+
 ---
 
 ## Nota 3 — CoreCLR es estricto con la coerción de tipos en bindings
@@ -184,12 +186,22 @@ Una página de benchmark (`BenchmarkSkiaPage`) que renderiza N partículas anima
 Ambas versiones conviven en el mismo dispositivo con app IDs distintos:
 
 ```bash
-# Compilar CoreCLR
+# Compilar CoreCLR (ARM64 — dispositivos físicos modernos)
 dotnet build -f net11.0-android -c Release -p:UseMono=false
+# APK → bin/coreclr/Release/net11.0-android/android-arm64/
 
-# Compilar Mono
+# Compilar Mono (fat APK, todas las ABIs soportadas)
 dotnet build -f net11.0-android -c Release -p:UseMono=true
+# APK → bin/mono/Release/net11.0-android/
 ```
+
+> **Arquitecturas Android**
+> - **arm64-v8a** — todos los teléfonos Android modernos (2017+). Es la única ABI necesaria para benchmarks en dispositivo físico.
+> - **x86_64** — solo emuladores en máquinas Intel/AMD y rarísimas tablets/Chromebooks con Intel. No incluido en este build.
+> - CoreCLR solo soporta 64-bit (arm64 o x64); Mono soporta arm64, arm, x86 y x64.
+
+> **Nota:** cada variante usa su propio directorio de build (`obj/coreclr/` y `obj/mono/`,
+> `bin/coreclr/` y `bin/mono/`) para evitar colisiones de cache de íconos y assets entre runtimes.
 
 **Protocolo de medición:**
 1. Abrir la app, ir a **Benchmarks → Skia particles animation**
@@ -250,4 +262,210 @@ dotnet build -f net11.0-android -c Release -p:UseMono=true
 
 ---
 
-*Última actualización: 2026-07-08 — agregada Nota 4 (benchmark Skia partículas + protocolo de medición)*
+## Nota 5 — Benchmark: Scroll FPS en lista virtualizada de 10.000 items
+
+### Qué se mide
+
+Luego de que la lista termina de bindear los 10.000 items, la página dispara automáticamente:
+
+1. **25 gestos de scroll incrementales** (`ScrollTo` con `animate: true`), cada uno avanzando ~400 items, con 200 ms de delay entre gestos — simula swipes continuos de dedo en lugar de un único salto al final
+2. Un `IDispatcherTimer` a ~16 ms (60 fps objetivo) activo durante toda la secuencia de gestos (~5 segundos)
+3. Captura de heap managed antes y después del scroll
+
+### Métricas nuevas en el stats panel
+
+| # | Métrica | Descripción | Por qué importa |
+|---|---|---|---|
+| 5 | **Avg FPS (scroll)** | FPS promedio calculado como `1000 / avg_tick_delta` durante los 5s de scroll | Rendimiento sostenido de la UI bajo carga de virtualización |
+| 6 | **Min FPS (scroll)** | FPS mínimo calculado como `1000 / max_tick_delta` | Revela drops por GC, JIT stalls o item realization costosa |
+| 7 | **Scroll duration** | Duración total de la ventana de medición (ms) | Referencia temporal |
+| 8 | **Managed heap Δ** | `GC.GetTotalMemory(false)` después − antes del scroll (KB) | Cuánto heap nuevo se asignó para realizar los item templates durante el scroll |
+
+### Cómo funciona el FPS timer
+
+Se usa `IDispatcherTimer` (main thread) con intervalo de 16 ms. Cada tick registra el timestamp (`Stopwatch.ElapsedMilliseconds`). Al terminar la ventana se calculan los deltas entre ticks consecutivos:
+
+```
+avg_fps = 1000 / mean(deltas)
+min_fps = 1000 / max(delta)   ← el delta más largo = peor frame
+```
+
+Este método mide la **tasa de dispatch del hilo principal** — si el UI thread está congestionado (virtualizando items, ejecutando bindings), los ticks se retrasan y el FPS baja. Es un proxy confiable para comparar CoreCLR vs Mono bajo carga de scroll.
+
+### Protocolo de medición
+
+1. Abrir la app → **Benchmarks → Virtual list (10k items)**
+2. Tocar **Reload benchmark** y esperar que cargue
+3. Tras ~800 ms, la lista ejecuta 25 gestos de scroll automáticos — **no tocar el dispositivo**
+4. Esperar ~5 segundos a que aparezcan los valores de scroll
+5. Anotar los 4 valores de la sección "Scroll FPS (auto)"
+6. Repetir en la otra app (mismo dispositivo, mismas condiciones)
+
+### Tabla de resultados (completar)
+
+| Métrica | CoreCLR | Mono |
+|---|---|---|
+| Avg FPS (scroll) | — | — |
+| Min FPS (scroll) | — | — |
+| Scroll duration | — | — |
+| Managed heap Δ | — | — |
+
+### Qué se espera observar
+
+- **Avg FPS**: CoreCLR debería ser igual o mejor — el JIT optimiza mejor los loops de binding
+- **Min FPS**: Mono puede ser más estable (GC menos agresivo, menos spikes); CoreCLR puede mostrar drops si el GC generacional barre durante el scroll
+- **Managed heap Δ**: Similar en ambos — el delta refleja la realización de item templates, no el runtime en sí; diferencias marcan colecciones temporales más grandes en uno de los dos
+
+### Archivos involucrados (cambios de esta nota)
+
+- `ViewModels/BenchmarkListViewModel.cs` — nuevas propiedades + `StartScrollMeasurement` / `StopScrollMeasurement` / timer FPS
+- `Pages/BenchmarkListPage.xaml.cs` — suscripción a `PropertyChanged`, 25 gestos de scroll incrementales (~400 items/gesto, 200 ms entre gestos), ventana con `CancellationToken`
+- `Pages/BenchmarkListPage.xaml` — 4 nuevas filas en el stats card + `ActivityIndicator` de estado
+
+---
+
+---
+
+## Nota 6 — Benchmark: Tiempo de navegación entre páginas (Navigation Timing)
+
+### Qué se mide
+
+El tiempo que tarda la app en ir desde que el usuario toca un ítem del menú (Main) hasta que la página de destino está **completamente lista** para mostrarse al usuario. Cubre: ejecución de `Shell.GoToAsync`, construcción del ViewModel y la Page (DI), y — en páginas con datos asíncronos — la carga y binding inicial.
+
+### Cómo funciona
+
+El sistema usa `NavigationTimer` (habilitado con la constante de compilación `ENABLE_NAV_TIMING`):
+
+| Momento | Código | Qué ocurre |
+|---|---|---|
+| **T0 — arranque** | `BaseViewModel.GoToAsync` | Justo antes de llamar a `Shell.Current.GoToAsync`, se llama a `NavigationTimer.Start(route)` y arranca el `Stopwatch`. |
+| **T1 — página lista** | `BaseViewModel.ReportPageReady()` | Llama a `NavigationTimer.Complete(Title)`, detiene el reloj y dispara el evento `NavTimingCompleted`. |
+
+`ReportPageReady()` se invoca de dos formas según la página:
+- **Automática**: `BaseContentPage.OnAppearing()` la llama si la página no carga datos async (el caso simple).
+- **Manual**: las páginas que cargan datos en forma asíncrona deben llamar a `vm.ReportPageReady()` ellas mismas una vez que el binding esté completo (por ejemplo, después del `await` que trae los datos).
+
+### Cómo se muestra el resultado
+
+Al completarse la navegación, aparece un badge flotante (`NavTimingOverlay`) superpuesto sobre la página destino con el formato:
+
+```
+⏱ <Título de la página>  —  <ms> ms
+```
+
+El badge desaparece solo a los 10 segundos o al tocarlo. Si se navega antes, se descarta automáticamente.
+
+### Cómo habilitar / deshabilitar
+
+Por defecto está activo en Debug **y** Release. Se puede apagar pasando `-p:EnableNavTiming=false` al compilar:
+
+```bash
+dotnet build -f net11.0-android -c Release -p:EnableNavTiming=false
+```
+
+### Caso a probar
+
+1. Abrir la app → pantalla **Main**
+2. Tocar cualquier ítem del menú lateral (ej: **Button**, **TextField**, **Progress indicator**)
+3. Observar el badge ⏱ que aparece en la esquina de la página destino
+4. Anotar el tiempo (ms) para cada página
+5. Repetir en CoreCLR y Mono para comparar: la diferencia refleja el costo de construcción de la página + bindings en cada runtime
+
+### Qué se espera observar
+
+- Páginas simples (sin carga async): <100 ms en ambos runtimes; CoreCLR puede ser marginalmente más rápido por JIT
+- Páginas con listas grandes (ej: **BenchmarkList**): la diferencia se amplifica porque el binding de la colección también está en el camino crítico
+- En el primer acceso a cada página, CoreCLR puede tardar más (JIT en frío); en accesos subsiguientes tiende a nivelar o superar a Mono
+
+### Archivos involucrados
+
+- `Utils/NavigationTimer.cs` — lógica de medición (stopwatch + evento `NavTimingCompleted`)
+- `ViewModels/BaseViewModel.cs` — `GoToAsync` (T0) y `ReportPageReady` (T1)
+- `Pages/BaseContentPage.cs` — llama a `ReportPageReady` en `OnAppearing` para páginas simples
+- `Views/NavTimingOverlay.xaml` + `.xaml.cs` — badge flotante que muestra el resultado durante 10 s
+- `AppShell.xaml.cs` — `EnsureNavTimingOverlay()` inyecta el overlay en el `Grid` de cada página
+
+---
+
+*Última actualización: 2026-07-09 — Nota 5 actualizada: scroll pasa de un único `ScrollTo` al final a 25 gestos incrementales de 200 ms para simular scroll manual realista*
+
+---
+
+## Nota 7 — Diagnóstico: Por qué CoreCLR rinde peor que Mono en el benchmark actual
+
+### Contexto
+
+Con la configuración de Release actual (`RunAOTCompilation=false`, `PublishReadyToRun=false`) CoreCLR muestra peor rendimiento que Mono en los benchmarks de la app de sample. Esto **no significa que CoreCLR sea más lento en general** — significa que la comparación no es justa. Hay dos categorías de causas: la configuración de compilación y las presiones de GC del código de benchmark.
+
+---
+
+### Causa A — Configuración de compilación (la más importante)
+
+#### `RunAOTCompilation=false` para ambos runtimes
+
+En Release Android, el `.csproj` deshabilita AOT para ambos runtimes:
+
+```xml
+<!-- ⚠ Esto deja CoreCLR corriendo con JIT puro — sin precalentamiento -->
+<RunAOTCompilation>false</RunAOTCompilation>
+```
+
+Sin AOT, CoreCLR arranca cada método en frío con JIT. Los primeros segundos del benchmark Skia o la primera carga de BenchmarkList muestran peor performance porque el JIT está compilando en caliente mientras el benchmark ya está midiendo.
+
+Mono históricamente tenía una estrategia diferente y no tiene el mismo "cold start" tan marcado sin AOT.
+
+#### `PublishReadyToRun=false` para CoreCLR (R2R deshabilitado)
+
+R2R (Ready-to-Run) pre-compila los assemblies a código nativo en tiempo de build, embebidos en el APK. Esto es **distinto** de `RunAOTCompilation` y es la optimización de startup más efectiva en CoreCLR.
+
+Estaba deshabilitado globalmente por un problema real con Mono: cuando R2R está activo, el compilador limpia el flag `ILOnly` de los PE files, y eso rompe Mono.Cecil en el paso `_LinkAssembliesNoShrink` del toolchain de Mono. Pero ese paso **no existe en builds CoreCLR**, por lo que R2R es seguro habilitarlo condicionalmente solo para `UseMono=false`.
+
+#### Fix aplicado al `.csproj`
+
+```xml
+<!-- AOT: habilitado para ambos en Release -->
+<RunAOTCompilation>true</RunAOTCompilation>
+
+<!-- R2R solo para CoreCLR — Mono.Cecil falla con assemblies R2R en _LinkAssembliesNoShrink -->
+<PublishReadyToRun Condition="'$(UseMono)' != 'true'">true</PublishReadyToRun>
+<PublishReadyToRun Condition="'$(UseMono)' == 'true'">false</PublishReadyToRun>
+```
+
+> **Nota de build time:** con `AndroidLinkMode=None` (sin trimming), `RunAOTCompilation=true` compila el BCL completo — el build tarda 3-5× más. Si el tiempo de compilación es una prioridad, se puede desactivar AOT con `-p:RunAOTCompilation=false` al hacer builds de iteración.
+
+---
+
+### Causa B — Presión de GC en el código de benchmark (sin modificar el código)
+
+El benchmark de Skia contiene patrones que generan presión de GC por frame. Estos no se modifican (el objetivo es que el benchmark sea lo que es), pero se documentan para entender por qué afectan más a CoreCLR que a Mono:
+
+| Patrón | Allocations/frame (200 partículas, 60fps) | Por qué afecta más a CoreCLR |
+|---|---|---|
+| `p.Trail.ToArray()` en el loop de render | 200 arrays × 60fps = 12.000/s (~1.9 MB/s Gen0) | CoreCLR tiene GC generacional → colecciones Gen0 frecuentes → pauses → min FPS bajo |
+| `new SKPaint { ... }` por frame | 1 objeto finalizable/frame = 60/s | CoreCLR finalization queue más estricta |
+| `Stopwatch.StartNew()` ×2 por frame | 120 objetos/s | Presión adicional de Gen0 |
+| 5 strings interpoladas cada 10 frames | 36 strings/s | Acumulación en Gen0 |
+
+Mono usa un GC **conservador non-moving**: no mueve objetos y recolecta menos frecuentemente bajo presión de objetos de corta vida. Esto produce menos pauses (mejor min FPS) a costa de mayor uso de memoria y menor throughput general.
+
+CoreCLR usa un GC **generacional tracing**: diseñado para throughput máximo en server/desktop. Bajo alta tasa de allocaciones Gen0, el GC interviene más frecuentemente → pauses visibles en el FPS.
+
+> **Conclusión:** el benchmark actual mide en parte el GC del runtime, no solo la velocidad de ejecución del JIT. Eso favorece estructuralmente a Mono. Con AOT habilitado, el JIT cold-start desaparece; la diferencia de GC persiste pero se puede medir por separado (min FPS vs avg FPS).
+
+---
+
+### Tabla de modos de compilación recomendados
+
+| Modo | `RunAOTCompilation` | `PublishReadyToRun` | `AndroidLinkMode` | Cuándo usar |
+|---|---|---|---|---|
+| **Debug Mono** | `false` | `false` | — | Iteración rápida, depuración |
+| **Debug CoreCLR** | `false` | `false` | — | Ídem |
+| **Release Mono (benchmark)** | `true` | `false` | `None` | Medición justa Mono |
+| **Release CoreCLR (benchmark)** | `true` | `true` | `None` | Medición justa CoreCLR |
+| **Release CoreCLR (producción)** | `true` | `true` | `SdkOnly` o `Full` | APK de distribución |
+
+> R2R (`PublishReadyToRun`) es distinto de AOT puro (`RunAOTCompilation`): R2R embebe código pre-JITeado que se usa como "hint" y tiene fallback a JIT; AOT puro no tiene fallback. En la práctica, para Android móvil, R2R + AOT juntos dan el mejor tiempo de startup y mejor throughput sostenido.
+
+---
+
+*Agregado: 2026-07-14*
