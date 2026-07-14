@@ -2,6 +2,42 @@
 
 > Estas son notas de trabajo para armar un post técnico sobre el impacto del runtime elegido en el peso del APK de release en .NET MAUI Android.
 
+## Referencias
+
+- 📖 [Runtimes and compilation in .NET MAUI (docs oficiales)](https://learn.microsoft.com/en-us/dotnet/maui/deployment/runtimes-compilation?view=net-maui-10.0) — explica Mono, CoreCLR, NativeAOT, ReadyToRun e intérprete Mono. Válido para .NET MAUI 8–11.
+- 🐛 [dotnet/android#7389](https://github.com/dotnet/android/issues/7389) — bug conocido: crash de Mono AOT con `AndroidLinkMode=None`
+- 📄 [mono-vs-coreclr-maui11-notas.md](./mono-vs-coreclr-maui11-notas.md) — bitácora detallada de debugging: 4 bugs encontrados durante la configuración del build (AOT + linker), causa raíz de cada uno, workarounds y configuración final validada en runtime
+
+---
+
+## 🏗️ Cómo está compilado cada APK (estado actual)
+
+### Mono (`-p:UseMono=true`)
+
+| Propiedad | Valor | Motivo |
+|---|---|---|
+| `UseMonoRuntime` | `true` | Selecciona el runtime Mono |
+| `AndroidLinkMode` | `Full` | **Requerido** para que AOT funcione. `None` crashea (XA1030 / `instance_size` mismatch). `SdkOnly` tiene una regresión activa en .NET 10/11 preview (#33032). |
+| `RunAOTCompilation` | `true` | AOT del pipeline Mono — precompila a `.so` nativos. Requiere trimming activo. |
+| `PublishReadyToRun` | `false` | R2R es de CoreCLR; si se activa en Mono rompe Mono.Cecil en `_LinkAssembliesNoShrink` |
+| `EmbedAssembliesIntoApk` | `true` | Embebe los dlls en el APK |
+| `AndroidUseAssemblyStore` | `false` | Deshabilita el formato assembly store |
+
+> ⚠️ **`Full` trimming** implica que el linker elimina también código propio y de NuGets. Cualquier uso de reflexión no anotado (ej: `JsonSerializer` sin `JsonSerializerContext`) lanza `InvalidOperationException` en runtime. Fix aplicado: `SampleJsonContext` (source generation) en el sample + `try/catch NotSupportedException` en el logger de debug de la librería.
+
+### CoreCLR (`-p:UseMono=false` o por defecto)
+
+| Propiedad | Valor | Motivo |
+|---|---|---|
+| `UseMonoRuntime` | `false` | Selecciona el runtime CoreCLR |
+| `AndroidLinkMode` | `SdkOnly` | Default recomendado; no tiene el bug de Mono con `SdkOnly` |
+| `RunAOTCompilation` | `false` | El pipeline AOT de Mono no aplica a CoreCLR (build error en MAUI 11 preview) |
+| `PublishReadyToRun` | `true` | R2R de CoreCLR: pre-JIT en build-time embebido en los `.dll`. Mejor startup y throughput. |
+| `EmbedAssembliesIntoApk` | `true` | Ídem Mono |
+| `AndroidUseAssemblyStore` | `false` | Ídem Mono |
+
+> ℹ️ La agresividad de trimming **no es equivalente** entre ambos runtimes: Mono usa `Full` (trimea todo), CoreCLR usa `SdkOnly` (solo BCL/SDK). El tamaño final del APK no es 100% comparable sin igualar el nivel de trimming.
+
 ---
 
 ## ⚡ TL;DR — Configuración crítica del build (referencia rápida)
@@ -559,5 +595,57 @@ Se reemplazaron **63 ocurrencias** con `{TemplateBinding}`. Se retuvo `{x:Refere
 Se actualizan mediante `UpdateTrailingIconComputed()`, hookeado en el `propertyChanged` de `TrailingIconProperty`, `ErrorIconProperty` y `HasErrorProperty`. En el XAML se usan como `{TemplateBinding TrailingIconImageSource}` y `{TemplateBinding TrailingIconVisible}`.
 
 Los converters `TrailingIconSourceConverter` y `TrailingIconIsVisibleConverter` se removieron del ResourceDictionary (la lógica está ahora en el code-behind).
+
+*Agregado: 2026-07-14*
+
+---
+
+## Issue conocido — Crash de Mono AOT con `AndroidLinkMode=None`
+
+**Referencia:** [dotnet/android#7389](https://github.com/dotnet/android/issues/7389)
+
+### Síntoma
+
+La app crashea inmediatamente al iniciar en Android cuando se compila con Mono AOT (`RunAOTCompilation=true`) combinado con `AndroidLinkMode=None`. El crash ocurre en el runtime Mono durante la inicialización de tipos y se manifiesta como:
+
+```
+E  * Assertion at class-init.c:2691, condition `klass->instance_size == instance_size' not met
+A  Fatal signal 6 (SIGABRT)
+```
+
+La app vive menos de 2 segundos: muere antes de llegar a mostrar cualquier pantalla.
+
+### Por qué ocurre
+
+Es un bug de larga data en el toolchain de .NET Android (reportado en 2022, sigue abierto). Cuando el linker está desactivado (`AndroidLinkMode=None`) y se activa AOT, el compilador AOT de Mono genera código nativo (`.so`) con un layout de objetos que no coincide con el que el runtime Mono espera al cargar las DLLs sin trimming. El desajuste de `instance_size` hace que Mono aborte.
+
+**Combinaciones afectadas:**
+
+| `AndroidLinkMode` | `RunAOTCompilation` | Resultado |
+|---|---|---|
+| `None` | `true` | 💥 Crash al inicio |
+| `None` | `false` | ✅ OK |
+| `SdkOnly` / `Full` | `true` | ✅ OK |
+
+### Workaround
+
+Deshabilitar AOT cuando el linker está apagado:
+
+```xml
+<PropertyGroup Condition="'$(Configuration)' == 'Release' and $(TargetFramework.Contains('-android'))">
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <RunAOTCompilation Condition="'$(UseMono)' == 'true'">false</RunAOTCompilation>
+</PropertyGroup>
+```
+
+O bien, activar el linker (que también resuelve el crash pero agrega tiempo de build y puede requerir `[Preserve]` en algunos tipos):
+
+```xml
+<AndroidLinkMode>SdkOnly</AndroidLinkMode>
+```
+
+### Estado del issue
+
+Abierto desde 2022 en el repo `dotnet/android`. No tiene fecha de fix confirmada. El crash se reproduce tanto en .NET 6/7/8 como en .NET 11 preview con Mono.
 
 *Agregado: 2026-07-14*

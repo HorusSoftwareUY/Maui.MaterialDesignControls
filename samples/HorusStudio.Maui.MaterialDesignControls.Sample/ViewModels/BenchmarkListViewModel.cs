@@ -66,7 +66,7 @@ public partial class BenchmarkListViewModel : BaseViewModel
 
                 // Phase 1 — JSON deserialize
                 var sw = Stopwatch.StartNew();
-                var dtos = JsonSerializer.Deserialize<List<BenchmarkRawDto>>(_cachedJson)!;
+                var dtos = JsonSerializer.Deserialize(_cachedJson, SampleJsonContext.Default.ListBenchmarkRawDto)!;
                 sw.Stop();
                 var p1 = sw.ElapsedMilliseconds;
 

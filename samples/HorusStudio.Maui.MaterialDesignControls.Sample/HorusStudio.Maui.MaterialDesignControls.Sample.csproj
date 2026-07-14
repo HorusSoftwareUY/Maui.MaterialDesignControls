@@ -52,7 +52,9 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Release' and $(TargetFramework.Contains('-android'))">
-        <AndroidLinkMode>None</AndroidLinkMode>
+		<AndroidLinkMode Condition="'$(UseMono)' == 'true'">Full</AndroidLinkMode>
+		<AndroidLinkMode Condition="'$(UseMono)' != 'true'">Full</AndroidLinkMode>
+		
         <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
         <AndroidUseAssemblyStore>false</AndroidUseAssemblyStore>
         <!-- AOT: Mono only. RunAOTCompilation is the Mono AOT pipeline trigger — applying it to
@@ -66,7 +68,10 @@
              ILOnly PE flag, which causes Mono.Cecil to fail in _LinkAssembliesNoShrink. -->
         <PublishReadyToRun Condition="'$(UseMono)' != 'true'">true</PublishReadyToRun>
         <PublishReadyToRun Condition="'$(UseMono)' == 'true'">false</PublishReadyToRun>
-    </PropertyGroup>
+
+		<AndroidEnableMarshalMethods Condition="'$(UseMono)' == 'true'">false</AndroidEnableMarshalMethods>
+
+	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|$(NetVersion)-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
