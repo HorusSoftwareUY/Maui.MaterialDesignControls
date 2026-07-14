@@ -11,7 +11,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     <PackageVersion Include="Microsoft.Maui.Core" Version="$(MauiVersion)" />
     <PackageVersion Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
-    <PackageVersion Include="Xamarin.AndroidX.AppCompat" Version="1.7.1.1" />
+    <PackageVersion Include="Xamarin.AndroidX.AppCompat" Version="1.7.1.3" />
     <PackageVersion Include="Xamarin.AndroidX.Lifecycle.LiveData.Ktx" Version="2.9.4" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageVersion Include="NUnit" Version="4.0.1" />
