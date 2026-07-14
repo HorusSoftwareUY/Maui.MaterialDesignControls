@@ -496,4 +496,16 @@ El commit `d57173f` ("initial setup, running ok (lib and sample) in .net 11", 7 
 
 Solo está instalado el workload `maui/11.0.0-preview.5.26304.4`. Los workload packs de MAUI .NET 10 no están presentes. Sin esos packs, el compilador no puede resolver los assemblies de plataforma (`Microsoft.Maui.Platform`, `Microsoft.Maui.Graphics`, etc.) para `net10.0-android`. Para publicar el NuGet con soporte net10.0, se necesita un pipeline de CI/CD con ambos workloads instalados.
 
+### MAUIG1001 — `x:Reference` en `ResourceDictionary` (breaking change MAUI 11)
+
+**Error:** `MAUIG1001: Name 'InputBase' not found in any NameScope`
+
+**Causa:** MAUI 11 endureció la resolución de `NameScope` en el compilador XAML. `{x:Reference InputBase}` dentro de `<Style>/<Setter>` que vive en `<ContentView.Resources>` (ResourceDictionary) no puede ver el `x:Name` del ContentView padre en tiempo de compilación — solo en runtime. Con `MauiEnableXamlCBindingWithSourceCompilation=true` el compilador intenta resolverlo en build y falla.
+
+**Dónde:** `MaterialInputBase.xaml` usa este patrón en ~40 setters de style.
+
+**Fix aplicado:** `MauiEnableXamlCBindingWithSourceCompilation=false` en el `.csproj` de la librería. El sample app conserva `true` heredado de `Directory.Build.props`.
+
+**Fix correcto a largo plazo:** refactorizar `MaterialInputBase.xaml` para reemplazar `{x:Reference InputBase}` en styles por asignaciones directas en los elementos del árbol visual (fuera del ResourceDictionary) o bindings `RelativeSource`.
+
 *Agregado: 2026-07-14*
