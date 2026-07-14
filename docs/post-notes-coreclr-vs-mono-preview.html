@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>CoreCLR vs Mono en .NET MAUI — Notas del post</title>
+  <style>
+    @page { margin: 18mm 16mm; size: A4; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.55;
+      color: #1a1a1a;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0;
+    }
+    h1 { font-size: 22pt; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.02em; }
+    h2 { font-size: 14pt; font-weight: 650; margin: 28px 0 10px; padding-top: 4px; border-top: 1px solid #e5e5e5; page-break-after: avoid; }
+    h3 { font-size: 11pt; font-weight: 650; margin: 16px 0 8px; page-break-after: avoid; }
+    p { margin: 0 0 10px; }
+    .subtitle { color: #555; margin-bottom: 12px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+    .pill {
+      display: inline-block;
+      font-size: 8.5pt;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      background: #f7f7f7;
+      color: #444;
+    }
+    .pill.info { border-color: #b8d4f0; background: #eef5fc; color: #1a5a8a; }
+    .pill.warn { border-color: #f0d9a8; background: #fdf8ee; color: #8a5a1a; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 20px; }
+    .stat {
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .stat .value { font-size: 13pt; font-weight: 650; margin-bottom: 2px; }
+    .stat .label { font-size: 8.5pt; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+    .section { margin-bottom: 22px; page-break-inside: avoid; }
+    .section-title {
+      font-size: 12pt;
+      font-weight: 650;
+      margin: 0 0 10px;
+      padding-left: 10px;
+      border-left: 3px solid #888;
+    }
+    .section-title.orange { border-color: #e07b39; }
+    .section-title.blue { border-color: #3b82f6; }
+    .section-title.red { border-color: #ef4444; }
+    .section-title.purple { border-color: #8b5cf6; }
+    .callout {
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin: 8px 0;
+      page-break-inside: avoid;
+    }
+    .callout strong { display: block; margin-bottom: 4px; font-size: 9.5pt; }
+    .callout.info { border-left: 3px solid #3b82f6; background: #f8fbff; }
+    .callout.warn { border-left: 3px solid #f59e0b; background: #fffbf5; }
+    .callout.success { border-left: 3px solid #22c55e; background: #f7fdf9; }
+    .callout.danger { border-left: 3px solid #ef4444; background: #fff8f8; }
+    .callout.neutral { border-left: 3px solid #9ca3af; background: #fafafa; }
+    pre, code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 8.5pt;
+    }
+    pre {
+      background: #f5f5f5;
+      border: 1px solid #e8e8e8;
+      border-radius: 6px;
+      padding: 10px 12px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 8px 0 12px;
+      page-break-inside: avoid;
+    }
+    code { background: #f0f0f0; padding: 1px 4px; border-radius: 3px; }
+    pre code { background: none; padding: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 14px;
+      font-size: 9pt;
+      page-break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid #e0e0e0;
+      padding: 6px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #f5f5f5; font-weight: 650; }
+    ul { margin: 6px 0 12px; padding-left: 18px; }
+    li { margin-bottom: 4px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+    .card {
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      overflow: hidden;
+      page-break-inside: avoid;
+    }
+    .card-header {
+      background: #f7f7f7;
+      padding: 6px 10px;
+      font-size: 9pt;
+      font-weight: 650;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    .card-body { padding: 8px 10px; }
+    .small { font-size: 8.5pt; color: #666; }
+    .footer { margin-top: 24px; text-align: right; font-size: 8pt; color: #888; border-top: 1px solid #eee; padding-top: 10px; }
+    .todo { list-style: none; padding: 0; margin: 8px 0; }
+    .todo li { padding: 5px 0 5px 22px; position: relative; border-bottom: 1px solid #f0f0f0; }
+    .todo li::before { content: "☐"; position: absolute; left: 0; color: #888; }
+    .expect-row { display: flex; gap: 8px; align-items: flex-start; margin: 6px 0; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+    .dot.green { background: #22c55e; }
+    .dot.yellow { background: #f59e0b; }
+    .dot.blue { background: #3b82f6; }
+  </style>
+</head>
+<body>
+  <h1>CoreCLR vs Mono en .NET MAUI</h1>
+  <p class="subtitle">Notas de trabajo para un post técnico sobre el impacto del runtime en el peso del APK de release en Android.</p>
+  <div class="meta">
+    <span class="pill info">4 notas</span>
+    <span class="pill">2 benchmarks</span>
+    <span class="pill warn">Post en borrador</span>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="value">Mono / CoreCLR</div><div class="label">Runtimes</div></div>
+    <div class="stat"><div class="value">Android Release</div><div class="label">Plataforma</div></div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title orange">Nota 1 — ¿Por qué el APK con CoreCLR pesa más?</h2>
+    <p>Al compilar .NET MAUI para Android en <code>Release</code>, se elige entre <code>Mono</code> (runtime histórico, optimizado para mobile) y <code>CoreCLR</code> (runtime moderno de .NET, portado recientemente a mobile).</p>
+
+    <h3>Razones del mayor tamaño</h3>
+    <div class="callout info"><strong>Runtime más pesado por diseño</strong>CoreCLR fue construido para desktop/server y luego portado. Mono fue diseñado desde el inicio para dispositivos embebidos y móviles.</div>
+    <div class="callout info"><strong>AOT genera .so más grandes</strong>Con CoreCLR, el compilador AOT produce archivos nativos de mayor tamaño. Mono usa un modelo AOT más compacto e interpreta parte del IL.</div>
+    <div class="callout warn"><strong>Trimming menos maduro en mobile</strong>El linker no es igual de agresivo con CoreCLR. Mono lleva años con optimizaciones de tamaño específicas para mobile.</div>
+    <div class="callout neutral"><strong>Mayor porción del BCL empaquetada</strong>CoreCLR tiende a incluir más del Base Class Library en el bundle, reducible con trimming agresivo.</div>
+
+    <h3>Cómo reducir el tamaño con CoreCLR</h3>
+    <pre><code>&lt;PublishTrimmed&gt;true&lt;/PublishTrimmed&gt;
+&lt;TrimMode&gt;link&lt;/TrimMode&gt;
+&lt;AndroidCreatePackagePerAbi&gt;true&lt;/AndroidCreatePackagePerAbi&gt;
+&lt;AndroidUseAapt2&gt;true&lt;/AndroidUseAapt2&gt;
+&lt;AndroidEnableAssemblyCompression&gt;true&lt;/AndroidEnableAssemblyCompression&gt;</code></pre>
+
+    <div class="callout success"><strong>Conclusión</strong>CoreCLR prioriza rendimiento sobre tamaño. El mayor peso del APK es un trade-off esperado. Microsoft está trabajando activamente en reducirlo.</div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title blue">Nota 2 — Benchmark: Lista virtual con 10.000 items</h2>
+    <p>Página <code>BenchmarkListPage</code> en la app de sample, accesible desde el menú hamburguesa (sección Benchmarks). Carga 10.000 items desde JSON pre-generado (~1.5 MB) y mide 4 fases por separado.</p>
+
+    <table>
+      <thead><tr><th>Fase</th><th>Operación</th></tr></thead>
+      <tbody>
+        <tr><td>1. JSON deserialize</td><td><code>JsonSerializer.Deserialize&lt;List&lt;BenchmarkRawDto&gt;&gt;()</code></td></tr>
+        <tr><td>2. LINQ map + sort</td><td>Proyección DTO → modelo + <code>OrderByDescending(score)</code></td></tr>
+        <tr><td>3. Date parse + format</td><td><code>DateTime.Parse</code> + <code>.ToString("MMM dd, yyyy")</code> × 10k</td></tr>
+        <tr><td>4. Bind collection</td><td><code>new ObservableCollection&lt;BenchmarkItem&gt;(list)</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Por qué estas fases muestran diferencias</h3>
+    <ul>
+      <li><code>JSON deserialize</code> — System.Text.Json se beneficia del JIT de CoreCLR en code paths repetitivos.</li>
+      <li><code>LINQ + proyección</code> — CoreCLR optimiza mejor iteradores y lambdas en caliente.</li>
+      <li><code>Date parse/format</code> — Operaciones de string intensivas; GC e inlining marcan diferencia.</li>
+      <li><code>Bind collection</code> — Overhead del constructor de ObservableCollection y notificaciones.</li>
+    </ul>
+
+    <h3>Archivos involucrados</h3>
+    <ul>
+      <li><code>Models/BenchmarkItem.cs</code></li>
+      <li><code>Models/BenchmarkRawDto.cs</code></li>
+      <li><code>ViewModels/BenchmarkListViewModel.cs</code></li>
+      <li><code>Pages/BenchmarkListPage.xaml</code></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title red">Nota 3 — CoreCLR es estricto con coerción de tipos en bindings</h2>
+    <p>Con <code>x:DataType</code> en un <code>DataTemplate</code> (bindings compilados), el tipo del modelo debe coincidir exactamente con el del control.</p>
+
+    <div class="card">
+      <div class="card-header">Ejemplo que falla en CoreCLR pero funciona en Mono</div>
+      <div class="card-body"><pre><code>&lt;DataTemplate x:DataType="models:BenchmarkItem"&gt;
+  &lt;!-- Score es int, Text espera string --&gt;
+  &lt;Label Text="{Binding Score}" /&gt;
+&lt;/DataTemplate&gt;</code></pre></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="callout success"><strong>Mono</strong>Conversión int → string implícita vía BindingExpression. No explota.</div>
+      <div class="callout danger"><strong>CoreCLR</strong>Binding compilado asigna int directamente a string → InvalidCastException envuelta en TargetInvocationException.</div>
+    </div>
+
+    <h3>Síntoma en logcat</h3>
+    <pre><code>android.runtime.JavaProxyThrowable: [System.Reflection.TargetInvocationException]:
+  Exception has been thrown by the target of an invocation.
+  at BindingExpression+BindingExpressionPart.TryGetValue
+  at ...BenchmarkListPage+&lt;&gt;c.&lt;InitializeComponent&gt;b__1_1</code></pre>
+    <p class="small">El inner exception real (InvalidCastException) no aparece en logcat — solo el wrapper. Difícil de diagnosticar.</p>
+
+    <h3>Fix recomendado</h3>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">Opción A: StringFormat</div>
+        <div class="card-body"><pre><code>&lt;Label Text="{Binding Score, StringFormat='{0}'}" /&gt;</code></pre></div>
+      </div>
+      <div class="card">
+        <div class="card-header">Opción B (recomendada)</div>
+        <div class="card-body"><pre><code>&lt;Label Text="{Binding ScoreText}" /&gt;</code></pre></div>
+      </div>
+    </div>
+
+    <div class="callout warn"><strong>Regla general para CoreCLR</strong>En bindings compilados con x:DataType, el tipo de la propiedad del modelo debe coincidir exactamente con el del control. No asumir coerción implícita.</div>
+    <p class="small">Tipos problemáticos: int/double/float → string (Label.Text), Color struct vía reflexión, bool → string sin converter.</p>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title purple">Nota 4 — Benchmark: Animación de partículas con SkiaSharp</h2>
+    <p>Página <code>BenchmarkSkiaPage</code>: N partículas animadas con trail sobre <code>SKCanvasView</code> fullscreen. Cada frame mide física y draw por separado.</p>
+
+    <div class="grid-3">
+      <div class="stat"><div class="value">20 pos.</div><div class="label">Trail</div></div>
+      <div class="stat"><div class="value">50–500</div><div class="label">Niveles</div></div>
+      <div class="stat"><div class="value">N × 21</div><div class="label">Draw calls/frame</div></div>
+    </div>
+    <p class="small">Ejemplo: 200 partículas → 4.200 draw calls/frame → ~250k draw calls/segundo a 60 fps. Loop vía InvalidateSurface() al final de cada PaintSurface.</p>
+
+    <table>
+      <thead><tr><th>Métrica</th><th>Descripción</th><th>Por qué importa</th></tr></thead>
+      <tbody>
+        <tr><td>FPS</td><td>Frames por segundo del frame actual</td><td>Referencia instantánea, muy variable</td></tr>
+        <tr><td>avg FPS</td><td>Promedio móvil de los últimos 120 frames</td><td>Número más representativo del rendimiento sostenido</td></tr>
+        <tr><td>min FPS</td><td>Mínimo histórico desde el inicio</td><td>Revela GC pauses y JIT stalls</td></tr>
+        <tr><td>physics ms</td><td>Loop C# por frame: posiciones, bordes, trail</td><td>Rendimiento JIT sobre código numérico puro</td></tr>
+        <tr><td>draw ms</td><td>Skia canvas: N × 21 DrawCircle() con paint/alpha</td><td>Overhead del interop .NET → Skia nativo</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Comandos de compilación</h3>
+    <div class="grid-2">
+      <div class="card"><div class="card-header">CoreCLR</div><div class="card-body"><pre><code>dotnet build -f net11.0-android -c Release -p:UseMono=false</code></pre></div></div>
+      <div class="card"><div class="card-header">Mono</div><div class="card-body"><pre><code>dotnet build -f net11.0-android -c Release -p:UseMono=true</code></pre></div></div>
+    </div>
+
+    <h3>Protocolo de medición</h3>
+    <ol>
+      <li>Abrir app → Benchmarks → Skia particles animation</li>
+      <li>Seleccionar nivel de carga (50 / 100 / 200 / 500)</li>
+      <li>Start → esperar ~30 s para estabilizar JIT</li>
+      <li>Anotar: avg FPS, min FPS, physics ms, draw ms</li>
+      <li>Repetir en la otra app (mismo dispositivo)</li>
+    </ol>
+
+    <h3>Tabla de resultados (completar)</h3>
+    <table>
+      <thead><tr><th>Métrica</th><th>CoreCLR</th><th>Mono</th></tr></thead>
+      <tbody>
+        <tr><td>100 partículas — avg FPS</td><td>—</td><td>—</td></tr>
+        <tr><td>100 partículas — min FPS</td><td>—</td><td>—</td></tr>
+        <tr><td>100 partículas — physics ms</td><td>—</td><td>—</td></tr>
+        <tr><td>100 partículas — draw ms</td><td>—</td><td>—</td></tr>
+        <tr><td>200 partículas — avg FPS</td><td>—</td><td>—</td></tr>
+        <tr><td>200 partículas — min FPS</td><td>—</td><td>—</td></tr>
+        <tr><td>200 partículas — physics ms</td><td>—</td><td>—</td></tr>
+        <tr><td>200 partículas — draw ms</td><td>—</td><td>—</td></tr>
+        <tr><td>500 partículas — avg FPS</td><td>—</td><td>—</td></tr>
+        <tr><td>500 partículas — min FPS</td><td>—</td><td>—</td></tr>
+        <tr><td>500 partículas — physics ms</td><td>—</td><td>—</td></tr>
+        <tr><td>500 partículas — draw ms</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Qué se espera observar</h3>
+    <div class="expect-row"><span class="dot green"></span><p><code>physics ms</code> — CoreCLR más rápido (JIT agresivo, mejor inlining)</p></div>
+    <div class="expect-row"><span class="dot yellow"></span><p><code>min FPS</code> — Mono más estable; CoreCLR puede tener caídas por GC generacional</p></div>
+    <div class="expect-row"><span class="dot blue"></span><p><code>draw ms</code> — Similar en ambos (Skia nativo, interop equivalente)</p></div>
+  </div>
+
+  <h2>Pendientes para el post</h2>
+  <ul class="todo">
+    <li>Mencionar el impacto de usar AAB vs APK para Play Store</li>
+    <li>Comparar rendimiento en runtime: ¿vale la pena el peso extra de CoreCLR?</li>
+    <li>Hablar de cuándo conviene cada runtime según el tipo de app</li>
+    <li>Referencias: docs oficiales de Microsoft sobre runtimes en MAUI</li>
+  </ul>
+
+  <p class="footer">Última actualización: 2026-07-08 — Nota 4 (benchmark Skia partículas + protocolo de medición)</p>
+</body>
+</html>

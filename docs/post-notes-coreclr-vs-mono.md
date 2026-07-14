@@ -500,12 +500,16 @@ Solo está instalado el workload `maui/11.0.0-preview.5.26304.4`. Los workload p
 
 **Error:** `MAUIG1001: Name 'InputBase' not found in any NameScope`
 
-**Causa:** MAUI 11 endureció la resolución de `NameScope` en el compilador XAML. `{x:Reference InputBase}` dentro de `<Style>/<Setter>` que vive en `<ContentView.Resources>` (ResourceDictionary) no puede ver el `x:Name` del ContentView padre en tiempo de compilación — solo en runtime. Con `MauiEnableXamlCBindingWithSourceCompilation=true` el compilador intenta resolverlo en build y falla.
+**Causa:** MAUI 11 endureció la resolución de `NameScope` en el compilador XAML. `{x:Reference InputBase}` dentro de `<Style>/<Setter>` y `<ControlTemplate>` que viven en `<ContentView.Resources>` (ResourceDictionary) no pueden ver el `x:Name` del ContentView padre en tiempo de compilación. En MAUI 10 esto se resolvía en runtime.
 
-**Dónde:** `MaterialInputBase.xaml` usa este patrón en ~40 setters de style.
+- `MauiEnableXamlCBindingWithSourceCompilation=false` → no aplica (MAUIG1001 viene del paso de parseo XAML, no del source generator de bindings).
+- `[XamlCompilation(XamlCompilationOptions.Skip)]` → no aplica (el source generator de MAUI 11 es Roslyn-based y no chequea este atributo).
 
-**Fix aplicado:** `MauiEnableXamlCBindingWithSourceCompilation=false` en el `.csproj` de la librería. El sample app conserva `true` heredado de `Directory.Build.props`.
+**Fix real aplicado:** `MaterialInputBase.xaml` usa el patrón `ControlTemplate` (ContentView con templates en Resources). La solución correcta es reemplazar:
+- `{Binding Prop, Source={x:Reference InputBase}}` → `{TemplateBinding Prop}` (válido en Style/Setter dentro de ControlTemplate; resuelve al TemplatedParent, que es el propio ContentView)
+- `{Binding Prop, Source={x:Reference InputBase}, Converter=X}` → `{TemplateBinding Prop, Converter=X}`
+- `<Binding Path="Prop" Source="{x:Reference InputBase}" />` dentro de MultiBinding → `<Binding Path="Prop" RelativeSource="{RelativeSource TemplatedParent}" />`
 
-**Fix correcto a largo plazo:** refactorizar `MaterialInputBase.xaml` para reemplazar `{x:Reference InputBase}` en styles por asignaciones directas en los elementos del árbol visual (fuera del ResourceDictionary) o bindings `RelativeSource`.
+Se reemplazaron **63 ocurrencias** en total. Se retuvo `{x:Reference OutlinedHint}` (referencia intra-template, válida en MAUI 11).
 
 *Agregado: 2026-07-14*

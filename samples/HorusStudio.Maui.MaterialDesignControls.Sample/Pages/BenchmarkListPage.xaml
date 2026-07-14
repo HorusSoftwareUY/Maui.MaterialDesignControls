@@ -11,7 +11,7 @@
     x:DataType="vm:BenchmarkListViewModel"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,Auto,*">
 
         <!-- Top app bar -->
         <material:MaterialTopAppBar
@@ -23,68 +23,68 @@
             LeadingIcon="ic_back.png"
             Type="Large" />
 
+        <!-- Sticky stats panel -->
+        <VerticalStackLayout Grid.Row="1" Spacing="0">
+
+            <material:MaterialCard
+                Type="Filled"
+                Margin="16,8"
+                Padding="16,12">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="4">
+
+                    <material:MaterialLabel
+                        Grid.Row="0"
+                        Text="{Binding TotalText}"
+                        Type="LabelLarge" />
+
+                    <material:MaterialDivider Grid.Row="1" Margin="0,6" />
+
+                    <!-- Phase rows -->
+                    <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
+                        <material:MaterialLabel Grid.Column="0" Text="1. JSON deserialize" Type="BodySmall" />
+                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase1Text}" Type="LabelMedium" />
+                    </Grid>
+                    <Grid Grid.Row="3" ColumnDefinitions="*,Auto">
+                        <material:MaterialLabel Grid.Column="0" Text="2. LINQ map + sort" Type="BodySmall" />
+                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase2Text}" Type="LabelMedium" />
+                    </Grid>
+                    <Grid Grid.Row="4" ColumnDefinitions="*,Auto">
+                        <material:MaterialLabel Grid.Column="0" Text="3. Date parse + format" Type="BodySmall" />
+                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase3Text}" Type="LabelMedium" />
+                    </Grid>
+                    <Grid Grid.Row="5" ColumnDefinitions="*,Auto">
+                        <material:MaterialLabel Grid.Column="0" Text="4. Bind collection" Type="BodySmall" />
+                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase4Text}" Type="LabelMedium" />
+                    </Grid>
+
+                </Grid>
+            </material:MaterialCard>
+
+            <!-- Error label (only visible on crash) -->
+            <material:MaterialLabel
+                Text="{Binding ErrorText}"
+                TextColor="{x:Static material:MaterialLightTheme.Error}"
+                Type="BodySmall"
+                Margin="16,0,16,4"
+                IsVisible="{Binding HasError}" />
+
+            <!-- Reload button -->
+            <material:MaterialButton
+                Text="Reload benchmark"
+                Command="{Binding LoadItemsCommand}"
+                IsEnabled="{Binding IsLoading, Converter={StaticResource ReverseBoolConverter}}"
+                Type="Tonal"
+                Margin="16,0,16,8"
+                HorizontalOptions="Fill" />
+
+        </VerticalStackLayout>
+
         <!-- CollectionView fills remaining height — virtualization active, no nested ScrollView -->
         <CollectionView
-            Grid.Row="1"
+            x:Name="CollectionViewRef"
+            Grid.Row="2"
             ItemsSource="{Binding Items}"
             ItemsLayout="VerticalList">
-
-            <CollectionView.Header>
-                <VerticalStackLayout Spacing="0">
-
-                    <!-- Stats panel -->
-                    <material:MaterialCard
-                        Type="Filled"
-                        Margin="16,8"
-                        Padding="16,12">
-                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="4">
-
-                            <material:MaterialLabel
-                                Grid.Row="0"
-                                Text="{Binding TotalText}"
-                                Type="LabelLarge" />
-
-                            <material:MaterialDivider Grid.Row="1" Margin="0,6" />
-
-                            <!-- Phase rows -->
-                            <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
-                                <material:MaterialLabel Grid.Column="0" Text="1. JSON deserialize" Type="BodySmall" />
-                                <material:MaterialLabel Grid.Column="1" Text="{Binding Phase1Text}" Type="LabelMedium" />
-                            </Grid>
-                            <Grid Grid.Row="3" ColumnDefinitions="*,Auto">
-                                <material:MaterialLabel Grid.Column="0" Text="2. LINQ map + sort" Type="BodySmall" />
-                                <material:MaterialLabel Grid.Column="1" Text="{Binding Phase2Text}" Type="LabelMedium" />
-                            </Grid>
-                            <Grid Grid.Row="4" ColumnDefinitions="*,Auto">
-                                <material:MaterialLabel Grid.Column="0" Text="3. Date parse + format" Type="BodySmall" />
-                                <material:MaterialLabel Grid.Column="1" Text="{Binding Phase3Text}" Type="LabelMedium" />
-                            </Grid>
-                            <Grid Grid.Row="5" ColumnDefinitions="*,Auto">
-                                <material:MaterialLabel Grid.Column="0" Text="4. Bind collection" Type="BodySmall" />
-                                <material:MaterialLabel Grid.Column="1" Text="{Binding Phase4Text}" Type="LabelMedium" />
-                            </Grid>
-                        </Grid>
-                    </material:MaterialCard>
-
-                    <!-- Error label (only visible on crash) -->
-                    <material:MaterialLabel
-                        Text="{Binding ErrorText}"
-                        TextColor="{x:Static material:MaterialLightTheme.Error}"
-                        Type="BodySmall"
-                        Margin="16,0,16,4"
-                        IsVisible="{Binding HasError}" />
-
-                    <!-- Reload button -->
-                    <material:MaterialButton
-                        Text="Reload benchmark"
-                        Command="{Binding LoadItemsCommand}"
-                        IsEnabled="{Binding IsLoading, Converter={StaticResource ReverseBoolConverter}}"
-                        Type="Tonal"
-                        Margin="16,0,16,8"
-                        HorizontalOptions="Fill" />
-
-                </VerticalStackLayout>
-            </CollectionView.Header>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:BenchmarkItem">

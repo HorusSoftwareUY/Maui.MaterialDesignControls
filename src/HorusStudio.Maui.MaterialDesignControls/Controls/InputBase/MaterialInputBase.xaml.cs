@@ -39,7 +39,6 @@ public enum MaterialInputTypeStates
 }
 
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[XamlCompilation(XamlCompilationOptions.Skip)]
 public abstract partial class MaterialInputBase : IValidableView
 {
     #region Attributes

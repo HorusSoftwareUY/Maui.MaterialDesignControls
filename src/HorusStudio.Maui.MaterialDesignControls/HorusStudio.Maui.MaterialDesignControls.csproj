@@ -6,13 +6,6 @@
 		<TargetFrameworks Condition="'$(NetVersion)' != 'net11.0'">$(TargetFrameworks);net11.0-android;net11.0-ios;net11.0-maccatalyst</TargetFrameworks>
 <!--		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) or '$(EnableWindowsTargeting)' == 'true'">$(TargetFrameworks);$(NetVersion)-windows10.0.19041;$(NetVersion)-windows10.0.20348</TargetFrameworks>-->
 		<RootNamespace>HorusStudio.Maui.MaterialDesignControls</RootNamespace>
-		<!-- MAUI 11 tightened NameScope resolution: {x:Reference} inside Style/Setter within a
-		     ResourceDictionary can no longer resolve names from the outer element's NameScope at
-		     compile time. MaterialInputBase.xaml uses this pattern extensively (x:Name="InputBase"
-		     referenced from ResourceDictionary-scoped styles). Disabling source-compiled bindings
-		     here restores the runtime-based resolution that worked in MAUI 10.
-		     The sample app keeps MauiEnableXamlCBindingWithSourceCompilation=true unaffected. -->
-		<MauiEnableXamlCBindingWithSourceCompilation>false</MauiEnableXamlCBindingWithSourceCompilation>
 	</PropertyGroup>
 	
 	<ItemGroup>

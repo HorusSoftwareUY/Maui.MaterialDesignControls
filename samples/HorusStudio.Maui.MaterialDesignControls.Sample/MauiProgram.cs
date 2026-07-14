@@ -197,7 +197,9 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             var pageTypes = GetPagesToRegister(vmTypes);
             foreach (var page in pageTypes)
             {
-                services.AddTransient(page);
+                // Register pages as Singleton so XAML is only inflated once,
+                // avoiding UI-thread jank / ANR on mid-range Android devices.
+                services.AddSingleton(page);
             }
 
             return services;
