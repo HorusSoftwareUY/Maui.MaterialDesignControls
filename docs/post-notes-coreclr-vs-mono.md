@@ -469,3 +469,31 @@ CoreCLR usa un GC **generacional tracing**: diseñado para throughput máximo en
 ---
 
 *Agregado: 2026-07-14*
+
+---
+
+## Nota 8 — Historial de configuración del build (qué se cambió y por qué)
+
+### Estado final del build tras la migración a .NET 11
+
+Todo el repositorio quedó unificado en **.NET 11 preview** con la siguiente configuración:
+
+| Archivo | Propiedad | Valor final | Motivo |
+|---|---|---|---|
+| `Directory.Build.props` | `NetVersion` | `net11.0` | TFM principal de todo el repo |
+| `Directory.Build.props` | `MauiVersion` | `11.0.0-preview.5.26304.4` | Debe coincidir con el workload instalado |
+| `Directory.Packages.props` | `Microsoft.Maui.Controls` | `$(MauiVersion)` | Resuelve a la versión correcta vía variable |
+| `Directory.Packages.props` | `Microsoft.Maui.Core` | `$(MauiVersion)` | Antes estaba hardcodeado en `10.0.10` |
+| `samples/Directory.Packages.props` | `Microsoft.Maui.Controls` (Update) | `11.0.0-preview.5.26304.4` | Redundante pero explícito como documentación |
+| Sample `.csproj` | `RunAOTCompilation` | `true` (Release Android) | AOT para benchmark justo |
+| Sample `.csproj` | `PublishReadyToRun` | `true` CoreCLR / `false` Mono | R2R seguro solo para CoreCLR |
+
+### Bug latente en la migración original
+
+El commit `d57173f` ("initial setup, running ok (lib and sample) in .net 11", 7 Jul 2026) cambió `NetVersion` a `net11.0` pero **olvidó actualizar `MauiVersion`**, que quedó en `10.0.10`. El error no era visible porque los builds incrementales usaban caché de compilaciones anteriores. Al habilitar `RunAOTCompilation=true` (que fuerza un rebuild limpio) el CS0234 salió a la luz.
+
+### Por qué no se puede volver a .NET 10 en esta máquina
+
+Solo está instalado el workload `maui/11.0.0-preview.5.26304.4`. Los workload packs de MAUI .NET 10 no están presentes. Sin esos packs, el compilador no puede resolver los assemblies de plataforma (`Microsoft.Maui.Platform`, `Microsoft.Maui.Graphics`, etc.) para `net10.0-android`. Para publicar el NuGet con soporte net10.0, se necesita un pipeline de CI/CD con ambos workloads instalados.
+
+*Agregado: 2026-07-14*
