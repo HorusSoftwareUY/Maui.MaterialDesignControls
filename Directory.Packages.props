@@ -9,7 +9,7 @@
     <PackageVersion Include="AdamE.Firebase.iOS.Analytics" Version="11.10.0" />
     <PackageVersion Include="AdamE.Firebase.iOS.Crashlytics" Version="11.10.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.Maui.Core" Version="10.0.10" />
+    <PackageVersion Include="Microsoft.Maui.Core" Version="$(MauiVersion)" />
     <PackageVersion Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
     <PackageVersion Include="Xamarin.AndroidX.AppCompat" Version="1.7.1.1" />
     <PackageVersion Include="Xamarin.AndroidX.Lifecycle.LiveData.Ktx" Version="2.9.4" />
