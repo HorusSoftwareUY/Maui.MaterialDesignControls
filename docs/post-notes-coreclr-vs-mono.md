@@ -508,8 +508,22 @@ Solo está instalado el workload `maui/11.0.0-preview.5.26304.4`. Los workload p
 **Fix real aplicado:** `MaterialInputBase.xaml` usa el patrón `ControlTemplate` (ContentView con templates en Resources). La solución correcta es reemplazar:
 - `{Binding Prop, Source={x:Reference InputBase}}` → `{TemplateBinding Prop}` (válido en Style/Setter dentro de ControlTemplate; resuelve al TemplatedParent, que es el propio ContentView)
 - `{Binding Prop, Source={x:Reference InputBase}, Converter=X}` → `{TemplateBinding Prop, Converter=X}`
-- `<Binding Path="Prop" Source="{x:Reference InputBase}" />` dentro de MultiBinding → `<Binding Path="Prop" RelativeSource="{RelativeSource TemplatedParent}" />`
+- `<Binding Path="Prop" Source="{x:Reference InputBase}" />` dentro de `<MultiBinding>` → **no usar `RelativeSource` como atributo XML** (MAUIX2002: no es BindableProperty, el source generator no lo acepta)
 
-Se reemplazaron **63 ocurrencias** en total. Se retuvo `{x:Reference OutlinedHint}` (referencia intra-template, válida en MAUI 11).
+Se reemplazaron **63 ocurrencias** con `{TemplateBinding}`. Se retuvo `{x:Reference OutlinedHint}` (referencia intra-template, válida en MAUI 11).
+
+### MAUIX2002 — `RelativeSource` no soportado en `<Binding>` element form
+
+**Error:** `MAUIX2002: No accessible property, BindableProperty, or event found for "RelativeSource"`
+
+**Causa:** El source generator de MAUI 11 valida los atributos XML de `<Binding>` contra BindableProperties. `RelativeSource` en `Binding` es una propiedad CLR, no una BindableProperty → el compilador la rechaza cuando está en forma de elemento (`<Binding RelativeSource="..." />`). En la forma inline `{Binding X, Source={RelativeSource TemplatedParent}}` sí funciona, pero no puede usarse dentro de `<MultiBinding>`.
+
+**Fix aplicado:** Para los dos `<MultiBinding>` en `TrailingIcon` Style (ImageSource e IsVisible), se agregaron dos BindableProperties computadas a `MaterialInputBase`:
+- `TrailingIconImageSourceProperty` → `hasError ? errorIcon ?? trailingIcon : trailingIcon`
+- `TrailingIconVisibleProperty` → `trailingIcon != null || (hasError && errorIcon != null)`
+
+Se actualizan mediante `UpdateTrailingIconComputed()`, hookeado en el `propertyChanged` de `TrailingIconProperty`, `ErrorIconProperty` y `HasErrorProperty`. En el XAML se usan como `{TemplateBinding TrailingIconImageSource}` y `{TemplateBinding TrailingIconVisible}`.
+
+Los converters `TrailingIconSourceConverter` y `TrailingIconIsVisibleConverter` se removieron del ResourceDictionary (la lógica está ahora en el code-behind).
 
 *Agregado: 2026-07-14*
