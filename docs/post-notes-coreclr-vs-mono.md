@@ -4,6 +4,35 @@
 
 ---
 
+## ⚡ TL;DR — Configuración crítica del build (referencia rápida)
+
+### Flags de compilación por runtime
+
+| Flag | Mono | CoreCLR | Por qué |
+|------|------|---------|---------|
+| `RunAOTCompilation` | `true` | `false` | Es el pipeline AOT de **Mono**; aplicarlo a CoreCLR en MAUI 11 preview causa build errors |
+| `PublishReadyToRun` | `false` | `true` | R2R pre-JIT de **CoreCLR**; rompe Mono.Cecil en `_LinkAssembliesNoShrink` de Mono |
+| `UseMonoRuntime` | `true` | `false` | Selector de runtime en el toolchain MAUI |
+
+### Versiones (MAUI 11 preview, .NET 11)
+
+| Variable | Valor | Dónde |
+|----------|-------|-------|
+| `NetVersion` | `net11.0` | `Directory.Build.props` |
+| `MauiVersion` | `11.0.0-preview.5.26304.4` | `Directory.Build.props` |
+| `Xamarin.AndroidX.AppCompat` | `>= 1.7.1.3` | `Directory.Packages.props` |
+
+> ⚠️ **`MauiVersion` debe coincidir exactamente con el workload instalado.** Si no coinciden, los paquetes NuGet no encuentran los assets de la TFM correcta y el build explota con CS0234 al primer rebuild limpio.
+
+### Breaking changes MAUI 11 en XAML
+
+| Error | Causa | Fix |
+|-------|-------|-----|
+| `MAUIG1001` | `{x:Reference Name}` en `Style/Setter` dentro de `ResourceDictionary` no resuelve a compile-time | Reemplazar con `{TemplateBinding Prop}` en ControlTemplates |
+| `MAUIX2002` | `RelativeSource` como atributo XML en `<Binding>` no es BindableProperty | Usar BindableProperties computadas en code-behind + `{TemplateBinding}` |
+
+---
+
 ## Nota 1 — ¿Por qué el APK con CoreCLR pesa más que con Mono?
 
 ### Contexto
