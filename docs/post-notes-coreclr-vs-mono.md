@@ -423,15 +423,20 @@ Estaba deshabilitado globalmente por un problema real con Mono: cuando R2R está
 #### Fix aplicado al `.csproj`
 
 ```xml
-<!-- AOT: habilitado para ambos en Release -->
-<RunAOTCompilation>true</RunAOTCompilation>
+<!-- AOT: Mono only. RunAOTCompilation es el pipeline AOT de Mono — aplicarlo a CoreCLR
+     en MAUI 11 preview falla (intenta correr el compilador Mono AOT sobre assemblies CoreCLR).
+     CoreCLR obtiene pre-compilación vía R2R abajo. -->
+<RunAOTCompilation Condition="'$(UseMono)' == 'true'">true</RunAOTCompilation>
+<RunAOTCompilation Condition="'$(UseMono)' != 'true'">false</RunAOTCompilation>
 
 <!-- R2R solo para CoreCLR — Mono.Cecil falla con assemblies R2R en _LinkAssembliesNoShrink -->
 <PublishReadyToRun Condition="'$(UseMono)' != 'true'">true</PublishReadyToRun>
 <PublishReadyToRun Condition="'$(UseMono)' == 'true'">false</PublishReadyToRun>
 ```
 
-> **Nota de build time:** con `AndroidLinkMode=None` (sin trimming), `RunAOTCompilation=true` compila el BCL completo — el build tarda 3-5× más. Si el tiempo de compilación es una prioridad, se puede desactivar AOT con `-p:RunAOTCompilation=false` al hacer builds de iteración.
+> **Nota:** `RunAOTCompilation=true` para ambos runtimes fue la config original, pero en MAUI 11 preview causa errores de build en CoreCLR porque el toolchain intenta correr el compilador AOT de Mono sobre assemblies CoreCLR. La config correcta es Mono → AOT, CoreCLR → R2R.
+
+> **Nota de build time:** con `AndroidLinkMode=None` (sin trimming), `RunAOTCompilation=true` en Mono compila el BCL completo — el build tarda 3-5× más. Para builds de iteración: `-p:RunAOTCompilation=false`.
 
 ---
 
@@ -485,8 +490,8 @@ Todo el repositorio quedó unificado en **.NET 11 preview** con la siguiente con
 | `Directory.Packages.props` | `Microsoft.Maui.Controls` | `$(MauiVersion)` | Resuelve a la versión correcta vía variable |
 | `Directory.Packages.props` | `Microsoft.Maui.Core` | `$(MauiVersion)` | Antes estaba hardcodeado en `10.0.10` |
 | `samples/Directory.Packages.props` | `Microsoft.Maui.Controls` (Update) | `11.0.0-preview.5.26304.4` | Redundante pero explícito como documentación |
-| Sample `.csproj` | `RunAOTCompilation` | `true` (Release Android) | AOT para benchmark justo |
-| Sample `.csproj` | `PublishReadyToRun` | `true` CoreCLR / `false` Mono | R2R seguro solo para CoreCLR |
+| Sample `.csproj` | `RunAOTCompilation` | `true` Mono / `false` CoreCLR | AOT es pipeline Mono; en CoreCLR causa build error en MAUI 11 preview |
+| Sample `.csproj` | `PublishReadyToRun` | `true` CoreCLR / `false` Mono | R2R es pre-compilación de CoreCLR; rompe Mono.Cecil en Mono builds |
 
 ### Bug latente en la migración original
 

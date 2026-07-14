@@ -55,10 +55,12 @@
         <AndroidLinkMode>None</AndroidLinkMode>
         <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
         <AndroidUseAssemblyStore>false</AndroidUseAssemblyStore>
-        <!-- AOT: enabled for both runtimes to get a fair benchmark comparison and better startup.
-             With AndroidLinkMode=None the full BCL is compiled — build time increases ~3-5x.
-             Override with -p:RunAOTCompilation=false for faster iteration builds. -->
-        <RunAOTCompilation>true</RunAOTCompilation>
+        <!-- AOT: Mono only. RunAOTCompilation is the Mono AOT pipeline trigger — applying it to
+             CoreCLR builds in MAUI 11 preview causes build failures (it attempts to run Mono's
+             AOT compiler over CoreCLR assemblies). CoreCLR gets pre-compilation via R2R below.
+             Override with -p:RunAOTCompilation=false for faster Mono iteration builds. -->
+        <RunAOTCompilation Condition="'$(UseMono)' == 'true'">true</RunAOTCompilation>
+        <RunAOTCompilation Condition="'$(UseMono)' != 'true'">false</RunAOTCompilation>
         <!-- R2R (ReadyToRun) — CoreCLR only: pre-JITs assemblies at build time for faster startup
              and better sustained throughput. Disabled for Mono because R2R assemblies clear the
              ILOnly PE flag, which causes Mono.Cecil to fail in _LinkAssembliesNoShrink. -->
