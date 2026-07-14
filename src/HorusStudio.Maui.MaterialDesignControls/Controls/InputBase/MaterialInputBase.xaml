@@ -13,8 +13,6 @@
 
         <converters:IsNotNullConverter x:Key="IsNotNull" />
         <converters:IsNotNullOrEmptyConverter x:Key="IsNotNullOrEmpty" />
-        <converters:TrailingIconIsVisibleConverter x:Key="IsTrailingIconVisible" />
-        <converters:TrailingIconSourceConverter x:Key="TrailingIconSource" />
         <converters:AutomationIdConverter x:Key="AutomationIdConverter" />
         <material:HalfHeightToMarginConverter x:Key="HalfHeightToMarginConverter" />
         
@@ -189,20 +187,8 @@
             <Setter Property="Command" Value="{TemplateBinding TrailingIconCommand}" />
             <Setter Property="CommandParameter" Value="{TemplateBinding TrailingIconCommandParameter}" />
             <Setter Property="AutomationId" Value="{TemplateBinding AutomationId, Converter={StaticResource AutomationIdConverter}, ConverterParameter=TrailingIcon}" />
-            <Setter Property="ImageSource">
-                <MultiBinding Converter="{StaticResource TrailingIconSource}">
-                    <Binding Path="TrailingIcon" RelativeSource="{RelativeSource TemplatedParent}" />
-                    <Binding Path="HasError" RelativeSource="{RelativeSource TemplatedParent}" />
-                    <Binding Path="ErrorIcon" RelativeSource="{RelativeSource TemplatedParent}" />
-                </MultiBinding>
-            </Setter>
-            <Setter Property="IsVisible">
-                <MultiBinding Converter="{StaticResource IsTrailingIconVisible}">
-                    <Binding Path="TrailingIcon" RelativeSource="{RelativeSource TemplatedParent}" />
-                    <Binding Path="HasError" RelativeSource="{RelativeSource TemplatedParent}" />
-                    <Binding Path="ErrorIcon" RelativeSource="{RelativeSource TemplatedParent}" />
-                </MultiBinding>
-            </Setter>
+            <Setter Property="ImageSource" Value="{TemplateBinding TrailingIconImageSource}" />
+            <Setter Property="IsVisible" Value="{TemplateBinding TrailingIconVisible}" />
         </Style>
         
         <ControlTemplate x:Key="FilledControlTemplate">
