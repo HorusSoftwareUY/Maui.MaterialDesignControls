@@ -16,15 +16,27 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
 
         public static MauiApp CreateMauiApp()
         {
-            var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-#if RELEASE
-                .InitFirebase()
+#if ENABLE_STARTUP_PROFILING
+            StartupProfiler.Mark("CreateMauiApp() start");
 #endif
-                .UseSkiaSharp()
-                .UseMauiCommunityToolkit()
-                .UseMaterialDesignControls(options =>
+            var builder = MauiApp.CreateBuilder();
+#if ENABLE_STARTUP_PROFILING
+            StartupProfiler.Mark("MauiApp.CreateBuilder() done");
+#endif
+
+            builder.UseMauiApp<App>();
+#if RELEASE
+            builder.InitFirebase();
+#endif
+            builder.UseSkiaSharp();
+#if ENABLE_STARTUP_PROFILING
+            StartupProfiler.Mark("UseSkiaSharp done");
+#endif
+            builder.UseMauiCommunityToolkit();
+#if ENABLE_STARTUP_PROFILING
+            StartupProfiler.Mark("UseMauiCommunityToolkit done");
+#endif
+            builder.UseMaterialDesignControls(options =>
                 {
                     options.EnableDebug();
                     options.OnException((sender, exception) =>
@@ -114,12 +126,23 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 {
                     handlers.AddHandler(typeof(MaterialTextField), typeof(Handlers.CustomMaterialTextFieldHandler));
                 });
-         
-            builder.Services
-                .AutoConfigureViewModelsAndPages()
-                .RegisterServices();
-            
+#if ENABLE_STARTUP_PROFILING
+            StartupProfiler.Mark("UseMaterialDesignControls done");
+#endif
+
+            builder.Services.AutoConfigureViewModelsAndPages();
+#if ENABLE_STARTUP_PROFILING
+            StartupProfiler.Mark("AutoConfigureViewModelsAndPages done");
+#endif
+            builder.Services.RegisterServices();
+#if ENABLE_STARTUP_PROFILING
+            StartupProfiler.Mark("RegisterServices done");
+#endif
+
             var app = builder.Build();
+#if ENABLE_STARTUP_PROFILING
+            StartupProfiler.Mark("builder.Build() done");
+#endif
             App.ServiceProvider = app.Services;
             
 #if RELEASE

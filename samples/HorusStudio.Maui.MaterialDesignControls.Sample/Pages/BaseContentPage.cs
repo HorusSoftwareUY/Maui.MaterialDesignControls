@@ -87,6 +87,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
                 // Timer is stopped in OnNavigatedTo (or by the VM itself if
                 // ReportsPageReadyManually is true). Nothing to do here.
 #endif
+#if ENABLE_STARTUP_PROFILING
+                // One-shot: record the first page that becomes visible and dump the timeline.
+                HorusStudio.Maui.MaterialDesignControls.Sample.Utils.StartupProfiler.Mark($"First OnAppearing: {GetType().Name}");
+                HorusStudio.Maui.MaterialDesignControls.Sample.Utils.StartupProfiler.Dump();
+#endif
             }
         }
 

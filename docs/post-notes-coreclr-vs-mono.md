@@ -649,3 +649,93 @@ O bien, activar el linker (que también resuelve el crash pero agrega tiempo de 
 Abierto desde 2022 en el repo `dotnet/android`. No tiene fecha de fix confirmada. El crash se reproduce tanto en .NET 6/7/8 como en .NET 11 preview con Mono.
 
 *Agregado: 2026-07-14*
+
+---
+
+## 🔍 Profiling de startup — por qué el tiempo no difiere tanto entre Mono y CoreCLR
+
+**Fecha:** 2026-07-23
+
+### Contexto
+
+Después de tener ambos builds funcionando (Mono + AOT y CoreCLR + R2R), los tiempos de startup medidos manualmente resultaron más parecidos de lo esperado. La hipótesis es que el cuello de botella no está en el runtime en sí, sino en fases comunes del startup de MAUI que corren igual en ambos runtimes (inicialización del DI container, reflexión sobre assemblies, inflar XAML, etc.). Para confirmarlo hace falta instrumentación.
+
+### Approach elegido: `StartupProfiler` (Layer 1 — C# puro)
+
+Se evaluaron tres capas de profiling:
+
+| Layer | Qué mide | Requiere código | Cómo ver resultados |
+|---|---|---|---|
+| **Layer 1** — `StartupProfiler` (✅ implementado) | Tiempo entre fases del startup en C# | Sí — marks en el código | `adb logcat -s STARTUP_PROFILE` |
+| Layer 2 — `atrace` / Perfetto | Lo mismo pero en flamegraph con contexto del OS | Sí — `Android.OS.Trace.BeginSection` | `adb shell atrace` + [Perfetto UI](https://ui.perfetto.dev/) |
+| Layer 3 — `dotnet-trace` / EventPipe | JIT por método, carga de assemblies, GC | No — tooling externo | `dotnet-trace collect` + PerfView / SpeedScope |
+
+Se optó por **Layer 1** para empezar: es el más rápido de integrar, da resultados inmediatos comparables entre Mono y CoreCLR, y pinpoints exactamente qué bloque C# es el responsable. Las otras capas quedan como follow-up si Layer 1 no da suficiente resolución.
+
+### Implementación
+
+Nueva clase `Utils/StartupProfiler.cs` gateada por `#if ENABLE_STARTUP_PROFILING` (análoga a `NavigationTimer`). Activa por defecto, se apaga con `-p:EnableStartupProfiling=false`.
+
+**Fases instrumentadas (en orden):**
+
+| # | Fase | Archivo | Por qué es relevante |
+|---|------|---------|----------------------|
+| T0 | `MainApplication.ctor` | `MainApplication.cs` | Primer punto donde corre código .NET en el proceso |
+| 1 | `MauiApp.CreateBuilder()` | `MauiProgram.cs` | Baseline de cuánto tarda arrancar el host builder |
+| 2 | `UseSkiaSharp` | `MauiProgram.cs` | SkiaSharp registra handlers de plataforma |
+| 3 | `UseMauiCommunityToolkit` | `MauiProgram.cs` | CT registra más handlers/behaviours |
+| 4 | `UseMaterialDesignControls` | `MauiProgram.cs` | Nuestro plugin — registra fonts, temas, handlers |
+| 5 | `AutoConfigureViewModelsAndPages` | `MauiProgram.cs` | ⚠️ Reflexión: escanea todo el assembly buscando tipos |
+| 6 | `RegisterServices` | `MauiProgram.cs` | Registro de platform services |
+| 7 | `builder.Build()` | `MauiProgram.cs` | ⚠️ Compilación del DI container |
+| 8 | `App.InitializeComponent` | `App.xaml.cs` | Carga del XAML raíz |
+| 9 | `MaterialDesignControls.InitializeComponents` | `App.xaml.cs` | Init del plugin |
+| 10 | `MainPage = new AppShell()` | `App.xaml.cs` | Infla el Shell completo (rutas, tabs) |
+| T_final | First `OnAppearing` | `BaseContentPage.cs` | Primer frame visible al usuario → dispara `Dump()` |
+
+**Output esperado en logcat:**
+
+```
+adb logcat -s STARTUP_PROFILE
+
+[STARTUP_PROFILE] === Startup timeline ===
+[STARTUP_PROFILE]   MainApplication.ctor                              +0 ms
+[STARTUP_PROFILE]   MauiApp.CreateBuilder() done                      +12 ms
+[STARTUP_PROFILE]   UseSkiaSharp done                                 +45 ms
+[STARTUP_PROFILE]   UseMauiCommunityToolkit done                      +80 ms
+[STARTUP_PROFILE]   UseMaterialDesignControls done                    +140 ms
+[STARTUP_PROFILE]   AutoConfigureViewModelsAndPages done              +230 ms   ← sospechoso
+[STARTUP_PROFILE]   RegisterServices done                             +235 ms
+[STARTUP_PROFILE]   builder.Build() done                              +410 ms   ← sospechoso
+[STARTUP_PROFILE]   App.InitializeComponent done                      +500 ms
+[STARTUP_PROFILE]   MaterialDesignControls.InitializeComponents done  +510 ms
+[STARTUP_PROFILE]   App.MainPage = new AppShell() done                +590 ms
+[STARTUP_PROFILE]   First OnAppearing: HomePage                       +750 ms
+[STARTUP_PROFILE]   --- TOTAL STARTUP: 750 ms ---
+```
+
+### Cómo usarlo
+
+```bash
+# Build CoreCLR con profiling (activo por defecto)
+dotnet build -p:UseMono=false -f net11.0-android -t:Run
+
+# Build Mono con profiling
+dotnet build -p:UseMono=true -f net11.0-android -t:Run
+
+# Filtrar logcat
+adb logcat -s STARTUP_PROFILE
+
+# Desactivar profiling
+dotnet build -p:UseMono=false -p:EnableStartupProfiling=false -f net11.0-android -t:Run
+```
+
+### Próximos pasos para el post
+
+- Correr ambos builds con `adb logcat -s STARTUP_PROFILE` y capturar los números reales
+- Comparar fase por fase: Mono vs CoreCLR — ¿dónde gana cada uno?
+- Hipótesis a validar: `AutoConfigureViewModelsAndPages` (reflexión) y `builder.Build()` (DI) son iguales en ambos runtimes → explican la similitud en el total
+- Si el cuello es `UseMaterialDesignControls` o `UseSkiaSharp`, vale la pena agregar Layer 2 (atrace) para ver si hay I/O o binder calls detrás
+- Documentar los números reales y agregar al post como tabla comparativa
+
+*Agregado: 2026-07-23*

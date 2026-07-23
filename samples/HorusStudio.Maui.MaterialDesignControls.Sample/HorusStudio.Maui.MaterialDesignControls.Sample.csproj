@@ -7,7 +7,7 @@
 		<SingleProject>true</SingleProject>
 
 		<!-- Runtime switch: set UseMono=true to compile with Mono runtime -->
-		<UseMono Condition="'$(UseMono)' == ''">true</UseMono>
+		<UseMono Condition="'$(UseMono)' == ''">false</UseMono>
 
 		<!-- Separate intermediate and output dirs per runtime so icon/asset caches
 		     never collide between a CoreCLR build and a Mono build. Without this,
@@ -38,6 +38,9 @@
 		<!-- Navigation timing: enabled by default in Debug and Release; override with -p:EnableNavTiming=false to disable -->
 		<EnableNavTiming Condition="'$(EnableNavTiming)' == ''">true</EnableNavTiming>
 		<DefineConstants Condition="'$(EnableNavTiming)' == 'true'">$(DefineConstants);ENABLE_NAV_TIMING</DefineConstants>
+		<!-- Startup profiling: enabled by default; override with -p:EnableStartupProfiling=false to disable -->
+		<EnableStartupProfiling Condition="'$(EnableStartupProfiling)' == ''">true</EnableStartupProfiling>
+		<DefineConstants Condition="'$(EnableStartupProfiling)' == 'true'">$(DefineConstants);ENABLE_STARTUP_PROFILING</DefineConstants>
 	</PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
