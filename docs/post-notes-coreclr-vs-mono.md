@@ -969,7 +969,18 @@ Vale aclarar explícitamente en el próximo post que "profiling" abarcaba dos co
 Al intentar correr `maui profile startup` contra .NET 11 preview se encontraron dos problemas:
 
 1. **`dotnet-pgo` clonado de `release/10.0`** — la herramienta `maui` CLI (preview 12) apunta a .NET 10, no a .NET 11.
-2. **`EndOfStreamException` en `IpcHeader.ParseAsync`** — `dotnet-trace` 9.0 no puede establecer el protocolo de diagnóstico con el runtime .NET 11 preview. Incompatibilidad de versiones en el protocolo EventPipe.
+2. **`EndOfStreamException` en `IpcHeader.ParseAsync`** — incompatibilidad de protocolo EventPipe entre `dotnet-trace 9.0` y el runtime .NET 11 preview. El runtime cierra el stream porque el protocolo cambió entre versiones.
+
+**Diagnóstico confirmado con approach manual (3 terminales):**
+- Terminal 1: `dotnet-dsrouter android` — arranca OK, escucha en puerto 9001
+- Terminal 2: `adb reverse tcp:9000 tcp:9001` + `dotnet build -t:Run -p:DiagnosticSuspend=true` — app lanza suspendida OK
+- Terminal 3: `dotnet-trace collect -p <dsrouter-pid>` — conecta al dsrouter, lista providers, pero falla con `EndOfStreamException` al intentar iniciar la sesión EventPipe
+
+El error es definitivo: requiere una versión de `dotnet-trace` que soporte el protocolo EventPipe de .NET 11, que no existe aún en stable.
+
+**Problemas adicionales encontrados durante el debugging:**
+- `maui profile startup` instala su propio `adb` en `~/.dotnet/tools/adb` (binario x64 para .NET 2.1 EOL) que pisa al `adb` del Android SDK en Apple Silicon → fix: `export PATH="/Users/$USER/Library/Android/sdk/platform-tools:$PATH"`
+- `maui profile startup` tiene un race condition: intenta iniciar `dotnet-dsrouter` DESPUÉS de deployar la app, cuando `adb reverse` ya ocupa el puerto 9001 → workaround: iniciar dsrouter manualmente primero
 
 **Todo el scaffolding ya está integrado en el proyecto** (`MauiProfilingHelper`, `MauiProfilingMarker.Complete()`, `MauiProfilingHelperEnableRuntimePgo`, `PublishReadyToRunAdditionalArgs`). Cuando .NET 11 salga estable y `maui` CLI se actualice, el comando funcionará sin cambios de código.
 
