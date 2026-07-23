@@ -1,9 +1,12 @@
-﻿using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
+using HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels;
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
 {
     public abstract class BaseContentPage<TBaseViewModel> : ContentPage where TBaseViewModel : BaseViewModel
     {
+        // One-shot guard for the startup profiling marker (see OnNavigatedTo).
+        private static bool _startupProfileMarked;
+
         public BaseContentPage(TBaseViewModel viewModel)
         {
             BindingContext = viewModel;
@@ -37,6 +40,14 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
                 if (!vm.ReportsPageReadyManually)
                     Dispatcher.Dispatch(vm.ReportPageReady);
 #endif
+                // Startup profiling marker for `maui profile startup`: fires once, after the
+                // first page completed navigation and its initial render pass (same point where
+                // the nav-timing timer stops). No-op unless the app runs under the MAUI profiler.
+                if (!_startupProfileMarked)
+                {
+                    _startupProfileMarked = true;
+                    Dispatcher.Dispatch(Microsoft.Maui.ProfilingHelper.MauiProfilingMarker.Complete);
+                }
             }
         }
 

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>$(NetVersion)-android;$(NetVersion)-ios;$(NetVersion)-maccatalyst</TargetFrameworks>
@@ -7,7 +7,7 @@
 		<SingleProject>true</SingleProject>
 
 		<!-- Runtime switch: set UseMono=true to compile with Mono runtime -->
-		<UseMono Condition="'$(UseMono)' == ''">true</UseMono>
+		<UseMono Condition="'$(UseMono)' == ''">false</UseMono>
 
 		<!-- Separate intermediate and output dirs per runtime so icon/asset caches
 		     never collide between a CoreCLR build and a Mono build. Without this,
@@ -73,6 +73,14 @@
 
 	</PropertyGroup>
 
+	<!-- Startup PGO: custom MIBC profile captured on-device (see Profiling/).
+	     Partial R2R precompiles the app's hot startup path on top of the
+	     default MIBC profiles the MAUI workload already ships for CoreCLR.
+	     Override with -p:DisableStartupPgo=true for A/B measurements. -->
+	<ItemGroup Condition="'$(Configuration)' == 'Release' and $(TargetFramework.Contains('-android')) and '$(UseMono)' != 'true' and '$(DisableStartupPgo)' != 'true'">
+		<_ReadyToRunPgoFiles Include="Profiling\android-startup.mibc" />
+	</ItemGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|$(NetVersion)-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
@@ -114,12 +122,22 @@
         <BundleResource Include="GoogleService-Info.plist" />
     </ItemGroup>
 
+	<!-- Startup profiling (opt-in): dotnet build -c Release -p:EnableStartupProfiling=true
+	     Embeds the on-device EventPipe capture environment and makes the APK debuggable
+	     so the .nettrace can be pulled via adb run-as. CoreCLR only — EventPipe/runtime
+	     PGO knobs in the .env are meaningless (ignored) on Mono. -->
+	<ItemGroup Condition="'$(EnableStartupProfiling)' == 'true' and $(TargetFramework.Contains('-android')) and '$(UseMono)' != 'true'">
+		<AndroidEnvironment Include="Profiling\startup-profiling.env" />
+	</ItemGroup>
+	<Import Project="Profiling\StartupProfiling.targets" Condition="'$(EnableStartupProfiling)' == 'true' and $(TargetFramework.Contains('-android')) and '$(UseMono)' != 'true'" />
+
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" />
 		<PackageReference Include="Microsoft.Maui.Controls" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" />
 		<PackageReference Include="Microsoft.Maui.Core" />
+		<PackageReference Include="Microsoft.Maui.ProfilingHelper" />
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" />
 	</ItemGroup>

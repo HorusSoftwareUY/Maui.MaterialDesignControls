@@ -7,6 +7,8 @@
     <PackageVersion Update="Microsoft.Maui.Core" Version="11.0.0-preview.5.26304.4" />
     <!-- CommunityToolkit.Maui 14.2.0 targets net10.0 but is compatible via NuGet fallback -->
     <PackageVersion Update="CommunityToolkit.Maui" Version="14.2.0" />
+    <!-- Startup profiling helper (maui profile startup): no-op unless running under the profiler -->
+    <PackageVersion Include="Microsoft.Maui.ProfilingHelper" Version="0.1.0-preview.12.26368.2" />
     <PackageVersion Include="SkiaSharp.Views.Maui.Controls" Version="4.148.0" />
   </ItemGroup>
   <ItemGroup>
