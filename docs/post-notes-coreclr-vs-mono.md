@@ -963,3 +963,14 @@ En el post anterior se publicó:
 Vale aclarar explícitamente en el próximo post que "profiling" abarcaba dos cosas distintas:
 
 > *"By 'profiling' we meant two things: measuring where startup time goes (StartupProfiler — a Stopwatch-based timeline that runs on both Mono and CoreCLR), and feeding a real startup profile to the CoreCLR R2R compiler (PGO via `.mibc`) so it pre-compiles the hot methods for this specific app. The first gives us data; the second uses that data to actually reduce startup time."*
+
+### ⚠️ Estado actual: `maui profile startup` incompatible con .NET 11 preview
+
+Al intentar correr `maui profile startup` contra .NET 11 preview se encontraron dos problemas:
+
+1. **`dotnet-pgo` clonado de `release/10.0`** — la herramienta `maui` CLI (preview 12) apunta a .NET 10, no a .NET 11.
+2. **`EndOfStreamException` en `IpcHeader.ParseAsync`** — `dotnet-trace` 9.0 no puede establecer el protocolo de diagnóstico con el runtime .NET 11 preview. Incompatibilidad de versiones en el protocolo EventPipe.
+
+**Todo el scaffolding ya está integrado en el proyecto** (`MauiProfilingHelper`, `MauiProfilingMarker.Complete()`, `MauiProfilingHelperEnableRuntimePgo`, `PublishReadyToRunAdditionalArgs`). Cuando .NET 11 salga estable y `maui` CLI se actualice, el comando funcionará sin cambios de código.
+
+**Mientras tanto:** usar `StartupProfiler` + `adb logcat -s STARTUP_PROFILE` para la comparativa Mono vs CoreCLR — funciona en ambos runtimes y ya está integrado.
