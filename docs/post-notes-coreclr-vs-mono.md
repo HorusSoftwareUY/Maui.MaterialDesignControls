@@ -714,6 +714,45 @@ adb logcat -s STARTUP_PROFILE
 [STARTUP_PROFILE]   --- TOTAL STARTUP: 750 ms ---
 ```
 
+### Cómo capturar los tiempos en el dispositivo
+
+El `StartupProfiler` escribe en logcat. El `Dump()` es idempotente (solo dispara una vez por proceso), así que hay que hacer **Force Stop** antes de cada medición para obtener un cold start limpio.
+
+**Workflow para CoreCLR (dos terminales):**
+
+```bash
+# Terminal 1 — dejar escuchando ANTES de abrir la app
+adb logcat -s STARTUP_PROFILE
+
+# Terminal 2 — force stop + abrir
+adb shell am force-stop com.horusstudio.maui.materialdesigncontrols.sample.coreclr
+adb shell am start -n com.horusstudio.maui.materialdesigncontrols.sample.coreclr/com.horusstudio.maui.materialdesigncontrols.sample.MainActivity
+```
+
+**Workflow para Mono:**
+
+```bash
+# Terminal 1
+adb logcat -s STARTUP_PROFILE
+
+# Terminal 2
+adb shell am force-stop com.horusstudio.maui.materialdesigncontrols.sample.mono
+adb shell am start -n com.horusstudio.maui.materialdesigncontrols.sample.mono/com.horusstudio.maui.materialdesigncontrols.sample.MainActivity
+```
+
+**Guardar output a archivo para comparar:**
+
+```bash
+# Terminal 1 — redirigir a archivo mientras se captura
+adb logcat -c && adb logcat -s STARTUP_PROFILE | tee coreclr.txt
+# (en otra sesión, una vez que aparece el output: Ctrl+C)
+
+# Repetir para Mono
+adb logcat -c && adb logcat -s STARTUP_PROFILE | tee mono.txt
+```
+
+> ⚠️ `adb logcat -c` limpia el buffer previo. Correrlo antes de abrir la app evita capturar tiempos de una ejecución anterior.
+
 ### Cómo usarlo
 
 ```bash
@@ -737,5 +776,30 @@ dotnet build -p:UseMono=false -p:EnableStartupProfiling=false -f net11.0-android
 - Hipótesis a validar: `AutoConfigureViewModelsAndPages` (reflexión) y `builder.Build()` (DI) son iguales en ambos runtimes → explican la similitud en el total
 - Si el cuello es `UseMaterialDesignControls` o `UseSkiaSharp`, vale la pena agregar Layer 2 (atrace) para ver si hay I/O o binder calls detrás
 - Documentar los números reales y agregar al post como tabla comparativa
+
+### `maui profile startup` — aclaración sobre el nombre
+
+`maui profile startup` es el **comando CLI oficial de MAUI** para medir el startup. El nombre puede confundir:
+
+- **"profile"** acá es el **verbo** (perfilar = medir performance), no el sustantivo. No tiene relación directa con PGO por defecto.
+- Internamente usa `dotnet-trace` (EventPipe de CoreCLR) — por eso **solo funciona en CoreCLR**, no en Mono.
+- A diferencia de `StartupProfiler` (que es C# puro y mide fases que vos definís), `maui profile startup` captura internals del runtime: qué métodos se JITearon, carga de assemblies, GC, etc.
+
+La conexión con PGO es **opcional**: si se corre con `-p:MauiProfilingHelperEnableRuntimePgo=true`, además de la traza de diagnóstico genera un `.mibc` (Managed IL Block) con datos de PGO. Ese `.mibc` se puede alimentar al compilador R2R en el siguiente build para que precompile exactamente los métodos hot del startup.
+
+```
+maui profile startup (solo mide)
+    ↓ con MauiProfilingHelperEnableRuntimePgo=true
+genera startup.mibc (datos de qué métodos son hot)
+    ↓ se pasa a crossgen2 en el siguiente build
+R2R precompila los métodos hot → startup más rápido
+```
+
+| Herramienta | Propósito | Funciona en Mono |
+|---|---|---|
+| `StartupProfiler` (nuestro) | Medir fases definidas en C# | ✅ |
+| `maui profile startup` | Medir internals del runtime con dotnet-trace | ❌ (CoreCLR only) |
+| `MauiProfilingHelperEnableRuntimePgo` | Generar `.mibc` para optimizar builds futuros | ❌ (CoreCLR only) |
+| `AndroidEnableProfiledAot` | Equivalente de PGO para Mono — precompila métodos hot | ✅ (Mono only) |
 
 *Agregado: 2026-07-23*
