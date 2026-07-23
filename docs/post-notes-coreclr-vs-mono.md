@@ -953,3 +953,13 @@ adb logcat -s STARTUP_PROFILE | tee coreclr-pgo.txt
 | **TOTAL** | **— ms** | **— ms** | **— ms** |
 
 *Pendiente de mediciones — actualizar después de correr `maui profile startup` y reinstalar ambas apps.*
+
+### Nota para el próximo post — distinguir "profiling" del post anterior
+
+En el post anterior se publicó:
+
+> *"we didn't profile the app itself in this round (traces / startup profiles). That's for the next round, where CoreCLR's startup should come down a bit more with profiling 🙌"*
+
+Vale aclarar explícitamente en el próximo post que "profiling" abarcaba dos cosas distintas:
+
+> *"By 'profiling' we meant two things: measuring where startup time goes (StartupProfiler — a Stopwatch-based timeline that runs on both Mono and CoreCLR), and feeding a real startup profile to the CoreCLR R2R compiler (PGO via `.mibc`) so it pre-compiles the hot methods for this specific app. The first gives us data; the second uses that data to actually reduce startup time."*
