@@ -818,14 +818,14 @@ Se integró el paquete `Microsoft.Maui.ProfilingHelper` y el CLI `maui` para pod
 |---|---|---|
 | `Microsoft.Maui.ProfilingHelper` NuGet | `.csproj` (CoreCLR Android only) | Expone `MauiProfilingMarker.Complete()` para señalizar fin del startup a la herramienta |
 | `MauiProfilingMarker.Complete()` | `BaseContentPage.OnAppearing` (gated `!USE_MONO`) | Detiene la traza de `maui profile startup` automáticamente al llegar al primer frame |
-| `PublishReadyToRunAdditionalArgs` | `.csproj` Release CoreCLR | Pasa `--mibc Profiling/startup.mibc` a `crossgen2` cuando el archivo existe |
+| `<_ReadyToRunPgoFiles>` ItemGroup | `.csproj` Release CoreCLR | Pasa `android-startup.mibc` a `crossgen2` cuando el archivo existe (MSBuild item correcto) |
 | `Profiling/README.md` | `samples/.../Profiling/` | Instrucciones para generar y regenerar el `.mibc` |
 | `Microsoft.Maui.Cli` tool | Global (`~/.dotnet/tools`) | Provee el comando `maui profile startup` |
 
 ### Instalación del CLI (one-time)
 
 ```bash
-dotnet tool install -g Microsoft.Maui.Cli --version "0.1.0-preview.12.26368.2"
+dotnet tool install -g Microsoft.Maui.Cli --prerelease
 # Agregar al PATH si no está:
 export PATH="$PATH:/Users/$USER/.dotnet/tools"
 ```
@@ -837,14 +837,7 @@ export PATH="$PATH:/Users/$USER/.dotnet/tools"
 cd samples/HorusStudio.Maui.MaterialDesignControls.Sample
 
 # Correr la sesión de profiling (build + deploy + profiling en un solo paso)
-maui profile startup \
-  --framework net11.0-android \
-  --configuration Release \
-  -p:MauiProfilingHelperEnableRuntimePgo=true \
-  --format mibc \
-  --stopping-event-provider-name Microsoft.Maui.ProfilingHelper \
-  --stopping-event-event-name StartupComplete \
-  --output Profiling/startup.mibc
+maui profile startup --format mibc
 ```
 
 La herramienta:
@@ -854,16 +847,17 @@ La herramienta:
 4. Conecta `dotnet-trace` inmediatamente
 5. La reanuda — el startup corre bajo traza
 6. Cuando `MauiProfilingMarker.Complete()` se dispara (first `OnAppearing`), la traza se detiene automáticamente
-7. Genera `Profiling/startup.mibc`
+7. Genera `android-startup.mibc` en el directorio actual → mover a `Profiling/`
 
 ### Activación automática en el siguiente build
 
-Una vez que `Profiling/startup.mibc` existe, el `.csproj` lo pasa automáticamente a `crossgen2`:
+Una vez que `Profiling/android-startup.mibc` existe, el `.csproj` lo pasa automáticamente a `crossgen2`
+usando el MSBuild item correcto (`_ReadyToRunPgoFiles`, como muestran los MVPs de MAUI en sus presentaciones):
 
 ```xml
-<PublishReadyToRunAdditionalArgs Condition="Exists('Profiling\startup.mibc')">
-  --mibc:Profiling\startup.mibc
-</PublishReadyToRunAdditionalArgs>
+<ItemGroup Condition="Exists('Profiling\android-startup.mibc')">
+  <_ReadyToRunPgoFiles Include="Profiling\android-startup.mibc" />
+</ItemGroup>
 ```
 
 No hace falta ningún flag extra — simplemente buildear en Release CoreCLR ya usa el perfil.
@@ -871,11 +865,13 @@ No hace falta ningún flag extra — simplemente buildear en Release CoreCLR ya 
 ### Comparar con y sin PGO
 
 ```bash
-# Con PGO (si startup.mibc existe)
+# Con PGO (si android-startup.mibc existe)
 dotnet build -p:UseMono=false -c Release -f net11.0-android
 
-# Sin PGO (forzar ignorar el .mibc)
-dotnet build -p:UseMono=false -c Release -f net11.0-android -p:PublishReadyToRunAdditionalArgs=""
+# Sin PGO (renombrar o eliminar el .mibc temporalmente)
+mv Profiling/android-startup.mibc Profiling/android-startup.mibc.bak
+dotnet build -p:UseMono=false -c Release -f net11.0-android
+mv Profiling/android-startup.mibc.bak Profiling/android-startup.mibc
 ```
 
 ### Cuándo regenerar el `.mibc`
