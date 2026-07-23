@@ -18,5 +18,6 @@
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageVersion Include="Xamarin.Firebase.Analytics" Version="122.3.0.2" />
     <PackageVersion Include="Xamarin.Firebase.Crashlytics" Version="119.4.2.1" />
+    <PackageVersion Include="Microsoft.Maui.ProfilingHelper" Version="0.1.0-preview.12.26368.2" />
   </ItemGroup>
 </Project>

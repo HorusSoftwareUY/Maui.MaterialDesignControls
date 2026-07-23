@@ -92,6 +92,11 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages
                 HorusStudio.Maui.MaterialDesignControls.Sample.Utils.StartupProfiler.Mark($"First OnAppearing: {GetType().Name}");
                 HorusStudio.Maui.MaterialDesignControls.Sample.Utils.StartupProfiler.Dump();
 #endif
+#if !USE_MONO
+                // Signal maui profile startup to stop the dotnet-trace session.
+                // No-op when not running inside a 'maui profile startup' session.
+                Microsoft.Maui.ProfilingHelper.MauiProfilingMarker.Complete();
+#endif
             }
         }
 

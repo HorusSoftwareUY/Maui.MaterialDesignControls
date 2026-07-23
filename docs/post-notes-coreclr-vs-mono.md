@@ -802,4 +802,86 @@ R2R precompila los métodos hot → startup más rápido
 | `MauiProfilingHelperEnableRuntimePgo` | Generar `.mibc` para optimizar builds futuros | ❌ (CoreCLR only) |
 | `AndroidEnableProfiledAot` | Equivalente de PGO para Mono — precompila métodos hot | ✅ (Mono only) |
 
+---
+
+## ⚡ Setup de `maui profile startup` + PGO para CoreCLR
+
+**Fecha:** 2026-07-23
+
+### Qué se hizo
+
+Se integró el paquete `Microsoft.Maui.ProfilingHelper` y el CLI `maui` para poder correr sesiones de profiling de startup con `dotnet-trace` y opcionalmente generar datos de PGO (`.mibc`) para optimizar builds futuros de CoreCLR.
+
+### Componentes agregados
+
+| Componente | Dónde | Qué hace |
+|---|---|---|
+| `Microsoft.Maui.ProfilingHelper` NuGet | `.csproj` (CoreCLR Android only) | Expone `MauiProfilingMarker.Complete()` para señalizar fin del startup a la herramienta |
+| `MauiProfilingMarker.Complete()` | `BaseContentPage.OnAppearing` (gated `!USE_MONO`) | Detiene la traza de `maui profile startup` automáticamente al llegar al primer frame |
+| `PublishReadyToRunAdditionalArgs` | `.csproj` Release CoreCLR | Pasa `--mibc Profiling/startup.mibc` a `crossgen2` cuando el archivo existe |
+| `Profiling/README.md` | `samples/.../Profiling/` | Instrucciones para generar y regenerar el `.mibc` |
+| `Microsoft.Maui.Cli` tool | Global (`~/.dotnet/tools`) | Provee el comando `maui profile startup` |
+
+### Instalación del CLI (one-time)
+
+```bash
+dotnet tool install -g Microsoft.Maui.Cli --version "0.1.0-preview.12.26368.2"
+# Agregar al PATH si no está:
+export PATH="$PATH:/Users/$USER/.dotnet/tools"
+```
+
+### Workflow completo para generar el `.mibc`
+
+```bash
+# Desde el directorio del sample project:
+cd samples/HorusStudio.Maui.MaterialDesignControls.Sample
+
+# Correr la sesión de profiling (build + deploy + profiling en un solo paso)
+maui profile startup \
+  --framework net11.0-android \
+  --configuration Release \
+  -p:MauiProfilingHelperEnableRuntimePgo=true \
+  --format mibc \
+  --stopping-event-provider-name Microsoft.Maui.ProfilingHelper \
+  --stopping-event-event-name StartupComplete \
+  --output Profiling/startup.mibc
+```
+
+La herramienta:
+1. Hace el build en Release
+2. Instala la app en el dispositivo
+3. La lanza **suspendida**
+4. Conecta `dotnet-trace` inmediatamente
+5. La reanuda — el startup corre bajo traza
+6. Cuando `MauiProfilingMarker.Complete()` se dispara (first `OnAppearing`), la traza se detiene automáticamente
+7. Genera `Profiling/startup.mibc`
+
+### Activación automática en el siguiente build
+
+Una vez que `Profiling/startup.mibc` existe, el `.csproj` lo pasa automáticamente a `crossgen2`:
+
+```xml
+<PublishReadyToRunAdditionalArgs Condition="Exists('Profiling\startup.mibc')">
+  --mibc:Profiling\startup.mibc
+</PublishReadyToRunAdditionalArgs>
+```
+
+No hace falta ningún flag extra — simplemente buildear en Release CoreCLR ya usa el perfil.
+
+### Comparar con y sin PGO
+
+```bash
+# Con PGO (si startup.mibc existe)
+dotnet build -p:UseMono=false -c Release -f net11.0-android
+
+# Sin PGO (forzar ignorar el .mibc)
+dotnet build -p:UseMono=false -c Release -f net11.0-android -p:PublishReadyToRunAdditionalArgs=""
+```
+
+### Cuándo regenerar el `.mibc`
+
+- Al agregar nuevas páginas o servicios al startup
+- Después de un upgrade mayor de MAUI / .NET
+- Si el startup regresa a tiempos similares al de Mono inesperadamente
+
 *Agregado: 2026-07-23*
