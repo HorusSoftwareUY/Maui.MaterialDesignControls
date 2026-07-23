@@ -885,3 +885,71 @@ dotnet build -p:UseMono=false -c Release -f net11.0-android -p:PublishReadyToRun
 - Si el startup regresa a tiempos similares al de Mono inesperadamente
 
 *Agregado: 2026-07-23*
+
+---
+
+## 📊 Próximo post: comparativa con PGO habilitado
+
+**Fecha:** 2026-07-23 (pendiente de mediciones reales)
+
+### Objetivo
+
+Comparar el startup de tres configuraciones:
+
+| Configuración | Runtime | Pre-compilación | Estado |
+|---|---|---|---|
+| Mono + AOT | Mono | AOT full (perfil default .NET) | ✅ baseline medido |
+| CoreCLR + R2R (sin PGO) | CoreCLR | R2R genérico | ✅ baseline medido |
+| CoreCLR + R2R + PGO | CoreCLR | R2R optimizado con perfil real de la app | ⏳ pendiente |
+
+### Por qué "profiling" aparece en dos contextos distintos
+
+La misma palabra tiene dos significados en este contexto:
+
+| Contexto | "Profiling" significa | Quién se beneficia | Ejemplo |
+|---|---|---|---|
+| **Diagnóstico** | Medir tiempos para encontrar cuellos de botella | El desarrollador | `StartupProfiler`, `maui profile startup` (traza) |
+| **PGO (Profile-Guided Optimization)** | Recolectar el *perfil de comportamiento* de la app para que el compilador optimice mejor | El compilador / los usuarios finales | `maui profile startup --format mibc`, `.mibc` → `crossgen2` |
+
+En PGO, el "perfil" es el dato recolectado sobre qué métodos corren, con qué frecuencia y qué ramas se toman. El compilador usa ese perfil para generar mejor código nativo. Es la misma raíz semántica pero con propósito completamente distinto.
+
+### Qué NO cambia en Mono
+
+El build de Mono no se toca — `MauiProfilingHelperEnableRuntimePgo` solo se activa cuando `UseMono != true` y el paquete `Microsoft.Maui.ProfilingHelper` solo se referencia en CoreCLR Android. Los comandos de logcat para capturar tiempos siguen funcionando igual para ambos runtimes:
+
+```bash
+# Tiempos Mono (sin cambios)
+adb logcat -c
+adb shell am force-stop com.horusstudio.maui.materialdesigncontrols.sample.mono
+adb shell am start -n com.horusstudio.maui.materialdesigncontrols.sample.mono/com.horusstudio.maui.materialdesigncontrols.sample.MainActivity
+adb logcat -s STARTUP_PROFILE | tee mono.txt
+
+# Tiempos CoreCLR + R2R + PGO (después de generar el .mibc)
+adb logcat -c
+adb shell am force-stop com.horusstudio.maui.materialdesigncontrols.sample.coreclr
+adb shell am start -n com.horusstudio.maui.materialdesigncontrols.sample.coreclr/com.horusstudio.maui.materialdesigncontrols.sample.MainActivity
+adb logcat -s STARTUP_PROFILE | tee coreclr-pgo.txt
+```
+
+### Hipótesis para el post
+
+- **CoreCLR + R2R + PGO debería ganarle a Mono + AOT en startup total** — el PGO optimiza exactamente los métodos de *esta* app, mientras que el AOT de Mono usa perfiles genéricos del equipo de .NET
+- **Las fases de C# puro (`builder.Build()`, `AutoConfigurePages`) seguirán iguales** — son independientes del runtime y del PGO
+- **La diferencia real debería verse en `UseMaterialDesignControls` y `UseSkiaSharp`** — ahí el JIT/AOT sí importa
+
+### Tabla de resultados (completar con mediciones reales)
+
+| Fase | Mono + AOT | CoreCLR R2R | CoreCLR R2R + PGO |
+|---|---|---|---|
+| `MainApplication.ctor` | — ms | — ms | — ms |
+| `CreateBuilder()` | — ms | — ms | — ms |
+| `UseSkiaSharp` | — ms | — ms | — ms |
+| `UseMauiCommunityToolkit` | — ms | — ms | — ms |
+| `UseMaterialDesignControls` | — ms | — ms | — ms |
+| `AutoConfigurePages` | — ms | — ms | — ms |
+| `builder.Build()` | — ms | — ms | — ms |
+| `App.InitializeComponent` | — ms | — ms | — ms |
+| `MainPage = AppShell` | — ms | — ms | — ms |
+| **TOTAL** | **— ms** | **— ms** | **— ms** |
+
+*Pendiente de mediciones — actualizar después de correr `maui profile startup` y reinstalar ambas apps.*

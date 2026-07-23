@@ -41,6 +41,8 @@
 		<!-- Startup profiling: enabled by default; override with -p:EnableStartupProfiling=false to disable -->
 		<EnableStartupProfiling Condition="'$(EnableStartupProfiling)' == ''">true</EnableStartupProfiling>
 		<DefineConstants Condition="'$(EnableStartupProfiling)' == 'true'">$(DefineConstants);ENABLE_STARTUP_PROFILING</DefineConstants>
+		<!-- Enable runtime PGO during maui profile startup sessions to generate optimized .mibc data -->
+		<MauiProfilingHelperEnableRuntimePgo Condition="'$(UseMono)' != 'true'">true</MauiProfilingHelperEnableRuntimePgo>
 	</PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
@@ -75,8 +77,7 @@
              with MauiProfilingHelperEnableRuntimePgo=true), feed it to crossgen2 so the R2R
              precompilation targets exactly the methods that are hot during startup.
              Collect the profile once, commit it, and every subsequent Release build benefits.
-             To regenerate: maui profile startup -f net11.0-android -p:MauiProfilingHelperEnableRuntimePgo=true
-                            --format mibc --output Profiling/startup.mibc -->
+             To regenerate: see Profiling/README.md -->
         <PublishReadyToRunAdditionalArgs Condition="'$(UseMono)' != 'true' and Exists('$(MSBuildThisFileDirectory)Profiling\startup.mibc')">--mibc:$(MSBuildThisFileDirectory)Profiling\startup.mibc</PublishReadyToRunAdditionalArgs>
 
 		<AndroidEnableMarshalMethods Condition="'$(UseMono)' == 'true'">false</AndroidEnableMarshalMethods>
