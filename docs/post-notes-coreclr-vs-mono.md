@@ -649,3 +649,42 @@ O bien, activar el linker (que también resuelve el crash pero agrega tiempo de 
 Abierto desde 2022 en el repo `dotnet/android`. No tiene fecha de fix confirmada. El crash se reproduce tanto en .NET 6/7/8 como en .NET 11 preview con Mono.
 
 *Agregado: 2026-07-14*
+
+---
+
+## Nota 9 — Startup PGO con MIBC custom (CoreCLR): −33% en cold start
+
+> Procedimiento completo, comandos y workarounds: [`startup-pgo-coreclr.md`](startup-pgo-coreclr.md). Esta nota es el resumen para el post.
+
+### Qué se hizo
+
+Se generó un perfil **MIBC custom** de la sample app (12.535 métodos, ~176 KB) y se integró al build R2R de CoreCLR vía `<_ReadyToRunPgoFiles>`. El flujo oficial (`maui profile startup --format mibc` de [dotnet/maui-labs](https://github.com/dotnet/maui-labs)) está roto en este preview ([dotnet/maui#36637](https://github.com/dotnet/maui/issues/36637): la traza sale truncada), así que se capturó la traza **on-device** (`DOTNET_EventPipeOutputPath`), se reparó el trailer del `.nettrace` (1 byte `0x01` faltante) y se convirtió con `dotnet-pgo create-mibc` **excluyendo la capa JNI** (`Java.Interop|Java.Lang|Mono.Android|Android.Runtime`): sin ese filtro la app crashea al arrancar (`TypeInitializationException` en `ManagedPeer..cctor`, bug de crossgen2 del preview). Instrumentación con `Microsoft.Maui.ProfilingHelper` + marcador one-shot en `BaseContentPage.OnNavigatedTo`.
+
+### Resultados (cold start, `adb shell am start -W` TotalTime, 10 corridas c/u, moto g54 5G físico, arm64, Release)
+
+| Variante | Mediana | Rango | Δ vs Mono |
+|---|---|---|---|
+| **Mono + AOT** (aotprofile default) | ~4.339 ms | 4.292–4.415 | baseline |
+| **CoreCLR R2R** (mibc default del workload) | ~4.246 ms | 4.182–4.364 | −2% |
+| **CoreCLR R2R + mibc custom** | **~2.893 ms** | 2.872–2.914 | **−33%** |
+
+- CoreCLR "pelado" apenas empata a Mono+AOT en startup; **el mibc custom es lo que destraba la ventaja** (−32% sobre CoreCLR default) y además es mucho más consistente (desvío ~15 ms vs ~60 ms).
+- crossgen2 queda con **4 perfiles**: los 3 default del workload MAUI + el custom (el custom es aditivo, no reemplaza).
+- Tamaños APK arm64-only: CoreCLR+mibc ~30 MB / Mono ~29 MB (el "45 MB" que se vio alguna vez era la slice x86_64 que empaqueta un build CLI de Mono sin `-r`, no tiene relación con el profiling).
+- Escape para A/B: `-p:DisableStartupPgo=true` (CoreCLR sin custom) y `-p:UseMono=true` (Mono). Los paquetes `.coreclr` y `.mono` conviven instalados por applicationId distinto.
+
+### Alcance y mantenimiento
+
+- El mibc es de la **app** (no de la librería): regenerar si cambia el startup path (MauiProgram, App, AppShell, primera página) o al bumpaer MAUI/dependencias grandes (~15 min).
+- El workload trae mibc default **solo para Android**; iOS quedó fuera de alcance (el tooling de captura de MAUI Labs solo soporta simulador en iOS).
+- Pendiente opcional: el equivalente en Mono (`*.aotprofile` custom) para completar la comparativa con una 4ª variante (ver §7 del doc de procedimiento).
+
+### Archivos involucrados
+
+- `samples/.../Profiling/android-startup.mibc` (perfil generado)
+- `samples/.../Profiling/StartupProfiling.targets` + `startup-profiling.env` (build de captura opt-in con `-p:EnableStartupProfiling=true`)
+- Sample `.csproj` → `<_ReadyToRunPgoFiles>` (solo CoreCLR Release Android)
+- `Pages/BaseContentPage.cs` → marcador `MauiProfilingMarker.Complete()`
+- `tools/tracecheck/` (validador/reparador de nettrace; `tools/**` está gitignored)
+
+*Agregado: 2026-07-23*
