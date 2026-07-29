@@ -7,7 +7,7 @@
 		<SingleProject>true</SingleProject>
 
 		<!-- Runtime switch: set UseMono=true to compile with Mono runtime -->
-		<UseMono Condition="'$(UseMono)' == ''">false</UseMono>
+		<UseMono Condition="'$(UseMono)' == ''">true</UseMono>
 
 		<!-- Separate intermediate and output dirs per runtime so icon/asset caches
 		     never collide between a CoreCLR build and a Mono build. Without this,
