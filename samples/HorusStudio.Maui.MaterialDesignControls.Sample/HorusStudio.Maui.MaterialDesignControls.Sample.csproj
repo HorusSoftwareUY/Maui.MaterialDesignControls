@@ -118,9 +118,9 @@
         <GoogleServicesJson Include="Platforms\Android\google-services.json" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-ios' and '$(Configuration)' == 'Release'">
+    <!-- <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-ios' and '$(Configuration)' == 'Release'">
         <BundleResource Include="GoogleService-Info.plist" />
-    </ItemGroup>
+    </ItemGroup> -->
 
 	<!-- Startup profiling (opt-in): dotnet build -c Release -p:EnableStartupProfiling=true
 	     Embeds the on-device EventPipe capture environment and makes the APK debuggable

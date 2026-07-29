@@ -19,7 +19,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-#if RELEASE
+#if RELEASE && ANDROID
                 .InitFirebase()
 #endif
                 .UseSkiaSharp()
