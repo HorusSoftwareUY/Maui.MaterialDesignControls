@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:models="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Models"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.BenchmarkListPage"
+    x:TypeArguments="vm:BenchmarkListViewModel"
+    x:DataType="vm:BenchmarkListViewModel"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- Top app bar -->
+        <material:MaterialTopAppBar
+            Grid.Row="0"
+            Headline="{Binding Title}"
+            Description="{Binding Subtitle}"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIconIsBusy="{Binding Path=GoBackCommand.IsRunning}"
+            LeadingIcon="ic_back.png"
+            Type="Large" />
+
+        <!-- Sticky stats panel -->
+        <VerticalStackLayout Grid.Row="1" Spacing="0">
+
+            <material:MaterialCard
+                Type="Filled"
+                Margin="16,8"
+                Padding="16,12">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="4">
+
+                    <material:MaterialLabel
+                        Grid.Row="0"
+                        Text="{Binding TotalText}"
+                        Type="LabelLarge" />
+
+                    <material:MaterialDivider Grid.Row="1" Margin="0,6" />
+
+                    <!-- Phase rows -->
+                    <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
+                        <material:MaterialLabel Grid.Column="0" Text="1. JSON deserialize" Type="BodySmall" />
+                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase1Text}" Type="LabelMedium" />
+                    </Grid>
+                    <Grid Grid.Row="3" ColumnDefinitions="*,Auto">
+                        <material:MaterialLabel Grid.Column="0" Text="2. LINQ map + sort" Type="BodySmall" />
+                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase2Text}" Type="LabelMedium" />
+                    </Grid>
+                    <Grid Grid.Row="4" ColumnDefinitions="*,Auto">
+                        <material:MaterialLabel Grid.Column="0" Text="3. Date parse + format" Type="BodySmall" />
+                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase3Text}" Type="LabelMedium" />
+                    </Grid>
+                    <Grid Grid.Row="5" ColumnDefinitions="*,Auto">
+                        <material:MaterialLabel Grid.Column="0" Text="4. Bind collection" Type="BodySmall" />
+                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase4Text}" Type="LabelMedium" />
+                    </Grid>
+
+                </Grid>
+            </material:MaterialCard>
+
+            <!-- Error label (only visible on crash) -->
+            <material:MaterialLabel
+                Text="{Binding ErrorText}"
+                TextColor="{x:Static material:MaterialLightTheme.Error}"
+                Type="BodySmall"
+                Margin="16,0,16,4"
+                IsVisible="{Binding HasError}" />
+
+            <!-- Reload button -->
+            <material:MaterialButton
+                Text="Reload benchmark"
+                Command="{Binding LoadItemsCommand}"
+                IsEnabled="{Binding IsLoading, Converter={StaticResource ReverseBoolConverter}}"
+                Type="Tonal"
+                Margin="16,0,16,8"
+                HorizontalOptions="Fill" />
+
+        </VerticalStackLayout>
+
+        <!-- CollectionView fills remaining height — virtualization active, no nested ScrollView -->
+        <CollectionView
+            x:Name="CollectionViewRef"
+            Grid.Row="2"
+            ItemsSource="{Binding Items}"
+            ItemsLayout="VerticalList">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:BenchmarkItem">
+                    <Grid Padding="16,3">
+                        <Border
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="Transparent"
+                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerHighest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerHighest}}">
+                            <Grid
+                                ColumnDefinitions="Auto,*,Auto"
+                                ColumnSpacing="12"
+                                Padding="12,10">
+
+                                <!-- Score badge -->
+                                <Grid
+                                    Grid.Column="0"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    VerticalOptions="Center">
+                                    <BoxView
+                                        Color="{Binding ScoreColor}"
+                                        CornerRadius="20"
+                                        WidthRequest="40"
+                                        HeightRequest="40" />
+                                    <Label
+                                        Text="{Binding ScoreText}"
+                                        FontSize="12"
+                                        FontAttributes="Bold"
+                                        TextColor="White"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                </Grid>
+
+                                <!-- Main content -->
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Spacing="1"
+                                    VerticalOptions="Center">
+                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" />
+                                    <Label Text="{Binding Email}" FontSize="11" />
+                                    <Label Text="{Binding TagsDisplay}" FontSize="11" />
+                                </VerticalStackLayout>
+
+                                <!-- Right column: department + date + status -->
+                                <VerticalStackLayout
+                                    Grid.Column="2"
+                                    Spacing="2"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="End">
+                                    <Label Text="{Binding Department}" FontSize="11" FontAttributes="Bold" HorizontalOptions="End" />
+                                    <Label Text="{Binding FormattedDate}" FontSize="10" HorizontalOptions="End" />
+                                    <Label
+                                        Text="{Binding StatusLabel}"
+                                        TextColor="{Binding StatusColor}"
+                                        FontSize="11"
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="End" />
+                                </VerticalStackLayout>
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Spacing="8"
+                    Padding="32">
+                    <ActivityIndicator
+                        IsRunning="{Binding IsLoading}"
+                        IsVisible="{Binding IsLoading}"
+                        HorizontalOptions="Center" />
+                    <material:MaterialLabel
+                        Text="No items loaded"
+                        Type="BodyMedium"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsLoading, Converter={StaticResource ReverseBoolConverter}}" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+        </CollectionView>
+
+    </Grid>
+</local:BaseContentPage>

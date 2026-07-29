@@ -1,10 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HorusStudio.Maui.MaterialDesignControls.MaterialInputBase"
              xmlns:converters="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Converters"
-             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls"
-             x:Name="InputBase">
+             xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls">
     <ContentView.Resources>
         <Thickness x:Key="DefaultHorizontalPadding">16,0</Thickness>
         <Thickness x:Key="DefaultVerticalPadding">0,8</Thickness>
@@ -14,14 +13,12 @@
 
         <converters:IsNotNullConverter x:Key="IsNotNull" />
         <converters:IsNotNullOrEmptyConverter x:Key="IsNotNullOrEmpty" />
-        <converters:TrailingIconIsVisibleConverter x:Key="IsTrailingIconVisible" />
-        <converters:TrailingIconSourceConverter x:Key="TrailingIconSource" />
         <converters:AutomationIdConverter x:Key="AutomationIdConverter" />
         <material:HalfHeightToMarginConverter x:Key="HalfHeightToMarginConverter" />
         
         <Style x:Key="MainBorder" TargetType="material:BorderButton">
-            <Setter Property="HeightRequest" Value="{Binding HeightRequest, Source={x:Reference InputBase}}" />
-            <Setter Property="Background" Value="{Binding Background, Source={x:Reference InputBase}}" />
+            <Setter Property="HeightRequest" Value="{TemplateBinding HeightRequest}" />
+            <Setter Property="Background" Value="{TemplateBinding Background}" />
         </Style>
         
         <Style x:Key="FilledBorder" TargetType="material:BorderButton" BaseResourceKey="MainBorder">
@@ -29,8 +26,8 @@
         </Style>
         
         <Style x:Key="OutlinedBorder" TargetType="material:BorderButton" BaseResourceKey="MainBorder">
-            <Setter Property="Stroke" Value="{Binding BorderColor, Source={x:Reference InputBase}}" />
-            <Setter Property="StrokeThickness" Value="{Binding InternalBorderWidth, Source={x:Reference InputBase}}" />
+            <Setter Property="Stroke" Value="{TemplateBinding BorderColor}" />
+            <Setter Property="StrokeThickness" Value="{TemplateBinding InternalBorderWidth}" />
         </Style>
         
         <Style x:Key="MainContent" TargetType="StackLayout">
@@ -44,8 +41,8 @@
             <Style.Triggers>
                 <MultiTrigger TargetType="StackLayout">
                     <MultiTrigger.Conditions>
-                        <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
-                        <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                        <BindingCondition Binding="{TemplateBinding IsFocused}" Value="false" />
+                        <BindingCondition Binding="{TemplateBinding Text, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
                     </MultiTrigger.Conditions>
                     <Setter Property="Margin" Value="{StaticResource DefaultVerticalPadding}" />
                 </MultiTrigger>
@@ -68,27 +65,27 @@
 
         <Style x:Key="Placeholder" TargetType="Label">
             <Setter Property="Margin" Value="{OnPlatform Android='4,0,0,0', Default=0}" />
-            <Setter Property="TextColor" Value="{Binding PlaceholderColor, Source={x:Reference InputBase}}" />
-            <Setter Property="FontFamily" Value="{Binding PlaceholderFontFamily, Source={x:Reference InputBase}}" />
-            <Setter Property="FontSize" Value="{Binding PlaceholderSize, Source={x:Reference InputBase}}" />
-            <Setter Property="LineBreakMode" Value="{Binding PlaceholderLineBreakMode, Source={x:Reference InputBase}}" />
-            <Setter Property="Text" Value="{Binding Placeholder, Source={x:Reference InputBase}}" />
-            <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
+            <Setter Property="TextColor" Value="{TemplateBinding PlaceholderColor}" />
+            <Setter Property="FontFamily" Value="{TemplateBinding PlaceholderFontFamily}" />
+            <Setter Property="FontSize" Value="{TemplateBinding PlaceholderSize}" />
+            <Setter Property="LineBreakMode" Value="{TemplateBinding PlaceholderLineBreakMode}" />
+            <Setter Property="Text" Value="{TemplateBinding Placeholder}" />
+            <Setter Property="HorizontalTextAlignment" Value="{TemplateBinding HorizontalTextAlignment}" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
-            <Setter Property="AutomationId" Value="{Binding AutomationId, Source={x:Reference InputBase}, Converter={StaticResource AutomationIdConverter}, ConverterParameter=Placeholder}" />
+            <Setter Property="AutomationId" Value="{TemplateBinding AutomationId, Converter={StaticResource AutomationIdConverter}, ConverterParameter=Placeholder}" />
             <Setter Property="IsVisible" Value="false" />
             <Style.Triggers>
                 <MultiTrigger TargetType="Label">
                     <MultiTrigger.Conditions>
-                        <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
-                        <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                        <BindingCondition Binding="{TemplateBinding IsFocused}" Value="false" />
+                        <BindingCondition Binding="{TemplateBinding Text, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
                     </MultiTrigger.Conditions>
                     <Setter Property="IsVisible" Value="true" />
                 </MultiTrigger>
                 <MultiTrigger TargetType="Label">
                     <MultiTrigger.Conditions>
-                        <BindingCondition Binding="{Binding Type, Source={x:Reference InputBase}}" Value="Filled" />
-                        <BindingCondition Binding="{Binding AlwaysShowLabel, Source={x:Reference InputBase}}" Value="true" />
+                        <BindingCondition Binding="{TemplateBinding Type}" Value="Filled" />
+                        <BindingCondition Binding="{TemplateBinding AlwaysShowLabel}" Value="true" />
                     </MultiTrigger.Conditions>
                     <Setter Property="VerticalTextAlignment" Value="End" />
                 </MultiTrigger>
@@ -97,39 +94,39 @@
         
         <Style x:Key="SupportingText" TargetType="Label">
             <Setter Property="VerticalTextAlignment" Value="Center" />
-            <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
-            <Setter Property="LineBreakMode" Value="{Binding SupportingLineBreakMode, Source={x:Reference InputBase}}" />
-            <Setter Property="FontSize" Value="{Binding SupportingSize, Source={x:Reference InputBase}}" />
-            <Setter Property="Margin" Value="{Binding SupportingMargin, Source={x:Reference InputBase}}" />
-            <Setter Property="FontFamily" Value="{Binding SupportingFontFamily, Source={x:Reference InputBase}}" />
-            <Setter Property="TextColor" Value="{Binding SupportingColor, Source={x:Reference InputBase}}" />
-            <Setter Property="Text" Value="{Binding SupportingText, Source={x:Reference InputBase}}" />
-            <Setter Property="IsVisible" Value="{Binding SupportingText, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" />
-            <Setter Property="AutomationId" Value="{Binding AutomationId, Source={x:Reference InputBase}, Converter={StaticResource AutomationIdConverter}, ConverterParameter=SupportingText}" />
+            <Setter Property="HorizontalTextAlignment" Value="{TemplateBinding HorizontalTextAlignment}" />
+            <Setter Property="LineBreakMode" Value="{TemplateBinding SupportingLineBreakMode}" />
+            <Setter Property="FontSize" Value="{TemplateBinding SupportingSize}" />
+            <Setter Property="Margin" Value="{TemplateBinding SupportingMargin}" />
+            <Setter Property="FontFamily" Value="{TemplateBinding SupportingFontFamily}" />
+            <Setter Property="TextColor" Value="{TemplateBinding SupportingColor}" />
+            <Setter Property="Text" Value="{TemplateBinding SupportingText}" />
+            <Setter Property="IsVisible" Value="{TemplateBinding SupportingText, Converter={StaticResource IsNotNullOrEmpty}}" />
+            <Setter Property="AutomationId" Value="{TemplateBinding AutomationId, Converter={StaticResource AutomationIdConverter}, ConverterParameter=SupportingText}" />
         </Style>
 
         <Style x:Key="Hint" TargetType="Label">
-            <Setter Property="Text" Value="{Binding Label, Source={x:Reference InputBase}}" />
-            <Setter Property="TextColor" Value="{Binding LabelColor, Source={x:Reference InputBase}}" />
-            <Setter Property="FontFamily" Value="{Binding LabelFontFamily, Source={x:Reference InputBase}}" />
-            <Setter Property="LineBreakMode" Value="{Binding LabelLineBreakMode, Source={x:Reference InputBase}}" />
-            <Setter Property="FontSize" Value="{Binding LabelSize, Source={x:Reference InputBase}}" />
-            <Setter Property="HorizontalTextAlignment" Value="{Binding HorizontalTextAlignment, Source={x:Reference InputBase}}" />
-            <Setter Property="AutomationId" Value="{Binding AutomationId, Source={x:Reference InputBase}, Converter={StaticResource AutomationIdConverter}, ConverterParameter=Hint}" />
+            <Setter Property="Text" Value="{TemplateBinding Label}" />
+            <Setter Property="TextColor" Value="{TemplateBinding LabelColor}" />
+            <Setter Property="FontFamily" Value="{TemplateBinding LabelFontFamily}" />
+            <Setter Property="LineBreakMode" Value="{TemplateBinding LabelLineBreakMode}" />
+            <Setter Property="FontSize" Value="{TemplateBinding LabelSize}" />
+            <Setter Property="HorizontalTextAlignment" Value="{TemplateBinding HorizontalTextAlignment}" />
+            <Setter Property="AutomationId" Value="{TemplateBinding AutomationId, Converter={StaticResource AutomationIdConverter}, ConverterParameter=Hint}" />
         </Style>
         
         <Style x:Key="FilledHint" TargetType="Label" BaseResourceKey="Hint">
-            <Setter Property="Margin" Value="{Binding LabelMargin, Source={x:Reference InputBase}}" />
-            <Setter Property="Padding" Value="{Binding LabelPadding, Source={x:Reference InputBase}}" />
+            <Setter Property="Margin" Value="{TemplateBinding LabelMargin}" />
+            <Setter Property="Padding" Value="{TemplateBinding LabelPadding}" />
             <Setter Property="HorizontalOptions" Value="Start" />
             <Setter Property="VerticalOptions" Value="Start" />
             <Setter Property="IsVisible" Value="true" />
             <Style.Triggers>
                 <MultiTrigger TargetType="Label">
                     <MultiTrigger.Conditions>
-                        <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
-                        <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
-                        <BindingCondition Binding="{Binding AlwaysShowLabel, Source={x:Reference InputBase}}" Value="false" />
+                        <BindingCondition Binding="{TemplateBinding IsFocused}" Value="false" />
+                        <BindingCondition Binding="{TemplateBinding Text, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                        <BindingCondition Binding="{TemplateBinding AlwaysShowLabel}" Value="false" />
                     </MultiTrigger.Conditions>
                     <Setter Property="IsVisible" Value="false" />
                 </MultiTrigger>
@@ -143,17 +140,17 @@
         
         <Style x:Key="OutlinedHintContainer" TargetType="Grid">
             <Setter Property="RowDefinitions" Value="*,*" />
-            <Setter Property="Margin" Value="{Binding LabelMargin, Source={x:Reference InputBase}}" />
-            <Setter Property="Padding" Value="{Binding LabelPadding, Source={x:Reference InputBase}}" />
+            <Setter Property="Margin" Value="{TemplateBinding LabelMargin}" />
+            <Setter Property="Padding" Value="{TemplateBinding LabelPadding}" />
             <Setter Property="HorizontalOptions" Value="Start" />
             <Setter Property="VerticalOptions" Value="Start" />
             <Setter Property="Opacity" Value="1" />
             <Style.Triggers>
                 <MultiTrigger TargetType="Grid">
                     <MultiTrigger.Conditions>
-                        <BindingCondition Binding="{Binding IsFocused, Source={x:Reference InputBase}}" Value="false" />
-                        <BindingCondition Binding="{Binding Text, Source={x:Reference InputBase}, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
-                        <BindingCondition Binding="{Binding AlwaysShowLabel, Source={x:Reference InputBase}}" Value="false" />
+                        <BindingCondition Binding="{TemplateBinding IsFocused}" Value="false" />
+                        <BindingCondition Binding="{TemplateBinding Text, Converter={StaticResource IsNotNullOrEmpty}}" Value="false" />
+                        <BindingCondition Binding="{TemplateBinding AlwaysShowLabel}" Value="false" />
                     </MultiTrigger.Conditions>
                     <Setter Property="Opacity" Value="0" />
                 </MultiTrigger>
@@ -176,39 +173,27 @@
         
         <Style x:Key="LeadingIcon" TargetType="material:MaterialIconButton" BaseResourceKey="BaseIcon">
             <Setter Property="Margin" Value="{StaticResource DefaultLeftPaddingWithIcon}" />
-            <Setter Property="IconTintColor" Value="{Binding LeadingIconTintColor, Source={x:Reference InputBase}}" />
-            <Setter Property="Command" Value="{Binding LeadingIconCommand, Source={x:Reference InputBase}}" />
-            <Setter Property="CommandParameter" Value="{Binding LeadingIconCommandParameter, Source={x:Reference InputBase}}" />
-            <Setter Property="ImageSource" Value="{Binding LeadingIcon, Source={x:Reference InputBase}}" />
-            <Setter Property="IsVisible" Value="{Binding LeadingIcon, Source={x:Reference InputBase}, Converter={StaticResource IsNotNull}}" />
-            <Setter Property="AutomationId" Value="{Binding AutomationId, Source={x:Reference InputBase}, Converter={StaticResource AutomationIdConverter}, ConverterParameter=LeadingIcon}" />
+            <Setter Property="IconTintColor" Value="{TemplateBinding LeadingIconTintColor}" />
+            <Setter Property="Command" Value="{TemplateBinding LeadingIconCommand}" />
+            <Setter Property="CommandParameter" Value="{TemplateBinding LeadingIconCommandParameter}" />
+            <Setter Property="ImageSource" Value="{TemplateBinding LeadingIcon}" />
+            <Setter Property="IsVisible" Value="{TemplateBinding LeadingIcon, Converter={StaticResource IsNotNull}}" />
+            <Setter Property="AutomationId" Value="{TemplateBinding AutomationId, Converter={StaticResource AutomationIdConverter}, ConverterParameter=LeadingIcon}" />
         </Style>
         
         <Style x:Key="TrailingIcon" TargetType="material:MaterialIconButton" BaseResourceKey="BaseIcon">
             <Setter Property="Margin" Value="{StaticResource DefaultRightPaddingWithIcon}" />
-            <Setter Property="IconTintColor" Value="{Binding TrailingIconTintColor, Source={x:Reference InputBase}}" />
-            <Setter Property="Command" Value="{Binding TrailingIconCommand, Source={x:Reference InputBase}}" />
-            <Setter Property="CommandParameter" Value="{Binding TrailingIconCommandParameter, Source={x:Reference InputBase}}" />
-            <Setter Property="AutomationId" Value="{Binding AutomationId, Source={x:Reference InputBase}, Converter={StaticResource AutomationIdConverter}, ConverterParameter=TrailingIcon}" />
-            <Setter Property="ImageSource">
-                <MultiBinding Converter="{StaticResource TrailingIconSource}">
-                    <Binding Path="TrailingIcon" Source="{x:Reference InputBase}" />
-                    <Binding Path="HasError" Source="{x:Reference InputBase}" />
-                    <Binding Path="ErrorIcon" Source="{x:Reference InputBase}" />
-                </MultiBinding>
-            </Setter>
-            <Setter Property="IsVisible">
-                <MultiBinding Converter="{StaticResource IsTrailingIconVisible}">
-                    <Binding Path="TrailingIcon" Source="{x:Reference InputBase}" />
-                    <Binding Path="HasError" Source="{x:Reference InputBase}" />
-                    <Binding Path="ErrorIcon" Source="{x:Reference InputBase}" />
-                </MultiBinding>
-            </Setter>
+            <Setter Property="IconTintColor" Value="{TemplateBinding TrailingIconTintColor}" />
+            <Setter Property="Command" Value="{TemplateBinding TrailingIconCommand}" />
+            <Setter Property="CommandParameter" Value="{TemplateBinding TrailingIconCommandParameter}" />
+            <Setter Property="AutomationId" Value="{TemplateBinding AutomationId, Converter={StaticResource AutomationIdConverter}, ConverterParameter=TrailingIcon}" />
+            <Setter Property="ImageSource" Value="{TemplateBinding TrailingIconImageSource}" />
+            <Setter Property="IsVisible" Value="{TemplateBinding TrailingIconVisible}" />
         </Style>
         
         <ControlTemplate x:Key="FilledControlTemplate">
             <VerticalStackLayout Spacing="0" x:Name="ContainerFilled">
-                <material:BorderButton x:Name="InputBorder" IsEnabled="{Binding IsEnabled, Source={x:Reference InputBase}}" Style="{StaticResource FilledBorder}">
+                <material:BorderButton x:Name="InputBorder" IsEnabled="{TemplateBinding IsEnabled}" Style="{StaticResource FilledBorder}">
                     <Grid>
                         <StackLayout Style="{StaticResource FilledMainContent}">
                             <material:MaterialIconButton Style="{StaticResource LeadingIcon}" />
@@ -224,7 +209,7 @@
                             <material:MaterialIconButton Style="{StaticResource TrailingIcon}" />
                         </StackLayout>
 
-                        <BoxView HeightRequest="{Binding InternalBorderWidth, Source={x:Reference InputBase}}" Color="{Binding BorderColor, Source={x:Reference InputBase}}" VerticalOptions="EndAndExpand" />
+                        <BoxView HeightRequest="{TemplateBinding InternalBorderWidth}" Color="{TemplateBinding BorderColor}" VerticalOptions="EndAndExpand" />
                     </Grid>
                 </material:BorderButton>
 
@@ -237,7 +222,7 @@
                 <Grid>
                     <material:BorderButton 
                         x:Name="InputBorder" 
-                        IsEnabled="{Binding IsEnabled, Source={x:Reference InputBase}}" 
+                        IsEnabled="{TemplateBinding IsEnabled}" 
                         Style="{StaticResource OutlinedBorder}"
                         Margin="{Binding Source={x:Reference OutlinedHint}, Path=Height, Converter={StaticResource HalfHeightToMarginConverter}}">
                         <StackLayout Style="{StaticResource MainContent}">

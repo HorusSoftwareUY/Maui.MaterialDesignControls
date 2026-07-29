@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>$(NetVersion)-android;$(NetVersion)-ios;$(NetVersion)-maccatalyst</TargetFrameworks>
@@ -6,23 +6,80 @@
 		<RootNamespace>HorusStudio.Maui.MaterialDesignControls.Sample</RootNamespace>
 		<SingleProject>true</SingleProject>
 
+		<!-- Runtime switch: set UseMono=true to compile with Mono runtime -->
+		<UseMono Condition="'$(UseMono)' == ''">true</UseMono>
+
+		<!-- Separate intermediate and output dirs per runtime so icon/asset caches
+		     never collide between a CoreCLR build and a Mono build. Without this,
+		     MAUI's incremental icon task reuses the cached mipmap/Assets from a
+		     previous build because appicon.svg (the base input) hasn't changed,
+		     even though ForegroundFile and Color differ between runtimes.
+		     Note: we change IntermediateOutputPath/OutputPath but NOT their Base
+		     counterparts, so the SDK keeps excluding obj\** from the compile glob. -->
+		<_RuntimeSlug Condition="'$(UseMono)' == 'true'">mono</_RuntimeSlug>
+		<_RuntimeSlug Condition="'$(UseMono)' != 'true'">coreclr</_RuntimeSlug>
+		<IntermediateOutputPath>obj\$(_RuntimeSlug)\$(Configuration)\$(TargetFramework)\</IntermediateOutputPath>
+		<OutputPath>bin\$(_RuntimeSlug)\$(Configuration)\$(TargetFramework)\</OutputPath>
+
 		<!-- Display name -->
 		<ApplicationTitle>Material Design Controls</ApplicationTitle>
 
-		<!-- App Identifier -->
-		<ApplicationId>com.horusstudio.maui.materialdesigncontrols.sample</ApplicationId>
+		<!-- App Identifier: .coreclr or .mono depending on runtime -->
+		<ApplicationId Condition="'$(UseMono)' != 'true'">com.horusstudio.maui.materialdesigncontrols.sample.coreclr</ApplicationId>
+		<ApplicationId Condition="'$(UseMono)' == 'true'">com.horusstudio.maui.materialdesigncontrols.sample.mono</ApplicationId>
 		<ApplicationIdGuid>24a1a7f0-9c21-4710-9d6d-f863bd1bdb97</ApplicationIdGuid>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0.4</ApplicationDisplayVersion>
 		<ApplicationVersion>5</ApplicationVersion>
+
+		<!-- DefineConstants for runtime-specific C# code -->
+		<DefineConstants Condition="'$(UseMono)' == 'true'">$(DefineConstants);USE_MONO</DefineConstants>
+		<!-- Navigation timing: enabled by default in Debug and Release; override with -p:EnableNavTiming=false to disable -->
+		<EnableNavTiming Condition="'$(EnableNavTiming)' == ''">true</EnableNavTiming>
+		<DefineConstants Condition="'$(EnableNavTiming)' == 'true'">$(DefineConstants);ENABLE_NAV_TIMING</DefineConstants>
 	</PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
-        <RuntimeIdentifiers>
-            android-arm;android-arm64;android-x86;android-x64
-        </RuntimeIdentifiers>
+        <!-- CoreCLR (.NET 11+) only supports 64-bit Android. We target arm64 only:
+             all modern Android phones are ARM64; x64 is only needed for Intel-based
+             emulators/Chromebooks (very rare). Add android-x64 here if needed.
+             ⚠️  x64 Android emulators are NOT supported with this config.
+                 To run on an emulator add android-x64 to RuntimeIdentifiers. -->
+        <RuntimeIdentifiers Condition="'$(UseMono)' != 'true'">android-arm64</RuntimeIdentifiers>
+        <!-- Use CoreCLR instead of Mono on Android (.NET 11+) -->
+        <UseMonoRuntime>$(UseMono)</UseMonoRuntime>
     </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release' and $(TargetFramework.Contains('-android'))">
+		<AndroidLinkMode Condition="'$(UseMono)' == 'true'">Full</AndroidLinkMode>
+		<AndroidLinkMode Condition="'$(UseMono)' != 'true'">Full</AndroidLinkMode>
+		
+        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+        <AndroidUseAssemblyStore>false</AndroidUseAssemblyStore>
+        <!-- AOT: Mono only. RunAOTCompilation is the Mono AOT pipeline trigger — applying it to
+             CoreCLR builds in MAUI 11 preview causes build failures (it attempts to run Mono's
+             AOT compiler over CoreCLR assemblies). CoreCLR gets pre-compilation via R2R below.
+             Override with -p:RunAOTCompilation=false for faster Mono iteration builds. -->
+        <RunAOTCompilation Condition="'$(UseMono)' == 'true'">true</RunAOTCompilation>
+        <RunAOTCompilation Condition="'$(UseMono)' != 'true'">false</RunAOTCompilation>
+        <!-- R2R (ReadyToRun) — CoreCLR only: pre-JITs assemblies at build time for faster startup
+             and better sustained throughput. Disabled for Mono because R2R assemblies clear the
+             ILOnly PE flag, which causes Mono.Cecil to fail in _LinkAssembliesNoShrink. -->
+        <PublishReadyToRun Condition="'$(UseMono)' != 'true'">true</PublishReadyToRun>
+        <PublishReadyToRun Condition="'$(UseMono)' == 'true'">false</PublishReadyToRun>
+
+		<AndroidEnableMarshalMethods Condition="'$(UseMono)' == 'true'">false</AndroidEnableMarshalMethods>
+
+	</PropertyGroup>
+
+	<!-- Startup PGO: custom MIBC profile captured on-device (see Profiling/).
+	     Partial R2R precompiles the app's hot startup path on top of the
+	     default MIBC profiles the MAUI workload already ships for CoreCLR.
+	     Override with -p:DisableStartupPgo=true for A/B measurements. -->
+	<ItemGroup Condition="'$(Configuration)' == 'Release' and $(TargetFramework.Contains('-android')) and '$(UseMono)' != 'true' and '$(DisableStartupPgo)' != 'true'">
+		<_ReadyToRunPgoFiles Include="Profiling\android-startup.mibc" />
+	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|$(NetVersion)-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
@@ -33,15 +90,19 @@
         <CodesignKey>iPhone Distribution</CodesignKey>
 	</PropertyGroup>
 	<ItemGroup>
-		<!-- App Icon -->
-		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.68" />
-		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="1" />
-		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="1" />
+		<!-- App Icon: CoreCLR (default) -->
+		<MauiIcon Condition="'$(UseMono)' != 'true'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.68" />
+		<!-- App Icon: Mono -->
+		<MauiIcon Condition="'$(UseMono)' == 'true'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_mono.svg" Color="#E1F5FE" BaseSize="24,24" ForegroundScale="0.68" />
 		
-		<!-- Splash Screen -->
-		<MauiSplashScreen Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\Splash\splash.svg" BaseSize="120,120" Color="White" />
-		<MauiSplashScreen Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\Splash\splash.svg" BaseSize="300,300" Color="White" />
-		<MauiSplashScreen Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\Splash\splash.svg" BaseSize="200,200" Color="White" />
+		<!-- Splash Screen: CoreCLR (default) -->
+		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\Splash\splash.svg" BaseSize="74,120" Color="White" />
+		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\Splash\splash.svg" BaseSize="184,300" Color="White" />
+		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\Splash\splash.svg" BaseSize="123,200" Color="White" />
+		<!-- Splash Screen: Mono -->
+		<MauiSplashScreen Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\Splash\splash_mono.svg" BaseSize="74,120" Color="White" />
+		<MauiSplashScreen Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\Splash\splash_mono.svg" BaseSize="184,300" Color="White" />
+		<MauiSplashScreen Condition="'$(UseMono)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\Splash\splash_mono.svg" BaseSize="123,200" Color="White" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -57,9 +118,18 @@
         <GoogleServicesJson Include="Platforms\Android\google-services.json" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-ios' and '$(Configuration)' == 'Release'">
+    <!-- <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-ios' and '$(Configuration)' == 'Release'">
         <BundleResource Include="GoogleService-Info.plist" />
-    </ItemGroup>
+    </ItemGroup> -->
+
+	<!-- Startup profiling (opt-in): dotnet build -c Release -p:EnableStartupProfiling=true
+	     Embeds the on-device EventPipe capture environment and makes the APK debuggable
+	     so the .nettrace can be pulled via adb run-as. CoreCLR only — EventPipe/runtime
+	     PGO knobs in the .env are meaningless (ignored) on Mono. -->
+	<ItemGroup Condition="'$(EnableStartupProfiling)' == 'true' and $(TargetFramework.Contains('-android')) and '$(UseMono)' != 'true'">
+		<AndroidEnvironment Include="Profiling\startup-profiling.env" />
+	</ItemGroup>
+	<Import Project="Profiling\StartupProfiling.targets" Condition="'$(EnableStartupProfiling)' == 'true' and $(TargetFramework.Contains('-android')) and '$(UseMono)' != 'true'" />
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" />
@@ -67,7 +137,9 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" />
 		<PackageReference Include="Microsoft.Maui.Core" />
+		<PackageReference Include="Microsoft.Maui.ProfilingHelper" />
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" />
 	</ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == '$(NetVersion)-ios'">

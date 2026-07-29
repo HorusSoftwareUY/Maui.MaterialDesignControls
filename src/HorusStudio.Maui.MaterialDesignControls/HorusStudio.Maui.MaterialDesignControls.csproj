@@ -2,6 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>$(NetVersion)-android;$(NetVersion)-ios;$(NetVersion)-maccatalyst</TargetFrameworks>
+		<!-- net11.0 targets for when referenced from the sample project -->
+		<TargetFrameworks Condition="'$(NetVersion)' != 'net11.0'">$(TargetFrameworks);net11.0-android;net11.0-ios;net11.0-maccatalyst</TargetFrameworks>
 <!--		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) or '$(EnableWindowsTargeting)' == 'true'">$(TargetFrameworks);$(NetVersion)-windows10.0.19041;$(NetVersion)-windows10.0.20348</TargetFrameworks>-->
 		<RootNamespace>HorusStudio.Maui.MaterialDesignControls</RootNamespace>
 	</PropertyGroup>
@@ -15,6 +17,10 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+		<PackageReference Include="Xamarin.AndroidX.AppCompat" />
 	</ItemGroup>
 	
 </Project>

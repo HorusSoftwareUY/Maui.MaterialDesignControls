@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Views.NavTimingOverlay"
+    HorizontalOptions="Center"
+    VerticalOptions="End"
+    IsVisible="False"
+    InputTransparent="False"
+    ZIndex="999">
+
+    <Border
+        Margin="0,0,0,32"
+        Padding="16,10"
+        StrokeShape="RoundRectangle 24"
+        Stroke="Transparent"
+        BackgroundColor="#CC1C1B1F">
+        <Label
+            x:Name="TimingLabel"
+            TextColor="White"
+            FontSize="13"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+    </Border>
+
+</ContentView>

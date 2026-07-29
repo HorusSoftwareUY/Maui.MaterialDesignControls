@@ -237,12 +237,24 @@ public abstract partial class MaterialInputBase : IValidableView
     /// <summary>
     /// The backing store for the <see cref="TrailingIcon">TrailingIcon</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty TrailingIconProperty = BindableProperty.Create(nameof(TrailingIcon), typeof(ImageSource), typeof(MaterialInputBase));
+    public static readonly BindableProperty TrailingIconProperty = BindableProperty.Create(nameof(TrailingIcon), typeof(ImageSource), typeof(MaterialInputBase), propertyChanged: (b, _, _) => ((MaterialInputBase)b).UpdateTrailingIconComputed());
     
     /// <summary>
     /// The backing store for the <see cref="ErrorIcon">ErrorIcon</see> bindable property.
     /// </summary>
-    public static readonly BindableProperty ErrorIconProperty = BindableProperty.Create(nameof(ErrorIcon), typeof(ImageSource), typeof(MaterialInputBase), defaultValueCreator: DefaultErrorIcon);
+    public static readonly BindableProperty ErrorIconProperty = BindableProperty.Create(nameof(ErrorIcon), typeof(ImageSource), typeof(MaterialInputBase), defaultValueCreator: DefaultErrorIcon, propertyChanged: (b, _, _) => ((MaterialInputBase)b).UpdateTrailingIconComputed());
+
+    /// <summary>
+    /// The backing store for the computed <see cref="TrailingIconImageSource"/> bindable property.
+    /// Updated automatically when TrailingIcon, ErrorIcon, or HasError changes.
+    /// </summary>
+    internal static readonly BindableProperty TrailingIconImageSourceProperty = BindableProperty.Create(nameof(TrailingIconImageSource), typeof(ImageSource), typeof(MaterialInputBase));
+
+    /// <summary>
+    /// The backing store for the computed <see cref="TrailingIconVisible"/> bindable property.
+    /// Updated automatically when TrailingIcon, ErrorIcon, or HasError changes.
+    /// </summary>
+    internal static readonly BindableProperty TrailingIconVisibleProperty = BindableProperty.Create(nameof(TrailingIconVisible), typeof(bool), typeof(MaterialInputBase), defaultValue: false);
 
     /// <summary>
     /// The backing store for the <see cref="IsFocused">IsFocused</see> bindable property.
@@ -382,6 +394,7 @@ public abstract partial class MaterialInputBase : IValidableView
         if (bindableObject is MaterialInputBase self)
         {
             self.SetHasError(self.Type);
+            self.UpdateTrailingIconComputed();
         }
     });
 
@@ -544,6 +557,10 @@ public abstract partial class MaterialInputBase : IValidableView
         get => (ImageSource)GetValue(ErrorIconProperty);
         set => SetValue(ErrorIconProperty, value);
     }
+
+    internal ImageSource TrailingIconImageSource => (ImageSource)GetValue(TrailingIconImageSourceProperty);
+
+    internal bool TrailingIconVisible => (bool)GetValue(TrailingIconVisibleProperty);
 
     /// <summary>
     /// Gets or sets the text displayed as the placeholder of the input.
@@ -1146,6 +1163,16 @@ public abstract partial class MaterialInputBase : IValidableView
         {
             _ = ErrorAnimationManager.AnimateAsync(this);
         }
+    }
+
+    private void UpdateTrailingIconComputed()
+    {
+        var trailingIcon = TrailingIcon;
+        var hasError = HasError;
+        var errorIcon = ErrorIcon;
+
+        SetValue(TrailingIconImageSourceProperty, hasError ? errorIcon ?? trailingIcon : trailingIcon);
+        SetValue(TrailingIconVisibleProperty, trailingIcon is not null || (hasError && errorIcon is not null));
     }
 
     private void SetBorderWidth(MaterialInputType type)

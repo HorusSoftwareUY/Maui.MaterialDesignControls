@@ -1,13 +1,13 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="24" height="24" fill="url(#paint0_linear_323_68)"/>
+    <rect width="24" height="24" fill="url(#paint0_linear_mono_fg)"/>
     <g transform="translate(6,2) scale(0.5)">
         <path d="M12.001 2.74219C17.1133 2.74245 21.2578 6.88661 21.2578 11.999C21.2578 17.1114 17.1133 21.2556 12.001 21.2559C6.8884 21.2559 2.74316 17.1116 2.74316 11.999C2.74316 6.88644 6.8884 2.74219 12.001 2.74219ZM12.001 4.11328C7.64582 4.11328 4.11523 7.64386 4.11523 11.999C4.11523 16.3542 7.64582 19.8848 12.001 19.8848C16.3559 19.8845 19.8857 16.354 19.8857 11.999C19.8857 7.64403 16.3559 4.11354 12.001 4.11328ZM16.9717 16.9707H7.0293V15.5986H16.9717V16.9707ZM8.40039 7.02734L12 12.8564L15.6006 7.02734H16.9717V14.2275H15.6006V9.62207L12.6865 14.2275H11.3145L8.40039 9.62207V14.2275H7.0293V7.02734H8.40039Z" fill="white"/>
     </g>
-    <text x="12" y="20" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="4.2" font-weight="700" fill="white">CoreCLR</text>
+    <text x="12" y="20" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="4.2" font-weight="700" fill="white">Mono</text>
     <defs>
-        <linearGradient id="paint0_linear_323_68" x1="24" y1="0" x2="0" y2="24" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#8E56E9"/>
-            <stop offset="1" stop-color="#6A1EE5"/>
+        <linearGradient id="paint0_linear_mono_fg" x1="24" y1="0" x2="0" y2="24" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#29B6F6"/>
+            <stop offset="1" stop-color="#0277BD"/>
         </linearGradient>
     </defs>
 </svg>

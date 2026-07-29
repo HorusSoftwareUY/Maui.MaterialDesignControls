@@ -624,7 +624,16 @@ public static class MaterialDesignControlsBuilderExtensions
             }
         }
         Logger.Debug($"Properties loaded from resources: {propertiesSet}");
-        Logger.Debug($"Loaded configuration: {JsonSerializer.Serialize(result, JsonSerializationUtils.Instance.SerializerOptions)}");
+        // JsonSerializer.Serialize over a generic T requires reflection metadata that Full trimming removes.
+        // Wrap in try/catch so Release builds log gracefully instead of crashing.
+        try
+        {
+            Logger.Debug($"Loaded configuration: {JsonSerializer.Serialize(result, JsonSerializationUtils.Instance.SerializerOptions)}");
+        }
+        catch (NotSupportedException)
+        {
+            Logger.Debug($"Loaded configuration: <serialization unavailable in trimmed builds — type: {typeof(T).Name}>");
+        }
 
         return result;
     }

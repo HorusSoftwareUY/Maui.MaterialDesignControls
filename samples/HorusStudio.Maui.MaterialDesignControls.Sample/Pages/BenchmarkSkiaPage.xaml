@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.BenchmarkSkiaPage"
+    x:TypeArguments="vm:BenchmarkSkiaViewModel"
+    x:DataType="vm:BenchmarkSkiaViewModel"
+    BackgroundColor="Black">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- Top app bar -->
+        <material:MaterialTopAppBar
+            Grid.Row="0"
+            Headline="{Binding Title}"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIconIsBusy="{Binding Path=GoBackCommand.IsRunning}"
+            LeadingIcon="ic_back.png"
+            Type="Small"
+            BackgroundColor="Black"
+            HeadlineColor="White" />
+
+        <!-- Stats + controls panel -->
+        <Grid
+            Grid.Row="1"
+            BackgroundColor="#1A1A1A"
+            Padding="12,8"
+            RowDefinitions="Auto,Auto"
+            RowSpacing="6">
+
+            <!-- Stats row -->
+            <Grid Grid.Row="0" ColumnDefinitions="*,*,*,*,*" ColumnSpacing="4">
+                <Label Grid.Column="0" Text="{Binding FpsText}"     TextColor="#4CAF50" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Grid.Column="1" Text="{Binding AvgFpsText}"  TextColor="#8BC34A" FontSize="13" HorizontalOptions="Center" />
+                <Label Grid.Column="2" Text="{Binding MinFpsText}"  TextColor="#FF9800" FontSize="13" HorizontalOptions="Center" />
+                <Label Grid.Column="3" Text="{Binding PhysicsText}" TextColor="#90CAF9" FontSize="11" HorizontalOptions="Center" />
+                <Label Grid.Column="4" Text="{Binding DrawText}"    TextColor="#CE93D8" FontSize="11" HorizontalOptions="Center" />
+            </Grid>
+
+            <!-- Controls row -->
+            <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto" ColumnSpacing="6">
+
+                <!-- Start / Stop -->
+                <Button
+                    Grid.Column="0"
+                    Text="{Binding ToggleButtonText}"
+                    Clicked="OnToggleClicked"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    FontSize="13"
+                    Padding="12,6"
+                    CornerRadius="6" />
+
+                <!-- Spacer -->
+                <BoxView Grid.Column="1" Color="Transparent" />
+
+                <!-- Particle count buttons -->
+                <Button Grid.Column="2" Text="50"  Clicked="OnCount50"  BackgroundColor="#333" TextColor="White" FontSize="12" Padding="10,6" CornerRadius="6" />
+                <Button Grid.Column="3" Text="100" Clicked="OnCount100" BackgroundColor="#333" TextColor="White" FontSize="12" Padding="10,6" CornerRadius="6" />
+                <Button Grid.Column="4" Text="200" Clicked="OnCount200" BackgroundColor="#333" TextColor="White" FontSize="12" Padding="10,6" CornerRadius="6" />
+                <Button Grid.Column="5" Text="500" Clicked="OnCount500" BackgroundColor="#333" TextColor="White" FontSize="12" Padding="10,6" CornerRadius="6" />
+            </Grid>
+        </Grid>
+
+        <!-- Canvas -->
+        <skia:SKCanvasView
+            Grid.Row="2"
+            x:Name="CanvasView"
+            PaintSurface="OnPaintSurface"
+            EnableTouchEvents="False" />
+
+    </Grid>
+</local:BaseContentPage>

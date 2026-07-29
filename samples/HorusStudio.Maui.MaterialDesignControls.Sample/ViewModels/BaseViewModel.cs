@@ -2,6 +2,9 @@
 using HorusStudio.Maui.MaterialDesignControls.Sample.Utils;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+#if ENABLE_NAV_TIMING
+using NavigationTimer = HorusStudio.Maui.MaterialDesignControls.Sample.Utils.NavigationTimer;
+#endif
 
 namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 {
@@ -107,11 +110,32 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
 
         public virtual void Initialize() { }
 
+        /// <summary>
+        /// When true the ViewModel takes ownership of calling <see cref="ReportPageReady"/>
+        /// (e.g. after async data is bound). Set to true in any VM that loads data
+        /// asynchronously so that BaseContentPage does not fire the timer too early.
+        /// </summary>
+        protected internal virtual bool ReportsPageReadyManually => false;
+
+        /// <summary>
+        /// Call this from any ViewModel when the page is fully loaded and ready to display.
+        /// Simple pages get this called automatically from OnNavigatedTo via BaseContentPage.
+        /// Pages with async data loading should override <see cref="ReportsPageReadyManually"/>
+        /// and call this themselves after the data is bound on the main thread.
+        /// </summary>
+        public void ReportPageReady()
+        {
+#if ENABLE_NAV_TIMING
+            NavigationTimer.Complete(Title);
+#endif
+        }
+
         public virtual void Appearing()
         {
             if (this is MainViewModel)
             {
                 Shell.Current.BindingContext = this;
+                Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
             }
             else
             {
@@ -160,13 +184,17 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 IsBusy = true;
                 var finalNavigationUri = $"{(isRoot ? "//" : string.Empty)}{navigationUri}";
 
+#if ENABLE_NAV_TIMING
+                NavigationTimer.Start(navigationUri);
+#endif
+
                 if (parameters != null)
                 {
-                    await Shell.Current.GoToAsync(navigationUri, animate, parameters);
+                    await Shell.Current.GoToAsync(finalNavigationUri, animate, parameters);
                 }
                 else
                 {
-                    await Shell.Current.GoToAsync(navigationUri, animate);
+                    await Shell.Current.GoToAsync(finalNavigationUri, animate);
                 }
             }
             catch (Exception ex)

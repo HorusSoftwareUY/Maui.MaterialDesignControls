@@ -2,7 +2,7 @@
   <Import Project="nuget.props" />
 
   <PropertyGroup>
-    <NetVersion>net10.0</NetVersion>
+    <NetVersion>net11.0</NetVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
@@ -13,7 +13,9 @@
 
   <PropertyGroup Condition=" $(MSBuildProjectName.Contains('Maui')) ">
     <UseMaui>true</UseMaui>
-    <MauiVersion>10.0.10</MauiVersion>
+    <!-- Must match the installed MAUI workload version and NetVersion (net11.0).
+         MAUI 10.x packages only ship net10.0-* assets; targeting net11.0-* requires MAUI 11.x. -->
+    <MauiVersion>11.0.0-preview.5.26304.4</MauiVersion>
     <XamlCompilationOptions>Compile</XamlCompilationOptions>
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
   </PropertyGroup>
@@ -21,7 +23,7 @@
   <Choose>
     <When Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
       <PropertyGroup>
-        <SupportedOSPlatformVersion>23.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
       </PropertyGroup>
     </When>
     <When Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">

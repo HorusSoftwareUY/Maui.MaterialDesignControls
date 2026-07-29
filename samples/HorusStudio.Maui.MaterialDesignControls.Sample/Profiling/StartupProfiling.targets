@@ -1,0 +1,45 @@
+<Project>
+  <!-- Startup profiling helpers (opt-in via -p:EnableStartupProfiling=true).
+       Makes the Release APK debuggable so the on-device .nettrace can be
+       pulled with `adb shell run-as <pkg>`. Same manifest patch the
+       Microsoft.Maui.Cli applies in MauiProfilingHelperInjection.targets. -->
+  <UsingTask TaskName="SetAndroidDebuggableForProfiling"
+             TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ManifestPath ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.Xml" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+if (!System.IO.File.Exists(ManifestPath))
+    return true;
+
+var document = new XmlDocument { PreserveWhitespace = true };
+document.Load(ManifestPath);
+
+var application = document.SelectSingleNode("/manifest/application") as XmlElement;
+if (application is null)
+    return true;
+
+application.SetAttribute("debuggable", "http://schemas.android.com/apk/res/android", "true");
+document.Save(ManifestPath);
+
+return true;
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="EnableAndroidDebuggableForProfiling"
+          AfterTargets="_GenerateJavaStubs">
+    <ItemGroup>
+      <_StartupProfilingManifest Include="$(IntermediateOutputPath)AndroidManifest.xml"
+                                 Condition="Exists('$(IntermediateOutputPath)AndroidManifest.xml')" />
+      <_StartupProfilingManifest Include="$(IntermediateOutputPath)android\AndroidManifest.xml"
+                                 Condition="Exists('$(IntermediateOutputPath)android\AndroidManifest.xml')" />
+      <_StartupProfilingManifest Include="$(IntermediateOutputPath)android\manifest\AndroidManifest.xml"
+                                 Condition="Exists('$(IntermediateOutputPath)android\manifest\AndroidManifest.xml')" />
+    </ItemGroup>
+    <SetAndroidDebuggableForProfiling ManifestPath="%(_StartupProfilingManifest.Identity)" />
+  </Target>
+</Project>

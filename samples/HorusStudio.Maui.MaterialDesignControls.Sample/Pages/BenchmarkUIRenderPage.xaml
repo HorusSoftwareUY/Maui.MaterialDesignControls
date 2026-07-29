@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.BenchmarkUIRenderPage"
+    x:TypeArguments="vm:BenchmarkUIRenderViewModel"
+    x:DataType="vm:BenchmarkUIRenderViewModel"
+    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- Top app bar -->
+        <material:MaterialTopAppBar
+            Grid.Row="0"
+            Headline="{Binding Title}"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIconIsBusy="{Binding Path=GoBackCommand.IsRunning}"
+            LeadingIcon="ic_back.png"
+            Type="Small" />
+
+        <!-- Controls panel -->
+        <Grid
+            Grid.Row="1"
+            Padding="12,8"
+            RowDefinitions="Auto,Auto,Auto"
+            RowSpacing="6"
+            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerHighest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerHighest}}">
+
+            <!-- Stats -->
+            <VerticalStackLayout Grid.Row="0" Spacing="2">
+                <Label Text="{Binding CreateText}"  FontSize="13" FontAttributes="Bold" />
+                <Label Text="{Binding AddText}"     FontSize="13" FontAttributes="Bold" />
+                <Label Text="{Binding MeasureText}" FontSize="13" FontAttributes="Bold" />
+                <Label Text="{Binding TotalText}"   FontSize="12" Opacity="0.7" />
+            </VerticalStackLayout>
+
+            <BoxView Grid.Row="1" HeightRequest="1" Opacity="0.2" Margin="0,2" />
+
+            <!-- Controls row: Run + count buttons -->
+            <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto" ColumnSpacing="6">
+                <Button
+                    Grid.Column="0"
+                    Text="Run"
+                    Clicked="OnRunClicked"
+                    IsEnabled="{Binding IsRunning, Converter={StaticResource ReverseBoolConverter}}"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Primary}, Dark={x:Static material:MaterialDarkTheme.Primary}}"
+                    TextColor="White"
+                    FontSize="13"
+                    Padding="14,6"
+                    CornerRadius="6" />
+
+                <BoxView Grid.Column="1" Color="Transparent" />
+
+                <Button Grid.Column="2" Text="50"  Clicked="OnCount50"  BackgroundColor="Transparent" BorderColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Outline}, Dark={x:Static material:MaterialDarkTheme.Outline}}" BorderWidth="1" FontSize="12" Padding="10,6" CornerRadius="6" />
+                <Button Grid.Column="3" Text="100" Clicked="OnCount100" BackgroundColor="Transparent" BorderColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Outline}, Dark={x:Static material:MaterialDarkTheme.Outline}}" BorderWidth="1" FontSize="12" Padding="10,6" CornerRadius="6" />
+                <Button Grid.Column="4" Text="250" Clicked="OnCount250" BackgroundColor="Transparent" BorderColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Outline}, Dark={x:Static material:MaterialDarkTheme.Outline}}" BorderWidth="1" FontSize="12" Padding="10,6" CornerRadius="6" />
+                <Button Grid.Column="5" Text="500" Clicked="OnCount500" BackgroundColor="Transparent" BorderColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Outline}, Dark={x:Static material:MaterialDarkTheme.Outline}}" BorderWidth="1" FontSize="12" Padding="10,6" CornerRadius="6" />
+            </Grid>
+        </Grid>
+
+        <!-- Scrollable area where controls are injected -->
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout x:Name="ControlsLayout" Spacing="2" Padding="12,8" />
+        </ScrollView>
+
+    </Grid>
+</local:BaseContentPage>
