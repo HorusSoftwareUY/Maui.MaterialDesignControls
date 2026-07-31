@@ -1,10 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
     xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:views="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Views"
     Shell.FlyoutBehavior="Flyout">
 
     <ShellContent
@@ -12,10 +13,18 @@
         Route="MainViewModel" />
 
     <Shell.FlyoutContent>
-        <ScrollView Padding="12,16" Background="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}">
-            <material:MaterialNavigationDrawer
-                Command="{Binding MenuItemClickCommand}"
-                ItemsSource="{Binding MenuItems}" />
-        </ScrollView>
+        <!-- Deferred: the 30-item drawer stays out of the startup path.
+             Loaded after the first frame, or on first flyout open (see AppShell.xaml.cs). -->
+        <views:LazyContentView x:Name="FlyoutLazyContent">
+            <views:LazyContentView.DeferredContent>
+                <DataTemplate>
+                    <ScrollView Padding="12,16" Background="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerLow}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerLow}}">
+                        <material:MaterialNavigationDrawer
+                            Command="{Binding MenuItemClickCommand}"
+                            ItemsSource="{Binding MenuItems}" />
+                    </ScrollView>
+                </DataTemplate>
+            </views:LazyContentView.DeferredContent>
+        </views:LazyContentView>
     </Shell.FlyoutContent>
 </Shell>

@@ -35,8 +35,11 @@
 
 		<!-- DefineConstants for runtime-specific C# code -->
 		<DefineConstants Condition="'$(UseMono)' == 'true'">$(DefineConstants);USE_MONO</DefineConstants>
-		<!-- Navigation timing: enabled by default in Debug and Release; override with -p:EnableNavTiming=false to disable -->
-		<EnableNavTiming Condition="'$(EnableNavTiming)' == ''">true</EnableNavTiming>
+		<!-- Navigation timing overlay: Debug only by default (it wraps every page in an extra
+		     Grid on each OnAppearing). For timing sessions in Release, opt in explicitly
+		     with -p:EnableNavTiming=true -->
+		<EnableNavTiming Condition="'$(EnableNavTiming)' == '' and '$(Configuration)' == 'Debug'">true</EnableNavTiming>
+		<EnableNavTiming Condition="'$(EnableNavTiming)' == '' and '$(Configuration)' != 'Debug'">false</EnableNavTiming>
 		<DefineConstants Condition="'$(EnableNavTiming)' == 'true'">$(DefineConstants);ENABLE_NAV_TIMING</DefineConstants>
 	</PropertyGroup>
 

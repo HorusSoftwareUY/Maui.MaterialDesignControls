@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Services;
 using HorusStudio.Maui.MaterialDesignControls.Sample.Utils;
@@ -26,7 +26,12 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample
                 .UseMauiCommunityToolkit()
                 .UseMaterialDesignControls(options =>
                 {
+#if DEBUG
+                    // Debug logging writes dozens of Console.WriteLine during startup
+                    // (UseMaterialDesignControls + RegisterDefaultStyles). Debug only —
+                    // in Release it adds pure overhead to the cold start path.
                     options.EnableDebug();
+#endif
                     options.OnException((sender, exception) =>
                     {
                         Logger.LogException(exception);
