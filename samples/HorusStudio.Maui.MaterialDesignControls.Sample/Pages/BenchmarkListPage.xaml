@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <local:BaseContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -11,6 +11,98 @@
     x:DataType="vm:BenchmarkListViewModel"
     BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.Surface}, Dark={x:Static material:MaterialDarkTheme.Surface}}">
 
+    <ContentPage.Resources>
+
+        <!-- Simple row: the cheap template. This is the one to use when comparing
+             load/scroll numbers against earlier measurements. -->
+        <DataTemplate x:Key="SimpleRowTemplate" x:DataType="models:BenchmarkItem">
+            <Grid Padding="16,3">
+                <Border
+                    StrokeShape="RoundRectangle 8"
+                    Stroke="Transparent"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerHighest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerHighest}}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Padding="12,10">
+
+                        <Grid Grid.Column="0" WidthRequest="40" HeightRequest="40" VerticalOptions="Center">
+                            <BoxView Color="{Binding ScoreColor}" CornerRadius="20" WidthRequest="40" HeightRequest="40" />
+                            <Label Text="{Binding ScoreText}" FontSize="12" FontAttributes="Bold" TextColor="White"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Grid>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                            <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" />
+                            <Label Text="{Binding Email}" FontSize="11" />
+                            <Label Text="{Binding TagsDisplay}" FontSize="11" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center" HorizontalOptions="End">
+                            <Label Text="{Binding Department}" FontSize="11" FontAttributes="Bold" HorizontalOptions="End" />
+                            <Label Text="{Binding FormattedDate}" FontSize="10" HorizontalOptions="End" />
+                            <Label Text="{Binding StatusLabel}" TextColor="{Binding StatusColor}" FontSize="11"
+                                   FontAttributes="Bold" HorizontalOptions="End" />
+                        </VerticalStackLayout>
+
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <!-- Rich row: avatar, score pill, tag pills and a status dot. Heavier to
+             lay out on purpose — swapping templates is itself a measurement. -->
+        <DataTemplate x:Key="RichRowTemplate" x:DataType="models:BenchmarkItem">
+            <Grid Padding="16,4">
+                <Border
+                    StrokeShape="RoundRectangle 14"
+                    Stroke="Transparent"
+                    BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerHighest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerHighest}}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Padding="12,10">
+
+                        <!-- Avatar with initials -->
+                        <Grid Grid.Column="0" WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                            <BoxView Color="{Binding AvatarColor}" CornerRadius="22" WidthRequest="44" HeightRequest="44" />
+                            <Label Text="{Binding Initials}" FontSize="15" FontAttributes="Bold" TextColor="White"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Grid>
+
+                        <!-- Name, email, tag pills -->
+                        <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                            <Label Text="{Binding Title}" FontSize="15" FontAttributes="Bold" />
+                            <Label Text="{Binding Email}" FontSize="11" Opacity="0.7" />
+                            <HorizontalStackLayout Spacing="4">
+                                <Border StrokeShape="RoundRectangle 9" Stroke="Transparent" Padding="7,2"
+                                        BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}">
+                                    <Label Text="{Binding Tag1}" FontSize="10"
+                                           TextColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnSecondaryContainer}}" />
+                                </Border>
+                                <Border StrokeShape="RoundRectangle 9" Stroke="Transparent" Padding="7,2"
+                                        BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}">
+                                    <Label Text="{Binding Tag2}" FontSize="10"
+                                           TextColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnSecondaryContainer}}" />
+                                </Border>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Score pill, department, status dot -->
+                        <VerticalStackLayout Grid.Column="2" Spacing="4" VerticalOptions="Center" HorizontalOptions="End">
+                            <Border StrokeShape="RoundRectangle 10" Stroke="Transparent" Padding="9,3"
+                                    BackgroundColor="{Binding ScoreColor}" HorizontalOptions="End">
+                                <Label Text="{Binding ScoreText}" FontSize="12" FontAttributes="Bold" TextColor="White" />
+                            </Border>
+                            <Label Text="{Binding Department}" FontSize="10" Opacity="0.75" HorizontalOptions="End" />
+                            <HorizontalStackLayout Spacing="5" HorizontalOptions="End">
+                                <BoxView Color="{Binding StatusColor}" CornerRadius="4" WidthRequest="8" HeightRequest="8"
+                                         VerticalOptions="Center" />
+                                <Label Text="{Binding StatusLabel}" FontSize="10" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+    </ContentPage.Resources>
+
     <Grid RowDefinitions="Auto,Auto,*">
 
         <!-- Top app bar -->
@@ -21,40 +113,101 @@
             LeadingIconCommand="{Binding GoBackCommand}"
             LeadingIconIsBusy="{Binding Path=GoBackCommand.IsRunning}"
             LeadingIcon="ic_back.png"
-            Type="Large" />
+            Type="Small" />
 
         <!-- Sticky stats panel -->
         <VerticalStackLayout Grid.Row="1" Spacing="0">
 
-            <material:MaterialCard
-                Type="Filled"
-                Margin="16,8"
-                Padding="16,12">
-                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="4">
+            <material:MaterialCard Type="Filled" Margin="16,4" Padding="16,12">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10">
 
-                    <material:MaterialLabel
-                        Grid.Row="0"
-                        Text="{Binding TotalText}"
-                        Type="LabelLarge" />
+                    <!-- Hero: total + throughput, with the delta vs previous run -->
+                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="0">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="{Binding TotalMsText}" FontSize="30" FontAttributes="Bold"
+                                       VerticalOptions="Center" />
+                                <!-- cold = first run of the session (pays JIT warm-up),
+                                     warm #N = steady state. Never mix them in a comparison. -->
+                                <Border StrokeShape="RoundRectangle 8" Stroke="Transparent" Padding="7,2"
+                                        VerticalOptions="Center" IsVisible="{Binding HasResult}"
+                                        BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.SecondaryContainer}}">
+                                    <Label Text="{Binding RunLabel}" FontSize="10" FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.OnSecondaryContainer}, Dark={x:Static material:MaterialDarkTheme.OnSecondaryContainer}}" />
+                                </Border>
+                            </HorizontalStackLayout>
+                            <Label Text="{Binding ThroughputText}" FontSize="11" Opacity="0.75" />
+                        </VerticalStackLayout>
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding DeltaText}"
+                            TextColor="{Binding DeltaColor}"
+                            FontSize="11"
+                            FontAttributes="Bold"
+                            VerticalOptions="End"
+                            IsVisible="{Binding HasPrevious}" />
+                    </Grid>
 
-                    <material:MaterialDivider Grid.Row="1" Margin="0,6" />
+                    <!-- Proportional stacked bar: segment width = share of total time.
+                         ScaleX with AnchorX=0 makes it grow from the left on reveal. -->
+                    <Border Grid.Row="1" StrokeShape="RoundRectangle 6" Stroke="Transparent"
+                            HeightRequest="18" Padding="0" IsVisible="{Binding HasResult}"
+                            ScaleX="{Binding RevealFraction}" AnchorX="0">
+                        <Grid ColumnDefinitions="{Binding PhaseColumns}">
+                            <BoxView Grid.Column="0" Color="{x:Static vm:BenchmarkListViewModel.Phase1Color}" />
+                            <BoxView Grid.Column="1" Color="{x:Static vm:BenchmarkListViewModel.Phase2Color}" />
+                            <BoxView Grid.Column="2" Color="{x:Static vm:BenchmarkListViewModel.Phase3Color}" />
+                            <BoxView Grid.Column="3" Color="{x:Static vm:BenchmarkListViewModel.Phase4Color}" />
+                        </Grid>
+                    </Border>
 
-                    <!-- Phase rows -->
-                    <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
-                        <material:MaterialLabel Grid.Column="0" Text="1. JSON deserialize" Type="BodySmall" />
-                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase1Text}" Type="LabelMedium" />
-                    </Grid>
-                    <Grid Grid.Row="3" ColumnDefinitions="*,Auto">
-                        <material:MaterialLabel Grid.Column="0" Text="2. LINQ map + sort" Type="BodySmall" />
-                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase2Text}" Type="LabelMedium" />
-                    </Grid>
-                    <Grid Grid.Row="4" ColumnDefinitions="*,Auto">
-                        <material:MaterialLabel Grid.Column="0" Text="3. Date parse + format" Type="BodySmall" />
-                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase3Text}" Type="LabelMedium" />
-                    </Grid>
-                    <Grid Grid.Row="5" ColumnDefinitions="*,Auto">
-                        <material:MaterialLabel Grid.Column="0" Text="4. Bind collection" Type="BodySmall" />
-                        <material:MaterialLabel Grid.Column="1" Text="{Binding Phase4Text}" Type="LabelMedium" />
+                    <!-- Ghost bar: the previous run, same scale -->
+                    <Border Grid.Row="2" StrokeShape="RoundRectangle 3" Stroke="Transparent"
+                            HeightRequest="7" Padding="0" Opacity="0.4" IsVisible="{Binding HasPrevious}">
+                        <Grid ColumnDefinitions="{Binding PreviousColumns}">
+                            <BoxView Grid.Column="0" Color="{x:Static vm:BenchmarkListViewModel.Phase1Color}" />
+                            <BoxView Grid.Column="1" Color="{x:Static vm:BenchmarkListViewModel.Phase2Color}" />
+                            <BoxView Grid.Column="2" Color="{x:Static vm:BenchmarkListViewModel.Phase3Color}" />
+                            <BoxView Grid.Column="3" Color="{x:Static vm:BenchmarkListViewModel.Phase4Color}" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Legend, two per row -->
+                    <Grid Grid.Row="3" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
+                          ColumnSpacing="12" RowSpacing="4">
+
+                        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                            <BoxView Color="{x:Static vm:BenchmarkListViewModel.Phase1Color}" CornerRadius="3"
+                                     WidthRequest="10" HeightRequest="10" VerticalOptions="Center" />
+                            <Label Text="JSON" FontSize="11" VerticalOptions="Center" />
+                            <Label Text="{Binding Phase1Text}" FontSize="11" FontAttributes="Bold" VerticalOptions="Center" />
+                            <Label Text="{Binding Phase1Percent}" FontSize="10" Opacity="0.6" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                            <BoxView Color="{x:Static vm:BenchmarkListViewModel.Phase2Color}" CornerRadius="3"
+                                     WidthRequest="10" HeightRequest="10" VerticalOptions="Center" />
+                            <Label Text="LINQ" FontSize="11" VerticalOptions="Center" />
+                            <Label Text="{Binding Phase2Text}" FontSize="11" FontAttributes="Bold" VerticalOptions="Center" />
+                            <Label Text="{Binding Phase2Percent}" FontSize="10" Opacity="0.6" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                            <BoxView Color="{x:Static vm:BenchmarkListViewModel.Phase3Color}" CornerRadius="3"
+                                     WidthRequest="10" HeightRequest="10" VerticalOptions="Center" />
+                            <Label Text="Dates" FontSize="11" VerticalOptions="Center" />
+                            <Label Text="{Binding Phase3Text}" FontSize="11" FontAttributes="Bold" VerticalOptions="Center" />
+                            <Label Text="{Binding Phase3Percent}" FontSize="10" Opacity="0.6" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
+                            <BoxView Color="{x:Static vm:BenchmarkListViewModel.Phase4Color}" CornerRadius="3"
+                                     WidthRequest="10" HeightRequest="10" VerticalOptions="Center" />
+                            <Label Text="Bind" FontSize="11" VerticalOptions="Center" />
+                            <Label Text="{Binding Phase4Text}" FontSize="11" FontAttributes="Bold" VerticalOptions="Center" />
+                            <Label Text="{Binding Phase4Percent}" FontSize="10" Opacity="0.6" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
                     </Grid>
 
                 </Grid>
@@ -68,107 +221,52 @@
                 Margin="16,0,16,4"
                 IsVisible="{Binding HasError}" />
 
-            <!-- Reload button -->
-            <material:MaterialButton
-                Text="Reload benchmark"
-                Command="{Binding LoadItemsCommand}"
-                IsEnabled="{Binding IsLoading, Converter={StaticResource ReverseBoolConverter}}"
-                Type="Tonal"
-                Margin="16,0,16,8"
-                HorizontalOptions="Fill" />
+            <!-- Actions -->
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" Margin="16,0,16,4">
+                <material:MaterialButton
+                    Grid.Column="0"
+                    Text="Run benchmark"
+                    Command="{Binding LoadItemsCommand}"
+                    IsEnabled="{Binding CanRun}"
+                    Type="Filled"
+                    HorizontalOptions="Fill" />
+                <material:MaterialButton
+                    Grid.Column="1"
+                    x:Name="RowsToggleButton"
+                    Text="Rows: rich"
+                    Clicked="OnToggleRowsClicked"
+                    Type="Outlined" />
+            </Grid>
 
         </VerticalStackLayout>
 
-        <!-- CollectionView fills remaining height — virtualization active, no nested ScrollView -->
-        <CollectionView
-            x:Name="CollectionViewRef"
-            Grid.Row="2"
-            ItemsSource="{Binding Items}"
-            ItemsLayout="VerticalList">
+        <!-- List area: CollectionView + video-analysis overlays -->
+        <Grid Grid.Row="2">
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:BenchmarkItem">
-                    <Grid Padding="16,3">
-                        <Border
-                            StrokeShape="RoundRectangle 8"
-                            Stroke="Transparent"
-                            BackgroundColor="{AppThemeBinding Light={x:Static material:MaterialLightTheme.SurfaceContainerHighest}, Dark={x:Static material:MaterialDarkTheme.SurfaceContainerHighest}}">
-                            <Grid
-                                ColumnDefinitions="Auto,*,Auto"
-                                ColumnSpacing="12"
-                                Padding="12,10">
+            <CollectionView
+                x:Name="CollectionViewRef"
+                ItemsSource="{Binding Items}"
+                ItemsLayout="VerticalList">
 
-                                <!-- Score badge -->
-                                <Grid
-                                    Grid.Column="0"
-                                    WidthRequest="40"
-                                    HeightRequest="40"
-                                    VerticalOptions="Center">
-                                    <BoxView
-                                        Color="{Binding ScoreColor}"
-                                        CornerRadius="20"
-                                        WidthRequest="40"
-                                        HeightRequest="40" />
-                                    <Label
-                                        Text="{Binding ScoreText}"
-                                        FontSize="12"
-                                        FontAttributes="Bold"
-                                        TextColor="White"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center" />
-                                </Grid>
-
-                                <!-- Main content -->
-                                <VerticalStackLayout
-                                    Grid.Column="1"
-                                    Spacing="1"
-                                    VerticalOptions="Center">
-                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" />
-                                    <Label Text="{Binding Email}" FontSize="11" />
-                                    <Label Text="{Binding TagsDisplay}" FontSize="11" />
-                                </VerticalStackLayout>
-
-                                <!-- Right column: department + date + status -->
-                                <VerticalStackLayout
-                                    Grid.Column="2"
-                                    Spacing="2"
-                                    VerticalOptions="Center"
-                                    HorizontalOptions="End">
-                                    <Label Text="{Binding Department}" FontSize="11" FontAttributes="Bold" HorizontalOptions="End" />
-                                    <Label Text="{Binding FormattedDate}" FontSize="10" HorizontalOptions="End" />
-                                    <Label
-                                        Text="{Binding StatusLabel}"
-                                        TextColor="{Binding StatusColor}"
-                                        FontSize="11"
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="End" />
-                                </VerticalStackLayout>
-
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-
-            <CollectionView.EmptyView>
-                <VerticalStackLayout
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Spacing="8"
-                    Padding="32">
-                    <ActivityIndicator
-                        IsRunning="{Binding IsLoading}"
-                        IsVisible="{Binding IsLoading}"
-                        HorizontalOptions="Center" />
-                    <material:MaterialLabel
-                        Text="No items loaded"
-                        Type="BodyMedium"
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout
                         HorizontalOptions="Center"
-                        IsVisible="{Binding IsLoading, Converter={StaticResource ReverseBoolConverter}}" />
-                </VerticalStackLayout>
-            </CollectionView.EmptyView>
+                        VerticalOptions="Center"
+                        Spacing="8"
+                        Padding="32">
+                        <material:MaterialLabel
+                            Text="No items loaded"
+                            Type="BodyMedium"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding IsLoading, Converter={StaticResource ReverseBoolConverter}}" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
 
-        </CollectionView>
+            </CollectionView>
+
+
+
+        </Grid>
 
     </Grid>
 </local:BaseContentPage>
