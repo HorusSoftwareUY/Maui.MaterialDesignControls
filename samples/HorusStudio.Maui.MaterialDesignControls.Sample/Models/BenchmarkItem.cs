@@ -14,4 +14,10 @@ public class BenchmarkItem
     public Color ScoreColor { get; set; } = Colors.Gray;
     public Color StatusColor { get; set; } = Colors.Gray;
     public string StatusLabel { get; set; } = string.Empty;
+
+    // Rich row template
+    public string Initials { get; set; } = string.Empty;
+    public Color AvatarColor { get; set; } = Colors.Gray;
+    public string Tag1 { get; set; } = string.Empty;
+    public string Tag2 { get; set; } = string.Empty;
 }

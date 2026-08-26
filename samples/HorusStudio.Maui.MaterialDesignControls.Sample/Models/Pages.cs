@@ -32,4 +32,6 @@ public class Pages
     public const string BenchmarkList = "Virtual list (10k items)";
     public const string BenchmarkSkia = "Skia particles animation";
     public const string BenchmarkUIRender = "UI controls render";
+    public const string BenchmarkWaves = "Liquid color waves";
+    public const string BenchmarkFluid = "Fluid ink (feedback)";
 }

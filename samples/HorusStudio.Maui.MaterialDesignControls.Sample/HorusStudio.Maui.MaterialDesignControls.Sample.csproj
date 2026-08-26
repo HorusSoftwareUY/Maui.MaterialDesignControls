@@ -7,7 +7,7 @@
 		<SingleProject>true</SingleProject>
 
 		<!-- Runtime switch: set UseMono=true to compile with Mono runtime -->
-		<UseMono Condition="'$(UseMono)' == ''">true</UseMono>
+		<UseMono Condition="'$(UseMono)' == ''">false</UseMono>
 
 		<!-- Separate intermediate and output dirs per runtime so icon/asset caches
 		     never collide between a CoreCLR build and a Mono build. Without this,
@@ -44,12 +44,13 @@
 	</PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
-        <!-- CoreCLR (.NET 11+) only supports 64-bit Android. We target arm64 only:
-             all modern Android phones are ARM64; x64 is only needed for Intel-based
-             emulators/Chromebooks (very rare). Add android-x64 here if needed.
-             ⚠️  x64 Android emulators are NOT supported with this config.
-                 To run on an emulator add android-x64 to RuntimeIdentifiers. -->
-        <RuntimeIdentifiers Condition="'$(UseMono)' != 'true'">android-arm64</RuntimeIdentifiers>
+        <!-- Both runtimes target arm64 only, so APK sizes are comparable:
+             all modern Android phones are ARM64, and Android emulators on
+             Apple Silicon run arm64 images natively. x64 is only needed for
+             Intel-based emulators/Chromebooks (very rare).
+             ⚠️  x64 (Intel) Android emulators are NOT supported with this config.
+                 To run on one, add android-x64 to RuntimeIdentifiers. -->
+        <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
         <!-- Use CoreCLR instead of Mono on Android (.NET 11+) -->
         <UseMonoRuntime>$(UseMono)</UseMonoRuntime>
     </PropertyGroup>
