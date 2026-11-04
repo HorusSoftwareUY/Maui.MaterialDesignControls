@@ -21,6 +21,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.Pages;
 public partial class OpenScreenPage : BaseContentPage<OpenScreenViewModel>
 {
     private static int _opensInProcess;
+    private const string VideoModeKey = "openscreen.videomode";
 
     private readonly OpenScreenViewModel _vm;
 
@@ -28,11 +29,31 @@ public partial class OpenScreenPage : BaseContentPage<OpenScreenViewModel>
     {
         _vm = vm;
         InitializeComponent();
+        VideoModeSwitch.IsToggled = Preferences.Default.Get(VideoModeKey, false);
+        ApplyVideoMode();
         TopBar.LeadingIconCommand = new Command(() =>
         {
             if (!CloseScreen())
                 vm.GoBackCommand.Execute(null);
         });
+    }
+
+    private void OnVideoModeToggled(object? sender, EventArgs e)
+    {
+        Preferences.Default.Set(VideoModeKey, VideoModeSwitch.IsToggled);
+        ApplyVideoMode();
+    }
+
+    /// <summary>
+    /// Video mode is applied up front, before any tap, so it never lands inside
+    /// a measurement: the opened screen spans both rows and the chip stays hidden.
+    /// </summary>
+    private void ApplyVideoMode()
+    {
+        var on = VideoModeSwitch.IsToggled;
+        Grid.SetRow(ScreenHost, on ? 0 : 1);
+        Grid.SetRowSpan(ScreenHost, on ? 2 : 1);
+        ResultChip.Opacity = on ? 0 : 1;
     }
 
     private void OnOpenXamlC(object? sender, EventArgs e) =>

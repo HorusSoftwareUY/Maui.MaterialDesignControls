@@ -55,6 +55,12 @@
                 </VerticalStackLayout>
             </Border>
 
+            <!-- Video mode: hides the top bar and the result chip so a screen
+                 recording shows only the opened screen. Persisted across launches
+                 (cold runs restart the app). Does not change what is timed. -->
+            <material:MaterialSwitch x:Name="VideoModeSwitch" Text="Video mode (hide top bar and result chip)"
+                                     Toggled="OnVideoModeToggled" />
+
             <Grid ColumnDefinitions="*,Auto">
                 <material:MaterialButton Type="Outlined" Text="Before · XamlC" Clicked="OnOpenXamlC" />
                 <Label Grid.Column="1" Text="{Binding LastXamlC}" FontSize="12" TextColor="#8A97B2" VerticalOptions="Center" Margin="12,0,0,0" />
@@ -65,11 +71,12 @@
             </Grid>
         </VerticalStackLayout>
 
-        <!-- The opened screen goes here, below the top bar. -->
+        <!-- The opened screen goes here, below the top bar
+             (in video mode it also covers the top bar row). -->
         <ContentView x:Name="ScreenHost" Grid.Row="1" IsVisible="False" />
 
         <!-- Result chip over the opened screen (for the video). -->
-        <Border Grid.Row="1" IsVisible="{Binding OverlayVisible}" InputTransparent="True"
+        <Border x:Name="ResultChip" Grid.Row="1" IsVisible="{Binding OverlayVisible}" InputTransparent="True"
                 HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,24"
                 BackgroundColor="#E60A0F1C" Stroke="#FFB547" StrokeThickness="1.5"
                 StrokeShape="RoundRectangle 20" Padding="18,8">
