@@ -36,4 +36,5 @@ public class Pages
     public const string BenchmarkFluid = "Fluid ink (feedback)";
     public const string BenchmarkSceneGraph = "Scene graph (polymorphic)";
     public const string BenchmarkXaml = "XAML pipeline (.NET 11)";
+    public const string OpenScreen = "Open a screen (.NET 11)";
 }

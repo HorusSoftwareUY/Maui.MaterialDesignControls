@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.OpenScreenPage"
+    x:TypeArguments="vm:OpenScreenViewModel"
+    x:DataType="vm:OpenScreenViewModel"
+    BackgroundColor="#0A0F1C">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- The back arrow closes the opened screen first, then leaves the page
+             (wired in code-behind), same as hardware back. -->
+        <material:MaterialTopAppBar
+            x:Name="TopBar"
+            Grid.Row="0"
+            Headline="{Binding Title}"
+            LeadingIcon="ic_back.png"
+            Type="Small" />
+
+        <VerticalStackLayout Grid.Row="1" Padding="20,8" Spacing="16">
+            <Label Text="{Binding RuntimeText}" FontSize="13" FontAttributes="Bold" TextColor="#2DD4BF" />
+            <Label Text="Opens the Northbeam Dispatch home screen (~700 elements, real library controls). Same XAML, two inflators. Back closes it."
+                   FontSize="13" TextColor="#8A97B2" />
+
+            <material:MaterialButton Type="Outlined" Text="Before · XamlC" Clicked="OnOpenXamlC" />
+            <material:MaterialButton Type="Filled" Text="Now · SourceGen (.NET 11)" Clicked="OnOpenSourceGen" />
+        </VerticalStackLayout>
+
+        <!-- The opened screen goes here, below the top bar. -->
+        <ContentView x:Name="ScreenHost" Grid.Row="1" IsVisible="False" />
+    </Grid>
+</local:BaseContentPage>

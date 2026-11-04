@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    "Northbeam Dispatch" — home screen of a fictional US freight carrier
+    (Northbeam Freight, Columbus OH). This is the heavy screen the
+    "Open a screen" benchmark opens.
+
+    DispatchHomeSourceGen.xaml and DispatchHomeXamlC.xaml are byte-identical
+    except for x:Class; the only variable is the Inflator metadata in the
+    csproj. Edit THIS file, then regenerate the twin:
+      sed 's/DispatchHomeSourceGen/DispatchHomeXamlC/' DispatchHomeSourceGen.xaml > DispatchHomeXamlC.xaml
+
+    Rules that keep the number honest:
+    - No page ResourceDictionary: colors are inline, so LazyRD (SourceGen only)
+      can't sneak into the XamlC vs SourceGen comparison.
+    - Nothing animates: the screen is static once drawn, so "first frame" is
+      a clean end point.
+    - It is a ContentView, not a page: the launcher swaps it in as its own
+      content instead of navigating. Same work (inflate, attach, handlers,
+      layout, draw) without Shell navigation in the number — and Shell
+      pops hung on return in preview 5.
+-->
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:os="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Benchmarks.OpenScreen"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Benchmarks.OpenScreen.DispatchHomeSourceGen"
+    x:DataType="os:DispatchData"
+    BackgroundColor="#0A0F1C">
+
+    <Grid>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="16,12,16,24" Spacing="18">
+
+                <!-- ═══ Top bar ═══ -->
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12">
+                    <Border Grid.Column="0" WidthRequest="42" HeightRequest="42" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#FFB547" Offset="0" />
+                                <GradientStop Color="#F2545B" Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Label Text="N" FontSize="22" FontAttributes="Bold" TextColor="#0A0F1C"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="0">
+                        <material:MaterialLabel Text="Northbeam Dispatch" FontSize="18" FontAttributes="Bold" TextColor="#E8EDF7" />
+                        <material:MaterialLabel Text="Columbus Hub · Wednesday, Nov 4" FontSize="12" TextColor="#8A97B2" />
+                    </VerticalStackLayout>
+                    <material:MaterialIconButton Grid.Column="2" ImageSource="ic_search.png" IconTintColor="#E8EDF7" Type="Standard" VerticalOptions="Center" />
+                    <Grid Grid.Column="3" VerticalOptions="Center">
+                        <material:MaterialIconButton ImageSource="pending_actions.png" IconTintColor="#E8EDF7" Type="Standard" />
+                        <material:MaterialBadge Type="Small" HorizontalOptions="End" VerticalOptions="Start" Margin="0,6,6,0" />
+                    </Grid>
+                </Grid>
+
+                <!-- ═══ Hero: on-time delivery ═══ -->
+                <Border StrokeThickness="0" StrokeShape="RoundRectangle 22" Padding="20,18">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#1E3A8A" Offset="0" />
+                            <GradientStop Color="#3B2A7A" Offset="0.6" />
+                            <GradientStop Color="#5B2A6A" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="6">
+                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                            <material:MaterialLabel Text="ON-TIME DELIVERY · 7 DAYS" FontSize="11" FontAttributes="Bold" CharacterSpacing="1.2" TextColor="#C7D2FE" />
+                            <Border Grid.Column="1" BackgroundColor="#332DD4BF" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="8,2">
+                                <Label Text="▲ 1.8 pts" FontSize="11" FontAttributes="Bold" TextColor="#2DD4BF" />
+                            </Border>
+                        </Grid>
+                        <HorizontalStackLayout Grid.Row="1" Spacing="6">
+                            <Label Text="97.4" FontSize="54" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="%" FontSize="26" FontAttributes="Bold" TextColor="#C7D2FE" VerticalOptions="End" Margin="0,0,0,10" />
+                        </HorizontalStackLayout>
+                        <!-- Sparkline: last 14 days -->
+                        <Grid Grid.Row="2" HeightRequest="46" ColumnSpacing="5"
+                              ColumnDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*">
+                            <BoxView Grid.Column="0" HeightRequest="22" VerticalOptions="End" Color="#66FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="1" HeightRequest="28" VerticalOptions="End" Color="#66FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="2" HeightRequest="25" VerticalOptions="End" Color="#66FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="3" HeightRequest="31" VerticalOptions="End" Color="#66FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="4" HeightRequest="27" VerticalOptions="End" Color="#66FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="5" HeightRequest="34" VerticalOptions="End" Color="#66FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="6" HeightRequest="30" VerticalOptions="End" Color="#66FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="7" HeightRequest="36" VerticalOptions="End" Color="#88FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="8" HeightRequest="33" VerticalOptions="End" Color="#88FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="9" HeightRequest="39" VerticalOptions="End" Color="#88FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="10" HeightRequest="37" VerticalOptions="End" Color="#88FFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="11" HeightRequest="42" VerticalOptions="End" Color="#AAFFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="12" HeightRequest="40" VerticalOptions="End" Color="#AAFFFFFF" CornerRadius="3" />
+                            <BoxView Grid.Column="13" HeightRequest="46" VerticalOptions="End" Color="#FFB547" CornerRadius="3" />
+                        </Grid>
+                        <Grid Grid.Row="3" ColumnDefinitions="*,*,*" Margin="0,8,0,0">
+                            <VerticalStackLayout Grid.Column="0" Spacing="0">
+                                <Label Text="2,418" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                                <Label Text="Loads this week" FontSize="11" TextColor="#C7D2FE" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="0">
+                                <Label Text="$1.42M" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                                <Label Text="Revenue booked" FontSize="11" TextColor="#C7D2FE" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="2" Spacing="0">
+                                <Label Text="$2.31" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                                <Label Text="Avg rate / mile" FontSize="11" TextColor="#C7D2FE" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- ═══ Lane filters ═══ -->
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Margin="-16,0">
+                    <HorizontalStackLayout Spacing="8" Padding="16,0">
+                        <material:MaterialChip Type="Filter" Text="All lanes" IsSelected="True" />
+                        <material:MaterialChip Type="Filter" Text="Midwest" />
+                        <material:MaterialChip Type="Filter" Text="Southeast" />
+                        <material:MaterialChip Type="Filter" Text="Texas Triangle" />
+                        <material:MaterialChip Type="Filter" Text="Northeast" />
+                        <material:MaterialChip Type="Filter" Text="Reefer" />
+                        <material:MaterialChip Type="Filter" Text="Hazmat" />
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <!-- ═══ KPI grid ═══ -->
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+
+                    <material:MaterialCard Grid.Row="0" Grid.Column="0" Type="Filled" BackgroundColor="#121A2B" CornerRadius="18" Padding="14">
+                        <VerticalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <material:MaterialLabel Text="In transit" FontSize="12" TextColor="#8A97B2" />
+                                <BoxView Grid.Column="1" WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="#5B8CFF" VerticalOptions="Center" />
+                            </Grid>
+                            <Label Text="1,284" FontSize="26" FontAttributes="Bold" TextColor="#E8EDF7" />
+                            <Grid ColumnDefinitions="72*,28*" HeightRequest="6">
+                                <BoxView Grid.Column="0" Color="#5B8CFF" CornerRadius="3" />
+                                <BoxView Grid.Column="1" Color="#22304D" CornerRadius="3" />
+                            </Grid>
+                            <Label Text="▲ 6.2% vs last Wed" FontSize="11" TextColor="#2DD4BF" />
+                        </VerticalStackLayout>
+                    </material:MaterialCard>
+
+                    <material:MaterialCard Grid.Row="0" Grid.Column="1" Type="Filled" BackgroundColor="#121A2B" CornerRadius="18" Padding="14">
+                        <VerticalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <material:MaterialLabel Text="Delivered today" FontSize="12" TextColor="#8A97B2" />
+                                <BoxView Grid.Column="1" WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="#2DD4BF" VerticalOptions="Center" />
+                            </Grid>
+                            <Label Text="3,912" FontSize="26" FontAttributes="Bold" TextColor="#E8EDF7" />
+                            <Grid ColumnDefinitions="88*,12*" HeightRequest="6">
+                                <BoxView Grid.Column="0" Color="#2DD4BF" CornerRadius="3" />
+                                <BoxView Grid.Column="1" Color="#22304D" CornerRadius="3" />
+                            </Grid>
+                            <Label Text="▲ 3.4% vs last Wed" FontSize="11" TextColor="#2DD4BF" />
+                        </VerticalStackLayout>
+                    </material:MaterialCard>
+
+                    <material:MaterialCard Grid.Row="1" Grid.Column="0" Type="Filled" BackgroundColor="#121A2B" CornerRadius="18" Padding="14">
+                        <VerticalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <material:MaterialLabel Text="Exceptions" FontSize="12" TextColor="#8A97B2" />
+                                <BoxView Grid.Column="1" WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="#F2545B" VerticalOptions="Center" />
+                            </Grid>
+                            <Label Text="47" FontSize="26" FontAttributes="Bold" TextColor="#E8EDF7" />
+                            <Grid ColumnDefinitions="12*,88*" HeightRequest="6">
+                                <BoxView Grid.Column="0" Color="#F2545B" CornerRadius="3" />
+                                <BoxView Grid.Column="1" Color="#22304D" CornerRadius="3" />
+                            </Grid>
+                            <Label Text="▼ 9 fewer than yesterday" FontSize="11" TextColor="#2DD4BF" />
+                        </VerticalStackLayout>
+                    </material:MaterialCard>
+
+                    <material:MaterialCard Grid.Row="1" Grid.Column="1" Type="Filled" BackgroundColor="#121A2B" CornerRadius="18" Padding="14">
+                        <VerticalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <material:MaterialLabel Text="Fleet utilization" FontSize="12" TextColor="#8A97B2" />
+                                <BoxView Grid.Column="1" WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="#FFB547" VerticalOptions="Center" />
+                            </Grid>
+                            <Label Text="86%" FontSize="26" FontAttributes="Bold" TextColor="#E8EDF7" />
+                            <Grid ColumnDefinitions="86*,14*" HeightRequest="6">
+                                <BoxView Grid.Column="0" Color="#FFB547" CornerRadius="3" />
+                                <BoxView Grid.Column="1" Color="#22304D" CornerRadius="3" />
+                            </Grid>
+                            <Label Text="96 of 112 tractors rolling" FontSize="11" TextColor="#8A97B2" />
+                        </VerticalStackLayout>
+                    </material:MaterialCard>
+                </Grid>
+
+                <!-- ═══ Live network ═══ -->
+                <material:MaterialCard Type="Filled" BackgroundColor="#121A2B" CornerRadius="22" Padding="16">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Spacing="0">
+                                <material:MaterialLabel Text="Live network" FontSize="16" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                <material:MaterialLabel Text="8 hubs · 11 active lanes" FontSize="12" TextColor="#8A97B2" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="1" BackgroundColor="#33F2545B" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="10,4" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="6">
+                                    <BoxView WidthRequest="7" HeightRequest="7" CornerRadius="4" Color="#F2545B" VerticalOptions="Center" />
+                                    <Label Text="LIVE" FontSize="11" FontAttributes="Bold" TextColor="#F2545B" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <AbsoluteLayout WidthRequest="330" HeightRequest="190" HorizontalOptions="Center">
+                            <!-- Lanes -->
+                            <Line X1="255" Y1="72" X2="220" Y2="55" Stroke="#5B8CFF" StrokeThickness="2" />
+                            <Line X1="255" Y1="72" X2="305" Y2="50" Stroke="#5B8CFF" StrokeThickness="2" />
+                            <Line X1="255" Y1="72" X2="250" Y2="140" Stroke="#FFB547" StrokeThickness="2.5" />
+                            <Line X1="255" Y1="72" X2="165" Y2="150" Stroke="#5B8CFF" StrokeThickness="2" />
+                            <Line X1="255" Y1="72" X2="105" Y2="80" Stroke="#5B8CFF" StrokeThickness="2" />
+                            <Line X1="220" Y1="55" X2="105" Y2="80" Stroke="#3A4B70" StrokeThickness="1.5" StrokeDashArray="4,3" />
+                            <Line X1="105" Y1="80" X2="30" Y2="25" Stroke="#3A4B70" StrokeThickness="1.5" StrokeDashArray="4,3" />
+                            <Line X1="105" Y1="80" X2="28" Y2="130" Stroke="#3A4B70" StrokeThickness="1.5" StrokeDashArray="4,3" />
+                            <Line X1="165" Y1="150" X2="28" Y2="130" Stroke="#3A4B70" StrokeThickness="1.5" StrokeDashArray="4,3" />
+                            <Line X1="250" Y1="140" X2="165" Y2="150" Stroke="#F2545B" StrokeThickness="2" />
+                            <Line X1="220" Y1="55" X2="305" Y2="50" Stroke="#3A4B70" StrokeThickness="1.5" StrokeDashArray="4,3" />
+
+                            <!-- Hubs: halo + dot + code -->
+                            <Ellipse AbsoluteLayout.LayoutBounds="244,61,22,22" Fill="#33FFB547" />
+                            <Ellipse AbsoluteLayout.LayoutBounds="249,66,12,12" Fill="#FFB547" />
+                            <Label AbsoluteLayout.LayoutBounds="262,78,40,16" Text="CMH" FontSize="10" FontAttributes="Bold" TextColor="#FFB547" />
+
+                            <Ellipse AbsoluteLayout.LayoutBounds="211,46,18,18" Fill="#335B8CFF" />
+                            <Ellipse AbsoluteLayout.LayoutBounds="216,51,8,8" Fill="#5B8CFF" />
+                            <Label AbsoluteLayout.LayoutBounds="200,30,40,16" Text="CHI" FontSize="10" FontAttributes="Bold" TextColor="#C7D2FE" />
+
+                            <Ellipse AbsoluteLayout.LayoutBounds="296,41,18,18" Fill="#335B8CFF" />
+                            <Ellipse AbsoluteLayout.LayoutBounds="301,46,8,8" Fill="#5B8CFF" />
+                            <Label AbsoluteLayout.LayoutBounds="292,24,40,16" Text="NYC" FontSize="10" FontAttributes="Bold" TextColor="#C7D2FE" />
+
+                            <Ellipse AbsoluteLayout.LayoutBounds="241,131,18,18" Fill="#33F2545B" />
+                            <Ellipse AbsoluteLayout.LayoutBounds="246,136,8,8" Fill="#F2545B" />
+                            <Label AbsoluteLayout.LayoutBounds="262,140,40,16" Text="ATL" FontSize="10" FontAttributes="Bold" TextColor="#C7D2FE" />
+
+                            <Ellipse AbsoluteLayout.LayoutBounds="156,141,18,18" Fill="#335B8CFF" />
+                            <Ellipse AbsoluteLayout.LayoutBounds="161,146,8,8" Fill="#5B8CFF" />
+                            <Label AbsoluteLayout.LayoutBounds="150,162,40,16" Text="DAL" FontSize="10" FontAttributes="Bold" TextColor="#C7D2FE" />
+
+                            <Ellipse AbsoluteLayout.LayoutBounds="96,71,18,18" Fill="#335B8CFF" />
+                            <Ellipse AbsoluteLayout.LayoutBounds="101,76,8,8" Fill="#5B8CFF" />
+                            <Label AbsoluteLayout.LayoutBounds="90,95,40,16" Text="DEN" FontSize="10" FontAttributes="Bold" TextColor="#C7D2FE" />
+
+                            <Ellipse AbsoluteLayout.LayoutBounds="21,16,18,18" Fill="#333A4B70" />
+                            <Ellipse AbsoluteLayout.LayoutBounds="26,21,8,8" Fill="#8A97B2" />
+                            <Label AbsoluteLayout.LayoutBounds="18,0,40,16" Text="SEA" FontSize="10" FontAttributes="Bold" TextColor="#8A97B2" />
+
+                            <Ellipse AbsoluteLayout.LayoutBounds="19,121,18,18" Fill="#333A4B70" />
+                            <Ellipse AbsoluteLayout.LayoutBounds="24,126,8,8" Fill="#8A97B2" />
+                            <Label AbsoluteLayout.LayoutBounds="14,144,40,16" Text="LAX" FontSize="10" FontAttributes="Bold" TextColor="#8A97B2" />
+                        </AbsoluteLayout>
+
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                            <HorizontalStackLayout Grid.Column="0" Spacing="6">
+                                <BoxView WidthRequest="14" HeightRequest="3" Color="#5B8CFF" VerticalOptions="Center" />
+                                <Label Text="On schedule" FontSize="11" TextColor="#8A97B2" />
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Column="1" Spacing="6">
+                                <BoxView WidthRequest="14" HeightRequest="3" Color="#FFB547" VerticalOptions="Center" />
+                                <Label Text="Priority" FontSize="11" TextColor="#8A97B2" />
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Column="2" Spacing="6">
+                                <BoxView WidthRequest="14" HeightRequest="3" Color="#F2545B" VerticalOptions="Center" />
+                                <Label Text="Weather delay" FontSize="11" TextColor="#8A97B2" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+
+                <!-- ═══ Active loads (horizontal) ═══ -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <material:MaterialLabel Text="Active loads" FontSize="16" FontAttributes="Bold" TextColor="#E8EDF7" VerticalOptions="Center" />
+                    <material:MaterialButton Grid.Column="1" Type="Text" Text="See all 1,284" TextColor="#FFB547" />
+                </Grid>
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Margin="-16,-10,-16,0">
+                    <HorizontalStackLayout Spacing="12" Padding="16,0">
+
+                        <material:MaterialCard Type="Filled" BackgroundColor="#121A2B" CornerRadius="20" Padding="16" WidthRequest="280">
+                            <VerticalStackLayout Spacing="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="NB-482130" FontSize="12" FontAttributes="Bold" TextColor="#FFB547" />
+                                    <Label Grid.Column="1" Text="Reefer · 36°F" FontSize="11" TextColor="#8A97B2" />
+                                </Grid>
+                                <Label Text="Columbus, OH → Atlanta, GA" FontSize="15" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                <Grid ColumnDefinitions="64*,36*" HeightRequest="6">
+                                    <BoxView Grid.Column="0" Color="#FFB547" CornerRadius="3" />
+                                    <BoxView Grid.Column="1" Color="#22304D" CornerRadius="3" />
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="364 mi left · ETA 6:40 PM" FontSize="11" TextColor="#8A97B2" />
+                                    <Label Grid.Column="1" Text="64%" FontSize="11" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                </Grid>
+                                <material:MaterialDivider Color="#22304D" />
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Border WidthRequest="34" HeightRequest="34" StrokeThickness="0" StrokeShape="Ellipse" BackgroundColor="#3B4F7A">
+                                        <Label Text="MR" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                        <Label Text="Marcus Reed" FontSize="13" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                        <Label Text="Unit 214 · Freightliner" FontSize="11" TextColor="#8A97B2" />
+                                    </VerticalStackLayout>
+                                    <material:MaterialButton Grid.Column="2" Type="Filled" Text="Track" BackgroundColor="#FFB547" TextColor="#0A0F1C" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </material:MaterialCard>
+
+                        <material:MaterialCard Type="Filled" BackgroundColor="#121A2B" CornerRadius="20" Padding="16" WidthRequest="280">
+                            <VerticalStackLayout Spacing="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="NB-482507" FontSize="12" FontAttributes="Bold" TextColor="#FFB547" />
+                                    <Label Grid.Column="1" Text="Dry van · 53'" FontSize="11" TextColor="#8A97B2" />
+                                </Grid>
+                                <Label Text="Chicago, IL → Dallas, TX" FontSize="15" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                <Grid ColumnDefinitions="41*,59*" HeightRequest="6">
+                                    <BoxView Grid.Column="0" Color="#5B8CFF" CornerRadius="3" />
+                                    <BoxView Grid.Column="1" Color="#22304D" CornerRadius="3" />
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="548 mi left · ETA Thu 9:15 AM" FontSize="11" TextColor="#8A97B2" />
+                                    <Label Grid.Column="1" Text="41%" FontSize="11" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                </Grid>
+                                <material:MaterialDivider Color="#22304D" />
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Border WidthRequest="34" HeightRequest="34" StrokeThickness="0" StrokeShape="Ellipse" BackgroundColor="#5A3E7A">
+                                        <Label Text="DO" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                        <Label Text="Dana Ortiz" FontSize="13" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                        <Label Text="Unit 087 · Kenworth T680" FontSize="11" TextColor="#8A97B2" />
+                                    </VerticalStackLayout>
+                                    <material:MaterialButton Grid.Column="2" Type="Filled" Text="Track" BackgroundColor="#FFB547" TextColor="#0A0F1C" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </material:MaterialCard>
+
+                        <material:MaterialCard Type="Filled" BackgroundColor="#121A2B" CornerRadius="20" Padding="16" WidthRequest="280">
+                            <VerticalStackLayout Spacing="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="NB-482884" FontSize="12" FontAttributes="Bold" TextColor="#F2545B" />
+                                    <Label Grid.Column="1" Text="Flatbed · tarped" FontSize="11" TextColor="#8A97B2" />
+                                </Grid>
+                                <Label Text="Pittsburgh, PA → Newark, NJ" FontSize="15" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                <Grid ColumnDefinitions="78*,22*" HeightRequest="6">
+                                    <BoxView Grid.Column="0" Color="#F2545B" CornerRadius="3" />
+                                    <BoxView Grid.Column="1" Color="#22304D" CornerRadius="3" />
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="Weather hold · I-78 closure" FontSize="11" TextColor="#F2545B" />
+                                    <Label Grid.Column="1" Text="78%" FontSize="11" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                </Grid>
+                                <material:MaterialDivider Color="#22304D" />
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Border WidthRequest="34" HeightRequest="34" StrokeThickness="0" StrokeShape="Ellipse" BackgroundColor="#2E6A6A">
+                                        <Label Text="JK" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                        <Label Text="Jamal King" FontSize="13" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                        <Label Text="Unit 151 · Peterbilt 579" FontSize="11" TextColor="#8A97B2" />
+                                    </VerticalStackLayout>
+                                    <material:MaterialButton Grid.Column="2" Type="Filled" Text="Track" BackgroundColor="#FFB547" TextColor="#0A0F1C" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </material:MaterialCard>
+
+                        <material:MaterialCard Type="Filled" BackgroundColor="#121A2B" CornerRadius="20" Padding="16" WidthRequest="280">
+                            <VerticalStackLayout Spacing="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="NB-483261" FontSize="12" FontAttributes="Bold" TextColor="#FFB547" />
+                                    <Label Grid.Column="1" Text="Team · expedited" FontSize="11" TextColor="#8A97B2" />
+                                </Grid>
+                                <Label Text="St. Louis, MO → Denver, CO" FontSize="15" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                <Grid ColumnDefinitions="23*,77*" HeightRequest="6">
+                                    <BoxView Grid.Column="0" Color="#5B8CFF" CornerRadius="3" />
+                                    <BoxView Grid.Column="1" Color="#22304D" CornerRadius="3" />
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="660 mi left · ETA Thu 4:05 AM" FontSize="11" TextColor="#8A97B2" />
+                                    <Label Grid.Column="1" Text="23%" FontSize="11" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                </Grid>
+                                <material:MaterialDivider Color="#22304D" />
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Border WidthRequest="34" HeightRequest="34" StrokeThickness="0" StrokeShape="Ellipse" BackgroundColor="#7A5A2E">
+                                        <Label Text="SL" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                        <Label Text="Sofia Lindqvist" FontSize="13" FontAttributes="Bold" TextColor="#E8EDF7" />
+                                        <Label Text="Unit 302 · Volvo VNL" FontSize="11" TextColor="#8A97B2" />
+                                    </VerticalStackLayout>
+                                    <material:MaterialButton Grid.Column="2" Type="Filled" Text="Track" BackgroundColor="#FFB547" TextColor="#0A0F1C" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </material:MaterialCard>
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <!-- ═══ Book a pickup ═══ -->
+                <material:MaterialCard Type="Filled" BackgroundColor="#121A2B" CornerRadius="22" Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <VerticalStackLayout Spacing="0">
+                            <material:MaterialLabel Text="Book a pickup" FontSize="16" FontAttributes="Bold" TextColor="#E8EDF7" />
+                            <material:MaterialLabel Text="Instant quote · capacity confirmed in under 2 min" FontSize="12" TextColor="#8A97B2" />
+                        </VerticalStackLayout>
+                        <material:MaterialTextField Type="Outlined" Placeholder="Pickup address" Text="4400 Easton Way, Columbus, OH" />
+                        <material:MaterialTextField Type="Outlined" Placeholder="Delivery address" Text="1100 Peachtree St, Atlanta, GA" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <material:MaterialPicker Grid.Column="0" Type="Outlined" Placeholder="Equipment" ItemsSource="{Binding EquipmentTypes}" />
+                            <material:MaterialPicker Grid.Column="1" Type="Outlined" Placeholder="Service level" ItemsSource="{Binding ServiceLevels}" />
+                        </Grid>
+                        <material:MaterialTextField Type="Outlined" Placeholder="Pickup date" Text="Thu, Nov 5 · 8:00 AM – 12:00 PM" />
+                        <material:MaterialSlider Label="Estimated weight · 18,000 lb" Value="0.45" />
+                        <material:MaterialSwitch Text="Liftgate required at delivery" IsToggled="True" />
+                        <material:MaterialSwitch Text="Hazardous materials (placarded)" />
+                        <material:MaterialSwitch Text="Temperature controlled" />
+                        <material:MaterialDivider Color="#22304D" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Spacing="0">
+                                <Label Text="Estimated rate" FontSize="12" TextColor="#8A97B2" />
+                                <Label Text="$1,286.40" FontSize="22" FontAttributes="Bold" TextColor="#E8EDF7" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="568 mi · $2.26/mi" FontSize="12" TextColor="#8A97B2" VerticalOptions="End" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <material:MaterialButton Grid.Column="0" Type="Outlined" Text="Save draft" />
+                            <material:MaterialButton Grid.Column="1" Type="Filled" Text="Book now" BackgroundColor="#FFB547" TextColor="#0A0F1C" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+
+                <!-- ═══ Recent shipments (bound list) ═══ -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <material:MaterialLabel Text="Recent shipments" FontSize="16" FontAttributes="Bold" TextColor="#E8EDF7" VerticalOptions="Center" />
+                    <material:MaterialButton Grid.Column="1" Type="Text" Text="Export CSV" TextColor="#FFB547" />
+                </Grid>
+                <material:MaterialCard Type="Filled" BackgroundColor="#121A2B" CornerRadius="22" Padding="8,4" Margin="0,-10,0,0">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Shipments}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="os:ShipmentRow">
+                                <VerticalStackLayout>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Padding="8,12">
+                                        <Border WidthRequest="40" HeightRequest="40" StrokeThickness="0" StrokeShape="RoundRectangle 12"
+                                                BackgroundColor="{Binding AvatarColor}" VerticalOptions="Center">
+                                            <Label Text="{Binding Initials}" FontSize="13" FontAttributes="Bold" TextColor="White"
+                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                                            <Label Text="{Binding Shipper}" FontSize="14" FontAttributes="Bold" TextColor="#E8EDF7" LineBreakMode="TailTruncation" />
+                                            <Label Text="{Binding Lane}" FontSize="12" TextColor="#8A97B2" LineBreakMode="TailTruncation" />
+                                            <HorizontalStackLayout Spacing="6">
+                                                <Label Text="{Binding Tracking}" FontSize="11" TextColor="#5E6B87" />
+                                                <Label Text="·" FontSize="11" TextColor="#5E6B87" />
+                                                <Label Text="{Binding Pallets}" FontSize="11" TextColor="#5E6B87" />
+                                                <Label Text="·" FontSize="11" TextColor="#5E6B87" />
+                                                <Label Text="{Binding Weight}" FontSize="11" TextColor="#5E6B87" />
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                        <VerticalStackLayout Grid.Column="2" Spacing="4" VerticalOptions="Center" HorizontalOptions="End">
+                                            <Border StrokeThickness="1" Stroke="{Binding StatusColor}" StrokeShape="RoundRectangle 9" Padding="8,2" HorizontalOptions="End">
+                                                <Label Text="{Binding Status}" FontSize="10" FontAttributes="Bold" TextColor="{Binding StatusColor}" />
+                                            </Border>
+                                            <Label Text="{Binding Eta}" FontSize="11" TextColor="#8A97B2" HorizontalOptions="End" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                    <BoxView HeightRequest="1" Color="#1C2740" Margin="60,0,8,0" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </material:MaterialCard>
+
+                <!-- ═══ Driver of the week ═══ -->
+                <Border StrokeThickness="1" Stroke="#3A2E14" StrokeShape="RoundRectangle 22" Padding="16" BackgroundColor="#1A1608">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Border WidthRequest="56" HeightRequest="56" StrokeThickness="2" Stroke="#FFB547" StrokeShape="Ellipse" BackgroundColor="#7A5A2E">
+                            <Label Text="TB" FontSize="18" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="DRIVER OF THE WEEK" FontSize="11" FontAttributes="Bold" CharacterSpacing="1.2" TextColor="#FFB547" />
+                            <Label Text="Tanya Brooks" FontSize="16" FontAttributes="Bold" TextColor="#E8EDF7" />
+                            <Label Text="2,940 mi · 14 stops · zero exceptions" FontSize="12" TextColor="#8A97B2" />
+                            <material:MaterialRating Value="5" ItemsSize="18" HorizontalOptions="Start" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentView>

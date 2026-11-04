@@ -212,4 +212,14 @@
 		<TrimmerRootDescriptor Include="Benchmarks\XamlProbes\BenchmarkProbes.Trimming.xml" />
 	</ItemGroup>
 
+	<!--
+		"Open a screen" benchmark: the same heavy client-style screen
+		(Northbeam Dispatch) in two byte-identical copies. XamlC is what
+		published apps ship today (.NET 6-10 Release default); SourceGen is
+		the .NET 11 default, so DispatchHomeSourceGen.xaml carries no metadata.
+	-->
+	<ItemGroup>
+		<MauiXaml Update="Benchmarks\OpenScreen\DispatchHomeXamlC.xaml" Inflator="XamlC" />
+	</ItemGroup>
+
 </Project>
