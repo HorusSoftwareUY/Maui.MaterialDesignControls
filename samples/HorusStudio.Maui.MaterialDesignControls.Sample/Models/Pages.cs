@@ -34,4 +34,5 @@ public class Pages
     public const string BenchmarkUIRender = "UI controls render";
     public const string BenchmarkWaves = "Liquid color waves";
     public const string BenchmarkFluid = "Fluid ink (feedback)";
+    public const string BenchmarkSceneGraph = "Scene graph (polymorphic)";
 }

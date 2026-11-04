@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.BenchmarkSceneGraphPage"
+    x:TypeArguments="vm:BenchmarkSceneGraphViewModel"
+    x:DataType="vm:BenchmarkSceneGraphViewModel"
+    BackgroundColor="Black">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- Top app bar -->
+        <material:MaterialTopAppBar
+            Grid.Row="0"
+            Headline="{Binding Title}"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIconIsBusy="{Binding Path=GoBackCommand.IsRunning}"
+            LeadingIcon="ic_back.png"
+            Type="Small"
+            BackgroundColor="Black"
+            HeadlineColor="White" />
+
+        <!-- Stats + controls panel -->
+        <Grid
+            Grid.Row="1"
+            BackgroundColor="#1A1A1A"
+            Padding="12,8"
+            RowDefinitions="Auto,Auto,Auto"
+            RowSpacing="6">
+
+            <!-- Stats. update/draw are the headline: vsync pins FPS at 60 for
+                 both runtimes and hides whatever headroom is left. -->
+            <Grid Grid.Row="0" ColumnDefinitions="*,*,*,*" ColumnSpacing="4">
+                <Label Grid.Column="0" Text="{Binding UpdateText}" TextColor="#CE93D8" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Grid.Column="1" Text="{Binding DrawText}"   TextColor="#90CAF9" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Grid.Column="2" Text="{Binding FpsText}"    TextColor="#4CAF50" FontSize="13" HorizontalOptions="Center" />
+                <Label Grid.Column="3" Text="{Binding MinFpsText}" TextColor="#FF9800" FontSize="13" HorizontalOptions="Center" />
+            </Grid>
+
+            <!-- Controls -->
+            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="6">
+
+                <Button
+                    Grid.Column="0"
+                    Text="{Binding ToggleButtonText}"
+                    Clicked="OnToggleClicked"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    FontSize="13"
+                    Padding="12,6"
+                    CornerRadius="6" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="{Binding BackendButtonText}"
+                    Clicked="OnBackendClicked"
+                    BackgroundColor="#1565C0"
+                    TextColor="White"
+                    FontSize="13"
+                    Padding="12,6"
+                    CornerRadius="6" />
+
+                <!-- The variable under test: same simulation, two code shapes. -->
+                <Button
+                    Grid.Column="3"
+                    Text="{Binding ShapeButtonText}"
+                    Clicked="OnShapeClicked"
+                    BackgroundColor="#6A1B9A"
+                    TextColor="White"
+                    FontSize="13"
+                    Padding="12,6"
+                    CornerRadius="6" />
+            </Grid>
+
+            <!-- Load levels -->
+            <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto,Auto,Auto,*" ColumnSpacing="6">
+                <Button Grid.Column="0" Text="1k"  Clicked="OnCount1k"  BackgroundColor="#333" TextColor="White" FontSize="12" Padding="12,6" CornerRadius="6" />
+                <Button Grid.Column="1" Text="5k"  Clicked="OnCount5k"  BackgroundColor="#333" TextColor="White" FontSize="12" Padding="12,6" CornerRadius="6" />
+                <Button Grid.Column="2" Text="10k" Clicked="OnCount10k" BackgroundColor="#333" TextColor="White" FontSize="12" Padding="12,6" CornerRadius="6" />
+                <Button Grid.Column="3" Text="20k" Clicked="OnCount20k" BackgroundColor="#333" TextColor="White" FontSize="12" Padding="12,6" CornerRadius="6" />
+                <Label  Grid.Column="4" Text="{Binding CountText}" TextColor="#B0BEC5" FontSize="12" VerticalOptions="Center" HorizontalOptions="End" />
+            </Grid>
+        </Grid>
+
+        <!-- Canvas: CPU raster view and GPU view share the slot; the code-behind
+             shows exactly one of them depending on the selected backend. -->
+        <skia:SKCanvasView
+            Grid.Row="2"
+            x:Name="CanvasView"
+            PaintSurface="OnPaintSurface"
+            EnableTouchEvents="False"
+            IsVisible="False" />
+
+        <skia:SKGLView
+            Grid.Row="2"
+            x:Name="GlView"
+            PaintSurface="OnPaintGlSurface"
+            EnableTouchEvents="False"
+            IsVisible="False" />
+
+    </Grid>
+</local:BaseContentPage>
