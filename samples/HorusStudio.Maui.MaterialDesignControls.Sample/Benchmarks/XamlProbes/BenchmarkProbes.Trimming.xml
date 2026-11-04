@@ -1,0 +1,20 @@
+<!--
+  The XAML round deliberately keeps two pre-.NET 11 code paths alive:
+
+    * XamlProbeRuntime  - inflated by the reflection-based XAML parser
+    * XamlBindClassic   - bound through string paths resolved by reflection
+
+  Both are exactly what full trimming is allowed to break (Microsoft documents
+  compiled bindings as *required* under full trimming and NativeAOT), and this
+  app builds with AndroidLinkMode=Full. Without rooting them the probes would
+  either throw or, worse, quietly measure a degraded path.
+
+  Scope is deliberately narrow: the probe namespace only. Nothing here changes
+  what the rest of the app gets trimmed down to, so the round does not distort
+  the size numbers of the other benchmarks.
+-->
+<linker>
+  <assembly fullname="HorusStudio.Maui.MaterialDesignControls.Sample">
+    <namespace fullname="HorusStudio.Maui.MaterialDesignControls.Sample.Benchmarks.XamlProbes" />
+  </assembly>
+</linker>

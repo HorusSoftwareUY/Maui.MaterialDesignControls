@@ -174,4 +174,42 @@
 		</Reference>
 	</ItemGroup>
 	-->
+
+	<!--
+		Round 5 — XAML pipeline benchmark.
+
+		The probes under Benchmarks/XamlProbes are pairs (or triplets) of XAML files
+		with byte-identical markup. The only variable is the build-time knob applied
+		here, so anything the benchmark measures between twins is that knob and
+		nothing else.
+
+		Inflator (per file, default is SourceGen in .NET 11):
+		  Runtime   -> [XamlCompilation(Skip)] + LoadFromXaml: the reflection-based
+		               XAML parser reads the embedded .xaml at runtime.
+		  XamlC     -> the pre-.NET 11 default: XamlCTask rewrites the body of
+		               InitializeComponent with IL after the C# compile.
+		  SourceGen -> the .NET 11 default: Roslyn emits plain C# (new Label(),
+		               SetValue(...)) with no reflection at all.
+
+		LazyRD (per file, default true in .NET 11): when false, every dictionary
+		entry is constructed in the constructor instead of being registered as a
+		factory and inflated on first access.
+
+		XC0022 is suppressed only on XamlBindClassic.xaml, where opting out of
+		compiled bindings is the whole point of the file.
+	-->
+	<ItemGroup>
+		<MauiXaml Update="Benchmarks\XamlProbes\XamlProbeRuntime.xaml" Inflator="Runtime" />
+		<MauiXaml Update="Benchmarks\XamlProbes\XamlProbeXamlC.xaml" Inflator="XamlC" />
+		<!-- XamlProbeSourceGen.xaml intentionally has no metadata: it is the default. -->
+
+		<MauiXaml Update="Benchmarks\XamlProbes\XamlDictEager.xaml" LazyRD="false" />
+		<!-- XamlDictLazy.xaml intentionally has no metadata: it is the default. -->
+
+		<MauiXaml Update="Benchmarks\XamlProbes\XamlBindClassic.xaml" NoWarn="XC0022;XC0023" />
+
+		<!-- Keeps the two reflection-based probes alive under AndroidLinkMode=Full. -->
+		<TrimmerRootDescriptor Include="Benchmarks\XamlProbes\BenchmarkProbes.Trimming.xml" />
+	</ItemGroup>
+
 </Project>

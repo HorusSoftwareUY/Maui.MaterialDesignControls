@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:probes="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Benchmarks.XamlProbes"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Benchmarks.XamlProbes.XamlBindCompiled">
+
+    <!-- 5 blocks x 8 bindings = 40 bindings per instance.
+         The only difference against its twin is the x:DataType below. -->
+    <VerticalStackLayout x:DataType="probes:XamlBindProbe" Spacing="2" Padding="8">
+
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8">
+            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Email}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Department}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Role}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="2" Grid.Column="0" Text="{Binding Score}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Status}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="3" Grid.Column="0" Text="{Binding Location}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="3" Grid.Column="1" Text="{Binding Updated}" FontSize="12" TextColor="#B0BEC5" />
+        </Grid>
+
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8">
+            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Email}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Department}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Role}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="2" Grid.Column="0" Text="{Binding Score}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Status}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="3" Grid.Column="0" Text="{Binding Location}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="3" Grid.Column="1" Text="{Binding Updated}" FontSize="12" TextColor="#B0BEC5" />
+        </Grid>
+
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8">
+            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Email}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Department}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Role}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="2" Grid.Column="0" Text="{Binding Score}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Status}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="3" Grid.Column="0" Text="{Binding Location}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="3" Grid.Column="1" Text="{Binding Updated}" FontSize="12" TextColor="#B0BEC5" />
+        </Grid>
+
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8">
+            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Email}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Department}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Role}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="2" Grid.Column="0" Text="{Binding Score}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Status}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="3" Grid.Column="0" Text="{Binding Location}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="3" Grid.Column="1" Text="{Binding Updated}" FontSize="12" TextColor="#B0BEC5" />
+        </Grid>
+
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8">
+            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Email}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Department}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Role}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="2" Grid.Column="0" Text="{Binding Score}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Status}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="3" Grid.Column="0" Text="{Binding Location}" FontSize="12" TextColor="#B0BEC5" />
+            <Label Grid.Row="3" Grid.Column="1" Text="{Binding Updated}" FontSize="12" TextColor="#B0BEC5" />
+        </Grid>
+
+    </VerticalStackLayout>
+
+</ContentView>

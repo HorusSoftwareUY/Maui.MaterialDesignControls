@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Pages"
+    xmlns:material="clr-namespace:HorusStudio.Maui.MaterialDesignControls;assembly=HorusStudio.Maui.MaterialDesignControls"
+    xmlns:vm="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels"
+    xmlns:models="clr-namespace:HorusStudio.Maui.MaterialDesignControls.Sample.Models"
+    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Pages.BenchmarkXamlPage"
+    x:TypeArguments="vm:BenchmarkXamlViewModel"
+    x:DataType="vm:BenchmarkXamlViewModel"
+    BackgroundColor="Black">
+
+    <ContentPage.Resources>
+
+        <!-- One measured variant: name, what was timed, the number, a
+             proportional bar and the ratio against the .NET 11 default. -->
+        <DataTemplate x:Key="RowTemplate" x:DataType="models:XamlBenchmarkRow">
+            <Grid RowDefinitions="Auto,Auto" RowSpacing="3" Padding="0,7">
+
+                <Grid Grid.Row="0" ColumnDefinitions="88,*,Auto" ColumnSpacing="8">
+                    <Label
+                        Grid.Column="0"
+                        Text="{Binding Variant}"
+                        FontSize="13"
+                        FontAttributes="Bold"
+                        TextColor="#ECEFF1"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="1"
+                        Text="{Binding Metric}"
+                        FontSize="11"
+                        TextColor="#78909C"
+                        LineBreakMode="TailTruncation"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="2"
+                        Text="{Binding MsText}"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        TextColor="#ECEFF1"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <Grid Grid.Row="1" ColumnDefinitions="88,*,Auto" ColumnSpacing="8">
+                    <Label
+                        Grid.Column="0"
+                        Text="{Binding RatioText}"
+                        TextColor="{Binding RatioColor}"
+                        FontSize="11"
+                        VerticalOptions="Center" />
+
+                    <!-- Proportional bar: the two star columns come from the
+                         viewmodel, so no converter is needed here. -->
+                    <Grid
+                        Grid.Column="1"
+                        ColumnDefinitions="{Binding BarColumns}"
+                        HeightRequest="6"
+                        VerticalOptions="Center">
+                        <BoxView
+                            Grid.Column="0"
+                            Color="{Binding BarColor}"
+                            CornerRadius="3" />
+                        <BoxView
+                            Grid.Column="1"
+                            Color="#242424"
+                            CornerRadius="3" />
+                    </Grid>
+
+                    <Label
+                        Grid.Column="2"
+                        Text="{Binding AllocText}"
+                        FontSize="11"
+                        TextColor="#546E7A"
+                        VerticalOptions="Center" />
+                </Grid>
+            </Grid>
+        </DataTemplate>
+
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <material:MaterialTopAppBar
+            Grid.Row="0"
+            Headline="{Binding Title}"
+            LeadingIconCommand="{Binding GoBackCommand}"
+            LeadingIconIsBusy="{Binding Path=GoBackCommand.IsRunning}"
+            LeadingIcon="ic_back.png"
+            Type="Small"
+            BackgroundColor="Black"
+            HeadlineColor="White" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="14,10,14,28" Spacing="14">
+
+                <!-- Which runtime this build is actually running on. Without it
+                     a screenshot of the page means nothing. -->
+                <Label
+                    Text="{Binding RuntimeText}"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    TextColor="#4DD0E1" />
+
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <Label
+                        Grid.Column="0"
+                        Text="{Binding StatusText}"
+                        FontSize="11"
+                        TextColor="#78909C"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="1"
+                        Text="{Binding RunLabel}"
+                        IsVisible="{Binding HasResult}"
+                        FontSize="11"
+                        FontAttributes="Bold"
+                        TextColor="#FFB74D"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <Button
+                    Text="Run benchmark"
+                    Command="{Binding RunCommand}"
+                    IsEnabled="{Binding CanRun}"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    FontSize="14"
+                    Padding="16,8"
+                    CornerRadius="8"
+                    HorizontalOptions="Fill" />
+
+                <!-- Headline: the three ratios, one per axis. -->
+                <Border
+                    IsVisible="{Binding HasResult}"
+                    BackgroundColor="#141414"
+                    Stroke="#2A2A2A"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="12,10">
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                        <Label Grid.Column="0" Text="{Binding InflateHeadline}" FontSize="11" TextColor="#B39DDB" HorizontalTextAlignment="Center" />
+                        <Label Grid.Column="1" Text="{Binding DictHeadline}"    FontSize="11" TextColor="#80CBC4" HorizontalTextAlignment="Center" />
+                        <Label Grid.Column="2" Text="{Binding BindHeadline}"    FontSize="11" TextColor="#FFCC80" HorizontalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Axis 1 — inflator -->
+                <VerticalStackLayout IsVisible="{Binding HasResult}" Spacing="2">
+                    <Label Text="1 · Inflator" FontSize="15" FontAttributes="Bold" TextColor="#B39DDB" />
+                    <Label
+                        Text="Same markup, three ways of turning it into objects. SourceGen is the .NET 11 default."
+                        FontSize="11"
+                        TextColor="#607D8B" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding InflateRows}" BindableLayout.ItemTemplate="{StaticResource RowTemplate}" Spacing="0" />
+                </VerticalStackLayout>
+
+                <!-- Axis 2 — lazy resource dictionaries -->
+                <VerticalStackLayout IsVisible="{Binding HasResult}" Spacing="2">
+                    <Label Text="2 · ResourceDictionary" FontSize="15" FontAttributes="Bold" TextColor="#80CBC4" />
+                    <Label
+                        Text="120 entries each. Lazy registers factories and inflates on first access; eager builds everything in the constructor."
+                        FontSize="11"
+                        TextColor="#607D8B" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding DictRows}" BindableLayout.ItemTemplate="{StaticResource RowTemplate}" Spacing="0" />
+                </VerticalStackLayout>
+
+                <!-- Axis 3 — compiled bindings -->
+                <VerticalStackLayout IsVisible="{Binding HasResult}" Spacing="2">
+                    <Label Text="3 · Bindings" FontSize="15" FontAttributes="Bold" TextColor="#FFCC80" />
+                    <Label
+                        Text="40 bindings per view. The only difference between the two probes is x:DataType."
+                        FontSize="11"
+                        TextColor="#607D8B" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding BindRows}" BindableLayout.ItemTemplate="{StaticResource RowTemplate}" Spacing="0" />
+                </VerticalStackLayout>
+
+                <Label
+                    IsVisible="{Binding HasResult}"
+                    Text="Right-hand figure is allocated bytes. The first run is cold: it pays JIT/tiering warm-up on every path, so only compare runs with the same label."
+                    FontSize="10"
+                    TextColor="#455A64" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</local:BaseContentPage>

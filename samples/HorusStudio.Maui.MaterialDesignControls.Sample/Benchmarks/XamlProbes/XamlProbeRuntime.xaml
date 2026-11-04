@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Benchmarks.XamlProbes.XamlProbeRuntime">
+
+    <!-- Eight cards of the same shape. No bindings and no x:Name on purpose:
+         this probe must isolate the cost of *inflating* markup, nothing else. -->
+    <VerticalStackLayout Spacing="8" Padding="12" BackgroundColor="#101010">
+
+        <Border StrokeThickness="1" Stroke="#333333" Padding="10" StrokeShape="RoundRectangle 8" BackgroundColor="#1A1A1A">
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
+                <BoxView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" WidthRequest="40" HeightRequest="40" CornerRadius="20" Color="#5E35B1" VerticalOptions="Center" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Olivia Bennett" FontSize="15" FontAttributes="Bold" TextColor="#ECEFF1" LineBreakMode="TailTruncation" />
+                <Label Grid.Row="1" Grid.Column="1" Text="olivia.bennett@acme.io" FontSize="12" TextColor="#90A4AE" LineBreakMode="TailTruncation" />
+                <HorizontalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                    <Label Text="senior" FontSize="11" TextColor="#4DD0E1" VerticalOptions="Center" />
+                    <Label Text="87" FontSize="14" FontAttributes="Bold" TextColor="#66BB6A" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <Border StrokeThickness="1" Stroke="#333333" Padding="10" StrokeShape="RoundRectangle 8" BackgroundColor="#1A1A1A">
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
+                <BoxView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" WidthRequest="40" HeightRequest="40" CornerRadius="20" Color="#00897B" VerticalOptions="Center" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Ethan Carter" FontSize="15" FontAttributes="Bold" TextColor="#ECEFF1" LineBreakMode="TailTruncation" />
+                <Label Grid.Row="1" Grid.Column="1" Text="ethan.carter@northwind.co" FontSize="12" TextColor="#90A4AE" LineBreakMode="TailTruncation" />
+                <HorizontalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                    <Label Text="remote" FontSize="11" TextColor="#4DD0E1" VerticalOptions="Center" />
+                    <Label Text="62" FontSize="14" FontAttributes="Bold" TextColor="#66BB6A" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <Border StrokeThickness="1" Stroke="#333333" Padding="10" StrokeShape="RoundRectangle 8" BackgroundColor="#1A1A1A">
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
+                <BoxView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" WidthRequest="40" HeightRequest="40" CornerRadius="20" Color="#C2185B" VerticalOptions="Center" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Mia Mitchell" FontSize="15" FontAttributes="Bold" TextColor="#ECEFF1" LineBreakMode="TailTruncation" />
+                <Label Grid.Row="1" Grid.Column="1" Text="mia.mitchell@globex.com" FontSize="12" TextColor="#90A4AE" LineBreakMode="TailTruncation" />
+                <HorizontalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                    <Label Text="junior" FontSize="11" TextColor="#4DD0E1" VerticalOptions="Center" />
+                    <Label Text="41" FontSize="14" FontAttributes="Bold" TextColor="#66BB6A" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <Border StrokeThickness="1" Stroke="#333333" Padding="10" StrokeShape="RoundRectangle 8" BackgroundColor="#1A1A1A">
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
+                <BoxView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" WidthRequest="40" HeightRequest="40" CornerRadius="20" Color="#1E88E5" VerticalOptions="Center" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Noah Harrison" FontSize="15" FontAttributes="Bold" TextColor="#ECEFF1" LineBreakMode="TailTruncation" />
+                <Label Grid.Row="1" Grid.Column="1" Text="noah.harrison@initech.dev" FontSize="12" TextColor="#90A4AE" LineBreakMode="TailTruncation" />
+                <HorizontalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                    <Label Text="lead" FontSize="11" TextColor="#4DD0E1" VerticalOptions="Center" />
+                    <Label Text="93" FontSize="14" FontAttributes="Bold" TextColor="#66BB6A" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <Border StrokeThickness="1" Stroke="#333333" Padding="10" StrokeShape="RoundRectangle 8" BackgroundColor="#1A1A1A">
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
+                <BoxView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" WidthRequest="40" HeightRequest="40" CornerRadius="20" Color="#F4511E" VerticalOptions="Center" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Ava Brooks" FontSize="15" FontAttributes="Bold" TextColor="#ECEFF1" LineBreakMode="TailTruncation" />
+                <Label Grid.Row="1" Grid.Column="1" Text="ava.brooks@acme.io" FontSize="12" TextColor="#90A4AE" LineBreakMode="TailTruncation" />
+                <HorizontalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                    <Label Text="contract" FontSize="11" TextColor="#4DD0E1" VerticalOptions="Center" />
+                    <Label Text="70" FontSize="14" FontAttributes="Bold" TextColor="#66BB6A" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <Border StrokeThickness="1" Stroke="#333333" Padding="10" StrokeShape="RoundRectangle 8" BackgroundColor="#1A1A1A">
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
+                <BoxView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" WidthRequest="40" HeightRequest="40" CornerRadius="20" Color="#43A047" VerticalOptions="Center" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Liam Sullivan" FontSize="15" FontAttributes="Bold" TextColor="#ECEFF1" LineBreakMode="TailTruncation" />
+                <Label Grid.Row="1" Grid.Column="1" Text="liam.sullivan@northwind.co" FontSize="12" TextColor="#90A4AE" LineBreakMode="TailTruncation" />
+                <HorizontalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                    <Label Text="intern" FontSize="11" TextColor="#4DD0E1" VerticalOptions="Center" />
+                    <Label Text="35" FontSize="14" FontAttributes="Bold" TextColor="#66BB6A" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <Border StrokeThickness="1" Stroke="#333333" Padding="10" StrokeShape="RoundRectangle 8" BackgroundColor="#1A1A1A">
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
+                <BoxView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" WidthRequest="40" HeightRequest="40" CornerRadius="20" Color="#6D4C41" VerticalOptions="Center" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Emma Parker" FontSize="15" FontAttributes="Bold" TextColor="#ECEFF1" LineBreakMode="TailTruncation" />
+                <Label Grid.Row="1" Grid.Column="1" Text="emma.parker@globex.com" FontSize="12" TextColor="#90A4AE" LineBreakMode="TailTruncation" />
+                <HorizontalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                    <Label Text="staff" FontSize="11" TextColor="#4DD0E1" VerticalOptions="Center" />
+                    <Label Text="78" FontSize="14" FontAttributes="Bold" TextColor="#66BB6A" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <Border StrokeThickness="1" Stroke="#333333" Padding="10" StrokeShape="RoundRectangle 8" BackgroundColor="#1A1A1A">
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="2">
+                <BoxView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" WidthRequest="40" HeightRequest="40" CornerRadius="20" Color="#3949AB" VerticalOptions="Center" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Lucas Hayes" FontSize="15" FontAttributes="Bold" TextColor="#ECEFF1" LineBreakMode="TailTruncation" />
+                <Label Grid.Row="1" Grid.Column="1" Text="lucas.hayes@initech.dev" FontSize="12" TextColor="#90A4AE" LineBreakMode="TailTruncation" />
+                <HorizontalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                    <Label Text="principal" FontSize="11" TextColor="#4DD0E1" VerticalOptions="Center" />
+                    <Label Text="55" FontSize="14" FontAttributes="Bold" TextColor="#66BB6A" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+    </VerticalStackLayout>
+
+</ContentView>

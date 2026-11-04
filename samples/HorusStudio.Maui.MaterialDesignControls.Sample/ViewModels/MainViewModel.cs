@@ -97,7 +97,8 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
             { Models.Pages.BenchmarkUIRender, typeof(BenchmarkUIRenderViewModel) },
             { Models.Pages.BenchmarkWaves, typeof(BenchmarkWavesViewModel) },
             { Models.Pages.BenchmarkFluid, typeof(BenchmarkFluidViewModel) },
-            { Models.Pages.BenchmarkSceneGraph, typeof(BenchmarkSceneGraphViewModel) }
+            { Models.Pages.BenchmarkSceneGraph, typeof(BenchmarkSceneGraphViewModel) },
+            { Models.Pages.BenchmarkXaml, typeof(BenchmarkXamlViewModel) }
         };
         
         public MainViewModel(IMaterialSnackbar snackbar)
@@ -119,6 +120,7 @@ namespace HorusStudio.Maui.MaterialDesignControls.Sample.ViewModels
                 new() { Headline = Sections.Benchmarks, Text = Models.Pages.BenchmarkWaves,    AutomationId = $"menu_{nameof(Models.Pages.BenchmarkWaves)}",    LeadingIcon = "ic_progress_indicator.png" },
                 new() { Headline = Sections.Benchmarks, Text = Models.Pages.BenchmarkFluid,    AutomationId = $"menu_{nameof(Models.Pages.BenchmarkFluid)}",    LeadingIcon = "ic_progress_indicator.png" },
                 new() { Headline = Sections.Benchmarks, Text = Models.Pages.BenchmarkSceneGraph,    AutomationId = $"menu_{nameof(Models.Pages.BenchmarkSceneGraph)}",    LeadingIcon = "ic_progress_indicator.png" },
+                new() { Headline = Sections.Benchmarks, Text = Models.Pages.BenchmarkXaml,          AutomationId = $"menu_{nameof(Models.Pages.BenchmarkXaml)}",          LeadingIcon = "ic_progress_indicator.png" },
                 new() { Headline = Sections.Settings, Text = Models.Pages.Appearance, AutomationId = $"menu_{nameof(Models.Pages.Appearance)}", LeadingIcon = "settings.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.Button, AutomationId = $"menu_{nameof(Models.Pages.Button)}", LeadingIcon = "ic_button.png" },
                 new() { Headline = Sections.Actions, Text = Models.Pages.FloatingButton, AutomationId = $"menu_{nameof(Models.Pages.FloatingButton)}", LeadingIcon = "ic_floating.png" },

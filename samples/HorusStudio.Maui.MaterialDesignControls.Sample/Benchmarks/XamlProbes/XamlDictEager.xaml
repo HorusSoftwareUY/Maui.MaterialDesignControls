@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="HorusStudio.Maui.MaterialDesignControls.Sample.Benchmarks.XamlProbes.XamlDictEager">
+
+    <!-- 120 entries: colors, doubles, thicknesses, strings and styles.
+         Styles are the expensive ones (each drags a Setter collection along),
+         so the mix matters: an all-colors dictionary would understate lazy. -->
+
+    <!-- 40 colors -->
+    <Color x:Key="XbC00">#00285A</Color>
+    <Color x:Key="XbC01">#256FCB</Color>
+    <Color x:Key="XbC02">#4AB63C</Color>
+    <Color x:Key="XbC03">#6FFDAD</Color>
+    <Color x:Key="XbC04">#94441E</Color>
+    <Color x:Key="XbC05">#B98B8F</Color>
+    <Color x:Key="XbC06">#DED200</Color>
+    <Color x:Key="XbC07">#031971</Color>
+    <Color x:Key="XbC08">#2860E2</Color>
+    <Color x:Key="XbC09">#4DA753</Color>
+    <Color x:Key="XbC10">#72EEC4</Color>
+    <Color x:Key="XbC11">#973535</Color>
+    <Color x:Key="XbC12">#BC7CA6</Color>
+    <Color x:Key="XbC13">#E1C317</Color>
+    <Color x:Key="XbC14">#060A88</Color>
+    <Color x:Key="XbC15">#2B51F9</Color>
+    <Color x:Key="XbC16">#50986A</Color>
+    <Color x:Key="XbC17">#75DFDB</Color>
+    <Color x:Key="XbC18">#9A264C</Color>
+    <Color x:Key="XbC19">#BF6DBD</Color>
+    <Color x:Key="XbC20">#E4B42E</Color>
+    <Color x:Key="XbC21">#09FB9F</Color>
+    <Color x:Key="XbC22">#2E4210</Color>
+    <Color x:Key="XbC23">#538981</Color>
+    <Color x:Key="XbC24">#78D0F2</Color>
+    <Color x:Key="XbC25">#9D1763</Color>
+    <Color x:Key="XbC26">#C25ED4</Color>
+    <Color x:Key="XbC27">#E7A545</Color>
+    <Color x:Key="XbC28">#0CECB6</Color>
+    <Color x:Key="XbC29">#313327</Color>
+    <Color x:Key="XbC30">#567A98</Color>
+    <Color x:Key="XbC31">#7BC109</Color>
+    <Color x:Key="XbC32">#A0087A</Color>
+    <Color x:Key="XbC33">#C54FEB</Color>
+    <Color x:Key="XbC34">#EA965C</Color>
+    <Color x:Key="XbC35">#0FDDCD</Color>
+    <Color x:Key="XbC36">#34243E</Color>
+    <Color x:Key="XbC37">#596BAF</Color>
+    <Color x:Key="XbC38">#7EB220</Color>
+    <Color x:Key="XbC39">#A3F991</Color>
+
+    <!-- 25 doubles -->
+    <x:Double x:Key="XbD00">8</x:Double>
+    <x:Double x:Key="XbD01">11</x:Double>
+    <x:Double x:Key="XbD02">14</x:Double>
+    <x:Double x:Key="XbD03">17</x:Double>
+    <x:Double x:Key="XbD04">20</x:Double>
+    <x:Double x:Key="XbD05">23</x:Double>
+    <x:Double x:Key="XbD06">26</x:Double>
+    <x:Double x:Key="XbD07">29</x:Double>
+    <x:Double x:Key="XbD08">32</x:Double>
+    <x:Double x:Key="XbD09">35</x:Double>
+    <x:Double x:Key="XbD10">38</x:Double>
+    <x:Double x:Key="XbD11">41</x:Double>
+    <x:Double x:Key="XbD12">44</x:Double>
+    <x:Double x:Key="XbD13">47</x:Double>
+    <x:Double x:Key="XbD14">50</x:Double>
+    <x:Double x:Key="XbD15">53</x:Double>
+    <x:Double x:Key="XbD16">56</x:Double>
+    <x:Double x:Key="XbD17">59</x:Double>
+    <x:Double x:Key="XbD18">62</x:Double>
+    <x:Double x:Key="XbD19">65</x:Double>
+    <x:Double x:Key="XbD20">68</x:Double>
+    <x:Double x:Key="XbD21">71</x:Double>
+    <x:Double x:Key="XbD22">74</x:Double>
+    <x:Double x:Key="XbD23">77</x:Double>
+    <x:Double x:Key="XbD24">80</x:Double>
+
+    <!-- 15 thicknesses -->
+    <Thickness x:Key="XbT00">0,2,0,2</Thickness>
+    <Thickness x:Key="XbT01">1,3,1,3</Thickness>
+    <Thickness x:Key="XbT02">2,4,2,4</Thickness>
+    <Thickness x:Key="XbT03">3,5,3,5</Thickness>
+    <Thickness x:Key="XbT04">4,6,4,6</Thickness>
+    <Thickness x:Key="XbT05">5,7,5,7</Thickness>
+    <Thickness x:Key="XbT06">6,8,6,8</Thickness>
+    <Thickness x:Key="XbT07">7,9,7,9</Thickness>
+    <Thickness x:Key="XbT08">8,10,8,10</Thickness>
+    <Thickness x:Key="XbT09">9,11,9,11</Thickness>
+    <Thickness x:Key="XbT10">10,12,10,12</Thickness>
+    <Thickness x:Key="XbT11">11,13,11,13</Thickness>
+    <Thickness x:Key="XbT12">12,14,12,14</Thickness>
+    <Thickness x:Key="XbT13">13,15,13,15</Thickness>
+    <Thickness x:Key="XbT14">14,16,14,16</Thickness>
+
+    <!-- 10 strings -->
+    <x:String x:Key="XbS00">resource-string-00</x:String>
+    <x:String x:Key="XbS01">resource-string-01</x:String>
+    <x:String x:Key="XbS02">resource-string-02</x:String>
+    <x:String x:Key="XbS03">resource-string-03</x:String>
+    <x:String x:Key="XbS04">resource-string-04</x:String>
+    <x:String x:Key="XbS05">resource-string-05</x:String>
+    <x:String x:Key="XbS06">resource-string-06</x:String>
+    <x:String x:Key="XbS07">resource-string-07</x:String>
+    <x:String x:Key="XbS08">resource-string-08</x:String>
+    <x:String x:Key="XbS09">resource-string-09</x:String>
+
+    <!-- 30 styles: the heavy half of the dictionary -->
+    <Style x:Key="XbY00" TargetType="Label">
+        <Setter Property="Margin" Value="0,0" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="#00A0C0" />
+    </Style>
+    <Style x:Key="XbY01" TargetType="Button">
+        <Setter Property="Margin" Value="1,1" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BackgroundColor" Value="#201180" />
+    </Style>
+    <Style x:Key="XbY02" TargetType="Border">
+        <Setter Property="Margin" Value="2,2" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="Stroke" Value="#6A3355" />
+    </Style>
+    <Style x:Key="XbY03" TargetType="BoxView">
+        <Setter Property="Margin" Value="3,3" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="11" />
+        <Setter Property="Color" Value="#557B22" />
+    </Style>
+    <Style x:Key="XbY04" TargetType="Entry">
+        <Setter Property="Margin" Value="4,0" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="PlaceholderColor" Value="#77885C" />
+    </Style>
+    <Style x:Key="XbY05" TargetType="Label">
+        <Setter Property="Margin" Value="5,1" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="TextColor" Value="#91A0C0" />
+    </Style>
+    <Style x:Key="XbY06" TargetType="Button">
+        <Setter Property="Margin" Value="0,2" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="BackgroundColor" Value="#206680" />
+    </Style>
+    <Style x:Key="XbY07" TargetType="Border">
+        <Setter Property="Margin" Value="1,3" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Stroke" Value="#733355" />
+    </Style>
+    <Style x:Key="XbY08" TargetType="BoxView">
+        <Setter Property="Margin" Value="2,0" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HeightRequest" Value="16" />
+        <Setter Property="Color" Value="#554822" />
+    </Style>
+    <Style x:Key="XbY09" TargetType="Entry">
+        <Setter Property="Margin" Value="3,1" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="PlaceholderColor" Value="#7788CF" />
+    </Style>
+    <Style x:Key="XbY10" TargetType="Label">
+        <Setter Property="Margin" Value="4,2" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" Value="#22A0C0" />
+    </Style>
+    <Style x:Key="XbY11" TargetType="Button">
+        <Setter Property="Margin" Value="5,3" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="CornerRadius" Value="7" />
+        <Setter Property="BackgroundColor" Value="#20BB80" />
+    </Style>
+    <Style x:Key="XbY12" TargetType="Border">
+        <Setter Property="Margin" Value="0,0" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke" Value="#7C3355" />
+    </Style>
+    <Style x:Key="XbY13" TargetType="BoxView">
+        <Setter Property="Margin" Value="1,1" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="11" />
+        <Setter Property="Color" Value="#551522" />
+    </Style>
+    <Style x:Key="XbY14" TargetType="Entry">
+        <Setter Property="Margin" Value="2,2" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="PlaceholderColor" Value="#778842" />
+    </Style>
+    <Style x:Key="XbY15" TargetType="Label">
+        <Setter Property="Margin" Value="3,3" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextColor" Value="#B3A0C0" />
+    </Style>
+    <Style x:Key="XbY16" TargetType="Button">
+        <Setter Property="Margin" Value="4,0" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="BackgroundColor" Value="#201080" />
+    </Style>
+    <Style x:Key="XbY17" TargetType="Border">
+        <Setter Property="Margin" Value="5,1" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="Stroke" Value="#853355" />
+    </Style>
+    <Style x:Key="XbY18" TargetType="BoxView">
+        <Setter Property="Margin" Value="0,2" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HeightRequest" Value="16" />
+        <Setter Property="Color" Value="#55E222" />
+    </Style>
+    <Style x:Key="XbY19" TargetType="Entry">
+        <Setter Property="Margin" Value="1,3" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="PlaceholderColor" Value="#7788B5" />
+    </Style>
+    <Style x:Key="XbY20" TargetType="Label">
+        <Setter Property="Margin" Value="2,0" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="#44A0C0" />
+    </Style>
+    <Style x:Key="XbY21" TargetType="Button">
+        <Setter Property="Margin" Value="3,1" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="CornerRadius" Value="9" />
+        <Setter Property="BackgroundColor" Value="#206580" />
+    </Style>
+    <Style x:Key="XbY22" TargetType="Border">
+        <Setter Property="Margin" Value="4,2" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Stroke" Value="#8E3355" />
+    </Style>
+    <Style x:Key="XbY23" TargetType="BoxView">
+        <Setter Property="Margin" Value="5,3" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="11" />
+        <Setter Property="Color" Value="#55AF22" />
+    </Style>
+    <Style x:Key="XbY24" TargetType="Entry">
+        <Setter Property="Margin" Value="0,0" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="PlaceholderColor" Value="#778828" />
+    </Style>
+    <Style x:Key="XbY25" TargetType="Label">
+        <Setter Property="Margin" Value="1,1" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="#D5A0C0" />
+    </Style>
+    <Style x:Key="XbY26" TargetType="Button">
+        <Setter Property="Margin" Value="2,2" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="BackgroundColor" Value="#20BA80" />
+    </Style>
+    <Style x:Key="XbY27" TargetType="Border">
+        <Setter Property="Margin" Value="3,3" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke" Value="#973355" />
+    </Style>
+    <Style x:Key="XbY28" TargetType="BoxView">
+        <Setter Property="Margin" Value="4,0" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HeightRequest" Value="16" />
+        <Setter Property="Color" Value="#557C22" />
+    </Style>
+    <Style x:Key="XbY29" TargetType="Entry">
+        <Setter Property="Margin" Value="5,1" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="PlaceholderColor" Value="#77889B" />
+    </Style>
+
+</ResourceDictionary>
