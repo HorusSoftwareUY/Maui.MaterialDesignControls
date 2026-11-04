@@ -243,6 +243,24 @@ public partial class BenchmarkXamlViewModel : BaseViewModel
 
     #endregion
 
+    /// <summary>
+    /// One logcat line per measured row (tag DOTNET, prefix XAMLBENCH) so cold
+    /// runs can be harvested with adb instead of read off screenshots.
+    /// </summary>
+    private void LogRows()
+    {
+        var runtime = RuntimeText.Split(' ')[0];
+        void Log(string axis, IEnumerable<XamlBenchmarkRow> rows)
+        {
+            foreach (var r in rows)
+                Console.WriteLine(FormattableString.Invariant(
+                    $"XAMLBENCH row runtime={runtime} run={RunLabel.Replace(' ', '_')} axis={axis} variant={r.Variant} metric=\"{r.Metric}\" ms={r.Ms:F2} bytes={r.Bytes}"));
+        }
+        Log("inflator", InflateRows);
+        Log("rd", DictRows);
+        Log("bindings", BindRows);
+    }
+
     [ICommand]
     private async Task Run()
     {
@@ -289,6 +307,7 @@ public partial class BenchmarkXamlViewModel : BaseViewModel
             RunLabel = _runCount == 1 ? "cold" : $"warm #{_runCount}";
             StatusText = $"{DescribeWorkload()}";
             HasResult = true;
+            LogRows();
         }
         catch (Exception ex)
         {
