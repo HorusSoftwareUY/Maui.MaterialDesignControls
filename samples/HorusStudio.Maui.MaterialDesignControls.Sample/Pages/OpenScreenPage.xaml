@@ -22,14 +22,58 @@
 
         <VerticalStackLayout Grid.Row="1" Padding="20,8" Spacing="16">
             <Label Text="{Binding RuntimeText}" FontSize="13" FontAttributes="Bold" TextColor="#2DD4BF" />
-            <Label Text="Opens the Northbeam Dispatch home screen (~700 elements, real library controls). Same XAML, two inflators. Back closes it."
+            <Label Text="Opens the Northbeam Dispatch home screen (~700 elements, real library controls). Same XAML, two inflators. Timed from tap to first drawn frame. Back closes it."
                    FontSize="13" TextColor="#8A97B2" />
 
-            <material:MaterialButton Type="Outlined" Text="Before · XamlC" Clicked="OnOpenXamlC" />
-            <material:MaterialButton Type="Filled" Text="Now · SourceGen (.NET 11)" Clicked="OnOpenSourceGen" />
+            <!-- Last open -->
+            <Border IsVisible="{Binding HasResult}" BackgroundColor="#121A2B" StrokeThickness="0"
+                    StrokeShape="RoundRectangle 18" Padding="16,14">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="{Binding ResultTitle}" FontSize="13" FontAttributes="Bold" TextColor="#8A97B2" VerticalOptions="Center" />
+                        <Border Grid.Column="1" StrokeThickness="1" Stroke="{Binding ChipColor}" StrokeShape="RoundRectangle 10" Padding="10,3">
+                            <Label Text="{Binding ChipText}" FontSize="12" FontAttributes="Bold" TextColor="{Binding ChipColor}" />
+                        </Border>
+                    </Grid>
+                    <Label Text="{Binding TotalText}" FontSize="48" FontAttributes="Bold" TextColor="#E8EDF7" />
+                    <Grid HeightRequest="12" ColumnSpacing="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding BuildStar}" />
+                            <ColumnDefinition Width="{Binding ShowStar}" />
+                        </Grid.ColumnDefinitions>
+                        <BoxView Grid.Column="0" Color="#FFB547" CornerRadius="4" />
+                        <BoxView Grid.Column="1" Color="#5B8CFF" CornerRadius="4" />
+                    </Grid>
+                    <HorizontalStackLayout Spacing="8">
+                        <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="3" Color="#FFB547" VerticalOptions="Center" />
+                        <Label Text="{Binding BuildText}" FontSize="13" TextColor="#E8EDF7" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="8">
+                        <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="3" Color="#5B8CFF" VerticalOptions="Center" />
+                        <Label Text="{Binding ShowText}" FontSize="13" TextColor="#E8EDF7" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="*,Auto">
+                <material:MaterialButton Type="Outlined" Text="Before · XamlC" Clicked="OnOpenXamlC" />
+                <Label Grid.Column="1" Text="{Binding LastXamlC}" FontSize="12" TextColor="#8A97B2" VerticalOptions="Center" Margin="12,0,0,0" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <material:MaterialButton Type="Filled" Text="Now · SourceGen (.NET 11)" Clicked="OnOpenSourceGen" />
+                <Label Grid.Column="1" Text="{Binding LastSourceGen}" FontSize="12" TextColor="#8A97B2" VerticalOptions="Center" Margin="12,0,0,0" />
+            </Grid>
         </VerticalStackLayout>
 
         <!-- The opened screen goes here, below the top bar. -->
         <ContentView x:Name="ScreenHost" Grid.Row="1" IsVisible="False" />
+
+        <!-- Result chip over the opened screen (for the video). -->
+        <Border Grid.Row="1" IsVisible="{Binding OverlayVisible}" InputTransparent="True"
+                HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,24"
+                BackgroundColor="#E60A0F1C" Stroke="#FFB547" StrokeThickness="1.5"
+                StrokeShape="RoundRectangle 20" Padding="18,8">
+            <Label Text="{Binding OverlayText}" FontSize="18" FontAttributes="Bold" TextColor="#FFB547" />
+        </Border>
     </Grid>
 </local:BaseContentPage>
