@@ -8,6 +8,8 @@ public partial class App
     {
         InitializeComponent();
         MaterialDesignControls.InitializeComponents();
-        MainPage = new AppShell();
     }
+
+    // Application.MainPage is obsolete in .NET 11: the window comes from CreateWindow.
+    protected override Window CreateWindow(IActivationState? activationState) => new(new AppShell());
 }

@@ -16,6 +16,9 @@ public class CrashlyticsService : ICrashlyticsService
             
         AndroidEnvironment.UnhandledExceptionRaiser += (sender, e) =>
         {
+            // Handled = true below swallows the exception; without this line a startup failure
+            // (e.g. a stale resource ID after an SDK change) leaves a blank app and no trace.
+            System.Console.WriteLine("Unhandled exception (swallowed): " + e.Exception);
             LogException(e.Exception, new Dictionary<string, string> { {"CrashDetectionMethod", "AndroidEnvironment.UnhandledExceptionRaiser"} });
             e.Handled = true;
         };
