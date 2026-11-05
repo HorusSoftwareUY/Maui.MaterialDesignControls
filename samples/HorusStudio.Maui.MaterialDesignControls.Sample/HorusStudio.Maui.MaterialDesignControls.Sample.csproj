@@ -95,12 +95,16 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon: CoreCLR (default) -->
-		<MauiIcon Condition="'$(UseMono)' != 'true'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.68" />
+		<!-- .NET 11 RC 2 workaround: the Resizetizer ships SkiaSharp 4.150 + Svg.Skia 5.1.1, which
+		     fail on SVG <text> (MissingMethodException SKTextBlobBuilder.AddPositionedRun).
+		     The CoreCLR icon foreground and Android splash use PNGs rasterized from the SVGs
+		     (appiconfg_rc2.png, splash_rc2.png). Revert to the .svg files once fixed. -->
+		<MauiIcon Condition="'$(UseMono)' != 'true'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_rc2.png" Color="#F7F2FA" BaseSize="24,24" ForegroundScale="0.68" />
 		<!-- App Icon: Mono -->
 		<MauiIcon Condition="'$(UseMono)' == 'true'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_mono.svg" Color="#E1F5FE" BaseSize="24,24" ForegroundScale="0.68" />
 		
 		<!-- Splash Screen: CoreCLR (default) -->
-		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\Splash\splash.svg" BaseSize="74,120" Color="White" />
+		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\Splash\splash_rc2.png" BaseSize="74,120" Color="White" />
 		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'" Include="Resources\Splash\splash.svg" BaseSize="184,300" Color="White" />
 		<MauiSplashScreen Condition="'$(UseMono)' != 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" Include="Resources\Splash\splash.svg" BaseSize="123,200" Color="White" />
 		<!-- Splash Screen: Mono -->
@@ -110,6 +114,14 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
+		<!-- .NET 11 RC 2 workaround (same Resizetizer bug as the splash): SVGs with <filter>
+		     fail (MissingMethodException SKImageFilter.CreateMatrixConvolution). Use PNGs
+		     rasterized at 3x from the same SVGs, with the SVG's size as BaseSize. -->
+		<MauiImage Remove="Resources\Images\home_floating_dark.svg;Resources\Images\home_floating_light.svg;Resources\Images\home_snackbar_dark.svg;Resources\Images\home_snackbar_light.svg" />
+		<MauiImage Include="Resources\ImagesRc2\home_floating_dark.png" BaseSize="270,118" />
+		<MauiImage Include="Resources\ImagesRc2\home_floating_light.png" BaseSize="254,102" />
+		<MauiImage Include="Resources\ImagesRc2\home_snackbar_dark.png" BaseSize="366,70" />
+		<MauiImage Include="Resources\ImagesRc2\home_snackbar_light.png" BaseSize="350,54" />
 		
 		<!-- Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -138,7 +150,6 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" />
 		<PackageReference Include="Microsoft.Maui.Controls" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" />
 		<PackageReference Include="Microsoft.Maui.Core" />
 		<PackageReference Include="Microsoft.Maui.ProfilingHelper" />
