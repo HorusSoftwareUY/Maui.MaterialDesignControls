@@ -15,13 +15,15 @@
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0.5</ApplicationDisplayVersion>
-		<ApplicationVersion>6</ApplicationVersion>
+		<ApplicationVersion>7</ApplicationVersion>
 	</PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == '$(NetVersion)-android'">
         <RuntimeIdentifiers>
             android-arm;android-arm64;android-x86;android-x64
         </RuntimeIdentifiers>
+        <!-- Google Play automatic protection requires minSdk 24 -->
+        <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
     </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|$(NetVersion)-ios|AnyCPU'">
